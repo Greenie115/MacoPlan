@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__MCP_DOCKER__resolve-library-id",
+      "mcp__MCP_DOCKER__get-library-docs",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "mcp__MCP_DOCKER__semgrep_scan_local",
+      "mcp__MCP_DOCKER__semgrep_scan",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
