@@ -6,6 +6,15 @@ export type ActivityLevel = 'sedentary' | 'lightly' | 'moderately' | 'very' | 'e
 export type Sex = 'male' | 'female'
 export type WeightUnit = 'lbs' | 'kg'
 
+// Step 4: Dietary Preferences
+export type DietaryStyle = 'none' | 'vegetarian' | 'vegan' | 'pescatarian' | 'paleo' | 'keto' | 'mediterranean'
+export type Allergy = 'none' | 'peanuts' | 'tree_nuts' | 'dairy' | 'eggs' | 'soy' | 'gluten' | 'shellfish' | 'fish'
+
+// Step 5: Experience Level
+export type ExperienceLevel = 'beginner' | 'intermediate' | 'advanced'
+export type TrackingExperience = 'never' | 'some' | 'experienced'
+export type MealPrepLevel = 'beginner' | 'intermediate' | 'advanced'
+
 export interface PersonalStats {
   age: number
   weight: number
@@ -30,7 +39,15 @@ interface OnboardingState {
   // Step 3: Activity Level
   activityLevel: ActivityLevel | null
 
-  // Step 4-5: Additional preferences (to be defined)
+  // Step 4: Dietary Preferences
+  dietaryStyle: DietaryStyle | null
+  allergies: Allergy[]
+  foodsToAvoid: string | null
+
+  // Step 5: Experience Level
+  fitnessExperience: ExperienceLevel | null
+  trackingExperience: TrackingExperience | null
+  mealPrepSkills: MealPrepLevel | null
 
   // Step 6: Calculated Results
   bmr: number | null
@@ -48,6 +65,16 @@ interface OnboardingState {
   setGoal: (goal: Goal) => void
   setPersonalStats: (stats: PersonalStats) => void
   setActivityLevel: (level: ActivityLevel) => void
+  setDietaryPreferences: (prefs: {
+    dietaryStyle?: DietaryStyle
+    allergies?: Allergy[]
+    foodsToAvoid?: string
+  }) => void
+  setExperienceLevel: (experience: {
+    fitnessExperience: ExperienceLevel
+    trackingExperience: TrackingExperience
+    mealPrepSkills: MealPrepLevel
+  }) => void
   calculateMacros: () => void
   resetOnboarding: () => void
   markStepComplete: (step: number) => void
@@ -150,6 +177,12 @@ export const useOnboardingStore = create<OnboardingState>()(
       heightInches: null,
       sex: null,
       activityLevel: null,
+      dietaryStyle: null,
+      allergies: [],
+      foodsToAvoid: null,
+      fitnessExperience: null,
+      trackingExperience: null,
+      mealPrepSkills: null,
       bmr: null,
       tdee: null,
       targetCalories: null,
@@ -173,6 +206,20 @@ export const useOnboardingStore = create<OnboardingState>()(
         }),
 
       setActivityLevel: (level) => set({ activityLevel: level }),
+
+      setDietaryPreferences: (prefs) =>
+        set({
+          dietaryStyle: prefs.dietaryStyle ?? null,
+          allergies: prefs.allergies ?? [],
+          foodsToAvoid: prefs.foodsToAvoid ?? null,
+        }),
+
+      setExperienceLevel: (experience) =>
+        set({
+          fitnessExperience: experience.fitnessExperience,
+          trackingExperience: experience.trackingExperience,
+          mealPrepSkills: experience.mealPrepSkills,
+        }),
 
       calculateMacros: () => {
         const state = get()
@@ -237,6 +284,12 @@ export const useOnboardingStore = create<OnboardingState>()(
           heightInches: null,
           sex: null,
           activityLevel: null,
+          dietaryStyle: null,
+          allergies: [],
+          foodsToAvoid: null,
+          fitnessExperience: null,
+          trackingExperience: null,
+          mealPrepSkills: null,
           bmr: null,
           tdee: null,
           targetCalories: null,

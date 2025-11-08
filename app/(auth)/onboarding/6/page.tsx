@@ -1,14 +1,16 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useOnboardingStore } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
 import { Card } from '@/components/ui/card'
+import { AuthModal } from '@/components/auth/auth-modal'
 
 export default function MacroResultsPage() {
   const router = useRouter()
   const store = useOnboardingStore()
+  const [showAuthModal, setShowAuthModal] = useState(false)
 
   useEffect(() => {
     // Calculate macros when component mounts
@@ -17,8 +19,8 @@ export default function MacroResultsPage() {
 
   const handleComplete = () => {
     store.markStepComplete(6)
-    // TODO: Show auth modal or navigate to dashboard
-    router.push('/dashboard')
+    // Show auth modal instead of navigating directly
+    setShowAuthModal(true)
   }
 
   const handleBack = () => {
@@ -116,6 +118,8 @@ export default function MacroResultsPage() {
           </p>
         </div>
       </div>
+
+      <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
     </StepContainer>
   )
 }
