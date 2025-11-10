@@ -60,6 +60,12 @@ interface OnboardingState {
   carbGrams: number | null
   fatGrams: number | null
 
+  // Custom Macros
+  isCustomMacros: boolean
+  customProteinGrams: number | null
+  customCarbGrams: number | null
+  customFatGrams: number | null
+
   // Error handling
   calculationError: string | null
 
@@ -82,6 +88,8 @@ interface OnboardingState {
     mealPrepSkills: MealPrepLevel
   }) => void
   calculateMacros: () => void
+  setCustomMacros: (macros: { protein: number; carbs: number; fat: number }) => void
+  resetToCalculated: () => void
   clearError: () => void
   resetOnboarding: () => void
   markStepComplete: (step: number) => void
@@ -112,6 +120,10 @@ export const useOnboardingStore = create<OnboardingState>()(
       proteinGrams: null,
       carbGrams: null,
       fatGrams: null,
+      isCustomMacros: false,
+      customProteinGrams: null,
+      customCarbGrams: null,
+      customFatGrams: null,
       calculationError: null,
       currentStep: 1,
       completedSteps: [],
@@ -219,6 +231,22 @@ export const useOnboardingStore = create<OnboardingState>()(
 
       clearError: () => set({ calculationError: null }),
 
+      setCustomMacros: (macros) =>
+        set({
+          isCustomMacros: true,
+          customProteinGrams: macros.protein,
+          customCarbGrams: macros.carbs,
+          customFatGrams: macros.fat,
+        }),
+
+      resetToCalculated: () =>
+        set({
+          isCustomMacros: false,
+          customProteinGrams: null,
+          customCarbGrams: null,
+          customFatGrams: null,
+        }),
+
       resetOnboarding: () =>
         set({
           goal: null,
@@ -241,6 +269,10 @@ export const useOnboardingStore = create<OnboardingState>()(
           proteinGrams: null,
           carbGrams: null,
           fatGrams: null,
+          isCustomMacros: false,
+          customProteinGrams: null,
+          customCarbGrams: null,
+          customFatGrams: null,
           calculationError: null,
           currentStep: 1,
           completedSteps: [],
