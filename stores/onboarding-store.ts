@@ -187,7 +187,9 @@ export const useOnboardingStore = create<OnboardingState>()(
             targetCalories,
             state.goal,
             state.weight,
-            state.weightUnit
+            state.weightUnit,
+            state.fitnessExperience ?? undefined,
+            state.activityLevel
           )
 
           set({
