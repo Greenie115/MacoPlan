@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 
-export default function HomePage() {
+export default function OnboardingPage() {
+  // Redirect to step 1
   redirect('/onboarding/1')
 }
