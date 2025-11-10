@@ -19,5 +19,14 @@ export type ActivityLevel = keyof typeof ACTIVITY_MULTIPLIERS
  * @returns TDEE in calories per day
  */
 export function calculateTDEE(bmr: number, activityLevel: ActivityLevel): number {
+  // Input validation
+  if (bmr <= 0 || !isFinite(bmr)) {
+    throw new Error('Invalid BMR value')
+  }
+
+  if (!ACTIVITY_MULTIPLIERS[activityLevel]) {
+    throw new Error('Invalid activity level')
+  }
+
   return Math.round(bmr * ACTIVITY_MULTIPLIERS[activityLevel])
 }

@@ -16,6 +16,17 @@ export function calculateBMR(
   sex: 'male' | 'female',
   unit: 'imperial' | 'metric' = 'imperial'
 ): number {
+  // Input validation
+  if (weight <= 0) {
+    throw new Error('Weight must be greater than 0')
+  }
+  if (heightInches <= 0) {
+    throw new Error('Height must be greater than 0')
+  }
+  if (age < 13 || age > 120) {
+    throw new Error('Age must be between 13 and 120 years')
+  }
+
   let weightKg: number
   let heightCm: number
 
@@ -25,6 +36,17 @@ export function calculateBMR(
   } else {
     weightKg = weight
     heightCm = heightInches
+  }
+
+  // Reasonable upper bounds to prevent absurd calculations
+  const maxWeightKg = 500 * 0.453592 // 500 lbs in kg
+  const maxHeightCm = 96 * 2.54 // 8 feet in cm
+
+  if (weightKg > maxWeightKg) {
+    throw new Error('Weight exceeds maximum allowed value (500 lbs / 227 kg)')
+  }
+  if (heightCm > maxHeightCm) {
+    throw new Error('Height exceeds maximum allowed value (8 feet / 244 cm)')
   }
 
   // Mifflin-St Jeor Equation: BMR = 10W + 6.25H - 5A + S

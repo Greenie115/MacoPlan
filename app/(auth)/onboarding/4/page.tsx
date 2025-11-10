@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useOnboardingStore, type DietaryStyle, type Allergy } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
+import { PageTransition } from '@/components/onboarding/page-transition'
 import { Card } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
@@ -35,6 +36,7 @@ const ALLERGIES = [
 
 export default function DietaryPreferencesPage() {
   const router = useRouter()
+  const store = useOnboardingStore()
   const {
     dietaryStyle,
     allergies,
@@ -42,7 +44,18 @@ export default function DietaryPreferencesPage() {
     setDietaryPreferences,
     markStepComplete,
     completedSteps,
-  } = useOnboardingStore()
+  } = store
+  const [isValidating, setIsValidating] = useState(true)
+
+  useEffect(() => {
+    // Route guard: Must have goal, personal stats, and activity level
+    if (!store.goal || !store.age || !store.weight || !store.heightFeet ||
+        store.heightInches === null || !store.sex || !store.activityLevel) {
+      router.replace('/onboarding/3')
+      return
+    }
+    setIsValidating(false)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const [localDietaryStyle, setLocalDietaryStyle] = useState<DietaryStyle | null>(
     dietaryStyle
@@ -51,11 +64,17 @@ export default function DietaryPreferencesPage() {
   const [localFoodsToAvoid, setLocalFoodsToAvoid] = useState<string>(foodsToAvoid || '')
 
   const handleContinue = () => {
+    // Sanitize foodsToAvoid - strip HTML tags and excessive whitespace
+    const sanitizedFoodsToAvoid = localFoodsToAvoid
+      .replace(/<[^>]*>/g, '') // Remove HTML tags
+      .replace(/\s+/g, ' ')     // Collapse multiple spaces
+      .trim()
+
     // Save preferences to store
     setDietaryPreferences({
       dietaryStyle: localDietaryStyle ?? undefined,
       allergies: localAllergies.length > 0 ? localAllergies : undefined,
-      foodsToAvoid: localFoodsToAvoid || undefined,
+      foodsToAvoid: sanitizedFoodsToAvoid || undefined,
     })
 
     markStepComplete(4)
@@ -94,16 +113,25 @@ export default function DietaryPreferencesPage() {
     }
   }
 
+  if (isValidating) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    )
+  }
+
   return (
-    <StepContainer
-      step={4}
-      title="Dietary Preferences"
-      emoji="🥗"
-      subtitle="Help us personalize your meal plans (optional)"
-      onBack={handleBack}
-      onContinue={handleContinue}
-      completedSteps={completedSteps}
-    >
+    <PageTransition step={4}>
+      <StepContainer
+        step={4}
+        title="Dietary Preferences"
+        emoji="🥗"
+        subtitle="Help us personalize your meal plans (optional)"
+        onBack={handleBack}
+        onContinue={handleContinue}
+        completedSteps={completedSteps}
+      >
       <div className="space-y-6">
         {/* Dietary Style */}
         <div className="space-y-3">
@@ -116,17 +144,30 @@ export default function DietaryPreferencesPage() {
                   'flex items-center gap-4 p-4 cursor-pointer transition-all',
                   'border-2',
                   localDietaryStyle === style.id
-                    ? 'border-primary bg-primary/5'
+                    ? 'border-primary bg-primary text-white'
                     : 'border-border hover:border-primary/50'
                 )}
                 onClick={() => setLocalDietaryStyle(style.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setLocalDietaryStyle(style.id)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed={localDietaryStyle === style.id}
+                aria-label={style.label}
               >
                 <span className="text-2xl">{style.emoji}</span>
-                <p className="flex-1 text-base font-medium text-charcoal">
+                <p className={cn(
+                  "flex-1 text-base font-medium",
+                  localDietaryStyle === style.id ? "text-white" : "text-charcoal"
+                )}>
                   {style.label}
                 </p>
                 {localDietaryStyle === style.id && (
-                  <div className="flex items-center justify-center size-6 rounded-full bg-primary text-white">
+                  <div className="flex items-center justify-center size-6 rounded-full bg-white text-primary">
                     <Check className="size-4" />
                   </div>
                 )}
@@ -185,5 +226,6 @@ export default function DietaryPreferencesPage() {
         </button>
       </div>
     </StepContainer>
+    </PageTransition>
   )
 }

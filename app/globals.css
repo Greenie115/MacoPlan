@@ -3,16 +3,27 @@
 @theme {
   /* MacroPlan Brand Colors */
   --color-primary: #FF6B35;
+  --color-primary-foreground: #FFFFFF;
   --color-charcoal: #1F1F1F;
   --color-protein: #E63946;
   --color-carb: #457B9D;
   --color-fat: #F4A261;
   --color-success: #06D6A0;
   --color-border: #E9ECEF;
+  --color-input: #E9ECEF;
 
   /* Base colors */
   --color-background: #FFFFFF;
   --color-foreground: #1F1F1F;
+
+  /* Additional UI colors */
+  --color-muted: #F8F9FA;
+  --color-muted-foreground: #6C757D;
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #1F1F1F;
+  --color-accent: #F8F9FA;
+  --color-accent-foreground: #1F1F1F;
+  --color-ring: #FF6B35;
 
   /* Border radius */
   --radius-default: 12px;

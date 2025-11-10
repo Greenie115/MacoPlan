@@ -9,6 +9,7 @@ import {
   type MealPrepLevel,
 } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
+import { PageTransition } from '@/components/onboarding/page-transition'
 import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
@@ -78,6 +79,7 @@ const MEAL_PREP_LEVELS = [
 
 export default function ExperienceLevelPage() {
   const router = useRouter()
+  const store = useOnboardingStore()
   const {
     fitnessExperience,
     trackingExperience,
@@ -85,7 +87,18 @@ export default function ExperienceLevelPage() {
     setExperienceLevel,
     markStepComplete,
     completedSteps,
-  } = useOnboardingStore()
+  } = store
+  const [isValidating, setIsValidating] = useState(true)
+
+  useEffect(() => {
+    // Route guard: Must have all previous data
+    if (!store.goal || !store.age || !store.weight || !store.heightFeet ||
+        store.heightInches === null || !store.sex || !store.activityLevel) {
+      router.replace('/onboarding/4')
+      return
+    }
+    setIsValidating(false)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const [localFitnessExperience, setLocalFitnessExperience] =
     useState<ExperienceLevel | null>(fitnessExperience)
@@ -111,6 +124,9 @@ export default function ExperienceLevelPage() {
       mealPrepSkills: localMealPrepSkills!,
     })
 
+    // Calculate macros NOW instead of on step 6 mount (Critical Fix 6)
+    store.calculateMacros()
+
     markStepComplete(5)
     router.push('/onboarding/6')
   }
@@ -119,17 +135,26 @@ export default function ExperienceLevelPage() {
     router.push('/onboarding/4')
   }
 
+  if (isValidating) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    )
+  }
+
   return (
-    <StepContainer
-      step={5}
-      title="Experience Level"
-      emoji="📊"
-      subtitle="Help us tailor the app to your needs"
-      onBack={handleBack}
-      onContinue={handleContinue}
-      continueDisabled={!canContinue}
-      completedSteps={completedSteps}
-    >
+    <PageTransition step={5}>
+      <StepContainer
+        step={5}
+        title="Experience Level"
+        emoji="📊"
+        subtitle="Help us tailor the app to your needs"
+        onBack={handleBack}
+        onContinue={handleContinue}
+        continueDisabled={!canContinue}
+        completedSteps={completedSteps}
+      >
       <div className="space-y-6">
         {/* Fitness Experience */}
         <div className="space-y-3">
@@ -142,16 +167,32 @@ export default function ExperienceLevelPage() {
                   'p-4 cursor-pointer transition-all',
                   'border-2',
                   localFitnessExperience === level.id
-                    ? 'border-primary bg-primary/5'
+                    ? 'border-primary bg-primary text-white'
                     : 'border-border hover:border-primary/50'
                 )}
                 onClick={() => setLocalFitnessExperience(level.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setLocalFitnessExperience(level.id)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed={localFitnessExperience === level.id}
+                aria-label={`${level.label}: ${level.description}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{level.emoji}</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-charcoal">{level.label}</p>
-                    <p className="text-sm text-muted-foreground">{level.description}</p>
+                    <p className={cn(
+                      "font-semibold",
+                      localFitnessExperience === level.id ? "text-white" : "text-charcoal"
+                    )}>{level.label}</p>
+                    <p className={cn(
+                      "text-sm",
+                      localFitnessExperience === level.id ? "text-white/90" : "text-muted-foreground"
+                    )}>{level.description}</p>
                   </div>
                 </div>
               </Card>
@@ -170,16 +211,32 @@ export default function ExperienceLevelPage() {
                   'p-4 cursor-pointer transition-all',
                   'border-2',
                   localTrackingExperience === level.id
-                    ? 'border-primary bg-primary/5'
+                    ? 'border-primary bg-primary text-white'
                     : 'border-border hover:border-primary/50'
                 )}
                 onClick={() => setLocalTrackingExperience(level.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setLocalTrackingExperience(level.id)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed={localTrackingExperience === level.id}
+                aria-label={`${level.label}: ${level.description}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{level.emoji}</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-charcoal">{level.label}</p>
-                    <p className="text-sm text-muted-foreground">{level.description}</p>
+                    <p className={cn(
+                      "font-semibold",
+                      localTrackingExperience === level.id ? "text-white" : "text-charcoal"
+                    )}>{level.label}</p>
+                    <p className={cn(
+                      "text-sm",
+                      localTrackingExperience === level.id ? "text-white/90" : "text-muted-foreground"
+                    )}>{level.description}</p>
                   </div>
                 </div>
               </Card>
@@ -198,16 +255,32 @@ export default function ExperienceLevelPage() {
                   'p-4 cursor-pointer transition-all',
                   'border-2',
                   localMealPrepSkills === level.id
-                    ? 'border-primary bg-primary/5'
+                    ? 'border-primary bg-primary text-white'
                     : 'border-border hover:border-primary/50'
                 )}
                 onClick={() => setLocalMealPrepSkills(level.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setLocalMealPrepSkills(level.id)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed={localMealPrepSkills === level.id}
+                aria-label={`${level.label}: ${level.description}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{level.emoji}</span>
                   <div className="flex-1">
-                    <p className="font-semibold text-charcoal">{level.label}</p>
-                    <p className="text-sm text-muted-foreground">{level.description}</p>
+                    <p className={cn(
+                      "font-semibold",
+                      localMealPrepSkills === level.id ? "text-white" : "text-charcoal"
+                    )}>{level.label}</p>
+                    <p className={cn(
+                      "text-sm",
+                      localMealPrepSkills === level.id ? "text-white/90" : "text-muted-foreground"
+                    )}>{level.description}</p>
                   </div>
                 </div>
               </Card>
@@ -216,5 +289,6 @@ export default function ExperienceLevelPage() {
         </div>
       </div>
     </StepContainer>
+    </PageTransition>
   )
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useOnboardingStore } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
+import { PageTransition } from '@/components/onboarding/page-transition'
 import { Card } from '@/components/ui/card'
 import { AuthModal } from '@/components/auth/auth-modal'
 
@@ -11,10 +12,29 @@ export default function MacroResultsPage() {
   const router = useRouter()
   const store = useOnboardingStore()
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [isValidating, setIsValidating] = useState(true)
 
   useEffect(() => {
-    // Calculate macros when component mounts
-    store.calculateMacros()
+    // Route guard: Must have all required data
+    const hasRequiredData =
+      store.goal &&
+      store.age &&
+      store.weight &&
+      store.heightFeet !== null &&
+      store.heightInches !== null &&
+      store.sex &&
+      store.activityLevel
+
+    if (!hasRequiredData) {
+      // Redirect to first incomplete step
+      const firstIncompleteStep = store.completedSteps.length > 0
+        ? Math.max(...store.completedSteps) + 1
+        : 1
+      router.replace(`/onboarding/${Math.min(firstIncompleteStep, 5)}`)
+      return
+    }
+
+    setIsValidating(false)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleComplete = () => {
@@ -27,33 +47,74 @@ export default function MacroResultsPage() {
     router.push('/onboarding/5')
   }
 
+  if (isValidating) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    )
+  }
+
+  // Display error if calculation failed
+  if (store.calculationError) {
+    return (
+      <PageTransition step={6}>
+        <StepContainer
+          step={6}
+          title="Calculation Error"
+          emoji="⚠️"
+          onBack={handleBack}
+          onContinue={() => {
+            store.clearError()
+            router.push('/onboarding/1')
+          }}
+          completedSteps={store.completedSteps}
+        >
+        <div className="space-y-4">
+          <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <p className="text-destructive font-medium">
+              {store.calculationError}
+            </p>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Please go back and verify all your information is correct.
+          </p>
+        </div>
+      </StepContainer>
+      </PageTransition>
+    )
+  }
+
   if (!store.targetCalories) {
     return (
-      <StepContainer
-        step={6}
-        title="Calculating..."
-        onBack={handleBack}
-        onContinue={handleComplete}
-        continueDisabled={true}
-        completedSteps={store.completedSteps}
-      >
+      <PageTransition step={6}>
+        <StepContainer
+          step={6}
+          title="Calculating..."
+          onBack={handleBack}
+          onContinue={handleComplete}
+          continueDisabled={true}
+          completedSteps={store.completedSteps}
+        >
         <div className="flex items-center justify-center p-8">
           <p className="text-muted-foreground">Calculating your personalized macros...</p>
         </div>
       </StepContainer>
+      </PageTransition>
     )
   }
 
   return (
-    <StepContainer
-      step={6}
-      title="Your Macro Targets"
-      emoji="🎯"
-      subtitle="Based on your goals and activity level"
-      onBack={handleBack}
-      onContinue={handleComplete}
-      completedSteps={store.completedSteps}
-    >
+    <PageTransition step={6}>
+      <StepContainer
+        step={6}
+        title="Your Macro Targets"
+        emoji="🎯"
+        subtitle="Based on your goals and activity level"
+        onBack={handleBack}
+        onContinue={handleComplete}
+        completedSteps={store.completedSteps}
+      >
       <div className="space-y-4">
         {/* Daily Calorie Target */}
         <Card className="p-6 bg-primary/5 border-primary">
@@ -67,29 +128,29 @@ export default function MacroResultsPage() {
         {/* Macro Breakdown */}
         <div className="grid grid-cols-3 gap-3">
           {/* Protein */}
-          <Card className="p-4 text-center border-2 border-[#E63946]/20">
-            <div className="size-12 mx-auto mb-2 rounded-full bg-[#E63946]/10 flex items-center justify-center">
+          <Card className="p-4 text-center border-2 border-protein/20">
+            <div className="size-12 mx-auto mb-2 rounded-full bg-protein/10 flex items-center justify-center">
               <span className="text-xl">🥩</span>
             </div>
-            <p className="text-2xl font-bold text-[#E63946]">{store.proteinGrams}g</p>
+            <p className="text-2xl font-bold text-protein">{store.proteinGrams}g</p>
             <p className="text-xs text-muted-foreground mt-1">Protein</p>
           </Card>
 
           {/* Carbs */}
-          <Card className="p-4 text-center border-2 border-[#457B9D]/20">
-            <div className="size-12 mx-auto mb-2 rounded-full bg-[#457B9D]/10 flex items-center justify-center">
+          <Card className="p-4 text-center border-2 border-carb/20">
+            <div className="size-12 mx-auto mb-2 rounded-full bg-carb/10 flex items-center justify-center">
               <span className="text-xl">🍞</span>
             </div>
-            <p className="text-2xl font-bold text-[#457B9D]">{store.carbGrams}g</p>
+            <p className="text-2xl font-bold text-carb">{store.carbGrams}g</p>
             <p className="text-xs text-muted-foreground mt-1">Carbs</p>
           </Card>
 
           {/* Fat */}
-          <Card className="p-4 text-center border-2 border-[#F4A261]/20">
-            <div className="size-12 mx-auto mb-2 rounded-full bg-[#F4A261]/10 flex items-center justify-center">
+          <Card className="p-4 text-center border-2 border-fat/20">
+            <div className="size-12 mx-auto mb-2 rounded-full bg-fat/10 flex items-center justify-center">
               <span className="text-xl">🥑</span>
             </div>
-            <p className="text-2xl font-bold text-[#F4A261]">{store.fatGrams}g</p>
+            <p className="text-2xl font-bold text-fat">{store.fatGrams}g</p>
             <p className="text-xs text-muted-foreground mt-1">Fat</p>
           </Card>
         </div>
@@ -121,5 +182,6 @@ export default function MacroResultsPage() {
 
       <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
     </StepContainer>
+    </PageTransition>
   )
 }

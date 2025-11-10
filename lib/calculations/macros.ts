@@ -15,6 +15,11 @@ export interface MacroCalculation {
  * @returns Target calories per day
  */
 export function calculateTargetCalories(tdee: number, goal: Goal): number {
+  // Input validation
+  if (tdee <= 0 || !isFinite(tdee)) {
+    throw new Error('Invalid TDEE value')
+  }
+
   switch (goal) {
     case 'cut':
       return Math.round(tdee * 0.8) // 20% deficit
@@ -42,6 +47,15 @@ export function calculateMacros(
   weight: number,
   weightUnit: 'lbs' | 'kg'
 ): MacroCalculation {
+  // Input validation
+  if (targetCalories <= 0 || !isFinite(targetCalories)) {
+    throw new Error('Invalid target calories')
+  }
+
+  if (weight <= 0) {
+    throw new Error('Weight must be greater than 0')
+  }
+
   const weightLbs = weightUnit === 'kg' ? weight * 2.20462 : weight
 
   // Protein: 0.8-1g per lb bodyweight (higher for cutting)

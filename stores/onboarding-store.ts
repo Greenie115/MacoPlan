@@ -1,5 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { calculateBMR } from '@/lib/calculations/bmr'
+import { calculateTDEE } from '@/lib/calculations/tdee'
+import { calculateTargetCalories, calculateMacros as calculateMacrosLib } from '@/lib/calculations/macros'
 
 export type Goal = 'cut' | 'bulk' | 'maintain' | 'recomp'
 export type ActivityLevel = 'sedentary' | 'lightly' | 'moderately' | 'very' | 'extremely'
@@ -57,6 +60,9 @@ interface OnboardingState {
   carbGrams: number | null
   fatGrams: number | null
 
+  // Error handling
+  calculationError: string | null
+
   // Meta
   currentStep: number
   completedSteps: number[]
@@ -76,93 +82,10 @@ interface OnboardingState {
     mealPrepSkills: MealPrepLevel
   }) => void
   calculateMacros: () => void
+  clearError: () => void
   resetOnboarding: () => void
   markStepComplete: (step: number) => void
   setCurrentStep: (step: number) => void
-}
-
-const ACTIVITY_MULTIPLIERS = {
-  sedentary: 1.2,
-  lightly: 1.375,
-  moderately: 1.55,
-  very: 1.725,
-  extremely: 1.9,
-} as const
-
-/**
- * Calculate Basal Metabolic Rate using Mifflin-St Jeor Equation
- */
-function calculateBMR(
-  weight: number,
-  heightInches: number,
-  age: number,
-  sex: Sex,
-  weightUnit: WeightUnit
-): number {
-  // Convert to metric
-  const weightKg = weightUnit === 'lbs' ? weight * 0.453592 : weight
-  const heightCm = heightInches * 2.54
-
-  // Mifflin-St Jeor Equation
-  const baseBMR = 10 * weightKg + 6.25 * heightCm - 5 * age
-
-  // Sex adjustment
-  return sex === 'male' ? baseBMR + 5 : baseBMR - 161
-}
-
-/**
- * Calculate Total Daily Energy Expenditure
- */
-function calculateTDEE(bmr: number, activityLevel: ActivityLevel): number {
-  return Math.round(bmr * ACTIVITY_MULTIPLIERS[activityLevel])
-}
-
-/**
- * Calculate target calories based on goal
- */
-function calculateTargetCalories(tdee: number, goal: Goal): number {
-  switch (goal) {
-    case 'cut':
-      return Math.round(tdee * 0.8) // 20% deficit
-    case 'bulk':
-      return Math.round(tdee * 1.1) // 10% surplus
-    case 'maintain':
-      return tdee
-    case 'recomp':
-      return tdee // Maintenance with specific macro ratios
-  }
-}
-
-/**
- * Calculate macronutrient distribution
- */
-function calculateMacroDistribution(
-  targetCalories: number,
-  goal: Goal,
-  weight: number,
-  weightUnit: WeightUnit
-): { protein: number; carbs: number; fat: number } {
-  const weightLbs = weightUnit === 'kg' ? weight * 2.20462 : weight
-
-  // Protein: 0.8-1g per lb bodyweight (higher for cutting)
-  const proteinMultiplier = goal === 'cut' ? 1.0 : 0.8
-  const proteinGrams = Math.round(weightLbs * proteinMultiplier)
-  const proteinCalories = proteinGrams * 4
-
-  // Fat: 25-30% of total calories
-  const fatPercentage = goal === 'bulk' ? 0.25 : 0.3
-  const fatCalories = Math.round(targetCalories * fatPercentage)
-  const fatGrams = Math.round(fatCalories / 9)
-
-  // Carbs: Remaining calories
-  const carbCalories = targetCalories - proteinCalories - fatCalories
-  const carbGrams = Math.round(carbCalories / 4)
-
-  return {
-    protein: proteinGrams,
-    carbs: Math.max(0, carbGrams), // Ensure non-negative
-    fat: fatGrams,
-  }
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -189,6 +112,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       proteinGrams: null,
       carbGrams: null,
       fatGrams: null,
+      calculationError: null,
       currentStep: 1,
       completedSteps: [],
 
@@ -224,6 +148,9 @@ export const useOnboardingStore = create<OnboardingState>()(
       calculateMacros: () => {
         const state = get()
 
+        // Clear any previous errors
+        set({ calculationError: null })
+
         // Validate required fields
         if (
           !state.goal ||
@@ -234,45 +161,62 @@ export const useOnboardingStore = create<OnboardingState>()(
           !state.sex ||
           !state.activityLevel
         ) {
-          console.error('Missing required fields for macro calculation')
+          set({ calculationError: 'Missing required information. Please complete all previous steps.' })
           return
         }
 
-        // Calculate total height in inches
-        const totalHeightInches = state.heightFeet * 12 + state.heightInches
+        try {
+          // Calculate total height in inches
+          const totalHeightInches = state.heightFeet * 12 + state.heightInches
 
-        // Calculate BMR
-        const bmr = calculateBMR(
-          state.weight,
-          totalHeightInches,
-          state.age,
-          state.sex,
-          state.weightUnit
-        )
+          // Convert weightUnit from 'lbs'/'kg' to 'imperial'/'metric'
+          const unit = state.weightUnit === 'lbs' ? 'imperial' : 'metric'
 
-        // Calculate TDEE
-        const tdee = calculateTDEE(bmr, state.activityLevel)
+          // Use imported calculation functions from lib
+          const bmr = calculateBMR(
+            state.weight,
+            totalHeightInches,
+            state.age,
+            state.sex,
+            unit
+          )
 
-        // Calculate target calories
-        const targetCalories = calculateTargetCalories(tdee, state.goal)
+          const tdee = calculateTDEE(bmr, state.activityLevel)
+          const targetCalories = calculateTargetCalories(tdee, state.goal)
+          const macros = calculateMacrosLib(
+            targetCalories,
+            state.goal,
+            state.weight,
+            state.weightUnit
+          )
 
-        // Calculate macro distribution
-        const macros = calculateMacroDistribution(
-          targetCalories,
-          state.goal,
-          state.weight,
-          state.weightUnit
-        )
+          set({
+            bmr: Math.round(bmr),
+            tdee,
+            targetCalories,
+            proteinGrams: macros.protein,
+            carbGrams: macros.carbs,
+            fatGrams: macros.fat,
+            calculationError: null,
+          })
+        } catch (error) {
+          const errorMessage = error instanceof Error
+            ? error.message
+            : 'Failed to calculate macros. Please check your inputs.'
 
-        set({
-          bmr: Math.round(bmr),
-          tdee,
-          targetCalories,
-          proteinGrams: macros.protein,
-          carbGrams: macros.carbs,
-          fatGrams: macros.fat,
-        })
+          set({
+            calculationError: errorMessage,
+            bmr: null,
+            tdee: null,
+            targetCalories: null,
+            proteinGrams: null,
+            carbGrams: null,
+            fatGrams: null,
+          })
+        }
       },
+
+      clearError: () => set({ calculationError: null }),
 
       resetOnboarding: () =>
         set({
@@ -296,6 +240,7 @@ export const useOnboardingStore = create<OnboardingState>()(
           proteinGrams: null,
           carbGrams: null,
           fatGrams: null,
+          calculationError: null,
           currentStep: 1,
           completedSteps: [],
         }),
@@ -309,6 +254,39 @@ export const useOnboardingStore = create<OnboardingState>()(
     }),
     {
       name: 'onboarding-storage',
+      storage: {
+        getItem: (name) => {
+          try {
+            const str = localStorage.getItem(name)
+            return str ? JSON.parse(str) : null
+          } catch (error) {
+            console.warn('Failed to read from localStorage:', error)
+            return null
+          }
+        },
+        setItem: (name, value) => {
+          try {
+            localStorage.setItem(name, JSON.stringify(value))
+          } catch (error) {
+            console.warn('Failed to write to localStorage:', error)
+            // Fallback: try sessionStorage
+            try {
+              sessionStorage.setItem(name, JSON.stringify(value))
+              console.info('Fell back to sessionStorage')
+            } catch (sessionError) {
+              console.error('Failed to write to sessionStorage:', sessionError)
+              // At this point, data will be in memory only
+            }
+          }
+        },
+        removeItem: (name) => {
+          try {
+            localStorage.removeItem(name)
+          } catch (error) {
+            console.warn('Failed to remove from localStorage:', error)
+          }
+        },
+      },
     }
   )
 )

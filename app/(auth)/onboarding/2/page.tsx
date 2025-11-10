@@ -1,11 +1,13 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useOnboardingStore } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
+import { PageTransition } from '@/components/onboarding/page-transition'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -32,6 +34,16 @@ type PersonalStatsForm = z.infer<typeof personalStatsSchema>
 export default function PersonalStatsPage() {
   const router = useRouter()
   const store = useOnboardingStore()
+  const [isValidating, setIsValidating] = useState(true)
+
+  useEffect(() => {
+    // Route guard: Must have goal from step 1
+    if (!store.goal) {
+      router.replace('/onboarding/1')
+      return
+    }
+    setIsValidating(false)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const form = useForm<PersonalStatsForm>({
     resolver: zodResolver(personalStatsSchema),
@@ -44,6 +56,34 @@ export default function PersonalStatsPage() {
       sex: store.sex || 'male',
     },
   })
+
+  // Track previous weight unit for conversion
+  const [prevWeightUnit, setPrevWeightUnit] = useState<'lbs' | 'kg'>(store.weightUnit || 'lbs')
+
+  // Watch for weight unit changes and convert weight value
+  const weightUnit = form.watch('weightUnit')
+  useEffect(() => {
+    if (weightUnit !== prevWeightUnit) {
+      const currentWeight = form.getValues('weight')
+      let convertedWeight: number
+
+      if (weightUnit === 'kg' && prevWeightUnit === 'lbs') {
+        // Convert lbs to kg
+        convertedWeight = currentWeight * 0.453592
+      } else if (weightUnit === 'lbs' && prevWeightUnit === 'kg') {
+        // Convert kg to lbs
+        convertedWeight = currentWeight * 2.20462
+      } else {
+        convertedWeight = currentWeight
+      }
+
+      // Round to 1 decimal place
+      convertedWeight = Math.round(convertedWeight * 10) / 10
+
+      form.setValue('weight', convertedWeight)
+      setPrevWeightUnit(weightUnit)
+    }
+  }, [weightUnit, prevWeightUnit, form])
 
   const handleContinue = async () => {
     const isValid = await form.trigger()
@@ -61,14 +101,23 @@ export default function PersonalStatsPage() {
 
   const sex = form.watch('sex')
 
+  if (isValidating) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    )
+  }
+
   return (
-    <StepContainer
-      step={2}
-      title="Tell us about yourself"
-      onBack={handleBack}
-      onContinue={handleContinue}
-      completedSteps={store.completedSteps}
-    >
+    <PageTransition step={2}>
+      <StepContainer
+        step={2}
+        title="Tell us about yourself"
+        onBack={handleBack}
+        onContinue={handleContinue}
+        completedSteps={store.completedSteps}
+      >
       <div className="flex flex-col gap-4">
         {/* Age Input */}
         <div className="flex flex-col gap-2">
@@ -80,7 +129,7 @@ export default function PersonalStatsPage() {
               {...form.register('age', { valueAsNumber: true })}
               className="pr-20"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#a15d45]">
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
               years
             </span>
           </div>
@@ -103,7 +152,7 @@ export default function PersonalStatsPage() {
               value={form.watch('weightUnit')}
               onValueChange={(value) => form.setValue('weightUnit', value as 'lbs' | 'kg')}
             >
-              <SelectTrigger className="absolute right-0 w-20 border-0">
+              <SelectTrigger className="absolute right-0 w-20 h-10 border-l rounded-l-none focus:ring-2 focus:ring-primary focus:ring-offset-0 data-[state=open]:border-primary data-[state=open]:ring-2 data-[state=open]:ring-primary">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -127,7 +176,7 @@ export default function PersonalStatsPage() {
                 {...form.register('heightFeet', { valueAsNumber: true })}
                 className="pr-12"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#a15d45]">
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
                 ft
               </span>
             </div>
@@ -137,7 +186,7 @@ export default function PersonalStatsPage() {
                 {...form.register('heightInches', { valueAsNumber: true })}
                 className="pr-12"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#a15d45]">
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
                 in
               </span>
             </div>
@@ -175,5 +224,6 @@ export default function PersonalStatsPage() {
         </div>
       </div>
     </StepContainer>
+    </PageTransition>
   )
 }

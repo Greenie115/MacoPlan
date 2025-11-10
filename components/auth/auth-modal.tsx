@@ -189,7 +189,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">
+                Password {mode === 'signup' && <span className="text-xs text-muted-foreground">(min. 8 characters)</span>}
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -197,9 +199,14 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                minLength={6}
+                minLength={8}
                 disabled={loading}
               />
+              {mode === 'signup' && password.length > 0 && password.length < 8 && (
+                <p className="text-xs text-yellow-600">
+                  Password must be at least 8 characters
+                </p>
+              )}
             </div>
 
             {error && (
