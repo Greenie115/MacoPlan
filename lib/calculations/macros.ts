@@ -1,5 +1,4 @@
 export type Goal = 'cut' | 'bulk' | 'maintain' | 'recomp'
-export type ExperienceLevel = 'beginner' | 'intermediate' | 'advanced'
 export type ActivityLevel = 'sedentary' | 'lightly' | 'moderately' | 'very' | 'extremely'
 
 export interface MacroCalculation {
@@ -35,94 +34,76 @@ export function calculateTargetCalories(tdee: number, goal: Goal): number {
 }
 
 /**
- * Calculate protein needs based on goal, experience level, and activity
+ * Calculate protein needs based on ISSN evidence-based recommendations
  *
- * @param weightLbs - Body weight in pounds
+ * Research: International Society of Sports Nutrition Position Stand
+ * - Bulk: 1.6-2.0 g/kg body weight
+ * - Cut: 2.0-3.0 g/kg body weight (preserve muscle in deficit)
+ * - Activity level matters more than training experience
+ *
+ * @param weightKg - Body weight in kilograms
  * @param goal - Fitness goal
- * @param experienceLevel - Training experience
  * @param activityLevel - Activity/training frequency
  * @returns Protein in grams per day
  */
 function calculateProteinNeeds(
-  weightLbs: number,
+  weightKg: number,
   goal: Goal,
-  experienceLevel: ExperienceLevel = 'intermediate',
   activityLevel: ActivityLevel = 'moderately'
 ): number {
-  let baseProtein: number
+  let proteinGKg: number
 
-  // Base protein needs by goal and experience
+  // Evidence-based protein ranges from ISSN
   if (goal === 'cut') {
-    // Higher protein during cuts to preserve muscle
-    switch (experienceLevel) {
-      case 'beginner':
-        baseProtein = weightLbs * 1.0
-        break
-      case 'intermediate':
-        baseProtein = weightLbs * 1.1
-        break
-      case 'advanced':
-        baseProtein = weightLbs * 1.2
-        break
+    // Cutting: 2.0-3.0 g/kg to preserve muscle in caloric deficit
+    // Higher activity = higher protein needs
+    if (activityLevel === 'very' || activityLevel === 'extremely') {
+      proteinGKg = 2.4 // High training volume during cut
+    } else {
+      proteinGKg = 2.2 // Moderate training volume
     }
   } else if (goal === 'bulk') {
-    // Moderate-high protein for muscle building
-    switch (experienceLevel) {
-      case 'beginner':
-        baseProtein = weightLbs * 0.8
-        break
-      case 'intermediate':
-        baseProtein = weightLbs * 0.9
-        break
-      case 'advanced':
-        baseProtein = weightLbs * 1.0
-        break
+    // Bulking: 1.6-2.0 g/kg for muscle building in surplus
+    if (activityLevel === 'very' || activityLevel === 'extremely') {
+      proteinGKg = 1.8 // High training volume
+    } else {
+      proteinGKg = 1.6 // Moderate training volume
     }
   } else {
-    // Maintain/recomp: moderate protein
-    switch (experienceLevel) {
-      case 'beginner':
-        baseProtein = weightLbs * 0.8
-        break
-      case 'intermediate':
-        baseProtein = weightLbs * 0.9
-        break
-      case 'advanced':
-        baseProtein = weightLbs * 1.0
-        break
-    }
+    // Maintain/recomp: 1.8-2.0 g/kg
+    proteinGKg = 1.8
   }
 
-  // Adjust for very high activity levels
-  if (activityLevel === 'very' || activityLevel === 'extremely') {
-    baseProtein *= 1.05 // 5% bump for high training volume
-  }
-
-  return Math.round(baseProtein)
+  return Math.round(weightKg * proteinGKg)
 }
 
 /**
  * Calculate fat needs based on goal and activity level
  *
+ * Ensures minimum fat intake of 0.5-1.0 g/kg for hormone production
+ * and essential fatty acid needs, then adjusts based on goals.
+ *
  * @param targetCalories - Target daily calories
+ * @param weightKg - Body weight in kilograms
  * @param goal - Fitness goal
  * @param activityLevel - Activity/training frequency
  * @returns Fat in grams per day
  */
 function calculateFatNeeds(
   targetCalories: number,
+  weightKg: number,
   goal: Goal,
   activityLevel: ActivityLevel = 'moderately'
 ): number {
   let fatPercentage: number
 
   if (goal === 'cut') {
-    // Higher fat % in deficit for hormone health and satiety
-    fatPercentage = 0.30 // 30% of calories
+    // Moderate fat in deficit for hormone health and satiety
+    fatPercentage = 0.25 // 25% of calories
   } else if (goal === 'bulk') {
     // Lower fat % to prioritize carbs for training performance
     if (activityLevel === 'very' || activityLevel === 'extremely') {
-      fatPercentage = 0.20 // 20% for very active
+      fatPercentage = 0.20 // 20% for very active (more carbs)
     } else {
       fatPercentage = 0.25 // 25% for moderate activity
     }
@@ -131,18 +112,27 @@ function calculateFatNeeds(
     fatPercentage = 0.25 // 25% of calories
   }
 
-  const fatCalories = targetCalories * fatPercentage
-  return Math.round(fatCalories / 9)
+  const fatFromPercentage = Math.round((targetCalories * fatPercentage) / 9)
+
+  // Ensure minimum for hormone production (0.5-1.0 g/kg recommended)
+  const minFatGrams = Math.round(weightKg * 0.5)
+
+  // Return the higher of percentage-based or minimum
+  return Math.max(fatFromPercentage, minFatGrams)
 }
 
 /**
- * Calculate macronutrient distribution with enhanced logic
+ * Calculate macronutrient distribution using evidence-based recommendations
+ *
+ * Based on International Society of Sports Nutrition (ISSN) Position Stand:
+ * - Protein: 1.6-2.0 g/kg (bulk), 2.0-3.0 g/kg (cut)
+ * - Fat: 20-25% of calories, minimum 0.5 g/kg for hormones
+ * - Carbs: Remaining calories for training performance
  *
  * @param targetCalories - Target daily calories
  * @param goal - Fitness goal
  * @param weight - Body weight
  * @param weightUnit - Unit of weight measurement
- * @param experienceLevel - Training experience (optional)
  * @param activityLevel - Activity/training frequency (optional)
  * @returns Macro distribution in grams
  */
@@ -151,7 +141,6 @@ export function calculateMacros(
   goal: Goal,
   weight: number,
   weightUnit: 'lbs' | 'kg',
-  experienceLevel?: ExperienceLevel,
   activityLevel?: ActivityLevel
 ): MacroCalculation {
   // Input validation
@@ -163,14 +152,15 @@ export function calculateMacros(
     throw new Error('Weight must be greater than 0')
   }
 
-  const weightLbs = weightUnit === 'kg' ? weight * 2.20462 : weight
+  // Convert to kg for calculations (ISSN uses g/kg)
+  const weightKg = weightUnit === 'kg' ? weight : weight * 0.453592
 
-  // Calculate protein needs (highest priority)
-  const proteinGrams = calculateProteinNeeds(weightLbs, goal, experienceLevel, activityLevel)
+  // Calculate protein needs (highest priority) - ISSN recommendations
+  const proteinGrams = calculateProteinNeeds(weightKg, goal, activityLevel)
   const proteinCalories = proteinGrams * 4
 
-  // Calculate fat needs (second priority)
-  const fatGrams = calculateFatNeeds(targetCalories, goal, activityLevel)
+  // Calculate fat needs (second priority) - minimum for hormones
+  const fatGrams = calculateFatNeeds(targetCalories, weightKg, goal, activityLevel)
   const fatCalories = fatGrams * 9
 
   // Carbs: Fill remaining calories (fuel for performance)
