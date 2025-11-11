@@ -40,9 +40,9 @@
   --color-info-700: #1D4ED8;
 
   /* Macro-specific colors for progress bars and rings */
-  --color-macro-protein: #3B82F6;
-  --color-macro-carbs: #F59E0B;
-  --color-macro-fat: #EAB308;
+  --color-macro-protein: #3B82F6; /* Blue */
+  --color-macro-carbs: #F97316; /* Orange - more distinct */
+  --color-macro-fat: #A855F7; /* Purple - very distinct */
 
   /* Border radius */
   --radius-default: 12px;

@@ -60,20 +60,23 @@ export const macroColors = {
     bg: 'bg-blue-50',
     text: 'text-blue-700',
     border: 'border-blue-200',
+    emoji: '🥩',
   },
   carbs: {
-    primary: '#F59E0B', // amber-500
-    light: '#FEF3C7', // amber-100
-    bg: 'bg-amber-50',
-    text: 'text-amber-700',
-    border: 'border-amber-200',
+    primary: '#F97316', // orange-500 (more distinct than amber)
+    light: '#FFEDD5', // orange-100
+    bg: 'bg-orange-50',
+    text: 'text-orange-700',
+    border: 'border-orange-200',
+    emoji: '🍞',
   },
   fat: {
-    primary: '#EAB308', // yellow-500
-    light: '#FEF9C3', // yellow-100
-    bg: 'bg-yellow-50',
-    text: 'text-yellow-700',
-    border: 'border-yellow-200',
+    primary: '#A855F7', // purple-500 (very distinct)
+    light: '#F3E8FF', // purple-100
+    bg: 'bg-purple-50',
+    text: 'text-purple-700',
+    border: 'border-purple-200',
+    emoji: '🥑',
   },
 } as const
 
