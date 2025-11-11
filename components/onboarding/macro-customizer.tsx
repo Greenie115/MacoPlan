@@ -22,16 +22,15 @@ interface MacroCustomizerProps {
 }
 
 interface MacroValidation {
-  isValid: boolean
-  errors: {
+  warnings: {
     protein?: string
     carbs?: string
     fat?: string
     total?: string
   }
-  warnings: {
-    protein?: string
-    fat?: string
+  info: {
+    totalCalories?: string
+    totalPercentage?: string
   }
 }
 
@@ -84,45 +83,36 @@ export function MacroCustomizer({
   const minFatGrams = Math.round(weightKg * 0.5) // Hormone health minimum
 
   /**
-   * Validate macro values against all rules
+   * Validate macro values - shows warnings but doesn't block saving
    */
   const validate = (): MacroValidation => {
-    const errors: MacroValidation['errors'] = {}
     const warnings: MacroValidation['warnings'] = {}
+    const info: MacroValidation['info'] = {}
 
     if (mode === 'grams') {
-      // Total calories validation (±50 cal tolerance)
+      // Total calories info (informational only)
       const totalCal = (protein * 4) + (carbs * 4) + (fat * 9)
-      const difference = Math.abs(totalCal - targetCalories)
+      const difference = totalCal - targetCalories
 
-      if (difference > 50) {
-        errors.total = `Total is ${totalCal} cal (${totalCal > targetCalories ? '+' : ''}${totalCal - targetCalories} from target)`
-      }
+      info.totalCalories = `${totalCal} cal (${difference > 0 ? '+' : ''}${difference} from target)`
 
-      // Minimum protein validation
+      // Minimum protein warning (informational)
       if (protein < minProteinGrams) {
         warnings.protein = `Below recommended minimum (${minProteinGrams}g)`
       }
 
-      // Minimum fat validation
+      // Minimum fat warning (informational)
       if (fat < minFatGrams) {
-        errors.fat = `Below minimum for hormone health (${minFatGrams}g required)`
-      }
-
-      // Range validation
-      if (protein < 0 || carbs < 0 || fat < 0) {
-        errors.total = 'All values must be positive'
+        warnings.fat = `Below recommended minimum for hormone health (${minFatGrams}g)`
       }
     } else {
-      // Percentage mode validation
+      // Percentage mode info
       const totalPct = proteinPct + carbsPct + fatPct
-      const difference = Math.abs(totalPct - 100)
+      const difference = totalPct - 100
 
-      if (difference > 1) {
-        errors.total = `Total is ${totalPct}% (must equal 100%)`
-      }
+      info.totalPercentage = `${totalPct}% (${difference > 0 ? '+' : ''}${difference}% from 100%)`
 
-      // Convert to grams for minimum validations
+      // Convert to grams for minimum warnings
       const proteinGrams = Math.round((proteinPct / 100) * targetCalories / 4)
       const fatGrams = Math.round((fatPct / 100) * targetCalories / 9)
 
@@ -131,13 +121,11 @@ export function MacroCustomizer({
       }
 
       if (fatGrams < minFatGrams) {
-        errors.fat = `Below minimum for hormone health (${minFatGrams}g required)`
+        warnings.fat = `Below recommended minimum for hormone health (${minFatGrams}g)`
       }
     }
 
-    const isValid = Object.keys(errors).length === 0
-
-    return { isValid, errors, warnings }
+    return { warnings, info }
   }
 
   const validation = validate()
@@ -201,11 +189,9 @@ export function MacroCustomizer({
   }
 
   /**
-   * Save custom macros
+   * Save custom macros (no validation blocking)
    */
   const handleSave = () => {
-    if (!validation.isValid) return
-
     onSave({ protein, carbs, fat })
   }
 
@@ -270,7 +256,6 @@ export function MacroCustomizer({
               onChange={(v) => handleGramsChange('protein', v)}
               mode="grams"
               targetCalories={targetCalories}
-              error={validation.errors.protein}
               warning={validation.warnings.protein}
               helpText={`Min: ${minProteinGrams}g recommended`}
             />
@@ -280,7 +265,7 @@ export function MacroCustomizer({
               onChange={(v) => handleGramsChange('carbs', v)}
               mode="grams"
               targetCalories={targetCalories}
-              error={validation.errors.carbs}
+              warning={validation.warnings.carbs}
             />
             <MacroInput
               label="Fat"
@@ -288,7 +273,7 @@ export function MacroCustomizer({
               onChange={(v) => handleGramsChange('fat', v)}
               mode="grams"
               targetCalories={targetCalories}
-              error={validation.errors.fat}
+              warning={validation.warnings.fat}
               helpText={`Min: ${minFatGrams}g (hormone health)`}
             />
           </>
@@ -300,7 +285,6 @@ export function MacroCustomizer({
               onChange={(v) => handlePercentageChange('protein', v)}
               mode="percentage"
               targetCalories={targetCalories}
-              error={validation.errors.protein}
               warning={validation.warnings.protein}
               max={100}
             />
@@ -310,7 +294,7 @@ export function MacroCustomizer({
               onChange={(v) => handlePercentageChange('carbs', v)}
               mode="percentage"
               targetCalories={targetCalories}
-              error={validation.errors.carbs}
+              warning={validation.warnings.carbs}
               max={100}
             />
             <MacroInput
@@ -319,7 +303,7 @@ export function MacroCustomizer({
               onChange={(v) => handlePercentageChange('fat', v)}
               mode="percentage"
               targetCalories={targetCalories}
-              error={validation.errors.fat}
+              warning={validation.warnings.fat}
               max={100}
             />
           </>
@@ -339,20 +323,24 @@ export function MacroCustomizer({
               {totalPct}%
             </span>
           )}
-          {validation.isValid ? (
-            <CheckCircle2 className="h-5 w-5 text-green-600" />
-          ) : (
-            <AlertCircle className="h-5 w-5 text-destructive" />
-          )}
         </div>
       </div>
 
-      {/* Total Error Message */}
-      {validation.errors.total && (
-        <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-          <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-destructive">
-            {validation.errors.total}
+      {/* Total Info Message */}
+      {validation.info.totalCalories && mode === 'grams' && (
+        <div className="flex items-start gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-blue-700">
+            {validation.info.totalCalories}
+          </p>
+        </div>
+      )}
+
+      {validation.info.totalPercentage && mode === 'percentage' && (
+        <div className="flex items-start gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-blue-700">
+            {validation.info.totalPercentage}
           </p>
         </div>
       )}
@@ -375,7 +363,7 @@ export function MacroCustomizer({
         </Button>
         <Button
           onClick={handleSave}
-          disabled={!validation.isValid || !hasChanges}
+          disabled={!hasChanges}
           className="flex-1"
         >
           Save
