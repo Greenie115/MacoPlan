@@ -24,10 +24,7 @@ export function useDashboardData() {
   }
 
   // Get stats (dummy data for MVP)
-  const stats = {
-    plansCreated: dashboardStore.plansCreated,
-    mealsLogged: dashboardStore.mealsLogged,
-  }
+  const stats = dashboardStore.stats
 
   // Get recent plans (dummy data for MVP)
   const recentPlans = dashboardStore.recentPlans

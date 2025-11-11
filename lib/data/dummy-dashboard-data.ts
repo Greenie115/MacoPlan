@@ -4,40 +4,41 @@ export const DUMMY_MEAL_PLANS: MealPlan[] = [
   {
     id: '1',
     name: '7-Day Muscle Plan',
-    dateRange: 'Nov 1-7, 2025',
+    dateRange: 'Nov 4-10, 2025',
     caloriesPerDay: 2450,
-    images: [
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop', // grilled chicken
-      'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=400&fit=crop', // salmon
-      'https://images.unsplash.com/photo-1467453678174-768ec283a940?w=400&h=400&fit=crop', // asparagus
-      'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop', // rice
-    ],
-    createdAt: new Date('2025-11-01'),
+    proteinGrams: 180,
+    carbGrams: 280,
+    fatGrams: 65,
+    isActive: true,
+    daysCompleted: 3,
+    totalDays: 7,
+    images: [], // Empty now, using macro ring instead
+    createdAt: new Date('2025-11-04'),
   },
   {
     id: '2',
     name: 'High-Protein Week',
-    dateRange: 'Oct 25-31, 2025',
+    dateRange: 'Oct 28-Nov 3, 2025',
     caloriesPerDay: 2600,
-    images: [
-      'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=400&fit=crop', // salmon
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop', // chicken
-      'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400&h=400&fit=crop', // pancakes
-      'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=400&fit=crop', // salad
-    ],
-    createdAt: new Date('2025-10-25'),
+    proteinGrams: 200,
+    carbGrams: 250,
+    fatGrams: 80,
+    daysCompleted: 7,
+    totalDays: 7,
+    images: [],
+    createdAt: new Date('2025-10-28'),
   },
   {
     id: '3',
     name: 'Lean Bulk Cycle',
-    dateRange: 'Oct 18-24, 2025',
+    dateRange: 'Oct 21-27, 2025',
     caloriesPerDay: 2800,
-    images: [
-      'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=400&fit=crop', // salad
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop', // chicken
-      'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=400&fit=crop', // salmon
-      'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop', // rice
-    ],
-    createdAt: new Date('2025-10-18'),
+    proteinGrams: 170,
+    carbGrams: 350,
+    fatGrams: 75,
+    daysCompleted: 7,
+    totalDays: 7,
+    images: [],
+    createdAt: new Date('2025-10-21'),
   },
 ]

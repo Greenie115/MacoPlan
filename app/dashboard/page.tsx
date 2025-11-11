@@ -37,8 +37,15 @@ export default function DashboardPage() {
       dashboardStore.setRecentPlans(DUMMY_MEAL_PLANS)
     }
 
-    if (stats.plansCreated === 0 && stats.mealsLogged === 0) {
-      dashboardStore.setStats(12, 45)
+    if (stats.currentStreak === 0) {
+      dashboardStore.setStats({
+        currentStreak: 7,
+        daysLoggedThisWeek: 5,
+        macroAccuracy: 94,
+        plansCreated: 12,
+        mealsLogged: 45,
+        monthlyTrend: 3,
+      })
     }
 
     if (progress.caloriesEaten === 0) {
@@ -62,7 +69,13 @@ export default function DashboardPage() {
       {/* Main Content */}
       <div className="w-full max-w-7xl mx-auto">
         {/* Greeting */}
-        <GreetingHeader />
+        <GreetingHeader
+          currentStreak={stats.currentStreak}
+          currentGoal={onboardingStore.goal || undefined}
+          activePlanName={recentPlans.find((p) => p.isActive)?.name}
+          activePlanDay={recentPlans.find((p) => p.isActive)?.daysCompleted}
+          activePlanTotalDays={recentPlans.find((p) => p.isActive)?.totalDays}
+        />
 
         {/* Today's Macro Target */}
         <div className="px-4 pb-4 md:px-6 lg:px-8">
@@ -75,12 +88,14 @@ export default function DashboardPage() {
             proteinEaten={progress.proteinEaten}
             carbsEaten={progress.carbsEaten}
             fatEaten={progress.fatEaten}
+            mealsLogged={2}
+            totalMealsPlanned={4}
           />
         </div>
 
         {/* Generate New Meal Plan CTA */}
         <div className="pb-4">
-          <GeneratePlanCTA />
+          <GeneratePlanCTA hasActivePlan={recentPlans.some((p) => p.isActive)} />
         </div>
 
         {/* Recent Plans Section */}
@@ -97,8 +112,11 @@ export default function DashboardPage() {
             Quick Stats
           </h2>
           <StatsGrid
+            currentStreak={stats.currentStreak}
+            daysLoggedThisWeek={stats.daysLoggedThisWeek}
+            macroAccuracy={stats.macroAccuracy}
             plansCreated={stats.plansCreated}
-            mealsLogged={stats.mealsLogged}
+            monthlyTrend={stats.monthlyTrend}
           />
         </div>
 

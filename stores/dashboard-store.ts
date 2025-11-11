@@ -6,8 +6,23 @@ export interface MealPlan {
   name: string
   dateRange: string
   caloriesPerDay: number
-  images: string[]
+  proteinGrams: number
+  carbGrams: number
+  fatGrams: number
+  isActive?: boolean
+  daysCompleted?: number
+  totalDays?: number
+  images: string[] // Keep for backwards compatibility, but won't be used
   createdAt: Date
+}
+
+export interface DashboardStats {
+  currentStreak: number
+  daysLoggedThisWeek: number
+  macroAccuracy: number // 0-100
+  plansCreated: number
+  mealsLogged: number
+  monthlyTrend?: number
 }
 
 interface DashboardState {
@@ -18,8 +33,7 @@ interface DashboardState {
   fatEaten: number
 
   // Stats (dummy data for MVP)
-  plansCreated: number
-  mealsLogged: number
+  stats: DashboardStats
 
   // Recent plans (dummy data for MVP)
   recentPlans: MealPlan[]
@@ -31,7 +45,7 @@ interface DashboardState {
     carbs: number,
     fat: number
   ) => void
-  setStats: (plans: number, meals: number) => void
+  setStats: (stats: DashboardStats) => void
   setRecentPlans: (plans: MealPlan[]) => void
   reset: () => void
 }
@@ -41,8 +55,14 @@ const initialState = {
   proteinEaten: 0,
   carbsEaten: 0,
   fatEaten: 0,
-  plansCreated: 0,
-  mealsLogged: 0,
+  stats: {
+    currentStreak: 0,
+    daysLoggedThisWeek: 0,
+    macroAccuracy: 0,
+    plansCreated: 0,
+    mealsLogged: 0,
+    monthlyTrend: 0,
+  },
   recentPlans: [],
 }
 
@@ -59,10 +79,9 @@ export const useDashboardStore = create<DashboardState>()(
           fatEaten: fat,
         }),
 
-      setStats: (plans, meals) =>
+      setStats: (stats) =>
         set({
-          plansCreated: plans,
-          mealsLogged: meals,
+          stats,
         }),
 
       setRecentPlans: (plans) =>

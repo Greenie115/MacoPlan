@@ -25,6 +25,25 @@
   --color-accent-foreground: #1F1F1F;
   --color-ring: #FF6B35;
 
+  /* Semantic Colors */
+  --color-success-50: #F0FDF4;
+  --color-success-500: #10B981;
+  --color-success-700: #047857;
+  --color-warning-50: #FFFBEB;
+  --color-warning-500: #F59E0B;
+  --color-warning-700: #B45309;
+  --color-danger-50: #FEF2F2;
+  --color-danger-500: #EF4444;
+  --color-danger-700: #B91C1C;
+  --color-info-50: #EFF6FF;
+  --color-info-500: #3B82F6;
+  --color-info-700: #1D4ED8;
+
+  /* Macro-specific colors for progress bars and rings */
+  --color-macro-protein: #3B82F6;
+  --color-macro-carbs: #F59E0B;
+  --color-macro-fat: #EAB308;
+
   /* Border radius */
   --radius-default: 12px;
   --radius-card: 16px;

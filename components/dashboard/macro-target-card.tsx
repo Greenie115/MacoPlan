@@ -3,16 +3,31 @@
 import { useRouter } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
+import { MacroProgressBar } from './macro-progress-bar'
+import { typography, card } from '@/lib/design-tokens'
+import { cn } from '@/lib/utils'
 
 interface MacroTargetCardProps {
+  // Targets
   targetCalories: number
   proteinGrams: number
   carbGrams: number
   fatGrams: number
+
+  // Progress
   caloriesEaten?: number
   proteinEaten?: number
   carbsEaten?: number
   fatEaten?: number
+
+  // Metadata
+  mealsLogged?: number
+  totalMealsPlanned?: number
+
+  // Actions
+  onLogMeal?: () => void
+  onViewPlan?: () => void
 }
 
 export function MacroTargetCard({
@@ -24,83 +39,152 @@ export function MacroTargetCard({
   proteinEaten = 0,
   carbsEaten = 0,
   fatEaten = 0,
+  mealsLogged = 0,
+  totalMealsPlanned = 0,
+  onLogMeal,
+  onViewPlan,
 }: MacroTargetCardProps) {
   const router = useRouter()
 
-  // Calculate progress percentage
-  const progressPercent = targetCalories > 0
-    ? Math.round((caloriesEaten / targetCalories) * 100)
-    : 0
+  // Calculate overall progress
+  const progressPercent =
+    targetCalories > 0
+      ? Math.round((caloriesEaten / targetCalories) * 100)
+      : 0
+
+  const caloriesRemaining = Math.max(0, targetCalories - caloriesEaten)
+
+  // Determine state
+  const isEmpty = caloriesEaten === 0
+  const isComplete = progressPercent >= 95
+  const isOver = progressPercent > 110
 
   return (
-    <Card className="shadow-md p-4 md:p-6">
-      <h2 className="text-lg font-bold text-charcoal">Today's Macro Target</h2>
+    <Card className={cn('shadow-md', card.padding.md)}>
+      {/* Header Section */}
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h2 className={cn(typography.h3, 'text-charcoal')}>
+            Today's Macro Target
+          </h2>
+          {totalMealsPlanned > 0 && (
+            <p className="text-sm text-muted-foreground mt-1">
+              {mealsLogged} of {totalMealsPlanned} meals logged
+            </p>
+          )}
+        </div>
 
-      {/* Calorie Display */}
-      <div className="flex items-baseline gap-2 mt-2">
-        <p className="text-3xl md:text-4xl font-extrabold text-charcoal">
-          {targetCalories.toLocaleString()}
-        </p>
-        <p className="text-base text-muted-foreground">cal</p>
+        {/* Status Badge */}
+        {isComplete && !isOver && (
+          <div className="px-3 py-1 bg-green-50 border border-green-200 rounded-full">
+            <p className="text-xs font-bold text-green-700">On Track ✓</p>
+          </div>
+        )}
+        {isOver && (
+          <div className="px-3 py-1 bg-red-50 border border-red-200 rounded-full">
+            <p className="text-xs font-bold text-red-700">Over Target</p>
+          </div>
+        )}
       </div>
 
-      {/* Progress Bar */}
-      <div className="mt-4 mb-4">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-sm font-medium text-muted-foreground">Progress</span>
-          <span className="text-sm font-medium text-muted-foreground">
-            {progressPercent}% eaten
-          </span>
+      {/* Calorie Summary */}
+      <div className="mb-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
+        <div className="flex items-baseline justify-between">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Calories</p>
+            <p className={cn(typography.display, 'text-charcoal')}>
+              {caloriesEaten.toLocaleString()}
+              <span className="text-xl text-muted-foreground ml-1">
+                / {targetCalories.toLocaleString()}
+              </span>
+            </p>
+          </div>
+
+          {caloriesRemaining > 0 && (
+            <div className="text-right">
+              <p className="text-sm font-medium text-muted-foreground">
+                Remaining
+              </p>
+              <p className={cn(typography.h2, 'text-primary')}>
+                {caloriesRemaining.toLocaleString()}
+              </p>
+            </div>
+          )}
         </div>
-        <div className="w-full bg-muted rounded-full h-2.5">
-          <div
-            className="bg-primary h-2.5 rounded-full transition-all duration-500"
-            style={{ width: `${Math.min(progressPercent, 100)}%` }}
-          />
+
+        {/* Overall Progress Bar */}
+        <div className="mt-3">
+          <div className="w-full bg-background rounded-full h-2.5 overflow-hidden">
+            <div
+              className={cn(
+                'h-2.5 rounded-full transition-all duration-500',
+                progressPercent >= 90 && progressPercent <= 110
+                  ? 'bg-green-500'
+                  : progressPercent > 110
+                    ? 'bg-red-500'
+                    : 'bg-primary'
+              )}
+              style={{ width: `${Math.min(progressPercent, 100)}%` }}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground text-right mt-1">
+            {progressPercent}% eaten
+          </p>
         </div>
       </div>
 
       {/* Macro Breakdown */}
-      <div className="grid grid-cols-3 gap-3 border-t border-border pt-4">
-        {/* Protein */}
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🥩</span>
-          <div className="flex flex-col">
-            <p className="text-xs text-muted-foreground">Protein</p>
-            <p className="text-sm font-bold text-charcoal">{proteinGrams}g</p>
-          </div>
-        </div>
-
-        {/* Carbs */}
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🍚</span>
-          <div className="flex flex-col">
-            <p className="text-xs text-muted-foreground">Carbs</p>
-            <p className="text-sm font-bold text-charcoal">{carbGrams}g</p>
-          </div>
-        </div>
-
-        {/* Fat */}
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🥑</span>
-          <div className="flex flex-col">
-            <p className="text-xs text-muted-foreground">Fat</p>
-            <p className="text-sm font-bold text-charcoal">{fatGrams}g</p>
-          </div>
-        </div>
+      <div className="space-y-4 mb-4">
+        <MacroProgressBar
+          type="protein"
+          eaten={proteinEaten}
+          target={proteinGrams}
+          showCalories
+        />
+        <MacroProgressBar
+          type="carbs"
+          eaten={carbsEaten}
+          target={carbGrams}
+          showCalories
+        />
+        <MacroProgressBar
+          type="fat"
+          eaten={fatEaten}
+          target={fatGrams}
+          showCalories
+        />
       </div>
 
-      {/* View Plan Button */}
-      <div className="mt-4">
+      {/* Action Buttons */}
+      <div className="flex gap-2">
         <Button
-          variant="ghost"
-          className="w-full text-primary hover:bg-primary/10"
-          onClick={() => router.push('/plans/today')}
+          onClick={onLogMeal || (() => router.push('/meals/log'))}
+          className="flex-1 font-semibold"
+          aria-label="Log a meal"
+        >
+          <Plus className="size-4 mr-2" />
+          Log Meal
+        </Button>
+
+        <Button
+          variant="outline"
+          onClick={onViewPlan || (() => router.push('/plans/today'))}
+          className="flex-1 font-medium"
           aria-label="View today's meal plan"
         >
-          View Today's Plan →
+          View Plan
         </Button>
       </div>
+
+      {/* Empty State */}
+      {isEmpty && (
+        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-700">
+            💡 <strong>Tip:</strong> Log your first meal to start tracking your
+            macros
+          </p>
+        </div>
+      )}
     </Card>
   )
 }
