@@ -6,8 +6,8 @@ import { useOnboardingStore } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
 import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { AuthModal } from '@/components/auth/auth-modal'
-import { MacroSummary } from '@/components/onboarding/macro-summary'
 import { MacroCustomizer } from '@/components/onboarding/macro-customizer'
 
 export default function MacroResultsPage() {
@@ -155,18 +155,55 @@ export default function MacroResultsPage() {
         completedSteps={store.completedSteps}
       >
       <div className="space-y-4">
-        {/* Conditional rendering: Summary or Customizer */}
         {!isCustomizing ? (
           <>
-            <MacroSummary
-              protein={displayProtein}
-              carbs={displayCarbs}
-              fat={displayFat}
-              targetCalories={store.targetCalories}
-              isCustom={store.isCustomMacros}
-              showCustomizeButton={true}
-              onCustomizeClick={handleCustomizeClick}
-            />
+            {/* Daily Calorie Target */}
+            <Card className="p-6 bg-primary/5 border-primary">
+              <div className="text-center">
+                <p className="text-sm font-medium text-muted-foreground mb-2">Daily Calorie Target</p>
+                <p className="text-4xl font-bold text-primary">{store.targetCalories}</p>
+                <p className="text-sm text-muted-foreground mt-1">calories per day</p>
+              </div>
+            </Card>
+
+            {/* Macro Breakdown */}
+            <div className="grid grid-cols-3 gap-3">
+              {/* Protein */}
+              <Card className="p-4 text-center border-2 border-protein/20">
+                <div className="size-12 mx-auto mb-2 rounded-full bg-protein/10 flex items-center justify-center">
+                  <span className="text-xl">🥩</span>
+                </div>
+                <p className="text-2xl font-bold text-protein">{displayProtein}g</p>
+                <p className="text-xs text-muted-foreground mt-1">Protein</p>
+                {store.isCustomMacros && (
+                  <p className="text-xs text-primary mt-1 font-medium">Custom</p>
+                )}
+              </Card>
+
+              {/* Carbs */}
+              <Card className="p-4 text-center border-2 border-carb/20">
+                <div className="size-12 mx-auto mb-2 rounded-full bg-carb/10 flex items-center justify-center">
+                  <span className="text-xl">🍞</span>
+                </div>
+                <p className="text-2xl font-bold text-carb">{displayCarbs}g</p>
+                <p className="text-xs text-muted-foreground mt-1">Carbs</p>
+                {store.isCustomMacros && (
+                  <p className="text-xs text-primary mt-1 font-medium">Custom</p>
+                )}
+              </Card>
+
+              {/* Fat */}
+              <Card className="p-4 text-center border-2 border-fat/20">
+                <div className="size-12 mx-auto mb-2 rounded-full bg-fat/10 flex items-center justify-center">
+                  <span className="text-xl">🥑</span>
+                </div>
+                <p className="text-2xl font-bold text-fat">{displayFat}g</p>
+                <p className="text-xs text-muted-foreground mt-1">Fat</p>
+                {store.isCustomMacros && (
+                  <p className="text-xs text-primary mt-1 font-medium">Custom</p>
+                )}
+              </Card>
+            </div>
 
             {/* Additional Info */}
             <Card className="p-4 bg-muted/50">
@@ -186,10 +223,19 @@ export default function MacroResultsPage() {
               </div>
             </Card>
 
-            <div className="pt-4">
+            <div className="pt-4 space-y-3">
               <p className="text-sm text-center text-muted-foreground">
                 These targets are personalized based on your profile and will help you achieve your {store.goal} goals.
               </p>
+
+              {/* Customize Button */}
+              <Button
+                variant="outline"
+                onClick={handleCustomizeClick}
+                className="w-full"
+              >
+                {store.isCustomMacros ? 'Edit Custom Macros' : 'Customize Macros'}
+              </Button>
             </div>
           </>
         ) : (
