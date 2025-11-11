@@ -69,15 +69,15 @@ export default function MacroResultsPage() {
   }
 
   // Get displayed macros (custom or calculated)
-  const displayProtein = store.isCustomMacros && store.customProteinGrams
+  const displayProtein = store.isCustomMacros && store.customProteinGrams !== null
     ? store.customProteinGrams
     : store.proteinGrams || 0
 
-  const displayCarbs = store.isCustomMacros && store.customCarbGrams
+  const displayCarbs = store.isCustomMacros && store.customCarbGrams !== null
     ? store.customCarbGrams
     : store.carbGrams || 0
 
-  const displayFat = store.isCustomMacros && store.customFatGrams
+  const displayFat = store.isCustomMacros && store.customFatGrams !== null
     ? store.customFatGrams
     : store.fatGrams || 0
 
