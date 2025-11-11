@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-import { MacroProgressBar } from './macro-progress-bar'
+import { MacroDonutChart } from './macro-donut-chart'
+import { MacroLegend } from './macro-legend'
 import { typography, card } from '@/lib/design-tokens'
 import { cn } from '@/lib/utils'
 
@@ -87,71 +88,67 @@ export function MacroTargetCard({
         )}
       </div>
 
-      {/* Calorie Summary */}
-      <div className="mb-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
-        <div className="flex items-baseline justify-between">
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">Calories</p>
-            <p className={cn(typography.display, 'text-charcoal')}>
-              {caloriesEaten.toLocaleString()}
-              <span className="text-xl text-muted-foreground ml-1">
-                / {targetCalories.toLocaleString()}
-              </span>
-            </p>
-          </div>
-
-          {caloriesRemaining > 0 && (
-            <div className="text-right">
-              <p className="text-sm font-medium text-muted-foreground">
-                Remaining
-              </p>
-              <p className={cn(typography.h2, 'text-primary')}>
-                {caloriesRemaining.toLocaleString()}
-              </p>
-            </div>
-          )}
+      {/* Donut Chart Visualization - Responsive sizing */}
+      <div className="mb-6 flex justify-center">
+        {/* Mobile: Small size */}
+        <div className="block md:hidden">
+          <MacroDonutChart
+            targetCalories={targetCalories}
+            proteinGrams={proteinGrams}
+            carbGrams={carbGrams}
+            fatGrams={fatGrams}
+            caloriesEaten={caloriesEaten}
+            proteinEaten={proteinEaten}
+            carbsEaten={carbsEaten}
+            fatEaten={fatEaten}
+            size="sm"
+            showTooltip={true}
+          />
         </div>
 
-        {/* Overall Progress Bar */}
-        <div className="mt-3">
-          <div className="w-full bg-background rounded-full h-2.5 overflow-hidden">
-            <div
-              className={cn(
-                'h-2.5 rounded-full transition-all duration-500',
-                progressPercent >= 90 && progressPercent <= 110
-                  ? 'bg-green-500'
-                  : progressPercent > 110
-                    ? 'bg-red-500'
-                    : 'bg-primary'
-              )}
-              style={{ width: `${Math.min(progressPercent, 100)}%` }}
-            />
-          </div>
-          <p className="text-xs text-muted-foreground text-right mt-1">
-            {progressPercent}% eaten
-          </p>
+        {/* Tablet: Medium size */}
+        <div className="hidden md:block lg:hidden">
+          <MacroDonutChart
+            targetCalories={targetCalories}
+            proteinGrams={proteinGrams}
+            carbGrams={carbGrams}
+            fatGrams={fatGrams}
+            caloriesEaten={caloriesEaten}
+            proteinEaten={proteinEaten}
+            carbsEaten={carbsEaten}
+            fatEaten={fatEaten}
+            size="md"
+            showTooltip={true}
+          />
+        </div>
+
+        {/* Desktop: Large size */}
+        <div className="hidden lg:block">
+          <MacroDonutChart
+            targetCalories={targetCalories}
+            proteinGrams={proteinGrams}
+            carbGrams={carbGrams}
+            fatGrams={fatGrams}
+            caloriesEaten={caloriesEaten}
+            proteinEaten={proteinEaten}
+            carbsEaten={carbsEaten}
+            fatEaten={fatEaten}
+            size="lg"
+            showTooltip={true}
+          />
         </div>
       </div>
 
-      {/* Macro Breakdown */}
-      <div className="space-y-4 mb-4">
-        <MacroProgressBar
-          type="protein"
-          eaten={proteinEaten}
-          target={proteinGrams}
-          showCalories
-        />
-        <MacroProgressBar
-          type="carbs"
-          eaten={carbsEaten}
-          target={carbGrams}
-          showCalories
-        />
-        <MacroProgressBar
-          type="fat"
-          eaten={fatEaten}
-          target={fatGrams}
-          showCalories
+      {/* Macro Legend */}
+      <div className="mb-4">
+        <MacroLegend
+          proteinEaten={proteinEaten}
+          proteinTarget={proteinGrams}
+          carbsEaten={carbsEaten}
+          carbsTarget={carbGrams}
+          fatEaten={fatEaten}
+          fatTarget={fatGrams}
+          variant="compact"
         />
       </div>
 
