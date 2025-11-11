@@ -86,6 +86,9 @@ export default function MacroResultsPage() {
     ? store.weight || 0
     : (store.weight || 0) * 0.453592
 
+  // Calculate actual total calories from displayed macros
+  const displayCalories = (displayProtein * 4) + (displayCarbs * 4) + (displayFat * 9)
+
   if (isValidating) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -160,9 +163,19 @@ export default function MacroResultsPage() {
             {/* Daily Calorie Target */}
             <Card className="p-6 bg-primary/5 border-primary">
               <div className="text-center">
-                <p className="text-sm font-medium text-muted-foreground mb-2">Daily Calorie Target</p>
-                <p className="text-4xl font-bold text-primary">{store.targetCalories}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-2">
+                  Daily Calorie Target
+                  {store.isCustomMacros && (
+                    <span className="ml-2 text-xs text-primary font-semibold">Custom</span>
+                  )}
+                </p>
+                <p className="text-4xl font-bold text-primary">{Math.round(displayCalories)}</p>
                 <p className="text-sm text-muted-foreground mt-1">calories per day</p>
+                {store.isCustomMacros && store.targetCalories !== Math.round(displayCalories) && (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Original target: {store.targetCalories} cal
+                  </p>
+                )}
               </div>
             </Card>
 
