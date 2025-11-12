@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-import { MacroDonutChart } from './macro-donut-chart'
-import { MacroLegend } from './macro-legend'
+import { CaloriesDonut } from './calories-donut'
+import { MacroCard } from './macro-card'
 import { typography, card } from '@/lib/design-tokens'
 import { cn } from '@/lib/utils'
 
@@ -61,15 +61,15 @@ export function MacroTargetCard({
   const isOver = progressPercent > 110
 
   return (
-    <Card className={cn('shadow-md', card.padding.md)}>
+    <Card className={cn('shadow-md', 'p-4 md:p-6 lg:p-8 xl:p-10')}>
       {/* Header Section */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 lg:mb-6">
         <div>
-          <h2 className={cn(typography.h3, 'text-charcoal')}>
+          <h2 className={cn(typography.h3Lg, 'text-charcoal')}>
             Today's Macro Target
           </h2>
           {totalMealsPlanned > 0 && (
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm lg:text-base text-muted-foreground mt-1">
               {mealsLogged} of {totalMealsPlanned} meals logged
             </p>
           )}
@@ -77,79 +77,112 @@ export function MacroTargetCard({
 
         {/* Status Badge */}
         {isComplete && !isOver && (
-          <div className="px-3 py-1 bg-green-50 border border-green-200 rounded-full">
-            <p className="text-xs font-bold text-green-700">On Track ✓</p>
+          <div className="px-3 py-1 lg:px-4 lg:py-2 bg-green-50 border border-green-200 rounded-full">
+            <p className="text-xs lg:text-sm font-bold text-green-700">On Track ✓</p>
           </div>
         )}
         {isOver && (
-          <div className="px-3 py-1 bg-red-50 border border-red-200 rounded-full">
-            <p className="text-xs font-bold text-red-700">Over Target</p>
+          <div className="px-3 py-1 lg:px-4 lg:py-2 bg-red-50 border border-red-200 rounded-full">
+            <p className="text-xs lg:text-sm font-bold text-red-700">Over Target</p>
           </div>
         )}
       </div>
 
-      {/* Donut Chart Visualization - Responsive sizing */}
-      <div className="mb-6 flex justify-center">
-        {/* Mobile: Small size */}
-        <div className="block md:hidden">
-          <MacroDonutChart
-            targetCalories={targetCalories}
-            proteinGrams={proteinGrams}
-            carbGrams={carbGrams}
-            fatGrams={fatGrams}
-            caloriesEaten={caloriesEaten}
-            proteinEaten={proteinEaten}
-            carbsEaten={carbsEaten}
-            fatEaten={fatEaten}
-            size="sm"
-            showTooltip={true}
-          />
+      {/* Unified Layout - Donut + Macro Cards (All Screen Sizes) */}
+      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-6 lg:gap-8 xl:gap-10 mb-6">
+        {/* Left Column: Calories Donut */}
+        <div className="flex items-center justify-center md:justify-start">
+          {/* Mobile: Extra Small */}
+          <div className="block sm:hidden">
+            <CaloriesDonut
+              targetCalories={targetCalories}
+              caloriesEaten={caloriesEaten}
+              proteinGrams={proteinGrams}
+              carbGrams={carbGrams}
+              fatGrams={fatGrams}
+              proteinEaten={proteinEaten}
+              carbsEaten={carbsEaten}
+              fatEaten={fatEaten}
+              size="xs"
+            />
+          </div>
+
+          {/* Small screens: Small */}
+          <div className="hidden sm:block md:hidden">
+            <CaloriesDonut
+              targetCalories={targetCalories}
+              caloriesEaten={caloriesEaten}
+              proteinGrams={proteinGrams}
+              carbGrams={carbGrams}
+              fatGrams={fatGrams}
+              proteinEaten={proteinEaten}
+              carbsEaten={carbsEaten}
+              fatEaten={fatEaten}
+              size="sm"
+            />
+          </div>
+
+          {/* Tablet: Medium */}
+          <div className="hidden md:block lg:hidden">
+            <CaloriesDonut
+              targetCalories={targetCalories}
+              caloriesEaten={caloriesEaten}
+              proteinGrams={proteinGrams}
+              carbGrams={carbGrams}
+              fatGrams={fatGrams}
+              proteinEaten={proteinEaten}
+              carbsEaten={carbsEaten}
+              fatEaten={fatEaten}
+              size="md"
+            />
+          </div>
+
+          {/* Desktop: Large */}
+          <div className="hidden lg:block xl:hidden">
+            <CaloriesDonut
+              targetCalories={targetCalories}
+              caloriesEaten={caloriesEaten}
+              proteinGrams={proteinGrams}
+              carbGrams={carbGrams}
+              fatGrams={fatGrams}
+              proteinEaten={proteinEaten}
+              carbsEaten={carbsEaten}
+              fatEaten={fatEaten}
+              size="lg"
+            />
+          </div>
+
+          {/* Desktop XL: Extra Large */}
+          <div className="hidden xl:block">
+            <CaloriesDonut
+              targetCalories={targetCalories}
+              caloriesEaten={caloriesEaten}
+              proteinGrams={proteinGrams}
+              carbGrams={carbGrams}
+              fatGrams={fatGrams}
+              proteinEaten={proteinEaten}
+              carbsEaten={carbsEaten}
+              fatEaten={fatEaten}
+              size="xl"
+            />
+          </div>
         </div>
 
-        {/* Tablet: Medium size */}
-        <div className="hidden md:block lg:hidden">
-          <MacroDonutChart
-            targetCalories={targetCalories}
-            proteinGrams={proteinGrams}
-            carbGrams={carbGrams}
-            fatGrams={fatGrams}
-            caloriesEaten={caloriesEaten}
-            proteinEaten={proteinEaten}
-            carbsEaten={carbsEaten}
-            fatEaten={fatEaten}
-            size="md"
-            showTooltip={true}
+        {/* Right Column: Individual Macro Cards */}
+        <div className="flex flex-col gap-2 md:gap-3 lg:gap-4">
+          {/* Protein Card */}
+          <MacroCard
+            type="protein"
+            eaten={proteinEaten}
+            target={proteinGrams}
           />
-        </div>
 
-        {/* Desktop: Large size */}
-        <div className="hidden lg:block">
-          <MacroDonutChart
-            targetCalories={targetCalories}
-            proteinGrams={proteinGrams}
-            carbGrams={carbGrams}
-            fatGrams={fatGrams}
-            caloriesEaten={caloriesEaten}
-            proteinEaten={proteinEaten}
-            carbsEaten={carbsEaten}
-            fatEaten={fatEaten}
-            size="lg"
-            showTooltip={true}
-          />
-        </div>
-      </div>
+          {/* Carbs Card */}
+          <MacroCard type="carbs" eaten={carbsEaten} target={carbGrams} />
 
-      {/* Macro Legend */}
-      <div className="mb-4">
-        <MacroLegend
-          proteinEaten={proteinEaten}
-          proteinTarget={proteinGrams}
-          carbsEaten={carbsEaten}
-          carbsTarget={carbGrams}
-          fatEaten={fatEaten}
-          fatTarget={fatGrams}
-          variant="compact"
-        />
+          {/* Fat Card */}
+          <MacroCard type="fat" eaten={fatEaten} target={fatGrams} />
+        </div>
       </div>
 
       {/* Action Buttons */}
