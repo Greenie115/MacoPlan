@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan - Create Account</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#fa6c38",
+                        "background-light": "#f8f6f5",
+                        "background-dark": "#23150f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex min-h-screen w-full items-center justify-center bg-background-light dark:bg-background-dark p-4">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-black/60"></div>
+<!-- This is a background image for context. The modal will appear on top of it. -->
+<img class="absolute inset-0 h-full w-full object-cover" data-alt="A person weightlifting in a gym, representing the app's target audience" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaqWtGRIQB4Is--VrC5Cge1ZeplNJqEU1VEhuwGNJwHAIs88bRwTMg5hziNbQjmEz-a3tMYUwOdBuy9-LnMNLYIZBWpuid9oN9Er5bxR9YM3DlGnJ6EDN7WDSmNbh3KGAHFSD4dFlB3L9rTIx5GwM3pLvBQKNNTL0Fki2iqSVC2-9ryncpWqWuI_4MlRr_-evU49WuN50Nu9qWrRzzZTqw3UjHHj0CKMHYp4d9Gj8Ej2epnSD4thiqe8ueWjtvlAZunEmMXI7khQ"/>
+<!-- Modal Container -->
+<div class="relative w-full max-w-sm rounded-xl bg-background-light dark:bg-background-dark p-6 shadow-2xl sm:p-8">
+<!-- Toolbar / Close Button -->
+<div class="absolute top-0 right-0 pt-4 pr-4">
+<button class="flex h-8 w-8 items-center justify-center rounded-full bg-background-light text-gray-500 hover:bg-gray-200 dark:bg-background-dark dark:text-gray-400 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<div class="flex flex-col space-y-4">
+<!-- Headline Text -->
+<h3 class="text-center font-display text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome to MacroPlan</h3>
+<!-- Body Text -->
+<p class="text-center font-display text-base font-normal text-gray-600 dark:text-gray-400">Create your free account</p>
+<!-- Social Login Button -->
+<div class="py-2">
+<button class="flex h-12 w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-lg border border-gray-300 bg-white px-4 text-sm font-medium text-gray-800 hover:bg-gray-50 dark:border-gray-600 dark:bg-background-dark dark:text-white dark:hover:bg-gray-800">
+<svg class="h-5 w-5" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_3024_28135)">
+<path d="M23.766 12.2727C23.766 11.4909 23.698 10.7091 23.562 9.95455H12.24V14.3318H18.718C18.452 15.8682 17.586 17.1818 16.326 18.0682V20.6682H20.048C22.376 18.5955 23.766 15.7273 23.766 12.2727Z" fill="#4285F4"></path>
+<path d="M12.2401 24C15.5401 24 18.3581 22.9227 20.0481 20.6682L16.3261 18.0682C15.2201 18.7818 13.8441 19.2273 12.2401 19.2273C9.11209 19.2273 6.44409 17.1364 5.46609 14.4773H1.61409V17.1591C3.34209 21.0818 7.42609 24 12.2401 24Z" fill="#34A853"></path>
+<path d="M5.46591 14.4773C5.23591 13.7818 5.10191 13.0455 5.10191 12.2727C5.10191 11.5 5.23591 10.7636 5.46591 10.0682V7.38636H1.61391C0.589914 9.43182 0 11.2955 0 12.2727C0 13.25 0.589914 15.1136 1.61391 17.1591L5.46591 14.4773Z" fill="#FBBC05"></path>
+<path d="M12.2401 5.31818C13.9481 5.31818 15.2201 5.97727 15.8201 6.54545L18.4101 3.95455C16.8821 2.45455 14.8841 1.54545 12.2401 1.54545C7.42609 1.54545 3.34209 4.46364 1.61409 7.38636L5.46609 10.0682C6.44409 7.40909 9.11209 5.31818 12.2401 5.31818Z" fill="#EA4335"></path>
+</g>
+<defs>
+<clippath id="clip0_3024_28135">
+<rect fill="white" height="24" width="24"></rect>
+</clippath>
+</defs>
+</svg>
+<span class="truncate">Sign up with Google</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="relative py-2">
+<div aria-hidden="true" class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
+</div>
+<div class="relative flex justify-center">
+<span class="bg-background-light px-2 text-sm text-gray-500 dark:bg-background-dark dark:text-gray-400">or</span>
+</div>
+</div>
+<!-- Form -->
+<form class="flex flex-col space-y-4">
+<!-- Email Input -->
+<div>
+<label class="sr-only" for="email">Email Address</label>
+<input class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 placeholder-gray-500 focus:border-primary focus:ring-primary dark:border-gray-600 dark:bg-background-dark dark:text-white dark:placeholder-gray-400" id="email" name="email" placeholder="your@email.com" required="" type="email"/>
+</div>
+<!-- Password Input -->
+<div>
+<label class="sr-only" for="password">Password</label>
+<input class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 placeholder-gray-500 focus:border-primary focus:ring-primary dark:border-gray-600 dark:bg-background-dark dark:text-white dark:placeholder-gray-400" id="password" name="password" placeholder="Password" required="" type="password"/>
+</div>
+<!-- Checkbox -->
+<div class="flex items-center">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700" id="terms" name="terms" type="checkbox"/>
+<label class="ml-2 block text-sm text-gray-700 dark:text-gray-300" for="terms">I agree to <a class="font-medium text-primary hover:underline" href="#">Terms &amp; Privacy</a></label>
+</div>
+<!-- Primary CTA Button -->
+<button class="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark" type="submit">
+                        Create Account
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Links -->
+<div class="flex flex-col items-center space-y-4 pt-2">
+<p class="text-sm text-gray-600 dark:text-gray-400">
+                        Already have an account?
+                        <a class="font-medium text-primary hover:underline" href="#">Login</a>
+</p>
+<button class="h-10 rounded-lg px-4 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10">Skip - Continue as Guest</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

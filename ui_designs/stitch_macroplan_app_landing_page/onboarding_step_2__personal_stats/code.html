@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ff6933",
+              "background-light": "#f8f6f5",
+              "background-dark": "#23140f",
+              "text-light": "#1d110c",
+              "text-dark": "#f8f6f5",
+              "input-light": "#ffffff",
+              "input-dark": "#3a2a25",
+              "border-light": "#ead5cd",
+              "border-dark": "rgba(234, 213, 205, 0.2)",
+              "inactive-light": "#ead5cd",
+              "inactive-dark": "rgba(234, 213, 205, 0.2)",
+              "placeholder-light": "#a15d45",
+              "placeholder-dark": "rgba(161, 93, 69, 0.8)",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex flex-col flex-1">
+<!-- Top App Bar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between">
+<button class="text-text-light dark:text-text-dark flex size-12 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">arrow_back</span>
+</button>
+</div>
+<!-- Page Indicators -->
+<div class="flex w-full flex-row items-center justify-center gap-3 py-3">
+<div class="h-2 w-2 rounded-full bg-inactive-light dark:bg-inactive-dark"></div>
+<div class="h-2 w-2 rounded-full bg-primary"></div>
+<div class="h-2 w-2 rounded-full bg-inactive-light dark:bg-inactive-dark"></div>
+<div class="h-2 w-2 rounded-full bg-inactive-light dark:bg-inactive-dark"></div>
+<div class="h-2 w-2 rounded-full bg-inactive-light dark:bg-inactive-dark"></div>
+<div class="h-2 w-2 rounded-full bg-inactive-light dark:bg-inactive-dark"></div>
+</div>
+<!-- Headline Text -->
+<h1 class="text-text-light dark:text-text-dark tracking-tight text-[32px] font-bold leading-tight px-4 text-left pb-3 pt-6">Tell us about yourself</h1>
+<!-- Form -->
+<div class="flex flex-col gap-4 px-4 py-3 flex-grow">
+<!-- Age Input -->
+<div class="flex flex-col">
+<label class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2" for="age">Age</label>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark h-14 placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark p-[15px] pr-20 text-base font-normal leading-normal" id="age" type="number" value="25"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-placeholder-light dark:text-placeholder-dark text-base">years</span>
+</div>
+</div>
+<!-- Weight Input -->
+<div class="flex flex-col">
+<label class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2" for="weight">Weight</label>
+<div class="relative flex items-center">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark h-14 placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark p-[15px] pr-24 text-base font-normal leading-normal" id="weight" type="number" value="180"/>
+<select class="absolute right-0 h-14 bg-transparent border-0 rounded-r-xl text-text-light dark:text-text-dark font-medium focus:ring-0 appearance-none pr-8 pl-3" style="background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 20 20%27%3e%3cpath stroke=%27%23ff6933%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%271.5%27 d=%27m6 8 4 4 4-4%27/%3e%3c/svg%3e'); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em;">
+<option>lbs</option>
+<option>kg</option>
+</select>
+</div>
+</div>
+<!-- Height Input -->
+<div class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Height</p>
+<div class="flex gap-4">
+<div class="relative flex-1">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark h-14 placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark p-[15px] pr-12 text-base font-normal leading-normal" type="number" value="5"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-placeholder-light dark:text-placeholder-dark text-base">ft</span>
+</div>
+<div class="relative flex-1">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark h-14 placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark p-[15px] pr-12 text-base font-normal leading-normal" type="number" value="10"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-placeholder-light dark:text-placeholder-dark text-base">in</span>
+</div>
+</div>
+</div>
+<!-- Sex Toggle -->
+<div class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Sex</p>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 rounded-xl h-14 text-base font-medium bg-primary text-white border border-primary">
+<span>Male</span>
+<span class="material-symbols-outlined text-xl">check</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-xl h-14 text-base font-medium bg-input-light dark:bg-input-dark text-text-light dark:text-text-dark border border-border-light dark:border-border-dark">
+<span>Female</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom CTA -->
+<div class="sticky bottom-0 w-full p-4 bg-background-light dark:bg-background-dark">
+<button class="flex w-full items-center justify-center gap-2 rounded-full bg-primary py-4 px-5 text-base font-bold text-white shadow-lg shadow-primary/30">
+<span>Continue</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

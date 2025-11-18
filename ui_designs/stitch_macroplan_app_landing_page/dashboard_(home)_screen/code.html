@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f56e3d",
+              "background-light": "#f8f6f5",
+              "background-dark": "#221510",
+              "text-primary-light": "#1c110d",
+              "text-primary-dark": "#fcf9f8",
+              "text-secondary-light": "#9c5f49",
+              "text-secondary-dark": "#a89999",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "border-light": "#e8d5ce",
+              "border-dark": "#4a3a34",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden pb-24">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex h-16 items-center bg-background-light/80 dark:bg-background-dark/80 px-4 backdrop-blur-sm">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<h2 class="text-text-primary-light dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em]">MacroPlan</h2>
+</div>
+<div class="flex flex-1 items-center justify-end gap-2">
+<button class="flex h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-text-primary-light dark:text-text-primary-dark">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAipRxy7GoCvy5CNqUtjOGQEBil5coRG6Bw5OmROOrNjqHF9_IDUgOsqfeS8eBr70kLY1HoNBS-Ncm8fKScrBTADFMLQXmfhVjG3vN6HThkFaAAXdCHgyvnL8ybK0fUV6ZYEBeloJ_Qpzi3a1s7kNrPLnjelRjnF1J_KgFwz3RiARY_Im8RfZvJBM_JxL5k4fmZI40NtKtq9QwMxWOJ67UJtYi9IKUy6ioKcRD6ADFzoQLx80aK5TnhDf2pATRNC5X8sbKLOHOH_g");'></div>
+</div>
+</div>
+<!-- Title Text -->
+<h1 class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold leading-tight tracking-[-0.015em] px-4 text-left pt-2 pb-4">Good morning, Alex! 👋</h1>
+<!-- Today's Macro Target Card -->
+<div class="px-4 pb-4 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-card-light dark:bg-card-dark p-4">
+<p class="text-text-primary-light dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em]">Today's Macro Target</p>
+<div class="flex items-baseline gap-2 pt-2">
+<p class="text-text-primary-light dark:text-text-primary-dark text-3xl font-extrabold leading-tight tracking-tighter">2,450</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal">cal</p>
+</div>
+<div class="w-full pt-3 pb-4">
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Progress</span>
+<span class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">60% eaten</span>
+</div>
+<div class="w-full bg-background-light dark:bg-background-dark rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 60%"></div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3 border-t border-border-light dark:border-border-dark pt-4">
+<div class="flex items-center gap-2">
+<span class="text-xl">🥩</span>
+<div class="flex flex-col">
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs">Protein</p>
+<p class="text-text-primary-light dark:text-text-primary-dark text-sm font-bold">180g</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xl">🍚</span>
+<div class="flex flex-col">
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs">Carbs</p>
+<p class="text-text-primary-light dark:text-text-primary-dark text-sm font-bold">280g</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xl">🥑</span>
+<div class="flex flex-col">
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs">Fat</p>
+<p class="text-text-primary-light dark:text-text-primary-dark text-sm font-bold">68g</p>
+</div>
+</div>
+</div>
+<div class="pt-4 mt-2">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/10 dark:bg-primary/20 text-primary text-sm font-bold leading-normal">
+<span class="truncate">View Today's Plan →</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Generate New Meal Plan CTA -->
+<div class="px-4 pb-4">
+<div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl bg-primary p-5 text-white">
+<div class="flex flex-col gap-1">
+<p class="text-base font-bold leading-tight">✨ Generate New Meal Plan</p>
+<p class="text-base font-normal leading-normal text-white/80">Create a new macro-perfect plan in 3 seconds</p>
+</div>
+<button class="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white text-primary text-sm font-bold leading-normal">
+<span class="truncate">Generate Now →</span>
+</button>
+</div>
+</div>
+<!-- Section Header: Recent Plans -->
+<h2 class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-3">Recent Plans</h2>
+<!-- Horizontal Scrollable Meal Plan Cards -->
+<div class="relative w-full">
+<div class="flex gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide">
+<!-- Plan Card 1 -->
+<div class="flex w-3/4 flex-shrink-0 flex-col rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-3 @container">
+<div class="grid grid-cols-2 gap-2 mb-3">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Grilled chicken and asparagus" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZFOdDXctoT4i9-WTpOVgcm4m65cQVGGeWbB_JD8Wv8pQzPQB91TZYPfnLKRwK6DT0IZJ6_iVlSA_oVQtJBB2Rd_6vSLEY0Bhukw6Ts6Ekdrrc8QsG_sI6RFKt-bWYli9-dbk6vkAYwgZuyLP1WAmWHCjK1zjR9UcAoe0HFXhSL3-cR9Z9q9rR5TSW9KS1DQTFFQMcx5lx9tDdr6rbr0dZgqCHVtLvtT4tGpned2t3Ibr0zeJkddJMjfKDD0w8KlIvwqK-hYqomQ");'></div>
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Salmon with rice and broccoli" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEimdDBvIchti9tLeACb3dMDYQ0V8XIKAhkNW-RIGFeD1p3YO0rmdcu-M_KH7esDPGFJJWQjzTCIhKxcuNs0s_lqpM3mU1A2p9A5v31AsKP62JHijv3009PbC-pq2PQsOvP9axBNhk1G2p76K2m2wyRP9_uW8Vx9Lv0boK4hLZsS0XP_QujALnfjR0jdoYJl08jPAt8PLIhOEySexLYmg7U35xygoV0nRaqMtNZOmwqZZm-zIbr0z9JrSVH_U8jVMyunzSmR0Kfg");'></div>
+</div>
+<p class="text-text-primary-light dark:text-text-primary-dark text-base font-bold leading-tight">7-Day Muscle Plan</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">Nov 1-7, 2025</p>
+<p class="text-primary text-sm font-medium mt-1">2,450 cal/day</p>
+</div>
+<!-- Plan Card 2 -->
+<div class="flex w-3/4 flex-shrink-0 flex-col rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-3 @container">
+<div class="grid grid-cols-2 gap-2 mb-3">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Protein pancakes with berries" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC02Y846YkbXoKDQ8fQ6Zwa0AM7PoY_NvxWV1q9tftqpeiNwIw72vc8DzheiI8eJF_5rU1iPo_fd7Y2eJx_f2c6XsBt4cuh9-AmxOePD3zuldYgb521sxy3SuUU0zdLIl9yneQwiisOrXp5bju2ibSOCmcKELNab1lH51Sz2ooiANpzvZqCgsOfLG1j1xnGjL9kt8rY8QPiYFcOyyZgaMlzLU9XCgRfqqdI3oG7C33oq5oU7bZkhWX6Bf66CeU3AXjTBQBx_7ia4A");'></div>
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Steak and sweet potato" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCgptq5oZT7ajR7mX3gHECCeZ94EdMLPJHpH9vTU0bKcRukj2CBxNQ8u6IFX5QZC06x_ZUERetjhoIcE3tyNKeOT_TScdQ-q2rUENwXHht10sFJYb55vOG0y_xlt2dBdjkmJwiWPUSiix1n4kCDXL-GZBbuBzssVEn4aHoFG4AXhGPEPTkfP_AT9bz2JWi-SwinNiFc5i7ybZdW-4q355-h-XnNtoY4znmSFJ45U8S68oJL_LW1mAtVNbgSt2qbXUkgiduYVbhRlw");'></div>
+</div>
+<p class="text-text-primary-light dark:text-text-primary-dark text-base font-bold leading-tight">High-Protein Week</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">Oct 25-31, 2025</p>
+<p class="text-primary text-sm font-medium mt-1">2,600 cal/day</p>
+</div>
+<!-- Plan Card 3 -->
+<div class="flex w-3/4 flex-shrink-0 flex-col rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-3 @container">
+<div class="grid grid-cols-2 gap-2 mb-3">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Yogurt bowl with fruit" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBePxl5VGCngcwJu1wdRSHh5A_URsrjMJtOKBUNyr56k0yeIsqNJrZwnxp6ciU74ZA2S3ntww0k9m1xGlrrK_jSNof1zZfgel2iV5GV7C7r48b1ail8ZAKSS1-tgvP4NQMt2sMmdL0quYO10mHCTufPaH8VZBo1vzDo6MGyrwAL3qLzblqDRq7OHomydD0m0So8vXCqSQtGLPV7ZPlg3MZmteiw3kLGxinR_yt7Y8j4sPvxe0BjytY5QJibVXC6MpFholkMlKl1jg");'></div>
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Quinoa salad with vegetables" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAro1qFAmz2fCdH2_NM_NegvwbQnVIX-0P184btsgrF0aM5sFFO_QBboeEjCDuQ11fhighBjxyIg25FPEkyqy9R4Z5as_IV6E2uUbeuhTlJeCObbpmgXm0YAV3KQ4gqOzwlaS3jVthGNz_AH1szRHcmbxwBaMsBUiBPDOEhA7al5GCGWMibN8y5zlwIs42ld_K60lNTqvRhDvGRqK38w6H95nVXu3a2AH3fQFpE_d0m-B0mLRfKwSaEY_0pbXBVg5n2fhW0PvcBIw");'></div>
+</div>
+<p class="text-text-primary-light dark:text-text-primary-dark text-base font-bold leading-tight">Lean Bulk Cycle</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">Oct 18-24, 2025</p>
+<p class="text-primary text-sm font-medium mt-1">2,800 cal/day</p>
+</div>
+</div>
+</div>
+<!-- Section Header: Quick Stats -->
+<h2 class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-3">Quick Stats</h2>
+<!-- Side-by-side Stat Cards -->
+<div class="grid grid-cols-2 gap-4 px-4 pb-4">
+<div class="flex flex-col gap-1 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
+<p class="text-text-primary-light dark:text-text-primary-dark text-2xl font-bold">12</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">Total Plans Created</p>
+</div>
+<div class="flex flex-col gap-1 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
+<p class="text-text-primary-light dark:text-text-primary-dark text-2xl font-bold">45</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">Total Meals Logged</p>
+</div>
+</div>
+<!-- Bottom Tab Bar -->
+<div class="fixed bottom-0 left-0 right-0 h-16 bg-card-light/80 dark:bg-card-dark/80 backdrop-blur-sm border-t border-border-light dark:border-border-dark">
+<div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+<button class="inline-flex flex-col items-center justify-center px-5 text-primary" type="button">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-xs font-bold">Home</span>
+</button>
+<button class="inline-flex flex-col items-center justify-center px-5 text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark" type="button">
+<span class="material-symbols-outlined text-2xl">menu_book</span>
+<span class="text-xs">Recipes</span>
+</button>
+<button class="inline-flex flex-col items-center justify-center px-5 text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark" type="button">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+<span class="text-xs">Plans</span>
+</button>
+<button class="inline-flex flex-col items-center justify-center px-5 text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark" type="button">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-xs">Profile</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

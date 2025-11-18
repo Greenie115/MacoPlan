@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan - Recipes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "protein": "#E63946",
+            "carbs": "#457B9D",
+            "fat": "#F4A261",
+            "brand-orange": "#FF6B35"
+          },
+          fontFamily: {
+            "inter": ["Inter", "sans-serif"]
+          },
+          fontWeight: {
+             'normal': 400,
+             'semibold': 600,
+          },
+          boxShadow: {
+            'card': '0 2px 8px rgba(0,0,0,0.08)',
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-white font-inter">
+<div class="relative mx-auto flex h-auto min-h-screen w-full max-w-md flex-col overflow-x-hidden bg-white">
+<div class="flex items-center bg-white p-4 justify-between sticky top-0 z-10">
+<div class="flex size-10 shrink-0 items-center justify-start">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-brand-orange" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAUZSzKfjmqwEQ0lDOUjms0OyrszTysHHHI0tvVp-MA2Q0-4z81ZyqXBlItVTLfU_EclYmf4Q862x832dcuLyxJ_CyUCOCMWnEX5zQo933EA8dCTMTgYXgU9Qr26WJbUR3c4Vf3FcWD_J_A7L_WEmL5hxoEn3mGlWU0rHB1IqyXQ1Ot1oYw7xmJm7y6VczQlf5DnxSjK73rir6sEKYvnT3D8vpv6fWS6W_rA65DRBqAKkDPQjpzWx10wzbXAwkD_Mxj7lc7GQ8Eg");'></div>
+</div>
+<h1 class="text-xl font-semibold leading-tight tracking-[-0.015em] flex-1 text-center">MacroPlan</h1>
+<div class="flex w-10 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-transparent text-gray-800 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-gray-800 text-2xl">notifications</span>
+</button>
+</div>
+</div>
+<h2 class="text-gray-900 tracking-tight text-[28px] font-semibold leading-tight px-4 text-left pb-3 pt-4">Recipes</h2>
+<div class="px-4 py-2">
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+<span class="material-symbols-outlined text-gray-500">search</span>
+</div>
+<input class="block w-full h-[48px] rounded-[12px] border border-gray-300 py-2 pl-12 pr-4 text-base text-gray-900 placeholder:text-gray-500 focus:border-brand-orange focus:ring-brand-orange" placeholder="Search recipes..." type="search" value=""/>
+</div>
+</div>
+<div class="flex gap-2 p-4 pt-2 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none]">
+<div class="flex h-[48px] shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-[12px] bg-brand-orange px-4">
+<p class="text-white text-base font-semibold leading-normal">High-Protein</p>
+</div>
+<div class="flex h-[48px] shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-[12px] border-2 border-brand-orange bg-white px-4">
+<p class="text-brand-orange text-base font-semibold leading-normal">Low-Carb</p>
+</div>
+<div class="flex h-[48px] shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-[12px] border-2 border-brand-orange bg-white px-4">
+<p class="text-brand-orange text-base font-semibold leading-normal">Quick</p>
+</div>
+<div class="flex h-[48px] shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-[12px] border-2 border-brand-orange bg-white px-4">
+<p class="text-brand-orange text-base font-semibold leading-normal">Breakfast</p>
+</div>
+<div class="flex h-[48px] shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-[12px] border-2 border-brand-orange bg-white px-4">
+<p class="text-brand-orange text-base font-semibold leading-normal">Lunch</p>
+</div>
+<div class="flex h-[48px] shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-[12px] border-2 border-brand-orange bg-white px-4">
+<p class="text-brand-orange text-base font-semibold leading-normal">Dinner</p>
+</div>
+</div>
+<div class="px-4 py-2">
+<div class="relative flex flex-1 flex-col items-start justify-between gap-3 rounded-[12px] bg-orange-50 p-4 sm:flex-row sm:items-center">
+<div class="flex flex-col gap-1">
+<p class="text-gray-900 text-sm font-semibold leading-tight">Free: 100 recipes available</p>
+</div>
+<a class="text-sm font-semibold leading-normal tracking-[0.015em] flex gap-1 text-brand-orange items-center" href="#">
+                    Upgrade for full access →
+                </a>
+<button class="absolute top-2 right-2 p-1 text-gray-500">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+</div>
+<div class="px-4 pt-4">
+<hr class="border-gray-200"/>
+</div>
+<div class="flex justify-between items-center px-4 pt-4 pb-2">
+<h3 class="text-gray-900 text-xl font-semibold">Popular Recipes</h3>
+</div>
+<div class="grid grid-cols-2 gap-4 px-4 pb-28">
+<div class="flex flex-col gap-4 rounded-[16px] border border-[#E9ECEF] bg-white p-4 shadow-card">
+<div class="aspect-square w-full rounded-[12px] bg-cover bg-center" data-alt="A bowl of high-protein chicken and rice" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiBNcI-Yk7upg3LAH-m99CQIZeHXjG3ng_Ou9hSyj2zV4bLeNjk6Hv77P9Wl1IKCXiNprWmwNd_0ClZRluOki_wtWNrr7QskQZ3pgrQZo5qyi_xzVyMmgSW3ZQ9rJ7RulemqscI5fsEq40ylA5hg58hfc3wqi_lGUriu0gvaIR6AP4ZrwVzl_F2Pwt0Jm8Oc4S3st8MoTzZLYps22ZlZ3sBBOLCvrvhzBWyW0fXXww5RRuJe3uk3BU0s97rXY1czuTpCgC8j0Cmw");'></div>
+<div class="flex flex-col gap-2">
+<p class="font-semibold text-base leading-tight text-gray-900">Chicken &amp; Rice</p>
+<p class="text-sm text-gray-500">680 cal</p>
+<div class="flex items-center gap-3 text-xs">
+<span class="flex items-center gap-1 font-medium text-protein">🥩 48g</span>
+<span class="flex items-center gap-1 font-medium text-carbs">🍞 75g</span>
+<span class="flex items-center gap-1 font-medium text-fat">🥑 18g</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-[16px] border border-[#E9ECEF] bg-white p-4 shadow-card">
+<div class="aspect-square w-full rounded-[12px] bg-cover bg-center" data-alt="A plate of grilled salmon with asparagus" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBI_7l3kJIAgLPFpWaz0Led6ody4lbISim-QDlh8agbhZt0qvipTBSvetjm3DPNDOuGMbkldSD9Y0X0t8noxRH_W7fLeAde6C7cWP-oyxnRvtFSH4b6On5jxuhWeZBk0fF_JrDQz_XW6LbfrT_X6S2i6We7ouvU27qj89a8wFW0pjdqjAHIZ35r2sssiJ7eGsBxKp1iu0h3Gj4LN8S_X8ZHIgtNPPoU4dL7a3FOht719UOBfThM8-WNLjo1cRztdlhH-slOVy5DmA");'></div>
+<div class="flex flex-col gap-2">
+<p class="font-semibold text-base leading-tight text-gray-900">Grilled Salmon</p>
+<p class="text-sm text-gray-500">550 cal</p>
+<div class="flex items-center gap-3 text-xs">
+<span class="flex items-center gap-1 font-medium text-protein">🥩 42g</span>
+<span class="flex items-center gap-1 font-medium text-carbs">🍞 10g</span>
+<span class="flex items-center gap-1 font-medium text-fat">🥑 38g</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-[16px] border border-[#E9ECEF] bg-white p-4 shadow-card">
+<div class="aspect-square w-full rounded-[12px] bg-cover bg-center" data-alt="A bowl of greek yogurt with berries and nuts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBSUuCFd26QUM9NeOl1XZdQelYEMeS_GK6Hg68fBv7WtpFPn08wQHmux5netDFGCmxDCMz9DFB9TWcBllN-bD3_bJ0Gop1CaFg4mwRjvw8Ep3d0zxXcUhDr0stnvRd2XUoGVDf1kSR8OD6j83arqtQysOhpYLc4gRVbtrnY5kj-Vn3Ppidank2rU22gQJsF6b-qLdHjLtI83YuUI8WrSH28gsjUVR1s0gBhbZK2CEMqC3ad37-kpPl9VKGrsksrtJY5LrguySyBNA");'></div>
+<div class="flex flex-col gap-2">
+<p class="font-semibold text-base leading-tight text-gray-900">Protein Yogurt Bowl</p>
+<p class="text-sm text-gray-500">420 cal</p>
+<div class="flex items-center gap-3 text-xs">
+<span class="flex items-center gap-1 font-medium text-protein">🥩 35g</span>
+<span class="flex items-center gap-1 font-medium text-carbs">🍞 30g</span>
+<span class="flex items-center gap-1 font-medium text-fat">🥑 18g</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-[16px] border border-[#E9ECEF] bg-white p-4 shadow-card">
+<div class="aspect-square w-full rounded-[12px] bg-cover bg-center" data-alt="A lean beef steak with sweet potato fries" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlRbVutRi-8MvJ6sq1U8y1bjueF5LXBZws3H5_tEkVuabXcKLGnGq4hRqaGOoCmJuMgDDF2fi8vtAtrc5srOivUfWOXh_rv5UdFCJg6YoBxvZKo0XrmQJMT-ecmTeqFo3j3k4egB-xhc_EubtGrXSwpL4R63VCHF6r-yjc0iDLlk9NVk0D1iIecMxbY67ShzqBDOaL1cWgewVBKNyQhvdCpduW5Ie4CUeSU5PmH-S_lB6HOIq9hBksUpcHbQ5jhD8zrFWW259Xbg");'></div>
+<div class="flex flex-col gap-2">
+<p class="font-semibold text-base leading-tight text-gray-900">Steak &amp; Fries</p>
+<p class="text-sm text-gray-500">710 cal</p>
+<div class="flex items-center gap-3 text-xs">
+<span class="flex items-center gap-1 font-medium text-protein">🥩 55g</span>
+<span class="flex items-center gap-1 font-medium text-carbs">🍞 50g</span>
+<span class="flex items-center gap-1 font-medium text-fat">🥑 30g</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-[16px] border border-[#E9ECEF] bg-white p-4 shadow-card">
+<div class="aspect-square w-full rounded-[12px] bg-cover bg-center" data-alt="A stack of protein pancakes with maple syrup" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDJw22aZL1lezdIZkO3PzrRZri4P1LEN4pK1Arllfil5aoh_CoZbQ8iadC9ew2sulRggH7nYYp5PwBN5hWj2bGDYAmftMeWpcbBd13qSD6lNpvBqIG-XVOyM1XnfH598YCxPWHXOLTuTQCGOV4x64hXrNTd_ACzmNkZb__tt-qXUtCIdk_tLyJ3II1ng5XSzJOVUwfF54_qVWgXe9yMvqHGGXeIonbQLRWw08C9Uwo8aLMQCIODdFDaz3b9WU68AFntTpDHvh48MA");'></div>
+<div class="flex flex-col gap-2">
+<p class="font-semibold text-base leading-tight text-gray-900">Protein Pancakes</p>
+<p class="text-sm text-gray-500">480 cal</p>
+<div class="flex items-center gap-3 text-xs">
+<span class="flex items-center gap-1 font-medium text-protein">🥩 30g</span>
+<span class="flex items-center gap-1 font-medium text-carbs">🍞 60g</span>
+<span class="flex items-center gap-1 font-medium text-fat">🥑 15g</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-[16px] border border-[#E9ECEF] bg-white p-4 shadow-card">
+<div class="aspect-square w-full rounded-[12px] bg-cover bg-center" data-alt="A bowl of quinoa salad with chicken and vegetables" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDJbqNI0bIQAFOnwwIoRkjPXE4CzAWUAROMC_ECuF6veTgwVfAIB-tDkLPzMHZz0sRCsjzPQt0kxevPBRM3rMc4E6WnWYDRyvr0IFsRpLEu8CIrXfR280XEakXjg-EFQMqRXub0V1ioZP13ijh_PH2JXs8o-mBao5G3y8bR4iUF_GP9jMGFW7N65Vxh7HdVJ7ZRilZ8wdX1Ng8mg4-ccxwhuZCvSsvEo56GanwbNZFxgN3hAPeOr1RLFI3imLGx4R8quDxkZF8aWQ");'></div>
+<div class="flex flex-col gap-2">
+<p class="font-semibold text-base leading-tight text-gray-900">Quinoa Chicken Salad</p>
+<p class="text-sm text-gray-500">520 cal</p>
+<div class="flex items-center gap-3 text-xs">
+<span class="flex items-center gap-1 font-medium text-protein">🥩 40g</span>
+<span class="flex items-center gap-1 font-medium text-carbs">🍞 45g</span>
+<span class="flex items-center gap-1 font-medium text-fat">🥑 20g</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-0 left-0 right-0 z-10 mx-auto max-w-md border-t border-gray-200 bg-white/80 backdrop-blur-sm">
+<div class="flex h-20 items-center justify-around">
+<a class="flex flex-col items-center gap-1 text-gray-500" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<p class="text-xs font-normal">Home</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-brand-orange" href="#">
+<span class="material-symbols-outlined text-2xl">restaurant_menu</span>
+<p class="text-xs font-semibold">Recipes</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500" href="#">
+<span class="material-symbols-outlined text-2xl">event_note</span>
+<p class="text-xs font-normal">Plans</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<p class="text-xs font-normal">Profile</p>
+</a>
+</div>
+</div>
+</div>
+
+</body></html>

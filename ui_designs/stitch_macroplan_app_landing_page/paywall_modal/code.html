@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan Premium</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f56e3d",
+                        "background-light": "#f8f6f5",
+                        "background-dark": "#221510",
+                        "text-light": "#1c110d",
+                        "text-dark": "#f8f6f5",
+                        "border-light": "#e7e5e4",
+                        "border-dark": "#3f322e",
+                        "success": "#00C48C",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col text-text-light dark:text-text-dark group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-end sticky top-0 z-10">
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0 text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined" style="font-size: 28px;">close</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center px-6 pb-8 pt-4">
+<!-- Lock Icon -->
+<div class="flex size-20 items-center justify-center rounded-full bg-primary/20 mb-6 text-primary">
+<span class="material-symbols-outlined" style="font-size: 40px;">lock</span>
+</div>
+<!-- HeadlineText -->
+<h2 class="text-text-light dark:text-text-dark tracking-light text-[28px] font-bold leading-tight text-center pb-3">You've reached your limit</h2>
+<!-- TitleText -->
+<p class="text-text-light/70 dark:text-text-dark/70 text-lg font-normal leading-relaxed text-center pb-8">You've used all 3 free meal plans. Upgrade to Premium for unlimited plans and more features.</p>
+<hr class="w-full border-t border-border-light dark:border-border-dark my-2"/>
+<!-- SectionHeader -->
+<h3 class="text-text-light dark:text-text-dark text-xl font-bold leading-tight tracking-[-0.015em] py-6 self-start">What You Get with Premium:</h3>
+<!-- Feature List -->
+<ul class="space-y-4 w-full text-lg text-text-light dark:text-text-dark mb-8">
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<span>Unlimited meal plan generation</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<span>Full recipe database (2M+)</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<span>Unlimited meal swaps</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<span>Advanced customization</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<span>Export plans as PDF</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<span>Priority support</span>
+</li>
+</ul>
+<hr class="w-full border-t border-border-light dark:border-border-dark my-2"/>
+<!-- Plan Selection Header -->
+<h3 class="text-text-light dark:text-text-dark text-xl font-bold leading-tight tracking-[-0.015em] py-6 self-start">Choose Your Plan:</h3>
+<!-- Annual Plan Card (Highlighted) -->
+<div class="relative w-full border-2 border-primary bg-primary/10 dark:bg-primary/20 p-5 rounded-xl mb-4">
+<div class="absolute -top-3 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">savings</span>
+                    BEST VALUE
+                </div>
+<div class="flex justify-between items-center mb-2">
+<p class="text-xl font-bold text-text-light dark:text-text-dark">Annual</p>
+<p class="text-xl font-bold text-text-light dark:text-text-dark">$79.99/year</p>
+</div>
+<p class="text-text-light/70 dark:text-text-dark/70 mb-5">Save 33% ($6.67/month)</p>
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-primary text-white gap-2 text-lg font-bold leading-normal tracking-wide">
+                    Subscribe Annual
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Monthly Plan Card -->
+<div class="w-full border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-5 rounded-xl mb-8">
+<div class="flex justify-between items-center mb-2">
+<p class="text-xl font-bold text-text-light dark:text-text-dark">Monthly</p>
+<p class="text-xl font-bold text-text-light dark:text-text-dark">$9.99/month</p>
+</div>
+<p class="text-text-light/70 dark:text-text-dark/70 mb-5">Billed monthly</p>
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-gray-200 dark:bg-gray-700 text-text-light dark:text-text-dark gap-2 text-lg font-bold leading-normal tracking-wide">
+                    Subscribe Monthly
+                </button>
+</div>
+<!-- Trust Signals -->
+<div class="flex flex-col items-center justify-center space-y-2 text-sm text-text-light/70 dark:text-text-dark/70 mb-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">check</span>
+<span>Cancel anytime</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">check</span>
+<span>7-day money-back guarantee</span>
+</div>
+</div>
+<hr class="w-full border-t border-border-light dark:border-border-dark mb-4"/>
+<!-- Maybe Later Button -->
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-text-light/70 dark:text-text-dark/70 gap-2 text-lg font-bold leading-normal tracking-wide">
+                Maybe Later
+            </button>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Generate Meal Plan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#f56e3d",
+            "background-light": "#f8f6f5",
+            "background-dark": "#221510",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-800 font-display">
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden">
+<!-- Background Content (blurred) -->
+<div class="absolute inset-0 z-0 h-full w-full">
+<img alt="A vibrant and healthy meal with salmon, avocado, and fresh greens, representing the app's focus on nutrition." class="h-full w-full object-cover blur-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcyZW7C8dh9S4ej8kz0m-Qfy9o1Q0mG3k-LQIe4sa1kn-r1pCohGaMIQJyoi3GqyvXdtUIwxHfJKxiaLj4H7NHHt1MpjABO670XOKyyI5J71C-5hHl8sghXFzf0FFrkQtATCQW1t_u1X2raX7vvbCpbrqmgBzikMF5h9yiY3P_fsQuYqmmfb4tNqIv07iRqCQSYC2wCZzsaUG_XsmWKqEi2yTQnzSaDADzzvI3fCDaC_rQqZsEEFU-wp-6OCYxi_8VmciHJtkOCw"/>
+</div>
+<!-- Bottom Sheet Modal Container -->
+<div class="relative flex h-full min-h-screen w-full flex-col items-center justify-end bg-black/30">
+<div class="flex w-full max-w-lg flex-col rounded-t-lg bg-background-light dark:bg-background-dark shadow-2xl">
+<!-- BottomSheetHandle -->
+<button class="flex h-5 w-full items-center justify-center pt-3">
+<div class="h-1.5 w-10 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+</button>
+<!-- HeadlineText -->
+<h3 class="font-display text-[#1c110d] dark:text-gray-100 tracking-light text-2xl font-bold leading-tight px-4 text-center pb-2 pt-5">Generate Meal Plan</h3>
+<!-- Plan Duration Section -->
+<p class="font-display text-[#1c110d] dark:text-gray-300 text-base font-medium leading-normal pb-1 pt-4 px-6">Plan Duration</p>
+<div class="flex px-6 pt-1 pb-3">
+<div class="flex h-11 flex-1 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800/50 p-1.5">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 text-gray-500 dark:text-gray-400 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900/50 has-[:checked]:shadow-sm has-[:checked]:text-primary text-sm font-semibold leading-normal transition-all duration-200">
+<span class="truncate">1 Day</span>
+<input class="invisible w-0" name="plan-duration" type="radio" value="1 Day"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 text-gray-500 dark:text-gray-400 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900/50 has-[:checked]:shadow-sm has-[:checked]:text-primary text-sm font-semibold leading-normal transition-all duration-200">
+<span class="truncate">3 Days</span>
+<input class="invisible w-0" name="plan-duration" type="radio" value="3 Days"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 text-gray-500 dark:text-gray-400 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900/50 has-[:checked]:shadow-sm has-[:checked]:text-primary text-sm font-semibold leading-normal transition-all duration-200">
+<span class="truncate">7 Days</span>
+<input checked="" class="invisible w-0" name="plan-duration" type="radio" value="7 Days"/>
+</label>
+</div>
+</div>
+<!-- Meals Per Day Section -->
+<p class="font-display text-[#1c110d] dark:text-gray-300 text-base font-medium leading-normal pb-1 pt-4 px-6">Meals Per Day</p>
+<div class="flex px-6 pt-1 pb-3">
+<div class="flex h-11 flex-1 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800/50 p-1.5">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 text-gray-500 dark:text-gray-400 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900/50 has-[:checked]:shadow-sm has-[:checked]:text-primary text-sm font-semibold leading-normal transition-all duration-200">
+<span class="truncate">3</span>
+<input class="invisible w-0" name="meals-per-day" type="radio" value="3"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 text-gray-500 dark:text-gray-400 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900/50 has-[:checked]:shadow-sm has-[:checked]:text-primary text-sm font-semibold leading-normal transition-all duration-200">
+<span class="truncate">4</span>
+<input checked="" class="invisible w-0" name="meals-per-day" type="radio" value="4"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 text-gray-500 dark:text-gray-400 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900/50 has-[:checked]:shadow-sm has-[:checked]:text-primary text-sm font-semibold leading-normal transition-all duration-200">
+<span class="truncate">5</span>
+<input class="invisible w-0" name="meals-per-day" type="radio" value="5"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 text-gray-500 dark:text-gray-400 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-900/50 has-[:checked]:shadow-sm has-[:checked]:text-primary text-sm font-semibold leading-normal transition-all duration-200">
+<span class="truncate">6</span>
+<input class="invisible w-0" name="meals-per-day" type="radio" value="6"/>
+</label>
+</div>
+</div>
+<!-- Dietary Preferences Section -->
+<div class="flex items-center justify-between px-6 pt-4 pb-3">
+<p class="font-display text-[#1c110d] dark:text-gray-300 text-base font-medium leading-normal">Dietary Preferences</p>
+<a class="font-display text-sm font-semibold text-primary" href="#">Edit Preferences</a>
+</div>
+<p class="font-display text-gray-600 dark:text-gray-400 text-sm leading-normal px-6 -mt-2">✓ Vegetarian, Gluten-Free</p>
+<!-- Target Macros Section -->
+<p class="font-display text-[#1c110d] dark:text-gray-300 text-base font-medium leading-normal pb-3 pt-6 px-6">Target Macros (per day)</p>
+<div class="grid grid-cols-4 gap-2 px-6">
+<div class="flex flex-col items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800/50 p-3 text-center">
+<span class="material-symbols-outlined text-2xl text-primary" data-icon="kebab_dining"></span>
+<span class="text-xs font-medium text-gray-600 dark:text-gray-400 mt-1">Protein</span>
+<span class="text-sm font-bold text-[#1c110d] dark:text-gray-200">180g</span>
+</div>
+<div class="flex flex-col items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800/50 p-3 text-center">
+<span class="material-symbols-outlined text-2xl text-primary" data-icon="rice_bowl"></span>
+<span class="text-xs font-medium text-gray-600 dark:text-gray-400 mt-1">Carbs</span>
+<span class="text-sm font-bold text-[#1c110d] dark:text-gray-200">280g</span>
+</div>
+<div class="flex flex-col items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800/50 p-3 text-center">
+<span class="material-symbols-outlined text-2xl text-primary" data-icon="egg_alt"></span>
+<span class="text-xs font-medium text-gray-600 dark:text-gray-400 mt-1">Fat</span>
+<span class="text-sm font-bold text-[#1c110d] dark:text-gray-200">68g</span>
+</div>
+<div class="flex flex-col items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 p-3 text-center">
+<span class="material-symbols-outlined text-2xl text-primary" data-icon="local_fire_department"></span>
+<span class="text-xs font-medium text-primary mt-1">Total</span>
+<span class="text-sm font-bold text-primary">2,450 cal</span>
+</div>
+</div>
+<!-- Divider -->
+<div class="px-6 py-4">
+<hr class="border-gray-200 dark:border-gray-700"/>
+</div>
+<!-- Status & Actions -->
+<div class="flex flex-col gap-3 px-6 pb-6 pt-1">
+<p class="font-display text-center text-xs text-gray-500 dark:text-gray-400">Free Plan: 1 of 3 plans remaining</p>
+<button class="flex h-14 w-full items-center justify-center rounded-full bg-primary font-display text-base font-bold text-white shadow-lg transition-transform active:scale-95">Generate in 3 Seconds ⚡️</button>
+<button class="flex h-14 w-full items-center justify-center rounded-full bg-transparent font-display text-base font-semibold text-gray-500 dark:text-gray-400 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

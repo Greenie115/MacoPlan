@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan - Activity Level</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#fa6c38",
+              "background-light": "#f8f6f5",
+              "background-dark": "#23150f",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "1rem",
+              "xl": "1.5rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden" style="--radio-dot-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(250,108,56)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e');">
+<header class="flex flex-col">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between">
+<button class="text-[#1c110d] dark:text-background-light flex size-12 shrink-0 items-center justify-center rounded-full">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+</div>
+<div class="flex w-full flex-row items-center justify-center gap-3 py-5">
+<div class="h-2 w-2 rounded-full bg-primary/30 dark:bg-primary/40"></div>
+<div class="h-2 w-2 rounded-full bg-primary/30 dark:bg-primary/40"></div>
+<div class="h-2 w-2 rounded-full bg-primary"></div>
+<div class="h-2 w-2 rounded-full bg-primary/30 dark:bg-primary/40"></div>
+<div class="h-2 w-2 rounded-full bg-primary/30 dark:bg-primary/40"></div>
+<div class="h-2 w-2 rounded-full bg-primary/30 dark:bg-primary/40"></div>
+</div>
+</header>
+<main class="flex-grow px-4">
+<h1 class="text-[#1c110d] dark:text-white tracking-tight text-[32px] font-bold leading-tight text-left pb-3 pt-6">How active are you?</h1>
+<p class="text-[#9e5e47] dark:text-gray-400 text-base font-normal leading-normal pb-3 pt-1">This helps us calculate your daily calorie needs.</p>
+<div class="flex flex-col gap-3 pt-4">
+<label class="flex items-center gap-4 rounded-xl border border-solid border-[#e9d5ce] dark:border-gray-700 bg-white dark:bg-background-dark p-[15px] has-[:checked]:border-primary has-[:checked]:ring-2 has-[:checked]:ring-primary/30 dark:has-[:checked]:border-primary">
+<div class="text-3xl">🛋️</div>
+<div class="flex grow flex-col">
+<p class="text-[#1c110d] dark:text-white text-base font-medium leading-normal">Sedentary</p>
+<p class="text-[#9e5e47] dark:text-gray-400 text-sm font-normal leading-normal">Little to no exercise</p>
+</div>
+<input class="h-5 w-5 appearance-none rounded-full border-2 border-[#e9d5ce] dark:border-gray-600 bg-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+<label class="flex items-center gap-4 rounded-xl border border-solid border-[#e9d5ce] dark:border-gray-700 bg-white dark:bg-background-dark p-[15px] has-[:checked]:border-primary has-[:checked]:ring-2 has-[:checked]:ring-primary/30 dark:has-[:checked]:border-primary">
+<div class="text-3xl">🚶</div>
+<div class="flex grow flex-col">
+<p class="text-[#1c110d] dark:text-white text-base font-medium leading-normal">Lightly Active</p>
+<p class="text-[#9e5e47] dark:text-gray-400 text-sm font-normal leading-normal">1-3 days/week</p>
+</div>
+<input checked="" class="h-5 w-5 appearance-none rounded-full border-2 border-[#e9d5ce] dark:border-gray-600 bg-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+<label class="flex items-center gap-4 rounded-xl border border-solid border-[#e9d5ce] dark:border-gray-700 bg-white dark:bg-background-dark p-[15px] has-[:checked]:border-primary has-[:checked]:ring-2 has-[:checked]:ring-primary/30 dark:has-[:checked]:border-primary">
+<div class="text-3xl">🏃</div>
+<div class="flex grow flex-col">
+<p class="text-[#1c110d] dark:text-white text-base font-medium leading-normal">Moderately Active</p>
+<p class="text-[#9e5e47] dark:text-gray-400 text-sm font-normal leading-normal">3-5 days/week</p>
+</div>
+<input class="h-5 w-5 appearance-none rounded-full border-2 border-[#e9d5ce] dark:border-gray-600 bg-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+<label class="flex items-center gap-4 rounded-xl border border-solid border-[#e9d5ce] dark:border-gray-700 bg-white dark:bg-background-dark p-[15px] has-[:checked]:border-primary has-[:checked]:ring-2 has-[:checked]:ring-primary/30 dark:has-[:checked]:border-primary">
+<div class="text-3xl">🏋️</div>
+<div class="flex grow flex-col">
+<p class="text-[#1c110d] dark:text-white text-base font-medium leading-normal">Very Active</p>
+<p class="text-[#9e5e47] dark:text-gray-400 text-sm font-normal leading-normal">6-7 days/week</p>
+</div>
+<input class="h-5 w-5 appearance-none rounded-full border-2 border-[#e9d5ce] dark:border-gray-600 bg-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+<label class="flex items-center gap-4 rounded-xl border border-solid border-[#e9d5ce] dark:border-gray-700 bg-white dark:bg-background-dark p-[15px] has-[:checked]:border-primary has-[:checked]:ring-2 has-[:checked]:ring-primary/30 dark:has-[:checked]:border-primary">
+<div class="text-3xl">💪</div>
+<div class="flex grow flex-col">
+<p class="text-[#1c110d] dark:text-white text-base font-medium leading-normal">Extremely Active</p>
+<p class="text-[#9e5e47] dark:text-gray-400 text-sm font-normal leading-normal">2x per day + physical job</p>
+</div>
+<input class="h-5 w-5 appearance-none rounded-full border-2 border-[#e9d5ce] dark:border-gray-600 bg-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0" name="activity_level" type="radio"/>
+</label>
+</div>
+</main>
+<footer class="sticky bottom-0 w-full bg-background-light dark:bg-background-dark p-4 pt-6 pb-8">
+<button class="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-base font-bold text-white shadow-sm">
+<span>Continue</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</footer>
+</div>
+</body></html>

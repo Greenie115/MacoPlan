@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Success Toast Notification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#05d69e",
+              "background-light": "#f5f8f8",
+              "background-dark": "#0f231e",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display flex items-center justify-center min-h-screen">
+<div class="relative w-[375px] h-[812px] bg-white dark:bg-zinc-900 shadow-2xl rounded-xl overflow-hidden border border-gray-200 dark:border-zinc-800">
+<!-- Mock App Content -->
+<header class="p-4 border-b border-gray-200 dark:border-zinc-800">
+<h1 class="text-xl font-bold text-zinc-900 dark:text-zinc-100 text-center">My Meal Plan</h1>
+</header>
+<main class="p-4 space-y-4">
+<div class="bg-zinc-100 dark:bg-zinc-800/50 p-4 rounded-lg">
+<h2 class="font-semibold text-zinc-800 dark:text-zinc-200">Monday</h2>
+<p class="text-zinc-600 dark:text-zinc-400">Breakfast, Lunch, Dinner</p>
+</div>
+<div class="bg-zinc-100 dark:bg-zinc-800/50 p-4 rounded-lg">
+<h2 class="font-semibold text-zinc-800 dark:text-zinc-200">Tuesday</h2>
+<p class="text-zinc-600 dark:text-zinc-400">Breakfast, Lunch, Dinner</p>
+</div>
+<div class="bg-zinc-100 dark:bg-zinc-800/50 p-4 rounded-lg">
+<h2 class="font-semibold text-zinc-800 dark:text-zinc-200">Wednesday</h2>
+<p class="text-zinc-600 dark:text-zinc-400">Breakfast, Lunch, Dinner</p>
+</div>
+</main>
+<!-- Toast Notification -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-max">
+<div class="flex items-center justify-center bg-primary text-white font-display text-base font-normal py-3 px-6 rounded-lg shadow-lg" role="alert">
+<span>✅</span>
+<span class="ml-2">Plan saved!</span>
+</div>
+</div>
+<!-- Mock Tab Bar -->
+<footer class="absolute bottom-0 left-0 right-0 h-16 bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-800">
+<!-- Tab bar content would go here -->
+</footer>
+</div>
+</body></html>

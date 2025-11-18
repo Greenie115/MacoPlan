@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f56e3d",
+              "background-light": "#f8f6f5",
+              "background-dark": "#221510",
+              "card-light": "#ffffff",
+              "card-dark": "#2d1b14",
+              "text-light-primary": "#1A1A1A",
+              "text-dark-primary": "#f8f6f5",
+              "text-light-secondary": "#6B7280",
+              "text-dark-secondary": "#b0a19b",
+              "destructive": "#D92D20",
+              "success": "#12B76A",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative w-full min-h-screen flex flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200/50 dark:border-white/10">
+<h2 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Profile</h2>
+</div>
+<main class="flex-grow pb-8">
+<!-- Profile Header -->
+<div class="p-4 @container">
+<div class="flex w-full flex-col gap-4 items-center bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20" data-alt="User avatar for Alex Johnson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLI24X0BBeyfWL41iPyKQbqiDRrEKfaPO5BOUIpyogKbkZYtFGlNrYxZOwNebWzYx9w8A3y2lyXAuqc3CzaC9ROBe4Dw_Sgptd480_YtOJai9ySF5m4lqHbpV_uT1m5qS62HNPYnOkBw6QRzQZMioF3hefXIMsJzRXtmAf5YQ-BbA3noWKww9nA13TygUca9V2_zq01ERbZOIbCHZPCtpulyLM-s8Rh0l5giSaxlVL3v0Ni7VGu7cDoXIg287fZW0H1uLTBx9HEw");'></div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-text-light-primary dark:text-text-dark-primary text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Alex Johnson</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-base font-normal leading-normal text-center">alex.j@email.com</p>
+</div>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary dark:text-[#ffc5b0] text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px]">
+<span class="truncate">Edit Profile</span>
+</button>
+</div>
+</div>
+<!-- Divider -->
+<div class="px-4"><div class="h-px bg-gray-200 dark:bg-white/10 w-full"></div></div>
+<!-- Plan & Billing Section -->
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6">Plan &amp; Billing</h3>
+<div class="px-4">
+<div class="flex flex-col items-stretch justify-start rounded-xl p-4 bg-card-light dark:bg-card-dark shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex w-full grow flex-col items-stretch justify-center gap-2">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">🆓 Free Plan</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em]">2 of 3 meal plans generated</p>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold leading-normal mt-2 gap-2">
+<span class="truncate">Upgrade to Premium</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="px-4 pt-6"><div class="h-px bg-gray-200 dark:bg-white/10 w-full"></div></div>
+<!-- Your Stats Section -->
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6">Your Stats</h3>
+<div class="grid grid-cols-2 gap-4 px-4">
+<div class="flex flex-col gap-1 rounded-xl p-4 bg-card-light dark:bg-card-dark shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<p class="text-text-light-primary dark:text-text-dark-primary text-2xl font-bold">12</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm">Plans Generated</p>
+</div>
+<div class="flex flex-col gap-1 rounded-xl p-4 bg-card-light dark:bg-card-dark shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<p class="text-text-light-primary dark:text-text-dark-primary text-2xl font-bold">45</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm">Recipes Favorited</p>
+</div>
+</div>
+<!-- Divider -->
+<div class="px-4 pt-6"><div class="h-px bg-gray-200 dark:bg-white/10 w-full"></div></div>
+<!-- Macro Goals Section -->
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6">Macro Goals</h3>
+<div class="px-4">
+<div class="flex flex-col gap-4 rounded-xl p-4 bg-card-light dark:bg-card-dark shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm">Current Targets</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold">2,450 cal/day</p>
+</div>
+<div class="flex justify-between items-center text-center text-sm text-text-light-secondary dark:text-text-dark-secondary">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-3xl text-primary">kebab_dining</span>
+<span>180g Protein</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-3xl text-primary">rice_bowl</span>
+<span>280g Carbs</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-3xl text-primary">egg_alt</span>
+<span>68g Fats</span>
+</div>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm">Goal: <span class="text-text-light-primary dark:text-text-dark-primary font-medium">Build Muscle (Bulk)</span></p>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary dark:text-[#ffc5b0] text-sm font-bold leading-normal tracking-[0.015em] w-full">
+<span class="truncate">Recalculate Macros</span>
+</button>
+</div>
+</div>
+<!-- Dietary Preferences Section -->
+<div class="px-4 pt-6">
+<div class="flex items-center justify-between rounded-xl p-4 bg-card-light dark:bg-card-dark shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-success">check_circle</span>
+<p class="text-text-light-primary dark:text-text-dark-primary">Vegetarian, Gluten-Free</p>
+</div>
+<a class="flex items-center gap-1 text-primary font-bold text-sm" href="#">
+<span>Edit</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Divider -->
+<div class="px-4 pt-6"><div class="h-px bg-gray-200 dark:bg-white/10 w-full"></div></div>
+<!-- Account Settings -->
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6">Account Settings</h3>
+<div class="flex flex-col px-4 gap-px">
+<a class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4 rounded-t-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="text-text-light-primary dark:text-text-dark-primary">Change Password</span>
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary">chevron_right</span>
+</a>
+<a class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="text-text-light-primary dark:text-text-dark-primary">Email Notifications</span>
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary">chevron_right</span>
+</a>
+<div class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4">
+<span class="text-text-light-primary dark:text-text-dark-primary">Dark Mode</span>
+<button class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark">
+<span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-0"></span>
+</button>
+</div>
+<a class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4 rounded-b-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="text-text-light-primary dark:text-text-dark-primary">Language</span>
+<div class="flex items-center gap-2 text-text-light-secondary dark:text-text-dark-secondary">
+<span>English</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+</div>
+<!-- Support & Legal -->
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-6">Support &amp; Legal</h3>
+<div class="flex flex-col px-4 gap-px">
+<a class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4 rounded-t-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="text-text-light-primary dark:text-text-dark-primary">Help Center</span>
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary">chevron_right</span>
+</a>
+<a class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="text-text-light-primary dark:text-text-dark-primary">Contact Support</span>
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary">chevron_right</span>
+</a>
+<a class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="text-text-light-primary dark:text-text-dark-primary">Terms of Service</span>
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary">chevron_right</span>
+</a>
+<a class="flex justify-between items-center bg-card-light dark:bg-card-dark p-4 rounded-b-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" href="#">
+<span class="text-text-light-primary dark:text-text-dark-primary">Privacy Policy</span>
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary">chevron_right</span>
+</a>
+</div>
+<!-- Logout Button -->
+<div class="p-4 mt-4">
+<button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-4 bg-transparent text-destructive text-base font-bold">
+<span class="truncate">Logout</span>
+</button>
+</div>
+<!-- App Version -->
+<div class="text-center px-4 pt-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-xs">App Version 1.0.0</p>
+</div>
+</main>
+</div>
+</body></html>
