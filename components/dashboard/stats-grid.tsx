@@ -25,7 +25,7 @@ export function StatsGrid({
     macroAccuracy >= 90 ? 'success' : macroAccuracy >= 75 ? 'warning' : 'danger'
 
   return (
-    <div className="grid grid-cols-2 gap-3 px-4 md:px-6 lg:px-8">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-6 px-4 md:px-6 lg:px-8">
       {/* Current Streak */}
       <StatsCard
         icon={Flame}

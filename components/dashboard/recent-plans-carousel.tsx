@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useRef, useState, useEffect } from 'react'
 import { MealPlanCard } from './meal-plan-card'
 import { cn } from '@/lib/utils'
 import type { MealPlan } from '@/stores/dashboard-store'
@@ -11,6 +12,38 @@ interface RecentPlansCarouselProps {
 
 export function RecentPlansCarousel({ plans }: RecentPlansCarouselProps) {
   const router = useRouter()
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [showLeftGradient, setShowLeftGradient] = useState(false)
+  const [showRightGradient, setShowRightGradient] = useState(false)
+
+  // Check scroll position to show/hide gradients
+  const checkScroll = () => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    const { scrollLeft, scrollWidth, clientWidth } = container
+
+    // Show left gradient if scrolled past start
+    setShowLeftGradient(scrollLeft > 10)
+
+    // Show right gradient if not at end
+    setShowRightGradient(scrollLeft < scrollWidth - clientWidth - 10)
+  }
+
+  useEffect(() => {
+    checkScroll()
+
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    container.addEventListener('scroll', checkScroll)
+    window.addEventListener('resize', checkScroll)
+
+    return () => {
+      container.removeEventListener('scroll', checkScroll)
+      window.removeEventListener('resize', checkScroll)
+    }
+  }, [plans.length])
 
   if (plans.length === 0) {
     return (
@@ -25,11 +58,24 @@ export function RecentPlansCarousel({ plans }: RecentPlansCarouselProps) {
 
   return (
     <div className="relative w-full">
-      <div className="flex gap-4 overflow-x-auto pb-4 px-4 snap-x snap-mandatory scrollbar-hide md:px-6 lg:px-8">
+      {/* Left gradient indicator */}
+      {showLeftGradient && (
+        <div className="absolute left-0 top-0 bottom-4 w-8 md:w-12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      )}
+
+      {/* Right gradient indicator */}
+      {showRightGradient && (
+        <div className="absolute right-0 top-0 bottom-4 w-8 md:w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      )}
+
+      <div
+        ref={scrollContainerRef}
+        className="flex gap-4 overflow-x-auto pb-4 px-4 snap-x snap-mandatory scrollbar-hide scroll-smooth md:px-6 lg:px-8"
+      >
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className="flex-shrink-0 w-[85%] snap-center md:w-[45%] lg:w-[30%]"
+            className="flex-shrink-0 w-[300px] snap-center sm:w-[340px] md:w-[360px] lg:w-[380px]"
           >
             <MealPlanCard
               {...plan}

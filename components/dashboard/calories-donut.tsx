@@ -1,7 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { cn } from '@/lib/utils'
-import { macroColors } from '@/lib/design-tokens'
+import { macroColors, chartColors } from '@/lib/design-tokens'
 
 interface CaloriesDonutProps {
   targetCalories: number
@@ -15,6 +16,8 @@ interface CaloriesDonutProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }
 
+type SelectedMacro = 'protein' | 'carbs' | 'fat' | null
+
 export function CaloriesDonut({
   targetCalories,
   caloriesEaten,
@@ -26,6 +29,10 @@ export function CaloriesDonut({
   fatEaten,
   size = 'md',
 }: CaloriesDonutProps) {
+  const [selectedMacro, setSelectedMacro] = useState<SelectedMacro>(null)
+  const [hoveredMacro, setHoveredMacro] = useState<SelectedMacro>(null)
+
+  const activeMacro = hoveredMacro || selectedMacro
   // Size configurations - optimized stroke width for better visibility
   const sizeConfig = {
     xs: {
@@ -33,35 +40,35 @@ export function CaloriesDonut({
       height: 140,
       radius: 52,
       stroke: 18,
-      fontSize: { large: 'text-xl', medium: 'text-sm', small: 'text-xs' },
+      fontSize: { large: 20, medium: 14, small: 12 }, // Pixel values for SVG
     },
     sm: {
       width: 180,
       height: 180,
       radius: 66,
       stroke: 22,
-      fontSize: { large: 'text-2xl', medium: 'text-base', small: 'text-xs' },
+      fontSize: { large: 24, medium: 16, small: 12 }, // Pixel values for SVG
     },
     md: {
       width: 240,
       height: 240,
       radius: 88,
       stroke: 28,
-      fontSize: { large: 'text-3xl', medium: 'text-lg', small: 'text-sm' },
+      fontSize: { large: 30, medium: 18, small: 14 }, // Pixel values for SVG
     },
     lg: {
       width: 280,
       height: 280,
       radius: 102,
       stroke: 32,
-      fontSize: { large: 'text-4xl', medium: 'text-xl', small: 'text-sm' },
+      fontSize: { large: 36, medium: 20, small: 14 }, // Pixel values for SVG
     },
     xl: {
       width: 340,
       height: 340,
       radius: 124,
       stroke: 38,
-      fontSize: { large: 'text-5xl', medium: 'text-2xl', small: 'text-base' },
+      fontSize: { large: 48, medium: 24, small: 16 }, // Pixel values for SVG
     },
   }
 
@@ -131,7 +138,7 @@ export function CaloriesDonut({
           cy={centerY}
           r={config.radius}
           fill="none"
-          stroke="#E5E7EB"
+          stroke={chartColors.background}
           strokeWidth={config.stroke}
         />
 
@@ -147,9 +154,22 @@ export function CaloriesDonut({
             strokeDasharray={`${proteinFilledSize} ${circumference}`}
             strokeDashoffset={proteinOffset}
             strokeLinecap="round"
-            className="transition-all duration-700 ease-out"
+            className="transition-all duration-300 ease-out cursor-pointer"
             style={{
               animation: 'drawCircle 1s ease-out 0.2s backwards',
+              opacity: activeMacro === null || activeMacro === 'protein' ? 1 : 0.3,
+            }}
+            onClick={() => setSelectedMacro(selectedMacro === 'protein' ? null : 'protein')}
+            onMouseEnter={() => setHoveredMacro('protein')}
+            onMouseLeave={() => setHoveredMacro(null)}
+            aria-label={`Protein: ${proteinEaten} of ${proteinGrams} grams consumed`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setSelectedMacro(selectedMacro === 'protein' ? null : 'protein')
+              }
             }}
           />
         )}
@@ -166,9 +186,22 @@ export function CaloriesDonut({
             strokeDasharray={`${carbFilledSize} ${circumference}`}
             strokeDashoffset={carbOffset}
             strokeLinecap="round"
-            className="transition-all duration-700 ease-out"
+            className="transition-all duration-300 ease-out cursor-pointer"
             style={{
               animation: 'drawCircle 1s ease-out 0.4s backwards',
+              opacity: activeMacro === null || activeMacro === 'carbs' ? 1 : 0.3,
+            }}
+            onClick={() => setSelectedMacro(selectedMacro === 'carbs' ? null : 'carbs')}
+            onMouseEnter={() => setHoveredMacro('carbs')}
+            onMouseLeave={() => setHoveredMacro(null)}
+            aria-label={`Carbs: ${carbsEaten} of ${carbGrams} grams consumed`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setSelectedMacro(selectedMacro === 'carbs' ? null : 'carbs')
+              }
             }}
           />
         )}
@@ -185,24 +218,52 @@ export function CaloriesDonut({
             strokeDasharray={`${fatFilledSize} ${circumference}`}
             strokeDashoffset={fatOffset}
             strokeLinecap="round"
-            className="transition-all duration-700 ease-out"
+            className="transition-all duration-300 ease-out cursor-pointer"
             style={{
               animation: 'drawCircle 1s ease-out 0.6s backwards',
+              opacity: activeMacro === null || activeMacro === 'fat' ? 1 : 0.3,
+            }}
+            onClick={() => setSelectedMacro(selectedMacro === 'fat' ? null : 'fat')}
+            onMouseEnter={() => setHoveredMacro('fat')}
+            onMouseLeave={() => setHoveredMacro(null)}
+            aria-label={`Fat: ${fatEaten} of ${fatGrams} grams consumed`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setSelectedMacro(selectedMacro === 'fat' ? null : 'fat')
+              }
             }}
           />
         )}
 
-        {/* Center content */}
+        {/* Center content - always shows total calories */}
         <g
           className="transform rotate-90"
           transform={`rotate(90 ${centerX} ${centerY})`}
         >
+          {/* "TOTAL" label */}
+          <text
+            x={centerX}
+            y={centerY - 28}
+            textAnchor="middle"
+            fill={chartColors.labelSecondary}
+            fontSize={config.fontSize.small}
+            fontWeight="600"
+            style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
+          >
+            Total
+          </text>
+
           {/* Main calories display */}
           <text
             x={centerX}
-            y={centerY - 18}
+            y={centerY - 5}
             textAnchor="middle"
-            className={cn(config.fontSize.large, 'font-bold fill-charcoal')}
+            fill={chartColors.labelPrimary}
+            fontSize={config.fontSize.large}
+            fontWeight="700"
           >
             {caloriesEaten.toLocaleString()}
           </text>
@@ -210,41 +271,23 @@ export function CaloriesDonut({
           {/* Separator line */}
           <line
             x1={centerX - separatorHalfWidth}
-            y1={centerY - 5}
+            y1={centerY + 8}
             x2={centerX + separatorHalfWidth}
-            y2={centerY - 5}
-            stroke="#D1D5DB"
+            y2={centerY + 8}
+            stroke={chartColors.separator}
             strokeWidth="1.5"
           />
 
           {/* Target calories */}
           <text
             x={centerX}
-            y={centerY + 10}
+            y={centerY + 23}
             textAnchor="middle"
-            className={cn(config.fontSize.small, 'fill-muted-foreground font-medium')}
+            fill={chartColors.labelSecondary}
+            fontSize={config.fontSize.small}
+            fontWeight="500"
           >
-            {targetCalories.toLocaleString()}
-          </text>
-
-          {/* Progress percentage or status */}
-          <text
-            x={centerX}
-            y={centerY + 24}
-            textAnchor="middle"
-            className={cn(
-              config.fontSize.small,
-              'font-semibold',
-              isOnTrack && 'fill-green-600',
-              !isOnTrack && !isOver && 'fill-amber-600',
-              isOver && 'fill-red-600'
-            )}
-          >
-            {isOver
-              ? `+${(caloriesEaten - targetCalories).toLocaleString()}`
-              : isOnTrack
-              ? 'On Track'
-              : `${caloriesRemaining.toLocaleString()} left`}
+            {targetCalories.toLocaleString()} cal
           </text>
         </g>
       </svg>

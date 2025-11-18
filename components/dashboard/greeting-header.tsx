@@ -48,8 +48,8 @@ export function GreetingHeader({
 
   return (
     <div className="px-4 pt-2 pb-4 md:px-6 lg:px-8">
-      <h1 className={cn(typography.h1, 'text-charcoal')}>{greeting}</h1>
-      <p className="text-base text-muted-foreground mt-1 font-medium">
+      <h1 className={cn(typography.h1Lg, 'text-charcoal')}>{greeting}</h1>
+      <p className="text-base lg:text-xl text-muted-foreground mt-1 lg:mt-2 font-medium">
         {getContextMessage()}
       </p>
     </div>

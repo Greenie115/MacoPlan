@@ -99,16 +99,16 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent Plans Section */}
-        <div className="pt-3">
-          <h2 className="text-xl font-bold leading-tight tracking-tight text-charcoal px-4 pb-3 md:px-6 lg:px-8">
+        <div className="pt-6 lg:pt-8 xl:pt-10">
+          <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold leading-tight tracking-tight text-charcoal px-4 pb-3 lg:pb-4 md:px-6 lg:px-8">
             Recent Plans
           </h2>
           <RecentPlansCarousel plans={recentPlans} />
         </div>
 
         {/* Quick Stats Section */}
-        <div className="pt-3">
-          <h2 className="text-xl font-bold leading-tight tracking-tight text-charcoal px-4 pb-3 md:px-6 lg:px-8">
+        <div className="pt-6 lg:pt-8 xl:pt-10">
+          <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold leading-tight tracking-tight text-charcoal px-4 pb-3 lg:pb-4 md:px-6 lg:px-8">
             Quick Stats
           </h2>
           <StatsGrid

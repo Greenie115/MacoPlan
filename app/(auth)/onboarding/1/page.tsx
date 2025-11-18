@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useOnboardingStore, type Goal } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
+import { SkipOnboardingDev } from '@/components/onboarding/skip-onboarding-dev'
 import { Card } from '@/components/ui/card'
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -32,6 +33,9 @@ export default function GoalSelectionPage() {
 
   return (
     <PageTransition step={1}>
+      {/* Dev only: Skip onboarding button */}
+      <SkipOnboardingDev />
+
       <StepContainer
         step={1}
         title="Hey there!"

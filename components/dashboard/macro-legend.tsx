@@ -60,7 +60,7 @@ export function MacroLegend({
 
   if (variant === 'compact') {
     return (
-      <div className="grid grid-cols-3 gap-2 w-full">
+      <div className="grid grid-cols-3 gap-2 lg:gap-4 w-full">
         {macros.map((macro) => {
           const remaining = Math.max(0, macro.target - macro.eaten)
           const percentage = (macro.eaten / macro.target) * 100
@@ -72,31 +72,36 @@ export function MacroLegend({
             >
               {/* Color indicator */}
               <div
-                className="w-3 h-3 rounded-full mb-1"
+                className="w-3 h-3 lg:w-4 lg:h-4 xl:w-5 xl:h-5 rounded-full mb-1 lg:mb-2"
                 style={{ backgroundColor: macro.color }}
               />
 
+              {/* Emoji - visible on desktop */}
+              <span className="hidden lg:block text-xl xl:text-2xl mb-1">
+                {macro.icon}
+              </span>
+
               {/* Label */}
-              <p className="text-xs text-muted-foreground font-medium mb-1">
+              <p className="text-xs lg:text-sm xl:text-base text-muted-foreground font-medium mb-1">
                 {macro.label}
               </p>
 
               {/* Values */}
-              <p className="text-sm font-bold text-charcoal">
+              <p className="text-sm lg:text-lg xl:text-xl font-bold text-charcoal">
                 <span
                   className={cn(percentage > 100 && 'text-red-600')}
                   style={{ color: percentage <= 100 ? macro.color : undefined }}
                 >
                   {macro.eaten}
                 </span>
-                <span className="text-muted-foreground text-xs">
+                <span className="text-muted-foreground text-xs lg:text-sm xl:text-base">
                   /{macro.target}g
                 </span>
               </p>
 
               {/* Remaining */}
               {remaining > 0 && (
-                <p className="text-[10px] text-muted-foreground mt-0.5">
+                <p className="text-[10px] lg:text-xs text-muted-foreground mt-0.5 lg:mt-1">
                   {remaining}g left
                 </p>
               )}

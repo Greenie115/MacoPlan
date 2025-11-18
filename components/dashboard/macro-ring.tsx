@@ -1,6 +1,6 @@
 'use client'
 
-import { macroColors } from '@/lib/design-tokens'
+import { macroColors, chartColors } from '@/lib/design-tokens'
 
 interface MacroRingProps {
   proteinGrams: number
@@ -19,9 +19,11 @@ export function MacroRing({
 }: MacroRingProps) {
   // Calculate total and percentages
   const totalGrams = proteinGrams + carbGrams + fatGrams
-  const proteinPercent = (proteinGrams / totalGrams) * 100
-  const carbsPercent = (carbGrams / totalGrams) * 100
-  const fatPercent = (fatGrams / totalGrams) * 100
+
+  // Guard against division by zero - use equal distribution if no data
+  const proteinPercent = totalGrams > 0 ? (proteinGrams / totalGrams) * 100 : 33.33
+  const carbsPercent = totalGrams > 0 ? (carbGrams / totalGrams) * 100 : 33.33
+  const fatPercent = totalGrams > 0 ? (fatGrams / totalGrams) * 100 : 33.34
 
   // Size mappings
   const sizes = {
@@ -49,7 +51,7 @@ export function MacroRing({
           cy={ring / 2}
           r={radius}
           fill="none"
-          stroke="#F3F4F6"
+          stroke={chartColors.background}
           strokeWidth={stroke}
         />
 

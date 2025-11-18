@@ -18,7 +18,7 @@ interface MacroDonutChartProps {
   fatEaten: number
 
   // Sizing
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
 
   // Interactive
   onSegmentClick?: (type: 'protein' | 'carbs' | 'fat') => void
@@ -70,6 +70,15 @@ export function MacroDonutChart({
       innerRadius: 90,
       innerStroke: 24,
       fontSize: { large: 'text-5xl', medium: 'text-2xl', small: 'text-base' },
+    },
+    xl: {
+      width: 380,
+      height: 380,
+      outerRadius: 165,
+      outerStroke: 32,
+      innerRadius: 105,
+      innerStroke: 28,
+      fontSize: { large: 'text-6xl', medium: 'text-2xl', small: 'text-lg' },
     },
   }
 
