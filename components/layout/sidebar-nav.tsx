@@ -54,7 +54,7 @@ export function SidebarNav() {
       {/* Sidebar - only shown on desktop */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-50 h-full bg-card border-r border-border',
+          'fixed top-0 left-0 z-50 h-full bg-background border-r border-border',
           'transition-transform duration-300 ease-in-out',
           'w-64',
           // Hide on mobile, show on desktop

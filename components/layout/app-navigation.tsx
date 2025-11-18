@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation'
 import { SidebarNav } from './sidebar-nav'
 import { BottomNav } from './bottom-nav'
-import { HamburgerButton } from './hamburger-button'
 
 interface AppNavigationProps {
   /**
@@ -27,9 +26,6 @@ export function AppNavigation({ hasCompletedOnboarding = false }: AppNavigationP
 
   return (
     <>
-      {/* Desktop: Hamburger button */}
-      <HamburgerButton />
-
       {/* Desktop: Sidebar navigation (hidden on mobile < lg) */}
       <SidebarNav />
 
