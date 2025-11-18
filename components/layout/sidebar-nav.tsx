@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, usePathname } from 'next/navigation'
-import { Home, BookOpen, Calendar, User, X } from 'lucide-react'
+import { Home, BookOpen, Calendar, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useNavigationStore } from '@/stores/navigation-store'
 import { useEffect } from 'react'
@@ -28,7 +28,7 @@ export function SidebarNav() {
 
   const currentTab = getActiveTab()
 
-  // Close sidebar on mobile when clicking outside or on escape
+  // Close sidebar on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isSidebarOpen) {
@@ -42,44 +42,31 @@ export function SidebarNav() {
 
   return (
     <>
-      {/* Overlay for mobile */}
+      {/* Overlay - click to close */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-40 hidden lg:block"
           onClick={closeSidebar}
           aria-hidden="true"
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar - only shown on desktop */}
       <aside
         className={cn(
           'fixed top-0 left-0 z-50 h-full bg-card border-r border-border',
           'transition-transform duration-300 ease-in-out',
-          'w-64 lg:sticky lg:z-30',
-          // Mobile: slide in from left
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
-          // Desktop: always visible, no transform
-          'lg:translate-x-0'
+          'w-64',
+          // Hide on mobile, show on desktop
+          'hidden lg:block',
+          // Desktop: slide in/out based on state
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         aria-label="Main navigation"
       >
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border">
-            <h2 className="text-xl font-bold text-foreground">MacroPlan</h2>
-            {/* Close button - only visible on mobile */}
-            <button
-              onClick={closeSidebar}
-              className="lg:hidden p-2 hover:bg-accent rounded-lg transition-colors"
-              aria-label="Close navigation"
-            >
-              <X className="size-5" />
-            </button>
-          </div>
-
           {/* Navigation items */}
-          <nav className="flex-1 p-4">
+          <nav className="flex-1 p-4 pt-20">
             <ul className="space-y-2">
               {tabs.map((tab) => {
                 const Icon = tab.icon
@@ -90,10 +77,6 @@ export function SidebarNav() {
                     <button
                       onClick={() => {
                         router.push(tab.path)
-                        // Close sidebar on mobile after navigation
-                        if (window.innerWidth < 1024) {
-                          closeSidebar()
-                        }
                       }}
                       className={cn(
                         'w-full flex items-center gap-3 px-4 py-3 rounded-lg',
@@ -115,7 +98,7 @@ export function SidebarNav() {
             </ul>
           </nav>
 
-          {/* Footer - can add user info or settings later */}
+          {/* Footer */}
           <div className="p-4 border-t border-border">
             <p className="text-xs text-muted-foreground text-center">
               MacroPlan v1.0

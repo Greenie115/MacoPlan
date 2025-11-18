@@ -18,11 +18,12 @@ export function HamburgerButton() {
     <button
       onClick={toggleSidebar}
       className={cn(
-        'fixed top-4 left-4 z-30 lg:z-20',
+        'fixed top-4 left-4 z-30',
         'p-3 bg-card border border-border rounded-lg',
         'hover:bg-accent transition-colors duration-200',
-        'shadow-lg lg:shadow-md',
-        'flex items-center justify-center'
+        'shadow-md',
+        // Only show on desktop (lg and above)
+        'hidden lg:flex items-center justify-center'
       )}
       aria-label="Toggle navigation menu"
     >
