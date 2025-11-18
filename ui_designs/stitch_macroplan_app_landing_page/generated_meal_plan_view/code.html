@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Your 7-Day Meal Plan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#F97316", // Orange accent
+            "background-light": "#FFFFFF",
+            "background-dark": "#111827",
+            "card-light": "#FFFFFF",
+            "card-dark": "#1F2937",
+            "text-light-primary": "#111827", // Darker text for white bg
+            "text-dark-primary": "#F9FAFB",
+            "text-light-secondary": "#6B7280",
+            "text-dark-secondary": "#9CA3AF",
+            "success": "#16A34A", // Green for success text
+            "protein": "#E63946",
+            "carbs": "#457B9D",
+            "fat": "#F4A261",
+            "border-gray": "#E9ECEF",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem", // 12px for buttons
+            "xl": "1rem", // 16px for cards
+            "full": "9999px"
+          },
+          boxShadow: {
+            'card': '0 2px 8px rgba(0,0,0,0.08)',
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 24px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;scrollbar-width: none;}
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light-primary">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-12 shrink-0 items-center text-text-light-primary dark:text-text-dark-primary -ml-2">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<div class="flex items-center justify-end gap-2">
+<button class="flex min-w-[48px] cursor-pointer items-center justify-center rounded-lg h-12 px-3 text-primary text-base font-semibold leading-normal">💾 Save</button>
+<div class="flex size-12 shrink-0 items-center justify-center text-text-light-primary dark:text-text-dark-primary">
+<span class="material-symbols-outlined">more_vert</span>
+</div>
+</div>
+</div>
+<header class="px-4 pt-2 pb-4">
+<h1 class="text-text-light-primary dark:text-text-dark-primary tracking-tight text-[28px] font-semibold leading-tight">Your 7-Day Meal Plan</h1>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-base font-normal leading-normal pt-1">Nov 5 - Nov 11, 2025</p>
+</header>
+<div class="px-4 pb-4 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl shadow-card bg-card-light dark:bg-card-dark p-4 border border-border-gray">
+<p class="text-text-light-primary dark:text-text-dark-primary text-lg font-semibold leading-tight tracking-[-0.015em]">Daily Totals: 2,465 cal avg</p>
+<div class="flex items-center gap-4 pt-3">
+<span class="text-base font-normal leading-normal text-protein">🥩 182g</span>
+<span class="text-base font-normal leading-normal text-carbs">🍚 278g</span>
+<span class="text-base font-normal leading-normal text-fat">🥑 69g</span>
+</div>
+<p class="text-success text-base font-normal leading-normal pt-2">✅ Within your targets</p>
+</div>
+</div>
+<div class="flex px-4 pb-4">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 text-primary bg-white text-base font-semibold leading-normal border-2 border-primary">
+<span class="truncate">📋 Generate Grocery List</span>
+</button>
+</div>
+<div class="h-px bg-border-gray dark:bg-gray-700 mx-4"></div>
+<div class="py-4">
+<div class="flex space-x-2 overflow-x-auto pb-2 -mx-4 px-4 no-scrollbar">
+<button class="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white h-10">Mon ●</button>
+<button class="whitespace-nowrap rounded-full bg-gray-100 dark:bg-card-dark px-4 py-2 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary h-10">Tue</button>
+<button class="whitespace-nowrap rounded-full bg-gray-100 dark:bg-card-dark px-4 py-2 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary h-10">Wed</button>
+<button class="whitespace-nowrap rounded-full bg-gray-100 dark:bg-card-dark px-4 py-2 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary h-10">Thu</button>
+<button class="whitespace-nowrap rounded-full bg-gray-100 dark:bg-card-dark px-4 py-2 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary h-10">Fri</button>
+<button class="whitespace-nowrap rounded-full bg-gray-100 dark:bg-card-dark px-4 py-2 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary h-10">Sat</button>
+<button class="whitespace-nowrap rounded-full bg-gray-100 dark:bg-card-dark px-4 py-2 text-sm font-semibold text-text-light-secondary dark:text-text-dark-secondary h-10">Sun</button>
+</div>
+</div>
+<header class="px-4 pt-2 pb-4">
+<h2 class="text-xl font-bold text-text-light-primary dark:text-text-dark-primary">Monday, November 5</h2>
+<p class="text-sm text-text-light-secondary dark:text-text-dark-secondary pt-1">2,450 calories ・ 180g P, 280g C, 65g F</p>
+</header>
+<div class="flex flex-col gap-4 px-4 pb-8">
+<div class="flex flex-col overflow-hidden rounded-xl bg-card-light dark:bg-card-dark shadow-card border border-border-gray">
+<div class="p-4">
+<p class="text-base font-normal text-text-light-secondary dark:text-text-dark-primary">🌅 Breakfast - 550 cal</p>
+</div>
+<div class="h-[200px] w-full bg-cover bg-center" data-alt="A bowl of greek yogurt with blueberries, strawberries, and granola." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXHaWdzmS4JYere0yagDnQ8q7OY_MI1ErfY_8N-qn6PPB6pNaVcbBglimqt_Po_Cun27nlBPNB3zEh2pXHpcF24Lw9Yk_0CJPHprLbRivw2ofPck492OyUfATLNuvYk-6olwNYYLGOeJeEOjLxc-ekHWoEVJ-BhX3tKaMNv6ZelfClbh22ZBw9ChAR755wDv_Q9dZQAEsFWPfETkbFXSmj9Yjk3asR3D3vC8Ru3_ShVoyhiajSxZgqggymIlXPnswuuVOVdRmDdw');"></div>
+<div class="p-4">
+<h3 class="text-xl font-semibold text-text-light-primary dark:text-text-dark-primary">Greek Yogurt Power Bowl</h3>
+<div class="flex items-center gap-4 pt-2">
+<span class="text-base font-normal text-protein">🥩 35g</span>
+<span class="text-base font-normal text-carbs">🍚 60g</span>
+<span class="text-base font-normal text-fat">🥑 12g</span>
+</div>
+<div class="mt-4 flex gap-3">
+<button class="flex h-12 flex-1 items-center justify-center rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">View Recipe</button>
+<button class="flex h-12 flex-1 items-center justify-center gap-1 rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">
+<span class="material-symbols-outlined" style="font-size: 20px;">swap_horiz</span>Swap Meal
+            </button>
+</div>
+</div>
+</div>
+<div class="flex flex-col overflow-hidden rounded-xl bg-card-light dark:bg-card-dark shadow-card border border-border-gray">
+<div class="p-4">
+<p class="text-base font-normal text-text-light-secondary dark:text-text-dark-primary">☀️ Lunch - 750 cal</p>
+</div>
+<div class="h-[200px] w-full bg-cover bg-center" data-alt="A colorful salad with grilled chicken, mixed greens, tomatoes, and avocado." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCIfGQOSeGE7V22OUYHzql1N0dO9M5VxqTg9HYRXM1G0eSocjofx6E0a3NKLYyfNGoIPJpYH1G4SVvdfXh1harL-65NKrnePuA8Sy9Iy5l0OsdzzyUSBKMSANZs2wxOrSardIDdiuv8Iiz9MJYnxT0Xf6Tk29dBUIR6G7GPgvNtQ0BLhWakOz2HfqIvO3YSsL8GB4Xjsc_GtvniFsgvThA8M6r6Ccb-wtI4HcW9z_DjGn0RlOR17_i_ghnLJLW6WIkEHwQ536rhaQ');"></div>
+<div class="p-4">
+<h3 class="text-xl font-semibold text-text-light-primary dark:text-text-dark-primary">Grilled Chicken Salad</h3>
+<div class="flex items-center gap-4 pt-2">
+<span class="text-base font-normal text-protein">🥩 55g</span>
+<span class="text-base font-normal text-carbs">🍚 40g</span>
+<span class="text-base font-normal text-fat">🥑 25g</span>
+</div>
+<div class="mt-4 flex gap-3">
+<button class="flex h-12 flex-1 items-center justify-center rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">View Recipe</button>
+<button class="flex h-12 flex-1 items-center justify-center gap-1 rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">
+<span class="material-symbols-outlined" style="font-size: 20px;">swap_horiz</span>Swap Meal
+            </button>
+</div>
+</div>
+</div>
+<div class="flex flex-col overflow-hidden rounded-xl bg-card-light dark:bg-card-dark shadow-card border border-border-gray">
+<div class="p-4">
+<p class="text-base font-normal text-text-light-secondary dark:text-text-dark-primary">🌙 Dinner - 800 cal</p>
+</div>
+<div class="h-[200px] w-full bg-cover bg-center" data-alt="A plate of salmon with asparagus and a side of quinoa." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuChczyAh7ygEEjHVjgVgNbiSvhH4JLBrjfiOJJ-4BM17Tye7xoEAqGMJQV7wxKT29Jy6KQnPaBb_NKeNxW9zh0tF3wLAtPEZ4k_VezRh8YEr-hzUSZl170DfgweQEvdOyPNHDzEiWm9Bok_jzLFEMH1Z2pmk193RooyhPOyXfOJI6HNojB5aMgUOT_SEUX5d8lD-YPLA98czODFtJG4koqxQyKJDPShv1JkNdxd-pvxhtsFXq0RrvW451YtH7M1rkI9xotY5VlwjQ');"></div>
+<div class="p-4">
+<h3 class="text-xl font-semibold text-text-light-primary dark:text-text-dark-primary">Salmon with Asparagus</h3>
+<div class="flex items-center gap-4 pt-2">
+<span class="text-base font-normal text-protein">🥩 60g</span>
+<span class="text-base font-normal text-carbs">🍚 120g</span>
+<span class="text-base font-normal text-fat">🥑 20g</span>
+</div>
+<div class="mt-4 flex gap-3">
+<button class="flex h-12 flex-1 items-center justify-center rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">View Recipe</button>
+<button class="flex h-12 flex-1 items-center justify-center gap-1 rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">
+<span class="material-symbols-outlined" style="font-size: 20px;">swap_horiz</span>Swap Meal
+            </button>
+</div>
+</div>
+</div>
+<div class="flex flex-col overflow-hidden rounded-xl bg-card-light dark:bg-card-dark shadow-card border border-border-gray">
+<div class="p-4">
+<p class="text-base font-normal text-text-light-secondary dark:text-text-dark-primary">💪 Snack - 350 cal</p>
+</div>
+<div class="h-[200px] w-full bg-cover bg-center" data-alt="A chocolate protein shake in a glass next to a scoop of protein powder." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAc07LyF2mcysXKOjmBmYIiSiswzWkTHpwGdaGZaW_RK-xFyq6f6I33rA0mUNBOjVy4FwB-cK0kHStVD6rorZjlqAtQv9ipwaZMDUkK_U_vLemfAS__AfI-bp782TOFZs5k9YDa3YRkNYR85LtrsDWRgEbPKF1uQylht3TSLhw6VmsqE9PxdRjhSkb39oqiNPhG9JhYZyK22PcObaemwM5pBOA0M81YlenlUQknkUrFgnDgk_MYXmp1Q_-HA6_RN88D12uVVuZDOA');"></div>
+<div class="p-4">
+<h3 class="text-xl font-semibold text-text-light-primary dark:text-text-dark-primary">Protein Shake</h3>
+<div class="flex items-center gap-4 pt-2">
+<span class="text-base font-normal text-protein">🥩 30g</span>
+<span class="text-base font-normal text-carbs">🍚 60g</span>
+<span class="text-base font-normal text-fat">🥑 8g</span>
+</div>
+<div class="mt-4 flex gap-3">
+<button class="flex h-12 flex-1 items-center justify-center rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">View Recipe</button>
+<button class="flex h-12 flex-1 items-center justify-center gap-1 rounded-lg border-2 border-primary bg-white px-4 text-base font-semibold text-primary">
+<span class="material-symbols-outlined" style="font-size: 20px;">swap_horiz</span>Swap Meal
+            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome to Premium</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f56e3d",
+                        "background-light": "#f8f6f5",
+                        "background-dark": "#221510",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body>
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark font-display text-[#1c110d] dark:text-gray-200">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<!-- No icon on left for this screen -->
+</div>
+<h2 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-[#1c110d] dark:text-gray-200">Confirmation</h2>
+<div class="flex w-12 items-center justify-end">
+<a class="text-primary text-base font-bold leading-normal tracking-[0.015em]" href="#">Done</a>
+</div>
+</div>
+<main class="flex-1 px-4 py-6">
+<!-- Celebration Header -->
+<div class="text-center">
+<p class="text-5xl">🎉</p>
+<h1 class="mt-6 text-[32px] font-bold leading-tight tracking-tight text-[#1c110d] dark:text-white">Welcome to Premium!</h1>
+<h2 class="mt-2 text-lg font-normal text-gray-600 dark:text-gray-400">You now have unlimited access to all MacroPlan features.</h2>
+</div>
+<hr class="my-8 border-t border-gray-200 dark:border-gray-700"/>
+<!-- Unlocked Features Section -->
+<div>
+<h3 class="text-xl font-bold leading-tight tracking-[-0.015em] text-[#1c110d] dark:text-white">What's Unlocked:</h3>
+<ul class="mt-4 space-y-3">
+<li class="flex items-center text-base text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined mr-3 text-green-500">check_circle</span>
+                        Unlimited meal plans
+                    </li>
+<li class="flex items-center text-base text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined mr-3 text-green-500">check_circle</span>
+                        2M+ recipes unlocked
+                    </li>
+<li class="flex items-center text-base text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined mr-3 text-green-500">check_circle</span>
+                        Unlimited meal swaps
+                    </li>
+<li class="flex items-center text-base text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined mr-3 text-green-500">check_circle</span>
+                        Advanced customization
+                    </li>
+<li class="flex items-center text-base text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined mr-3 text-green-500">check_circle</span>
+                        PDF export
+                    </li>
+<li class="flex items-center text-base text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined mr-3 text-green-500">check_circle</span>
+                        Priority support
+                    </li>
+</ul>
+</div>
+<hr class="my-8 border-t border-gray-200 dark:border-gray-700"/>
+<!-- Primary Actions Section -->
+<div class="space-y-4">
+<a class="flex h-14 w-full items-center justify-center rounded-lg bg-primary text-center font-bold text-white transition-opacity hover:opacity-90" href="#">
+                    Generate Unlimited Plans
+                    <span class="material-symbols-outlined ml-2">arrow_forward</span>
+</a>
+<a class="flex h-14 w-full items-center justify-center rounded-lg bg-primary/10 text-center font-bold text-primary transition-colors hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30" href="#">
+                    Browse Full Recipe Database
+                </a>
+</div>
+<hr class="my-8 border-t border-gray-200 dark:border-gray-700"/>
+<!-- Onboarding & Support Section -->
+<div class="text-center">
+<p class="text-base text-gray-600 dark:text-gray-400">Need help getting started?</p>
+<a class="mt-2 inline-flex items-center font-bold text-primary" href="#">
+                    Watch Quick Tutorial (2 min)
+                    <span class="material-symbols-outlined ml-1 text-base">arrow_forward</span>
+</a>
+</div>
+</main>
+<!-- Footer/Transactional Info -->
+<footer class="px-4 pb-8 pt-4 text-center">
+<p class="text-sm text-gray-500 dark:text-gray-500">Receipt sent to alex@email.com</p>
+<a class="mt-1 inline-block text-sm font-medium text-primary underline" href="#">Manage Subscription</a>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Saved Plans</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF6B35",
+                        "protein": "#E63946",
+                        "carbs": "#457B9D",
+                        "fat": "#F4A261",
+                        "text-primary": "#212121",
+                        "text-secondary": "#6F767E",
+                        "border-light": "#E9ECEF",
+                    },
+                    fontFamily: {
+                        "inter": ["Inter", "sans-serif"]
+                    },
+                    fontWeight: {
+                        normal: '400',
+                        semibold: '600',
+                    },
+                    boxShadow: {
+                      'subtle': '0 2px 8px rgba(0,0,0,0.08)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-white font-inter text-text-primary">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+<div class="flex h-[60px] items-center p-4">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<button class="flex h-12 w-12 items-center justify-center">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+</div>
+<h1 class="flex-1 text-center text-xl font-semibold leading-tight tracking-[-0.015em]">Saved Plans</h1>
+<div class="flex w-12 shrink-0 items-center justify-end"></div>
+</div>
+<div class="px-4">
+<div class="flex border-b border-border-light">
+<a class="flex flex-1 flex-col items-center justify-center border-b-[3px] border-primary py-3" href="#">
+<p class="text-sm font-semibold leading-normal text-primary">All</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center border-b-[3px] border-b-transparent py-3" href="#">
+<p class="text-sm font-semibold leading-normal text-text-secondary">This Week</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center border-b-[3px] border-b-transparent py-3" href="#">
+<p class="text-sm font-semibold leading-normal text-text-secondary">Last Month</p>
+</a>
+</div>
+</div>
+</div>
+<main class="flex-grow p-4 pb-28 space-y-4">
+<div class="relative flex flex-col items-stretch justify-start rounded-2xl bg-white shadow-subtle border border-border-light p-4 space-y-4">
+<div class="absolute top-2 right-2">
+<button class="flex h-12 w-12 items-center justify-center rounded-full text-text-secondary">
+<span class="material-symbols-outlined !text-[24px]">more_horiz</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-2 pr-12">
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCbgJOtqnYGX5DmDQDYfXfY--E0kMXkc2st6vV8lpvFRDX5drHr9MEvLOExf3uzp3NnkppUWMJELPweHXpMz8ATd8CWHdZKT2EF13B29KF867HscH1sAYNqBoncnrnSfiXPYSGEaymXUEkxoyRn3wbnENFa4MSTQ-xB513eZ6gOR41DRZ-dtd6oFYu66CZfspXnNDqXTSZfagFLvAtYvsPEYBtv5UT9JEjoJIYAObY8P3olgDwf6j3H8l_6w26qiDz-ORnkpkKm7A");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDUgS8yFt0hPuYAdE32v_iAFbU49e_o2LIivBGq319CzZrZf8UdoPKFrKR10mQ2Sn87z6pJv4XA3wsP_9mZCq7z6AfQNyG5PDWQi846129mMXc1xJtf4iPLnO3AGV0b6l6civA_ax_RVFBBkYDX_oosGDe4mJUnedyaT8HXyc4RWIaYjczOIQJY9QT2YPxovOg7uKegQpOhjNxNkznIZUsmPIIbs-vb9hg3Ix3qWWWN56wYa28b2_-Q72hEVB922WJGy0AE-SaBMw");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA0IJVAqAmJWvJ0FJSiD3wMrJLv3S3U9WY7Doz_ARwTFQARO5HteD0bQlHQJmUgCFc3R1gccShO3K1UPP_QzwWzyitpaeQ-KTnwWPv66u4EiWT2ugF7UDAf2nkAKe4SggHHT1U_LV-MAmXBXkjboIKz4Y6FUTxunfrpRLvatEMbb5eHdu-TMN-2HrGfM6-ZYxnTrQ9pjfI0wD5EsKk504D7iWt0yUaHveC4Ute71t0t43ysfbQWfISNQS2UzvWt_pw1NB1jNjWLbQ");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcwGjTT-8O5Z-0a2aG-riAlru9b_jSRtCaNnavcTp3ZM4nb6btM2YpMy2QW5i0gGMQ5DfmDMJa2b4OIGA0mQPiSyYLzXMSGiKcWYOn-T9c4CXuD3jHWssCzfqPehTcTm7zWlMdtS7-EePDQ5QhDzE39-OQ5gb4y2_TTGpoOmCHJJY38PEYdQwKNIhtE8bUiOEP86A05jpT_vkXD5J9an7TZHs_EKmOn5CqS72stcyM86Xo5hPFzh3cmk35EER0ICv03ZsT_FvD0A");'></div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-xl font-semibold leading-tight tracking-[-0.015em]">7-Day Muscle Building Plan</h2>
+<p class="text-sm font-normal leading-normal text-text-secondary">Nov 5-11, 2025</p>
+<p class="text-sm font-normal leading-normal text-text-secondary">📊 2,450 cal/day avg</p>
+</div>
+<div class="flex items-center gap-4 text-sm text-text-secondary pt-1">
+<span class="flex items-center gap-1.5"><span class="text-protein">🥩</span> 180g</span>
+<span class="flex items-center gap-1.5"><span class="text-carbs">🍚</span> 280g</span>
+<span class="flex items-center gap-1.5"><span class="text-fat">🥑</span> 68g</span>
+</div>
+<button class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-white text-base font-semibold leading-normal text-primary">
+<span class="truncate">View Plan</span>
+<span class="material-symbols-outlined !text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="relative flex flex-col items-stretch justify-start rounded-2xl bg-white shadow-subtle border border-border-light p-4 space-y-4">
+<div class="absolute top-2 right-2">
+<button class="flex h-12 w-12 items-center justify-center rounded-full text-text-secondary">
+<span class="material-symbols-outlined !text-[24px]">more_horiz</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-2 pr-12">
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBkDdDwIb0GiZAr3twx8HRZqvV_8ppdO4S-wxO5K4kn2Wk5F13xUMHvuHjRF8f6FViGzOms7hD2W0jchWcMo8tJ3fZO-1tnMhLFjWXJJiUMGF-W5x0lWtX2UUDfwrEMfBIijVg68q5A-TbL0rVMgYvTBpuSwrxt4NrwQFUZDRA35q2-yaZr3VBmJXj3iIJoAyoJ8REXbZICtLdDS2E-t7POHqBJiahc1K6Zyhfj9GuD3mqI9ljR9KDPHdOhbuNNbDlcJx6krQ9naw");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqzlaiFn-iA33ww6cEVLHYCRrlepMnSVLeytKyMYpoVekKPNBBexVVDhpknN1t34IfpSGw-QLjD5-r1GZh6BCv2M_abugGo05-sKboSiH2jBMq4CWPX3Bz6nqRrqYjLdxa_btfxtQclmImWmNTdqJH2XhQI6Qjb3Fj8pbbCCkcoehI2OTMvChfHwCG6GXLeQLL24NpjvFJvnsCU_vie99pITrFVzSWPAsPxS4GIF-Cxl3MlknM2zzblS7pnlkZEoqtFwzlQ4BGnQ");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBf-hQrYm5YQQGTBI4mvNGpQGYR_CP3bnAov8ib8R4bVcENl5jPzh8qceQOYnbwuxazsIt9kknuxg2wnisPDcGR5VHdh9Pp_TB-vykddRplwKqyTqyCdPITdjAqx4GlWH6W2Z0LyHeFsMlKJEh8oEj8A52f9BCtL4uceavCf_Yuy5yh9xBcJY-yeS3rMIRrhnN6FRoO8k5HsytdQJhxyPl_KOagM94Mv9P6lHaNDLeQnAY69ZHqPeeU4P13lZ63Hafp9n5KadcKrQ");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCoB1qPNA64koQ2xL-uE5zEBlN9vtGz6Ywy_QzFRz1Fr2afpuUx3yxBp80MZfP85uvlqq9h6gARm2Y1zDFoI3nHiOFvzr5J8Okvy5nsmGptqPKxdGJfDOY1NxIo1L04vbXmrphgvVpKNr0Ti8-22xKCPtzRkyozPAM6OED3EKUtg5TQU1uNvTbCYWqfOVvlgDRsvLhLuoJJC_1Dfh0EPJfJxQH7y3cYgZg323fx0Lqjfwlf25MOjstzyltU0PAMV2cadCszfmqXlA");'></div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-xl font-semibold leading-tight tracking-[-0.015em]">High-Protein Shred</h2>
+<p class="text-sm font-normal leading-normal text-text-secondary">Oct 29 - Nov 4, 2025</p>
+<p class="text-sm font-normal leading-normal text-text-secondary">📊 2,100 cal/day avg</p>
+</div>
+<div class="flex items-center gap-4 text-sm text-text-secondary pt-1">
+<span class="flex items-center gap-1.5"><span class="text-protein">🥩</span> 200g</span>
+<span class="flex items-center gap-1.5"><span class="text-carbs">🍚</span> 150g</span>
+<span class="flex items-center gap-1.5"><span class="text-fat">🥑</span> 70g</span>
+</div>
+<button class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-white text-base font-semibold leading-normal text-primary">
+<span class="truncate">View Plan</span>
+<span class="material-symbols-outlined !text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="relative flex flex-col items-stretch justify-start rounded-2xl bg-white shadow-subtle border border-border-light p-4 space-y-4">
+<div class="absolute top-2 right-2">
+<button class="flex h-12 w-12 items-center justify-center rounded-full text-text-secondary">
+<span class="material-symbols-outlined !text-[24px]">more_horiz</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-2 pr-12">
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCgguhhJQlohFykP2UkDx7zmP_MIjSLqIr0fTZWvAxApNiTyVFubi6QHMfygU67r8xdFeakrEJLnyGF9lZmjXRG1E-mh7Mxf5QbrflsAMXgQNdSe8bv44Oc57X3PW-EortC0sDS4T3AFIBX4RxuO4kCqobRN_N-9T6zjnzXLf-nJ0CPJQR_yfYDdZRJWG1tuEh2x4kwcMCkFKymmEuz61TQpZHx1K_nxqnkqHmK-3JvfQUeefAIh8jNawvalxWk1YZAeAI7EaOMMw");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD_Ee7NlTXFG0DAEdeOZ6FBmMyo2jmnKp60gWU3xLgJwWeRrXWBXF5JAOx_5Hd7_X0OfXOcvBTkzsThuynvl_zfVu_rts9qXcx2fZ4IT1fCsgS1jyWNrDo6mUaz6xN8xGYprHYMCtCqa1MAN1o-m0TBT62Tv43qWko7ZX0FSqgWc-EIRtUNMXH9alFjUIllt4Bx7Rig7EH03uzkSxqkh5IMEAJLAAmq0SJYmLMY7u-GOIyh4fFSxhj3uC9PjUl03tKmifkj_K38Pg");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9aa_quVTa9_9NEnZQkPo74uV3vcOMkGYFnpHNoSdgasEeFqklRVSvTMP-z6kSh-WOq94uoXZ0qqz6RYXRHmUjzi_U5VV_cx1oKap5ghlchT2V6pozqouULUrdcunOglG690OqUne6YVrKX3rqfwayNCSFmDdcnY8otbu-3cWD-QSloeajcEWjgCn_gJAvtSQrIEz3BUJVuh9KjVXYEmCEo4eiIoYwEms29qWn6Qwj1G3uxLv7UTxMKzvNglpYg-PdyxVrx-uKrA");'></div>
+<div class="aspect-square w-full rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAroKpvWDggHQzdN0fgwuVGksFxYg11ZGqoquKNRbL736jIrBbJgItUZatK0Isbf7H6NuBB8xfOY5Dy9-B3xUdJ3O3Ui7EdmxomRlMMZJvJavAf_-Twzj7aOO2OEDU7NSdKp_4etGO1LvtNeBL-OL3UsrPbTi-dDWdSG0cAg7vZ-tKCsNJNcFBzTu0CN68C9VwLmjnrgiCLSFHAQc2vgWNOZBDYoJnkAKt7RrmRJm2LD0ApUoRaFec5dntRfYXVbuwwtbmnxQPh_Q");'></div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-xl font-semibold leading-tight tracking-[-0.015em]">Bulking Phase Week 3</h2>
+<p class="text-sm font-normal leading-normal text-text-secondary">Oct 15-21, 2025</p>
+<p class="text-sm font-normal leading-normal text-text-secondary">📊 3,200 cal/day avg</p>
+</div>
+<div class="flex items-center gap-4 text-sm text-text-secondary pt-1">
+<span class="flex items-center gap-1.5"><span class="text-protein">🥩</span> 190g</span>
+<span class="flex items-center gap-1.5"><span class="text-carbs">🍚</span> 400g</span>
+<span class="flex items-center gap-1.5"><span class="text-fat">🥑</span> 85g</span>
+</div>
+<button class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-white text-base font-semibold leading-normal text-primary">
+<span class="truncate">View Plan</span>
+<span class="material-symbols-outlined !text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-10 bg-white/80 p-4 backdrop-blur-sm border-t border-border-light">
+<div class="text-center text-sm text-text-secondary">
+<p>Free: 2 of 3 plans saved</p>
+<a class="font-semibold text-primary underline" href="#">Upgrade to save unlimited plans</a>
+</div>
+</div>
+</div>
+
+</body></html>

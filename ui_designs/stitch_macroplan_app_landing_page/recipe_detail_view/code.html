@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan - Recipe Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f56e3d",
+                        "background-light": "#f8f6f5",
+                        "background-dark": "#221510",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative w-full max-w-md mx-auto min-h-screen flex flex-col group/design-root overflow-x-hidden">
+<!-- Header -->
+<div class="absolute top-0 left-0 right-0 z-10 p-4">
+<div class="flex items-center justify-between">
+<button class="flex items-center justify-center size-10 rounded-full bg-black/30 text-white backdrop-blur-sm">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full bg-black/30 text-white backdrop-blur-sm">
+<span class="material-symbols-outlined text-2xl">favorite_border</span>
+</button>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-grow">
+<!-- Header Image -->
+<div class="w-full h-[300px] bg-center bg-no-repeat bg-cover" data-alt="A close-up, appetizing photo of a grilled chicken caesar salad in a white bowl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAPf0X4YphPcxSouV1BBdc7M2wDuDd32kjBjm8lDANBoUhaUOKZmKdV8iu4j3gXucWjGuj5Duq89l42diij8VQPyPcfvq21W1o0gUrNKddyP77A3RM3TtthdEXnvolvwP4qRLfk9GVVCuT1Vj6d6QdJ8uHUASaDqejbaktfPlasXl1Tay0cOHt8aqUFV4-sQmS2q1fjlLHu2Hqh70luCZBz8Vz6Sxc8x6YWJ2J5vipJn1AI9WKQmsKHsk3VLUoiVY9OQBxtkrc8VQ');"></div>
+<div class="p-4 flex flex-col gap-6 -mt-8 relative z-0">
+<div class="bg-background-light dark:bg-background-dark rounded-t-xl pt-6 pb-2">
+<!-- Headline & Meta -->
+<h1 class="text-[#1c110d] dark:text-gray-100 tracking-tight text-3xl font-bold leading-tight px-4 text-left pb-2">Grilled Chicken Caesar Salad</h1>
+<p class="text-[#9c5f49] dark:text-gray-400 text-sm font-normal leading-normal pb-3 pt-1 px-4">⭐ 4.5 (120 ratings) | 🕐 25 min</p>
+</div>
+<!-- Macro Card -->
+<div class="bg-white dark:bg-zinc-800 rounded-xl shadow-lg p-5 flex flex-col gap-5">
+<h2 class="text-[#1c110d] dark:text-gray-100 text-lg font-bold leading-tight tracking-[-0.015em]">Macros Per Serving</h2>
+<div class="text-center">
+<span class="text-5xl font-bold text-[#1c110d] dark:text-gray-100">680</span>
+<span class="text-lg text-gray-500 dark:text-gray-400">cal</span>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Protein -->
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-2xl text-red-500">egg</span>
+<div class="flex-grow">
+<div class="flex justify-between items-baseline mb-1">
+<span class="text-sm font-semibold text-[#1c110d] dark:text-gray-100">Protein</span>
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">48g</span>
+</div>
+<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-red-500 h-2 rounded-full" style="width: 60%"></div>
+</div>
+</div>
+</div>
+<!-- Carbs -->
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-2xl text-blue-500">rice_bowl</span>
+<div class="flex-grow">
+<div class="flex justify-between items-baseline mb-1">
+<span class="text-sm font-semibold text-[#1c110d] dark:text-gray-100">Carbs</span>
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">45g</span>
+</div>
+<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+<!-- Fat -->
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-2xl text-yellow-500">oil_barrel</span>
+<div class="flex-grow">
+<div class="flex justify-between items-baseline mb-1">
+<span class="text-sm font-semibold text-[#1c110d] dark:text-gray-100">Fat</span>
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">22g</span>
+</div>
+<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+<div class="bg-yellow-500 h-2 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700 mt-2"></div>
+<div class="flex justify-between items-center">
+<span class="text-base font-semibold text-[#1c110d] dark:text-gray-100">Servings</span>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-700 text-[#1c110d] dark:text-gray-100 font-bold">-</button>
+<span class="text-lg font-bold w-4 text-center text-[#1c110d] dark:text-gray-100">1</span>
+<button class="flex items-center justify-center size-8 rounded-full bg-primary text-white font-bold">+</button>
+</div>
+</div>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2 px-0">
+<span class="bg-primary/20 text-primary font-semibold text-xs py-1.5 px-3 rounded-full">High-Protein</span>
+<span class="bg-primary/20 text-primary font-semibold text-xs py-1.5 px-3 rounded-full">Low-Carb</span>
+<span class="bg-primary/20 text-primary font-semibold text-xs py-1.5 px-3 rounded-full">Keto</span>
+<span class="bg-primary/20 text-primary font-semibold text-xs py-1.5 px-3 rounded-full">Gluten-Free</span>
+</div>
+<!-- Ingredients Section -->
+<div class="flex flex-col gap-4">
+<h2 class="text-[#1c110d] dark:text-gray-100 text-xl font-bold">Ingredients</h2>
+<ul class="space-y-3">
+<li class="flex items-center gap-3">
+<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<label class="text-gray-700 dark:text-gray-300">6 oz grilled chicken breast</label>
+</li>
+<li class="flex items-center gap-3">
+<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<label class="text-gray-700 dark:text-gray-300">2 cups romaine lettuce, chopped</label>
+</li>
+<li class="flex items-center gap-3">
+<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<label class="text-gray-700 dark:text-gray-300">1/4 cup Caesar dressing</label>
+</li>
+<li class="flex items-center gap-3">
+<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<label class="text-gray-700 dark:text-gray-300">2 tbsp shredded Parmesan cheese</label>
+</li>
+<li class="flex items-center gap-3">
+<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<label class="text-gray-700 dark:text-gray-300">1/4 cup croutons (optional)</label>
+</li>
+</ul>
+</div>
+<!-- Instructions Section -->
+<div class="flex flex-col gap-4">
+<h2 class="text-[#1c110d] dark:text-gray-100 text-xl font-bold">Instructions</h2>
+<ol class="space-y-4 list-inside">
+<li class="flex items-start gap-4">
+<div class="flex-shrink-0 size-7 flex items-center justify-center bg-primary/20 text-primary font-bold rounded-full text-sm">1</div>
+<p class="text-gray-700 dark:text-gray-300 flex-1">Grill the chicken breast until fully cooked. Let it rest for a few minutes, then slice it into strips.</p>
+</li>
+<li class="flex items-start gap-4">
+<div class="flex-shrink-0 size-7 flex items-center justify-center bg-primary/20 text-primary font-bold rounded-full text-sm">2</div>
+<p class="text-gray-700 dark:text-gray-300 flex-1">In a large bowl, combine the chopped romaine lettuce with the Caesar dressing. Toss to coat evenly.</p>
+</li>
+<li class="flex items-start gap-4">
+<div class="flex-shrink-0 size-7 flex items-center justify-center bg-primary/20 text-primary font-bold rounded-full text-sm">3</div>
+<p class="text-gray-700 dark:text-gray-300 flex-1">Add the sliced grilled chicken, Parmesan cheese, and croutons (if using) to the bowl.</p>
+</li>
+<li class="flex items-start gap-4">
+<div class="flex-shrink-0 size-7 flex items-center justify-center bg-primary/20 text-primary font-bold rounded-full text-sm">4</div>
+<p class="text-gray-700 dark:text-gray-300 flex-1">Toss everything together gently and serve immediately.</p>
+</li>
+</ol>
+</div>
+<!-- Nutrition Facts (Collapsible) -->
+<details class="group">
+<summary class="flex items-center justify-between cursor-pointer list-none">
+<h2 class="text-[#1c110d] dark:text-gray-100 text-xl font-bold">Nutrition Facts</h2>
+<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="mt-4 text-gray-600 dark:text-gray-400 text-sm space-y-2">
+<p>Detailed nutrition information like sodium, sugar, fiber, etc., would be listed here.</p>
+</div>
+</details>
+<!-- CTAs & Footer -->
+<div class="flex flex-col gap-4 pt-6">
+<button class="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-primary/20 text-primary text-base font-bold">
+<span class="material-symbols-outlined">swap_horiz</span>
+                        Swap This Meal
+                    </button>
+<button class="w-full h-12 flex items-center justify-center gap-2 rounded-xl border-2 border-primary/30 text-primary text-base font-bold">
+<span class="material-symbols-outlined">add</span>
+                        Add to Favorites
+                    </button>
+<div class="flex items-center justify-center gap-2 pt-4">
+<span class="text-xs text-gray-400 dark:text-gray-500">Recipe data powered by</span>
+<span class="text-sm font-bold text-gray-500 dark:text-gray-400">Edamam</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
