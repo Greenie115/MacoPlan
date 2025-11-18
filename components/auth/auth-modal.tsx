@@ -100,8 +100,8 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         return
       }
 
-      // Success - redirect to onboarding complete
-      router.push('/onboarding/complete')
+      // Success - redirect to dashboard
+      router.push('/dashboard')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to log in')
       setLoading(false)
