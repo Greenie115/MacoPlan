@@ -1,10 +1,9 @@
 'use client'
 
 import { useRouter, usePathname } from 'next/navigation'
-import { Home, BookOpen, Calendar, User } from 'lucide-react'
+import { Home, BookOpen, Calendar, User, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { useNavigationStore } from '@/stores/navigation-store'
-import { useEffect } from 'react'
+import { useSidebarStore } from '@/stores/sidebar-store'
 
 const tabs = [
   { id: 'home' as const, label: 'Home', icon: Home, path: '/dashboard' },
@@ -16,7 +15,7 @@ const tabs = [
 export function SidebarNav() {
   const router = useRouter()
   const pathname = usePathname()
-  const { isSidebarOpen, closeSidebar } = useNavigationStore()
+  const { isCollapsed, toggle } = useSidebarStore()
 
   // Determine active tab from pathname
   const getActiveTab = () => {
@@ -28,43 +27,32 @@ export function SidebarNav() {
 
   const currentTab = getActiveTab()
 
-  // Close sidebar on escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isSidebarOpen) {
-        closeSidebar()
-      }
-    }
-
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [isSidebarOpen, closeSidebar])
-
   return (
     <>
-      {/* Overlay - click to close */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 hidden lg:block"
-          onClick={closeSidebar}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Sidebar - only shown on desktop */}
+      {/* Sidebar - always visible on desktop, hidden on mobile */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-50 h-full bg-background border-r border-border',
-          'transition-transform duration-300 ease-in-out',
-          'w-64',
-          // Hide on mobile, show on desktop
-          'hidden lg:block',
-          // Desktop: slide in/out based on state
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          'fixed top-0 left-0 z-40 h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out',
+          isCollapsed ? 'w-20' : 'w-64',
+          // Hide on mobile, always show on desktop
+          'hidden lg:block'
         )}
         aria-label="Main navigation"
       >
         <div className="flex flex-col h-full">
+          {/* Toggle Button */}
+          <button
+            onClick={toggle}
+            className="absolute -right-3 top-9 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md hover:bg-gray-100"
+            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {isCollapsed ? (
+              <ChevronRight className="h-3 w-3 text-gray-600" />
+            ) : (
+              <ChevronLeft className="h-3 w-3 text-gray-600" />
+            )}
+          </button>
+
           {/* Navigation items */}
           <nav className="flex-1 p-4 pt-20">
             <ul className="space-y-2">
@@ -84,13 +72,19 @@ export function SidebarNav() {
                         'hover:bg-accent',
                         isActive
                           ? 'bg-primary text-primary-foreground font-semibold'
-                          : 'text-muted-foreground'
+                          : 'text-muted-foreground',
+                        isCollapsed && 'justify-center px-2'
                       )}
                       aria-label={`Navigate to ${tab.label}`}
                       aria-current={isActive ? 'page' : undefined}
+                      title={isCollapsed ? tab.label : undefined}
                     >
-                      <Icon className="size-5" />
-                      <span>{tab.label}</span>
+                      <Icon className="size-5 shrink-0" />
+                      {!isCollapsed && (
+                        <span className="whitespace-nowrap overflow-hidden transition-all duration-300">
+                          {tab.label}
+                        </span>
+                      )}
                     </button>
                   </li>
                 )
@@ -100,9 +94,13 @@ export function SidebarNav() {
 
           {/* Footer */}
           <div className="p-4 border-t border-border">
-            <p className="text-xs text-muted-foreground text-center">
-              MacroPlan v1.0
-            </p>
+            {!isCollapsed ? (
+              <p className="text-xs text-muted-foreground text-center whitespace-nowrap">
+                MacroPlan v1.0
+              </p>
+            ) : (
+              <p className="text-xs text-muted-foreground text-center">v1.0</p>
+            )}
           </div>
         </div>
       </aside>

@@ -58,30 +58,37 @@ export const semanticColors = {
   },
 } as const
 
+// Brand Colors
+export const brandColors = {
+  primary: '#FF6B35', // Brand orange - primary CTA color
+  primaryLight: '#FFE5DB', // Light orange for backgrounds
+  primaryDark: '#E85A24', // Darker orange for hover states
+} as const
+
 // Macro Category Colors
 export const macroColors = {
   protein: {
-    primary: '#3B82F6', // blue-500
-    light: '#DBEAFE', // blue-100
-    bg: 'bg-blue-50',
-    text: 'text-blue-700',
-    border: 'border-blue-200',
+    primary: '#E63946', // Red
+    light: '#FECDD3', // red-200
+    bg: 'bg-red-50',
+    text: 'text-red-700',
+    border: 'border-red-200',
     emoji: '🥩',
   },
   carbs: {
-    primary: '#F97316', // orange-500 (more distinct than amber)
-    light: '#FFEDD5', // orange-100
-    bg: 'bg-orange-50',
-    text: 'text-orange-700',
-    border: 'border-orange-200',
+    primary: '#457B9D', // Blue
+    light: '#BFDBFE', // blue-200
+    bg: 'bg-blue-50',
+    text: 'text-blue-700',
+    border: 'border-blue-200',
     emoji: '🍞',
   },
   fat: {
-    primary: '#A855F7', // purple-500 (very distinct)
-    light: '#F3E8FF', // purple-100
-    bg: 'bg-purple-50',
-    text: 'text-purple-700',
-    border: 'border-purple-200',
+    primary: '#F4A261', // Orange/tan
+    light: '#FED7AA', // orange-200
+    bg: 'bg-orange-50',
+    text: 'text-orange-700',
+    border: 'border-orange-200',
     emoji: '🥑',
   },
 } as const
