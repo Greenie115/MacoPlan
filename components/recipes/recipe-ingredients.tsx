@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { RecipeIngredient } from '@/lib/types/recipe'
+import { Checkbox } from '@/components/ui/checkbox'
 
 interface RecipeIngredientsProps {
   ingredients: RecipeIngredient[]
@@ -21,9 +22,11 @@ export function RecipeIngredients({ ingredients }: RecipeIngredientsProps) {
   }
 
   return (
-    <div className="px-4 py-6">
-      <h2 className="text-xl font-bold text-gray-900 mb-4">Ingredients</h2>
-      <div className="space-y-3">
+    <div className="flex flex-col gap-4 p-4">
+      <h2 className="text-gray-900 text-xl font-bold">
+        Ingredients
+      </h2>
+      <ul className="space-y-3">
         {ingredients.map((ingredient, index) => {
           const isChecked = checkedItems.has(index)
           const ingredientText = [
@@ -35,29 +38,27 @@ export function RecipeIngredients({ ingredients }: RecipeIngredientsProps) {
             .join(' ')
 
           return (
-            <label
-              key={ingredient.id}
-              className="flex items-start gap-3 cursor-pointer group"
-            >
-              <input
-                type="checkbox"
+            <li key={ingredient.id} className="flex items-center gap-3">
+              <Checkbox
+                id={`ingredient-${index}`}
                 checked={isChecked}
-                onChange={() => toggleCheck(index)}
-                className="mt-1 h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                onCheckedChange={() => toggleCheck(index)}
+                className="size-5 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <span
-                className={`text-base leading-relaxed transition-colors ${
+              <label
+                htmlFor={`ingredient-${index}`}
+                className={`text-base cursor-pointer transition-colors ${
                   isChecked
-                    ? 'text-gray-400 line-through'
-                    : 'text-gray-700 group-hover:text-gray-900'
+                    ? 'line-through text-gray-400'
+                    : 'text-gray-800 font-medium'
                 }`}
               >
                 {ingredientText}
-              </span>
-            </label>
+              </label>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </div>
   )
 }

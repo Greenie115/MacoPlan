@@ -8,27 +8,22 @@ interface RecipeInstructionsProps {
 
 export function RecipeInstructions({ instructions }: RecipeInstructionsProps) {
   return (
-    <div className="px-4 py-6">
-      <h2 className="text-xl font-bold text-gray-900 mb-4">Instructions</h2>
-      <div className="space-y-4">
-        {instructions.map((instruction) => (
-          <div key={instruction.id} className="flex gap-4">
-            {/* Step Number Circle */}
-            <div className="flex-shrink-0">
-              <div className="flex items-center justify-center size-8 rounded-full bg-primary/20 text-primary font-semibold text-sm">
-                {instruction.step_number}
-              </div>
-            </div>
-
-            {/* Instruction Text */}
-            <div className="flex-1 pt-1">
-              <p className="text-base leading-relaxed text-gray-700">
-                {instruction.instruction}
-              </p>
-            </div>
-          </div>
+    <div className="flex flex-col gap-4 p-4">
+      <h2 className="text-gray-900 text-xl font-bold">
+        Instructions
+      </h2>
+      <ol className="space-y-4 list-inside">
+        {instructions.map((step) => (
+          <li key={step.id} className="flex gap-4">
+            <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-bold text-sm">
+              {step.step_number}
+            </span>
+            <p className="text-gray-800 leading-relaxed pt-1 font-medium">
+              {step.instruction}
+            </p>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   )
 }

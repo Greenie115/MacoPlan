@@ -57,6 +57,8 @@ export function RecipeHero({
             <span className="text-gray-400">No image</span>
           </div>
         )}
+        {/* Gradient overlay for better text visibility if needed, though design shows clean image */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-50" />
       </div>
 
       {/* Floating buttons */}

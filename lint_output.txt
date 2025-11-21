@@ -1,0 +1,206 @@
+
+> macro-plan@0.1.0 lint
+> eslint
+
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\2\page.tsx
+  64:22  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\2\page.tsx:64:22
+  62 |
+  63 |   // Watch for weight unit changes and convert weight value
+> 64 |   const weightUnit = form.watch('weightUnit')
+     |                      ^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  65 |   useEffect(() => {
+  66 |     if (weightUnit !== prevWeightUnit) {
+  67 |       const currentWeight = form.getValues('weight')  react-hooks/incompatible-library
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\3\page.tsx
+  56:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\3\page.tsx:56:5
+  54 |       return
+  55 |     }
+> 56 |     setIsValidating(false)
+     |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  57 |   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  58 |
+  59 |   const handleContinue = () => {  react-hooks/set-state-in-effect
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\4\page.tsx
+  57:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\4\page.tsx:57:5
+  55 |       return
+  56 |     }
+> 57 |     setIsValidating(false)
+     |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  58 |   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  59 |
+  60 |   const [localDietaryStyle, setLocalDietaryStyle] = useState<DietaryStyle | null>(  react-hooks/set-state-in-effect
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\5\page.tsx
+  100:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\5\page.tsx:100:5
+   98 |       return
+   99 |     }
+> 100 |     setIsValidating(false)
+      |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  101 |   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  102 |
+  103 |   const [localFitnessExperience, setLocalFitnessExperience] =  react-hooks/set-state-in-effect
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\6\page.tsx
+  40:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\(auth)\onboarding\6\page.tsx:40:5
+  38 |     }
+  39 |
+> 40 |     setIsValidating(false)
+     |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  41 |   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  42 |
+  43 |   const handleComplete = () => {  react-hooks/set-state-in-effect
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\dashboard\page.tsx
+  61:5  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\dashboard\page.tsx:61:5
+  59 |     }
+  60 |
+> 61 |     setIsInitialized(true)
+     |     ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  62 |   }, [isInitialized, onboardingStore.targetCalories, router, recentPlans.length, stats.plansCreated, stats.mealsLogged, progress.caloriesEaten, dashboardStore, macros])
+  63 |
+  64 |   return (  react-hooks/set-state-in-effect
+  62:6  warning  React Hook useEffect has a missing dependency: 'stats.currentStreak'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/exhaustive-deps
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\onboarding\complete\page.tsx
+  10:10  warning  'migrating' is assigned a value but never used                   @typescript-eslint/no-unused-vars
+  55:13  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\plans\today\page.tsx
+  10:65  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\recipes\[id]\not-found.tsx
+  15:20  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  15:42  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  16:27  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\recipes\[id]\page.tsx
+  159:11  error  Do not use an `<a>` element to navigate to `/plans/generate/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\recipes\error.tsx
+  29:20  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\app\recipes\page.tsx
+   8:10  warning  'Recipe' is defined but never used        @typescript-eslint/no-unused-vars
+  76:55  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  77:54  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  84:37  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\dashboard\calories-donut.tsx
+    4:10  warning  'cn' is defined but never used                          @typescript-eslint/no-unused-vars
+  124:9   warning  'caloriesRemaining' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  125:9   warning  'isOnTrack' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  126:9   warning  'isOver' is assigned a value but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\dashboard\generate-plan-cta.tsx
+  5:10  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\dashboard\macro-donut-chart.tsx
+  5:23  warning  'progressColors' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\dashboard\macro-progress-bar.tsx
+  35:9  warning  'colors' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\dashboard\macro-target-card.tsx
+   9:22  warning  'card' is defined but never used                                 @typescript-eslint/no-unused-vars
+  56:9   warning  'caloriesRemaining' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  69:18  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\dashboard\meal-plan-card.tsx
+  22:3  warning  'id' is defined but never used                          @typescript-eslint/no-unused-vars
+  34:9  warning  'completionPercent' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\onboarding\macro-customizer.tsx
+   7:23  warning  'CheckCircle2' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  49:3   warning  'isCustom' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  78:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\onboarding\macro-customizer.tsx:78:5
+  76 |       carbs !== currentCarbs ||
+  77 |       fat !== currentFat
+> 78 |     setHasChanges(changed)
+     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  79 |   }, [protein, carbs, fat, currentProtein, currentCarbs, currentFat])
+  80 |
+  81 |   // Calculate minimum values  react-hooks/set-state-in-effect
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\onboarding\page-transition.tsx
+  17:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\components\onboarding\page-transition.tsx:17:7
+  15 |   useEffect(() => {
+  16 |     if (step > prevStep) {
+> 17 |       setDirection('forward')
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  18 |     } else if (step < prevStep) {
+  19 |       setDirection('backward')
+  20 |     }  react-hooks/set-state-in-effect
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\scripts\apply-migration.mjs
+  59:11  warning  'data' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\danie\Documents\01 Projects\MacoPlan\maco-plan\stores\navigation-store.ts
+  26:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  34:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  41:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 39 problems (18 errors, 21 warnings)
+
