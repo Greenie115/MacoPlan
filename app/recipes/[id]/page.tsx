@@ -76,29 +76,23 @@ export default async function RecipePage({ params }: RecipePageProps) {
     notFound()
   }
 
-  console.log('RecipePage: Recipe found:', recipe.name)
-  // ... existing code ...
-
   // Sort ingredients and instructions in JS since Supabase ordering on nested relations can be tricky
   let ingredients = (recipe.recipe_ingredients || []).sort(
-    (a: any, b: any) => a.order_index - b.order_index
+    (a, b) => a.order_index - b.order_index
   )
   let instructions = (recipe.recipe_instructions || []).sort(
-    (a: any, b: any) => a.step_number - b.step_number
+    (a, b) => a.step_number - b.step_number
   )
 
   // Fallback logic: If ingredients or instructions are missing, try to fetch them
   if (ingredients.length === 0 || instructions.length === 0) {
-    console.log('RecipePage: Missing ingredients or instructions, attempting fallback fetch...')
     const fallbackData = await getRecipeFallback(recipe.name)
     
     if (fallbackData) {
       if (ingredients.length === 0 && fallbackData.ingredients) {
-        console.log(`RecipePage: Using ${fallbackData.ingredients.length} fallback ingredients`)
         ingredients = fallbackData.ingredients
       }
       if (instructions.length === 0 && fallbackData.instructions) {
-        console.log(`RecipePage: Using ${fallbackData.instructions.length} fallback instructions`)
         instructions = fallbackData.instructions
       }
     }

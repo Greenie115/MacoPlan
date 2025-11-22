@@ -26,7 +26,6 @@ export async function getRecipeFallback(recipeName: string): Promise<Partial<Rec
 
   // 2. Try TheMealDB API
   try {
-    console.log(`Fetching from TheMealDB for: ${recipeName}`)
     let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(recipeName)}`)
     let data = await response.json()
 
@@ -34,7 +33,6 @@ export async function getRecipeFallback(recipeName: string): Promise<Partial<Rec
     if (!data.meals) {
       const simplifiedName = recipeName.split(' ').slice(0, 2).join(' ')
       if (simplifiedName !== recipeName && simplifiedName.length > 3) {
-        console.log(`No exact match, retrying with simplified name: ${simplifiedName}`)
         response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(simplifiedName)}`)
         data = await response.json()
       }
@@ -42,7 +40,6 @@ export async function getRecipeFallback(recipeName: string): Promise<Partial<Rec
 
     if (data.meals && data.meals.length > 0) {
       const meal = data.meals[0]
-      console.log(`Found meal: ${meal.strMeal}`)
       
       // Parse ingredients
       const ingredients: RecipeIngredient[] = []
@@ -76,8 +73,6 @@ export async function getRecipeFallback(recipeName: string): Promise<Partial<Rec
         }))
 
       return { ingredients, instructions }
-    } else {
-      console.log('No meals found in TheMealDB')
     }
   } catch (error) {
     console.error('Error fetching from TheMealDB:', error)
