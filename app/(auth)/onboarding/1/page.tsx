@@ -1,10 +1,10 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useOnboardingStore, type Goal } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
-import { SkipOnboardingDev } from '@/components/onboarding/skip-onboarding-dev'
 import { Card } from '@/components/ui/card'
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -33,9 +33,6 @@ export default function GoalSelectionPage() {
 
   return (
     <PageTransition step={1}>
-      {/* Dev only: Skip onboarding button */}
-      <SkipOnboardingDev />
-
       <StepContainer
         step={1}
         title="Hey there!"
@@ -83,6 +80,12 @@ export default function GoalSelectionPage() {
               )}
             </Card>
           ))}
+        </div>
+        
+        <div className="mt-8 text-center">
+          <Link href="/login" className="text-sm text-gray-500 hover:text-primary transition-colors">
+            Already have an account? <span className="font-bold">Log in</span>
+          </Link>
         </div>
       </StepContainer>
     </PageTransition>

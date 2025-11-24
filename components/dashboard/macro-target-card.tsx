@@ -198,7 +198,7 @@ export function MacroTargetCard({
 
         <Button
           variant="outline"
-          onClick={onViewPlan || (() => router.push('/plans/today'))}
+          onClick={onViewPlan || (() => router.push('/plans'))}
           className="flex-1 font-medium"
           aria-label="View today's meal plan"
         >

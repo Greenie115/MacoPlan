@@ -2,6 +2,7 @@
 
 import { MoreHorizontal, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Plan } from '@/lib/types/plan'
 import {
   DropdownMenu,
@@ -81,10 +82,14 @@ export function PlanCard({ plan }: PlanCardProps) {
         </div>
 
         {/* Action Button */}
-        <button className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary/10 bg-primary/5 text-sm font-bold text-primary hover:bg-primary/10 transition-colors">
+        {/* Action Button */}
+        <Link 
+          href={`/plans/${plan.id}`}
+          className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary/10 bg-primary/5 text-sm font-bold text-primary hover:bg-primary/10 transition-colors"
+        >
           <span className="truncate">View Plan</span>
           <ArrowRight className="size-4" />
-        </button>
+        </Link>
       </div>
     </div>
   )

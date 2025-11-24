@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createClient } from '@/lib/supabase/client'
 import { Loader2 } from 'lucide-react'
+import { useOnboardingStore } from '@/stores/onboarding-store'
 
 interface AuthModalProps {
   open: boolean
@@ -59,7 +60,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
     try {
       const supabase = createClient()
-      const { error } = await supabase.auth.signUp({
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -67,10 +68,14 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         },
       })
 
-      if (error) {
-        setError(error.message)
+      if (authError) {
+        setError(authError.message)
         setLoading(false)
         return
+      }
+
+      if (authData.user) {
+        await saveProfileData(authData.user.id)
       }
 
       // Success - show confirmation message
@@ -89,15 +94,19 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
     try {
       const supabase = createClient()
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
-      if (error) {
-        setError(error.message)
+      if (authError) {
+        setError(authError.message)
         setLoading(false)
         return
+      }
+
+      if (authData.user) {
+        await saveProfileData(authData.user.id)
       }
 
       // Success - redirect to dashboard
@@ -105,6 +114,56 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to log in')
       setLoading(false)
+    }
+  }
+
+  const saveProfileData = async (userId: string) => {
+    const store = useOnboardingStore.getState()
+    
+    // Only save if we have data (at least a goal)
+    if (!store.goal) return
+
+    const supabase = createClient()
+    
+    // Convert weight to kg
+    const weightKg = store.weightUnit === 'kg' 
+      ? store.weight 
+      : (store.weight || 0) * 0.453592
+
+    // Convert height to cm
+    const heightInches = (store.heightFeet || 0) * 12 + (store.heightInches || 0)
+    const heightCm = heightInches * 2.54
+
+    const profileData = {
+      user_id: userId,
+      goal: store.goal,
+      age: store.age,
+      weight_kg: weightKg,
+      height_cm: heightCm,
+      sex: store.sex,
+      activity_level: store.activityLevel,
+      dietary_style: store.dietaryStyle,
+      allergies: store.allergies,
+      foods_to_avoid: store.foodsToAvoid,
+      fitness_experience: store.fitnessExperience,
+      tracking_experience: store.trackingExperience,
+      meal_prep_skills: store.mealPrepSkills,
+      bmr: store.bmr,
+      tdee: store.tdee,
+      target_calories: store.targetCalories,
+      protein_grams: store.proteinGrams,
+      carb_grams: store.carbGrams,
+      fat_grams: store.fatGrams,
+      onboarding_completed: true
+    }
+
+    const { error } = await supabase
+      .from('user_profiles')
+      .upsert(profileData, { onConflict: 'user_id' })
+
+    if (error) {
+      console.error('Error saving profile:', error)
+      // Don't block auth success on profile save error, but log it
     }
   }
 

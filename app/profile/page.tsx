@@ -1,3 +1,5 @@
+'use client'
+
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { TopAppBar } from '@/components/layout/top-app-bar'
 import { 
@@ -16,7 +18,21 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+import { useState } from 'react'
+
 export default function ProfilePage() {
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const router = useRouter()
+  const supabase = createClient()
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push('/login')
+    router.refresh()
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
       <TopAppBar />
@@ -161,13 +177,16 @@ export default function ProfilePage() {
               </div>
               <ChevronRight className="size-5 text-gray-400" />
             </Link>
-            <div className="flex items-center justify-between p-4 bg-white">
+            <div 
+              className="flex items-center justify-between p-4 bg-white cursor-pointer hover:bg-gray-50 transition-colors"
+              onClick={() => setIsDarkMode(!isDarkMode)}
+            >
               <div className="flex items-center gap-3">
                 <Moon className="size-5 text-gray-400" />
                 <span className="text-gray-900 font-medium">Dark Mode</span>
               </div>
-              <div className="w-11 h-6 bg-gray-200 rounded-full relative cursor-pointer">
-                <div className="absolute left-1 top-1 size-4 bg-white rounded-full shadow-sm"></div>
+              <div className={`w-11 h-6 rounded-full relative transition-colors ${isDarkMode ? 'bg-primary' : 'bg-gray-200'}`}>
+                <div className={`absolute top-1 size-4 bg-white rounded-full shadow-sm transition-all ${isDarkMode ? 'left-6' : 'left-1'}`}></div>
               </div>
             </div>
             <Link href="#" className="flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors">
@@ -213,7 +232,10 @@ export default function ProfilePage() {
 
         {/* Logout */}
         <div className="p-4 mt-4">
-          <button className="w-full h-12 flex items-center justify-center gap-2 text-red-600 font-bold hover:bg-red-50 rounded-xl transition-colors">
+          <button 
+            onClick={handleLogout}
+            className="w-full h-12 flex items-center justify-center gap-2 text-red-600 font-bold hover:bg-red-50 rounded-xl transition-colors"
+          >
             <LogOut className="size-5" />
             <span>Log Out</span>
           </button>

@@ -24,7 +24,9 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Navigation */}
-      <AppNavigation hasCompletedOnboarding={hasCompletedOnboarding} />
+      {!pathname.startsWith('/login') && !pathname.startsWith('/signup') && (
+        <AppNavigation hasCompletedOnboarding={hasCompletedOnboarding} />
+      )}
 
       {/* Main content area */}
       <main
@@ -33,8 +35,8 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
           // Add padding bottom on mobile to account for bottom nav
           'pb-16 lg:pb-0',
           // Add padding left on desktop when sidebar is visible
-          // ONLY if not on onboarding route and user has completed onboarding
-          !isOnboardingRoute && hasCompletedOnboarding && (isCollapsed ? 'lg:pl-20' : 'lg:pl-64')
+          // ONLY if not on onboarding route, not on login/signup route, and user has completed onboarding
+          !isOnboardingRoute && !pathname.startsWith('/login') && !pathname.startsWith('/signup') && hasCompletedOnboarding && (isCollapsed ? 'lg:pl-20' : 'lg:pl-64')
         )}
       >
         {children}

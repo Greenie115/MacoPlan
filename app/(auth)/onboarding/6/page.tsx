@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AuthModal } from '@/components/auth/auth-modal'
 import { MacroCustomizer } from '@/components/onboarding/macro-customizer'
+import { createClient } from '@/lib/supabase/client'
 
 export default function MacroResultsPage() {
   const router = useRouter()
@@ -40,10 +41,68 @@ export default function MacroResultsPage() {
     setIsValidating(false)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     store.markStepComplete(6)
-    // Show auth modal instead of navigating directly
-    setShowAuthModal(true)
+    
+    // Check if user is already logged in (from signup flow)
+    const supabase = createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    if (session?.user) {
+      // User is logged in, save data directly
+      await saveProfileData(session.user.id)
+      router.push('/dashboard')
+    } else {
+      // User is not logged in, show auth modal
+      setShowAuthModal(true)
+    }
+  }
+
+  const saveProfileData = async (userId: string) => {
+    // Only save if we have data (at least a goal)
+    if (!store.goal) return
+
+    const supabase = createClient()
+    
+    // Convert weight to kg
+    const weightKg = store.weightUnit === 'kg' 
+      ? store.weight 
+      : (store.weight || 0) * 0.453592
+
+    // Convert height to cm
+    const heightInches = (store.heightFeet || 0) * 12 + (store.heightInches || 0)
+    const heightCm = heightInches * 2.54
+
+    const profileData = {
+      goal: store.goal,
+      age: store.age,
+      weight_kg: weightKg,
+      height_cm: heightCm,
+      sex: store.sex,
+      activity_level: store.activityLevel,
+      dietary_style: store.dietaryStyle,
+      allergies: store.allergies,
+      foods_to_avoid: store.foodsToAvoid,
+      fitness_experience: store.fitnessExperience,
+      tracking_experience: store.trackingExperience,
+      meal_prep_skills: store.mealPrepSkills,
+      bmr: store.bmr,
+      tdee: store.tdee,
+      target_calories: store.targetCalories,
+      protein_grams: store.proteinGrams,
+      carb_grams: store.carbGrams,
+      fat_grams: store.fatGrams,
+      onboarding_completed: true
+    }
+
+    const { error } = await supabase
+      .from('user_profiles')
+      .update(profileData)
+      .eq('user_id', userId)
+
+    if (error) {
+      console.error('Error saving profile:', error)
+    }
   }
 
   const handleBack = () => {
