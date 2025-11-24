@@ -289,6 +289,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       name: 'onboarding-storage',
       storage: {
         getItem: (name) => {
+          if (typeof window === 'undefined') return null
           try {
             const str = localStorage.getItem(name)
             return str ? JSON.parse(str) : null
@@ -298,6 +299,7 @@ export const useOnboardingStore = create<OnboardingState>()(
           }
         },
         setItem: (name, value) => {
+          if (typeof window === 'undefined') return
           try {
             localStorage.setItem(name, JSON.stringify(value))
           } catch (error) {
@@ -313,6 +315,7 @@ export const useOnboardingStore = create<OnboardingState>()(
           }
         },
         removeItem: (name) => {
+          if (typeof window === 'undefined') return
           try {
             localStorage.removeItem(name)
           } catch (error) {

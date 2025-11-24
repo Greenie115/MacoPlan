@@ -63,10 +63,22 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
 
   query = query.order('created_at', { ascending: false }).range(from, to)
 
-  const { data: recipes, error, count } = await query
+  let recipes = []
+  let count = 0
+  let error = null
+
+  try {
+    const result = await query
+    recipes = result.data || []
+    count = result.count || 0
+    error = result.error
+  } catch (e) {
+    console.error('Unexpected error fetching recipes:', e)
+  }
 
   if (error) {
-    throw new Error(`Failed to fetch recipes: ${error.message}`)
+    console.error('Supabase error fetching recipes:', error.message)
+    // Don't throw, just let it render empty state
   }
 
   // If multiple tag filters, ensure recipes have ALL selected tags (AND logic)
