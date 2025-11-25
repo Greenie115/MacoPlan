@@ -14,8 +14,10 @@ import { MacroTargetCard } from '@/components/dashboard/macro-target-card'
 import { GeneratePlanCTA } from '@/components/dashboard/generate-plan-cta'
 import { RecentPlansCarousel } from '@/components/dashboard/recent-plans-carousel'
 import { StatsGrid } from '@/components/dashboard/stats-grid'
+import { QuickLogWidget } from '@/components/dashboard/quick-log-widget'
 import { LogMealModal } from '@/components/meals/log-meal-modal'
 import { getMealsForDate, getDailyTotals, deleteMealLog } from '@/app/actions/meal-logs'
+import { getFavoriteRecipesForDashboard } from '@/app/actions/dashboard'
 import { toast } from 'sonner'
 import type { LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
 
@@ -37,6 +39,7 @@ export default function DashboardPage() {
     fat: 0,
     mealsLogged: 0,
   })
+  const [favoriteRecipes, setFavoriteRecipes] = useState<any[]>([])
 
   // Fetch meal data
   const fetchMealData = async () => {
@@ -96,11 +99,11 @@ export default function DashboardPage() {
               trackingExperience: profile.tracking_experience,
               mealPrepSkills: profile.meal_prep_skills,
             })
-            
+
             // Recalculate macros to ensure consistency
             onboardingStore.calculateMacros()
-            
-            // If custom macros were saved (need to add to profile schema later if needed, 
+
+            // If custom macros were saved (need to add to profile schema later if needed,
             // for now just use calculated or what's in DB if we added columns)
             // For now, we'll rely on recalculation based on saved stats
           } else {
@@ -130,11 +133,18 @@ export default function DashboardPage() {
       // Fetch real meal data instead of using dummy data
       await fetchMealData()
 
+      // Fetch favorite recipes for Quick Log widget
+      const favoritesResult = await getFavoriteRecipesForDashboard()
+      if (favoritesResult.success && favoritesResult.data) {
+        setFavoriteRecipes(favoritesResult.data)
+      }
+
       setIsInitialized(true)
     }
 
     initializeDashboard()
-  }, [isInitialized, onboardingStore, dashboardStore, router, recentPlans.length, stats.currentStreak, progress.caloriesEaten, macros])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -188,6 +198,11 @@ export default function DashboardPage() {
         {/* Generate New Meal Plan CTA */}
         <div className="pb-4">
           <GeneratePlanCTA hasActivePlan={recentPlans.some((p) => p.isActive)} />
+        </div>
+
+        {/* Quick Log Widget */}
+        <div className="px-4 pb-4 md:px-6 lg:px-8">
+          <QuickLogWidget favoriteRecipes={favoriteRecipes} />
         </div>
 
         {/* Recent Plans Section */}

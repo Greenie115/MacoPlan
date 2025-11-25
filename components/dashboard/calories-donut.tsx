@@ -265,7 +265,7 @@ export function CaloriesDonut({
             fontSize={config.fontSize.large}
             fontWeight="700"
           >
-            {caloriesEaten.toLocaleString()}
+            {Math.round(caloriesEaten).toLocaleString()}
           </text>
 
           {/* Separator line */}
@@ -287,7 +287,7 @@ export function CaloriesDonut({
             fontSize={config.fontSize.small}
             fontWeight="500"
           >
-            {targetCalories.toLocaleString()} cal
+            {Math.round(targetCalories).toLocaleString()} cal
           </text>
         </g>
       </svg>

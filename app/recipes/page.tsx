@@ -3,6 +3,7 @@ import { TopAppBar } from '@/components/layout/top-app-bar'
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { RecipeSearch } from '@/components/recipes/recipe-search'
 import { RecipeFilters } from '@/components/recipes/recipe-filters'
+import { RecipeTabs } from '@/components/recipes/recipe-tabs'
 import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
 import { RecipeGrid } from '@/components/recipes/recipe-grid'
 import { Recipe } from '@/lib/types/recipe'
@@ -16,6 +17,7 @@ interface RecipesPageProps {
     search?: string
     filters?: string
     page?: string
+    tab?: string
   }>
 }
 
@@ -24,6 +26,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   const searchQuery = params.search?.trim() || ''
   const filterTags = params.filters?.split(',').filter(Boolean) || []
   const currentPage = Math.max(1, parseInt(params.page || '1', 10))
+  const activeTab = params.tab || 'all'
 
   const supabase = await createClient()
 
@@ -92,15 +95,22 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   }
 
   // Remove duplicate recipes (due to JOIN with recipe_tags)
-  const uniqueRecipes = Array.from(
+  let uniqueRecipes = Array.from(
     new Map(filteredRecipes.map((r: any) => [r.id, r])).values()
   )
 
   // Get user's favorite recipe IDs
   const favoriteIds = await getFavoriteRecipeIds()
 
+  // Filter by favorites tab if active
+  if (activeTab === 'favorites') {
+    uniqueRecipes = uniqueRecipes.filter((recipe: any) =>
+      favoriteIds.includes(recipe.id)
+    )
+  }
+
   // Calculate pagination info
-  const totalRecipes = count || 0
+  const totalRecipes = uniqueRecipes.length
   const totalPages = Math.ceil(totalRecipes / RECIPES_PER_PAGE)
   const hasNextPage = currentPage < totalPages
   const hasPrevPage = currentPage > 1
@@ -124,6 +134,11 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       {/* Search */}
       <div className="max-w-7xl mx-auto">
         <RecipeSearch />
+      </div>
+
+      {/* Tabs: All / Favorites */}
+      <div className="max-w-7xl mx-auto">
+        <RecipeTabs />
       </div>
 
       {/* Filters */}

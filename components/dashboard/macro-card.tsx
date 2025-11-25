@@ -90,9 +90,9 @@ export function MacroCard({ type, eaten, target }: MacroCardProps) {
         {/* Center text - grams eaten */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-3xl font-bold" style={{ color: macro.color }}>
-            {eaten}
+            {Math.round(eaten)}
           </span>
-          <span className="text-xs text-muted-foreground">of {target}g</span>
+          <span className="text-xs text-muted-foreground">of {Math.round(target)}g</span>
         </div>
       </div>
 
@@ -122,7 +122,7 @@ export function MacroCard({ type, eaten, target }: MacroCardProps) {
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Remaining</span>
               <span className="text-sm font-medium text-charcoal">
-                {remaining}g
+                {Math.round(remaining)}g
               </span>
             </div>
           )}
@@ -131,7 +131,7 @@ export function MacroCard({ type, eaten, target }: MacroCardProps) {
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Over target</span>
               <span className="text-sm font-bold text-red-600">
-                +{eaten - target}g
+                +{Math.round(eaten - target)}g
               </span>
             </div>
           )}
@@ -140,7 +140,7 @@ export function MacroCard({ type, eaten, target }: MacroCardProps) {
         {/* Calories */}
         <div className="mt-2 pt-2 border-t border-gray-200">
           <span className="text-xs text-muted-foreground">
-            {eaten * (type === 'fat' ? 9 : 4)} of {target * (type === 'fat' ? 9 : 4)} cal
+            {Math.round(eaten * (type === 'fat' ? 9 : 4))} of {Math.round(target * (type === 'fat' ? 9 : 4))} cal
           </span>
         </div>
       </div>

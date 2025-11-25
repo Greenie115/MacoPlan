@@ -1,13 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import { RecipeHero } from '@/components/recipes/recipe-hero'
 import { RecipeMacrosCard } from '@/components/recipes/recipe-macros-card'
 import { RecipeIngredients } from '@/components/recipes/recipe-ingredients'
 import { RecipeInstructions } from '@/components/recipes/recipe-instructions'
 import { RecipeNutritionFacts } from '@/components/recipes/recipe-nutrition-facts'
+import { LogRecipeButton } from '@/components/recipes/log-recipe-button'
+import { FavoriteButton } from '@/components/recipes/favorite-button'
 import { RecipeWithDetails } from '@/lib/types/recipe'
 import { isFavorite } from '../actions'
+import { getLoggedMealForRecipe } from '@/app/actions/meal-logs'
 import { z } from 'zod'
 import { getRecipeFallback } from '@/lib/services/recipe-service'
 
@@ -108,6 +110,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
   // Check if recipe is favorited
   const isRecipeFavorite = await isFavorite(id)
 
+  // Check if recipe is already logged today
+  const { mealId: loggedMealId } = await getLoggedMealForRecipe(id)
+
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Hero Image with Back/Favorite Buttons */}
@@ -183,17 +188,27 @@ export default async function RecipePage({ params }: RecipePageProps) {
           />
         </div>
 
-        {/* Footer Buttons */}
-        <div className="flex flex-col gap-4 pt-2 pb-6">
-          <Link
-            href="/plans/generate"
-            className="flex items-center justify-center w-full h-12 rounded-xl bg-primary/20 text-primary text-base font-bold hover:bg-primary/30 transition-colors"
-          >
-            Swap This Meal
-          </Link>
-          <button className="w-full h-12 flex items-center justify-center gap-2 rounded-xl border-2 border-primary/30 text-primary text-base font-bold hover:bg-primary/5 transition-colors">
-            Add to Favorites
-          </button>
+        {/* Action Buttons */}
+        <div className="flex flex-col gap-3 pt-2 pb-6">
+          <LogRecipeButton
+            recipe={{
+              id: recipe.id,
+              name: recipe.name,
+              calories: recipe.calories,
+              protein_grams: recipe.protein_grams,
+              carb_grams: recipe.carb_grams,
+              fat_grams: recipe.fat_grams,
+              servings: recipe.servings,
+            }}
+            loggedMealId={loggedMealId}
+            className="h-12 text-base"
+          />
+          <FavoriteButton
+            recipeId={recipe.id}
+            initialIsFavorited={isRecipeFavorite}
+            variant="button"
+            className="h-12 text-base"
+          />
           <div className="flex items-center justify-center gap-2 pt-2">
             <span className="text-xs text-gray-400">Recipe data powered by</span>
             <span className="text-sm font-bold text-gray-500">Edamam</span>

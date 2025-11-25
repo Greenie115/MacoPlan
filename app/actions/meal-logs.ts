@@ -7,7 +7,7 @@ import type { LogMealInput, LoggedMeal, DailyTotals } from '@/lib/types/meal-log
 /**
  * Log a new meal for the authenticated user
  */
-export async function logMeal(input: LogMealInput) {
+export async function logMeal(input: LogMealInput, recipeId?: string) {
   const supabase = await createClient()
   const {
     data: { user },
@@ -60,7 +60,7 @@ export async function logMeal(input: LogMealInput) {
       fat_grams: Number(input.fatGrams.toFixed(1)),
       serving_size: input.servingSize?.trim() || null,
       description: input.description?.trim() || null,
-      recipe_id: null,
+      recipe_id: recipeId || null,
       plan_meal_id: null,
     })
     .select()
@@ -216,5 +216,40 @@ export async function deleteMealLog(mealId: string) {
   }
 
   revalidatePath('/dashboard')
+  revalidatePath('/recipes/[id]', 'page')
   return { success: true }
+}
+
+/**
+ * Check if a recipe has been logged today and return the meal log ID
+ */
+export async function getLoggedMealForRecipe(
+  recipeId: string,
+  date?: string
+): Promise<{ mealId: string | null }> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return { mealId: null }
+  }
+
+  const targetDate = date || new Date().toISOString().split('T')[0] // YYYY-MM-DD
+
+  const { data, error } = await supabase
+    .from('logged_meals')
+    .select('id')
+    .eq('user_id', user.id)
+    .eq('recipe_id', recipeId)
+    .eq('date', targetDate)
+    .single()
+
+  if (error || !data) {
+    return { mealId: null }
+  }
+
+  return { mealId: data.id }
 }
