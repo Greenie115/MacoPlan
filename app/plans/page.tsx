@@ -4,7 +4,7 @@ import { PlanList } from '@/components/plans/plan-list'
 import { PlanTabs } from '@/components/plans/plan-tabs'
 import { Plus, ArrowRight, Calendar } from 'lucide-react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { PlanService } from '@/lib/services/plan-service'
 import { Plan } from '@/lib/types/plan'
 import { createClient } from '@/lib/supabase/client'
@@ -76,7 +76,9 @@ export default function PlansPage() {
               View All
             </Link>
           </div>
-          <PlanTabs />
+          <Suspense fallback={<div className="h-10" />}>
+            <PlanTabs />
+          </Suspense>
           {loading ? (
             <div className="text-center py-8 text-gray-500">Loading plans...</div>
           ) : plans.length > 0 ? (

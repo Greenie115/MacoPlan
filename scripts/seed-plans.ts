@@ -36,9 +36,9 @@ const PLAN_DATA = {
       day_of_week: 'Mon',
       date: '2025-11-05',
       meals: [
-        { name: 'Greek Yogurt Power Bowl', type: 'breakfast', calories: 550, protein: 35, carbs: 60, fat: 12, image: 'https://images.unsplash.com/photo-1488477181946-6428a029177b?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Greek Yogurt Power Bowl', type: 'breakfast', calories: 550, protein: 35, carbs: 60, fat: 12, image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80' },
         { name: 'Grilled Chicken Salad', type: 'lunch', calories: 750, protein: 55, carbs: 40, fat: 25, image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80' },
-        { name: 'Salmon with Asparagus', type: 'dinner', calories: 800, protein: 60, carbs: 120, fat: 20, image: 'https://images.unsplash.com/photo-1467003909585-2f8a7270028d?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Salmon with Asparagus', type: 'dinner', calories: 800, protein: 60, carbs: 120, fat: 20, image: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80' },
         { name: 'Protein Shake', type: 'snack', calories: 350, protein: 30, carbs: 60, fat: 8, image: 'https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?auto=format&fit=crop&w=800&q=80' },
       ]
     },
@@ -56,7 +56,7 @@ const PLAN_DATA = {
       day_of_week: 'Wed',
       date: '2025-11-07',
       meals: [
-        { name: 'Avocado Toast with Poached Egg', type: 'breakfast', calories: 380, protein: 18, carbs: 35, fat: 22, image: 'https://images.unsplash.com/photo-1525351484163-7529414395d8?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Avocado Toast with Poached Egg', type: 'breakfast', calories: 380, protein: 18, carbs: 35, fat: 22, image: 'https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?auto=format&fit=crop&w=800&q=80' },
         { name: 'Quinoa & Black Bean Salad', type: 'lunch', calories: 350, protein: 12, carbs: 55, fat: 10, image: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=800&q=80' },
         { name: 'Baked Cod with Roasted Veggies', type: 'dinner', calories: 320, protein: 30, carbs: 15, fat: 10, image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80' },
         { name: 'Hard Boiled Eggs & Almonds', type: 'snack', calories: 220, protein: 14, carbs: 4, fat: 16, image: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=800&q=80' },
@@ -66,8 +66,8 @@ const PLAN_DATA = {
       day_of_week: 'Thu',
       date: '2025-11-08',
       meals: [
-        { name: 'Greek Yogurt Power Bowl', type: 'breakfast', calories: 550, protein: 35, carbs: 60, fat: 12, image: 'https://images.unsplash.com/photo-1488477181946-6428a029177b?auto=format&fit=crop&w=800&q=80' },
-        { name: 'Turkey Chili', type: 'lunch', calories: 450, protein: 35, carbs: 40, fat: 12, image: 'https://images.unsplash.com/photo-1547592166-23acbe346499?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Greek Yogurt Power Bowl', type: 'breakfast', calories: 550, protein: 35, carbs: 60, fat: 12, image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Turkey Chili', type: 'lunch', calories: 450, protein: 35, carbs: 40, fat: 12, image: 'https://images.unsplash.com/photo-1529543544282-ea669407fca3?auto=format&fit=crop&w=800&q=80' },
         { name: 'Grilled Chicken Salad', type: 'dinner', calories: 750, protein: 55, carbs: 40, fat: 25, image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80' },
         { name: 'Apple Slices with Almond Butter', type: 'snack', calories: 200, protein: 5, carbs: 25, fat: 10, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80' },
       ]
@@ -78,7 +78,7 @@ const PLAN_DATA = {
       meals: [
         { name: 'Oatmeal with Peanut Butter', type: 'breakfast', calories: 450, protein: 15, carbs: 65, fat: 18, image: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?auto=format&fit=crop&w=800&q=80' },
         { name: 'Beef Stir-Fry', type: 'lunch', calories: 500, protein: 40, carbs: 20, fat: 25, image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80' },
-        { name: 'Salmon with Asparagus', type: 'dinner', calories: 800, protein: 60, carbs: 120, fat: 20, image: 'https://images.unsplash.com/photo-1467003909585-2f8a7270028d?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Salmon with Asparagus', type: 'dinner', calories: 800, protein: 60, carbs: 120, fat: 20, image: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80' },
         { name: 'Protein Shake', type: 'snack', calories: 350, protein: 30, carbs: 60, fat: 8, image: 'https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?auto=format&fit=crop&w=800&q=80' },
       ]
     },
@@ -86,9 +86,9 @@ const PLAN_DATA = {
       day_of_week: 'Sat',
       date: '2025-11-10',
       meals: [
-        { name: 'Avocado Toast with Poached Egg', type: 'breakfast', calories: 380, protein: 18, carbs: 35, fat: 22, image: 'https://images.unsplash.com/photo-1525351484163-7529414395d8?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Avocado Toast with Poached Egg', type: 'breakfast', calories: 380, protein: 18, carbs: 35, fat: 22, image: 'https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?auto=format&fit=crop&w=800&q=80' },
         { name: 'Turkey & Cheese Wrap', type: 'lunch', calories: 420, protein: 35, carbs: 30, fat: 15, image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=800&q=80' },
-        { name: 'Turkey Chili', type: 'dinner', calories: 450, protein: 35, carbs: 40, fat: 12, image: 'https://images.unsplash.com/photo-1547592166-23acbe346499?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Turkey Chili', type: 'dinner', calories: 450, protein: 35, carbs: 40, fat: 12, image: 'https://images.unsplash.com/photo-1529543544282-ea669407fca3?auto=format&fit=crop&w=800&q=80' },
         { name: 'Cottage Cheese with Pineapple', type: 'snack', calories: 180, protein: 25, carbs: 15, fat: 2, image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=800&q=80' },
       ]
     },
@@ -96,7 +96,7 @@ const PLAN_DATA = {
       day_of_week: 'Sun',
       date: '2025-11-11',
       meals: [
-        { name: 'Greek Yogurt Power Bowl', type: 'breakfast', calories: 550, protein: 35, carbs: 60, fat: 12, image: 'https://images.unsplash.com/photo-1488477181946-6428a029177b?auto=format&fit=crop&w=800&q=80' },
+        { name: 'Greek Yogurt Power Bowl', type: 'breakfast', calories: 550, protein: 35, carbs: 60, fat: 12, image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80' },
         { name: 'Quinoa & Black Bean Salad', type: 'lunch', calories: 350, protein: 12, carbs: 55, fat: 10, image: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=800&q=80' },
         { name: 'Baked Cod with Roasted Veggies', type: 'dinner', calories: 320, protein: 30, carbs: 15, fat: 10, image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80' },
         { name: 'Hard Boiled Eggs & Almonds', type: 'snack', calories: 220, protein: 14, carbs: 4, fat: 16, image: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=800&q=80' },

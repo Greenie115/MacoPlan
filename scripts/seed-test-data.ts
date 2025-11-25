@@ -17,7 +17,7 @@ const TEST_RECIPES = [
   {
     name: 'Greek Yogurt Power Bowl',
     description: 'A high-protein breakfast bowl with fresh berries and honey.',
-    image_url: 'https://images.unsplash.com/photo-1488477181946-6428a029177b?auto=format&fit=crop&w=800&q=80',
+    image_url: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80',
     calories: 550,
     protein_grams: 35,
     carb_grams: 60,
@@ -71,7 +71,7 @@ const TEST_RECIPES = [
   {
     name: 'Salmon with Asparagus',
     description: 'Omega-3 rich dinner with roasted vegetables.',
-    image_url: 'https://images.unsplash.com/photo-1467003909585-2f8a7270028d?auto=format&fit=crop&w=800&q=80',
+    image_url: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80',
     calories: 800,
     protein_grams: 60,
     carb_grams: 120, // High due to side (e.g. quinoa/rice not listed but implied by macros in design)
@@ -152,7 +152,7 @@ const TEST_RECIPES = [
   {
     name: 'Avocado Toast with Poached Egg',
     description: 'Classic brunch favorite with healthy fats and protein.',
-    image_url: 'https://images.unsplash.com/photo-1525351484163-7529414395d8?auto=format&fit=crop&w=800&q=80',
+    image_url: 'https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?auto=format&fit=crop&w=800&q=80',
     calories: 380,
     protein_grams: 18,
     carb_grams: 35,
@@ -283,7 +283,7 @@ const TEST_RECIPES = [
   {
     name: 'Turkey Chili',
     description: 'Warm and comforting bowl of chili.',
-    image_url: 'https://images.unsplash.com/photo-1547592166-23acbe346499?auto=format&fit=crop&w=800&q=80',
+    image_url: 'https://images.unsplash.com/photo-1529543544282-ea669407fca3?auto=format&fit=crop&w=800&q=80',
     calories: 450,
     protein_grams: 35,
     carb_grams: 40,
