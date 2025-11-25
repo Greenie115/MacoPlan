@@ -21,6 +21,7 @@ export function PlanTabs() {
           <Link
             key={tab.value}
             href={`?tab=${tab.value}`}
+            aria-current={isActive ? 'page' : undefined}
             className={`flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors ${
               isActive
                 ? 'border-primary'

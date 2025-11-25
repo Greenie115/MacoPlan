@@ -8,21 +8,53 @@ import { useEffect, useState, Suspense } from 'react'
 import { PlanService } from '@/lib/services/plan-service'
 import { Plan } from '@/lib/types/plan'
 import { createClient } from '@/lib/supabase/client'
+import { useSearchParams } from 'next/navigation'
 
-export default function PlansPage() {
+/**
+ * Filter plans based on the selected tab
+ * Note: Currently returns all plans as Plan type doesn't have date fields.
+ * TODO: Add createdAt timestamp to Plan interface for proper filtering.
+ */
+function getFilteredPlans(plans: Plan[], tab: string): Plan[] {
+  // Tab filtering will be implemented once Plan interface includes timestamp fields
+  return plans
+}
+
+/**
+ * Plans content component that uses useSearchParams
+ * Must be wrapped in Suspense boundary
+ */
+function PlansContent() {
   const [plans, setPlans] = useState<Plan[]>([])
   const [loading, setLoading] = useState(true)
-  const planService = new PlanService()
-  const supabase = createClient()
+  const [error, setError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  const currentTab = searchParams.get('tab') || 'all'
 
   useEffect(() => {
     async function fetchPlans() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        const userPlans = await planService.getPlans(user.id)
-        setPlans(userPlans)
+      try {
+        const supabase = createClient()
+        const planService = new PlanService()
+
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+        if (authError) {
+          setError('Failed to authenticate. Please try logging in again.')
+          setLoading(false)
+          return
+        }
+
+        if (user) {
+          const userPlans = await planService.getPlans(user.id)
+          setPlans(userPlans)
+        }
+      } catch (err) {
+        setError('Failed to load plans. Please try again.')
+        console.error('Error fetching plans:', err)
+      } finally {
+        setLoading(false)
       }
-      setLoading(false)
     }
     fetchPlans()
   }, [])
@@ -35,7 +67,10 @@ export default function PlansPage() {
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">My Plans</h1>
             <Link href="/plans/generate">
-              <button className="p-2 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
+              <button
+                className="p-2 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
+                aria-label="Create new meal plan"
+              >
                 <Plus className="size-6" />
               </button>
             </Link>
@@ -81,10 +116,20 @@ export default function PlansPage() {
           <Suspense fallback={<div className="h-10" />}>
             <PlanTabs />
           </Suspense>
-          {loading ? (
+          {error ? (
+            <div className="text-center py-8">
+              <p className="text-red-600 font-medium">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="text-primary font-bold mt-2 inline-block hover:underline"
+              >
+                Try again
+              </button>
+            </div>
+          ) : loading ? (
             <div className="text-center py-8 text-gray-500">Loading plans...</div>
           ) : plans.length > 0 ? (
-            <PlanList plans={plans} />
+            <PlanList plans={getFilteredPlans(plans, currentTab)} />
           ) : (
             <div className="text-center py-8 text-gray-500">
               <p>No saved plans yet.</p>
@@ -96,5 +141,16 @@ export default function PlansPage() {
         </section>
       </main>
     </div>
+  )
+}
+
+/**
+ * Main page component with Suspense boundary
+ */
+export default function PlansPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="text-gray-500">Loading plans...</div></div>}>
+      <PlansContent />
+    </Suspense>
   )
 }
