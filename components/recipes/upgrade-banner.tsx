@@ -1,6 +1,6 @@
 'use client'
 
-import { X } from 'lucide-react'
+import { X, Sparkles, Crown } from 'lucide-react'
 import { useState } from 'react'
 
 export function UpgradeBanner() {
@@ -10,25 +10,48 @@ export function UpgradeBanner() {
 
   return (
     <div className="px-4 py-2">
-      <div className="relative flex flex-1 flex-col items-start justify-between gap-3 rounded-xl bg-orange-50 p-4 sm:flex-row sm:items-center">
-        <div className="flex flex-col gap-1">
-          <p className="text-gray-900 text-sm font-semibold leading-tight">
-            Free: 100 recipes available
-          </p>
+      <div className="relative rounded-xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-2 border-primary/20 p-4 overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 opacity-10">
+          <Sparkles className="h-32 w-32 text-primary" />
         </div>
-        <a
-          className="text-sm font-semibold leading-normal tracking-[0.015em] flex gap-1 text-primary items-center hover:underline"
-          href="#"
-        >
-          Upgrade for full access →
-        </a>
-        <button
-          className="absolute top-2 right-2 p-1 text-gray-500 hover:text-gray-700 transition-colors"
-          onClick={() => setIsVisible(false)}
-          aria-label="Close banner"
-        >
-          <X className="h-5 w-5" />
-        </button>
+
+        {/* Main content */}
+        <div className="relative flex items-start gap-3">
+          {/* Icon */}
+          <div className="hidden sm:flex shrink-0 items-center justify-center w-10 h-10 rounded-full bg-primary/20">
+            <Crown className="h-5 w-5 text-primary" />
+          </div>
+
+          {/* Text content */}
+          <div className="flex-1 min-w-0 pr-8">
+            <div className="flex items-center gap-2 mb-1">
+              <Crown className="h-4 w-4 text-primary sm:hidden" />
+              <h3 className="text-sm font-bold text-gray-900">
+                Free Tier: 100 Recipes Available
+              </h3>
+            </div>
+            <p className="text-xs text-gray-600 mb-3 sm:mb-2">
+              Unlock unlimited recipes, custom meal plans, and advanced nutrition tracking
+            </p>
+            <a
+              className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors group"
+              href="#"
+            >
+              <span>Upgrade to Premium</span>
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          </div>
+
+          {/* Close button */}
+          <button
+            className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
+            onClick={() => setIsVisible(false)}
+            aria-label="Dismiss upgrade banner"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
       </div>
     </div>
   )
