@@ -42,20 +42,8 @@ export default function SignupPage() {
       }
 
       if (authData.user) {
-        // 2. Create initial profile with name
-        const { error: profileError } = await supabase
-          .from('user_profiles')
-          .insert({
-            user_id: authData.user.id,
-            full_name: fullName,
-            onboarding_completed: false
-          })
-
-        if (profileError) {
-          console.error('Error creating profile:', profileError)
-          // Continue anyway, we can fix profile later
-        }
-
+        // 2. Profile is created automatically by database trigger
+        
         // 3. Redirect to onboarding
         router.push('/onboarding/1')
       }

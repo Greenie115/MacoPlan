@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { CaloriesDonut } from './calories-donut'
 import { MacroCard } from './macro-card'
+import { MealLogList } from '@/components/meals/meal-log-list'
 import { typography, card } from '@/lib/design-tokens'
 import { cn } from '@/lib/utils'
+import type { LoggedMeal } from '@/lib/types/meal-log'
 
 interface MacroTargetCardProps {
   // Targets
@@ -26,6 +28,11 @@ interface MacroTargetCardProps {
   mealsLogged?: number
   totalMealsPlanned?: number
 
+  // Meal logging
+  meals?: LoggedMeal[]
+  onEditMeal?: (meal: LoggedMeal) => void
+  onDeleteMeal?: (mealId: string) => void
+
   // Actions
   onLogMeal?: () => void
   onViewPlan?: () => void
@@ -42,6 +49,9 @@ export function MacroTargetCard({
   fatEaten = 0,
   mealsLogged = 0,
   totalMealsPlanned = 0,
+  meals,
+  onEditMeal,
+  onDeleteMeal,
   onLogMeal,
   onViewPlan,
 }: MacroTargetCardProps) {
@@ -207,12 +217,26 @@ export function MacroTargetCard({
       </div>
 
       {/* Empty State */}
-      {isEmpty && (
+      {isEmpty && (!meals || meals.length === 0) && (
         <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-sm text-blue-700">
             💡 <strong>Tip:</strong> Log your first meal to start tracking your
             macros
           </p>
+        </div>
+      )}
+
+      {/* Today's Logged Meals */}
+      {meals && meals.length > 0 && onEditMeal && onDeleteMeal && (
+        <div className="mt-6 border-t pt-6">
+          <h3 className="text-base md:text-lg font-semibold text-charcoal mb-3 md:mb-4">
+            Today&apos;s Meals ({meals.length})
+          </h3>
+          <MealLogList
+            meals={meals}
+            onEdit={onEditMeal}
+            onDelete={onDeleteMeal}
+          />
         </div>
       )}
     </Card>

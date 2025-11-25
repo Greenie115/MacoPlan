@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
   // If user IS logged in and tries to access login or onboarding, redirect to dashboard/plans
   // (Optional, but good UX)
   if (user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup') || request.nextUrl.pathname === '/')) {
-     return NextResponse.redirect(new URL('/plans', request.url))
+     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   return response

@@ -37,6 +37,12 @@ export class PlanService {
   }
 
   async getPlanById(id: string): Promise<Plan | null> {
+    // Skip fetching dummy/test plans (they don't exist in the database)
+    if (id.startsWith('00000000-0000-4000-8000-')) {
+      console.log('Skipping dummy plan fetch:', id)
+      return null
+    }
+
     // 1. Fetch Plan
     const { data: plan, error: planError } = await this.supabase
       .from('plans')

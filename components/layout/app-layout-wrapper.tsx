@@ -3,6 +3,7 @@
 import { useOnboardingStore } from '@/stores/onboarding-store'
 import { useSidebarStore } from '@/stores/sidebar-store'
 import { AppNavigation } from './app-navigation'
+import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
 
@@ -22,25 +23,28 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
   const isOnboardingRoute = pathname.startsWith('/onboarding')
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Navigation */}
-      {!pathname.startsWith('/login') && !pathname.startsWith('/signup') && (
-        <AppNavigation hasCompletedOnboarding={hasCompletedOnboarding} />
-      )}
-
-      {/* Main content area */}
-      <main
-        className={cn(
-          'flex-1 overflow-auto transition-all duration-300 ease-in-out',
-          // Add padding bottom on mobile to account for bottom nav
-          'pb-16 lg:pb-0',
-          // Add padding left on desktop when sidebar is visible
-          // ONLY if not on onboarding route, not on login/signup route, and user has completed onboarding
-          !isOnboardingRoute && !pathname.startsWith('/login') && !pathname.startsWith('/signup') && hasCompletedOnboarding && (isCollapsed ? 'lg:pl-20' : 'lg:pl-64')
+    <>
+      <div className="flex h-screen overflow-hidden">
+        {/* Navigation */}
+        {!pathname.startsWith('/login') && !pathname.startsWith('/signup') && (
+          <AppNavigation hasCompletedOnboarding={hasCompletedOnboarding} />
         )}
-      >
-        {children}
-      </main>
-    </div>
+
+        {/* Main content area */}
+        <main
+          className={cn(
+            'flex-1 overflow-auto transition-all duration-300 ease-in-out',
+            // Add padding bottom on mobile to account for bottom nav
+            'pb-16 lg:pb-0',
+            // Add padding left on desktop when sidebar is visible
+            // ONLY if not on onboarding route, not on login/signup route, and user has completed onboarding
+            !isOnboardingRoute && !pathname.startsWith('/login') && !pathname.startsWith('/signup') && hasCompletedOnboarding && (isCollapsed ? 'lg:pl-20' : 'lg:pl-64')
+          )}
+        >
+          {children}
+        </main>
+      </div>
+      <Toaster />
+    </>
   )
 }

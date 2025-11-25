@@ -1,8 +1,16 @@
 import type { MealPlan } from '@/stores/dashboard-store'
 
+// Generate consistent dummy UUIDs (v4 format)
+const DUMMY_UUID_1 = '00000000-0000-4000-8000-000000000001'
+const DUMMY_UUID_2 = '00000000-0000-4000-8000-000000000002'
+const DUMMY_UUID_3 = '00000000-0000-4000-8000-000000000003'
+const DUMMY_UUID_4 = '00000000-0000-4000-8000-000000000004'
+const DUMMY_UUID_5 = '00000000-0000-4000-8000-000000000005'
+const DUMMY_UUID_6 = '00000000-0000-4000-8000-000000000006'
+
 export const DUMMY_MEAL_PLANS: MealPlan[] = [
   {
-    id: '1',
+    id: DUMMY_UUID_1,
     name: '7-Day Muscle Plan',
     dateRange: 'Nov 4-10, 2025',
     caloriesPerDay: 2450,
@@ -16,7 +24,7 @@ export const DUMMY_MEAL_PLANS: MealPlan[] = [
     createdAt: new Date('2025-11-04'),
   },
   {
-    id: '2',
+    id: DUMMY_UUID_2,
     name: 'High-Protein Week',
     dateRange: 'Oct 28-Nov 3, 2025',
     caloriesPerDay: 2600,
@@ -29,7 +37,7 @@ export const DUMMY_MEAL_PLANS: MealPlan[] = [
     createdAt: new Date('2025-10-28'),
   },
   {
-    id: '3',
+    id: DUMMY_UUID_3,
     name: 'Lean Bulk Cycle',
     dateRange: 'Oct 21-27, 2025',
     caloriesPerDay: 2800,
@@ -42,7 +50,7 @@ export const DUMMY_MEAL_PLANS: MealPlan[] = [
     createdAt: new Date('2025-10-21'),
   },
   {
-    id: '4',
+    id: DUMMY_UUID_4,
     name: 'Cutting Phase',
     dateRange: 'Oct 14-20, 2025',
     caloriesPerDay: 2200,
@@ -55,7 +63,7 @@ export const DUMMY_MEAL_PLANS: MealPlan[] = [
     createdAt: new Date('2025-10-14'),
   },
   {
-    id: '5',
+    id: DUMMY_UUID_5,
     name: 'Maintenance Plan',
     dateRange: 'Oct 7-13, 2025',
     caloriesPerDay: 2500,
@@ -68,7 +76,7 @@ export const DUMMY_MEAL_PLANS: MealPlan[] = [
     createdAt: new Date('2025-10-07'),
   },
   {
-    id: '6',
+    id: DUMMY_UUID_6,
     name: 'Performance Week',
     dateRange: 'Sep 30-Oct 6, 2025',
     caloriesPerDay: 2900,
