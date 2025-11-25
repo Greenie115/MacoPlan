@@ -54,17 +54,13 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     )
   }
 
-  // Apply tag filters
-  // Note: For single tag, we use database filtering (efficient)
-  // For multiple tags with AND logic, we fetch broadly and filter in-app
+  // Don't apply tag filters at database level - will be applied client-side
+  // This ensures consistent behavior for both single and multiple tag filters
   // TODO: Optimize with PostgreSQL RPC function for large datasets:
   //   CREATE FUNCTION get_recipes_with_all_tags(tag_array text[])
   //   This is acceptable for current dataset size (<100 recipes)
-  if (filterTags.length > 0) {
-    query = query.in('recipe_tags.tag', filterTags)
-  }
 
-  query = query.order('created_at', { ascending: false }).range(from, to)
+  query = query.order('created_at', { ascending: false })
 
   let recipes = []
   let count = 0
@@ -84,10 +80,9 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     // Don't throw, just let it render empty state
   }
 
-  // If multiple tag filters, ensure recipes have ALL selected tags (AND logic)
-  // This is done post-query for simplicity; optimal solution requires DB-level aggregation
+  // Apply tag filters client-side (works for both single and multiple tags with AND logic)
   let filteredRecipes = recipes || []
-  if (filterTags.length > 1 && filteredRecipes.length > 0) {
+  if (filterTags.length > 0 && filteredRecipes.length > 0) {
     filteredRecipes = filteredRecipes.filter((recipe: any) => {
       const recipeTags = recipe.recipe_tags?.map((t: any) => t.tag) || []
       return filterTags.every((tag) => recipeTags.includes(tag))
@@ -114,6 +109,9 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   const totalPages = Math.ceil(totalRecipes / RECIPES_PER_PAGE)
   const hasNextPage = currentPage < totalPages
   const hasPrevPage = currentPage > 1
+
+  // Apply client-side pagination
+  const paginatedRecipes = uniqueRecipes.slice(from, to + 1)
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
@@ -152,7 +150,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       </div>
 
       {/* Recipe Grid */}
-      <RecipeGrid recipes={uniqueRecipes} favoriteIds={favoriteIds} />
+      <RecipeGrid recipes={paginatedRecipes} favoriteIds={favoriteIds} />
 
       {/* Pagination */}
       {totalPages > 1 && (
