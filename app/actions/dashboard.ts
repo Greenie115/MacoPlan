@@ -2,6 +2,19 @@
 
 import { createClient } from '@/lib/supabase/server'
 
+interface FavoriteWithRecipe {
+  recipe_id: string
+  recipes: {
+    id: string
+    name: string
+    calories: number
+    protein_grams: number
+    carb_grams: number
+    fat_grams: number
+    image_url: string | null
+  } | null
+}
+
 /**
  * Get favorite recipes for quick logging on dashboard
  */
@@ -42,7 +55,7 @@ export async function getFavoriteRecipesForDashboard() {
 
   // Flatten the structure
   const recipes = data
-    .filter((fav) => fav.recipes) // Filter out any null recipes
+    .filter((fav) => fav.recipes)
     .map((fav: any) => fav.recipes)
 
   return { success: true, data: recipes }

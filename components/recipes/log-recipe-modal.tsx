@@ -22,7 +22,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { logMeal } from '@/app/actions/meal-logs'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
-import { MEAL_TYPE_LABELS } from '@/lib/types/meal-log'
+import { MEAL_TYPE_LABELS, type LogMealInput } from '@/lib/types/meal-log'
 
 interface Recipe {
   id: string
@@ -53,7 +53,7 @@ export function LogRecipeModal({
   const [description, setDescription] = useState('')
 
   // Calculate adjusted macros based on serving multiplier
-  const multiplier = parseFloat(servingMultiplier) || 1
+  const multiplier = Math.max(parseFloat(servingMultiplier) || 1, 0.1)
   const adjustedMacros = {
     calories: Math.round(recipe.calories * multiplier),
     protein: Number((recipe.protein_grams * multiplier).toFixed(1)),
@@ -62,6 +62,11 @@ export function LogRecipeModal({
   }
 
   const handleSubmit = async () => {
+    if (!servingMultiplier || parseFloat(servingMultiplier) === 0) {
+      toast.error('Please enter a serving size')
+      return
+    }
+
     if (!mealType) {
       toast.error('Please select a meal type')
       return
@@ -73,7 +78,7 @@ export function LogRecipeModal({
       const result = await logMeal(
         {
           name: recipe.name,
-          mealType: mealType as any,
+          mealType: mealType as LogMealInput['mealType'],
           calories: adjustedMacros.calories,
           proteinGrams: adjustedMacros.protein,
           carbGrams: adjustedMacros.carbs,
@@ -106,6 +111,20 @@ export function LogRecipeModal({
   const handleServingChange = (value: string) => {
     // Allow only positive numbers and decimals
     if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      const numValue = parseFloat(value)
+
+      // Validate range when user enters a value
+      if (value && numValue > 0) {
+        if (numValue < 0.1) {
+          toast.error('Serving size must be at least 0.1')
+          return
+        }
+        if (numValue > 10) {
+          toast.error('Serving size cannot exceed 10')
+          return
+        }
+      }
+
       setServingMultiplier(value)
     }
   }

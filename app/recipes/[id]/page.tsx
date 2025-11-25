@@ -26,7 +26,10 @@ const recipeParamsSchema = z.object({
 
 export default async function RecipePage({ params }: RecipePageProps) {
   const resolvedParams = await params
-  console.log('RecipePage: Fetching recipe with ID:', resolvedParams.id)
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log('RecipePage: Fetching recipe with ID:', resolvedParams.id)
+  }
 
   // Validate recipe ID parameter
   const validationResult = recipeParamsSchema.safeParse(resolvedParams)

@@ -2,7 +2,11 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { z } from 'zod'
 import type { LogMealInput, LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
+
+// Validation schema for recipe ID
+const recipeIdSchema = z.string().uuid({ message: 'Invalid recipe ID format' })
 
 /**
  * Log a new meal for the authenticated user
@@ -227,6 +231,12 @@ export async function getLoggedMealForRecipe(
   recipeId: string,
   date?: string
 ): Promise<{ mealId: string | null }> {
+  // Validate recipe ID
+  const validationResult = recipeIdSchema.safeParse(recipeId)
+  if (!validationResult.success) {
+    return { mealId: null }
+  }
+
   const supabase = await createClient()
   const {
     data: { user },
@@ -245,7 +255,9 @@ export async function getLoggedMealForRecipe(
     .eq('user_id', user.id)
     .eq('recipe_id', recipeId)
     .eq('date', targetDate)
-    .single()
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
 
   if (error || !data) {
     return { mealId: null }

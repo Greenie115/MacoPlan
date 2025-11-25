@@ -61,6 +61,7 @@ export function LogRecipeButton({
         variant="outline"
         size={size}
         className={className}
+        aria-label="Remove this recipe from today's logged meals"
       >
         <Trash2 className="mr-2 h-4 w-4" />
         {isDeleting ? 'Removing...' : 'Remove from Logged Meals'}
@@ -76,6 +77,7 @@ export function LogRecipeButton({
         variant={variant}
         size={size}
         className={className}
+        aria-label="Log this recipe as a meal"
       >
         <Plus className="mr-2 h-4 w-4" />
         Log This Meal
