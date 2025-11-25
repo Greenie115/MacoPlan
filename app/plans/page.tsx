@@ -30,44 +30,46 @@ export default function PlansPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-10">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold text-gray-900">My Plans</h1>
-          <Link href="/plans/generate">
-            <button className="p-2 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
-              <Plus className="size-6" />
-            </button>
-          </Link>
-        </div>
-        
-        {/* Current Plan Card (Placeholder logic for now) */}
-        {plans.length > 0 && (
-          <div className="bg-primary rounded-2xl p-4 text-white shadow-lg shadow-primary/20 mb-2">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
-                <Calendar className="size-4" />
-                <span className="text-xs font-bold">Current Plan</span>
-              </div>
-              <span className="text-sm font-medium opacity-90">{plans[0].dateRange}</span>
-            </div>
-            <h2 className="text-xl font-bold mb-1">{plans[0].title}</h2>
-            <div className="flex items-center gap-2 text-sm opacity-90 mb-4">
-              <span>{plans[0].calories} cal</span>
-              <span>•</span>
-              <span>{plans[0].macros.protein}g Protein</span>
-            </div>
-            <Link 
-              href={`/plans/${plans[0].id}`}
-              className="flex items-center justify-between bg-white text-primary px-4 py-3 rounded-xl font-bold text-sm hover:bg-gray-50 transition-colors"
-            >
-              View Today's Meals
-              <ArrowRight className="size-4" />
+      <header className="bg-white border-b border-gray-200 px-4 md:px-6 lg:px-8 py-4 md:py-6 sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">My Plans</h1>
+            <Link href="/plans/generate">
+              <button className="p-2 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
+                <Plus className="size-6" />
+              </button>
             </Link>
           </div>
-        )}
+
+          {/* Current Plan Card (Placeholder logic for now) */}
+          {plans.length > 0 && (
+            <div className="bg-primary rounded-2xl p-4 md:p-6 text-white shadow-lg shadow-primary/20 mb-2 max-w-3xl">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                  <Calendar className="size-4" />
+                  <span className="text-xs font-bold">Current Plan</span>
+                </div>
+                <span className="text-sm font-medium opacity-90">{plans[0].dateRange}</span>
+              </div>
+              <h2 className="text-xl md:text-2xl font-bold mb-1">{plans[0].title}</h2>
+              <div className="flex items-center gap-2 text-sm opacity-90 mb-4">
+                <span>{plans[0].calories} cal</span>
+                <span>•</span>
+                <span>{plans[0].macros.protein}g Protein</span>
+              </div>
+              <Link
+                href={`/plans/${plans[0].id}`}
+                className="flex items-center justify-between bg-white text-primary px-4 py-3 rounded-xl font-bold text-sm hover:bg-gray-50 transition-colors"
+              >
+                View Today's Meals
+                <ArrowRight className="size-4" />
+              </Link>
+            </div>
+          )}
+        </div>
       </header>
 
-      <main className="p-4 space-y-6">
+      <main className="px-4 md:px-6 lg:px-8 py-6 md:py-8 max-w-7xl mx-auto space-y-6">
         {/* Saved Plans Section */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
