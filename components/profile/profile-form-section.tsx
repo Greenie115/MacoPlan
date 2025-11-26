@@ -1,6 +1,4 @@
 import { ReactNode } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 
 interface ProfileFormSectionProps {
   title: string
@@ -11,14 +9,14 @@ interface ProfileFormSectionProps {
 
 export function ProfileFormSection({ title, description, children, className }: ProfileFormSectionProps) {
   return (
-    <div className={className}>
-      <Card>
-        <CardHeader>
-          <CardTitle>{title}</CardTitle>
-          {description && <CardDescription>{description}</CardDescription>}
-        </CardHeader>
-        <CardContent className="space-y-4">{children}</CardContent>
-      </Card>
-    </div>
+    <section className={className}>
+      <div className="px-4">
+        <h3 className="text-lg font-bold text-gray-900 mb-1">{title}</h3>
+        {description && <p className="text-sm text-gray-500 mb-3">{description}</p>}
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200">
+          {children}
+        </div>
+      </div>
+    </section>
   )
 }

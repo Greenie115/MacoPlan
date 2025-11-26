@@ -19,6 +19,8 @@ import { updateProfileField, updateEmail, recalculateMacros } from '@/app/action
 import { toast } from 'sonner'
 import { ArrowLeft, Check, Loader2, Mail, Calculator } from 'lucide-react'
 import { debounce } from '@/lib/utils/debounce'
+import { TopAppBar } from '@/components/layout/top-app-bar'
+import { BottomNav } from '@/components/layout/bottom-nav'
 
 export default function EditProfilePage() {
   const router = useRouter()
@@ -175,18 +177,18 @@ export default function EditProfilePage() {
   const FieldStatus = ({ field }: { field: string }) => {
     if (savingFields[field]) {
       return (
-        <Badge variant="secondary" className="ml-2">
-          <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+        <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-100 text-xs font-medium text-gray-600">
+          <Loader2 className="h-3 w-3 animate-spin" />
           Saving
-        </Badge>
+        </span>
       )
     }
     if (savedFields[field]) {
       return (
-        <Badge variant="default" className="ml-2 bg-green-500">
-          <Check className="mr-1 h-3 w-3" />
+        <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-xs font-medium text-green-700">
+          <Check className="h-3 w-3" />
           Saved
-        </Badge>
+        </span>
       )
     }
     return null
@@ -194,24 +196,40 @@ export default function EditProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="min-h-screen bg-gray-50 pb-24">
+        <TopAppBar />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+        <BottomNav activeTab="profile" />
       </div>
     )
   }
 
   if (!profile) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-4">
-        <div className="text-center space-y-2">
-          <h2 className="text-2xl font-bold text-gray-900">Complete Your Profile</h2>
-          <p className="text-muted-foreground max-w-md">
-            You need to complete the onboarding process before you can edit your profile.
-          </p>
-        </div>
-        <Button onClick={() => router.push('/onboarding/1')} className="bg-primary">
-          Go to Onboarding
-        </Button>
+      <div className="min-h-screen bg-gray-50 pb-24">
+        <TopAppBar />
+        <main className="max-w-3xl mx-auto p-4">
+          <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <ArrowLeft className="h-8 w-8 text-primary" />
+            </div>
+            <div className="text-center space-y-2">
+              <h2 className="text-2xl font-bold text-gray-900">Complete Your Profile</h2>
+              <p className="text-gray-500 max-w-md">
+                You need to complete the onboarding process before you can edit your profile.
+              </p>
+            </div>
+            <button
+              onClick={() => router.push('/onboarding/1')}
+              className="px-6 py-3 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary/90 transition-colors"
+            >
+              Go to Onboarding
+            </button>
+          </div>
+        </main>
+        <BottomNav activeTab="profile" />
       </div>
     )
   }
@@ -226,26 +244,38 @@ export default function EditProfilePage() {
     : 'U'
 
   return (
-    <div className="container mx-auto max-w-4xl py-8 px-4">
-      {/* Header */}
-      <div className="mb-8">
-        <Button variant="ghost" onClick={() => router.back()} className="mb-4">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
-        </Button>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Edit Profile</h1>
-            <p className="text-muted-foreground">Update your personal information and preferences</p>
-          </div>
-          <Button onClick={handleRecalculateMacros} disabled={recalculating} variant="outline">
-            <Calculator className="mr-2 h-4 w-4" />
-            {recalculating ? 'Recalculating...' : 'Recalculate Macros'}
-          </Button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gray-50 pb-24">
+      <TopAppBar />
 
-      <div className="space-y-6">
+      <main className="max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="px-4 pt-6 pb-4">
+          <button
+            onClick={() => router.back()}
+            className="flex items-center gap-2 text-primary hover:text-primary/80 font-medium mb-4 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            Back to Profile
+          </button>
+          <h1 className="text-3xl lg:text-4xl font-bold text-charcoal">Edit Profile</h1>
+          <p className="text-base text-gray-500 mt-2">Update your personal information and preferences</p>
+        </div>
+
+        {/* Recalculate Macros Button */}
+        <div className="px-4 pb-2">
+          <button
+            onClick={handleRecalculateMacros}
+            disabled={recalculating}
+            className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Calculator className="h-5 w-5" />
+            {recalculating ? 'Recalculating...' : 'Recalculate Macros'}
+          </button>
+        </div>
+
+        <div className="px-4 pt-2"><div className="h-px bg-gray-200 w-full"></div></div>
+
+      <div className="space-y-6 pb-6">
         {/* Profile Picture */}
         <ProfileFormSection title="Profile Picture" description="Upload a photo to personalize your account">
           <AvatarUpload
@@ -282,23 +312,26 @@ export default function EditProfilePage() {
             </div>
 
             <div>
-              <Label htmlFor="email" className="flex items-center">
+              <Label htmlFor="email" className="flex items-center gap-2">
                 Email
                 <FieldStatus field="email" />
-                <Badge variant="outline" className="ml-2">
-                  <Mail className="mr-1 h-3 w-3" />
-                  Requires Confirmation
-                </Badge>
               </Label>
-              <div className="flex gap-2">
-                <Input id="email" type="email" defaultValue={userEmail} placeholder="your@email.com" />
-                <Button onClick={handleEmailUpdate} variant="outline" disabled={savingFields.email}>
+              <div className="flex gap-2 mt-2">
+                <Input id="email" type="email" defaultValue={userEmail} placeholder="your@email.com" className="flex-1" />
+                <button
+                  onClick={handleEmailUpdate}
+                  disabled={savingFields.email}
+                  className="px-4 h-10 rounded-xl border-2 border-primary/20 bg-primary/5 text-primary font-bold hover:bg-primary/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   Update
-                </Button>
+                </button>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                You'll receive a confirmation email to verify the change
-              </p>
+              <div className="flex items-start gap-2 mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg">
+                <Mail className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-blue-700">
+                  You'll receive a confirmation email to verify the change
+                </p>
+              </div>
             </div>
           </div>
         </ProfileFormSection>
@@ -648,37 +681,44 @@ export default function EditProfilePage() {
 
         {/* Current Macros Display */}
         <ProfileFormSection title="Current Macros" description="Your calculated daily nutrition targets">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-muted rounded-lg">
-              <p className="text-sm text-muted-foreground">Calories</p>
-              <p className="text-2xl font-bold">{profile.target_calories || '-'}</p>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-500">Calories</p>
+                <p className="text-xl font-bold text-gray-900">{profile.target_calories?.toLocaleString() || '-'}</p>
+              </div>
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-500">Protein</p>
+                <p className="text-xl font-bold text-gray-900">{profile.protein_grams || '-'}g</p>
+              </div>
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-500">Carbs</p>
+                <p className="text-xl font-bold text-gray-900">{profile.carb_grams || '-'}g</p>
+              </div>
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-500">Fat</p>
+                <p className="text-xl font-bold text-gray-900">{profile.fat_grams || '-'}g</p>
+              </div>
             </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <p className="text-sm text-muted-foreground">Protein</p>
-              <p className="text-2xl font-bold">{profile.protein_grams || '-'}g</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-500">BMR</p>
+                <p className="text-xl font-bold text-gray-900">{profile.bmr?.toLocaleString() || '-'}</p>
+              </div>
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs text-gray-500">TDEE</p>
+                <p className="text-xl font-bold text-gray-900">{profile.tdee?.toLocaleString() || '-'}</p>
+              </div>
             </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <p className="text-sm text-muted-foreground">Carbs</p>
-              <p className="text-2xl font-bold">{profile.carb_grams || '-'}g</p>
-            </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <p className="text-sm text-muted-foreground">Fat</p>
-              <p className="text-2xl font-bold">{profile.fat_grams || '-'}g</p>
-            </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <p className="text-sm text-muted-foreground">BMR</p>
-              <p className="text-2xl font-bold">{profile.bmr || '-'}</p>
-            </div>
-            <div className="p-4 bg-muted rounded-lg">
-              <p className="text-sm text-muted-foreground">TDEE</p>
-              <p className="text-2xl font-bold">{profile.tdee || '-'}</p>
-            </div>
+            <p className="text-xs text-gray-500 pt-2">
+              💡 Click "Recalculate Macros" after changing personal stats or goals to update these values.
+            </p>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Click "Recalculate Macros" above after changing personal stats or goals to update these values.
-          </p>
         </ProfileFormSection>
       </div>
+      </main>
+
+      <BottomNav activeTab="profile" />
 
       {/* Macro Warning Modal */}
       <MacroWarningModal
