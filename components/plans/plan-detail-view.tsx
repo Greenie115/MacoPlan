@@ -1,12 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { ArrowLeft, MoreVertical, ClipboardList, RefreshCw, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { macroColors } from '@/lib/design-tokens'
 import { Plan, PlanDay } from '@/lib/types/plan'
 import { PaywallModal } from '@/components/monetization/paywall-modal'
+import { generateGroceryList } from '@/app/actions/grocery-lists'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 interface PlanDetailViewProps {
   plan: Plan
@@ -15,8 +18,10 @@ interface PlanDetailViewProps {
 }
 
 export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetailViewProps) {
+  const router = useRouter()
   const [selectedDayIndex, setSelectedDayIndex] = useState(0)
   const [showPaywall, setShowPaywall] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   // Default to empty array if days are missing (e.g. mock list data)
   const days = plan.days || []
@@ -28,6 +33,19 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
     } else {
       setShowPaywall(true)
     }
+  }
+
+  const handleGenerateGroceryList = () => {
+    startTransition(async () => {
+      const result = await generateGroceryList(plan.id)
+
+      if (result.error) {
+        toast.error(result.error)
+      } else if (result.listId) {
+        toast.success('Grocery list generated!')
+        router.push(`/grocery-lists/${result.listId}`)
+      }
+    })
   }
 
   if (!currentDay) {
@@ -96,9 +114,13 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
         </div>
 
         {/* Actions */}
-        <button className="w-full h-12 flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-colors">
+        <button
+          onClick={handleGenerateGroceryList}
+          disabled={isPending}
+          className="w-full h-12 flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           <ClipboardList className="size-5" />
-          Generate Grocery List
+          {isPending ? 'Generating...' : 'Generate Grocery List'}
         </button>
 
         <div className="h-px bg-gray-200" />
