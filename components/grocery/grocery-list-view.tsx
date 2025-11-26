@@ -12,6 +12,8 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { generatePlainText } from '@/lib/export/plain-text'
+import { useShare } from '@/hooks/use-share'
 
 interface GroceryListItem {
   id: string
@@ -46,6 +48,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export function GroceryListView({ list }: GroceryListViewProps) {
   const router = useRouter()
+  const { share, isSharing } = useShare()
   const [items, setItems] = useState(list.grocery_list_items)
   const [newItem, setNewItem] = useState('')
   const [newItemAmount, setNewItemAmount] = useState('')
@@ -145,6 +148,14 @@ export function GroceryListView({ list }: GroceryListViewProps) {
     }
   }
 
+  const handleShare = () => {
+    const text = generatePlainText(list)
+    share({
+      title: list.name,
+      text: text,
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto p-4 md:p-6 pb-20">
@@ -159,11 +170,23 @@ export function GroceryListView({ list }: GroceryListViewProps) {
               <ArrowLeft className="h-5 w-5 text-gray-600" />
             </button>
             <h1 className="text-xl md:text-2xl font-bold flex-1">{list.name}</h1>
-            <Button variant="ghost" size="sm" className="hidden md:flex">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleShare}
+              disabled={isSharing}
+              className="hidden md:flex"
+            >
               <Share2 className="h-4 w-4 mr-2" />
-              Share
+              {isSharing ? 'Sharing...' : 'Share'}
             </Button>
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleShare}
+              disabled={isSharing}
+              className="md:hidden"
+            >
               <Share2 className="h-4 w-4" />
             </Button>
           </div>
