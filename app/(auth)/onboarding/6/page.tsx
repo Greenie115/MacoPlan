@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button'
 import { AuthModal } from '@/components/auth/auth-modal'
 import { MacroCustomizer } from '@/components/onboarding/macro-customizer'
 import { createClient } from '@/lib/supabase/client'
+import { createUserProfile } from '@/app/actions/profile'
+import { toast } from 'sonner'
 
 export default function MacroResultsPage() {
   const router = useRouter()
@@ -60,18 +62,19 @@ export default function MacroResultsPage() {
 
   const saveProfileData = async (userId: string) => {
     // Only save if we have data (at least a goal)
-    if (!store.goal) return
+    if (!store.goal) {
+      toast.error('Missing required data')
+      return
+    }
 
-    const supabase = createClient()
-    
     // Convert weight to kg
-    const weightKg = store.weightUnit === 'kg' 
-      ? store.weight 
+    const weightKg = store.weightUnit === 'kg'
+      ? store.weight
       : (store.weight || 0) * 0.453592
 
-    // Convert height to cm
+    // Convert height to cm and round to integer
     const heightInches = (store.heightFeet || 0) * 12 + (store.heightInches || 0)
-    const heightCm = heightInches * 2.54
+    const heightCm = Math.round(heightInches * 2.54)
 
     const profileData = {
       goal: store.goal,
@@ -80,12 +83,12 @@ export default function MacroResultsPage() {
       height_cm: heightCm,
       sex: store.sex,
       activity_level: store.activityLevel,
-      dietary_style: store.dietaryStyle,
-      allergies: store.allergies,
-      foods_to_avoid: store.foodsToAvoid,
-      fitness_experience: store.fitnessExperience,
-      tracking_experience: store.trackingExperience,
-      meal_prep_skills: store.mealPrepSkills,
+      dietary_style: store.dietaryStyle ?? undefined,
+      allergies: store.allergies && store.allergies.length > 0 ? store.allergies : undefined,
+      foods_to_avoid: store.foodsToAvoid ?? undefined,
+      fitness_experience: store.fitnessExperience ?? undefined,
+      tracking_experience: store.trackingExperience ?? undefined,
+      meal_prep_skills: store.mealPrepSkills ?? undefined,
       bmr: store.bmr,
       tdee: store.tdee,
       target_calories: store.targetCalories,
@@ -95,14 +98,18 @@ export default function MacroResultsPage() {
       onboarding_completed: true
     }
 
-    const { error } = await supabase
-      .from('user_profiles')
-      .update(profileData)
-      .eq('user_id', userId)
+    // Use createUserProfile server action (handles INSERT)
+    const result = await createUserProfile(profileData)
 
-    if (error) {
-      console.error('Error saving profile:', error)
+    if (result.error) {
+      console.error('Error saving profile:', result.error)
+      toast.error(result.error)
+      throw new Error(result.error)
     }
+
+    // Clear localStorage after successful save
+    localStorage.removeItem('onboarding-storage')
+    store.resetOnboarding()
   }
 
   const handleBack = () => {

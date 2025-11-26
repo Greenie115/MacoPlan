@@ -1,11 +1,13 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useOnboardingStore } from '@/stores/onboarding-store'
 import { useSidebarStore } from '@/stores/sidebar-store'
 import { AppNavigation } from './app-navigation'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 interface AppLayoutWrapperProps {
   children: React.ReactNode
@@ -15,10 +17,40 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
   const { completedSteps } = useOnboardingStore()
   const { isCollapsed } = useSidebarStore()
   const pathname = usePathname()
+  const [hasProfile, setHasProfile] = useState(false)
+  const [checkingProfile, setCheckingProfile] = useState(true)
 
-  // Check if user has completed all 6 steps of onboarding
-  const hasCompletedOnboarding = completedSteps.includes(6)
-  
+  // Check if user has a profile in database (more reliable than localStorage)
+  useEffect(() => {
+    async function checkUserProfile() {
+      // Skip check on auth pages
+      if (pathname.startsWith('/login') || pathname.startsWith('/signup') || pathname.startsWith('/onboarding')) {
+        setCheckingProfile(false)
+        return
+      }
+
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (user) {
+        const { data } = await supabase
+          .from('user_profiles')
+          .select('onboarding_completed')
+          .eq('user_id', user.id)
+          .single()
+
+        setHasProfile(!!data?.onboarding_completed)
+      }
+
+      setCheckingProfile(false)
+    }
+
+    checkUserProfile()
+  }, [pathname])
+
+  // Check if user has completed onboarding (either from localStorage or database)
+  const hasCompletedOnboarding = completedSteps.includes(6) || hasProfile
+
   // Explicitly check if we are on an onboarding route
   const isOnboardingRoute = pathname.startsWith('/onboarding')
 

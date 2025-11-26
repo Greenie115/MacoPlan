@@ -6,6 +6,10 @@ export interface UserProfile {
   id: string
   user_id: string
 
+  // Profile Info
+  full_name: string | null
+  avatar_url: string | null
+
   // Step 1: Goal
   goal: 'cut' | 'bulk' | 'maintain' | 'recomp' | null
 

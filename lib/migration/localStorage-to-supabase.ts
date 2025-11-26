@@ -16,8 +16,9 @@ export async function migrateOnboardingData(): Promise<void> {
 
   // Convert imperial measurements to metric for database storage
   const weightKg = store.weightUnit === 'lbs' ? store.weight * 0.453592 : store.weight
-  const heightCm =
+  const heightCm = Math.round(
     ((store.heightFeet ?? 0) * 12 + (store.heightInches ?? 0)) * 2.54
+  )
 
   // Prepare profile data for database
   const profileData = {

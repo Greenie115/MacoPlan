@@ -2,30 +2,75 @@
 
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { TopAppBar } from '@/components/layout/top-app-bar'
-import { 
-  Utensils, 
-  ChevronRight, 
-  HelpCircle, 
-  FileText, 
-  LogOut, 
+import {
+  Utensils,
+  ChevronRight,
+  HelpCircle,
+  FileText,
+  LogOut,
   Moon,
   Globe,
   Bell,
   Lock,
   Shield,
-  ArrowRight
+  ArrowRight,
+  User
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { UserProfile } from '@/lib/types/database'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export default function ProfilePage() {
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [profile, setProfile] = useState<UserProfile | null>(null)
+  const [userEmail, setUserEmail] = useState('')
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
   const supabase = createClient()
+
+  // Load profile data
+  useEffect(() => {
+    async function loadProfile() {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser()
+
+        if (!user) {
+          router.push('/login')
+          return
+        }
+
+        setUserEmail(user.email || '')
+
+        const { data, error } = await supabase.from('user_profiles').select('*').eq('user_id', user.id).single()
+
+        if (error) {
+          // PGRST116 = no rows returned (user has no profile)
+          if (error.code === 'PGRST116') {
+            console.log('No profile found - user needs to complete onboarding')
+            setProfile(null)
+          } else {
+            console.error('Failed to load profile:', error)
+            setProfile(null)
+          }
+        } else {
+          setProfile(data)
+        }
+      } catch (error) {
+        console.error('Failed to load profile:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProfile()
+  }, [supabase, router])
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -33,29 +78,94 @@ export default function ProfilePage() {
     router.refresh()
   }
 
+  const userInitials = profile?.full_name
+    ? profile.full_name
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : 'U'
+
+  const goalLabels = {
+    cut: 'Lose Fat',
+    bulk: 'Build Muscle',
+    maintain: 'Maintain Weight',
+    recomp: 'Recomposition',
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-24">
+        <TopAppBar />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <p className="text-gray-500">Loading profile...</p>
+        </div>
+        <BottomNav activeTab="profile" />
+      </div>
+    )
+  }
+
+  // Show onboarding prompt if no profile exists
+  if (!profile) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-24">
+        <TopAppBar />
+        <main className="max-w-3xl mx-auto p-4">
+          <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <User className="h-8 w-8 text-primary" />
+            </div>
+            <div className="text-center space-y-2">
+              <h2 className="text-2xl font-bold text-gray-900">Complete Your Profile</h2>
+              <p className="text-gray-500 max-w-md">
+                It looks like you haven't completed your profile setup yet. Complete the onboarding process to unlock
+                all features.
+              </p>
+            </div>
+            <Link
+              href="/onboarding/1"
+              className="px-6 py-3 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary/90 transition-colors flex items-center gap-2"
+            >
+              Complete Onboarding
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-gray-500 hover:text-gray-700 text-sm flex items-center gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Log Out
+            </button>
+          </div>
+        </main>
+        <BottomNav activeTab="profile" />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
       <TopAppBar />
-      
+
       <main className="max-w-3xl mx-auto">
         {/* Profile Header */}
         <div className="p-4">
           <div className="flex flex-col items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-            <div className="relative size-20 rounded-full overflow-hidden bg-gray-100">
-              <Image
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
-                alt="User avatar"
-                fill
-                className="object-cover"
-              />
-            </div>
+            <Avatar className="h-20 w-20">
+              <AvatarImage src={profile?.avatar_url || undefined} alt="Profile picture" />
+              <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
+            </Avatar>
             <div className="text-center">
-              <h2 className="text-xl font-bold text-gray-900">Alex Johnson</h2>
-              <p className="text-gray-500">alex.j@email.com</p>
+              <h2 className="text-xl font-bold text-gray-900">{profile?.full_name || 'User'}</h2>
+              <p className="text-gray-500">{userEmail}</p>
             </div>
-            <button className="w-full max-w-xs h-10 rounded-xl bg-primary/10 text-primary font-bold text-sm hover:bg-primary/20 transition-colors">
+            <Link
+              href="/profile/editprofile"
+              className="w-full max-w-xs h-10 rounded-xl bg-primary/10 text-primary font-bold text-sm hover:bg-primary/20 transition-colors flex items-center justify-center"
+            >
               Edit Profile
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -111,32 +221,39 @@ export default function ProfilePage() {
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-sm text-gray-500">Daily Target</p>
-                  <p className="text-xl font-bold text-gray-900">2,450 cal</p>
+                  <p className="text-xl font-bold text-gray-900">
+                    {profile?.target_calories?.toLocaleString() || '-'} cal
+                  </p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-gray-500">Goal</p>
-                  <p className="text-sm font-bold text-primary">Build Muscle</p>
+                  <p className="text-sm font-bold text-primary">
+                    {profile?.goal ? goalLabels[profile.goal] : '-'}
+                  </p>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-3 gap-2 text-center text-sm">
                 <div className="bg-gray-50 p-2 rounded-lg">
-                  <p className="font-bold text-gray-900">180g</p>
+                  <p className="font-bold text-gray-900">{profile?.protein_grams || '-'}g</p>
                   <p className="text-xs text-gray-500">Protein</p>
                 </div>
                 <div className="bg-gray-50 p-2 rounded-lg">
-                  <p className="font-bold text-gray-900">280g</p>
+                  <p className="font-bold text-gray-900">{profile?.carb_grams || '-'}g</p>
                   <p className="text-xs text-gray-500">Carbs</p>
                 </div>
                 <div className="bg-gray-50 p-2 rounded-lg">
-                  <p className="font-bold text-gray-900">68g</p>
+                  <p className="font-bold text-gray-900">{profile?.fat_grams || '-'}g</p>
                   <p className="text-xs text-gray-500">Fat</p>
                 </div>
               </div>
 
-              <button className="w-full h-10 rounded-xl bg-primary/10 text-primary font-bold text-sm hover:bg-primary/20 transition-colors">
-                Recalculate Macros
-              </button>
+              <Link
+                href="/profile/editprofile"
+                className="w-full h-10 rounded-xl bg-primary/10 text-primary font-bold text-sm hover:bg-primary/20 transition-colors flex items-center justify-center"
+              >
+                Update Macros
+              </Link>
             </div>
           </div>
         </section>
@@ -150,10 +267,16 @@ export default function ProfilePage() {
               </div>
               <div>
                 <p className="font-medium text-gray-900">Dietary Preferences</p>
-                <p className="text-xs text-gray-500">Vegetarian, Gluten-Free</p>
+                <p className="text-xs text-gray-500">
+                  {profile?.dietary_style && profile.dietary_style !== 'none'
+                    ? profile.dietary_style.charAt(0).toUpperCase() + profile.dietary_style.slice(1)
+                    : 'No restrictions'}
+                </p>
               </div>
             </div>
-            <button className="text-primary font-bold text-sm hover:underline">Edit</button>
+            <Link href="/profile/editprofile" className="text-primary font-bold text-sm hover:underline">
+              Edit
+            </Link>
           </div>
         </section>
 
