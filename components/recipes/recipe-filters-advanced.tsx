@@ -16,50 +16,66 @@
  */
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useMemo } from 'react'
 import { X, Filter, ChevronDown } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { cn } from '@/lib/utils'
+import {
+  ALLOWED_CUISINES,
+  ALLOWED_PREP_TIMES,
+  ALLOWED_MEAL_TYPES,
+  MAX_CUISINES,
+  MAX_PREP_TIMES,
+  MAX_MEAL_TYPES,
+  isValidCuisine,
+  isValidMealType,
+  isValidPrepTime,
+} from '@/lib/utils/filter-validation'
 
-// Filter options
-const CUISINES = [
-  { value: 'italian', label: 'Italian' },
-  { value: 'mexican', label: 'Mexican' },
-  { value: 'chinese', label: 'Chinese' },
-  { value: 'indian', label: 'Indian' },
-  { value: 'japanese', label: 'Japanese' },
-  { value: 'thai', label: 'Thai' },
-  { value: 'american', label: 'American' },
-  { value: 'mediterranean', label: 'Mediterranean' },
-  { value: 'french', label: 'French' },
-  { value: 'greek', label: 'Greek' },
-  { value: 'korean', label: 'Korean' },
-  { value: 'spanish', label: 'Spanish' },
-]
+// Filter option labels (values come from validation utility)
+const CUISINES = ALLOWED_CUISINES.map((value) => ({
+  value,
+  label: value.charAt(0).toUpperCase() + value.slice(1),
+}))
 
-const PREP_TIMES = [
-  { value: '15', label: '15 minutes' },
-  { value: '30', label: '30 minutes' },
-  { value: '60', label: '1 hour' },
-]
+const PREP_TIMES = ALLOWED_PREP_TIMES.map((value) => ({
+  value,
+  label:
+    value === '60'
+      ? '1 hour'
+      : value === '30'
+      ? '30 minutes'
+      : '15 minutes',
+}))
 
-const MEAL_TYPES = [
-  { value: 'breakfast', label: 'Breakfast' },
-  { value: 'main course', label: 'Lunch/Dinner' },
-  { value: 'snack', label: 'Snack' },
-  { value: 'dessert', label: 'Dessert' },
-  { value: 'appetizer', label: 'Appetizer' },
-]
+const MEAL_TYPES = ALLOWED_MEAL_TYPES.map((value) => ({
+  value,
+  label:
+    value === 'main course'
+      ? 'Lunch/Dinner'
+      : value.charAt(0).toUpperCase() + value.slice(1),
+}))
 
 export function RecipeFiltersAdvanced() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
 
-  // Get current filter values from URL
-  const urlCuisines = searchParams.get('cuisine')?.split(',').filter(Boolean) || []
-  const urlPrepTimes = searchParams.get('maxTime')?.split(',').filter(Boolean) || []
-  const urlMealTypes = searchParams.get('type')?.split(',').filter(Boolean) || []
+  // P0 Fix: Validate URL parameters to prevent injection attacks
+  const urlCuisines = useMemo(() => {
+    const raw = searchParams.get('cuisine')?.split(',').filter(Boolean) || []
+    return raw.filter(isValidCuisine).slice(0, MAX_CUISINES)
+  }, [searchParams])
+
+  const urlPrepTimes = useMemo(() => {
+    const raw = searchParams.get('maxTime')?.split(',').filter(Boolean) || []
+    return raw.filter(isValidPrepTime).slice(0, MAX_PREP_TIMES)
+  }, [searchParams])
+
+  const urlMealTypes = useMemo(() => {
+    const raw = searchParams.get('type')?.split(',').filter(Boolean) || []
+    return raw.filter(isValidMealType).slice(0, MAX_MEAL_TYPES)
+  }, [searchParams])
 
   // Local state for pending changes (before Apply is clicked)
   const [pendingCuisines, setPendingCuisines] = useState<string[]>(urlCuisines)
@@ -71,11 +87,28 @@ export function RecipeFiltersAdvanced() {
   const [showPrepTimeDropdown, setShowPrepTimeDropdown] = useState(false)
   const [showMealTypeDropdown, setShowMealTypeDropdown] = useState(false)
 
-  // Check if there are pending changes
-  const hasPendingChanges =
-    JSON.stringify(pendingCuisines.sort()) !== JSON.stringify(urlCuisines.sort()) ||
-    JSON.stringify(pendingPrepTimes.sort()) !== JSON.stringify(urlPrepTimes.sort()) ||
-    JSON.stringify(pendingMealTypes.sort()) !== JSON.stringify(urlMealTypes.sort())
+  // P1 Fix: Optimize array comparison with useMemo (no mutation)
+  const hasPendingChanges = useMemo(() => {
+    const arraysEqual = (a: string[], b: string[]) => {
+      if (a.length !== b.length) return false
+      const sortedA = [...a].sort() // Create copy to avoid mutation
+      const sortedB = [...b].sort()
+      return sortedA.every((val, idx) => val === sortedB[idx])
+    }
+
+    return (
+      !arraysEqual(pendingCuisines, urlCuisines) ||
+      !arraysEqual(pendingPrepTimes, urlPrepTimes) ||
+      !arraysEqual(pendingMealTypes, urlMealTypes)
+    )
+  }, [
+    pendingCuisines,
+    urlCuisines,
+    pendingPrepTimes,
+    urlPrepTimes,
+    pendingMealTypes,
+    urlMealTypes,
+  ])
 
   // Apply filters to URL (triggers re-fetch)
   const applyFilters = () => {
@@ -114,7 +147,7 @@ export function RecipeFiltersAdvanced() {
     })
   }
 
-  // Toggle selection for any filter
+  // P2 Fix: Toggle selection with max limits enforcement
   const toggleSelection = (
     type: 'cuisine' | 'prepTime' | 'mealType',
     value: string
@@ -122,20 +155,27 @@ export function RecipeFiltersAdvanced() {
     if (type === 'cuisine') {
       if (pendingCuisines.includes(value)) {
         setPendingCuisines(pendingCuisines.filter((c) => c !== value))
-      } else {
+      } else if (pendingCuisines.length < MAX_CUISINES) {
         setPendingCuisines([...pendingCuisines, value])
+      } else {
+        console.warn(`Maximum ${MAX_CUISINES} cuisines can be selected`)
+        // Could add toast notification here
       }
     } else if (type === 'prepTime') {
       if (pendingPrepTimes.includes(value)) {
         setPendingPrepTimes(pendingPrepTimes.filter((t) => t !== value))
-      } else {
+      } else if (pendingPrepTimes.length < MAX_PREP_TIMES) {
         setPendingPrepTimes([...pendingPrepTimes, value])
+      } else {
+        console.warn(`Maximum ${MAX_PREP_TIMES} prep times can be selected`)
       }
     } else if (type === 'mealType') {
       if (pendingMealTypes.includes(value)) {
         setPendingMealTypes(pendingMealTypes.filter((m) => m !== value))
-      } else {
+      } else if (pendingMealTypes.length < MAX_MEAL_TYPES) {
         setPendingMealTypes([...pendingMealTypes, value])
+      } else {
+        console.warn(`Maximum ${MAX_MEAL_TYPES} meal types can be selected`)
       }
     }
   }

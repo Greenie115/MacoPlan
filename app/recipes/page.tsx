@@ -13,13 +13,23 @@ import {
   getUserFavoriteSpoonacularIds,
 } from '@/app/actions/spoonacular-recipes'
 import { getUserTopKeywords } from '@/app/actions/recipe-tracking'
+import { validateRecipeFilters } from '@/lib/utils/filter-validation'
+import { withCache } from '@/lib/cache/recipe-cache'
+import type { SpoonacularRecipe } from '@/lib/types/spoonacular'
 
 // Pagination configuration
 const RECIPES_PER_PAGE = 20
 
 /**
  * Helper function to search recipes with multiple meal types
- * Makes parallel queries when multiple meal types are selected, then merges and deduplicates
+ *
+ * Features:
+ * - Intelligent caching to reduce API costs (15min TTL)
+ * - Validates meal types against allowed values
+ * - Limits to MAX 5 meal types to prevent DoS
+ * - Makes parallel queries when multiple meal types selected
+ * - Merges and deduplicates results
+ * - Proper TypeScript typing (no 'any')
  */
 async function searchWithMealTypes(
   baseParams: {
@@ -33,75 +43,114 @@ async function searchWithMealTypes(
   },
   mealTypes: string[] | undefined
 ) {
-  // If no meal types or only one, make a single query
-  if (!mealTypes || mealTypes.length === 0) {
-    return await searchSpoonacularRecipes(baseParams)
-  }
+  // P0 Fix: Validate and limit meal types to prevent DoS
+  const MAX_MEAL_TYPES = 5
+  const validatedMealTypes = mealTypes && mealTypes.length > 0
+    ? mealTypes.slice(0, MAX_MEAL_TYPES)
+    : undefined
 
-  if (mealTypes.length === 1) {
-    return await searchSpoonacularRecipes({
-      ...baseParams,
-      type: mealTypes[0],
-    })
-  }
-
-  // Multiple meal types: make parallel queries
-  const results = await Promise.all(
-    mealTypes.map((mealType) =>
-      searchSpoonacularRecipes({
-        ...baseParams,
-        type: mealType,
-      })
+  if (validatedMealTypes && validatedMealTypes.length > MAX_MEAL_TYPES) {
+    console.warn(
+      `[searchWithMealTypes] Limited meal types from ${mealTypes?.length} to ${MAX_MEAL_TYPES}`
     )
-  )
-
-  // Merge all successful results
-  const allRecipes: any[] = []
-  let totalResults = 0
-  let hasError = false
-  let errorMessage: string | undefined
-
-  for (const result of results) {
-    if (result.success && result.data) {
-      allRecipes.push(...(result.data.results || []))
-      totalResults += result.data.totalResults || 0
-    } else if (result.error) {
-      hasError = true
-      errorMessage = result.error
-    }
   }
 
-  // If all queries failed, return error
-  if (hasError && allRecipes.length === 0) {
+  // If no meal types or only one, make a single cached query
+  if (!validatedMealTypes || validatedMealTypes.length === 0) {
+    return await withCache(
+      { ...baseParams, type: undefined },
+      async () => await searchSpoonacularRecipes(baseParams)
+    )
+  }
+
+  if (validatedMealTypes.length === 1) {
+    return await withCache(
+      { ...baseParams, type: validatedMealTypes[0] },
+      async () =>
+        await searchSpoonacularRecipes({
+          ...baseParams,
+          type: validatedMealTypes[0],
+        })
+    )
+  }
+
+  // Multiple meal types: make parallel cached queries
+  const cacheKey = {
+    ...baseParams,
+    mealTypes: validatedMealTypes.sort().join(','),
+  }
+
+  return await withCache(cacheKey, async () => {
+    console.log(
+      `[searchWithMealTypes] Making ${validatedMealTypes.length} parallel queries for meal types:`,
+      validatedMealTypes
+    )
+
+    const results = await Promise.all(
+      validatedMealTypes.map((mealType) =>
+        searchSpoonacularRecipes({
+          ...baseParams,
+          type: mealType,
+        })
+      )
+    )
+
+    // P1 Fix: Use proper TypeScript type instead of 'any'
+    const allRecipes: SpoonacularRecipe[] = []
+    let totalResults = 0
+    let hasError = false
+    let errorMessage: string | undefined
+
+    for (const result of results) {
+      if (result.success && result.data) {
+        allRecipes.push(...(result.data.results || []))
+        totalResults += result.data.totalResults || 0
+      } else if (result.error) {
+        hasError = true
+        errorMessage = result.error
+      }
+    }
+
+    // If all queries failed, return error
+    if (hasError && allRecipes.length === 0) {
+      return {
+        success: false,
+        error: errorMessage || 'Failed to fetch recipes',
+      }
+    }
+
+    // Deduplicate by recipe ID
+    const uniqueRecipes = Array.from(
+      new Map(allRecipes.map((r) => [r.id, r])).values()
+    )
+
+    // Sort by popularity (stable sort)
+    const sortedRecipes = uniqueRecipes.sort((a, b) => {
+      // Primary: sort by aggregated likes (popularity)
+      const likesA = a.aggregateLikes || 0
+      const likesB = b.aggregateLikes || 0
+      if (likesB !== likesA) {
+        return likesB - likesA
+      }
+      // Secondary: health score
+      const healthA = a.healthScore || 0
+      const healthB = b.healthScore || 0
+      return healthB - healthA
+    })
+
+    console.log(
+      `[searchWithMealTypes] Merged ${allRecipes.length} recipes → ${sortedRecipes.length} unique recipes`
+    )
+
     return {
-      success: false,
-      error: errorMessage || 'Failed to fetch recipes',
+      success: true,
+      data: {
+        results: sortedRecipes,
+        totalResults: sortedRecipes.length,
+      },
+      error: undefined,
     }
-  }
-
-  // Deduplicate by recipe ID
-  const uniqueRecipes = Array.from(
-    new Map(allRecipes.map((r) => [r.id, r])).values()
-  )
-
-  // Sort by popularity (healthScore is a good proxy for quality)
-  const sortedRecipes = uniqueRecipes.sort((a, b) => {
-    // Primary: sort by aggregated likes (popularity)
-    if (b.aggregateLikes !== a.aggregateLikes) {
-      return (b.aggregateLikes || 0) - (a.aggregateLikes || 0)
-    }
-    // Secondary: health score
-    return (b.healthScore || 0) - (a.healthScore || 0)
   })
-
-  return {
-    success: true,
-    data: {
-      results: sortedRecipes,
-      totalResults: sortedRecipes.length,
-    },
-    error: undefined,
-  }
 }
 
 interface RecipesPageProps {
@@ -125,18 +174,17 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   const activeTab = params.tab || 'all'
   const dietFilter = params.dietFilter !== 'false' // Default: true (enabled)
 
-  // Advanced filters from URL (support comma-separated values)
-  const cuisineFilters = params.cuisine?.split(',').filter(Boolean)
-  const cuisineFilter = cuisineFilters && cuisineFilters.length > 0 ? cuisineFilters : undefined
+  // P0 Fix: Validate and sanitize all filter parameters to prevent injection attacks
+  const validatedFilters = validateRecipeFilters({
+    cuisine: params.cuisine,
+    maxTime: params.maxTime,
+    type: params.type,
+  })
 
-  // For maxTime: take the maximum value from comma-separated list
-  const maxTimeFilter = params.maxTime
-    ? Math.max(...params.maxTime.split(',').map((t) => parseInt(t, 10)))
-    : undefined
-
-  // For type: Parse all meal types for multi-select support
-  const mealTypeFilters = params.type?.split(',').filter(Boolean)
-  const mealTypeFilter = mealTypeFilters && mealTypeFilters.length > 0 ? mealTypeFilters : undefined
+  const cuisineFilter = validatedFilters.cuisines
+  const maxTimeFilter = validatedFilters.maxReadyTime
+  const mealTypeFilter = validatedFilters.mealTypes
+  const rawPrepTimes = validatedFilters.rawPrepTimes // For display in chips
 
   const supabase = await createClient()
 
