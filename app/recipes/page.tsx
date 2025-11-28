@@ -17,6 +17,93 @@ import { getUserTopKeywords } from '@/app/actions/recipe-tracking'
 // Pagination configuration
 const RECIPES_PER_PAGE = 20
 
+/**
+ * Helper function to search recipes with multiple meal types
+ * Makes parallel queries when multiple meal types are selected, then merges and deduplicates
+ */
+async function searchWithMealTypes(
+  baseParams: {
+    query?: string
+    number?: number
+    page?: number
+    sort?: 'popularity' | 'healthiness' | 'price' | 'time' | 'random' | 'max-used-ingredients' | 'min-missing-ingredients'
+    applyDietaryFilter?: boolean
+    cuisines?: string[]
+    maxReadyTime?: number
+  },
+  mealTypes: string[] | undefined
+) {
+  // If no meal types or only one, make a single query
+  if (!mealTypes || mealTypes.length === 0) {
+    return await searchSpoonacularRecipes(baseParams)
+  }
+
+  if (mealTypes.length === 1) {
+    return await searchSpoonacularRecipes({
+      ...baseParams,
+      type: mealTypes[0],
+    })
+  }
+
+  // Multiple meal types: make parallel queries
+  const results = await Promise.all(
+    mealTypes.map((mealType) =>
+      searchSpoonacularRecipes({
+        ...baseParams,
+        type: mealType,
+      })
+    )
+  )
+
+  // Merge all successful results
+  const allRecipes: any[] = []
+  let totalResults = 0
+  let hasError = false
+  let errorMessage: string | undefined
+
+  for (const result of results) {
+    if (result.success && result.data) {
+      allRecipes.push(...(result.data.results || []))
+      totalResults += result.data.totalResults || 0
+    } else if (result.error) {
+      hasError = true
+      errorMessage = result.error
+    }
+  }
+
+  // If all queries failed, return error
+  if (hasError && allRecipes.length === 0) {
+    return {
+      success: false,
+      error: errorMessage || 'Failed to fetch recipes',
+    }
+  }
+
+  // Deduplicate by recipe ID
+  const uniqueRecipes = Array.from(
+    new Map(allRecipes.map((r) => [r.id, r])).values()
+  )
+
+  // Sort by popularity (healthScore is a good proxy for quality)
+  const sortedRecipes = uniqueRecipes.sort((a, b) => {
+    // Primary: sort by aggregated likes (popularity)
+    if (b.aggregateLikes !== a.aggregateLikes) {
+      return (b.aggregateLikes || 0) - (a.aggregateLikes || 0)
+    }
+    // Secondary: health score
+    return (b.healthScore || 0) - (a.healthScore || 0)
+  })
+
+  return {
+    success: true,
+    data: {
+      results: sortedRecipes,
+      totalResults: sortedRecipes.length,
+    },
+    error: undefined,
+  }
+}
+
 interface RecipesPageProps {
   searchParams: Promise<{
     search?: string
@@ -47,9 +134,9 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     ? Math.max(...params.maxTime.split(',').map((t) => parseInt(t, 10)))
     : undefined
 
-  // For type: Spoonacular doesn't support multiple meal types in one query, so we'll take first value
-  // In the future, this could be enhanced to make multiple queries and combine results
-  const typeFilter = params.type?.split(',')[0] || undefined
+  // For type: Parse all meal types for multi-select support
+  const mealTypeFilters = params.type?.split(',').filter(Boolean)
+  const mealTypeFilter = mealTypeFilters && mealTypeFilters.length > 0 ? mealTypeFilters : undefined
 
   const supabase = await createClient()
 
@@ -79,15 +166,17 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
 
   if (searchQuery) {
     // User is searching - fetch search results sorted by popularity
-    const spoonacularResult = await searchSpoonacularRecipes({
-      query: searchQuery,
-      page: currentPage,
-      applyDietaryFilter: dietFilter,
-      sort: 'popularity', // Sort search results by popularity
-      cuisines: cuisineFilter,
-      maxReadyTime: maxTimeFilter,
-      type: typeFilter,
-    })
+    const spoonacularResult = await searchWithMealTypes(
+      {
+        query: searchQuery,
+        page: currentPage,
+        applyDietaryFilter: dietFilter,
+        sort: 'popularity', // Sort search results by popularity
+        cuisines: cuisineFilter,
+        maxReadyTime: maxTimeFilter,
+      },
+      mealTypeFilter
+    )
 
     if (spoonacularResult.success && spoonacularResult.data) {
       spoonacularRecipes = spoonacularResult.data.results || []
@@ -114,38 +203,44 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       const [keywordResult1, keywordResult2, generalResult] = await Promise.all([
         // Keyword-based recipe 1 (30% of results)
         keyword1
-          ? searchSpoonacularRecipes({
-              query: keyword1,
-              number: 6,
-              sort: 'popularity',
-              applyDietaryFilter: dietFilter,
-              cuisines: cuisineFilter,
-              maxReadyTime: maxTimeFilter,
-              type: typeFilter,
-            })
+          ? searchWithMealTypes(
+              {
+                query: keyword1,
+                number: 6,
+                sort: 'popularity',
+                applyDietaryFilter: dietFilter,
+                cuisines: cuisineFilter,
+                maxReadyTime: maxTimeFilter,
+              },
+              mealTypeFilter
+            )
           : null,
         // Keyword-based recipe 2 (30% of results)
         keyword2
-          ? searchSpoonacularRecipes({
-              query: keyword2,
-              number: 6,
-              sort: 'popularity',
-              applyDietaryFilter: dietFilter,
-              cuisines: cuisineFilter,
-              maxReadyTime: maxTimeFilter,
-              type: typeFilter,
-            })
+          ? searchWithMealTypes(
+              {
+                query: keyword2,
+                number: 6,
+                sort: 'popularity',
+                applyDietaryFilter: dietFilter,
+                cuisines: cuisineFilter,
+                maxReadyTime: maxTimeFilter,
+              },
+              mealTypeFilter
+            )
           : null,
         // General top-rated (40% of results)
-        searchSpoonacularRecipes({
-          query: 'high protein',
-          number: 8,
-          sort: 'popularity',
-          applyDietaryFilter: dietFilter,
-          cuisines: cuisineFilter,
-          maxReadyTime: maxTimeFilter,
-          type: typeFilter,
-        }),
+        searchWithMealTypes(
+          {
+            query: 'high protein',
+            number: 8,
+            sort: 'popularity',
+            applyDietaryFilter: dietFilter,
+            cuisines: cuisineFilter,
+            maxReadyTime: maxTimeFilter,
+          },
+          mealTypeFilter
+        ),
       ])
 
       // Combine results
@@ -177,15 +272,17 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       // New user or not enough data - show general top-rated recipes
       console.log('[AdaptiveRecipes] New user - showing top-rated high-protein recipes')
 
-      const spoonacularResult = await searchSpoonacularRecipes({
-        query: 'high protein',
-        number: 20,
-        sort: 'popularity',
-        applyDietaryFilter: dietFilter,
-        cuisines: cuisineFilter,
-        maxReadyTime: maxTimeFilter,
-        type: typeFilter,
-      })
+      const spoonacularResult = await searchWithMealTypes(
+        {
+          query: 'high protein',
+          number: 20,
+          sort: 'popularity',
+          applyDietaryFilter: dietFilter,
+          cuisines: cuisineFilter,
+          maxReadyTime: maxTimeFilter,
+        },
+        mealTypeFilter
+      )
 
       if (spoonacularResult.success && spoonacularResult.data) {
         spoonacularRecipes = spoonacularResult.data.results || []
@@ -196,15 +293,17 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     }
   } else {
     // Anonymous user - show general top-rated recipes
-    const spoonacularResult = await searchSpoonacularRecipes({
-      query: 'high protein',
-      number: 20,
-      sort: 'popularity',
-      applyDietaryFilter: false, // No dietary filtering for anonymous
-      cuisines: cuisineFilter,
-      maxReadyTime: maxTimeFilter,
-      type: typeFilter,
-    })
+    const spoonacularResult = await searchWithMealTypes(
+      {
+        query: 'high protein',
+        number: 20,
+        sort: 'popularity',
+        applyDietaryFilter: false, // No dietary filtering for anonymous
+        cuisines: cuisineFilter,
+        maxReadyTime: maxTimeFilter,
+      },
+      mealTypeFilter
+    )
 
     if (spoonacularResult.success && spoonacularResult.data) {
       spoonacularRecipes = spoonacularResult.data.results || []
