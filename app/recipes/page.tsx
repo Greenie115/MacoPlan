@@ -5,7 +5,7 @@ import { RecipeSearch } from '@/components/recipes/recipe-search'
 import { RecipeFiltersAdvanced } from '@/components/recipes/recipe-filters-advanced'
 import { RecipeTabs } from '@/components/recipes/recipe-tabs'
 import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
-import { RecipeGrid } from '@/components/recipes/recipe-grid'
+import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
 import { RecipeDietaryToggle } from '@/components/recipes/recipe-dietary-toggle'
 import { getFavoriteRecipeIds } from './actions'
 import {
@@ -502,10 +502,13 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         <UpgradeBanner />
       </div>
 
-      {/* Recipe Grid */}
-      <RecipeGrid
-        recipes={paginatedRecipes}
+      {/* Recipe Grid with Session Cache */}
+      <RecipeResultsClient
+        initialRecipes={paginatedRecipes}
+        totalResults={totalResults}
         favoriteIds={searchQuery ? favoriteSpoonacularIds : favoriteIds}
+        searchQuery={searchQuery}
+        isAdaptiveRecommendation={isAdaptiveRecommendation}
       />
 
       {/* Error Message */}

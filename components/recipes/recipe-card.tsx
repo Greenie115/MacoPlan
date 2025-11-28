@@ -6,15 +6,19 @@ import { Heart } from 'lucide-react'
 import { Recipe } from '@/lib/types/recipe'
 import { macroColors } from '@/lib/design-tokens'
 import { toggleFavorite } from '@/app/recipes/actions'
+import { toggleSpoonacularFavorite } from '@/app/actions/spoonacular-recipes'
 import { useOptimistic, useTransition } from 'react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
+import { SpoonacularBadge } from './spoonacular-badge'
+import { getSpoonacularImageUrl } from '@/lib/utils/spoonacular-image'
 
 interface RecipeCardProps {
-  recipe: Recipe
+  recipe: Recipe | any // Allow both local Recipe and Spoonacular recipe
   isFavorite: boolean
+  source?: 'local' | 'spoonacular'
 }
 
-export function RecipeCard({ recipe, isFavorite }: RecipeCardProps) {
+export function RecipeCard({ recipe, isFavorite, source = 'local' }: RecipeCardProps) {
   const [isPending, startTransition] = useTransition()
   const [optimisticFavorite, setOptimisticFavorite] = useOptimistic(isFavorite)
 
@@ -26,21 +30,48 @@ export function RecipeCard({ recipe, isFavorite }: RecipeCardProps) {
       setOptimisticFavorite(!optimisticFavorite)
     })
 
-    await toggleFavorite(recipe.id)
+    // Call appropriate favorite action based on source
+    if (source === 'spoonacular') {
+      await toggleSpoonacularFavorite(recipe.id)
+    } else {
+      await toggleFavorite(recipe.id)
+    }
   }
 
+  // Get appropriate values based on source
+  const recipeTitle = source === 'spoonacular' ? recipe.title : recipe.name
+  // For Spoonacular, use high-quality image (636x393 - no watermark)
+  const recipeImage = source === 'spoonacular'
+    ? getSpoonacularImageUrl(recipe.id, '636x393')
+    : recipe.image_url
+  const recipeLink = source === 'spoonacular' ? `/recipes/spoonacular/${recipe.id}` : `/recipes/${recipe.id}`
+
+  // For Spoonacular, extract nutrition from the nutrition object
+  const calories = source === 'spoonacular'
+    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Calories')?.amount || 0
+    : recipe.calories
+  const protein = source === 'spoonacular'
+    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Protein')?.amount || 0
+    : recipe.protein_grams
+  const carbs = source === 'spoonacular'
+    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Carbohydrates')?.amount || 0
+    : recipe.carb_grams
+  const fat = source === 'spoonacular'
+    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Fat')?.amount || 0
+    : recipe.fat_grams
+
   // Validate image URL for security
-  const safeImageUrl = getSafeImageUrl(recipe.image_url)
+  const safeImageUrl = getSafeImageUrl(recipeImage)
 
   return (
-    <Link href={`/recipes/${recipe.id}`} className="h-full block">
+    <Link href={recipeLink} className="h-full block" prefetch={false}>
       <div className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full">
         {/* Recipe Image */}
         <div className="aspect-square w-full rounded-xl bg-gray-200 overflow-hidden relative shrink-0">
           {safeImageUrl ? (
             <Image
               src={safeImageUrl}
-              alt={recipe.name}
+              alt={recipeTitle}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 50vw, 33vw"
@@ -52,6 +83,13 @@ export function RecipeCard({ recipe, isFavorite }: RecipeCardProps) {
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
               No image
+            </div>
+          )}
+
+          {/* Spoonacular Badge */}
+          {source === 'spoonacular' && (
+            <div className="absolute top-2 left-2">
+              <SpoonacularBadge size="sm" />
             </div>
           )}
 
@@ -75,9 +113,9 @@ export function RecipeCard({ recipe, isFavorite }: RecipeCardProps) {
         {/* Recipe Info */}
         <div className="flex flex-col gap-2 flex-1">
           <p className="font-semibold text-base leading-tight text-gray-900 line-clamp-2 h-10">
-            {recipe.name}
+            {recipeTitle}
           </p>
-          <p className="text-sm text-gray-500">{recipe.calories} cal</p>
+          <p className="text-sm text-gray-500">{Math.round(calories)} cal</p>
 
           {/* Macros */}
           <div className="flex items-center gap-3 text-xs">
@@ -85,19 +123,19 @@ export function RecipeCard({ recipe, isFavorite }: RecipeCardProps) {
               className="flex items-center gap-1 font-medium"
               style={{ color: macroColors.protein.primary }}
             >
-              {macroColors.protein.emoji} {recipe.protein_grams}g
+              {macroColors.protein.emoji} {Math.round(protein)}g
             </span>
             <span
               className="flex items-center gap-1 font-medium"
               style={{ color: macroColors.carbs.primary }}
             >
-              {macroColors.carbs.emoji} {recipe.carb_grams}g
+              {macroColors.carbs.emoji} {Math.round(carbs)}g
             </span>
             <span
               className="flex items-center gap-1 font-medium"
               style={{ color: macroColors.fat.primary }}
             >
-              {macroColors.fat.emoji} {recipe.fat_grams}g
+              {macroColors.fat.emoji} {Math.round(fat)}g
             </span>
           </div>
         </div>

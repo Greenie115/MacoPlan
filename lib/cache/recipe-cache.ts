@@ -31,8 +31,8 @@ class RecipeCache {
   private maxSize: number
   private defaultTTL: number
 
-  constructor(maxSize = 100, defaultTTL = 15 * 60 * 1000) {
-    // 15 minutes
+  constructor(maxSize = 100, defaultTTL = 30 * 60 * 1000) {
+    // 30 minutes (increased from 15min to match session cache)
     this.cache = new Map()
     this.stats = { hits: 0, misses: 0, evictions: 0 }
     this.maxSize = maxSize
