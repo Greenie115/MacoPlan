@@ -211,13 +211,12 @@ export async function searchSpoonacularRecipes(
           : undefined,
     }
   } catch (error) {
+    // Log full error server-side for debugging
     console.error('[SearchAction] Error searching recipes:', error)
+    // Return generic error message to prevent information disclosure
     return {
       success: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : 'Failed to search recipes. Please try again.',
+      error: 'Failed to search recipes. Please try again.',
     }
   }
 }
@@ -237,13 +236,12 @@ export async function getSpoonacularRecipeDetails(
       data: recipe,
     }
   } catch (error) {
+    // Log full error server-side for debugging
     console.error('[GetRecipeAction] Error fetching recipe details:', error)
+    // Return generic error message to prevent information disclosure
     return {
       success: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : 'Failed to fetch recipe details. Please try again.',
+      error: 'Failed to fetch recipe details. Please try again.',
     }
   }
 }

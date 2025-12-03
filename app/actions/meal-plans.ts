@@ -12,8 +12,6 @@ import { spoonacularMealPlanService } from '@/lib/services/spoonacular-meal-plan
 import { spoonacularService } from '@/lib/services/spoonacular'
 import {
   getUserSubscriptionTier,
-  checkMealPlanQuota,
-  incrementMealPlanQuota,
 } from '@/lib/utils/subscription'
 import type {
   MealPlan,
@@ -27,6 +25,40 @@ import type {
   SpoonacularWeeklyMealPlan,
   SpoonacularMeal,
 } from '@/lib/types/spoonacular'
+import { z } from 'zod'
+
+// ============================================================================
+// Input Validation Schemas
+// ============================================================================
+
+const GenerateMealPlanRequestSchema = z.object({
+  timeFrame: z.enum(['day', 'week']),
+  mealsPerDay: z
+    .number()
+    .int()
+    .min(2, 'Meals per day must be at least 2')
+    .max(6, 'Meals per day cannot exceed 6')
+    .optional(),
+  targetCalories: z
+    .number()
+    .int()
+    .min(1200, 'Target calories must be at least 1200 for safe nutrition')
+    .max(5000, 'Target calories cannot exceed 5000')
+    .optional(),
+  customDiet: z
+    .string()
+    .max(50, 'Diet preference cannot exceed 50 characters')
+    .regex(/^[a-zA-Z\s-]*$/, 'Diet preference contains invalid characters')
+    .optional(),
+  customExclude: z
+    .string()
+    .max(500, 'Exclusion list cannot exceed 500 characters')
+    .regex(
+      /^[a-zA-Z0-9\s,.-]*$/,
+      'Exclusion list contains invalid characters (only letters, numbers, commas, spaces, dots, and hyphens allowed)'
+    )
+    .optional(),
+})
 
 // ============================================================================
 // Types
@@ -84,6 +116,18 @@ export async function generateMealPlan(
   request: GenerateMealPlanRequest
 ): Promise<GenerateMealPlanResponse> {
   try {
+    // Step 0: Validate input
+    const validationResult = GenerateMealPlanRequestSchema.safeParse(request)
+    if (!validationResult.success) {
+      const firstError = validationResult.error.issues[0]
+      return {
+        success: false,
+        error: `Invalid input: ${firstError.message}`,
+      }
+    }
+
+    const validatedRequest = validationResult.data
+
     const supabase = await createClient()
     const {
       data: { user },
@@ -93,17 +137,30 @@ export async function generateMealPlan(
       return { success: false, error: 'Not authenticated' }
     }
 
-    // Step 1: Check subscription tier and quota
+    // Step 1: Atomic quota check and reserve
+    // This prevents race conditions by checking AND reserving in a single transaction
     const tier = await getUserSubscriptionTier(user.id)
-    const quotaCheck = await checkMealPlanQuota(user.id, tier)
 
-    if (!quotaCheck.allowed) {
+    const { data: quotaResult, error: quotaError } = await supabase.rpc(
+      'check_and_reserve_meal_plan_quota',
+      {
+        p_user_id: user.id,
+        p_is_free_tier: tier === 'free',
+      }
+    )
+
+    if (quotaError) {
+      console.error('[GenerateMealPlan] Quota check error:', quotaError)
+      return { success: false, error: 'Failed to check quota. Please try again.' }
+    }
+
+    if (!quotaResult.allowed) {
       return {
         success: false,
-        error: quotaCheck.reason,
+        error: quotaResult.reason,
         quotaInfo: {
-          remaining: quotaCheck.remaining,
-          total: quotaCheck.total,
+          remaining: quotaResult.remaining,
+          total: quotaResult.total,
         },
       }
     }
@@ -125,8 +182,8 @@ export async function generateMealPlan(
     }
 
     // Step 3: Build Spoonacular API parameters
-    const targetCalories = request.targetCalories || profile.target_calories
-    const diet = request.customDiet || mapDietaryStyleToDiet(profile.dietary_style)
+    const targetCalories = validatedRequest.targetCalories || profile.target_calories
+    const diet = validatedRequest.customDiet || mapDietaryStyleToDiet(profile.dietary_style)
 
     // Combine allergies and foods to avoid
     const excludeItems: string[] = []
@@ -141,14 +198,14 @@ export async function generateMealPlan(
           .filter(Boolean)
       )
     }
-    if (request.customExclude) {
-      excludeItems.push(request.customExclude)
+    if (validatedRequest.customExclude) {
+      excludeItems.push(validatedRequest.customExclude)
     }
 
     const params: MealPlanGenerationParams = {
-      timeFrame: request.timeFrame,
+      timeFrame: validatedRequest.timeFrame,
       targetCalories,
-      mealsPerDay: request.mealsPerDay,
+      mealsPerDay: validatedRequest.mealsPerDay,
       diet,
       exclude: excludeItems.length > 0 ? excludeItems.join(',') : undefined,
     }
@@ -169,7 +226,7 @@ export async function generateMealPlan(
     let totalCarbs = 0
     let totalFat = 0
 
-    if (request.timeFrame === 'day') {
+    if (validatedRequest.timeFrame === 'day') {
       const dailyPlan = spoonacularPlan as SpoonacularDailyMealPlan
       actualCalories = dailyPlan.nutrients.calories
       totalProtein = dailyPlan.nutrients.protein
@@ -194,6 +251,7 @@ export async function generateMealPlan(
     )
 
     // Step 6: Deactivate existing active plans (unique constraint: only 1 active per user)
+    // CRITICAL: Must succeed before creating new plan to maintain data integrity
     const { error: deactivateError } = await supabase
       .from('meal_plans')
       .update({ is_active: false })
@@ -201,24 +259,27 @@ export async function generateMealPlan(
       .eq('is_active', true)
 
     if (deactivateError) {
-      console.error('[GenerateMealPlan] Error deactivating existing plans:', deactivateError)
-      // Continue anyway - this is not critical
+      console.error('[GenerateMealPlan] CRITICAL: Failed to deactivate existing plans:', deactivateError)
+      return {
+        success: false,
+        error: 'Failed to prepare for new meal plan. Please try again.',
+      }
     }
 
     // Step 7: Save meal plan to database
     const startDate = new Date()
     const endDate = new Date()
-    if (request.timeFrame === 'week') {
+    if (validatedRequest.timeFrame === 'week') {
       endDate.setDate(endDate.getDate() + 6)
     }
 
     const mealPlanData: MealPlanInsert = {
       user_id: user.id,
-      name: `${request.timeFrame === 'day' ? 'Daily' : 'Weekly'} Meal Plan - ${startDate.toLocaleDateString()}`,
+      name: `${validatedRequest.timeFrame === 'day' ? 'Daily' : 'Weekly'} Meal Plan - ${startDate.toLocaleDateString()}`,
       description: `Generated meal plan with ${Math.round(actualCalories)} calories per day`,
       start_date: startDate.toISOString().split('T')[0],
       end_date: endDate.toISOString().split('T')[0],
-      total_days: request.timeFrame === 'day' ? 1 : 7,
+      total_days: validatedRequest.timeFrame === 'day' ? 1 : 7,
       target_calories: targetCalories,
       protein_grams: profile.protein_grams || 0,
       carb_grams: profile.carb_grams || 0,
@@ -247,7 +308,7 @@ export async function generateMealPlan(
     // Step 8: Save individual meals to meal_plan_meals table
     const mealsToInsert: MealPlanMealInsert[] = []
 
-    if (request.timeFrame === 'day') {
+    if (validatedRequest.timeFrame === 'day') {
       const dailyPlan = spoonacularPlan as SpoonacularDailyMealPlan
       dailyPlan.meals.forEach((meal, index) => {
         mealsToInsert.push(createMealPlanMealEntry(savedPlan.id, meal, 0, index))
@@ -283,10 +344,9 @@ export async function generateMealPlan(
       return { success: false, error: 'Failed to save meal plan meals' }
     }
 
-    // Step 9: Increment quota counter
-    await incrementMealPlanQuota(user.id, tier)
+    // Quota was already reserved atomically in Step 1, no need to increment again
 
-    // Step 10: Revalidate paths
+    // Step 9: Revalidate paths
     revalidatePath('/meal-plans')
     revalidatePath('/dashboard')
 
@@ -302,18 +362,17 @@ export async function generateMealPlan(
         macroMatch,
       },
       quotaInfo: {
-        remaining: quotaCheck.remaining - 1,
-        total: quotaCheck.total,
+        remaining: quotaResult.remaining,
+        total: quotaResult.total,
       },
     }
   } catch (error) {
+    // Log full error server-side for debugging
     console.error('[GenerateMealPlan] Unexpected error:', error)
+    // Return generic error message to prevent information disclosure
     return {
       success: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : 'Failed to generate meal plan. Please try again.',
+      error: 'Failed to generate meal plan. Please try again.',
     }
   }
 }
@@ -716,15 +775,28 @@ export async function getMealPlanQuotaInfo(): Promise<{
     }
 
     const tier = await getUserSubscriptionTier(user.id)
-    const quotaCheck = await checkMealPlanQuota(user.id, tier)
+
+    // Get current quota status from database
+    const { data: quota } = await supabase
+      .from('meal_plan_generation_quota')
+      .select('*')
+      .eq('user_id', user.id)
+      .single()
+
+    // Calculate remaining based on tier
+    const total = tier === 'free' ? 3 : 100
+    const used = tier === 'free'
+      ? (quota?.free_tier_generated || 0)
+      : (quota?.current_period_generated || 0)
+    const remaining = Math.max(0, total - used)
 
     return {
       success: true,
       data: {
         tier,
-        remaining: quotaCheck.remaining,
-        total: quotaCheck.total,
-        used: quotaCheck.total - quotaCheck.remaining,
+        remaining,
+        total,
+        used,
       },
     }
   } catch (error) {
