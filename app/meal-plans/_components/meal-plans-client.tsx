@@ -316,12 +316,13 @@ function MealPlanCard({
   const fallbackIds = [715538, 716429, 715394, 716627]
 
   // Build preview images array - use actual images when available, fallback otherwise
+  // Using maximum quality 1200x900 for crisp display on high-DPI screens
   const previewImages = Array.from({ length: 4 }, (_, index) => {
     const preview = plan.preview_images?.[index]
     if (preview?.spoonacular_id) {
-      // Use spoonacular_id to generate high-quality image URL
+      // Use spoonacular_id to generate maximum quality image URL
       return {
-        src: getSpoonacularImageUrl(preview.spoonacular_id, '636x393'),
+        src: getSpoonacularImageUrl(preview.spoonacular_id, '1200x900'),
         key: `meal-${preview.spoonacular_id}`,
       }
     } else if (preview?.image_url) {
@@ -333,7 +334,7 @@ function MealPlanCard({
     } else {
       // Fall back to placeholder
       return {
-        src: getSpoonacularImageUrl(fallbackIds[index], '636x393'),
+        src: getSpoonacularImageUrl(fallbackIds[index], '1200x900'),
         key: `fallback-${index}`,
       }
     }
