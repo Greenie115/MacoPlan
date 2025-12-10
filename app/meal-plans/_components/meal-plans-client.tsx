@@ -35,13 +35,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { deleteMealPlan, toggleMealPlanFavorite, archiveMealPlan } from '@/app/actions/meal-plans'
-import type { MealPlan } from '@/lib/types/database'
+import { deleteMealPlan, toggleMealPlanFavorite, archiveMealPlan, type MealPlanWithPreviews } from '@/app/actions/meal-plans'
 
 type TabFilter = 'all' | 'this_week' | 'favorites'
 
 interface MealPlansClientProps {
-  initialPlans: MealPlan[]
+  initialPlans: MealPlanWithPreviews[]
   quotaInfo: {
     tier: 'free' | 'paid'
     remaining: number
@@ -57,7 +56,7 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
   const [paywallTrigger, setPaywallTrigger] = useState<PaywallTrigger>('meal_plan_limit')
   const [plans, setPlans] = useState(initialPlans)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [planToDelete, setPlanToDelete] = useState<MealPlan | null>(null)
+  const [planToDelete, setPlanToDelete] = useState<MealPlanWithPreviews | null>(null)
   const [isPending, startTransition] = useTransition()
 
   // Filter plans based on active tab
@@ -73,7 +72,7 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
     return true
   })
 
-  const handleDeletePlan = (plan: MealPlan) => {
+  const handleDeletePlan = (plan: MealPlanWithPreviews) => {
     setPlanToDelete(plan)
     setDeleteDialogOpen(true)
   }
@@ -307,15 +306,38 @@ function MealPlanCard({
   onArchive,
   isPending,
 }: {
-  plan: MealPlan
-  onDelete: (plan: MealPlan) => void
+  plan: MealPlanWithPreviews
+  onDelete: (plan: MealPlanWithPreviews) => void
   onToggleFavorite: (planId: string) => void
   onArchive: (planId: string) => void
   isPending: boolean
 }) {
-  // Get placeholder images for the 2x2 grid (will be replaced with actual meal images)
-  // Using high-quality 636x393 images (watermark-free)
-  const placeholderIds = [715538, 716429, 715394, 716627]
+  // Get actual meal images from the plan, with fallbacks
+  const fallbackIds = [715538, 716429, 715394, 716627]
+
+  // Build preview images array - use actual images when available, fallback otherwise
+  const previewImages = Array.from({ length: 4 }, (_, index) => {
+    const preview = plan.preview_images?.[index]
+    if (preview?.spoonacular_id) {
+      // Use spoonacular_id to generate high-quality image URL
+      return {
+        src: getSpoonacularImageUrl(preview.spoonacular_id, '636x393'),
+        key: `meal-${preview.spoonacular_id}`,
+      }
+    } else if (preview?.image_url) {
+      // Use direct image URL if available
+      return {
+        src: preview.image_url,
+        key: `url-${index}`,
+      }
+    } else {
+      // Fall back to placeholder
+      return {
+        src: getSpoonacularImageUrl(fallbackIds[index], '636x393'),
+        key: `fallback-${index}`,
+      }
+    }
+  })
 
   return (
     <Link href={`/meal-plans/${plan.id}`}>
@@ -375,20 +397,21 @@ function MealPlanCard({
           </DropdownMenu>
         </div>
 
-        {/* 2x2 Image Grid - constrained size */}
+        {/* 2x2 Image Grid - using actual meal images */}
         <div className="grid grid-cols-2 gap-1.5 mb-4 max-w-[200px]">
-          {placeholderIds.map((id, index) => (
+          {previewImages.map((image) => (
             <div
-              key={index}
+              key={image.key}
               className="aspect-square rounded-lg overflow-hidden bg-gray-100 relative"
             >
               <Image
-                src={getSpoonacularImageUrl(id, '636x393')}
+                src={image.src}
                 alt=""
                 fill
                 sizes="100px"
                 className="object-cover"
-                quality={85}
+                quality={90}
+                unoptimized={!image.src.includes('spoonacular')}
               />
             </div>
           ))}

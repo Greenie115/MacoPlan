@@ -24,6 +24,7 @@ import type {
   SpoonacularDailyMealPlan,
   SpoonacularWeeklyMealPlan,
   SpoonacularMeal,
+  SpoonacularMealPlanNutrients,
 } from '@/lib/types/spoonacular'
 import { z } from 'zod'
 
@@ -116,10 +117,19 @@ export async function generateMealPlan(
   request: GenerateMealPlanRequest
 ): Promise<GenerateMealPlanResponse> {
   try {
+    console.log('[GenerateMealPlan] Incoming request:', {
+      timeFrame: request.timeFrame,
+      mealsPerDay: request.mealsPerDay,
+      targetCalories: request.targetCalories,
+      customDiet: request.customDiet,
+      customExclude: request.customExclude?.substring(0, 50),
+    })
+
     // Step 0: Validate input
     const validationResult = GenerateMealPlanRequestSchema.safeParse(request)
     if (!validationResult.success) {
       const firstError = validationResult.error.issues[0]
+      console.error('[GenerateMealPlan] Validation error:', firstError)
       return {
         success: false,
         error: `Invalid input: ${firstError.message}`,
@@ -216,6 +226,7 @@ export async function generateMealPlan(
     const spoonacularPlan = await spoonacularMealPlanService.generateMealPlan({
       timeFrame: params.timeFrame,
       targetCalories: params.targetCalories,
+      mealsPerDay: params.mealsPerDay,
       diet: params.diet,
       exclude: params.exclude,
     })
@@ -310,8 +321,18 @@ export async function generateMealPlan(
 
     if (validatedRequest.timeFrame === 'day') {
       const dailyPlan = spoonacularPlan as SpoonacularDailyMealPlan
+      const numMeals = dailyPlan.meals.length
       dailyPlan.meals.forEach((meal, index) => {
-        mealsToInsert.push(createMealPlanMealEntry(savedPlan.id, meal, 0, index))
+        mealsToInsert.push(
+          createMealPlanMealEntry(
+            savedPlan.id,
+            meal,
+            0,
+            index,
+            dailyPlan.nutrients,
+            numMeals
+          )
+        )
       })
     } else {
       const weeklyPlan = spoonacularPlan as SpoonacularWeeklyMealPlan
@@ -326,9 +347,17 @@ export async function generateMealPlan(
       ]
       dayNames.forEach((dayName, dayIndex) => {
         const dayPlan = weeklyPlan.week[dayName as keyof typeof weeklyPlan.week]
+        const numMeals = dayPlan.meals.length
         dayPlan.meals.forEach((meal, mealIndex) => {
           mealsToInsert.push(
-            createMealPlanMealEntry(savedPlan.id, meal, dayIndex, mealIndex)
+            createMealPlanMealEntry(
+              savedPlan.id,
+              meal,
+              dayIndex,
+              mealIndex,
+              dayPlan.nutrients,
+              numMeals
+            )
           )
         })
       })
@@ -382,7 +411,9 @@ function createMealPlanMealEntry(
   mealPlanId: string,
   meal: SpoonacularMeal,
   dayIndex: number,
-  mealOrder: number
+  mealOrder: number,
+  dayNutrients: SpoonacularMealPlanNutrients,
+  numMealsInDay: number
 ): MealPlanMealInsert {
   // Determine meal type based on order (simple heuristic)
   const mealTypes: Array<'breakfast' | 'lunch' | 'dinner' | 'snack'> = [
@@ -392,6 +423,13 @@ function createMealPlanMealEntry(
     'snack',
   ]
   const mealType = mealTypes[mealOrder] || 'snack'
+
+  // Distribute day's nutrients evenly across meals
+  // Note: This is an approximation since Spoonacular doesn't provide per-meal nutrition
+  const caloriesPerMeal = Math.round(dayNutrients.calories / numMealsInDay)
+  const proteinPerMeal = Math.round(dayNutrients.protein / numMealsInDay)
+  const carbsPerMeal = Math.round(dayNutrients.carbohydrates / numMealsInDay)
+  const fatPerMeal = Math.round(dayNutrients.fat / numMealsInDay)
 
   return {
     meal_plan_id: mealPlanId,
@@ -407,10 +445,10 @@ function createMealPlanMealEntry(
       : null,
     servings: meal.servings,
     ready_in_minutes: meal.readyInMinutes,
-    calories: null, // Will be fetched from recipe details if needed
-    protein_grams: null,
-    carb_grams: null,
-    fat_grams: null,
+    calories: caloriesPerMeal,
+    protein_grams: proteinPerMeal,
+    carb_grams: carbsPerMeal,
+    fat_grams: fatPerMeal,
     serving_multiplier: 1.0,
     notes: null,
   }
@@ -420,13 +458,23 @@ function createMealPlanMealEntry(
 // Get User's Meal Plans
 // ============================================================================
 
+/**
+ * Extended MealPlan type with preview images for list display
+ */
+export interface MealPlanWithPreviews extends MealPlan {
+  preview_images: {
+    spoonacular_id: number | null
+    image_url: string | null
+  }[]
+}
+
 export async function getMealPlans(filters?: {
   activeOnly?: boolean
   favoritesOnly?: boolean
   archived?: boolean
 }): Promise<{
   success: boolean
-  data?: MealPlan[]
+  data?: MealPlanWithPreviews[]
   error?: string
 }> {
   try {
@@ -439,9 +487,17 @@ export async function getMealPlans(filters?: {
       return { success: false, error: 'Not authenticated' }
     }
 
+    // Fetch meal plans with their first 4 meals for preview images
     let query = supabase
       .from('meal_plans')
-      .select('*')
+      .select(`
+        *,
+        meal_plan_meals (
+          spoonacular_id,
+          recipe_image_url,
+          meal_order
+        )
+      `)
       .eq('user_id', user.id)
       .order('created_at', { ascending: false })
 
@@ -467,7 +523,41 @@ export async function getMealPlans(filters?: {
       return { success: false, error: 'Failed to fetch meal plans' }
     }
 
-    return { success: true, data: data as MealPlan[] }
+    // Transform data to include preview_images array
+    const plansWithPreviews: MealPlanWithPreviews[] = (data || []).map((plan) => {
+      // Get up to 4 unique meal images, sorted by meal_order
+      const meals = (plan.meal_plan_meals || []) as Array<{
+        spoonacular_id: number | null
+        recipe_image_url: string | null
+        meal_order: number
+      }>
+
+      // Sort by meal_order and take first 4 unique images
+      const sortedMeals = meals.sort((a, b) => a.meal_order - b.meal_order)
+      const seenIds = new Set<number>()
+      const previewImages: { spoonacular_id: number | null; image_url: string | null }[] = []
+
+      for (const meal of sortedMeals) {
+        if (previewImages.length >= 4) break
+        // Skip duplicates based on spoonacular_id
+        if (meal.spoonacular_id && seenIds.has(meal.spoonacular_id)) continue
+        if (meal.spoonacular_id) seenIds.add(meal.spoonacular_id)
+
+        previewImages.push({
+          spoonacular_id: meal.spoonacular_id,
+          image_url: meal.recipe_image_url,
+        })
+      }
+
+      // Remove the meal_plan_meals from the result and add preview_images
+      const { meal_plan_meals, ...planData } = plan
+      return {
+        ...planData,
+        preview_images: previewImages,
+      } as MealPlanWithPreviews
+    })
+
+    return { success: true, data: plansWithPreviews }
   } catch (error) {
     console.error('[GetMealPlans] Unexpected error:', error)
     return { success: false, error: 'Failed to fetch meal plans' }
@@ -747,6 +837,208 @@ export async function regenerateMealPlan(
   } catch (error) {
     console.error('[RegenerateMealPlan] Unexpected error:', error)
     return { success: false, error: 'Failed to regenerate meal plan' }
+  }
+}
+
+// ============================================================================
+// Swap Meal - Get Alternatives
+// ============================================================================
+
+interface SwapOption {
+  id: number
+  title: string
+  image: string
+  readyInMinutes: number
+  servings: number
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
+}
+
+export async function getSwapOptions(
+  mealId: string,
+  mealType: string,
+  targetCalories: number
+): Promise<{ success: boolean; data?: SwapOption[]; error?: string }> {
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return { success: false, error: 'Not authenticated' }
+    }
+
+    // Get the meal to verify ownership
+    const { data: meal, error: mealError } = await supabase
+      .from('meal_plan_meals')
+      .select('*, meal_plans!inner(user_id)')
+      .eq('id', mealId)
+      .single()
+
+    if (mealError || !meal) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    // Verify ownership via RLS (meal_plans.user_id check)
+    if ((meal.meal_plans as { user_id: string }).user_id !== user.id) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    // Get user's dietary preferences
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('dietary_style, allergies, foods_to_avoid')
+      .eq('user_id', user.id)
+      .single()
+
+    // Map meal type to Spoonacular type
+    const typeMap: Record<string, string> = {
+      breakfast: 'breakfast',
+      lunch: 'main course',
+      dinner: 'main course',
+      snack: 'snack',
+    }
+
+    // Calculate calorie range (±15%)
+    const minCalories = Math.round(targetCalories * 0.85)
+    const maxCalories = Math.round(targetCalories * 1.15)
+
+    // Build exclude list
+    const excludeItems: string[] = []
+    if (profile?.allergies) {
+      excludeItems.push(...profile.allergies)
+    }
+    if (profile?.foods_to_avoid) {
+      excludeItems.push(
+        ...profile.foods_to_avoid
+          .split(',')
+          .map((item: string) => item.trim())
+          .filter(Boolean)
+      )
+    }
+
+    // Search for alternatives via Spoonacular
+    const searchParams = {
+      type: typeMap[mealType] || 'main course',
+      minCalories,
+      maxCalories,
+      number: 6,
+      diet: mapDietaryStyleToDiet(profile?.dietary_style),
+      excludeIngredients: excludeItems.length > 0 ? excludeItems : undefined,
+      sort: 'random' as const,
+    }
+
+    const alternatives = await spoonacularService.searchRecipes(searchParams)
+
+    // Transform results to swap options
+    const swapOptions: SwapOption[] = alternatives.results.map((recipe) => {
+      // Extract nutrients
+      const nutrients = recipe.nutrition?.nutrients || []
+      const getN = (name: string) =>
+        Math.round(nutrients.find((n) => n.name === name)?.amount || 0)
+
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        image: recipe.image || '',
+        readyInMinutes: recipe.readyInMinutes || 30,
+        servings: recipe.servings || 1,
+        calories: getN('Calories') || Math.round((minCalories + maxCalories) / 2),
+        protein: getN('Protein'),
+        carbs: getN('Carbohydrates'),
+        fat: getN('Fat'),
+      }
+    })
+
+    return { success: true, data: swapOptions }
+  } catch (error) {
+    console.error('[GetSwapOptions] Error:', error)
+    return { success: false, error: 'Failed to fetch alternatives' }
+  }
+}
+
+// ============================================================================
+// Swap Meal - Perform Swap
+// ============================================================================
+
+export async function swapMeal(
+  mealId: string,
+  newSpoonacularId: number
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return { success: false, error: 'Not authenticated' }
+    }
+
+    // Get the meal to verify ownership and get meal plan ID
+    const { data: meal, error: mealError } = await supabase
+      .from('meal_plan_meals')
+      .select('*, meal_plans!inner(user_id, id)')
+      .eq('id', mealId)
+      .single()
+
+    if (mealError || !meal) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    // Verify ownership
+    if ((meal.meal_plans as { user_id: string }).user_id !== user.id) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    // Fetch new recipe details from Spoonacular
+    const newRecipe = await spoonacularService.getRecipeInformation(newSpoonacularId)
+
+    if (!newRecipe) {
+      return { success: false, error: 'Failed to fetch recipe details' }
+    }
+
+    // Extract nutrition
+    const nutrients = newRecipe.nutrition?.nutrients || []
+    const getN = (name: string) =>
+      Math.round(nutrients.find((n) => n.name === name)?.amount || 0)
+
+    // Update the meal with new recipe
+    const { error: updateError } = await supabase
+      .from('meal_plan_meals')
+      .update({
+        spoonacular_id: newRecipe.id,
+        recipe_title: newRecipe.title,
+        recipe_image_url: newRecipe.image
+          ? `https://img.spoonacular.com/recipes/${newRecipe.id}-636x393.jpg`
+          : null,
+        servings: newRecipe.servings,
+        ready_in_minutes: newRecipe.readyInMinutes || null,
+        calories: getN('Calories') || null,
+        protein_grams: getN('Protein') || null,
+        carb_grams: getN('Carbohydrates') || null,
+        fat_grams: getN('Fat') || null,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', mealId)
+
+    if (updateError) {
+      console.error('[SwapMeal] Update error:', updateError)
+      return { success: false, error: 'Failed to swap meal' }
+    }
+
+    // Revalidate paths
+    const planId = (meal.meal_plans as { id: string }).id
+    revalidatePath(`/meal-plans/${planId}`)
+    revalidatePath('/meal-plans')
+
+    return { success: true }
+  } catch (error) {
+    console.error('[SwapMeal] Error:', error)
+    return { success: false, error: 'Failed to swap meal' }
   }
 }
 
