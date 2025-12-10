@@ -167,6 +167,150 @@ class SpoonacularMealPlanService {
   }
 
   // ==========================================================================
+  // Snack Supplementation Methods
+  // ==========================================================================
+
+  /**
+   * Supplements a daily meal plan with snacks if more than 3 meals were requested
+   */
+  private async supplementDailyPlanWithSnacks(
+    dailyData: SpoonacularDailyMealPlan,
+    requestedMeals: number,
+    params: SpoonacularMealPlanParams
+  ): Promise<SpoonacularDailyMealPlan> {
+    const returnedMeals = dailyData.meals?.length || 0
+    console.log(`[MealPlanService] API returned ${returnedMeals} meals (requested: ${requestedMeals})`)
+
+    if (requestedMeals <= returnedMeals || returnedMeals === 0) {
+      return dailyData
+    }
+
+    const snacksNeeded = requestedMeals - returnedMeals
+    console.log(`[MealPlanService] Supplementing daily plan with ${snacksNeeded} snack(s)`)
+
+    const snackRecipes = await this.fetchSnacksForDay(
+      snacksNeeded,
+      dailyData.nutrients.calories,
+      params.targetCalories,
+      params.diet,
+      params.exclude
+    )
+
+    if (snackRecipes.length === 0) {
+      console.warn('[MealPlanService] Failed to fetch snack recipes, returning base plan')
+      return dailyData
+    }
+
+    const supplementedMeals = this.insertSnacksIntoMeals(dailyData.meals, snackRecipes)
+    console.log(`[MealPlanService] Supplemented daily plan now has ${supplementedMeals.length} meals`)
+
+    return {
+      ...dailyData,
+      meals: supplementedMeals,
+    }
+  }
+
+  /**
+   * Supplements a weekly meal plan with snacks for each day
+   */
+  private async supplementWeeklyPlanWithSnacks(
+    weeklyData: SpoonacularWeeklyMealPlan,
+    requestedMeals: number,
+    params: SpoonacularMealPlanParams
+  ): Promise<SpoonacularWeeklyMealPlan> {
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const
+
+    // Check if supplementation is needed
+    const firstDay = weeklyData.week.monday
+    const returnedMeals = firstDay?.meals?.length || 0
+    console.log(`[MealPlanService] Weekly plan: API returned ${returnedMeals} meals per day (requested: ${requestedMeals})`)
+
+    if (requestedMeals <= returnedMeals) {
+      return weeklyData
+    }
+
+    const snacksNeeded = requestedMeals - returnedMeals
+    console.log(`[MealPlanService] Supplementing weekly plan with ${snacksNeeded} snack(s) per day`)
+
+    // Create a copy of the weekly data to modify
+    const supplementedWeek = { ...weeklyData.week }
+
+    // Supplement each day
+    for (const day of days) {
+      const dayPlan = weeklyData.week[day]
+      if (!dayPlan || !dayPlan.meals) continue
+
+      // Fetch unique snacks for each day to add variety
+      const snackRecipes = await this.fetchSnacksForDay(
+        snacksNeeded,
+        dayPlan.nutrients.calories,
+        params.targetCalories,
+        params.diet,
+        params.exclude
+      )
+
+      if (snackRecipes.length > 0) {
+        supplementedWeek[day] = {
+          ...dayPlan,
+          meals: this.insertSnacksIntoMeals(dayPlan.meals, snackRecipes),
+        }
+        console.log(`[MealPlanService] ${day}: supplemented to ${supplementedWeek[day].meals.length} meals`)
+      }
+    }
+
+    return {
+      week: supplementedWeek,
+    }
+  }
+
+  /**
+   * Fetches snack recipes for a single day
+   */
+  private async fetchSnacksForDay(
+    snacksNeeded: number,
+    mainMealCalories: number,
+    targetDailyCalories: number,
+    diet?: string,
+    exclude?: string
+  ): Promise<SpoonacularMeal[]> {
+    // Calculate calories per snack
+    const remainingCalories = Math.max(0, targetDailyCalories - mainMealCalories)
+    const caloriesPerSnack = remainingCalories > 0
+      ? Math.round(remainingCalories / snacksNeeded)
+      : Math.round(targetDailyCalories * 0.1)
+
+    console.log(`[MealPlanService] Target calories per snack: ${caloriesPerSnack}`)
+
+    await this.incrementRateLimitCounter(1)
+    return this.fetchSnackRecipes(snacksNeeded, caloriesPerSnack, diet, exclude)
+  }
+
+  /**
+   * Inserts snack recipes between main meals at logical positions
+   */
+  private insertSnacksIntoMeals(
+    meals: SpoonacularMeal[],
+    snacks: SpoonacularMeal[]
+  ): SpoonacularMeal[] {
+    const supplementedMeals = [...meals]
+
+    // Strategy: Insert snacks at logical points
+    // 3 meals + 1 snack: After lunch (index 2)
+    // 3 meals + 2 snacks: After breakfast (index 1), after lunch (index 3)
+    // 3 meals + 3 snacks: After each meal (indices 1, 3, 5)
+    const insertPositions = [2, 1, 4]
+
+    snacks.forEach((snack, index) => {
+      const position = index < insertPositions.length
+        ? insertPositions[index] + index
+        : supplementedMeals.length
+      supplementedMeals.splice(Math.min(position, supplementedMeals.length), 0, snack)
+    })
+
+    return supplementedMeals
+  }
+
+  // ==========================================================================
   // Fetch Additional Snack Recipes
   // ==========================================================================
 
@@ -422,65 +566,21 @@ class SpoonacularMealPlanService {
       // Log how many meals were returned from the API
       const requestedMeals = params.mealsPerDay || 3
 
+      // WORKAROUND: Spoonacular only returns 3 meals per day (breakfast, lunch, dinner)
+      // regardless of the numberOfMeals parameter. We supplement with snack recipes.
       if (params.timeFrame === 'day') {
-        const dailyData = data as SpoonacularDailyMealPlan
-        const returnedMeals = dailyData.meals?.length || 0
-        console.log(`[MealPlanService] API returned ${returnedMeals} meals (requested: ${requestedMeals})`)
-
-        // WORKAROUND: Spoonacular only returns 3 meals (breakfast, lunch, dinner)
-        // If user requested more than 3 meals, supplement with snack recipes
-        if (requestedMeals > returnedMeals && returnedMeals > 0) {
-          const snacksNeeded = requestedMeals - returnedMeals
-          console.log(`[MealPlanService] Supplementing with ${snacksNeeded} snack(s)`)
-
-          // Calculate calories per snack (distribute remaining calories)
-          // Assume main meals get ~30% each, snacks get remaining portion
-          const mainMealCalories = dailyData.nutrients.calories
-          const targetDailyCalories = params.targetCalories
-          const remainingCalories = Math.max(0, targetDailyCalories - mainMealCalories)
-          const caloriesPerSnack = remainingCalories > 0
-            ? Math.round(remainingCalories / snacksNeeded)
-            : Math.round(targetDailyCalories * 0.1) // Default to 10% of daily if calculation fails
-
-          console.log(`[MealPlanService] Target calories per snack: ${caloriesPerSnack}`)
-
-          // Fetch snack recipes - add extra API call cost
-          await this.incrementRateLimitCounter(1)
-          const snackRecipes = await this.fetchSnackRecipes(
-            snacksNeeded,
-            caloriesPerSnack,
-            params.diet,
-            params.exclude
-          )
-
-          if (snackRecipes.length > 0) {
-            // Insert snacks between meals (after breakfast, after lunch, etc.)
-            const supplementedMeals = [...dailyData.meals]
-
-            // Strategy: Insert snacks at logical points
-            // 3 meals + 1 snack: After lunch (index 2)
-            // 3 meals + 2 snacks: After breakfast (index 1), after lunch (index 3)
-            // 3 meals + 3 snacks: After each meal (indices 1, 3, 5)
-            const insertPositions = [2, 1, 4] // Insert after: lunch, breakfast, dinner
-
-            snackRecipes.forEach((snack, index) => {
-              const position = index < insertPositions.length
-                ? insertPositions[index] + index // Adjust for already inserted items
-                : supplementedMeals.length // Append to end if we run out of positions
-              supplementedMeals.splice(Math.min(position, supplementedMeals.length), 0, snack)
-            })
-
-            console.log(`[MealPlanService] Supplemented plan now has ${supplementedMeals.length} meals`)
-
-            // Update the data with supplemented meals
-            data = {
-              ...dailyData,
-              meals: supplementedMeals,
-            } as SpoonacularDailyMealPlan
-          } else {
-            console.warn('[MealPlanService] Failed to fetch snack recipes, returning base plan')
-          }
-        }
+        data = await this.supplementDailyPlanWithSnacks(
+          data as SpoonacularDailyMealPlan,
+          requestedMeals,
+          params
+        )
+      } else {
+        // Weekly plan - supplement each day
+        data = await this.supplementWeeklyPlanWithSnacks(
+          data as SpoonacularWeeklyMealPlan,
+          requestedMeals,
+          params
+        )
       }
 
       await this.incrementRateLimitCounter(estimatedPoints)
