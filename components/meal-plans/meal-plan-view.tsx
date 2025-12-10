@@ -192,7 +192,7 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
     <div className="min-h-screen bg-white">
       {/* Sticky Header */}
       <div className="sticky top-0 z-10 bg-white border-b border-gray-100">
-        <div className="mx-auto max-w-3xl p-4 pb-2 flex items-center justify-between">
+        <div className="mx-auto max-w-7xl p-4 pb-2 flex items-center justify-between">
         <button
           onClick={() => router.back()}
           aria-label="Go back"
@@ -249,241 +249,275 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
         </div>
       </div>
 
-      {/* Main Content Container - constrained width for large screens */}
-      <div className="mx-auto max-w-3xl">
-        {/* Page Title */}
-        <header className="px-4 pt-2 pb-4">
-        <h1 className="text-gray-900 tracking-tight text-[28px] font-semibold leading-tight">
-          {plan.name}
-        </h1>
-        <p className="text-gray-600 text-base font-normal leading-normal pt-1">
-          {new Date(plan.start_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} -{' '}
-          {new Date(plan.end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-        </p>
-      </header>
-
-      {/* Daily Totals Summary Card */}
-      <div className="px-4 pb-4">
-        <div className="flex flex-col rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] bg-white p-4 border border-[#E9ECEF]">
-          <div className="flex items-center justify-between">
-            <p className="text-gray-900 text-lg font-semibold leading-tight tracking-[-0.015em]">
-              {plan.total_days === 1
-                ? `Today: ${Math.round(dayCalories).toLocaleString()} cal`
-                : `Daily Average: ${avgCalories.toLocaleString()} cal`}
-            </p>
-            <span className="text-sm text-gray-500">
-              Target: {plan.target_calories.toLocaleString()}
-            </span>
-          </div>
-
-          {/* Progress bar toward target */}
-          <div className="flex items-center gap-3 pt-3">
-            <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-              <div
-                className={cn(
-                  'h-full rounded-full transition-all duration-500',
-                  isWithinTargets ? 'bg-green-500' : avgCalories > plan.target_calories ? 'bg-amber-500' : 'bg-[#F97316]'
-                )}
-                style={{ width: `${Math.min(100, (avgCalories / plan.target_calories) * 100)}%` }}
-              />
-            </div>
-            <span className={cn(
-              'text-sm font-medium min-w-[45px] text-right',
-              isWithinTargets ? 'text-green-600' : 'text-gray-600'
-            )}>
-              {Math.round((avgCalories / plan.target_calories) * 100)}%
-            </span>
-          </div>
-
-          {/* Macro breakdown */}
-          <div className="flex items-center gap-4 pt-3">
-            <span className="text-base font-normal text-[#E63946]">
-              🥩 {Math.round(plan.total_days === 1 ? dayProtein : totalProtein / plan.total_days)}g
-            </span>
-            <span className="text-base font-normal text-[#457B9D]">
-              🍚 {Math.round(plan.total_days === 1 ? dayCarbs : totalCarbs / plan.total_days)}g
-            </span>
-            <span className="text-base font-normal text-[#F4A261]">
-              🥑 {Math.round(plan.total_days === 1 ? dayFat : totalFat / plan.total_days)}g
-            </span>
-          </div>
-
-          {isWithinTargets && (
-            <p className="text-[#16A34A] text-base font-normal leading-normal pt-2">
-              ✅ Within your targets
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Generate Grocery List Button */}
-      <div className="flex px-4 pb-4">
-        <button
-          onClick={handleGenerateShoppingList}
-          disabled={isGeneratingList}
-          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 text-[#F97316] bg-white text-base font-semibold leading-normal border-2 border-[#F97316] hover:bg-orange-50 transition-colors disabled:opacity-50"
-        >
-          {isGeneratingList ? (
-            <span className="flex items-center gap-2">
-              <RefreshCw className="size-4 animate-spin" />
-              Generating...
-            </span>
-          ) : (
-            <span className="truncate">📋 Generate Grocery List</span>
-          )}
-        </button>
-      </div>
-
-      {/* Error Display */}
-      {error && (
-        <div className="mx-4 mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
-          {error}
-        </div>
-      )}
-
-      {/* Divider */}
-      {plan.total_days > 1 && (
-        <div className="h-px bg-[#E9ECEF] mx-4"></div>
-      )}
-
-      {/* Day Selector Pills (for weekly plans) */}
-      {plan.total_days > 1 && (
-        <div className="py-4">
-          <div className="flex space-x-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-            {Object.keys(mealsByDay).map((dayIndex) => {
-              const dayNum = Number(dayIndex)
-              const isActive = selectedDay === dayNum
-              return (
-                <button
-                  key={dayIndex}
-                  onClick={() => setSelectedDay(dayNum)}
-                  className={cn(
-                    'whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold h-10 transition-colors',
-                    isActive
-                      ? 'bg-[#F97316] text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  )}
-                >
-                  {dayNames[dayNum % 7]}{isActive && ' ●'}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Day Header */}
-      <header className="px-4 pt-2 pb-4">
-        <h2 className="text-xl font-bold text-gray-900">
-          {plan.total_days === 1
-            ? 'Today\'s Meals'
-            : `${fullDayNames[selectedDay % 7]}, ${new Date(plan.start_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`}
-        </h2>
-        <p className="text-sm text-gray-600 pt-1">
-          {Math.round(dayCalories)} calories ・ {Math.round(dayProtein)}g P, {Math.round(dayCarbs)}g C, {Math.round(dayFat)}g F
-        </p>
-      </header>
-
-      {/* Meal Cards */}
-      <div className="flex flex-col gap-4 px-4 pb-8">
-        {selectedDayMeals
-          .sort((a, b) => a.meal_order - b.meal_order)
-          .map((meal) => (
-            <div
-              key={meal.id}
-              className="flex flex-col overflow-hidden rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-[#E9ECEF]"
-            >
-              {/* Meal Type Label */}
-              <div className="p-4">
-                <p className="text-base font-normal text-gray-600">
-                  {getMealTypeLabel(meal.meal_type, (meal.calories || 0) * meal.serving_multiplier)}
+      {/* Main Content - Responsive Layout */}
+      <div className="mx-auto max-w-7xl">
+        {/* Large Screen: Two-column layout with sticky sidebar */}
+        <div className="lg:flex lg:gap-8 lg:p-6">
+          {/* Sidebar - Summary & Controls (sticky on large screens) */}
+          <aside className="lg:w-80 lg:shrink-0">
+            <div className="lg:sticky lg:top-[76px]">
+              {/* Page Title */}
+              <header className="px-4 pt-2 pb-4 lg:px-0 lg:pt-0">
+                <h1 className="text-gray-900 tracking-tight text-[28px] font-semibold leading-tight">
+                  {plan.name}
+                </h1>
+                <p className="text-gray-600 text-base font-normal leading-normal pt-1">
+                  {new Date(plan.start_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} -{' '}
+                  {new Date(plan.end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                 </p>
+              </header>
+
+              {/* Daily Totals Summary Card */}
+              <div className="px-4 pb-4 lg:px-0">
+                <div className="flex flex-col rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] bg-white p-4 border border-[#E9ECEF]">
+                  <div className="flex items-center justify-between">
+                    <p className="text-gray-900 text-lg font-semibold leading-tight tracking-[-0.015em]">
+                      {plan.total_days === 1
+                        ? `Today: ${Math.round(dayCalories).toLocaleString()} cal`
+                        : `Daily Average: ${avgCalories.toLocaleString()} cal`}
+                    </p>
+                    <span className="text-sm text-gray-500">
+                      Target: {plan.target_calories.toLocaleString()}
+                    </span>
+                  </div>
+
+                  {/* Progress bar toward target */}
+                  <div className="flex items-center gap-3 pt-3">
+                    <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className={cn(
+                          'h-full rounded-full transition-all duration-500',
+                          isWithinTargets ? 'bg-green-500' : avgCalories > plan.target_calories ? 'bg-amber-500' : 'bg-[#F97316]'
+                        )}
+                        style={{ width: `${Math.min(100, (avgCalories / plan.target_calories) * 100)}%` }}
+                      />
+                    </div>
+                    <span className={cn(
+                      'text-sm font-medium min-w-[45px] text-right',
+                      isWithinTargets ? 'text-green-600' : 'text-gray-600'
+                    )}>
+                      {Math.round((avgCalories / plan.target_calories) * 100)}%
+                    </span>
+                  </div>
+
+                  {/* Macro breakdown */}
+                  <div className="flex items-center gap-4 pt-3">
+                    <span className="text-base font-normal text-[#E63946]">
+                      🥩 {Math.round(plan.total_days === 1 ? dayProtein : totalProtein / plan.total_days)}g
+                    </span>
+                    <span className="text-base font-normal text-[#457B9D]">
+                      🍚 {Math.round(plan.total_days === 1 ? dayCarbs : totalCarbs / plan.total_days)}g
+                    </span>
+                    <span className="text-base font-normal text-[#F4A261]">
+                      🥑 {Math.round(plan.total_days === 1 ? dayFat : totalFat / plan.total_days)}g
+                    </span>
+                  </div>
+
+                  {isWithinTargets && (
+                    <p className="text-[#16A34A] text-base font-normal leading-normal pt-2">
+                      ✅ Within your targets
+                    </p>
+                  )}
+                </div>
               </div>
 
-              {/* Hero Image - Using high-quality 636x393 (watermark-free) */}
-              {meal.recipe_image_url && (
-                <div className="relative h-[200px] md:h-[250px] w-full bg-gray-100">
-                  <Image
-                    src={resizeSpoonacularImage(meal.recipe_image_url, '636x393')}
-                    alt={meal.recipe_title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 768px"
-                    className="object-cover"
-                    quality={90}
-                    priority={meal.meal_order === 0}
-                  />
+              {/* Generate Grocery List Button */}
+              <div className="flex px-4 pb-4 lg:px-0">
+                <button
+                  onClick={handleGenerateShoppingList}
+                  disabled={isGeneratingList}
+                  className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 text-[#F97316] bg-white text-base font-semibold leading-normal border-2 border-[#F97316] hover:bg-orange-50 transition-colors disabled:opacity-50"
+                >
+                  {isGeneratingList ? (
+                    <span className="flex items-center gap-2">
+                      <RefreshCw className="size-4 animate-spin" />
+                      Generating...
+                    </span>
+                  ) : (
+                    <span className="truncate">📋 Generate Grocery List</span>
+                  )}
+                </button>
+              </div>
+
+              {/* Error Display */}
+              {error && (
+                <div className="mx-4 mb-4 lg:mx-0 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+                  {error}
                 </div>
               )}
 
-              {/* Meal Info */}
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                  {meal.recipe_title}
-                </h3>
-
-                {/* Calories and Prep Time */}
-                <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
-                  {meal.calories != null && (
-                    <span className="font-medium text-gray-700">
-                      {Math.round((meal.calories || 0) * meal.serving_multiplier)} cal
-                    </span>
-                  )}
-                  {meal.ready_in_minutes != null && (
-                    <>
-                      <span className="text-gray-300">•</span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="size-4" />
-                        {meal.ready_in_minutes} min
-                      </span>
-                    </>
-                  )}
-                  {meal.servings != null && (
-                    <>
-                      <span className="text-gray-300">•</span>
-                      <span>{meal.servings} serving{meal.servings > 1 ? 's' : ''}</span>
-                    </>
-                  )}
-                </div>
-
-                {/* Macro Row */}
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-base font-normal text-[#E63946]">
-                    🥩 {Math.round((meal.protein_grams || 0) * meal.serving_multiplier)}g
-                  </span>
-                  <span className="text-base font-normal text-[#457B9D]">
-                    🍚 {Math.round((meal.carb_grams || 0) * meal.serving_multiplier)}g
-                  </span>
-                  <span className="text-base font-normal text-[#F4A261]">
-                    🥑 {Math.round((meal.fat_grams || 0) * meal.serving_multiplier)}g
-                  </span>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => {
-                      if (meal.spoonacular_id) {
-                        router.push(`/recipes/spoonacular/${meal.spoonacular_id}`)
-                      } else if (meal.recipe_id) {
-                        router.push(`/recipes/${meal.recipe_id}`)
-                      }
-                    }}
-                    className="flex h-12 flex-1 items-center justify-center rounded-lg border-2 border-[#F97316] bg-white text-base font-semibold text-[#F97316] hover:bg-orange-50 transition-colors"
-                  >
-                    View Recipe
-                  </button>
-                  <button
-                    onClick={() => handleSwapMeal(meal)}
-                    className="flex h-12 flex-1 items-center justify-center gap-1 rounded-lg border-2 border-[#F97316] bg-white text-base font-semibold text-[#F97316] hover:bg-orange-50 transition-colors"
-                  >
-                    <RefreshCw className="size-5" />
-                    Swap Meal
-                  </button>
-                </div>
-              </div>
+              {/* Day Selector Pills (for weekly plans) - Vertical on large screens */}
+              {plan.total_days > 1 && (
+                <>
+                  <div className="h-px bg-[#E9ECEF] mx-4 lg:mx-0 mb-4"></div>
+                  <div className="px-4 pb-4 lg:px-0">
+                    {/* Horizontal scroll on mobile */}
+                    <div className="flex space-x-2 overflow-x-auto pb-2 lg:hidden scrollbar-hide">
+                      {Object.keys(mealsByDay).map((dayIndex) => {
+                        const dayNum = Number(dayIndex)
+                        const isActive = selectedDay === dayNum
+                        return (
+                          <button
+                            key={dayIndex}
+                            onClick={() => setSelectedDay(dayNum)}
+                            className={cn(
+                              'whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold h-10 transition-colors',
+                              isActive
+                                ? 'bg-[#F97316] text-white'
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            )}
+                          >
+                            {dayNames[dayNum % 7]}{isActive && ' ●'}
+                          </button>
+                        )
+                      })}
+                    </div>
+                    {/* Vertical list on large screens */}
+                    <div className="hidden lg:flex lg:flex-col lg:gap-2">
+                      {Object.keys(mealsByDay).map((dayIndex) => {
+                        const dayNum = Number(dayIndex)
+                        const isActive = selectedDay === dayNum
+                        const dayMeals = mealsByDay[dayNum] || []
+                        const dayTotalCal = dayMeals.reduce((sum, m) => sum + (m.calories || 0) * m.serving_multiplier, 0)
+                        return (
+                          <button
+                            key={dayIndex}
+                            onClick={() => setSelectedDay(dayNum)}
+                            className={cn(
+                              'flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium transition-colors text-left',
+                              isActive
+                                ? 'bg-[#F97316] text-white'
+                                : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                            )}
+                          >
+                            <span>{fullDayNames[dayNum % 7]}</span>
+                            <span className={cn(
+                              'text-xs',
+                              isActive ? 'text-orange-100' : 'text-gray-400'
+                            )}>
+                              {Math.round(dayTotalCal)} cal
+                            </span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-          ))}
-      </div>
+          </aside>
+
+          {/* Main Content - Meals */}
+          <main className="flex-1 min-w-0">
+            {/* Day Header */}
+            <header className="px-4 pt-2 pb-4 lg:px-0 lg:pt-0">
+              <h2 className="text-xl font-bold text-gray-900">
+                {plan.total_days === 1
+                  ? 'Today\'s Meals'
+                  : `${fullDayNames[selectedDay % 7]}'s Meals`}
+              </h2>
+              <p className="text-sm text-gray-600 pt-1">
+                {Math.round(dayCalories)} calories ・ {Math.round(dayProtein)}g P, {Math.round(dayCarbs)}g C, {Math.round(dayFat)}g F
+              </p>
+            </header>
+
+            {/* Meal Cards - Grid on large screens */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-4 pb-8 lg:px-0">
+              {selectedDayMeals
+                .sort((a, b) => a.meal_order - b.meal_order)
+                .map((meal) => (
+                  <div
+                    key={meal.id}
+                    className="flex flex-col overflow-hidden rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-[#E9ECEF]"
+                  >
+                    {/* Hero Image - Using high-quality 636x393 (watermark-free) */}
+                    {meal.recipe_image_url && (
+                      <div className="relative h-[180px] w-full bg-gray-100">
+                        <Image
+                          src={resizeSpoonacularImage(meal.recipe_image_url, '636x393')}
+                          alt={meal.recipe_title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                          className="object-cover"
+                          quality={90}
+                          priority={meal.meal_order === 0}
+                        />
+                        {/* Meal Type Badge */}
+                        <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-gray-700">
+                          {getMealTypeLabel(meal.meal_type).split(' - ')[0]}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Meal Info */}
+                    <div className="p-4 flex flex-col flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
+                        {meal.recipe_title}
+                      </h3>
+
+                      {/* Calories and Prep Time */}
+                      <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                        {meal.calories != null && (
+                          <span className="font-medium text-gray-700">
+                            {Math.round((meal.calories || 0) * meal.serving_multiplier)} cal
+                          </span>
+                        )}
+                        {meal.ready_in_minutes != null && (
+                          <>
+                            <span className="text-gray-300">•</span>
+                            <span className="flex items-center gap-1">
+                              <Clock className="size-4" />
+                              {meal.ready_in_minutes} min
+                            </span>
+                          </>
+                        )}
+                      </div>
+
+                      {/* Macro Row */}
+                      <div className="flex items-center gap-3 mb-4 text-sm">
+                        <span className="font-normal text-[#E63946]">
+                          🥩 {Math.round((meal.protein_grams || 0) * meal.serving_multiplier)}g
+                        </span>
+                        <span className="font-normal text-[#457B9D]">
+                          🍚 {Math.round((meal.carb_grams || 0) * meal.serving_multiplier)}g
+                        </span>
+                        <span className="font-normal text-[#F4A261]">
+                          🥑 {Math.round((meal.fat_grams || 0) * meal.serving_multiplier)}g
+                        </span>
+                      </div>
+
+                      {/* Action Buttons - pushed to bottom */}
+                      <div className="flex gap-2 mt-auto">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            if (meal.spoonacular_id) {
+                              router.push(`/recipes/spoonacular/${meal.spoonacular_id}`)
+                            } else if (meal.recipe_id) {
+                              router.push(`/recipes/${meal.recipe_id}`)
+                            }
+                          }}
+                          className="flex h-10 flex-1 items-center justify-center rounded-lg border-2 border-[#F97316] bg-white text-sm font-semibold text-[#F97316] hover:bg-orange-50 transition-colors"
+                        >
+                          View
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleSwapMeal(meal)
+                          }}
+                          className="flex h-10 flex-1 items-center justify-center gap-1 rounded-lg border-2 border-[#F97316] bg-white text-sm font-semibold text-[#F97316] hover:bg-orange-50 transition-colors"
+                        >
+                          <RefreshCw className="size-4" />
+                          Swap
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </main>
+        </div>
       </div>
 
       {/* Swap Meal Modal */}
