@@ -15,6 +15,7 @@ interface MealPlanCardProps {
   isActive?: boolean
   daysCompleted?: number
   totalDays?: number
+  images?: string[]
   onClick?: () => void
 }
 
@@ -29,18 +30,26 @@ export function MealPlanCard({
   isActive = false,
   daysCompleted = 0,
   totalDays = 7,
+  images = [],
   onClick,
 }: MealPlanCardProps) {
   const completionPercent =
     totalDays > 0 ? Math.round((daysCompleted / totalDays) * 100) : 0
 
+  // Ensure we have 4 images for the grid, filling with placeholders if needed
+  const displayImages = [...images]
+  while (displayImages.length < 4) {
+    displayImages.push('/placeholder-meal.jpg') // You might want a better placeholder strategy
+  }
+  const gridImages = displayImages.slice(0, 4)
+
   return (
     <Card
       className={cn(
-        'p-4 border-2 cursor-pointer transition-all hover:shadow-lg relative',
+        'p-4 cursor-pointer transition-all hover:shadow-lg relative flex flex-col h-full',
         isActive
-          ? 'border-primary bg-primary/5'
-          : 'border-border hover:border-primary/50'
+          ? 'border-primary border-2 bg-card'
+          : 'border-border-strong hover:border-primary/50 bg-card'
       )}
       onClick={onClick}
       role="button"
@@ -53,65 +62,30 @@ export function MealPlanCard({
       }}
       aria-label={`${isActive ? 'Active: ' : ''}View ${name} meal plan`}
     >
-      {/* Active Badge */}
-      {isActive && (
-        <div className="absolute top-3 right-3 px-2 py-0.5 bg-primary text-white text-xs font-bold rounded-full">
-          Active
-        </div>
-      )}
-
-      {/* Macro Ring (replaces 2x2 image grid) */}
-      <div className="flex justify-center mb-3 pt-2">
-        <MacroRing
-          proteinGrams={proteinGrams}
-          carbGrams={carbGrams}
-          fatGrams={fatGrams}
-          size="sm"
-        />
+      {/* Image Grid */}
+      <div className="grid grid-cols-2 gap-2 mb-3 aspect-square w-full">
+        {gridImages.map((img, i) => (
+          <div
+            key={i}
+            className="w-full h-full bg-center bg-no-repeat bg-cover rounded-xl bg-muted"
+            style={{ backgroundImage: `url(${img})` }}
+            role="img"
+            aria-label={`Meal preview ${i + 1}`}
+          />
+        ))}
       </div>
 
       {/* Plan Details */}
-      <div className="space-y-2">
-        <p className="text-base font-bold text-charcoal leading-tight">
+      <div className="flex flex-col flex-1">
+        <p className="text-base font-bold text-foreground leading-tight mb-0.5">
           {name}
         </p>
 
-        <p className="text-sm text-muted-foreground">{dateRange}</p>
+        <p className="text-sm text-muted-foreground mb-1">{dateRange}</p>
 
-        {/* Macro Breakdown */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="font-medium text-charcoal">
-            {caloriesPerDay.toLocaleString()} cal
-          </span>
-          <span className="text-muted-foreground">•</span>
-          <span className="text-muted-foreground">
-            {proteinGrams}P / {carbGrams}C / {fatGrams}F
-          </span>
-        </div>
-
-        {/* Completion Progress */}
-        {totalDays > 0 && (
-          <div className="pt-2 border-t border-border">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs text-muted-foreground">Progress</span>
-              <span className="text-xs font-medium text-charcoal">
-                {daysCompleted}/{totalDays} days
-              </span>
-            </div>
-
-            <div className="flex gap-1">
-              {Array.from({ length: totalDays }).map((_, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    'flex-1 h-1 rounded-full',
-                    i < daysCompleted ? 'bg-primary' : 'bg-muted'
-                  )}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        <p className="text-primary text-sm font-medium mt-auto">
+          {caloriesPerDay.toLocaleString()} cal/day
+        </p>
       </div>
     </Card>
   )

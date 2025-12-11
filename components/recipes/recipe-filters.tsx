@@ -45,7 +45,7 @@ export function RecipeFilters() {
   return (
     <div className="px-4 pt-2 pb-4">
       {/* Scrollable filter buttons */}
-      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
+      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-transparent">
         {FILTER_OPTIONS.map((filter) => {
           const isActive = activeFilters.includes(filter.id)
 
@@ -57,7 +57,7 @@ export function RecipeFilters() {
                 'flex h-12 shrink-0 cursor-pointer items-center justify-center gap-x-2 rounded-xl px-4 transition-colors whitespace-nowrap',
                 isActive
                   ? 'bg-primary text-white'
-                  : 'border-2 border-primary bg-white text-primary hover:bg-primary/10'
+                  : 'border-2 border-primary bg-card text-primary hover:bg-primary/10'
               )}
             >
               <p className="text-base font-semibold leading-normal">

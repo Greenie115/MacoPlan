@@ -18,12 +18,12 @@ interface PlanCardProps {
 
 export function PlanCard({ plan }: PlanCardProps) {
   return (
-    <div className="relative flex flex-col items-stretch justify-start rounded-2xl bg-white shadow-sm border border-gray-200 p-4 space-y-4">
+    <div className="relative flex flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 space-y-4">
       {/* Context Menu */}
       <div className="absolute top-2 right-2 z-10">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm text-gray-500 hover:bg-white hover:text-gray-900 transition-colors">
+            <button className="flex h-8 w-8 items-center justify-center rounded-full bg-card/80 backdrop-blur-sm text-icon hover:bg-card hover:text-foreground transition-colors">
               <MoreHorizontal className="size-5" />
             </button>
           </DropdownMenuTrigger>
@@ -40,7 +40,7 @@ export function PlanCard({ plan }: PlanCardProps) {
         {plan.images.slice(0, 4).map((image, index) => (
           <div
             key={index}
-            className="relative aspect-square w-full rounded-lg overflow-hidden bg-gray-100"
+            className="relative aspect-square w-full rounded-lg overflow-hidden bg-muted"
           >
             <Image
               src={image}
@@ -56,26 +56,26 @@ export function PlanCard({ plan }: PlanCardProps) {
       {/* Content */}
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h2 className="text-lg font-bold leading-tight text-gray-900">
+          <h2 className="text-lg font-bold leading-tight text-foreground">
             {plan.title}
           </h2>
-          <p className="text-sm font-medium text-gray-500">{plan.dateRange}</p>
-          <p className="text-sm font-medium text-gray-500">
+          <p className="text-sm font-medium text-muted-foreground">{plan.dateRange}</p>
+          <p className="text-sm font-medium text-muted-foreground">
             📊 {plan.calories.toLocaleString()} cal/day avg
           </p>
         </div>
 
         {/* Macros */}
-        <div className="flex items-center gap-4 text-sm text-gray-600 pt-1">
-          <span className="flex items-center gap-1.5 font-medium">
+        <div className="flex items-center gap-4 text-sm text-muted-foreground pt-1">
+          <span className="flex items-center gap-1.5 font-medium text-protein">
             <span className="text-lg">{macroColors.protein.emoji}</span>
             {plan.macros.protein}g
           </span>
-          <span className="flex items-center gap-1.5 font-medium">
+          <span className="flex items-center gap-1.5 font-medium text-carb">
             <span className="text-lg">{macroColors.carbs.emoji}</span>
             {plan.macros.carbs}g
           </span>
-          <span className="flex items-center gap-1.5 font-medium">
+          <span className="flex items-center gap-1.5 font-medium text-fat">
             <span className="text-lg">{macroColors.fat.emoji}</span>
             {plan.macros.fat}g
           </span>
@@ -83,9 +83,9 @@ export function PlanCard({ plan }: PlanCardProps) {
 
         {/* Action Button */}
         {/* Action Button */}
-        <Link 
-          href={`/plans/${plan.id}`}
-          className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary/10 bg-primary/5 text-sm font-bold text-primary hover:bg-primary/10 transition-colors"
+        <Link
+          href={`/meal-plans/${plan.id}`}
+          className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-primary/5 text-sm font-bold text-primary hover:bg-primary/10 transition-colors"
         >
           <span className="truncate">View Plan</span>
           <ArrowRight className="size-4" />

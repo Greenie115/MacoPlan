@@ -6,18 +6,16 @@ import { createClient } from '@/lib/supabase/client'
 import { useOnboardingStore } from '@/stores/onboarding-store'
 import { useDashboardStore } from '@/stores/dashboard-store'
 import { useDashboardData } from '@/lib/hooks/use-dashboard-data'
-import { DUMMY_MEAL_PLANS } from '@/lib/data/dummy-dashboard-data'
+import { useUserProfile } from '@/lib/hooks/use-user-profile'
+import { getRecentPlansWithProgress, archiveOldCompletedPlans } from '@/app/actions/plans'
 import { TopAppBar } from '@/components/layout/top-app-bar'
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { GreetingHeader } from '@/components/dashboard/greeting-header'
 import { MacroTargetCard } from '@/components/dashboard/macro-target-card'
 import { GeneratePlanCTA } from '@/components/dashboard/generate-plan-cta'
 import { RecentPlansCarousel } from '@/components/dashboard/recent-plans-carousel'
-import { StatsGrid } from '@/components/dashboard/stats-grid'
-import { QuickLogWidget } from '@/components/dashboard/quick-log-widget'
 import { LogMealModal } from '@/components/meals/log-meal-modal'
 import { getMealsForDate, getDailyTotals, deleteMealLog } from '@/app/actions/meal-logs'
-import { getFavoriteRecipesForDashboard } from '@/app/actions/dashboard'
 import { toast } from 'sonner'
 import type { LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
 
@@ -26,6 +24,7 @@ export default function DashboardPage() {
   const onboardingStore = useOnboardingStore()
   const dashboardStore = useDashboardStore()
   const { macros, progress, stats, recentPlans } = useDashboardData()
+  const { userName, avatarUrl } = useUserProfile()
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Meal logging state
@@ -39,7 +38,6 @@ export default function DashboardPage() {
     fat: 0,
     mealsLogged: 0,
   })
-  const [favoriteRecipes, setFavoriteRecipes] = useState<any[]>([])
 
   // Fetch meal data
   const fetchMealData = async () => {
@@ -102,10 +100,6 @@ export default function DashboardPage() {
 
             // Recalculate macros to ensure consistency
             onboardingStore.calculateMacros()
-
-            // If custom macros were saved (need to add to profile schema later if needed,
-            // for now just use calculated or what's in DB if we added columns)
-            // For now, we'll rely on recalculation based on saved stats
           } else {
             // No profile or incomplete -> Redirect to onboarding
             router.replace('/onboarding/1')
@@ -114,10 +108,14 @@ export default function DashboardPage() {
         }
       }
 
-      // 2. Initialize dummy dashboard data if needed
-      if (recentPlans.length === 0) {
-        dashboardStore.setRecentPlans(DUMMY_MEAL_PLANS)
+      // 2. Fetch real plans data from Supabase
+      const plansResult = await getRecentPlansWithProgress()
+      if (plansResult.success && plansResult.data) {
+        dashboardStore.setRecentPlans(plansResult.data)
       }
+
+      // Archive old completed plans (runs in background)
+      await archiveOldCompletedPlans()
 
       if (stats.currentStreak === 0) {
         dashboardStore.setStats({
@@ -133,12 +131,6 @@ export default function DashboardPage() {
       // Fetch real meal data instead of using dummy data
       await fetchMealData()
 
-      // Fetch favorite recipes for Quick Log widget
-      const favoritesResult = await getFavoriteRecipesForDashboard()
-      if (favoritesResult.success && favoritesResult.data) {
-        setFavoriteRecipes(favoritesResult.data)
-      }
-
       setIsInitialized(true)
     }
 
@@ -147,14 +139,14 @@ export default function DashboardPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      {/* Top App Bar */}
-      <TopAppBar />
+    <div className="relative flex h-auto min-h-screen w-full flex-col bg-background group/design-root overflow-x-hidden pb-24 font-display items-center">
+      <div className="w-full max-w-md">
+        {/* Top App Bar */}
+        <TopAppBar userName={userName} avatarUrl={avatarUrl} />
 
-      {/* Main Content */}
-      <div className="w-full max-w-7xl mx-auto">
         {/* Greeting */}
         <GreetingHeader
+          userName={userName}
           currentStreak={stats.currentStreak}
           currentGoal={onboardingStore.goal || undefined}
           activePlanName={recentPlans.find((p) => p.isActive)?.name}
@@ -163,69 +155,48 @@ export default function DashboardPage() {
         />
 
         {/* Today's Macro Target */}
-        <div className="px-4 pb-4 md:px-6 lg:px-8">
-          <MacroTargetCard
-            targetCalories={macros.targetCalories}
-            proteinGrams={macros.proteinGrams}
-            carbGrams={macros.carbGrams}
-            fatGrams={macros.fatGrams}
-            caloriesEaten={dailyTotals.calories}
-            proteinEaten={dailyTotals.protein}
-            carbsEaten={dailyTotals.carbs}
-            fatEaten={dailyTotals.fat}
-            mealsLogged={dailyTotals.mealsLogged}
-            onLogMeal={() => {
-              setEditingMeal(undefined)
-              setIsLogMealOpen(true)
-            }}
-            meals={todaysMeals}
-            onEditMeal={(meal) => {
-              setEditingMeal(meal)
-              setIsLogMealOpen(true)
-            }}
-            onDeleteMeal={async (mealId) => {
-              const result = await deleteMealLog(mealId)
-              if (result.success) {
-                await fetchMealData()
-                toast.success('Meal deleted')
-              } else {
-                toast.error(result.error || 'Failed to delete meal')
-              }
-            }}
-          />
-        </div>
+        <MacroTargetCard
+          targetCalories={macros.targetCalories}
+          proteinGrams={macros.proteinGrams}
+          carbGrams={macros.carbGrams}
+          fatGrams={macros.fatGrams}
+          caloriesEaten={dailyTotals.calories}
+          proteinEaten={dailyTotals.protein}
+          carbsEaten={dailyTotals.carbs}
+          fatEaten={dailyTotals.fat}
+          mealsLogged={dailyTotals.mealsLogged}
+          onLogMeal={() => {
+            setEditingMeal(undefined)
+            setIsLogMealOpen(true)
+          }}
+          meals={todaysMeals}
+          onEditMeal={(meal) => {
+            setEditingMeal(meal)
+            setIsLogMealOpen(true)
+          }}
+          onDeleteMeal={async (mealId) => {
+            const result = await deleteMealLog(mealId)
+            if (result.success) {
+              await fetchMealData()
+              toast.success('Meal deleted')
+            } else {
+              toast.error(result.error || 'Failed to delete meal')
+            }
+          }}
+        />
 
         {/* Generate New Meal Plan CTA */}
-        <div className="pb-4">
-          <GeneratePlanCTA hasActivePlan={recentPlans.some((p) => p.isActive)} />
-        </div>
-
-        {/* Quick Log Widget */}
-        <div className="px-4 pb-4 md:px-6 lg:px-8">
-          <QuickLogWidget favoriteRecipes={favoriteRecipes} />
-        </div>
+        <GeneratePlanCTA hasActivePlan={recentPlans.some((p) => p.isActive)} />
 
         {/* Recent Plans Section */}
-        <div className="pt-6 lg:pt-8 xl:pt-10">
-          <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold leading-tight tracking-tight text-charcoal px-4 pb-3 lg:pb-4 md:px-6 lg:px-8">
-            Recent Plans
-          </h2>
-          <RecentPlansCarousel plans={recentPlans} />
-        </div>
-
-        {/* Quick Stats Section */}
-        <div className="pt-6 lg:pt-8 xl:pt-10">
-          <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold leading-tight tracking-tight text-charcoal px-4 pb-3 lg:pb-4 md:px-6 lg:px-8">
-            Quick Stats
-          </h2>
-          <StatsGrid
-            currentStreak={stats.currentStreak}
-            daysLoggedThisWeek={stats.daysLoggedThisWeek}
-            macroAccuracy={stats.macroAccuracy}
-            plansCreated={stats.plansCreated}
-            monthlyTrend={stats.monthlyTrend}
-          />
-        </div>
+        {recentPlans.length > 0 && (
+          <>
+            <h2 className="text-foreground text-xl font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-3">
+              Recent Plans
+            </h2>
+            <RecentPlansCarousel plans={recentPlans} />
+          </>
+        )}
 
         {/* Bottom spacing for fixed nav */}
         <div className="h-4" />

@@ -194,10 +194,13 @@ export default function EditProfilePage() {
     return null
   }
 
+  const tempUserName = userEmail.split('@')[0] || 'User'
+  const tempAvatarUrl = null
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 pb-24">
-        <TopAppBar />
+        <TopAppBar userName={tempUserName} avatarUrl={tempAvatarUrl} />
         <div className="flex items-center justify-center min-h-[50vh]">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
@@ -209,7 +212,7 @@ export default function EditProfilePage() {
   if (!profile) {
     return (
       <div className="min-h-screen bg-gray-50 pb-24">
-        <TopAppBar />
+        <TopAppBar userName={tempUserName} avatarUrl={tempAvatarUrl} />
         <main className="max-w-3xl mx-auto p-4">
           <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6">
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
@@ -243,9 +246,12 @@ export default function EditProfilePage() {
         .slice(0, 2)
     : 'U'
 
+  const userName = profile.full_name || userEmail.split('@')[0] || 'User'
+  const avatarUrl = profile.avatar_url || null
+
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
-      <TopAppBar />
+      <TopAppBar userName={userName} avatarUrl={avatarUrl} />
 
       <main className="max-w-3xl mx-auto">
         {/* Header */}

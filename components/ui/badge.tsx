@@ -14,7 +14,13 @@ const badgeVariants = cva(
           "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
+        outline: "text-foreground border-border",
+        // Brand kit tag style: primary/10 background with primary text
+        tag: "border-transparent bg-primary/10 text-primary px-3 py-1",
+        // Macro-specific badges
+        protein: "border-transparent bg-protein/10 text-protein",
+        carbs: "border-transparent bg-carb/10 text-carb",
+        fat: "border-transparent bg-fat/10 text-fat",
       },
     },
     defaultVariants: {

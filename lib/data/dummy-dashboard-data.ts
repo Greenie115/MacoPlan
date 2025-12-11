@@ -1,5 +1,18 @@
 import type { MealPlan } from '@/stores/dashboard-store'
 
+/**
+ * ⚠️ DEPRECATED: This file contains dummy data for testing only
+ *
+ * Real meal plan data should be fetched from Supabase using:
+ * - `getRecentPlansWithProgress()` from @/app/actions/plans
+ *
+ * This dummy data is no longer used in the dashboard and should be removed
+ * once all references are confirmed to be replaced with real data.
+ *
+ * @deprecated Use getRecentPlansWithProgress() instead
+ * @see app/actions/plans.ts
+ */
+
 // Generate consistent dummy UUIDs (v4 format)
 const DUMMY_UUID_1 = '00000000-0000-4000-8000-000000000001'
 const DUMMY_UUID_2 = '00000000-0000-4000-8000-000000000002'

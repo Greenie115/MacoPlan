@@ -70,16 +70,16 @@ export function RecentPlansCarousel({ plans }: RecentPlansCarouselProps) {
 
       <div
         ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto pb-4 px-4 snap-x snap-mandatory scrollbar-hide scroll-smooth md:px-6 lg:px-8"
+        className="flex gap-4 overflow-x-auto pb-4 px-4 snap-x snap-mandatory scrollbar-hide scroll-smooth"
       >
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className="flex-shrink-0 w-[300px] snap-center sm:w-[340px] md:w-[360px] lg:w-[380px]"
+            className="flex w-3/4 flex-shrink-0 flex-col rounded-2xl border border-border-strong bg-card p-3 @container snap-center sm:w-[300px] shadow-sm"
           >
             <MealPlanCard
               {...plan}
-              onClick={() => router.push(`/plans/${plan.id}`)}
+              onClick={() => router.push(`/meal-plans/${plan.id}`)}
             />
           </div>
         ))}

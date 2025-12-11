@@ -65,7 +65,7 @@ export function RecipeResultsClient({
       {/* Results summary */}
       {recipes.length === 0 && (
         <div className="max-w-7xl mx-auto px-4 py-12 text-center">
-          <p className="text-gray-500">
+          <p className="text-muted-foreground">
             {searchQuery
               ? `No recipes found for "${searchQuery}". Try different filters or search terms.`
               : 'No recipes found. Try adjusting your filters.'}

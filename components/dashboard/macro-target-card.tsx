@@ -63,182 +63,78 @@ export function MacroTargetCard({
       ? Math.round((caloriesEaten / targetCalories) * 100)
       : 0
 
-  const caloriesRemaining = Math.max(0, targetCalories - caloriesEaten)
-
   // Determine state
-  const isEmpty = caloriesEaten === 0
   const isComplete = progressPercent >= 95
   const isOver = progressPercent > 110
 
   return (
-    <Card className={cn('shadow-md', 'p-4 md:p-6 lg:p-8 xl:p-10')}>
-      {/* Header Section */}
-      <div className="flex items-center justify-between mb-4 lg:mb-6">
-        <div>
-          <h2 className={cn(typography.h3Lg, 'text-charcoal')}>
-            Today's Macro Target
-          </h2>
-          {totalMealsPlanned > 0 && (
-            <p className="text-sm lg:text-base text-muted-foreground mt-1">
-              {mealsLogged} of {totalMealsPlanned} meals logged
-            </p>
-          )}
-        </div>
-
-        {/* Status Badge */}
-        {isComplete && !isOver && (
-          <div className="px-3 py-1 lg:px-4 lg:py-2 bg-green-50 border border-green-200 rounded-full">
-            <p className="text-xs lg:text-sm font-bold text-green-700">On Track ✓</p>
-          </div>
-        )}
-        {isOver && (
-          <div className="px-3 py-1 lg:px-4 lg:py-2 bg-red-50 border border-red-200 rounded-full">
-            <p className="text-xs lg:text-sm font-bold text-red-700">Over Target</p>
-          </div>
-        )}
-      </div>
-
-      {/* Unified Layout - Donut + Macro Cards (All Screen Sizes) */}
-      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-6 lg:gap-8 xl:gap-10 mb-6">
-        {/* Left Column: Calories Donut */}
-        <div className="flex items-center justify-center md:justify-start">
-          {/* Mobile: Extra Small */}
-          <div className="block sm:hidden">
-            <CaloriesDonut
-              targetCalories={targetCalories}
-              caloriesEaten={caloriesEaten}
-              proteinGrams={proteinGrams}
-              carbGrams={carbGrams}
-              fatGrams={fatGrams}
-              proteinEaten={proteinEaten}
-              carbsEaten={carbsEaten}
-              fatEaten={fatEaten}
-              size="xs"
-            />
-          </div>
-
-          {/* Small screens: Small */}
-          <div className="hidden sm:block md:hidden">
-            <CaloriesDonut
-              targetCalories={targetCalories}
-              caloriesEaten={caloriesEaten}
-              proteinGrams={proteinGrams}
-              carbGrams={carbGrams}
-              fatGrams={fatGrams}
-              proteinEaten={proteinEaten}
-              carbsEaten={carbsEaten}
-              fatEaten={fatEaten}
-              size="sm"
-            />
-          </div>
-
-          {/* Tablet: Medium */}
-          <div className="hidden md:block lg:hidden">
-            <CaloriesDonut
-              targetCalories={targetCalories}
-              caloriesEaten={caloriesEaten}
-              proteinGrams={proteinGrams}
-              carbGrams={carbGrams}
-              fatGrams={fatGrams}
-              proteinEaten={proteinEaten}
-              carbsEaten={carbsEaten}
-              fatEaten={fatEaten}
-              size="md"
-            />
-          </div>
-
-          {/* Desktop: Large */}
-          <div className="hidden lg:block xl:hidden">
-            <CaloriesDonut
-              targetCalories={targetCalories}
-              caloriesEaten={caloriesEaten}
-              proteinGrams={proteinGrams}
-              carbGrams={carbGrams}
-              fatGrams={fatGrams}
-              proteinEaten={proteinEaten}
-              carbsEaten={carbsEaten}
-              fatEaten={fatEaten}
-              size="lg"
-            />
-          </div>
-
-          {/* Desktop XL: Extra Large */}
-          <div className="hidden xl:block">
-            <CaloriesDonut
-              targetCalories={targetCalories}
-              caloriesEaten={caloriesEaten}
-              proteinGrams={proteinGrams}
-              carbGrams={carbGrams}
-              fatGrams={fatGrams}
-              proteinEaten={proteinEaten}
-              carbsEaten={carbsEaten}
-              fatEaten={fatEaten}
-              size="xl"
-            />
-          </div>
-        </div>
-
-        {/* Right Column: Individual Macro Cards */}
-        <div className="flex flex-col gap-2 md:gap-3 lg:gap-4">
-          {/* Protein Card */}
-          <MacroCard
-            type="protein"
-            eaten={proteinEaten}
-            target={proteinGrams}
-          />
-
-          {/* Carbs Card */}
-          <MacroCard type="carbs" eaten={carbsEaten} target={carbGrams} />
-
-          {/* Fat Card */}
-          <MacroCard type="fat" eaten={fatEaten} target={fatGrams} />
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex gap-2">
-        <Button
-          onClick={onLogMeal || (() => router.push('/meals/log'))}
-          className="flex-1 font-semibold"
-          aria-label="Log a meal"
-        >
-          <Plus className="size-4 mr-2" />
-          Log Meal
-        </Button>
-
-        <Button
-          variant="outline"
-          onClick={onViewPlan || (() => router.push('/plans'))}
-          className="flex-1 font-medium"
-          aria-label="View today's meal plan"
-        >
-          View Plan
-        </Button>
-      </div>
-
-      {/* Empty State */}
-      {isEmpty && (!meals || meals.length === 0) && (
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-700">
-            💡 <strong>Tip:</strong> Log your first meal to start tracking your
-            macros
+    <div className="px-4 pb-4 @container">
+      <div className="flex flex-col items-stretch justify-start rounded-2xl shadow-sm bg-card p-5 border border-border-strong">
+        <p className="text-foreground text-lg font-bold leading-tight tracking-[-0.015em]">Today's Macro Target</p>
+        
+        {/* Calories Display */}
+        <div className="flex items-baseline gap-2 pt-2">
+          <p className="text-foreground text-3xl font-extrabold leading-tight tracking-tighter">
+            {targetCalories.toLocaleString()}
           </p>
+          <p className="text-muted-foreground text-base font-normal">cal</p>
         </div>
-      )}
 
-      {/* Today's Logged Meals */}
-      {meals && meals.length > 0 && onEditMeal && onDeleteMeal && (
-        <div className="mt-6 border-t pt-6">
-          <h3 className="text-base md:text-lg font-semibold text-charcoal mb-3 md:mb-4">
-            Today&apos;s Meals ({meals.length})
-          </h3>
-          <MealLogList
-            meals={meals}
-            onEdit={onEditMeal}
-            onDelete={onDeleteMeal}
-          />
+        {/* Progress Bar */}
+        <div className="w-full pt-3 pb-4">
+          <div className="flex justify-between items-center mb-1">
+            <span className="text-sm font-medium text-muted-foreground">Progress</span>
+            <span className="text-sm font-medium text-muted-foreground">{progressPercent}% eaten</span>
+          </div>
+          <div className="w-full bg-background rounded-full h-2.5">
+            <div 
+              className={cn("h-2.5 rounded-full transition-all duration-500", isOver ? "bg-warning" : "bg-primary")} 
+              style={{ width: `${Math.min(progressPercent, 100)}%` }}
+            ></div>
+          </div>
         </div>
-      )}
-    </Card>
+
+        {/* Macro Grid */}
+        <div className="grid grid-cols-3 gap-3 border-t border-border-strong pt-4">
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-full bg-protein/10 flex items-center justify-center">
+              <span className="text-lg">🥩</span>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs font-medium">Protein</p>
+              <p className="text-protein text-sm font-bold">{proteinGrams}g</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-full bg-carb/10 flex items-center justify-center">
+              <span className="text-lg">🍚</span>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs font-medium">Carbs</p>
+              <p className="text-carb text-sm font-bold">{carbGrams}g</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-full bg-fat/10 flex items-center justify-center">
+              <span className="text-lg">🥑</span>
+            </div>
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs font-medium">Fat</p>
+              <p className="text-fat text-sm font-bold">{fatGrams}g</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <div className="pt-4 mt-2">
+          <button
+            onClick={onViewPlan || (() => router.push('/meal-plans'))}
+            className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 px-4 bg-primary/10 text-primary text-sm font-semibold leading-normal hover:bg-primary/20 transition-colors"
+          >
+            <span className="truncate">View Today's Plan →</span>
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }

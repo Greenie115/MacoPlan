@@ -27,25 +27,24 @@ export default function LoginPage() {
       setError(error.message)
       setLoading(false)
     } else {
-      router.push('/plans')
+      router.push('/dashboard')
       router.refresh()
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-foreground">
           Sign in to your account
         </h2>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
+        <div className="bg-card py-8 px-6 shadow-sm sm:rounded-2xl border border-border-strong">
           <form className="space-y-6" onSubmit={handleLogin}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-foreground">
                 Email address
               </label>
               <div className="mt-1">
@@ -57,13 +56,13 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  className="appearance-none block w-full px-4 py-3 border border-input rounded-xl shadow-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm bg-card"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-foreground">
                 Password
               </label>
               <div className="mt-1">
@@ -75,13 +74,13 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  className="appearance-none block w-full px-4 py-3 border border-input rounded-xl shadow-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm bg-card"
                 />
               </div>
             </div>
 
             {error && (
-              <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
+              <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-xl">
                 {error}
               </div>
             )}
@@ -90,7 +89,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
@@ -98,9 +97,9 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Don&apos;t have an account?{' '}
-              <Link href="/signup" className="font-medium text-primary hover:text-primary/90">
+              <Link href="/signup" className="font-semibold text-primary hover:text-primary/90">
                 Sign up
               </Link>
             </p>
@@ -109,19 +108,19 @@ export default function LoginPage() {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-border-strong" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
+                <span className="px-2 bg-card text-muted-foreground">
                   Test Credentials
                 </span>
               </div>
             </div>
 
             <div className="mt-6 grid grid-cols-1 gap-3">
-              <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-600 text-center">
-                <p>Email: <strong>testuser@macoplan.com</strong></p>
-                <p>Password: <strong>password123</strong></p>
+              <div className="bg-accent p-4 rounded-xl text-sm text-muted-foreground text-center">
+                <p>Email: <strong className="text-foreground">testuser@macoplan.com</strong></p>
+                <p>Password: <strong className="text-foreground">password123</strong></p>
               </div>
             </div>
           </div>

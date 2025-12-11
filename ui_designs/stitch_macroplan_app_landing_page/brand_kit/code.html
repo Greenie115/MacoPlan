@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MacroPlan Mobile Branding Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#F97316", // Orange
+            "background-light": "#f8f6f5", // Light Gray - UPDATED
+            "background-dark": "#18181B", // Dark Zinc
+            "success": "#22C55E", // Green
+            "warning": "#DC2626", // Red
+            "protein": "#ef4444", // Red for protein - UPDATED
+            "carbs": "#3b82f6", // Blue for carbs - UPDATED
+            "fat": "#eab308", // Amber for fat - UPDATED
+            "icon-color": "#9c5f49", // Brown for icons - NEW
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "1rem", // 16px
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    .material-icons {
+      font-size: inherit;
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-700 dark:text-slate-300">
+<div class="max-w-6xl mx-auto p-8 md:p-12 lg:p-16">
+<header class="text-center mb-16">
+<h1 class="font-bold text-5xl text-slate-900 dark:text-white">MacroPlan</h1>
+<p class="text-xl mt-2 text-slate-600 dark:text-slate-400">Mobile App Branding Kit</p>
+</header>
+<main class="space-y-16">
+<section>
+<h2 class="text-3xl font-bold mb-8 text-slate-900 dark:text-white">Color Palette</h2>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+<div class="text-center">
+<div class="w-full h-32 rounded-lg bg-primary shadow-md"></div>
+<h3 class="font-semibold mt-4 text-slate-800 dark:text-slate-200">Primary</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">#F97316</p>
+</div>
+<div class="text-center">
+<div class="w-full h-32 rounded-lg bg-background-light dark:bg-zinc-800 shadow-md border border-slate-200 dark:border-zinc-700"></div>
+<h3 class="font-semibold mt-4 text-slate-800 dark:text-slate-200">Background</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">#f8f6f5</p>
+</div>
+<div class="text-center">
+<div class="w-full h-32 rounded-lg bg-success shadow-md"></div>
+<h3 class="font-semibold mt-4 text-slate-800 dark:text-slate-200">Success</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">#22C55E</p>
+</div>
+<div class="text-center">
+<div class="w-full h-32 rounded-lg bg-warning shadow-md"></div>
+<h3 class="font-semibold mt-4 text-slate-800 dark:text-slate-200">Warning</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">#DC2626</p>
+</div>
+<div class="text-center">
+<div class="w-full h-32 rounded-lg bg-slate-900 dark:bg-white shadow-md"></div>
+<h3 class="font-semibold mt-4 text-slate-800 dark:text-slate-200">Text</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Dark / Light</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-3xl font-bold mb-8 text-slate-900 dark:text-white">Typography</h2>
+<div class="space-y-6 bg-white dark:bg-zinc-800 p-8 rounded-lg border border-slate-200 dark:border-zinc-700">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-1">Font Family: Inter</p>
+<h1 class="text-5xl font-bold text-slate-900 dark:text-white">Display Heading</h1>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-1">H2 - Bold</p>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">Section Heading</h2>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-1">H3 - Semibold</p>
+<h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Card Title or Subheading</h3>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-1">Body Text - Regular</p>
+<p class="text-slate-600 dark:text-slate-300">This is the main body text for descriptions and paragraphs. It's designed to be clean, readable, and provide a comfortable reading experience for the user.</p>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-1">Label - Medium</p>
+<p class="font-medium text-slate-700 dark:text-slate-200">Protein</p>
+</div>
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-1">Caption / Small Text - Regular</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">180g P, 280g C, 65g F</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-3xl font-bold mb-8 text-slate-900 dark:text-white">UI Components</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="space-y-6">
+<h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Buttons</h3>
+<div class="bg-white dark:bg-zinc-800 p-8 rounded-lg border border-slate-200 dark:border-zinc-700 space-y-4">
+<button class="w-full bg-primary text-white font-semibold py-3 px-6 rounded-full text-lg flex items-center justify-center gap-2">Generate in 3 Seconds <i class="material-icons text-xl">bolt</i></button>
+<button class="w-full bg-transparent border-2 border-primary text-primary font-semibold py-3 px-6 rounded-full text-lg flex items-center justify-center gap-2">Swap Meal <i class="material-icons text-xl">swap_horiz</i></button>
+<button class="w-full bg-slate-100 dark:bg-zinc-700 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-full">Day</button>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Cards</h3>
+<div class="bg-white dark:bg-zinc-800 p-6 rounded-lg border border-slate-200 dark:border-zinc-700 shadow-sm space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-icons text-lg text-icon-color">lunch_dining</span>
+<p class="text-slate-600 dark:text-slate-400">Lunch - 750 cal</p>
+</div>
+<div>
+<img alt="Grilled chicken salad with greens and tomatoes in a white bowl" class="w-full h-48 object-cover rounded-lg mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkiI9VvgZ343xeeQv7h1aR0O9IQIS4-gZl9u_X1tluyh93N6P1f1VyCU665E764K4PZDW7m54uUOv08JFjKpAPtdFITB7BEK-rVt85qMNYIXL3FxwAp4MsHjpk_b9K00z7mqVGV2_CZdKklWB4mTlziaSBwIlYE6JmjzPk0_kbw1VZVFftyP6v_U9TL1D5m_HzliD_Z3zqt0BdiMw0c-_eQc4GaOLtLC6qwLYIL5Tc9z59bRLzQrymUeBh6lPpLsm0jWOm1WwhXU1a"/>
+<h4 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Grilled Chicken Salad</h4>
+<div class="flex items-center gap-4 mt-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="flex items-center gap-1"><i class="material-icons text-protein text-base">local_fire_department</i>55g</span>
+<span class="flex items-center gap-1"><i class="material-icons text-carbs text-base">grain</i>40g</span>
+<span class="flex items-center gap-1"><i class="material-icons text-fat text-base">egg</i>5g</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Macro Indicators</h3>
+<div class="bg-white dark:bg-zinc-800 p-8 rounded-lg border border-slate-200 dark:border-zinc-700 flex flex-wrap justify-around gap-6">
+<div class="text-center flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-protein/10 flex items-center justify-center mb-2">
+<i class="material-icons text-protein text-2xl">local_fire_department</i>
+</div>
+<p class="font-semibold text-slate-800 dark:text-slate-200">Protein</p>
+<p class="text-slate-500 dark:text-slate-400">180g</p>
+</div>
+<div class="text-center flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-carbs/10 flex items-center justify-center mb-2">
+<i class="material-icons text-carbs text-2xl">grain</i>
+</div>
+<p class="font-semibold text-slate-800 dark:text-slate-200">Carbs</p>
+<p class="text-slate-500 dark:text-slate-400">280g</p>
+</div>
+<div class="text-center flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-fat/10 flex items-center justify-center mb-2">
+<i class="material-icons text-fat text-2xl">egg</i>
+</div>
+<p class="font-semibold text-slate-800 dark:text-slate-200">Fat</p>
+<p class="text-slate-500 dark:text-slate-400">68g</p>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200">Other UI Elements</h3>
+<div class="bg-white dark:bg-zinc-800 p-8 rounded-lg border border-slate-200 dark:border-zinc-700 space-y-6">
+<div>
+<label class="text-sm font-medium text-slate-600 dark:text-slate-400">Progress Bar</label>
+<div class="flex items-center gap-4 mt-1">
+<div class="w-full bg-slate-200 dark:bg-zinc-700 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 60%"></div>
+</div>
+<span class="text-sm text-slate-500 dark:text-slate-400">60%</span>
+</div>
+</div>
+<div>
+<label class="text-sm font-medium text-slate-600 dark:text-slate-400">Tags</label>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">High-Protein</span>
+<span class="bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">Low-Carb</span>
+<span class="bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">Keto</span>
+</div>
+</div>
+<div>
+<label class="text-sm font-medium text-slate-600 dark:text-slate-400">Checkbox</label>
+<div class="flex items-center gap-2 mt-1 text-slate-600 dark:text-slate-300">
+<i class="material-icons text-success">check_box</i>
+<span>Within your targets</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-3xl font-bold mb-8 text-slate-900 dark:text-white">Iconography</h2>
+<div class="bg-white dark:bg-zinc-800 p-8 rounded-lg border border-slate-200 dark:border-zinc-700">
+<div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-6 text-center">
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">arrow_back</i>
+<span class="text-xs text-slate-500">arrow_back</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">more_vert</i>
+<span class="text-xs text-slate-500">more_vert</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">save</i>
+<span class="text-xs text-slate-500">save</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">swap_horiz</i>
+<span class="text-xs text-slate-500">swap_horiz</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">sunny</i>
+<span class="text-xs text-slate-500">sunny</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">nightlight_round</i>
+<span class="text-xs text-slate-500">nightlight</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">breakfast_dining</i>
+<span class="text-xs text-slate-500">breakfast</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">notifications</i>
+<span class="text-xs text-slate-500">notifications</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">account_circle</i>
+<span class="text-xs text-slate-500">account_circle</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">arrow_forward</i>
+<span class="text-xs text-slate-500">arrow_forward</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">favorite_border</i>
+<span class="text-xs text-slate-500">favorite</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">star</i>
+<span class="text-xs text-slate-500">star</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">schedule</i>
+<span class="text-xs text-slate-500">schedule</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">remove_circle_outline</i>
+<span class="text-xs text-slate-500">remove</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">add_circle_outline</i>
+<span class="text-xs text-slate-500">add</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">home</i>
+<span class="text-xs text-slate-500">home</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">menu_book</i>
+<span class="text-xs text-slate-500">recipes</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">calendar_today</i>
+<span class="text-xs text-slate-500">plans</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">person</i>
+<span class="text-xs text-slate-500">profile</span>
+</div>
+<div class="flex flex-col items-center space-y-2">
+<i class="material-icons text-3xl text-icon-color dark:text-slate-300">bolt</i>
+<span class="text-xs text-slate-500">bolt</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+</body></html>

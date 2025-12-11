@@ -31,7 +31,7 @@ export function RecipeTabs() {
           'flex-1 h-10 rounded-lg font-semibold text-sm transition-colors',
           activeTab === 'all'
             ? 'bg-primary text-white'
-            : 'bg-white text-gray-600 border-2 border-gray-200 hover:bg-gray-50'
+            : 'bg-card text-muted-foreground border-2 border-border hover:bg-muted'
         )}
       >
         All Recipes
@@ -42,7 +42,7 @@ export function RecipeTabs() {
           'flex-1 h-10 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2',
           activeTab === 'favorites'
             ? 'bg-primary text-white'
-            : 'bg-white text-gray-600 border-2 border-gray-200 hover:bg-gray-50'
+            : 'bg-card text-muted-foreground border-2 border-border hover:bg-muted'
         )}
       >
         <span>❤️</span>

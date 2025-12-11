@@ -51,8 +51,8 @@ export default function GoalSelectionPage() {
                 'flex items-center gap-4 p-4 cursor-pointer transition-all',
                 'border-2',
                 goal === goalOption.id
-                  ? 'border-primary bg-primary text-white'
-                  : 'border-border hover:border-primary/50'
+                  ? 'border-primary bg-primary/5'
+                  : 'border-border-strong hover:border-primary/50'
               )}
               onClick={() => setGoal(goalOption.id)}
               onKeyDown={(e) => {
@@ -69,12 +69,12 @@ export default function GoalSelectionPage() {
               <span className="text-2xl">{goalOption.emoji}</span>
               <p className={cn(
                 "flex-1 text-base font-medium",
-                goal === goalOption.id ? "text-white" : "text-charcoal"
+                goal === goalOption.id ? "text-foreground" : "text-foreground"
               )}>
                 {goalOption.label}
               </p>
               {goal === goalOption.id && (
-                <div className="flex items-center justify-center size-6 rounded-full bg-white text-primary">
+                <div className="flex items-center justify-center size-6 rounded-full bg-primary text-white">
                   <Check className="size-4" />
                 </div>
               )}
@@ -83,8 +83,8 @@ export default function GoalSelectionPage() {
         </div>
         
         <div className="mt-8 text-center">
-          <Link href="/login" className="text-sm text-gray-500 hover:text-primary transition-colors">
-            Already have an account? <span className="font-bold">Log in</span>
+          <Link href="/login" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            Already have an account? <span className="font-semibold">Log in</span>
           </Link>
         </div>
       </StepContainer>

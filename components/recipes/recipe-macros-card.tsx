@@ -39,16 +39,16 @@ export function RecipeMacrosCard({
   const fatPct = totalGrams > 0 ? Math.round((macros.fat / totalGrams) * 100) : 0
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col gap-5">
-      <h2 className="text-gray-900 text-lg font-bold leading-tight tracking-tight">
+    <div className="bg-card rounded-2xl shadow-sm border border-border-strong p-5 flex flex-col gap-5">
+      <h2 className="text-foreground text-lg font-bold leading-tight tracking-tight">
         Macros Per Serving
       </h2>
 
       <div className="text-center">
-        <span className="text-5xl font-bold text-gray-900">
+        <span className="text-5xl font-bold text-foreground">
           {macros.calories}
         </span>
-        <span className="text-lg text-gray-600 ml-1 font-medium">cal</span>
+        <span className="text-lg text-muted-foreground ml-1 font-medium">cal</span>
       </div>
 
       <div className="flex flex-col gap-4">
@@ -57,19 +57,18 @@ export function RecipeMacrosCard({
           <span className="text-2xl">{macroColors.protein.emoji}</span>
           <div className="flex-grow">
             <div className="flex justify-between items-baseline mb-1">
-              <span className="text-sm font-semibold text-gray-900">
+              <span className="text-sm font-semibold text-foreground">
                 Protein
               </span>
-              <span className="text-sm font-bold text-gray-700">
+              <span className="text-sm font-bold text-protein">
                 {macros.protein}g
               </span>
             </div>
-            <div className="w-full bg-gray-100 rounded-full h-2">
+            <div className="w-full bg-muted rounded-full h-2">
               <div
-                className="h-2 rounded-full transition-all duration-300"
+                className="h-2 rounded-full transition-all duration-300 bg-protein"
                 style={{
                   width: `${proteinPct}%`,
-                  backgroundColor: macroColors.protein.primary,
                 }}
               />
             </div>
@@ -81,19 +80,18 @@ export function RecipeMacrosCard({
           <span className="text-2xl">{macroColors.carbs.emoji}</span>
           <div className="flex-grow">
             <div className="flex justify-between items-baseline mb-1">
-              <span className="text-sm font-semibold text-gray-900">
+              <span className="text-sm font-semibold text-foreground">
                 Carbs
               </span>
-              <span className="text-sm font-bold text-gray-700">
+              <span className="text-sm font-bold text-carb">
                 {macros.carbs}g
               </span>
             </div>
-            <div className="w-full bg-gray-100 rounded-full h-2">
+            <div className="w-full bg-muted rounded-full h-2">
               <div
-                className="h-2 rounded-full transition-all duration-300"
+                className="h-2 rounded-full transition-all duration-300 bg-carb"
                 style={{
                   width: `${carbsPct}%`,
-                  backgroundColor: macroColors.carbs.primary,
                 }}
               />
             </div>
@@ -105,19 +103,18 @@ export function RecipeMacrosCard({
           <span className="text-2xl">{macroColors.fat.emoji}</span>
           <div className="flex-grow">
             <div className="flex justify-between items-baseline mb-1">
-              <span className="text-sm font-semibold text-gray-900">
+              <span className="text-sm font-semibold text-foreground">
                 Fat
               </span>
-              <span className="text-sm font-bold text-gray-700">
+              <span className="text-sm font-bold text-fat">
                 {macros.fat}g
               </span>
             </div>
-            <div className="w-full bg-gray-100 rounded-full h-2">
+            <div className="w-full bg-muted rounded-full h-2">
               <div
-                className="h-2 rounded-full transition-all duration-300"
+                className="h-2 rounded-full transition-all duration-300 bg-fat"
                 style={{
                   width: `${fatPct}%`,
-                  backgroundColor: macroColors.fat.primary,
                 }}
               />
             </div>
@@ -125,21 +122,21 @@ export function RecipeMacrosCard({
         </div>
       </div>
 
-      <div className="border-t border-gray-100 mt-2" />
+      <div className="border-t border-border mt-2" />
 
       <div className="flex justify-between items-center">
-        <span className="text-base font-semibold text-gray-900">
+        <span className="text-base font-semibold text-foreground">
           Servings
         </span>
         <div className="flex items-center gap-4">
           <button
             onClick={handleDecrement}
-            className="flex items-center justify-center size-8 rounded-full bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors"
+            className="flex items-center justify-center size-8 rounded-full bg-muted text-icon hover:bg-border transition-colors"
             aria-label="Decrease servings"
           >
             <Minus className="size-4" />
           </button>
-          <span className="text-lg font-bold w-4 text-center text-gray-900">
+          <span className="text-lg font-bold w-4 text-center text-foreground">
             {servings}
           </span>
           <button

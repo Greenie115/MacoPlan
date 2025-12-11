@@ -19,6 +19,18 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "dxhfjhprhxylnhufzaiu.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "spoonacular.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.spoonacular.com",
+      },
     ],
   },
   experimental: {

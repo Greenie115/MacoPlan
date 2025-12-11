@@ -165,28 +165,28 @@ export function LogRecipeModal({
           </div>
 
           {/* Adjusted Macros Display */}
-          <div className="grid grid-cols-4 gap-3 p-4 bg-gray-50 rounded-lg">
+          <div className="grid grid-cols-4 gap-3 p-4 bg-muted rounded-lg">
             <div>
               <Label className="text-xs text-muted-foreground">Calories</Label>
-              <p className="text-lg font-bold text-charcoal">
+              <p className="text-lg font-bold text-foreground">
                 {adjustedMacros.calories}
               </p>
             </div>
             <div>
               <Label className="text-xs text-muted-foreground">Protein</Label>
-              <p className="text-lg font-bold text-primary">
+              <p className="text-lg font-bold text-protein">
                 {adjustedMacros.protein}g
               </p>
             </div>
             <div>
               <Label className="text-xs text-muted-foreground">Carbs</Label>
-              <p className="text-lg font-bold text-blue-600">
+              <p className="text-lg font-bold text-carb">
                 {adjustedMacros.carbs}g
               </p>
             </div>
             <div>
               <Label className="text-xs text-muted-foreground">Fat</Label>
-              <p className="text-lg font-bold text-orange-600">
+              <p className="text-lg font-bold text-fat">
                 {adjustedMacros.fat}g
               </p>
             </div>

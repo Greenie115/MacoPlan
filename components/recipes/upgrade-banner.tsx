@@ -27,11 +27,11 @@ export function UpgradeBanner() {
           <div className="flex-1 min-w-0 pr-8">
             <div className="flex items-center gap-2 mb-1">
               <Crown className="h-4 w-4 text-primary sm:hidden" />
-              <h3 className="text-sm font-bold text-gray-900">
+              <h3 className="text-sm font-bold text-foreground">
                 Free Tier: 100 Recipes Available
               </h3>
             </div>
-            <p className="text-xs text-gray-600 mb-3 sm:mb-2">
+            <p className="text-xs text-muted-foreground mb-3 sm:mb-2">
               Unlock unlimited recipes, custom meal plans, and advanced nutrition tracking
             </p>
             <a
@@ -45,7 +45,7 @@ export function UpgradeBanner() {
 
           {/* Close button */}
           <button
-            className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
+            className="absolute top-0 right-0 p-2 text-icon hover:text-primary hover:bg-muted rounded-lg transition-all"
             onClick={() => setIsVisible(false)}
             aria-label="Dismiss upgrade banner"
           >

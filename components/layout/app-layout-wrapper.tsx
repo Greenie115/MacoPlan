@@ -58,7 +58,7 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
     <>
       <div className="flex h-screen overflow-hidden">
         {/* Navigation */}
-        {!pathname.startsWith('/login') && !pathname.startsWith('/signup') && (
+        {!pathname.startsWith('/login') && !pathname.startsWith('/signup') && pathname !== '/' && !pathname.startsWith('/blog') && (
           <AppNavigation hasCompletedOnboarding={hasCompletedOnboarding} />
         )}
 
@@ -70,7 +70,7 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
             'pb-16 lg:pb-0',
             // Add padding left on desktop when sidebar is visible
             // ONLY if not on onboarding route, not on login/signup route, and user has completed onboarding
-            !isOnboardingRoute && !pathname.startsWith('/login') && !pathname.startsWith('/signup') && hasCompletedOnboarding && (isCollapsed ? 'lg:pl-20' : 'lg:pl-64')
+            !isOnboardingRoute && !pathname.startsWith('/login') && !pathname.startsWith('/signup') && pathname !== '/' && !pathname.startsWith('/blog') && hasCompletedOnboarding && (isCollapsed ? 'lg:pl-20' : 'lg:pl-64')
           )}
         >
           {children}

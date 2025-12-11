@@ -53,21 +53,21 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-background pb-24">
       <PaywallModal isOpen={showPaywall} onClose={() => setShowPaywall(false)} />
 
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+      <div className="sticky top-0 z-10 bg-card/80 backdrop-blur-sm border-b border-border">
         <div className="flex h-[60px] items-center px-4 justify-between max-w-3xl mx-auto w-full">
-          <Link 
-            href={isGenerated ? "/plans/generate" : "/plans"} 
-            className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
+          <Link
+            href={isGenerated ? "/meal-plans/generate" : "/meal-plans"}
+            className="p-2 -ml-2 hover:bg-muted rounded-full transition-colors"
           >
-            <ArrowLeft className="size-6 text-gray-900" />
+            <ArrowLeft className="size-6 text-icon" />
           </Link>
           <div className="flex items-center gap-2">
             {isGenerated && (
-              <button 
+              <button
                 onClick={handleSave}
                 className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-primary font-semibold hover:bg-primary/5 transition-colors"
               >
@@ -75,8 +75,8 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
                 Save
               </button>
             )}
-            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <MoreVertical className="size-6 text-gray-900" />
+            <button className="p-2 hover:bg-muted rounded-full transition-colors">
+              <MoreVertical className="size-6 text-icon" />
             </button>
           </div>
         </div>
@@ -85,30 +85,30 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
       <main className="max-w-3xl mx-auto p-4 space-y-6">
         {/* Plan Header */}
         <header>
-          <h1 className="text-2xl font-bold text-gray-900">{plan.title}</h1>
-          <p className="text-gray-500">{plan.dateRange}</p>
+          <h1 className="text-2xl font-bold text-foreground">{plan.title}</h1>
+          <p className="text-muted-foreground">{plan.dateRange}</p>
         </header>
 
         {/* Daily Totals Card */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div className="bg-card rounded-2xl p-4 shadow-sm border border-border-strong">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-semibold text-gray-900">Daily Totals: {Math.round(plan.calories)} cal avg</h2>
+            <h2 className="font-semibold text-foreground">Daily Totals: {Math.round(plan.calories)} cal avg</h2>
           </div>
           <div className="flex items-center gap-4 mb-2">
             <div className="flex items-center gap-1.5">
               <span className="text-lg">🥩</span>
-              <span className="font-medium" style={{ color: macroColors.protein.primary }}>{plan.macros.protein}g</span>
+              <span className="font-medium text-protein">{plan.macros.protein}g</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-lg">🍚</span>
-              <span className="font-medium" style={{ color: macroColors.carbs.primary }}>{plan.macros.carbs}g</span>
+              <span className="font-medium text-carb">{plan.macros.carbs}g</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-lg">🥑</span>
-              <span className="font-medium" style={{ color: macroColors.fat.primary }}>{plan.macros.fat}g</span>
+              <span className="font-medium text-fat">{plan.macros.fat}g</span>
             </div>
           </div>
-          <p className="text-green-600 text-sm font-medium flex items-center gap-1">
+          <p className="text-success text-sm font-medium flex items-center gap-1">
             <span className="text-lg">✅</span> Within your targets
           </p>
         </div>
@@ -117,13 +117,13 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
         <button
           onClick={handleGenerateGroceryList}
           disabled={isPending}
-          className="w-full h-12 flex items-center justify-center gap-2 bg-white border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full h-12 flex items-center justify-center gap-2 bg-card border-2 border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ClipboardList className="size-5" />
           {isPending ? 'Generating...' : 'Generate Grocery List'}
         </button>
 
-        <div className="h-px bg-gray-200" />
+        <div className="h-px bg-border" />
 
         {/* Day Selector */}
         <div className="overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
@@ -134,8 +134,8 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
                 onClick={() => setSelectedDayIndex(index)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
                   selectedDayIndex === index
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
                 }`}
               >
                 {day.dayOfWeek}
@@ -147,8 +147,8 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
 
         {/* Day Header */}
         <div>
-          <h2 className="text-xl font-bold text-gray-900">{currentDay.dayOfWeek}, {currentDay.date}</h2>
-          <p className="text-sm text-gray-500">
+          <h2 className="text-xl font-bold text-foreground">{currentDay.dayOfWeek}, {currentDay.date}</h2>
+          <p className="text-sm text-muted-foreground">
             {Math.round(currentDay.calories)} calories • {currentDay.macros.protein}g P, {currentDay.macros.carbs}g C, {currentDay.macros.fat}g F
           </p>
         </div>
@@ -156,14 +156,14 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
         {/* Meals List */}
         <div className="space-y-4">
           {currentDay.meals.map((meal) => (
-            <div key={meal.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-4 border-b border-gray-50">
-                <p className="text-sm text-gray-500 capitalize">
+            <div key={meal.id} className="bg-card rounded-2xl shadow-sm border border-border-strong overflow-hidden">
+              <div className="p-4 border-b border-border">
+                <p className="text-sm text-muted-foreground capitalize">
                   {meal.type === 'breakfast' ? '🌅' : meal.type === 'lunch' ? '☀️' : meal.type === 'dinner' ? '🌙' : '💪'} {meal.type} - {Math.round(meal.calories)} cal
                 </p>
               </div>
-              
-              <div className="relative h-48 w-full bg-gray-100">
+
+              <div className="relative h-48 w-full bg-muted">
                 <Image
                   src={meal.image}
                   alt={meal.name}
@@ -173,23 +173,23 @@ export function PlanDetailView({ plan, isGenerated = false, onSave }: PlanDetail
               </div>
 
               <div className="p-4">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{meal.name}</h3>
-                
+                <h3 className="text-lg font-bold text-foreground mb-2">{meal.name}</h3>
+
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-sm font-medium" style={{ color: macroColors.protein.primary }}>🥩 {meal.macros.protein}g</span>
-                  <span className="text-sm font-medium" style={{ color: macroColors.carbs.primary }}>🍚 {meal.macros.carbs}g</span>
-                  <span className="text-sm font-medium" style={{ color: macroColors.fat.primary }}>🥑 {meal.macros.fat}g</span>
+                  <span className="text-sm font-medium text-protein">🥩 {meal.macros.protein}g</span>
+                  <span className="text-sm font-medium text-carb">🍚 {meal.macros.carbs}g</span>
+                  <span className="text-sm font-medium text-fat">🥑 {meal.macros.fat}g</span>
                 </div>
 
                 <div className="flex gap-3">
-                  <Link 
+                  <Link
                     href={meal.recipeId ? `/recipes/${meal.recipeId}` : '#'}
-                    className="flex-1 h-10 flex items-center justify-center rounded-lg border border-primary text-primary font-semibold hover:bg-primary/5 transition-colors text-sm"
+                    className="flex-1 h-10 flex items-center justify-center rounded-xl border-2 border-primary text-primary font-semibold hover:bg-primary/5 transition-colors text-sm"
                   >
                     View Recipe
                   </Link>
                   {isGenerated && (
-                    <button className="flex-1 h-10 flex items-center justify-center gap-1 rounded-lg border border-primary text-primary font-semibold hover:bg-primary/5 transition-colors text-sm">
+                    <button className="flex-1 h-10 flex items-center justify-center gap-1 rounded-xl border-2 border-primary text-primary font-semibold hover:bg-primary/5 transition-colors text-sm">
                       <RefreshCw className="size-4" />
                       Swap Meal
                     </button>

@@ -149,7 +149,7 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
               <button
                 onClick={handleGenerateNew}
                 aria-label="Generate new plan"
-                className="flex h-12 w-12 items-center justify-center text-[#F97316] hover:bg-orange-50 rounded-lg transition-colors"
+                className="flex h-12 w-12 items-center justify-center text-primary hover:bg-primary/10 rounded-lg transition-colors"
               >
                 <Plus className="size-6" />
               </button>
@@ -166,7 +166,7 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
                   className={cn(
                     'flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors md:flex-none md:px-6',
                     activeTab === tab.key
-                      ? 'border-[#F97316] text-[#F97316]'
+                      ? 'border-primary text-primary'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   )}
                 >
@@ -208,7 +208,7 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
                 setPaywallTrigger('meal_plan_limit')
                 setShowPaywall(true)
               }}
-              className="font-semibold text-[#F97316] hover:underline"
+              className="font-semibold text-primary hover:underline"
             >
               Upgrade for unlimited plans
             </button>
@@ -277,15 +277,15 @@ function EmptyState({
 
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">
-      <div className="size-20 rounded-full bg-orange-50 flex items-center justify-center mb-6">
-        <ChefHat className="size-10 text-[#F97316]" />
+      <div className="size-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+        <ChefHat className="size-10 text-primary" />
       </div>
       <h2 className="text-xl font-semibold text-gray-900 mb-2 text-center">{title}</h2>
       <p className="text-gray-500 text-center mb-8 max-w-xs">{subtitle}</p>
       {activeTab !== 'favorites' && (
         <button
           onClick={onGenerate}
-          className="flex items-center gap-2 h-12 px-6 rounded-xl bg-[#F97316] text-white font-semibold hover:bg-[#EA580C] transition-colors"
+          className="flex items-center gap-2 h-12 px-6 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
         >
           <Plus className="size-5" />
           Generate Meal Plan
@@ -436,22 +436,22 @@ function MealPlanCard({
           {/* Macro Display */}
           <div className="flex items-center gap-3 text-sm text-gray-500">
             <span className="flex items-center gap-1">
-              <span className="text-[#E63946]">🥩</span>
+              <span className="text-protein">🥩</span>
               {plan.protein_grams}g
             </span>
             <span className="flex items-center gap-1">
-              <span className="text-[#457B9D]">🍚</span>
+              <span className="text-carb">🍚</span>
               {plan.carb_grams}g
             </span>
             <span className="flex items-center gap-1">
-              <span className="text-[#F4A261]">🥑</span>
+              <span className="text-fat">🥑</span>
               {plan.fat_grams}g
             </span>
           </div>
 
           {/* View Plan Button - pushed to bottom */}
           <div className="mt-auto pt-2">
-            <button className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-[#F97316] bg-white text-sm font-semibold leading-normal text-[#F97316] hover:bg-orange-50 transition-colors">
+            <button className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-primary bg-white text-sm font-semibold leading-normal text-primary hover:bg-primary/10 transition-colors">
               <span className="truncate">View Plan</span>
               <ArrowRight className="size-4" />
             </button>

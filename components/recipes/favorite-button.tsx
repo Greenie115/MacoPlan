@@ -66,7 +66,7 @@ export function FavoriteButton({
           className={cn(
             iconSizeClasses[size],
             'transition-colors',
-            isFavorited ? 'fill-red-500 text-red-500' : 'text-gray-400'
+            isFavorited ? 'fill-primary text-primary' : 'text-icon'
           )}
         />
         {isFavorited ? 'Favorited' : 'Add to Favorites'}
@@ -79,7 +79,7 @@ export function FavoriteButton({
       onClick={handleToggle}
       disabled={isLoading}
       className={cn(
-        'p-2 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50',
+        'p-2 rounded-full hover:bg-muted transition-colors disabled:opacity-50',
         className
       )}
       aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
@@ -89,8 +89,8 @@ export function FavoriteButton({
           iconSizeClasses[size],
           'transition-all duration-200',
           isFavorited
-            ? 'fill-red-500 text-red-500 scale-110'
-            : 'text-gray-400 hover:text-red-400'
+            ? 'fill-primary text-primary scale-110'
+            : 'text-icon hover:text-primary'
         )}
       />
     </button>

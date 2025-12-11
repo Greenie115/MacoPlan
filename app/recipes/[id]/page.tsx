@@ -10,6 +10,7 @@ import { FavoriteButton } from '@/components/recipes/favorite-button'
 import { RecipeWithDetails } from '@/lib/types/recipe'
 import { isFavorite } from '../actions'
 import { getLoggedMealForRecipe } from '@/app/actions/meal-logs'
+import { trackRecipeView } from '@/app/actions/recipe-tracking'
 import { z } from 'zod'
 import { getRecipeFallback } from '@/lib/services/recipe-service'
 
@@ -80,6 +81,11 @@ export default async function RecipePage({ params }: RecipePageProps) {
     console.log('RecipePage: Recipe not found for ID:', id)
     notFound()
   }
+
+  // Track recipe view for recommendations (async, doesn't block render)
+  trackRecipeView(recipe.id, recipe.name, 'local').catch((err) =>
+    console.error('Failed to track recipe view:', err)
+  )
 
   // Sort ingredients and instructions in JS since Supabase ordering on nested relations can be tricky
   let ingredients = (recipe.recipe_ingredients || []).sort(

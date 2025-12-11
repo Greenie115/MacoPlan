@@ -23,7 +23,7 @@ export function RecipeIngredients({ ingredients }: RecipeIngredientsProps) {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <h2 className="text-gray-900 text-xl font-bold">
+      <h2 className="text-foreground text-xl font-bold">
         Ingredients
       </h2>
       <ul className="space-y-3">
@@ -43,14 +43,14 @@ export function RecipeIngredients({ ingredients }: RecipeIngredientsProps) {
                 id={`ingredient-${index}`}
                 checked={isChecked}
                 onCheckedChange={() => toggleCheck(index)}
-                className="size-5 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                className="size-5 border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
               <label
                 htmlFor={`ingredient-${index}`}
                 className={`text-base cursor-pointer transition-colors ${
                   isChecked
-                    ? 'line-through text-gray-400'
-                    : 'text-gray-800 font-medium'
+                    ? 'line-through text-muted-foreground'
+                    : 'text-foreground font-medium'
                 }`}
               >
                 {ingredientText}

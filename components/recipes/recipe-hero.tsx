@@ -53,8 +53,8 @@ export function RecipeHero({
             }}
           />
         ) : (
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-400">No image</span>
+          <div className="w-full h-full bg-muted flex items-center justify-center">
+            <span className="text-muted-foreground">No image</span>
           </div>
         )}
         {/* Gradient overlay for better text visibility if needed, though design shows clean image */}

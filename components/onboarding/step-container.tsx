@@ -35,10 +35,10 @@ export function StepContainer({
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
           <button
             onClick={onBack}
-            className="flex items-center justify-center size-10 rounded-full hover:bg-muted transition-colors"
+            className="flex items-center justify-center size-10 rounded-full hover:bg-accent transition-colors"
             aria-label="Go back to previous step"
           >
-            <ArrowLeft className="size-6 text-charcoal" />
+            <ArrowLeft className="size-6 text-icon" />
           </button>
         </div>
 
@@ -52,7 +52,7 @@ export function StepContainer({
         {/* Content */}
         <div className="flex-1 px-4 sm:px-6 lg:px-8 overflow-y-auto pb-24">
           <div className="mt-8">
-            <h1 className="text-[32px] font-bold leading-tight text-charcoal">
+            <h1 className="text-[32px] font-bold leading-tight text-foreground">
               {emoji && <span className="mr-2">{emoji}</span>}
               {title}
             </h1>
@@ -65,11 +65,11 @@ export function StepContainer({
         </div>
 
         {/* Bottom CTA - constrained within max-width */}
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[560px] px-4 sm:px-6 lg:px-8 py-4 bg-background border-t border-border">
+        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[560px] px-4 sm:px-6 lg:px-8 py-4 bg-background border-t border-border-strong">
           <Button
             onClick={onContinue}
             disabled={continueDisabled}
-            className="w-full h-12 text-base font-bold"
+            className="w-full h-12 text-base font-semibold rounded-xl"
             size="lg"
             aria-label="Continue to next step"
           >

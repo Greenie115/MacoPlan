@@ -18,15 +18,16 @@ describe('Macro Calculation', () => {
       expect(result.protein).toBe(180)
     })
 
-    it('sets fat to ~30% of calories', () => {
+    it('sets fat to ~25% of calories', () => {
       const targetCalories = 2294
       const result = calculateMacros(targetCalories, 'cut', 180, 'lbs')
 
       const fatCalories = result.fat * 9
       const fatPercentage = (fatCalories / result.targetCalories) * 100
 
-      expect(fatPercentage).toBeGreaterThan(28)
-      expect(fatPercentage).toBeLessThan(32)
+      // Implementation uses 25% fat for cut (ISSN recommendations)
+      expect(fatPercentage).toBeGreaterThan(23)
+      expect(fatPercentage).toBeLessThan(27)
     })
   })
 
@@ -39,11 +40,16 @@ describe('Macro Calculation', () => {
       expect(targetCalories).toBe(expected)
     })
 
-    it('sets protein to 0.8g per lb body weight', () => {
+    it('sets protein based on ISSN recommendations (1.6 g/kg)', () => {
       const targetCalories = 3155
       const result = calculateMacros(targetCalories, 'bulk', 180, 'lbs')
 
-      expect(result.protein).toBe(Math.round(180 * 0.8)) // 144
+      // 180 lbs = 81.65 kg
+      // ISSN bulk protein: 1.6 g/kg * 81.65 kg = 130.6 g ≈ 131 g
+      const weightKg = 180 * 0.453592 // 81.65 kg
+      const expectedProtein = Math.round(weightKg * 1.6) // ~131g
+
+      expect(result.protein).toBe(expectedProtein)
     })
   })
 

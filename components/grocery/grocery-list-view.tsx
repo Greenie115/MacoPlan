@@ -142,9 +142,9 @@ export function GroceryListView({ list }: GroceryListViewProps) {
 
   const handleBack = () => {
     if (list.plan_id) {
-      router.push(`/plans/${list.plan_id}`)
+      router.push(`/meal-plans/${list.plan_id}`)
     } else {
-      router.push('/plans')
+      router.push('/meal-plans')
     }
   }
 

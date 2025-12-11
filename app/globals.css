@@ -1,37 +1,60 @@
 @import "tailwindcss";
 
 @theme {
-  /* MacroPlan Brand Colors */
-  --color-primary: #FF6B35;
+  /* ============================================
+     MacroPlan Brand Kit - UI Style Guide
+     Reference: ui_designs/stitch_macroplan_app_landing_page/brand_kit/
+     ============================================ */
+
+  /* Primary Brand Color */
+  --color-primary: #F97316;
   --color-primary-foreground: #FFFFFF;
-  --color-charcoal: #1F1F1F;
-  --color-protein: #E63946;
-  --color-carb: #457B9D;
-  --color-fat: #F4A261;
-  --color-success: #06D6A0;
-  --color-border: #E9ECEF;
-  --color-input: #E9ECEF;
 
-  /* Base colors */
-  --color-background: #FFFFFF;
-  --color-foreground: #1F1F1F;
+  /* Text Colors */
+  --color-charcoal: #1c110d;
+  --color-foreground: #1c110d;
 
-  /* Additional UI colors */
-  --color-muted: #F8F9FA;
-  --color-muted-foreground: #6C757D;
-  --color-popover: #FFFFFF;
-  --color-popover-foreground: #1F1F1F;
-  --color-accent: #F8F9FA;
-  --color-accent-foreground: #1F1F1F;
-  --color-ring: #FF6B35;
+  /* Macro Colors - Used for nutritional indicators */
+  --color-protein: #ef4444;
+  --color-carb: #3b82f6;
+  --color-fat: #eab308;
 
   /* Semantic Colors */
+  --color-success: #22C55E;
+  --color-warning: #DC2626;
+  --color-destructive: #DC2626;
+  --color-destructive-foreground: #FFFFFF;
+
+  /* UI Element Colors */
+  --color-border: #e8d5ce;
+  --color-input: #e8d5ce;
+  --color-icon: #9c5f49;
+  --color-ring: #F97316;
+
+  /* Background Colors */
+  --color-background: #f8f6f5;
+
+  /* Secondary/Muted Colors */
+  --color-muted: #f8f6f5;
+  --color-muted-foreground: #9c5f49;
+  --color-secondary: #f8f6f5;
+  --color-secondary-foreground: #1c110d;
+
+  /* Popover/Dropdown Colors */
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #1c110d;
+
+  /* Accent Colors */
+  --color-accent: #FFF7ED;
+  --color-accent-foreground: #1c110d;
+
+  /* Semantic Color Scales */
   --color-success-50: #F0FDF4;
-  --color-success-500: #10B981;
-  --color-success-700: #047857;
-  --color-warning-50: #FFFBEB;
-  --color-warning-500: #F59E0B;
-  --color-warning-700: #B45309;
+  --color-success-500: #22C55E;
+  --color-success-700: #15803d;
+  --color-warning-50: #FEF2F2;
+  --color-warning-500: #DC2626;
+  --color-warning-700: #991b1b;
   --color-danger-50: #FEF2F2;
   --color-danger-500: #EF4444;
   --color-danger-700: #B91C1C;
@@ -39,20 +62,56 @@
   --color-info-500: #3B82F6;
   --color-info-700: #1D4ED8;
 
-  /* Macro-specific colors for progress bars and rings */
-  --color-macro-protein: #E63946; /* Red */
-  --color-macro-carbs: #457B9D; /* Blue */
-  --color-macro-fat: #F4A261; /* Orange/tan */
+  /* Macro-specific colors (aliases for consistency) */
+  --color-macro-protein: #ef4444;
+  --color-macro-carbs: #3b82f6;
+  --color-macro-fat: #eab308;
 
-  /* Border radius */
-  --radius-default: 12px;
-  --radius-card: 16px;
+  /* Border Radius - Brand Kit specifies 1rem (16px) for cards */
+  --radius-default: 0.5rem;
+  --radius-card: 1rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  /* Card Colors */
+  --color-card: #FFFFFF;
+  --color-card-foreground: #1c110d;
+
+  /* Subtle/Secondary Text */
+  --color-subtle: #9c5f49;
+  --color-subtle-foreground: #9c5f49;
+
+  /* Strong Border (for card borders) */
+  --color-border-strong: #e8d5ce;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Dark Mode - Brand Kit Reference: #18181B background */
+.dark {
+  --color-background: #18181B;
+  --color-foreground: #f4f4f5;
+  --color-card: #27272a;
+  --color-card-foreground: #f4f4f5;
+  --color-muted: #27272a;
+  --color-muted-foreground: #a1a1aa;
+  --color-secondary: #27272a;
+  --color-secondary-foreground: #f4f4f5;
+  --color-border: #3f3f46;
+  --color-border-strong: #52525b;
+  --color-input: #3f3f46;
+  --color-accent: #3f3f46;
+  --color-accent-foreground: #f4f4f5;
+  --color-popover: #27272a;
+  --color-popover-foreground: #f4f4f5;
+  --color-subtle: #a1a1aa;
+  --color-subtle-foreground: #a1a1aa;
+  --color-icon: #d4d4d8;
 }
 
 /* Hide scrollbar but keep functionality */

@@ -360,3 +360,93 @@ export interface SpoonacularApiResponse<T> {
   fromCache?: boolean
   fromLegacy?: boolean
 }
+
+// ============================================================================
+// Meal Plan Types
+// ============================================================================
+
+/**
+ * Meal Plan Nutrients (aggregate for the day or week)
+ */
+export interface SpoonacularMealPlanNutrients {
+  calories: number
+  protein: number
+  fat: number
+  carbohydrates: number
+}
+
+/**
+ * Individual Meal in a Meal Plan
+ */
+export interface SpoonacularMeal {
+  id: number
+  title: string
+  imageType?: string
+  readyInMinutes: number
+  servings: number
+  sourceUrl: string
+}
+
+/**
+ * Daily Meal Plan Response (timeFrame = 'day')
+ */
+export interface SpoonacularDailyMealPlan {
+  nutrients: SpoonacularMealPlanNutrients
+  meals: SpoonacularMeal[]
+}
+
+/**
+ * Day within a Weekly Meal Plan
+ */
+export interface SpoonacularDayPlan {
+  meals: SpoonacularMeal[]
+  nutrients: SpoonacularMealPlanNutrients
+}
+
+/**
+ * Weekly Meal Plan Response (timeFrame = 'week')
+ */
+export interface SpoonacularWeeklyMealPlan {
+  week: {
+    monday: SpoonacularDayPlan
+    tuesday: SpoonacularDayPlan
+    wednesday: SpoonacularDayPlan
+    thursday: SpoonacularDayPlan
+    friday: SpoonacularDayPlan
+    saturday: SpoonacularDayPlan
+    sunday: SpoonacularDayPlan
+  }
+}
+
+/**
+ * Meal Plan Generation Parameters
+ */
+export interface SpoonacularMealPlanParams {
+  timeFrame: 'day' | 'week'
+  targetCalories: number
+  mealsPerDay?: number
+  diet?: string
+  exclude?: string
+}
+
+/**
+ * Cached Meal Plan (Database)
+ */
+export interface CachedSpoonacularMealPlan {
+  id: string
+  query_hash: string
+  query_params: SpoonacularMealPlanParams
+  time_frame: 'day' | 'week'
+  target_calories: number
+  total_calories: number | null
+  total_protein: number | null
+  total_carbs: number | null
+  total_fat: number | null
+  meals: any // JSONB - SpoonacularMeal[]
+  week_data: any // JSONB - SpoonacularWeeklyMealPlan
+  recipe_ids: number[]
+  cached_at: string
+  expires_at: string
+  hit_count: number
+  created_at: string
+}

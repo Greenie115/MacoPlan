@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Sparkles, ChefHat } from 'lucide-react'
+import { ChefHat } from 'lucide-react'
 
 interface GeneratePlanCTAProps {
   hasActivePlan?: boolean
@@ -19,7 +19,7 @@ export function GeneratePlanCTA({
     if (onClick) {
       onClick()
     } else {
-      router.push('/plans/generate')
+      router.push('/meal-plans/generate')
     }
   }
 
@@ -27,10 +27,10 @@ export function GeneratePlanCTA({
   if (hasActivePlan) {
     return (
       <div className="px-4 md:px-6 lg:px-8">
-        <div className="p-4 border-2 border-dashed border-primary/30 rounded-lg bg-primary/5">
+        <div className="p-4 border-2 border-dashed border-primary/30 rounded-2xl bg-primary/5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-charcoal">
+              <p className="text-sm font-semibold text-foreground">
                 Need a new plan?
               </p>
               <p className="text-sm text-muted-foreground">
@@ -40,7 +40,7 @@ export function GeneratePlanCTA({
             <Button
               onClick={handleClick}
               variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-white font-medium"
+              className="font-semibold"
             >
               Generate
             </Button>
@@ -52,38 +52,20 @@ export function GeneratePlanCTA({
 
   // No active plan - show prominent CTA
   return (
-    <div className="px-4 md:px-6 lg:px-8">
-      <div className="rounded-xl bg-gradient-to-br from-primary to-primary/80 p-5 text-white space-y-3 shadow-lg">
-        <div className="flex items-start gap-3">
-          <div className="p-2 bg-white/20 rounded-lg">
-            <ChefHat className="size-6" />
-          </div>
-          <div className="flex-1">
-            <p className="text-lg font-bold leading-tight">
-              Generate Your First Meal Plan
-            </p>
-            <p className="text-sm font-normal leading-normal text-white/90 mt-1">
-              AI-powered plans tailored to your macros
-            </p>
-          </div>
+    <div className="px-4 pb-4">
+      <div className="flex flex-1 flex-col items-start justify-between gap-4 rounded-2xl bg-primary p-5 text-white shadow-lg">
+        <div className="flex flex-col gap-1">
+          <p className="text-base font-bold leading-tight">✨ Generate New Meal Plan</p>
+          <p className="text-base font-normal leading-normal text-white/80">
+            Create a new macro-perfect plan in 3 seconds
+          </p>
         </div>
-
-        <div className="flex gap-2">
-          <Button
-            onClick={handleClick}
-            className="flex-1 bg-white text-primary hover:bg-white/90 font-bold"
-            size="lg"
-          >
-            Get Started
-          </Button>
-          <Button
-            onClick={() => router.push('/plans/learn-more')}
-            variant="ghost"
-            className="text-white hover:bg-white/20 font-medium"
-          >
-            Learn More
-          </Button>
-        </div>
+        <button
+          onClick={handleClick}
+          className="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 px-5 bg-white text-primary text-sm font-bold leading-normal hover:bg-white/90 transition-colors"
+        >
+          <span className="truncate">Generate Now →</span>
+        </button>
       </div>
     </div>
   )

@@ -115,8 +115,8 @@ export async function generateGroceryList(planId: string) {
     return { error: 'Failed to add items to grocery list' }
   }
 
-  revalidatePath(`/plans/${planId}`)
-  revalidatePath('/plans')
+  revalidatePath(`/meal-plans/${planId}`)
+  revalidatePath('/meal-plans')
   revalidatePath(`/grocery-lists/${groceryList.id}`)
   return { success: true, listId: groceryList.id }
 }

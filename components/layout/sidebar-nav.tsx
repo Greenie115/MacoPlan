@@ -8,7 +8,7 @@ import { useSidebarStore } from '@/stores/sidebar-store'
 const tabs = [
   { id: 'home' as const, label: 'Home', icon: Home, path: '/dashboard' },
   { id: 'recipes' as const, label: 'Recipes', icon: BookOpen, path: '/recipes' },
-  { id: 'plans' as const, label: 'Plans', icon: Calendar, path: '/plans' },
+  { id: 'plans' as const, label: 'Plans', icon: Calendar, path: '/meal-plans' },
   { id: 'profile' as const, label: 'Profile', icon: User, path: '/profile' },
 ]
 
@@ -20,7 +20,7 @@ export function SidebarNav() {
   // Determine active tab from pathname
   const getActiveTab = () => {
     if (pathname.startsWith('/recipes')) return 'recipes'
-    if (pathname.startsWith('/plans')) return 'plans'
+    if (pathname.startsWith('/meal-plans')) return 'plans'
     if (pathname.startsWith('/profile')) return 'profile'
     return 'home'
   }
@@ -32,7 +32,7 @@ export function SidebarNav() {
       {/* Sidebar - always visible on desktop, hidden on mobile */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-40 h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out',
+          'fixed top-0 left-0 z-40 h-full bg-card border-r border-border-strong transition-all duration-300 ease-in-out',
           isCollapsed ? 'w-20' : 'w-64',
           // Hide on mobile, always show on desktop
           'hidden lg:block'
@@ -43,13 +43,13 @@ export function SidebarNav() {
           {/* Toggle Button */}
           <button
             onClick={toggle}
-            className="absolute -right-3 top-9 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md hover:bg-gray-100"
+            className="absolute -right-3 top-9 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-border-strong bg-card shadow-md hover:bg-accent transition-colors"
             aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {isCollapsed ? (
-              <ChevronRight className="h-3 w-3 text-gray-600" />
+              <ChevronRight className="h-3 w-3 text-icon" />
             ) : (
-              <ChevronLeft className="h-3 w-3 text-gray-600" />
+              <ChevronLeft className="h-3 w-3 text-icon" />
             )}
           </button>
 
@@ -67,12 +67,12 @@ export function SidebarNav() {
                         router.push(tab.path)
                       }}
                       className={cn(
-                        'w-full flex items-center gap-3 px-4 py-3 rounded-lg',
+                        'w-full flex items-center gap-3 px-4 py-3 rounded-xl',
                         'transition-colors duration-200',
                         'hover:bg-accent',
                         isActive
                           ? 'bg-primary text-primary-foreground font-semibold'
-                          : 'text-muted-foreground',
+                          : 'text-icon hover:text-foreground',
                         isCollapsed && 'justify-center px-2'
                       )}
                       aria-label={`Navigate to ${tab.label}`}
@@ -93,7 +93,7 @@ export function SidebarNav() {
           </nav>
 
           {/* Footer */}
-          <div className="p-4 border-t border-border">
+          <div className="p-4 border-t border-border-strong">
             {!isCollapsed ? (
               <p className="text-xs text-muted-foreground text-center whitespace-nowrap">
                 MacroPlan v1.0
