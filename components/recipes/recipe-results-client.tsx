@@ -17,10 +17,25 @@
 
 import { useRecipeCache } from '@/lib/hooks/use-recipe-cache'
 import { RecipeGrid } from './recipe-grid'
-import type { SpoonacularRecipe } from '@/lib/types/spoonacular'
+
+interface RecipeData {
+  id: string | number
+  title?: string
+  name?: string
+  imageUrl?: string
+  image_url?: string
+  calories?: number
+  protein?: number
+  protein_grams?: number
+  carbs?: number
+  carb_grams?: number
+  fat?: number
+  fat_grams?: number
+  source?: 'local' | 'fatsecret'
+}
 
 interface RecipeResultsClientProps {
-  initialRecipes: SpoonacularRecipe[]
+  initialRecipes: RecipeData[]
   totalResults: number
   favoriteIds: number[] | string[]
   searchQuery?: string

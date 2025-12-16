@@ -6,16 +6,13 @@ import { Heart } from 'lucide-react'
 import { Recipe } from '@/lib/types/recipe'
 import { macroColors } from '@/lib/design-tokens'
 import { toggleFavorite } from '@/app/recipes/actions'
-import { toggleSpoonacularFavorite } from '@/app/actions/spoonacular-recipes'
 import { useOptimistic, useTransition } from 'react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
-import { SpoonacularBadge } from './spoonacular-badge'
-import { getSpoonacularImageUrl } from '@/lib/utils/spoonacular-image'
 
 interface RecipeCardProps {
-  recipe: Recipe | any // Allow both local Recipe and Spoonacular recipe
+  recipe: Recipe | any // Allow both local Recipe and FatSecret recipe
   isFavorite: boolean
-  source?: 'local' | 'spoonacular'
+  source?: 'local' | 'fatsecret'
 }
 
 export function RecipeCard({ recipe, isFavorite, source = 'local' }: RecipeCardProps) {
@@ -30,35 +27,23 @@ export function RecipeCard({ recipe, isFavorite, source = 'local' }: RecipeCardP
       setOptimisticFavorite(!optimisticFavorite)
     })
 
-    // Call appropriate favorite action based on source
-    if (source === 'spoonacular') {
-      await toggleSpoonacularFavorite(recipe.id)
-    } else {
+    // Call favorite action for local recipes
+    // FatSecret favorites can be added later if needed
+    if (source === 'local') {
       await toggleFavorite(recipe.id)
     }
   }
 
   // Get appropriate values based on source
-  const recipeTitle = source === 'spoonacular' ? recipe.title : recipe.name
-  // For Spoonacular, use high-quality image (636x393 - no watermark)
-  const recipeImage = source === 'spoonacular'
-    ? getSpoonacularImageUrl(recipe.id, '636x393')
-    : recipe.image_url
-  const recipeLink = source === 'spoonacular' ? `/recipes/spoonacular/${recipe.id}` : `/recipes/${recipe.id}`
+  const recipeTitle = source === 'fatsecret' ? recipe.title : recipe.name
+  const recipeImage = source === 'fatsecret' ? recipe.imageUrl : recipe.image_url
+  const recipeLink = source === 'fatsecret' ? `/recipes/fatsecret/${recipe.id}` : `/recipes/${recipe.id}`
 
-  // For Spoonacular, extract nutrition from the nutrition object
-  const calories = source === 'spoonacular'
-    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Calories')?.amount || 0
-    : recipe.calories
-  const protein = source === 'spoonacular'
-    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Protein')?.amount || 0
-    : recipe.protein_grams
-  const carbs = source === 'spoonacular'
-    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Carbohydrates')?.amount || 0
-    : recipe.carb_grams
-  const fat = source === 'spoonacular'
-    ? recipe.nutrition?.nutrients?.find((n: any) => n.name === 'Fat')?.amount || 0
-    : recipe.fat_grams
+  // Get nutrition values
+  const calories = source === 'fatsecret' ? recipe.calories : recipe.calories
+  const protein = source === 'fatsecret' ? recipe.protein : recipe.protein_grams
+  const carbs = source === 'fatsecret' ? recipe.carbs : recipe.carb_grams
+  const fat = source === 'fatsecret' ? recipe.fat : recipe.fat_grams
 
   // Validate image URL for security
   const safeImageUrl = getSafeImageUrl(recipeImage)
@@ -84,13 +69,6 @@ export function RecipeCard({ recipe, isFavorite, source = 'local' }: RecipeCardP
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
               No image
-            </div>
-          )}
-
-          {/* Spoonacular Badge */}
-          {source === 'spoonacular' && (
-            <div className="absolute top-2 left-2">
-              <SpoonacularBadge size="sm" />
             </div>
           )}
 

@@ -59,6 +59,7 @@ export default function MealPlanGeneratorForm({ userProfile }: MealPlanGenerator
     try {
       const result = await generateMealPlan({
         timeFrame: duration === '1' ? 'day' : 'week',
+        numberOfDays: parseInt(duration, 10),
         mealsPerDay,
       })
 
@@ -93,9 +94,9 @@ export default function MealPlanGeneratorForm({ userProfile }: MealPlanGenerator
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header with back button */}
-      <div className="sticky top-0 z-10 bg-card border-b border-border">
-        <div className="flex items-center justify-between px-4 py-3">
+      {/* Sub-header with back button and title */}
+      <div className="bg-background border-b border-border-strong">
+        <div className="flex items-center justify-between px-4 py-2">
           <button
             onClick={() => router.back()}
             className="flex size-10 items-center justify-center rounded-full hover:bg-muted transition-colors -ml-2"

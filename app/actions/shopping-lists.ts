@@ -7,14 +7,13 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
-import { spoonacularService } from '@/lib/services/spoonacular'
-import { generateShoppingList, generateShoppingListCSV } from '@/lib/utils/shopping-list-generator'
+import { fatSecretService } from '@/lib/services/fatsecret'
+import { generateShoppingList, generateShoppingListCSV, type RecipeIngredient } from '@/lib/utils/shopping-list-generator'
 import type {
   ShoppingList,
   ShoppingListInsert,
   CategorizedIngredients,
 } from '@/lib/types/database'
-import type { SpoonacularIngredient } from '@/lib/types/spoonacular'
 
 // ============================================================================
 // Generate Shopping List from Meal Plan
@@ -58,27 +57,40 @@ export async function generateShoppingListFromMealPlan(
       return { success: false, error: 'No meals found in meal plan' }
     }
 
-    // Step 2: Fetch full recipe details for all Spoonacular recipes
-    const allIngredients: SpoonacularIngredient[] = []
+    // Step 2: Fetch full recipe details for all FatSecret recipes
+    const allIngredients: RecipeIngredient[] = []
 
     for (const meal of meals) {
-      if (meal.recipe_source === 'spoonacular' && meal.spoonacular_id) {
+      if (meal.recipe_source === 'fatsecret' && meal.fatsecret_id) {
         try {
-          const recipe = await spoonacularService.getRecipeInformation(
-            meal.spoonacular_id
-          )
+          const recipe = await fatSecretService.getRecipeDetails(meal.fatsecret_id)
 
-          if (recipe.extendedIngredients) {
-            // Multiply by serving multiplier
-            const adjustedIngredients = recipe.extendedIngredients.map((ing) => ({
-              ...ing,
-              amount: ing.amount * meal.serving_multiplier,
-            }))
-            allIngredients.push(...adjustedIngredients)
+          if (recipe?.ingredients?.ingredient) {
+            const ingredientList = Array.isArray(recipe.ingredients.ingredient)
+              ? recipe.ingredients.ingredient
+              : [recipe.ingredients.ingredient]
+
+            // Convert FatSecret ingredients to RecipeIngredient format
+            const formattedIngredients: RecipeIngredient[] = ingredientList.map((ing, idx) => {
+              // Parse the ingredient description (e.g., "2 cups flour")
+              const match = ing.ingredient_description?.match(/^([\d.\/]+)?\s*(\w+)?\s*(.+)$/)
+              const amount = match?.[1] ? parseFloat(match[1]) : 1
+              const unit = match?.[2] || ''
+              const name = match?.[3] || ing.ingredient_description || 'Unknown'
+
+              return {
+                id: `${meal.fatsecret_id}-${idx}`,
+                name: name.trim(),
+                original: ing.ingredient_description || '',
+                amount: amount * meal.serving_multiplier,
+                unit: unit,
+              }
+            })
+            allIngredients.push(...formattedIngredients)
           }
         } catch (error) {
           console.error(
-            `[ShoppingList] Error fetching recipe ${meal.spoonacular_id}:`,
+            `[ShoppingList] Error fetching recipe ${meal.fatsecret_id}:`,
             error
           )
           // Continue with other recipes

@@ -8,7 +8,6 @@ import { useDashboardStore } from '@/stores/dashboard-store'
 import { useDashboardData } from '@/lib/hooks/use-dashboard-data'
 import { useUserProfile } from '@/lib/hooks/use-user-profile'
 import { getRecentPlansWithProgress, archiveOldCompletedPlans } from '@/app/actions/plans'
-import { TopAppBar } from '@/components/layout/top-app-bar'
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { GreetingHeader } from '@/components/dashboard/greeting-header'
 import { MacroTargetCard } from '@/components/dashboard/macro-target-card'
@@ -24,7 +23,7 @@ export default function DashboardPage() {
   const onboardingStore = useOnboardingStore()
   const dashboardStore = useDashboardStore()
   const { macros, progress, stats, recentPlans } = useDashboardData()
-  const { userName, avatarUrl } = useUserProfile()
+  const { userName } = useUserProfile()
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Meal logging state
@@ -139,12 +138,10 @@ export default function DashboardPage() {
   }, [])
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col bg-background group/design-root overflow-x-hidden pb-24 font-display items-center">
-      <div className="w-full max-w-md">
-        {/* Top App Bar */}
-        <TopAppBar userName={userName} avatarUrl={avatarUrl} />
-
-        {/* Greeting */}
+    <div className="min-h-screen bg-background">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-6 pb-24 lg:pb-8">
+        {/* Greeting - Full width */}
         <GreetingHeader
           userName={userName}
           currentStreak={stats.currentStreak}
@@ -154,55 +151,60 @@ export default function DashboardPage() {
           activePlanTotalDays={recentPlans.find((p) => p.isActive)?.totalDays}
         />
 
-        {/* Today's Macro Target */}
-        <MacroTargetCard
-          targetCalories={macros.targetCalories}
-          proteinGrams={macros.proteinGrams}
-          carbGrams={macros.carbGrams}
-          fatGrams={macros.fatGrams}
-          caloriesEaten={dailyTotals.calories}
-          proteinEaten={dailyTotals.protein}
-          carbsEaten={dailyTotals.carbs}
-          fatEaten={dailyTotals.fat}
-          mealsLogged={dailyTotals.mealsLogged}
-          onLogMeal={() => {
-            setEditingMeal(undefined)
-            setIsLogMealOpen(true)
-          }}
-          meals={todaysMeals}
-          onEditMeal={(meal) => {
-            setEditingMeal(meal)
-            setIsLogMealOpen(true)
-          }}
-          onDeleteMeal={async (mealId) => {
-            const result = await deleteMealLog(mealId)
-            if (result.success) {
-              await fetchMealData()
-              toast.success('Meal deleted')
-            } else {
-              toast.error(result.error || 'Failed to delete meal')
-            }
-          }}
-        />
+        {/* Dashboard Grid - Side by side on larger screens */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+          {/* Left Column - Macro Target */}
+          <div className="space-y-6">
+            <MacroTargetCard
+              targetCalories={macros.targetCalories}
+              proteinGrams={macros.proteinGrams}
+              carbGrams={macros.carbGrams}
+              fatGrams={macros.fatGrams}
+              caloriesEaten={dailyTotals.calories}
+              proteinEaten={dailyTotals.protein}
+              carbsEaten={dailyTotals.carbs}
+              fatEaten={dailyTotals.fat}
+              mealsLogged={dailyTotals.mealsLogged}
+              onLogMeal={() => {
+                setEditingMeal(undefined)
+                setIsLogMealOpen(true)
+              }}
+              meals={todaysMeals}
+              onEditMeal={(meal) => {
+                setEditingMeal(meal)
+                setIsLogMealOpen(true)
+              }}
+              onDeleteMeal={async (mealId) => {
+                const result = await deleteMealLog(mealId)
+                if (result.success) {
+                  await fetchMealData()
+                  toast.success('Meal deleted')
+                } else {
+                  toast.error(result.error || 'Failed to delete meal')
+                }
+              }}
+            />
+          </div>
 
-        {/* Generate New Meal Plan CTA */}
-        <GeneratePlanCTA hasActivePlan={recentPlans.some((p) => p.isActive)} />
+          {/* Right Column - CTA and Recent Plans */}
+          <div className="space-y-6">
+            {/* Generate New Meal Plan CTA */}
+            <GeneratePlanCTA hasActivePlan={recentPlans.some((p) => p.isActive)} />
 
-        {/* Recent Plans Section */}
-        {recentPlans.length > 0 && (
-          <>
-            <h2 className="text-foreground text-xl font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-3">
-              Recent Plans
-            </h2>
-            <RecentPlansCarousel plans={recentPlans} />
-          </>
-        )}
+            {/* Recent Plans Section */}
+            {recentPlans.length > 0 && (
+              <div>
+                <h2 className="text-foreground text-xl font-bold leading-tight tracking-[-0.015em] pb-3">
+                  Recent Plans
+                </h2>
+                <RecentPlansCarousel plans={recentPlans} />
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
 
-        {/* Bottom spacing for fixed nav */}
-        <div className="h-4" />
-      </div>
-
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation - Mobile only */}
       <BottomNav activeTab="home" />
 
       {/* Log Meal Modal */}

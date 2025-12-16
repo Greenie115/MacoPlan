@@ -10,7 +10,19 @@ import type {
   CategorizedIngredients,
   ShoppingListIngredient,
 } from '@/lib/types/database'
-import type { SpoonacularIngredient } from '@/lib/types/spoonacular'
+
+/**
+ * Generic recipe ingredient type that works with any recipe source
+ */
+export interface RecipeIngredient {
+  id: number | string
+  name: string
+  nameClean?: string
+  original: string
+  amount: number
+  unit: string
+  aisle?: string
+}
 
 // ============================================================================
 // Ingredient Categorization
@@ -144,7 +156,7 @@ const INGREDIENT_CATEGORIES = {
 // Categorize Ingredient
 // ============================================================================
 
-export function categorizeIngredient(ingredient: SpoonacularIngredient): string {
+export function categorizeIngredient(ingredient: RecipeIngredient): string {
   const name = ingredient.name.toLowerCase()
   const aisle = ingredient.aisle?.toLowerCase() || ''
   const searchText = `${name} ${aisle}`
@@ -173,7 +185,7 @@ interface IngredientMap {
 }
 
 export function aggregateIngredients(
-  ingredients: SpoonacularIngredient[]
+  ingredients: RecipeIngredient[]
 ): IngredientMap {
   const map: IngredientMap = {}
 
@@ -305,7 +317,7 @@ function normalizeUnit(unit: string): string | null {
 // ============================================================================
 
 export function generateShoppingList(
-  ingredientsList: SpoonacularIngredient[]
+  ingredientsList: RecipeIngredient[]
 ): CategorizedIngredients {
   // Step 1: Aggregate duplicate ingredients
   const aggregated = aggregateIngredients(ingredientsList)
@@ -333,7 +345,7 @@ export function generateShoppingList(
     }
 
     // Determine category
-    const fakeSpoonacularIngredient: SpoonacularIngredient = {
+    const ingredientForCategorization: RecipeIngredient = {
       id: 0,
       name: data.name,
       original: data.originals[0],
@@ -342,7 +354,7 @@ export function generateShoppingList(
       aisle: data.aisle,
     }
 
-    const category = categorizeIngredient(fakeSpoonacularIngredient)
+    const category = categorizeIngredient(ingredientForCategorization)
 
     // Add to appropriate category
     if (category in categorized) {

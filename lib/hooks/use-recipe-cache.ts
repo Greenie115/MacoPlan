@@ -13,17 +13,17 @@ import {
   getSearchResults,
   saveSearchResults,
   cleanupExpiredEntries,
+  type CachedRecipe,
 } from '@/lib/cache/session-cache'
-import type { SpoonacularRecipe } from '@/lib/types/spoonacular'
 
 interface UseRecipeCacheOptions {
-  initialRecipes: SpoonacularRecipe[]
+  initialRecipes: CachedRecipe[]
   totalResults: number
   enableScrollRestoration?: boolean
 }
 
 interface UseRecipeCacheReturn {
-  recipes: SpoonacularRecipe[]
+  recipes: CachedRecipe[]
   totalResults: number
   isFromCache: boolean
   saveToCache: (scrollPosition?: number) => void
@@ -49,7 +49,7 @@ export function useRecipeCache({
   enableScrollRestoration = true,
 }: UseRecipeCacheOptions): UseRecipeCacheReturn {
   const searchParams = useSearchParams()
-  const [recipes, setRecipes] = useState<SpoonacularRecipe[]>(initialRecipes)
+  const [recipes, setRecipes] = useState<CachedRecipe[]>(initialRecipes)
   const [total, setTotal] = useState(totalResults)
   const [isFromCache, setIsFromCache] = useState(false)
   const hasRestoredScroll = useRef(false)

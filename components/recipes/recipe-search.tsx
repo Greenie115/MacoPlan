@@ -4,12 +4,12 @@ import { Search, Loader2 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebounce } from '@/lib/hooks/use-debounce'
 import { useState, useEffect, useRef } from 'react'
-import { autocompleteRecipes } from '@/app/actions/spoonacular-recipes'
+import { searchRecipes } from '@/app/actions/fatsecret-recipes'
+import { Input } from '@/components/ui/input'
 
 interface AutocompleteResult {
-  id: number
+  id: string
   title: string
-  imageType: string
 }
 
 export function RecipeSearch() {
@@ -33,10 +33,12 @@ export function RecipeSearch() {
   useEffect(() => {
     if (debouncedAutocomplete.length >= 3 && showAutocomplete) {
       setIsLoadingAutocomplete(true)
-      autocompleteRecipes(debouncedAutocomplete)
+      searchRecipes({ search_expression: debouncedAutocomplete, max_results: 5 })
         .then((response) => {
           if (response.success && response.data) {
-            setAutocompleteResults(response.data)
+            setAutocompleteResults(
+              response.data.recipes.map(r => ({ id: r.id, title: r.title }))
+            )
           }
           setIsLoadingAutocomplete(false)
         })
@@ -73,20 +75,20 @@ export function RecipeSearch() {
   const handleSelectSuggestion = (suggestion: AutocompleteResult) => {
     setSearchQuery(suggestion.title)
     setShowAutocomplete(false)
-    // Navigate to Spoonacular recipe detail page
-    router.push(`/recipes/spoonacular/${suggestion.id}`)
+    // Navigate to FatSecret recipe detail page
+    router.push(`/recipes/fatsecret/${suggestion.id}`)
   }
 
   return (
     <div className="px-4 py-2 relative">
       <div className="relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 z-10">
           <Search className="h-5 w-5 text-icon" />
         </div>
-        <input
+        <Input
           ref={inputRef}
           type="search"
-          className="block w-full h-12 rounded-xl border border-border py-2 pl-12 pr-4 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary focus:outline-none focus:ring-2 bg-card"
+          className="h-12 pl-12 pr-4"
           placeholder="Search recipes..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

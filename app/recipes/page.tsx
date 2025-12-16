@@ -1,157 +1,15 @@
-import { createClient } from '@/lib/supabase/server'
-import { TopAppBar } from '@/components/layout/top-app-bar'
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { RecipeSearch } from '@/components/recipes/recipe-search'
 import { RecipeFiltersAdvanced } from '@/components/recipes/recipe-filters-advanced'
 import { RecipeTabs } from '@/components/recipes/recipe-tabs'
 import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
 import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
-import { RecipeDietaryToggle } from '@/components/recipes/recipe-dietary-toggle'
 import { getFavoriteRecipeIds } from './actions'
-import {
-  searchSpoonacularRecipes,
-  getUserFavoriteSpoonacularIds,
-} from '@/app/actions/spoonacular-recipes'
-import { getUserTopKeywords } from '@/app/actions/recipe-tracking'
+import { searchRecipes } from '@/app/actions/fatsecret-recipes'
 import { validateRecipeFilters } from '@/lib/utils/filter-validation'
-import { withCache } from '@/lib/cache/recipe-cache'
-import type { SpoonacularRecipe } from '@/lib/types/spoonacular'
 
 // Pagination configuration
 const RECIPES_PER_PAGE = 20
-
-/**
- * Helper function to search recipes with multiple meal types
- *
- * Features:
- * - Intelligent caching to reduce API costs (15min TTL)
- * - Validates meal types against allowed values
- * - Limits to MAX 5 meal types to prevent DoS
- * - Makes parallel queries when multiple meal types selected
- * - Merges and deduplicates results
- * - Proper TypeScript typing (no 'any')
- */
-async function searchWithMealTypes(
-  baseParams: {
-    query?: string
-    number?: number
-    page?: number
-    sort?: 'popularity' | 'healthiness' | 'price' | 'time' | 'random' | 'max-used-ingredients' | 'min-missing-ingredients'
-    applyDietaryFilter?: boolean
-    cuisines?: string[]
-    maxReadyTime?: number
-  },
-  mealTypes: string[] | undefined
-) {
-  // P0 Fix: Validate and limit meal types to prevent DoS
-  const MAX_MEAL_TYPES = 5
-  const validatedMealTypes = mealTypes && mealTypes.length > 0
-    ? mealTypes.slice(0, MAX_MEAL_TYPES)
-    : undefined
-
-  if (validatedMealTypes && validatedMealTypes.length > MAX_MEAL_TYPES) {
-    console.warn(
-      `[searchWithMealTypes] Limited meal types from ${mealTypes?.length} to ${MAX_MEAL_TYPES}`
-    )
-  }
-
-  // If no meal types or only one, make a single cached query
-  if (!validatedMealTypes || validatedMealTypes.length === 0) {
-    return await withCache(
-      { ...baseParams, type: undefined },
-      async () => await searchSpoonacularRecipes(baseParams)
-    )
-  }
-
-  if (validatedMealTypes.length === 1) {
-    return await withCache(
-      { ...baseParams, type: validatedMealTypes[0] },
-      async () =>
-        await searchSpoonacularRecipes({
-          ...baseParams,
-          type: validatedMealTypes[0],
-        })
-    )
-  }
-
-  // Multiple meal types: make parallel cached queries
-  const cacheKey = {
-    ...baseParams,
-    mealTypes: validatedMealTypes.sort().join(','),
-  }
-
-  return await withCache(cacheKey, async () => {
-    console.log(
-      `[searchWithMealTypes] Making ${validatedMealTypes.length} parallel queries for meal types:`,
-      validatedMealTypes
-    )
-
-    const results = await Promise.all(
-      validatedMealTypes.map((mealType) =>
-        searchSpoonacularRecipes({
-          ...baseParams,
-          type: mealType,
-        })
-      )
-    )
-
-    // P1 Fix: Use proper TypeScript type instead of 'any'
-    const allRecipes: SpoonacularRecipe[] = []
-    let totalResults = 0
-    let hasError = false
-    let errorMessage: string | undefined
-
-    for (const result of results) {
-      if (result.success && result.data) {
-        allRecipes.push(...(result.data.results || []))
-        totalResults += result.data.totalResults || 0
-      } else if (result.error) {
-        hasError = true
-        errorMessage = result.error
-      }
-    }
-
-    // If all queries failed, return error
-    if (hasError && allRecipes.length === 0) {
-      return {
-        success: false,
-        error: errorMessage || 'Failed to fetch recipes',
-      }
-    }
-
-    // Deduplicate by recipe ID
-    const uniqueRecipes = Array.from(
-      new Map(allRecipes.map((r) => [r.id, r])).values()
-    )
-
-    // Sort by popularity (stable sort)
-    const sortedRecipes = uniqueRecipes.sort((a, b) => {
-      // Primary: sort by aggregated likes (popularity)
-      const likesA = a.aggregateLikes || 0
-      const likesB = b.aggregateLikes || 0
-      if (likesB !== likesA) {
-        return likesB - likesA
-      }
-      // Secondary: health score
-      const healthA = a.healthScore || 0
-      const healthB = b.healthScore || 0
-      return healthB - healthA
-    })
-
-    console.log(
-      `[searchWithMealTypes] Merged ${allRecipes.length} recipes → ${sortedRecipes.length} unique recipes`
-    )
-
-    return {
-      success: true,
-      data: {
-        results: sortedRecipes,
-        totalResults: sortedRecipes.length,
-      },
-      error: undefined,
-    }
-  })
-}
 
 interface RecipesPageProps {
   searchParams: Promise<{
@@ -172,320 +30,91 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   const filterTags = params.filters?.split(',').filter(Boolean) || []
   const currentPage = Math.max(1, parseInt(params.page || '1', 10))
   const activeTab = params.tab || 'all'
-  const dietFilter = params.dietFilter !== 'false' // Default: true (enabled)
 
-  // P0 Fix: Validate and sanitize all filter parameters to prevent injection attacks
+  // Validate filter parameters
   const validatedFilters = validateRecipeFilters({
     cuisine: params.cuisine,
     maxTime: params.maxTime,
     type: params.type,
   })
 
-  const cuisineFilter = validatedFilters.cuisines
-  const maxTimeFilter = validatedFilters.maxReadyTime
-  const mealTypeFilter = validatedFilters.mealTypes
-  const rawPrepTimes = validatedFilters.rawPrepTimes // For display in chips
+  const mealTypeFilter = validatedFilters.mealTypes?.[0] || undefined
 
-  const supabase = await createClient()
+  // Fetch FatSecret recipes
+  let fatSecretRecipes: any[] = []
+  let fatSecretTotalResults = 0
+  let fatSecretError: string | null = null
 
-  // Fetch user profile for avatar
-  const { data: { user } } = await supabase.auth.getUser()
-  let userName = 'User'
-  let avatarUrl: string | null = null
-
-  if (user) {
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('full_name, avatar_url')
-      .eq('user_id', user.id)
-      .single()
-
-    if (profile) {
-      userName = profile.full_name || user.email?.split('@')[0] || 'User'
-      avatarUrl = profile.avatar_url
-    }
+  // Map meal type to FatSecret recipe type
+  const recipeTypeMap: Record<string, string> = {
+    'main-course': 'Main Dish',
+    'side-dish': 'Side Dish',
+    'dessert': 'Dessert',
+    'appetizer': 'Appetizer',
+    'salad': 'Salad',
+    'bread': 'Bread',
+    'breakfast': 'Breakfast',
+    'soup': 'Soup',
+    'beverage': 'Beverage',
+    'sauce': 'Sauce',
+    'marinade': 'Marinade',
+    'fingerfood': 'Snack',
+    'snack': 'Snack',
+    'drink': 'Beverage',
   }
 
-  // Fetch Spoonacular recipes (with dietary filtering if enabled)
-  let spoonacularRecipes: any[] = []
-  let spoonacularTotalResults = 0
-  let spoonacularError = null
-  let isAdaptiveRecommendation = false
+  const fatSecretRecipeType = mealTypeFilter
+    ? recipeTypeMap[mealTypeFilter] || undefined
+    : undefined
 
-  if (searchQuery) {
-    // User is searching - fetch search results sorted by popularity
-    const spoonacularResult = await searchWithMealTypes(
-      {
-        query: searchQuery,
-        page: currentPage,
-        applyDietaryFilter: dietFilter,
-        sort: 'popularity', // Sort search results by popularity
-        cuisines: cuisineFilter,
-        maxReadyTime: maxTimeFilter,
-      },
-      mealTypeFilter
-    )
+  // Search FatSecret
+  const defaultSearchTerm = searchQuery || 'high protein healthy'
 
-    if (spoonacularResult.success && spoonacularResult.data) {
-      spoonacularRecipes = spoonacularResult.data.results || []
-      spoonacularTotalResults = spoonacularResult.data.totalResults || 0
-    } else {
-      spoonacularError = spoonacularResult.error
-    }
-  } else if (user) {
-    // No search query - show adaptive recommendations
-    // Get user's top keywords (recipes they've viewed 3+ times)
-    const topKeywordsResult = await getUserTopKeywords(2, 3) // Top 2 keywords, min 3 views
+  const fatSecretResult = await searchRecipes({
+    search_expression: defaultSearchTerm,
+    recipe_type: fatSecretRecipeType as any,
+    max_results: RECIPES_PER_PAGE,
+    page_number: currentPage - 1,
+  })
 
-    if (topKeywordsResult.success && topKeywordsResult.data && topKeywordsResult.data.length > 0) {
-      // User has established preferences - show personalized blend
-      isAdaptiveRecommendation = true
-      const topKeywords = topKeywordsResult.data
-
-      console.log('[AdaptiveRecipes] User has preferences:', topKeywords)
-
-      // Fetch 60% keyword-based + 40% general top-rated
-      const keyword1 = topKeywords[0]?.keyword
-      const keyword2 = topKeywords[1]?.keyword
-
-      const [keywordResult1, keywordResult2, generalResult] = await Promise.all([
-        // Keyword-based recipe 1 (30% of results)
-        keyword1
-          ? searchWithMealTypes(
-              {
-                query: keyword1,
-                number: 6,
-                sort: 'popularity',
-                applyDietaryFilter: dietFilter,
-                cuisines: cuisineFilter,
-                maxReadyTime: maxTimeFilter,
-              },
-              mealTypeFilter
-            )
-          : null,
-        // Keyword-based recipe 2 (30% of results)
-        keyword2
-          ? searchWithMealTypes(
-              {
-                query: keyword2,
-                number: 6,
-                sort: 'popularity',
-                applyDietaryFilter: dietFilter,
-                cuisines: cuisineFilter,
-                maxReadyTime: maxTimeFilter,
-              },
-              mealTypeFilter
-            )
-          : null,
-        // General top-rated (40% of results)
-        searchWithMealTypes(
-          {
-            query: 'high protein',
-            number: 8,
-            sort: 'popularity',
-            applyDietaryFilter: dietFilter,
-            cuisines: cuisineFilter,
-            maxReadyTime: maxTimeFilter,
-          },
-          mealTypeFilter
-        ),
-      ])
-
-      // Combine results
-      const keywordRecipes1 = keywordResult1?.data?.results || []
-      const keywordRecipes2 = keywordResult2?.data?.results || []
-      const generalRecipes = generalResult?.data?.results || []
-
-      // Interleave for variety: general, keyword1, keyword2, general, keyword1...
-      spoonacularRecipes = []
-      const maxLength = Math.max(
-        generalRecipes.length,
-        keywordRecipes1.length,
-        keywordRecipes2.length
-      )
-
-      for (let i = 0; i < maxLength; i++) {
-        if (generalRecipes[i]) spoonacularRecipes.push(generalRecipes[i])
-        if (keywordRecipes1[i]) spoonacularRecipes.push(keywordRecipes1[i])
-        if (keywordRecipes2[i]) spoonacularRecipes.push(keywordRecipes2[i])
-      }
-
-      // Remove duplicates by ID
-      spoonacularRecipes = Array.from(
-        new Map(spoonacularRecipes.map((r: any) => [r.id, r])).values()
-      )
-
-      spoonacularTotalResults = spoonacularRecipes.length
-    } else {
-      // New user or not enough data - show general top-rated recipes
-      console.log('[AdaptiveRecipes] New user - showing top-rated high-protein recipes')
-
-      const spoonacularResult = await searchWithMealTypes(
-        {
-          query: 'high protein',
-          number: 20,
-          sort: 'popularity',
-          applyDietaryFilter: dietFilter,
-          cuisines: cuisineFilter,
-          maxReadyTime: maxTimeFilter,
-        },
-        mealTypeFilter
-      )
-
-      if (spoonacularResult.success && spoonacularResult.data) {
-        spoonacularRecipes = spoonacularResult.data.results || []
-        spoonacularTotalResults = spoonacularResult.data.totalResults || 0
-      } else {
-        spoonacularError = spoonacularResult.error
-      }
-    }
+  if (fatSecretResult.success && fatSecretResult.data) {
+    fatSecretRecipes = fatSecretResult.data.recipes.map((recipe) => ({
+      id: recipe.id,
+      title: recipe.title,
+      name: recipe.title,
+      imageUrl: recipe.imageUrl,
+      image_url: recipe.imageUrl,
+      calories: recipe.calories,
+      protein: recipe.protein,
+      protein_grams: recipe.protein,
+      carbs: recipe.carbs,
+      carb_grams: recipe.carbs,
+      fat: recipe.fat,
+      fat_grams: recipe.fat,
+      source: 'fatsecret' as const,
+    }))
+    fatSecretTotalResults = fatSecretResult.data.totalResults
   } else {
-    // Anonymous user - show general top-rated recipes
-    const spoonacularResult = await searchWithMealTypes(
-      {
-        query: 'high protein',
-        number: 20,
-        sort: 'popularity',
-        applyDietaryFilter: false, // No dietary filtering for anonymous
-        cuisines: cuisineFilter,
-        maxReadyTime: maxTimeFilter,
-      },
-      mealTypeFilter
-    )
-
-    if (spoonacularResult.success && spoonacularResult.data) {
-      spoonacularRecipes = spoonacularResult.data.results || []
-      spoonacularTotalResults = spoonacularResult.data.totalResults || 0
-    } else {
-      spoonacularError = spoonacularResult.error
-    }
+    fatSecretError = fatSecretResult.error || 'Failed to fetch recipes'
   }
 
-  // Calculate pagination range
-  const from = (currentPage - 1) * RECIPES_PER_PAGE
-  const to = from + RECIPES_PER_PAGE - 1
-
-  // Build the query with filtering
-  let query = supabase
-    .from('recipes')
-    .select(
-      `
-      *,
-      recipe_tags(tag)
-    `,
-      { count: 'exact' }
-    )
-
-  // Apply text search filter on name and description
-  // Escape special SQL LIKE characters (%, _) to prevent SQL injection
-  if (searchQuery) {
-    const sanitizedQuery = searchQuery.replace(/[%_]/g, '\\$&')
-    query = query.or(
-      `name.ilike.%${sanitizedQuery}%,description.ilike.%${sanitizedQuery}%`
-    )
-  }
-
-  // Don't apply tag filters at database level - will be applied client-side
-  // This ensures consistent behavior for both single and multiple tag filters
-  // TODO: Optimize with PostgreSQL RPC function for large datasets:
-  //   CREATE FUNCTION get_recipes_with_all_tags(tag_array text[])
-  //   This is acceptable for current dataset size (<100 recipes)
-
-  query = query.order('created_at', { ascending: false })
-
-  let recipes = []
-  let count = 0
-  let error = null
-
-  try {
-    const result = await query
-    recipes = result.data || []
-    count = result.count || 0
-    error = result.error
-  } catch (e) {
-    console.error('Unexpected error fetching recipes:', e)
-  }
-
-  if (error) {
-    console.error('Supabase error fetching recipes:', error.message)
-    // Don't throw, just let it render empty state
-  }
-
-  // Apply tag filters client-side (works for both single and multiple tags with AND logic)
-  let filteredRecipes = recipes || []
-  if (filterTags.length > 0 && filteredRecipes.length > 0) {
-    filteredRecipes = filteredRecipes.filter((recipe: any) => {
-      const recipeTags = recipe.recipe_tags?.map((t: any) => t.tag) || []
-      return filterTags.every((tag) => recipeTags.includes(tag))
-    })
-  }
-
-  // Remove duplicate recipes (due to JOIN with recipe_tags)
-  let uniqueRecipes = Array.from(
-    new Map(filteredRecipes.map((r: any) => [r.id, r])).values()
-  )
-
-  // Get user's favorite recipe IDs (both local and Spoonacular)
+  // Get user's favorite recipe IDs
   const favoriteIds = await getFavoriteRecipeIds()
-  const { data: favoriteSpoonacularIds = [] } =
-    await getUserFavoriteSpoonacularIds()
 
-  // Always show Spoonacular recipes (adaptive or search)
-  let allRecipes: any[] = spoonacularRecipes.map((recipe: any) => ({
-    ...recipe,
-    source: 'spoonacular',
-    id: recipe.id, // Spoonacular ID
-  }))
-
-  // Filter by favorites tab if active
-  if (activeTab === 'favorites') {
-    // Filter Spoonacular recipes by favorited IDs
-    allRecipes = allRecipes.filter((recipe: any) =>
-      favoriteSpoonacularIds.includes(recipe.id)
-    )
-  }
-
-  let totalResults = allRecipes.length
+  const allRecipes = fatSecretRecipes
+  const totalResults = fatSecretTotalResults
 
   // Calculate pagination info
   const totalPages = Math.ceil(totalResults / RECIPES_PER_PAGE)
   const hasNextPage = currentPage < totalPages
   const hasPrevPage = currentPage > 1
 
-  // Use Spoonacular results directly (already paginated)
-  const paginatedRecipes = allRecipes
-
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Top App Bar */}
-      <TopAppBar userName={userName} avatarUrl={avatarUrl} />
-
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-gray-900">Recipe Library</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            {searchQuery
-              ? `Search results for "${searchQuery}" (sorted by popularity)`
-              : isAdaptiveRecommendation
-              ? '✨ Personalized recommendations based on your preferences'
-              : '🌟 Top-rated high-protein recipes'}
-            {totalResults > 0 && ` · ${totalResults} ${searchQuery ? 'results' : 'recipes'}`}
-          </p>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-background pb-20">
       {/* Search */}
       <div className="max-w-7xl mx-auto">
         <RecipeSearch />
       </div>
-
-      {/* Dietary Filter Toggle (show when searching) */}
-      {searchQuery && (
-        <div className="max-w-7xl mx-auto">
-          <RecipeDietaryToggle />
-        </div>
-      )}
 
       {/* Tabs: All / Favorites (hide when searching) */}
       {!searchQuery && (
@@ -504,19 +133,24 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
 
       {/* Recipe Grid with Session Cache */}
       <RecipeResultsClient
-        initialRecipes={paginatedRecipes}
+        initialRecipes={allRecipes}
         totalResults={totalResults}
-        favoriteIds={searchQuery ? favoriteSpoonacularIds : favoriteIds}
+        favoriteIds={favoriteIds}
         searchQuery={searchQuery}
-        isAdaptiveRecommendation={isAdaptiveRecommendation}
+        isAdaptiveRecommendation={false}
       />
 
       {/* Error Message */}
-      {spoonacularError && (
+      {fatSecretError && (
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <p className="text-sm text-red-800">
-              Unable to fetch recipes from Spoonacular. Please try again later.
+          <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4">
+            <p className="text-sm text-destructive">
+              Unable to fetch recipes from FatSecret. Please try again later.
+              {fatSecretError.includes('IP') && (
+                <span className="block mt-1 text-xs">
+                  Note: The FatSecret API requires IP whitelisting. Please check your FatSecret developer account.
+                </span>
+              )}
             </p>
           </div>
         </div>
@@ -538,15 +172,15 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
                     }).toString()}`
                   : '#'
               }
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 hasPrevPage
-                  ? 'bg-primary text-white hover:bg-primary/90'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed pointer-events-none'
+                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  : 'bg-muted text-muted-foreground cursor-not-allowed pointer-events-none'
               }`}
             >
               Previous
             </a>
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-muted-foreground">
               Page {currentPage} of {totalPages}
             </span>
             <a
@@ -561,10 +195,10 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
                     }).toString()}`
                   : '#'
               }
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 hasNextPage
-                  ? 'bg-primary text-white hover:bg-primary/90'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed pointer-events-none'
+                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  : 'bg-muted text-muted-foreground cursor-not-allowed pointer-events-none'
               }`}
             >
               Next
@@ -572,6 +206,17 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
           </div>
         </div>
       )}
+
+      {/* FatSecret Attribution - Required by API Terms (visible without login) */}
+      <div className="max-w-7xl mx-auto px-4 pb-6 flex justify-center">
+        <a href="https://www.fatsecret.com" target="_blank" rel="noopener noreferrer">
+          <img
+            src="https://platform.fatsecret.com/api/static/images/powered_by_fatsecret.svg"
+            alt="Powered by fatsecret"
+            className="h-5 opacity-50 hover:opacity-100 transition-opacity"
+          />
+        </a>
+      </div>
 
       {/* Bottom Navigation */}
       <BottomNav activeTab="recipes" />

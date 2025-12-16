@@ -32,8 +32,6 @@ export default async function MealPlanDetailPage({
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <MealPlanView plan={result.data.plan} meals={result.data.meals} />
-    </div>
+    <MealPlanView plan={result.data.plan} meals={result.data.meals} />
   )
 }

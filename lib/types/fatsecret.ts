@@ -227,24 +227,23 @@ export interface FatSecretRecipeSearchParams {
   max_results?: number // Default 20, max 50
 }
 
+// Valid FatSecret API recipe types (from recipe_types.get endpoint)
+// Note: These are the actual values accepted by the API - use these exact strings
 export type FatSecretRecipeTypeFilter =
-  | 'Appetizer'
+  | 'Appetizers'
   | 'Baked'
-  | 'Beverage'
-  | 'Bread'
+  | 'Beverages'
+  | 'Breads'
   | 'Breakfast'
-  | 'Brunch'
-  | 'Dessert'
-  | 'Dinner'
-  | 'Lunch'
-  | 'Main Dish'
-  | 'Salad'
-  | 'Sandwich'
-  | 'Side Dish'
-  | 'Smoothie'
-  | 'Snack'
-  | 'Soup'
-  | 'Vegetarian'
+  | 'Desserts'
+  | 'Main Dishes'
+  | 'Preserving'
+  | 'Salads'
+  | 'Sandwiches'
+  | 'Sauces and Condiments'
+  | 'Side Dishes'
+  | 'Soups'
+  | 'Vegetables'
 
 // ============================================================================
 // Normalized Types (for internal use)

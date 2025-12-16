@@ -2,16 +2,14 @@
  * FatSecret Meal Plan Generator Service
  *
  * Builds meal plans programmatically by:
- * 1. Searching recipes by meal type (Breakfast, Lunch, Dinner)
- * 2. Filtering by macro targets (high protein, low carb, etc.)
- * 3. Ensuring at least one meal per type
- * 4. Filling remaining slots with snacks
+ * 1. Finding recipes that naturally match calorie targets (no forced scaling)
+ * 2. Running searches in parallel for speed
+ * 3. Returning recipes with original nutritional values (user adjusts servings manually)
  */
 
 import { fatSecretService } from './fatsecret'
+import { checkDietaryConflict } from '@/lib/utils/recipe-keywords'
 import type {
-  FatSecretRecipeSearchParams,
-  FatSecretRecipeTypeFilter,
   NormalizedRecipe,
   MealType,
   MealSlot,
@@ -24,50 +22,140 @@ import type {
 // Configuration
 // ============================================================================
 
-// Meal type mappings to FatSecret recipe types
-const MEAL_TYPE_FILTERS: Record<MealType, FatSecretRecipeTypeFilter[]> = {
-  breakfast: ['Breakfast', 'Brunch', 'Smoothie'],
-  lunch: ['Lunch', 'Main Dish', 'Salad', 'Sandwich', 'Soup'],
-  dinner: ['Dinner', 'Main Dish'],
-  snack: ['Snack', 'Appetizer', 'Smoothie', 'Dessert'],
+// Meal type search term prefixes (base - used when no dietary restriction)
+const MEAL_TYPE_SEARCH_PREFIXES: Record<MealType, string[]> = {
+  breakfast: ['breakfast', 'morning', 'eggs', 'oatmeal', 'pancakes', 'omelette'],
+  lunch: ['lunch', 'salad', 'sandwich', 'soup', 'wrap', 'bowl'],
+  dinner: ['dinner', 'chicken', 'beef', 'salmon', 'grilled', 'roasted'],
+  snack: ['snack', 'smoothie', 'protein', 'nuts', 'yogurt', 'energy'],
 }
 
-// Search terms for high protein recipes
-const HIGH_PROTEIN_TERMS = [
-  'chicken',
-  'beef',
-  'salmon',
-  'tuna',
-  'eggs',
-  'turkey',
-  'shrimp',
-  'pork',
-  'tofu',
-  'greek yogurt',
-  'cottage cheese',
-  'protein',
+// Vegetarian-safe prefixes
+const MEAL_TYPE_SEARCH_PREFIXES_VEGETARIAN: Record<MealType, string[]> = {
+  breakfast: ['breakfast', 'morning', 'eggs', 'oatmeal', 'pancakes', 'omelette', 'vegetarian'],
+  lunch: ['lunch', 'salad', 'sandwich', 'soup', 'wrap', 'bowl', 'vegetarian'],
+  dinner: ['dinner', 'vegetarian', 'veggie', 'grilled', 'roasted', 'pasta', 'curry'],
+  snack: ['snack', 'smoothie', 'protein', 'nuts', 'yogurt', 'energy'],
+}
+
+// Vegan-safe prefixes
+const MEAL_TYPE_SEARCH_PREFIXES_VEGAN: Record<MealType, string[]> = {
+  breakfast: ['breakfast', 'morning', 'vegan', 'oatmeal', 'smoothie', 'avocado'],
+  lunch: ['lunch', 'salad', 'vegan', 'soup', 'wrap', 'bowl', 'falafel'],
+  dinner: ['dinner', 'vegan', 'veggie', 'grilled', 'roasted', 'stir fry', 'curry'],
+  snack: ['snack', 'smoothie', 'vegan', 'nuts', 'fruit', 'energy'],
+}
+
+// Keto-safe prefixes (low carb, high fat)
+const MEAL_TYPE_SEARCH_PREFIXES_KETO: Record<MealType, string[]> = {
+  breakfast: ['keto breakfast', 'eggs', 'bacon', 'avocado', 'omelette', 'low carb'],
+  lunch: ['keto lunch', 'salad', 'grilled', 'chicken', 'bunless', 'low carb'],
+  dinner: ['keto dinner', 'steak', 'salmon', 'grilled', 'roasted', 'low carb'],
+  snack: ['keto snack', 'cheese', 'nuts', 'avocado', 'fat bomb', 'low carb'],
+}
+
+// Paleo-safe prefixes (no grains, legumes, dairy, processed)
+const MEAL_TYPE_SEARCH_PREFIXES_PALEO: Record<MealType, string[]> = {
+  breakfast: ['paleo breakfast', 'eggs', 'bacon', 'sweet potato', 'fruit', 'whole30'],
+  lunch: ['paleo lunch', 'salad', 'grilled', 'chicken', 'fish', 'whole30'],
+  dinner: ['paleo dinner', 'steak', 'salmon', 'grilled', 'roasted', 'whole30'],
+  snack: ['paleo snack', 'nuts', 'fruit', 'beef jerky', 'vegetables', 'whole30'],
+}
+
+// Mediterranean prefixes (fish, olive oil, vegetables, whole grains)
+const MEAL_TYPE_SEARCH_PREFIXES_MEDITERRANEAN: Record<MealType, string[]> = {
+  breakfast: ['mediterranean breakfast', 'greek yogurt', 'eggs', 'olive oil', 'fruit'],
+  lunch: ['mediterranean lunch', 'greek salad', 'hummus', 'falafel', 'fish'],
+  dinner: ['mediterranean dinner', 'salmon', 'grilled fish', 'olive oil', 'greek'],
+  snack: ['mediterranean snack', 'hummus', 'olives', 'nuts', 'fruit', 'greek yogurt'],
+}
+
+// Search terms for high protein recipes (meat-based)
+const HIGH_PROTEIN_TERMS_MEAT = [
+  'chicken', 'beef', 'salmon', 'tuna', 'turkey',
+  'shrimp', 'pork',
 ]
 
-// Search terms for low carb recipes
-const LOW_CARB_TERMS = [
-  'keto',
-  'low carb',
-  'grilled',
-  'roasted',
-  'salad',
-  'steak',
-  'fish',
-  'chicken breast',
-  'cauliflower',
-  'zucchini',
+// Search terms for high protein recipes (vegetarian-friendly)
+const HIGH_PROTEIN_TERMS_VEGETARIAN = [
+  'eggs', 'tofu', 'greek yogurt', 'cottage cheese', 'protein',
+  'lentils', 'chickpea', 'beans', 'tempeh', 'paneer', 'quinoa',
 ]
 
-// Default calorie distribution per meal type (percentage of daily target)
-const CALORIE_DISTRIBUTION: Record<MealType, number> = {
-  breakfast: 0.25, // 25%
-  lunch: 0.30, // 30%
-  dinner: 0.30, // 30%
-  snack: 0.15, // 15% (split among snacks)
+// Search terms for high protein recipes (vegan-friendly)
+const HIGH_PROTEIN_TERMS_VEGAN = [
+  'tofu', 'tempeh', 'lentils', 'chickpea', 'beans', 'seitan',
+  'quinoa', 'edamame', 'plant protein', 'vegan protein',
+]
+
+// Search terms for low carb recipes (meat-based)
+const LOW_CARB_TERMS_MEAT = [
+  'steak', 'fish', 'chicken breast',
+]
+
+// Search terms for low carb recipes (vegetarian-friendly)
+const LOW_CARB_TERMS_VEGETARIAN = [
+  'keto', 'low carb', 'grilled', 'roasted', 'salad',
+  'cauliflower', 'zucchini', 'spinach', 'kale',
+]
+
+// Search terms for keto diet
+const KETO_SEARCH_TERMS = [
+  'keto', 'low carb', 'eggs', 'bacon', 'avocado', 'cheese',
+  'chicken', 'salmon', 'steak', 'cauliflower', 'butter',
+  'cream cheese', 'spinach', 'zucchini', 'fat bomb',
+]
+
+// Search terms for paleo diet
+const PALEO_SEARCH_TERMS = [
+  'paleo', 'whole30', 'grain free', 'chicken', 'beef', 'salmon',
+  'eggs', 'sweet potato', 'vegetables', 'nuts', 'fruit',
+  'grass fed', 'wild caught', 'avocado',
+]
+
+// Search terms for mediterranean diet
+const MEDITERRANEAN_SEARCH_TERMS = [
+  'mediterranean', 'greek', 'olive oil', 'salmon', 'fish',
+  'hummus', 'falafel', 'quinoa', 'chickpea', 'lemon',
+  'tomato', 'cucumber', 'feta', 'grilled fish',
+]
+
+// Foods to avoid for keto (high carb)
+const KETO_AVOID_FOODS = [
+  'bread', 'pasta', 'rice', 'potato', 'potatoes', 'noodles',
+  'sugar', 'flour', 'corn', 'oatmeal', 'oats', 'cereal',
+  'banana', 'apple', 'orange', 'grapes', 'mango',
+  'beans', 'lentils', 'quinoa', 'couscous', 'tortilla',
+  'pizza', 'sandwich', 'pancake', 'waffle', 'muffin',
+  'cookie', 'cake', 'brownie', 'candy', 'soda',
+]
+
+// Foods to avoid for paleo (grains, legumes, dairy, processed)
+const PALEO_AVOID_FOODS = [
+  'bread', 'pasta', 'rice', 'oatmeal', 'oats', 'cereal', 'wheat',
+  'corn', 'quinoa', 'barley', 'flour', 'tortilla', 'noodles',
+  'beans', 'lentils', 'peanut', 'chickpea', 'soy', 'tofu', 'edamame',
+  'milk', 'cheese', 'yogurt', 'cream', 'butter', 'ice cream',
+  'sugar', 'candy', 'soda', 'processed',
+]
+
+// Calorie tolerance - how close we try to match (tighter = better natural fits)
+const CALORIE_TOLERANCE = 0.15
+
+// ============================================================================
+// Extended Types (kept for backward compatibility but no longer used for scaling)
+// ============================================================================
+
+export interface RecipeWithMultiplier extends NormalizedRecipe {
+  servingMultiplier: number
+  adjustedCalories: number
+  adjustedProtein: number
+  adjustedCarbs: number
+  adjustedFat: number
+}
+
+export interface MealSlotWithMultiplier extends Omit<MealSlot, 'recipe'> {
+  recipe: RecipeWithMultiplier | null
 }
 
 // ============================================================================
@@ -75,10 +163,7 @@ const CALORIE_DISTRIBUTION: Record<MealType, number> = {
 // ============================================================================
 
 class FatSecretMealPlanService {
-  // Request deduplication
   private inflightGenerations = new Map<string, Promise<DailyMealPlan | WeeklyMealPlan>>()
-
-  // Recipe cache to avoid fetching same recipes multiple times
   private recipeCache = new Map<string, NormalizedRecipe>()
 
   /**
@@ -89,7 +174,6 @@ class FatSecretMealPlanService {
   ): Promise<DailyMealPlan | WeeklyMealPlan> {
     const cacheKey = JSON.stringify(params)
 
-    // Check for in-flight request
     if (this.inflightGenerations.has(cacheKey)) {
       console.log('[MealPlanGenerator] Generation deduplicated')
       return this.inflightGenerations.get(cacheKey)!
@@ -107,73 +191,106 @@ class FatSecretMealPlanService {
 
   /**
    * Generate a single day meal plan
+   * Finds recipes that naturally match calorie targets - no automatic scaling
+   * Users can manually adjust serving sizes on the meal cards
    */
   async generateDailyPlan(params: MealPlanGenerationParams): Promise<DailyMealPlan> {
     console.log('[MealPlanGenerator] Generating daily plan:', params)
 
-    const meals: MealSlot[] = []
     const mealsPerDay = params.mealsPerDay || 4
-
-    // Calculate calorie targets per meal type
     const mealTargets = this.calculateMealTargets(params)
 
-    // Step 1: Always add breakfast, lunch, dinner
-    const breakfastRecipe = await this.findRecipeForMeal('breakfast', mealTargets.breakfast, params)
-    meals.push({
-      type: 'breakfast',
-      recipe: breakfastRecipe,
-      targetCalories: mealTargets.breakfast.calories,
-      targetProtein: mealTargets.breakfast.protein,
-    })
+    // Find recipes in parallel (natural calorie ranges, no forced scaling)
+    console.log('[MealPlanGenerator] Finding natural recipe matches...')
+    const startTime = Date.now()
 
-    const lunchRecipe = await this.findRecipeForMeal('lunch', mealTargets.lunch, params)
-    meals.push({
-      type: 'lunch',
-      recipe: lunchRecipe,
-      targetCalories: mealTargets.lunch.calories,
-      targetProtein: mealTargets.lunch.protein,
-    })
+    const [breakfastResult, lunchResult, dinnerResult] = await Promise.all([
+      this.findRecipeForMeal('breakfast', mealTargets.breakfast, params),
+      this.findRecipeForMeal('lunch', mealTargets.lunch, params),
+      this.findRecipeForMeal('dinner', mealTargets.dinner, params),
+    ])
 
-    const dinnerRecipe = await this.findRecipeForMeal('dinner', mealTargets.dinner, params)
-    meals.push({
-      type: 'dinner',
-      recipe: dinnerRecipe,
-      targetCalories: mealTargets.dinner.calories,
-      targetProtein: mealTargets.dinner.protein,
-    })
+    console.log(`[MealPlanGenerator] Main meals found in ${Date.now() - startTime}ms`)
 
-    // Step 2: Add snacks to fill remaining slots
+    // Build meals with 1x multiplier (original recipe values)
+    const meals: MealSlotWithMultiplier[] = [
+      this.createMealSlot('breakfast', breakfastResult, mealTargets.breakfast),
+      this.createMealSlot('lunch', lunchResult, mealTargets.lunch),
+      this.createMealSlot('dinner', dinnerResult, mealTargets.dinner),
+    ]
+
+    // Add snacks in parallel
     const snacksNeeded = mealsPerDay - 3
     if (snacksNeeded > 0) {
       const snackCaloriesEach = mealTargets.snack.calories / snacksNeeded
       const snackProteinEach = mealTargets.snack.protein / snacksNeeded
 
-      for (let i = 0; i < snacksNeeded; i++) {
-        const snackRecipe = await this.findRecipeForMeal('snack', {
+      const snackPromises = Array.from({ length: snacksNeeded }, (_, i) =>
+        this.findRecipeForMeal('snack', {
           calories: snackCaloriesEach,
           protein: snackProteinEach,
           carbs: params.targetCarbs * 0.1,
           fat: params.targetFat * 0.1,
-        }, params, i) // Pass index for variety
+        }, params, i)
+      )
 
-        // Insert snack at logical position
-        const insertPosition = this.getSnackInsertPosition(i, snacksNeeded)
-        meals.splice(insertPosition, 0, {
-          type: 'snack',
-          recipe: snackRecipe,
-          targetCalories: snackCaloriesEach,
-          targetProtein: snackProteinEach,
-        })
-      }
+      const snackResults = await Promise.all(snackPromises)
+
+      snackResults.forEach((snackRecipe, i) => {
+        const insertPosition = this.getSnackInsertPosition(i, snacksNeeded, meals.length)
+        meals.splice(insertPosition, 0,
+          this.createMealSlot('snack', snackRecipe, {
+            calories: snackCaloriesEach,
+            protein: snackProteinEach,
+          })
+        )
+      })
     }
 
-    // Calculate totals
+    // Calculate totals (no automatic adjustment - user controls serving sizes)
     const totals = this.calculateTotals(meals)
+    const accuracy = Math.round((totals.totalCalories / params.targetCalories) * 100)
+
+    console.log(`[MealPlanGenerator] Daily plan complete: ${totals.totalCalories} cal / ${params.targetCalories} target (${accuracy}%)`)
 
     return {
       date: new Date().toISOString().split('T')[0],
-      meals,
+      meals: meals as MealSlot[],
       ...totals,
+    }
+  }
+
+  /**
+   * Create a meal slot with 1x multiplier (natural serving)
+   */
+  private createMealSlot(
+    type: MealType,
+    recipe: NormalizedRecipe | null,
+    targets: { calories: number; protein: number }
+  ): MealSlotWithMultiplier {
+    if (!recipe) {
+      return {
+        type,
+        recipe: null,
+        targetCalories: targets.calories,
+        targetProtein: targets.protein,
+      }
+    }
+
+    const recipeWithMultiplier: RecipeWithMultiplier = {
+      ...recipe,
+      servingMultiplier: 1.0,
+      adjustedCalories: recipe.calories,
+      adjustedProtein: recipe.protein,
+      adjustedCarbs: recipe.carbs,
+      adjustedFat: recipe.fat,
+    }
+
+    return {
+      type,
+      recipe: recipeWithMultiplier,
+      targetCalories: targets.calories,
+      targetProtein: targets.protein,
     }
   }
 
@@ -186,7 +303,6 @@ class FatSecretMealPlanService {
     const days: DailyMealPlan[] = []
     const startDate = new Date()
 
-    // Clear recipe cache between weeks for variety
     this.recipeCache.clear()
 
     for (let i = 0; i < params.days; i++) {
@@ -203,13 +319,11 @@ class FatSecretMealPlanService {
         date: date.toISOString().split('T')[0],
       })
 
-      // Small delay to avoid rate limiting
       if (i < params.days - 1) {
         await this.delay(100)
       }
     }
 
-    // Calculate averages
     const avgCalories = days.reduce((sum, d) => sum + d.totalCalories, 0) / days.length
     const avgProtein = days.reduce((sum, d) => sum + d.totalProtein, 0) / days.length
     const avgCarbs = days.reduce((sum, d) => sum + d.totalCarbs, 0) / days.length
@@ -226,7 +340,8 @@ class FatSecretMealPlanService {
   }
 
   /**
-   * Find a recipe matching the meal type and macro targets
+   * Find a recipe that naturally matches the calorie target (within tolerance)
+   * No forced scaling - just find the best natural fit
    */
   private async findRecipeForMeal(
     mealType: MealType,
@@ -234,60 +349,117 @@ class FatSecretMealPlanService {
     params: MealPlanGenerationParams,
     varietyIndex: number = 0
   ): Promise<NormalizedRecipe | null> {
-    const recipeTypes = MEAL_TYPE_FILTERS[mealType]
     const usedRecipeIds = new Set(
       Array.from(this.recipeCache.values()).map(r => r.id)
     )
 
-    // Build search terms based on macro targets
     const searchTerms = this.buildSearchTerms(mealType, params)
 
-    // Try each recipe type until we find a match
-    for (const recipeType of recipeTypes) {
+    // Select appropriate prefixes based on dietary style
+    const dietaryStyle = params.dietaryPreferences?.[0] || null
+    let mealPrefixes: string[]
+    switch (dietaryStyle) {
+      case 'vegan':
+        mealPrefixes = MEAL_TYPE_SEARCH_PREFIXES_VEGAN[mealType]
+        break
+      case 'vegetarian':
+        mealPrefixes = MEAL_TYPE_SEARCH_PREFIXES_VEGETARIAN[mealType]
+        break
+      case 'keto':
+        mealPrefixes = MEAL_TYPE_SEARCH_PREFIXES_KETO[mealType]
+        break
+      case 'paleo':
+        mealPrefixes = MEAL_TYPE_SEARCH_PREFIXES_PALEO[mealType]
+        break
+      case 'mediterranean':
+        mealPrefixes = MEAL_TYPE_SEARCH_PREFIXES_MEDITERRANEAN[mealType]
+        break
+      default:
+        mealPrefixes = MEAL_TYPE_SEARCH_PREFIXES[mealType]
+    }
+
+    const maxAttempts = Math.min(searchTerms.length, 3)
+
+    // Define acceptable calorie range (within tolerance of target)
+    const minCalories = targets.calories * (1 - CALORIE_TOLERANCE)
+    const maxCalories = targets.calories * (1 + CALORIE_TOLERANCE)
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
       try {
-        // Search with different terms for variety
-        const searchTerm = searchTerms[varietyIndex % searchTerms.length]
+        const prefix = mealPrefixes[(varietyIndex + attempt) % mealPrefixes.length]
+        const term = searchTerms[(varietyIndex + attempt) % searchTerms.length]
+        const searchExpression = `${prefix} ${term}`.trim()
+
+        console.log(`[MealPlanGenerator] Searching for ${mealType}: "${searchExpression}" (target: ${targets.calories} cal)`)
 
         const response = await fatSecretService.searchRecipes({
-          search_expression: searchTerm,
-          recipe_type: recipeType,
-          max_results: 20,
-          page_number: varietyIndex, // Different page for variety
+          search_expression: searchExpression,
+          max_results: 30,
+          page_number: Math.floor(varietyIndex / 2),
         })
 
-        if (!response.recipes?.recipe) continue
+        if (!response.recipes?.recipe) {
+          console.log(`[MealPlanGenerator] No results for "${searchExpression}", trying next term`)
+          continue
+        }
 
         const recipes = Array.isArray(response.recipes.recipe)
           ? response.recipes.recipe
           : [response.recipes.recipe]
 
-        // Filter and score recipes
+        // Score recipes based on natural fit (no multiplier)
         const scoredRecipes = recipes
-          .filter(r => !usedRecipeIds.has(r.recipe_id))
-          .map(r => ({
-            recipe: r,
-            score: this.scoreRecipe(r, targets, params),
-          }))
+          .filter(r => !usedRecipeIds.has(r.recipe_id) && r.recipe_nutrition)
+          // Filter out recipes that violate dietary restrictions
+          .filter(r => !this.hasDietaryConflict(r.recipe_name, params))
+          .map(r => {
+            const calories = parseFloat(r.recipe_nutrition!.calories) || 0
+            const protein = parseFloat(r.recipe_nutrition!.protein) || 0
+            const carbs = parseFloat(r.recipe_nutrition!.carbohydrate) || 0
+            const fat = parseFloat(r.recipe_nutrition!.fat) || 0
+
+            const score = this.scoreRecipeNatural(
+              { calories, protein, carbs, fat },
+              targets,
+              params,
+              minCalories,
+              maxCalories
+            )
+
+            return { recipe: r, score, calories }
+          })
           .filter(r => r.score > 0)
           .sort((a, b) => b.score - a.score)
 
         if (scoredRecipes.length > 0) {
-          // Pick from top candidates with some randomness for variety
-          const topCandidates = scoredRecipes.slice(0, 5)
-          const selected = topCandidates[Math.floor(Math.random() * topCandidates.length)]
+          // Try top candidates until we find one that passes ingredient check
+          const topCandidates = scoredRecipes.slice(0, 10) // Check more candidates
 
-          // Get full recipe details
-          const details = await fatSecretService.getRecipeDetails(selected.recipe.recipe_id)
+          // Shuffle for variety but still check in order
+          const shuffledCandidates = this.shuffleArray([...topCandidates])
 
-          if (details) {
-            const normalized = fatSecretService.normalizeRecipe(details)
-            this.recipeCache.set(normalized.id, normalized)
-            console.log(`[MealPlanGenerator] Found ${mealType}: ${normalized.title} (${normalized.calories} cal, ${normalized.protein}g protein)`)
-            return normalized
+          for (const candidate of shuffledCandidates) {
+            const details = await fatSecretService.getRecipeDetails(candidate.recipe.recipe_id)
+
+            if (details) {
+              const normalized = fatSecretService.normalizeRecipe(details)
+
+              // Check ingredients for dietary conflicts
+              if (this.hasIngredientConflict(normalized, params)) {
+                console.log(`[MealPlanGenerator] Skipping "${normalized.title}" - ingredient conflict detected`)
+                continue
+              }
+
+              this.recipeCache.set(normalized.id, normalized)
+              console.log(`[MealPlanGenerator] Found ${mealType}: ${normalized.title} (${normalized.calories} cal, target was ${targets.calories})`)
+              return normalized
+            }
           }
+
+          console.log(`[MealPlanGenerator] All ${topCandidates.length} candidates had conflicts, trying next search`)
         }
       } catch (error) {
-        console.warn(`[MealPlanGenerator] Error searching ${recipeType}:`, error)
+        console.warn(`[MealPlanGenerator] Error searching for ${mealType}:`, error)
       }
     }
 
@@ -296,122 +468,350 @@ class FatSecretMealPlanService {
   }
 
   /**
-   * Build search terms based on meal type and macro preferences
+   * Score a recipe based on natural fit (no multiplier scaling)
+   */
+  private scoreRecipeNatural(
+    recipe: { calories: number; protein: number; carbs: number; fat: number },
+    targets: { calories: number; protein: number; carbs: number; fat: number },
+    params: MealPlanGenerationParams,
+    minCalories: number,
+    maxCalories: number
+  ): number {
+    // Reject recipes outside the acceptable calorie range
+    if (recipe.calories < minCalories * 0.5 || recipe.calories > maxCalories * 1.5) {
+      return 0
+    }
+
+    let score = 100
+
+    // Calorie match (most important - up to 50 points)
+    const calorieError = Math.abs(recipe.calories - targets.calories) / targets.calories
+    score -= calorieError * 50
+
+    // Protein match (up to 25 points)
+    const proteinError = Math.abs(recipe.protein - targets.protein) / Math.max(targets.protein, 1)
+    const isHighProtein = params.targetProtein > params.targetCalories * 0.15 / 4
+    score -= proteinError * (isHighProtein ? 25 : 15)
+
+    // Carb match (up to 15 points)
+    const carbError = Math.abs(recipe.carbs - targets.carbs) / Math.max(targets.carbs, 1)
+    const isLowCarb = params.targetCarbs < params.targetCalories * 0.35 / 4
+    if (isLowCarb && recipe.carbs > targets.carbs * 1.3) {
+      score -= 20
+    } else {
+      score -= carbError * 15
+    }
+
+    // Fat match (up to 10 points)
+    const fatError = Math.abs(recipe.fat - targets.fat) / Math.max(targets.fat, 1)
+    score -= fatError * 10
+
+    // Bonus for being close to target
+    if (calorieError < 0.15) score += 15
+    if (calorieError < 0.10) score += 10
+    if (proteinError < 0.20) score += 5
+
+    return Math.max(score, 0)
+  }
+
+  /**
+   * Check if a recipe NAME conflicts with dietary preferences or excluded ingredients
+   * Used for quick filtering before fetching full details
+   * Returns true if the recipe should be EXCLUDED
+   */
+  private hasDietaryConflict(
+    recipeName: string,
+    params: MealPlanGenerationParams
+  ): boolean {
+    // Extract dietary style from preferences (first one if multiple)
+    const dietaryStyle = params.dietaryPreferences?.[0] || null
+
+    // Check against dietary style (vegetarian, vegan, pescatarian, etc.)
+    if (checkDietaryConflict(recipeName, dietaryStyle, null)) {
+      console.log(`[MealPlanGenerator] Excluding "${recipeName}" - conflicts with ${dietaryStyle} diet`)
+      return true
+    }
+
+    // Check against excluded ingredients (foods_to_avoid)
+    if (params.excludeIngredients && params.excludeIngredients.length > 0) {
+      const recipeNameLower = recipeName.toLowerCase()
+
+      for (const ingredient of params.excludeIngredients) {
+        const ingredientLower = ingredient.toLowerCase().trim()
+        if (ingredientLower && recipeNameLower.includes(ingredientLower)) {
+          console.log(`[MealPlanGenerator] Excluding "${recipeName}" - contains avoided ingredient: ${ingredient}`)
+          return true
+        }
+      }
+    }
+
+    return false
+  }
+
+  /**
+   * Check if a recipe's INGREDIENTS conflict with dietary preferences
+   * This is a more thorough check after fetching full recipe details
+   * Returns true if the recipe should be EXCLUDED
+   */
+  private hasIngredientConflict(
+    recipe: NormalizedRecipe,
+    params: MealPlanGenerationParams
+  ): boolean {
+    const dietaryStyle = params.dietaryPreferences?.[0] || null
+
+    // Build a searchable string from all ingredients
+    const ingredientText = recipe.ingredients
+      .map(ing => `${ing.name} ${ing.description || ''}`.toLowerCase())
+      .join(' ')
+
+    // Also check the recipe title
+    const recipeTitle = recipe.title.toLowerCase()
+    const fullSearchText = `${recipeTitle} ${ingredientText}`
+
+    // Meat proteins that vegetarians don't eat
+    const meatProteins = [
+      'chicken', 'turkey', 'duck', 'beef', 'steak', 'pork', 'lamb', 'veal',
+      'brisket', 'ribs', 'bacon', 'sausage', 'ham', 'prosciutto', 'pepperoni',
+      'salami', 'ground beef', 'ground pork', 'ground turkey', 'meatball',
+      'hot dog', 'chorizo', 'pancetta', 'venison', 'bison', 'rabbit',
+    ]
+
+    // Seafood proteins
+    const seafoodProteins = [
+      'salmon', 'tuna', 'shrimp', 'fish', 'cod', 'tilapia', 'halibut',
+      'crab', 'lobster', 'scallops', 'mussels', 'clams', 'seafood', 'prawn',
+      'anchovy', 'sardine', 'trout', 'bass', 'mackerel', 'squid', 'calamari',
+      'oyster', 'crawfish', 'crayfish',
+    ]
+
+    // All animal products (for vegan check)
+    const animalProducts = [
+      ...meatProteins,
+      ...seafoodProteins,
+      'egg', 'eggs', 'cheese', 'cream', 'butter', 'milk', 'yogurt', 'paneer',
+      'ghee', 'whey', 'casein', 'gelatin', 'honey', 'lard',
+    ]
+
+    // Check dietary style conflicts in ingredients
+    if (dietaryStyle) {
+      switch (dietaryStyle) {
+        case 'vegetarian':
+          for (const meat of meatProteins) {
+            if (fullSearchText.includes(meat)) {
+              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${meat} (vegetarian diet)`)
+              return true
+            }
+          }
+          for (const seafood of seafoodProteins) {
+            if (fullSearchText.includes(seafood)) {
+              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${seafood} (vegetarian diet)`)
+              return true
+            }
+          }
+          break
+
+        case 'vegan':
+          for (const animal of animalProducts) {
+            if (fullSearchText.includes(animal)) {
+              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${animal} (vegan diet)`)
+              return true
+            }
+          }
+          break
+
+        case 'pescatarian':
+          for (const meat of meatProteins) {
+            if (fullSearchText.includes(meat)) {
+              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${meat} (pescatarian diet)`)
+              return true
+            }
+          }
+          break
+
+        case 'keto':
+          // Keto avoids high-carb foods
+          for (const food of KETO_AVOID_FOODS) {
+            if (fullSearchText.includes(food)) {
+              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${food} (keto diet)`)
+              return true
+            }
+          }
+          break
+
+        case 'paleo':
+          // Paleo avoids grains, legumes, dairy, processed foods
+          for (const food of PALEO_AVOID_FOODS) {
+            if (fullSearchText.includes(food)) {
+              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${food} (paleo diet)`)
+              return true
+            }
+          }
+          break
+
+        case 'mediterranean':
+          // Mediterranean is more flexible - mainly emphasizes certain foods
+          // rather than strict exclusions, so no ingredient blocking
+          break
+      }
+    }
+
+    // Check excluded ingredients (foods_to_avoid)
+    if (params.excludeIngredients && params.excludeIngredients.length > 0) {
+      for (const excluded of params.excludeIngredients) {
+        const excludedLower = excluded.toLowerCase().trim()
+        if (excludedLower && fullSearchText.includes(excludedLower)) {
+          console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains avoided "${excluded}"`)
+          return true
+        }
+      }
+    }
+
+    return false
+  }
+
+  /**
+   * Build search terms based on meal type, macro preferences, and dietary restrictions
    */
   private buildSearchTerms(
     mealType: MealType,
     params: MealPlanGenerationParams
   ): string[] {
     const terms: string[] = []
+    const dietaryStyle = params.dietaryPreferences?.[0] || null
 
-    // Check if high protein is prioritized
     const isHighProtein = params.targetProtein > params.targetCalories * 0.15 / 4
-
-    // Check if low carb is prioritized
     const isLowCarb = params.targetCarbs < params.targetCalories * 0.35 / 4
 
-    if (isHighProtein) {
-      terms.push(...HIGH_PROTEIN_TERMS)
+    // Add diet-specific search terms first (highest priority)
+    switch (dietaryStyle) {
+      case 'vegan':
+        terms.push(...HIGH_PROTEIN_TERMS_VEGAN)
+        break
+      case 'vegetarian':
+        terms.push(...HIGH_PROTEIN_TERMS_VEGETARIAN)
+        break
+      case 'pescatarian':
+        terms.push(...HIGH_PROTEIN_TERMS_VEGETARIAN)
+        terms.push('salmon', 'tuna', 'shrimp', 'fish')
+        break
+      case 'keto':
+        terms.push(...KETO_SEARCH_TERMS)
+        break
+      case 'paleo':
+        terms.push(...PALEO_SEARCH_TERMS)
+        break
+      case 'mediterranean':
+        terms.push(...MEDITERRANEAN_SEARCH_TERMS)
+        break
+      default:
+        // No dietary restriction - add protein terms based on macro goals
+        if (isHighProtein) {
+          terms.push(...HIGH_PROTEIN_TERMS_MEAT)
+          terms.push(...HIGH_PROTEIN_TERMS_VEGETARIAN)
+        }
+        if (isLowCarb) {
+          terms.push(...LOW_CARB_TERMS_MEAT)
+          terms.push(...LOW_CARB_TERMS_VEGETARIAN)
+        }
     }
 
-    if (isLowCarb) {
-      terms.push(...LOW_CARB_TERMS)
-    }
-
-    // Add meal-specific terms
+    // Add meal-type specific terms based on dietary style
     switch (mealType) {
       case 'breakfast':
-        if (isHighProtein) {
-          terms.push('eggs', 'protein pancakes', 'greek yogurt', 'omelette')
-        } else {
-          terms.push('oatmeal', 'smoothie bowl', 'avocado toast', 'breakfast')
+        switch (dietaryStyle) {
+          case 'vegan':
+            terms.push('tofu scramble', 'vegan breakfast', 'avocado toast', 'smoothie bowl', 'oatmeal')
+            break
+          case 'vegetarian':
+            terms.push('eggs', 'omelette', 'vegetarian breakfast', 'pancakes', 'oatmeal')
+            break
+          case 'keto':
+            terms.push('keto eggs', 'bacon eggs', 'avocado eggs', 'low carb breakfast')
+            break
+          case 'paleo':
+            terms.push('paleo eggs', 'sweet potato hash', 'fruit breakfast', 'whole30 breakfast')
+            break
+          case 'mediterranean':
+            terms.push('greek yogurt', 'mediterranean eggs', 'olive oil breakfast')
+            break
+          default:
+            terms.push(isHighProtein ? 'eggs' : 'oatmeal', isHighProtein ? 'omelette' : 'smoothie bowl', 'breakfast')
         }
         break
+
       case 'lunch':
-        if (isHighProtein) {
-          terms.push('chicken salad', 'tuna wrap', 'turkey sandwich', 'grilled chicken')
-        } else {
-          terms.push('salad', 'soup', 'wrap', 'bowl')
+        switch (dietaryStyle) {
+          case 'vegan':
+            terms.push('vegan salad', 'lentil soup', 'buddha bowl', 'falafel', 'veggie wrap')
+            break
+          case 'vegetarian':
+            terms.push('vegetarian salad', 'cheese sandwich', 'veggie wrap', 'soup', 'bowl')
+            break
+          case 'keto':
+            terms.push('keto salad', 'bunless burger', 'lettuce wrap', 'low carb lunch')
+            break
+          case 'paleo':
+            terms.push('paleo salad', 'grilled chicken salad', 'paleo wrap', 'whole30 lunch')
+            break
+          case 'mediterranean':
+            terms.push('greek salad', 'hummus plate', 'mediterranean bowl', 'falafel wrap')
+            break
+          default:
+            terms.push(isHighProtein ? 'chicken salad' : 'salad', isHighProtein ? 'grilled chicken' : 'soup', 'wrap', 'bowl')
         }
         break
+
       case 'dinner':
-        if (isHighProtein) {
-          terms.push('grilled salmon', 'chicken breast', 'steak', 'shrimp')
-        } else {
-          terms.push('stir fry', 'pasta', 'curry', 'roasted')
+        switch (dietaryStyle) {
+          case 'vegan':
+            terms.push('tofu stir fry', 'vegan curry', 'lentil dinner', 'vegetable stew', 'vegan pasta')
+            break
+          case 'vegetarian':
+            terms.push('vegetarian dinner', 'paneer curry', 'veggie stir fry', 'pasta', 'roasted vegetables')
+            break
+          case 'keto':
+            terms.push('keto steak', 'grilled salmon', 'cauliflower rice', 'low carb dinner')
+            break
+          case 'paleo':
+            terms.push('paleo steak', 'grilled salmon', 'roasted vegetables', 'whole30 dinner')
+            break
+          case 'mediterranean':
+            terms.push('grilled fish', 'mediterranean chicken', 'olive oil salmon', 'greek dinner')
+            break
+          default:
+            terms.push(isHighProtein ? 'grilled salmon' : 'stir fry', isHighProtein ? 'chicken breast' : 'pasta', 'roasted')
         }
         break
+
       case 'snack':
-        if (isHighProtein) {
-          terms.push('protein bar', 'hard boiled eggs', 'cottage cheese', 'nuts')
-        } else {
-          terms.push('fruit', 'yogurt', 'energy balls', 'hummus')
+        switch (dietaryStyle) {
+          case 'vegan':
+            terms.push('vegan snack', 'hummus', 'fruit', 'nuts', 'energy balls')
+            break
+          case 'vegetarian':
+            terms.push('protein', 'cottage cheese', 'yogurt', 'nuts', 'smoothie')
+            break
+          case 'keto':
+            terms.push('keto snack', 'cheese', 'nuts', 'fat bomb', 'pork rinds')
+            break
+          case 'paleo':
+            terms.push('paleo snack', 'nuts', 'fruit', 'beef jerky', 'vegetables')
+            break
+          case 'mediterranean':
+            terms.push('olives', 'hummus', 'nuts', 'greek yogurt', 'fruit')
+            break
+          default:
+            terms.push(isHighProtein ? 'protein' : 'fruit', isHighProtein ? 'cottage cheese' : 'yogurt', 'nuts', 'smoothie')
         }
         break
     }
 
-    // Add dietary preferences
-    if (params.dietaryPreferences?.includes('vegetarian')) {
-      terms.push('vegetarian', 'veggie', 'plant based')
-    }
-    if (params.dietaryPreferences?.includes('vegan')) {
-      terms.push('vegan', 'plant based')
+    // Add explicit dietary preference terms for better API matching
+    if (dietaryStyle && dietaryStyle !== 'none') {
+      terms.push(dietaryStyle)
     }
 
-    // Shuffle for variety
     return this.shuffleArray(terms)
-  }
-
-  /**
-   * Score a recipe based on how well it matches targets
-   */
-  private scoreRecipe(
-    recipe: { recipe_id: string; recipe_nutrition?: { calories: string; protein: string; carbohydrate: string; fat: string } },
-    targets: { calories: number; protein: number; carbs: number; fat: number },
-    params: MealPlanGenerationParams
-  ): number {
-    if (!recipe.recipe_nutrition) return 0
-
-    const calories = parseFloat(recipe.recipe_nutrition.calories) || 0
-    const protein = parseFloat(recipe.recipe_nutrition.protein) || 0
-    const carbs = parseFloat(recipe.recipe_nutrition.carbohydrate) || 0
-    const fat = parseFloat(recipe.recipe_nutrition.fat) || 0
-
-    // Skip if way off on calories (more than 50% over or under)
-    if (calories < targets.calories * 0.5 || calories > targets.calories * 1.5) {
-      return 0
-    }
-
-    let score = 100
-
-    // Calorie match (up to 30 points deducted)
-    const calorieError = Math.abs(calories - targets.calories) / targets.calories
-    score -= calorieError * 30
-
-    // Protein match - weighted heavily for high protein goals (up to 40 points deducted)
-    const proteinError = Math.abs(protein - targets.protein) / Math.max(targets.protein, 1)
-    const isHighProtein = params.targetProtein > params.targetCalories * 0.15 / 4
-    score -= proteinError * (isHighProtein ? 40 : 20)
-
-    // Carb match - weighted heavily for low carb goals (up to 20 points deducted)
-    const carbError = Math.abs(carbs - targets.carbs) / Math.max(targets.carbs, 1)
-    const isLowCarb = params.targetCarbs < params.targetCalories * 0.35 / 4
-    if (isLowCarb && carbs > targets.carbs * 1.2) {
-      score -= 30 // Penalize high carb recipes for low carb diets
-    } else {
-      score -= carbError * 10
-    }
-
-    // Fat match (up to 10 points deducted)
-    const fatError = Math.abs(fat - targets.fat) / Math.max(targets.fat, 1)
-    score -= fatError * 10
-
-    // Bonus for high protein foods
-    if (protein >= targets.protein) {
-      score += 10
-    }
-
-    return Math.max(score, 0)
   }
 
   /**
@@ -421,74 +821,58 @@ class FatSecretMealPlanService {
     const mealsPerDay = params.mealsPerDay || 4
     const snackCount = Math.max(0, mealsPerDay - 3)
 
-    // Adjust distribution if fewer meals
-    let distribution = { ...CALORIE_DISTRIBUTION }
+    let breakfast = 0.25
+    let lunch = 0.30
+    let dinner = 0.30
+    let snackTotal = 0.15
 
     if (mealsPerDay === 3) {
-      // No snacks - redistribute
-      distribution = {
-        breakfast: 0.28,
-        lunch: 0.36,
-        dinner: 0.36,
-        snack: 0,
-      }
+      breakfast = 0.28
+      lunch = 0.36
+      dinner = 0.36
+      snackTotal = 0
     } else if (snackCount > 0) {
-      // Adjust snack allocation
-      const snackTotal = snackCount * 0.08 // ~8% per snack
-      const mainMealReduction = snackTotal / 3
-
-      distribution = {
-        breakfast: 0.25 - mainMealReduction,
-        lunch: 0.30 - mainMealReduction,
-        dinner: 0.30 - mainMealReduction,
-        snack: snackTotal,
-      }
+      snackTotal = snackCount * 0.10
+      const mainMealReduction = (snackTotal - 0.15) / 3
+      breakfast = 0.25 - mainMealReduction
+      lunch = 0.30 - mainMealReduction
+      dinner = 0.30 - mainMealReduction
     }
 
     return {
       breakfast: {
-        calories: Math.round(params.targetCalories * distribution.breakfast),
-        protein: Math.round(params.targetProtein * distribution.breakfast),
-        carbs: Math.round(params.targetCarbs * distribution.breakfast),
-        fat: Math.round(params.targetFat * distribution.breakfast),
+        calories: Math.round(params.targetCalories * breakfast),
+        protein: Math.round(params.targetProtein * breakfast),
+        carbs: Math.round(params.targetCarbs * breakfast),
+        fat: Math.round(params.targetFat * breakfast),
       },
       lunch: {
-        calories: Math.round(params.targetCalories * distribution.lunch),
-        protein: Math.round(params.targetProtein * distribution.lunch),
-        carbs: Math.round(params.targetCarbs * distribution.lunch),
-        fat: Math.round(params.targetFat * distribution.lunch),
+        calories: Math.round(params.targetCalories * lunch),
+        protein: Math.round(params.targetProtein * lunch),
+        carbs: Math.round(params.targetCarbs * lunch),
+        fat: Math.round(params.targetFat * lunch),
       },
       dinner: {
-        calories: Math.round(params.targetCalories * distribution.dinner),
-        protein: Math.round(params.targetProtein * distribution.dinner),
-        carbs: Math.round(params.targetCarbs * distribution.dinner),
-        fat: Math.round(params.targetFat * distribution.dinner),
+        calories: Math.round(params.targetCalories * dinner),
+        protein: Math.round(params.targetProtein * dinner),
+        carbs: Math.round(params.targetCarbs * dinner),
+        fat: Math.round(params.targetFat * dinner),
       },
       snack: {
-        calories: Math.round(params.targetCalories * distribution.snack),
-        protein: Math.round(params.targetProtein * distribution.snack),
-        carbs: Math.round(params.targetCarbs * distribution.snack),
-        fat: Math.round(params.targetFat * distribution.snack),
+        calories: Math.round(params.targetCalories * snackTotal),
+        protein: Math.round(params.targetProtein * snackTotal),
+        carbs: Math.round(params.targetCarbs * snackTotal),
+        fat: Math.round(params.targetFat * snackTotal),
       },
     }
   }
 
-  /**
-   * Get insert position for snacks (between main meals)
-   */
-  private getSnackInsertPosition(snackIndex: number, totalSnacks: number): number {
-    // Strategy:
-    // 1 snack: after lunch (position 2)
-    // 2 snacks: after breakfast (1), after lunch (3)
-    // 3 snacks: after breakfast (1), after lunch (3), after dinner (5)
-    const positions = [2, 1, 4]
-    return positions[snackIndex] || 5
+  private getSnackInsertPosition(snackIndex: number, totalSnacks: number, currentLength: number): number {
+    const positions = [2, 1, currentLength]
+    return Math.min(positions[snackIndex] ?? currentLength, currentLength)
   }
 
-  /**
-   * Calculate total macros from meals
-   */
-  private calculateTotals(meals: MealSlot[]): {
+  private calculateTotals(meals: MealSlotWithMultiplier[]): {
     totalCalories: number
     totalProtein: number
     totalCarbs: number
@@ -497,10 +881,10 @@ class FatSecretMealPlanService {
     return meals.reduce(
       (totals, meal) => {
         if (meal.recipe) {
-          totals.totalCalories += meal.recipe.calories
-          totals.totalProtein += meal.recipe.protein
-          totals.totalCarbs += meal.recipe.carbs
-          totals.totalFat += meal.recipe.fat
+          totals.totalCalories += meal.recipe.adjustedCalories
+          totals.totalProtein += meal.recipe.adjustedProtein
+          totals.totalCarbs += meal.recipe.adjustedCarbs
+          totals.totalFat += meal.recipe.adjustedFat
         }
         return totals
       },
@@ -508,9 +892,6 @@ class FatSecretMealPlanService {
     )
   }
 
-  /**
-   * Shuffle array for variety
-   */
   private shuffleArray<T>(array: T[]): T[] {
     const shuffled = [...array]
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -520,16 +901,10 @@ class FatSecretMealPlanService {
     return shuffled
   }
 
-  /**
-   * Delay helper
-   */
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  /**
-   * Validate macro match for quality assurance
-   */
   validateMacroMatch(
     target: number,
     actual: number
@@ -538,14 +913,11 @@ class FatSecretMealPlanService {
     const percentDiff = (diff / target) * 100
 
     return {
-      isWithinTolerance: percentDiff <= 15, // ±15% tolerance
+      isWithinTolerance: percentDiff <= 15,
       percentDiff: Math.round(percentDiff * 10) / 10,
     }
   }
 }
 
-// Export singleton instance
 export const fatSecretMealPlanService = new FatSecretMealPlanService()
-
-// Export class for testing
 export { FatSecretMealPlanService }

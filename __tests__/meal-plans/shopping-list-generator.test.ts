@@ -3,7 +3,7 @@ import {
   generateShoppingList,
   aggregateIngredients,
   categorizeIngredient,
-  type SpoonacularIngredient,
+  type RecipeIngredient,
 } from '@/lib/utils/shopping-list-generator'
 
 describe('Shopping List Generator', () => {
@@ -64,7 +64,7 @@ describe('Shopping List Generator', () => {
 
   describe('aggregateIngredients', () => {
     it('should combine duplicate ingredients', () => {
-      const ingredients: SpoonacularIngredient[] = [
+      const ingredients: RecipeIngredient[] = [
         {
           id: 1,
           name: 'Chicken Breast',
@@ -91,7 +91,7 @@ describe('Shopping List Generator', () => {
     })
 
     it('should handle different units gracefully', () => {
-      const ingredients: SpoonacularIngredient[] = [
+      const ingredients: RecipeIngredient[] = [
         {
           id: 1,
           name: 'Sugar',
@@ -113,7 +113,7 @@ describe('Shopping List Generator', () => {
     })
 
     it('should preserve aisle information', () => {
-      const ingredients: SpoonacularIngredient[] = [
+      const ingredients: RecipeIngredient[] = [
         {
           id: 1,
           name: 'Tomato',
@@ -132,7 +132,7 @@ describe('Shopping List Generator', () => {
 
   describe('generateShoppingList', () => {
     it('should generate categorized shopping list', () => {
-      const ingredients: SpoonacularIngredient[] = [
+      const ingredients: RecipeIngredient[] = [
         {
           id: 1,
           name: 'Chicken Breast',
@@ -175,7 +175,7 @@ describe('Shopping List Generator', () => {
     })
 
     it('should round amounts to 2 decimal places', () => {
-      const ingredients: SpoonacularIngredient[] = [
+      const ingredients: RecipeIngredient[] = [
         {
           id: 1,
           name: 'Flour',
@@ -204,7 +204,7 @@ describe('Shopping List Generator', () => {
     })
 
     it('should create proper shopping list ingredient format', () => {
-      const ingredients: SpoonacularIngredient[] = [
+      const ingredients: RecipeIngredient[] = [
         {
           id: 1,
           name: 'Rice',

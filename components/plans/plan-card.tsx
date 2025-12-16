@@ -11,12 +11,19 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { macroColors } from '@/lib/design-tokens'
+import { MealPlaceholder } from '@/components/meal-plans/meal-placeholder'
 
 interface PlanCardProps {
   plan: Plan
 }
 
+// Meal types for placeholder grid positions
+const GRID_MEAL_TYPES = ['breakfast', 'lunch', 'dinner', 'snack'] as const
+
 export function PlanCard({ plan }: PlanCardProps) {
+  // Take first 4 images (or fewer if not available)
+  const gridImages = plan.images.slice(0, 4)
+
   return (
     <div className="relative flex flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 space-y-4">
       {/* Context Menu */}
@@ -37,18 +44,26 @@ export function PlanCard({ plan }: PlanCardProps) {
 
       {/* Image Grid */}
       <div className="grid grid-cols-2 gap-2 pr-8">
-        {plan.images.slice(0, 4).map((image, index) => (
+        {[0, 1, 2, 3].map((i) => (
           <div
-            key={index}
+            key={i}
             className="relative aspect-square w-full rounded-lg overflow-hidden bg-muted"
           >
-            <Image
-              src={image}
-              alt={`Plan image ${index + 1}`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 50vw, 25vw"
-            />
+            {gridImages[i] ? (
+              <Image
+                src={gridImages[i]}
+                alt={`Plan image ${i + 1}`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            ) : (
+              <MealPlaceholder
+                mealType={GRID_MEAL_TYPES[i]}
+                className="w-full h-full"
+                compact
+              />
+            )}
           </div>
         ))}
       </div>
@@ -61,7 +76,7 @@ export function PlanCard({ plan }: PlanCardProps) {
           </h2>
           <p className="text-sm font-medium text-muted-foreground">{plan.dateRange}</p>
           <p className="text-sm font-medium text-muted-foreground">
-            📊 {plan.calories.toLocaleString()} cal/day avg
+            {plan.calories.toLocaleString()} cal/day avg
           </p>
         </div>
 
@@ -81,7 +96,6 @@ export function PlanCard({ plan }: PlanCardProps) {
           </span>
         </div>
 
-        {/* Action Button */}
         {/* Action Button */}
         <Link
           href={`/meal-plans/${plan.id}`}

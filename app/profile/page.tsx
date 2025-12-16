@@ -1,7 +1,6 @@
 'use client'
 
 import { BottomNav } from '@/components/layout/bottom-nav'
-import { TopAppBar } from '@/components/layout/top-app-bar'
 import {
   Utensils,
   ChevronRight,
@@ -16,7 +15,6 @@ import {
   ArrowRight,
   User
 } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { useRouter } from 'next/navigation'
@@ -94,13 +92,9 @@ export default function ProfilePage() {
     recomp: 'Recomposition',
   }
 
-  const userName = profile?.full_name || userEmail.split('@')[0] || 'User'
-  const avatarUrl = profile?.avatar_url || null
-
   if (loading) {
     return (
       <div className="min-h-screen bg-background pb-24">
-        <TopAppBar userName={userName} avatarUrl={avatarUrl} />
         <div className="flex items-center justify-center min-h-[50vh]">
           <p className="text-muted-foreground">Loading profile...</p>
         </div>
@@ -113,7 +107,6 @@ export default function ProfilePage() {
   if (!profile) {
     return (
       <div className="min-h-screen bg-background pb-24">
-        <TopAppBar userName={userName} avatarUrl={avatarUrl} />
         <main className="max-w-3xl mx-auto p-4">
           <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6">
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
@@ -149,8 +142,6 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <TopAppBar userName={userName} avatarUrl={avatarUrl} />
-
       <main className="max-w-3xl mx-auto">
         {/* Profile Header */}
         <div className="p-4">

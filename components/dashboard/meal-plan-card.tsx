@@ -1,7 +1,7 @@
 'use client'
 
 import { Card } from '@/components/ui/card'
-import { MacroRing } from './macro-ring'
+import { MealPlaceholder } from '@/components/meal-plans/meal-placeholder'
 import { cn } from '@/lib/utils'
 
 interface MealPlanCardProps {
@@ -18,6 +18,9 @@ interface MealPlanCardProps {
   images?: string[]
   onClick?: () => void
 }
+
+// Meal types for placeholder grid positions
+const GRID_MEAL_TYPES = ['breakfast', 'lunch', 'dinner', 'snack'] as const
 
 export function MealPlanCard({
   id,
@@ -36,12 +39,8 @@ export function MealPlanCard({
   const completionPercent =
     totalDays > 0 ? Math.round((daysCompleted / totalDays) * 100) : 0
 
-  // Ensure we have 4 images for the grid, filling with placeholders if needed
-  const displayImages = [...images]
-  while (displayImages.length < 4) {
-    displayImages.push('/placeholder-meal.jpg') // You might want a better placeholder strategy
-  }
-  const gridImages = displayImages.slice(0, 4)
+  // Take first 4 images (or fewer if not available)
+  const gridImages = images.slice(0, 4)
 
   return (
     <Card
@@ -64,14 +63,26 @@ export function MealPlanCard({
     >
       {/* Image Grid */}
       <div className="grid grid-cols-2 gap-2 mb-3 aspect-square w-full">
-        {gridImages.map((img, i) => (
+        {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
-            className="w-full h-full bg-center bg-no-repeat bg-cover rounded-xl bg-muted"
-            style={{ backgroundImage: `url(${img})` }}
-            role="img"
-            aria-label={`Meal preview ${i + 1}`}
-          />
+            className="w-full h-full rounded-xl overflow-hidden bg-muted"
+          >
+            {gridImages[i] ? (
+              <div
+                className="w-full h-full bg-center bg-no-repeat bg-cover"
+                style={{ backgroundImage: `url(${gridImages[i]})` }}
+                role="img"
+                aria-label={`Meal preview ${i + 1}`}
+              />
+            ) : (
+              <MealPlaceholder
+                mealType={GRID_MEAL_TYPES[i]}
+                className="w-full h-full"
+                compact
+              />
+            )}
+          </div>
         ))}
       </div>
 

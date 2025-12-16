@@ -16,14 +16,31 @@
  * - User applies filters → Clicks recipe → Back button (filters preserved!)
  */
 
-import type { SpoonacularRecipe } from '@/lib/types/spoonacular'
+/**
+ * Generic recipe type for caching - works with any recipe source
+ */
+export interface CachedRecipe {
+  id: string | number
+  title?: string
+  name?: string
+  imageUrl?: string
+  image_url?: string
+  calories?: number
+  protein?: number
+  protein_grams?: number
+  carbs?: number
+  carb_grams?: number
+  fat?: number
+  fat_grams?: number
+  source?: 'local' | 'fatsecret'
+}
 
 const CACHE_PREFIX = 'recipe_search_'
 const MAX_ENTRIES = 20
 const DEFAULT_TTL = 30 * 60 * 1000 // 30 minutes
 
 interface CachedSearchResults {
-  recipes: SpoonacularRecipe[]
+  recipes: CachedRecipe[]
   totalResults: number
   scrollPosition: number
   timestamp: number
@@ -154,7 +171,7 @@ function enforceMaxEntries(): void {
  */
 export function saveSearchResults(
   searchParams: URLSearchParams | string,
-  recipes: SpoonacularRecipe[],
+  recipes: CachedRecipe[],
   totalResults: number,
   scrollPosition?: number
 ): void {

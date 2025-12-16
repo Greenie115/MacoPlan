@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { cn } from '@/lib/utils'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export function RecipeTabs() {
   const router = useRouter()
@@ -24,30 +24,24 @@ export function RecipeTabs() {
   }
 
   return (
-    <div className="flex gap-2 px-4 pt-4 pb-2">
-      <button
-        onClick={() => setTab('all')}
-        className={cn(
-          'flex-1 h-10 rounded-lg font-semibold text-sm transition-colors',
-          activeTab === 'all'
-            ? 'bg-primary text-white'
-            : 'bg-card text-muted-foreground border-2 border-border hover:bg-muted'
-        )}
-      >
-        All Recipes
-      </button>
-      <button
-        onClick={() => setTab('favorites')}
-        className={cn(
-          'flex-1 h-10 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2',
-          activeTab === 'favorites'
-            ? 'bg-primary text-white'
-            : 'bg-card text-muted-foreground border-2 border-border hover:bg-muted'
-        )}
-      >
-        <span>❤️</span>
-        Favorites
-      </button>
+    <div className="px-4 pt-4 pb-2">
+      <Tabs value={activeTab} onValueChange={setTab} className="w-full">
+        <TabsList className="w-full h-12 p-1 bg-muted rounded-xl">
+          <TabsTrigger
+            value="all"
+            className="flex-1 h-10 rounded-lg font-semibold text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none"
+          >
+            All Recipes
+          </TabsTrigger>
+          <TabsTrigger
+            value="favorites"
+            className="flex-1 h-10 rounded-lg font-semibold text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none gap-2"
+          >
+            <span>❤️</span>
+            Favorites
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
     </div>
   )
 }

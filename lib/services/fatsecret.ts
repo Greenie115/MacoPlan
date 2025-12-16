@@ -495,9 +495,11 @@ class FatSecretService {
     // Cache miss - call API
     console.log('[FatSecret] Recipe search cache MISS - calling API')
 
+    // Note: We don't pass recipe_type as it causes API errors (108: Invalid Type)
+    // The FatSecret API recipe_type values are undocumented/inconsistent
+    // Instead, we rely on search_expression to find appropriate recipes
     const response = await this.apiRequest<FatSecretRecipeSearchResponse>('recipes.search', {
       search_expression: params.search_expression,
-      recipe_type: params.recipe_type,
       page_number: params.page_number,
       max_results: params.max_results || 20,
     })

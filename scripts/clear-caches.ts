@@ -5,7 +5,7 @@
  *
  * This script clears:
  * 1. Server-side in-memory recipe cache (by importing and calling clearCache)
- * 2. Database meal plan cache (spoonacular_meal_plans table)
+ * 2. Database FatSecret cache tables
  */
 
 import * as dotenv from 'dotenv'
@@ -25,8 +25,8 @@ async function clearAllCaches() {
   clearCache()
   console.log('   ✅ In-memory cache cleared\n')
 
-  // 2. Clear database meal plan cache
-  console.log('2. Clearing database meal plan cache...')
+  // 2. Clear database FatSecret cache
+  console.log('2. Clearing database FatSecret cache...')
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -37,21 +37,36 @@ async function clearAllCaches() {
   } else {
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Get count before delete
-    const { count: beforeCount } = await supabase
-      .from('spoonacular_meal_plans')
+    // Clear FatSecret search cache
+    const { count: searchCacheCount } = await supabase
+      .from('fatsecret_search_cache')
       .select('*', { count: 'exact', head: true })
 
-    // Delete all cached meal plans
-    const { error } = await supabase
-      .from('spoonacular_meal_plans')
+    const { error: searchError } = await supabase
+      .from('fatsecret_search_cache')
       .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000') // Delete all rows
+      .neq('id', '00000000-0000-0000-0000-000000000000')
 
-    if (error) {
-      console.log('   ❌ Error clearing database cache:', error.message)
+    if (searchError) {
+      console.log('   ⚠️ Error clearing search cache:', searchError.message)
     } else {
-      console.log(`   ✅ Cleared ${beforeCount || 0} cached meal plans from database\n`)
+      console.log(`   ✅ Cleared ${searchCacheCount || 0} search cache entries`)
+    }
+
+    // Clear FatSecret recipes cache
+    const { count: recipesCount } = await supabase
+      .from('fatsecret_recipes')
+      .select('*', { count: 'exact', head: true })
+
+    const { error: recipesError } = await supabase
+      .from('fatsecret_recipes')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000')
+
+    if (recipesError) {
+      console.log('   ⚠️ Error clearing recipes cache:', recipesError.message)
+    } else {
+      console.log(`   ✅ Cleared ${recipesCount || 0} cached recipes\n`)
     }
   }
 

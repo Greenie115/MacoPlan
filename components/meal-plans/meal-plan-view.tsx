@@ -9,13 +9,13 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { ArrowLeft, MoreVertical, RefreshCw, Heart, Clock, Archive, Trash2, Copy } from 'lucide-react'
+import { ArrowLeft, MoreVertical, RefreshCw, Heart, Clock, Archive, Trash2, Copy, Minus, Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { generateShoppingListFromMealPlan } from '@/app/actions/shopping-lists'
-import { toggleMealPlanFavorite, deleteMealPlan, archiveMealPlan } from '@/app/actions/meal-plans'
+import { toggleMealPlanFavorite, deleteMealPlan, archiveMealPlan, updateMealServing } from '@/app/actions/meal-plans'
 import { cn } from '@/lib/utils'
-import { resizeSpoonacularImage } from '@/lib/utils/spoonacular-image'
 import { SwapMealModal } from './swap-meal-modal'
+import { MealPlaceholder } from './meal-placeholder'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,6 +55,47 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
   // State for delete confirmation
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
+
+  // State for serving multipliers (local state for optimistic updates)
+  const [servingMultipliers, setServingMultipliers] = useState<Record<string, number>>(() =>
+    meals.reduce((acc, meal) => {
+      acc[meal.id] = meal.serving_multiplier
+      return acc
+    }, {} as Record<string, number>)
+  )
+  const [updatingMeals, setUpdatingMeals] = useState<Set<string>>(new Set())
+
+  // Handle serving size update
+  async function handleServingChange(mealId: string, newMultiplier: number) {
+    // Clamp to valid range
+    const clampedMultiplier = Math.max(0.5, Math.min(3.0, newMultiplier))
+
+    // Optimistic update
+    setServingMultipliers(prev => ({ ...prev, [mealId]: clampedMultiplier }))
+    setUpdatingMeals(prev => new Set(prev).add(mealId))
+
+    const result = await updateMealServing(mealId, clampedMultiplier)
+
+    setUpdatingMeals(prev => {
+      const next = new Set(prev)
+      next.delete(mealId)
+      return next
+    })
+
+    if (!result.success) {
+      // Revert on error
+      const originalMeal = meals.find(m => m.id === mealId)
+      if (originalMeal) {
+        setServingMultipliers(prev => ({ ...prev, [mealId]: originalMeal.serving_multiplier }))
+      }
+      toast.error(result.error || 'Failed to update serving size')
+    }
+  }
+
+  // Get effective multiplier for a meal (uses local state for optimistic updates)
+  function getMultiplier(mealId: string): number {
+    return servingMultipliers[mealId] ?? 1.0
+  }
 
   // Handle save/favorite toggle
   async function handleSave() {
@@ -158,20 +199,20 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
     }
   }
 
-  // Calculate totals
-  const totalCalories = meals.reduce((sum, meal) => sum + (meal.calories || 0) * meal.serving_multiplier, 0)
-  const totalProtein = meals.reduce((sum, meal) => sum + (meal.protein_grams || 0) * meal.serving_multiplier, 0)
-  const totalCarbs = meals.reduce((sum, meal) => sum + (meal.carb_grams || 0) * meal.serving_multiplier, 0)
-  const totalFat = meals.reduce((sum, meal) => sum + (meal.fat_grams || 0) * meal.serving_multiplier, 0)
+  // Calculate totals using local multipliers for optimistic updates
+  const totalCalories = meals.reduce((sum, meal) => sum + (meal.calories || 0) * getMultiplier(meal.id), 0)
+  const totalProtein = meals.reduce((sum, meal) => sum + (meal.protein_grams || 0) * getMultiplier(meal.id), 0)
+  const totalCarbs = meals.reduce((sum, meal) => sum + (meal.carb_grams || 0) * getMultiplier(meal.id), 0)
+  const totalFat = meals.reduce((sum, meal) => sum + (meal.fat_grams || 0) * getMultiplier(meal.id), 0)
 
   const avgCalories = Math.round(totalCalories / plan.total_days)
 
   // Get selected day meals
   const selectedDayMeals = mealsByDay[selectedDay] || []
-  const dayCalories = selectedDayMeals.reduce((sum, meal) => sum + (meal.calories || 0) * meal.serving_multiplier, 0)
-  const dayProtein = selectedDayMeals.reduce((sum, meal) => sum + (meal.protein_grams || 0) * meal.serving_multiplier, 0)
-  const dayCarbs = selectedDayMeals.reduce((sum, meal) => sum + (meal.carb_grams || 0) * meal.serving_multiplier, 0)
-  const dayFat = selectedDayMeals.reduce((sum, meal) => sum + (meal.fat_grams || 0) * meal.serving_multiplier, 0)
+  const dayCalories = selectedDayMeals.reduce((sum, meal) => sum + (meal.calories || 0) * getMultiplier(meal.id), 0)
+  const dayProtein = selectedDayMeals.reduce((sum, meal) => sum + (meal.protein_grams || 0) * getMultiplier(meal.id), 0)
+  const dayCarbs = selectedDayMeals.reduce((sum, meal) => sum + (meal.carb_grams || 0) * getMultiplier(meal.id), 0)
+  const dayFat = selectedDayMeals.reduce((sum, meal) => sum + (meal.fat_grams || 0) * getMultiplier(meal.id), 0)
 
   // Helper: Get meal type icon and label
   const getMealTypeLabel = (mealType: string, calories?: number) => {
@@ -190,62 +231,62 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-10 bg-card border-b border-border">
-        <div className="mx-auto max-w-7xl p-4 pb-2 flex items-center justify-between">
-        <button
-          onClick={() => router.back()}
-          aria-label="Go back"
-          className="flex size-12 shrink-0 items-center justify-center -ml-2 hover:bg-muted rounded-lg transition-colors"
-        >
-          <ArrowLeft className="size-6 text-icon" />
-        </button>
-        <div className="flex items-center gap-2">
+      {/* Sub-header with back button and actions */}
+      <div className="bg-background border-b border-border-strong">
+        <div className="mx-auto max-w-7xl px-4 py-2 flex items-center justify-between">
           <button
-            onClick={handleSave}
-            disabled={isSaving}
-            aria-label={isSaved ? 'Remove from favorites' : 'Save to favorites'}
-            className={cn(
-              'flex min-w-[48px] cursor-pointer items-center justify-center gap-1.5 rounded-lg h-12 px-3 text-base font-semibold transition-colors disabled:opacity-50',
-              isSaved
-                ? 'text-red-500 bg-red-50'
-                : 'text-primary hover:bg-primary/10'
-            )}
+            onClick={() => router.back()}
+            aria-label="Go back"
+            className="flex size-10 shrink-0 items-center justify-center -ml-2 hover:bg-muted rounded-lg transition-colors"
           >
-            <Heart className={cn('size-5', isSaved && 'fill-current')} />
-            {isSaved ? 'Saved' : 'Save'}
+            <ArrowLeft className="size-5 text-icon" />
           </button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                aria-label="More options"
-                aria-haspopup="menu"
-                className="flex size-12 shrink-0 items-center justify-center hover:bg-muted rounded-lg transition-colors"
-              >
-                <MoreVertical className="size-6 text-icon" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleCopyLink}>
-                <Copy className="size-4 mr-2" />
-                Copy Link
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleArchivePlan} disabled={isPending}>
-                <Archive className="size-4 mr-2" />
-                Archive Plan
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={handleDeletePlan}
-                disabled={isPending}
-                className="text-red-600 focus:text-red-600"
-              >
-                <Trash2 className="size-4 mr-2" />
-                Delete Plan
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              aria-label={isSaved ? 'Remove from favorites' : 'Save to favorites'}
+              className={cn(
+                'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-lg h-10 px-3 text-sm font-semibold transition-colors disabled:opacity-50',
+                isSaved
+                  ? 'text-destructive bg-danger-50'
+                  : 'text-primary hover:bg-primary/10'
+              )}
+            >
+              <Heart className={cn('size-4', isSaved && 'fill-current')} />
+              {isSaved ? 'Saved' : 'Save'}
+            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  aria-label="More options"
+                  aria-haspopup="menu"
+                  className="flex size-10 shrink-0 items-center justify-center hover:bg-muted rounded-lg transition-colors"
+                >
+                  <MoreVertical className="size-5 text-icon" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleCopyLink}>
+                  <Copy className="size-4 mr-2" />
+                  Copy Link
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleArchivePlan} disabled={isPending}>
+                  <Archive className="size-4 mr-2" />
+                  Archive Plan
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleDeletePlan}
+                  disabled={isPending}
+                  className="text-destructive focus:text-destructive"
+                >
+                  <Trash2 className="size-4 mr-2" />
+                  Delete Plan
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
 
@@ -255,7 +296,7 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
         <div className="lg:flex lg:gap-8 lg:p-6">
           {/* Sidebar - Summary & Controls (sticky on large screens) */}
           <aside className="lg:w-80 lg:shrink-0">
-            <div className="lg:sticky lg:top-[76px]">
+            <div className="lg:sticky lg:top-[120px]">
               {/* Page Title */}
               <header className="px-4 pt-2 pb-4 lg:px-0 lg:pt-0">
                 <h1 className="text-foreground tracking-tight text-[28px] font-semibold leading-tight">
@@ -341,7 +382,7 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
 
               {/* Error Display */}
               {error && (
-                <div className="mx-4 mb-4 lg:mx-0 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+                <div className="mx-4 mb-4 lg:mx-0 p-4 bg-danger-50 border border-destructive/30 text-destructive rounded-xl text-sm">
                   {error}
                 </div>
               )}
@@ -378,7 +419,7 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                         const dayNum = Number(dayIndex)
                         const isActive = selectedDay === dayNum
                         const dayMeals = mealsByDay[dayNum] || []
-                        const dayTotalCal = dayMeals.reduce((sum, m) => sum + (m.calories || 0) * m.serving_multiplier, 0)
+                        const dayTotalCal = dayMeals.reduce((sum, m) => sum + (m.calories || 0) * getMultiplier(m.id), 0)
                         return (
                           <button
                             key={dayIndex}
@@ -430,24 +471,30 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                     key={meal.id}
                     className="flex flex-col overflow-hidden rounded-2xl bg-card shadow-sm border border-border-strong"
                   >
-                    {/* Hero Image - Using high-quality 636x393 (watermark-free) */}
-                    {meal.recipe_image_url && (
-                      <div className="relative h-[180px] w-full bg-muted">
+                    {/* Hero Image or Placeholder */}
+                    <div className="relative h-[180px] w-full bg-muted">
+                      {meal.recipe_image_url ? (
                         <Image
-                          src={resizeSpoonacularImage(meal.recipe_image_url, '636x393')}
+                          src={meal.recipe_image_url}
                           alt={meal.recipe_title}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                           className="object-cover"
                           quality={90}
                           priority={meal.meal_order === 0}
+                          unoptimized
                         />
-                        {/* Meal Type Badge */}
-                        <div className="absolute top-3 left-3 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-foreground">
-                          {getMealTypeLabel(meal.meal_type).split(' - ')[0]}
-                        </div>
+                      ) : (
+                        <MealPlaceholder
+                          mealType={meal.meal_type}
+                          className="h-full w-full"
+                        />
+                      )}
+                      {/* Meal Type Badge */}
+                      <div className="absolute top-3 left-3 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-foreground">
+                        {getMealTypeLabel(meal.meal_type).split(' - ')[0]}
                       </div>
-                    )}
+                    </div>
 
                     {/* Meal Info */}
                     <div className="p-4 flex flex-col flex-1">
@@ -459,7 +506,7 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                       <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
                         {meal.calories != null && (
                           <span className="font-medium text-foreground">
-                            {Math.round((meal.calories || 0) * meal.serving_multiplier)} cal
+                            {Math.round((meal.calories || 0) * getMultiplier(meal.id))} cal
                           </span>
                         )}
                         {meal.ready_in_minutes != null && (
@@ -474,16 +521,51 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                       </div>
 
                       {/* Macro Row */}
-                      <div className="flex items-center gap-3 mb-4 text-sm">
+                      <div className="flex items-center gap-3 mb-3 text-sm">
                         <span className="font-normal text-protein">
-                          🥩 {Math.round((meal.protein_grams || 0) * meal.serving_multiplier)}g
+                          🥩 {Math.round((meal.protein_grams || 0) * getMultiplier(meal.id))}g
                         </span>
                         <span className="font-normal text-carb">
-                          🍚 {Math.round((meal.carb_grams || 0) * meal.serving_multiplier)}g
+                          🍚 {Math.round((meal.carb_grams || 0) * getMultiplier(meal.id))}g
                         </span>
                         <span className="font-normal text-fat">
-                          🥑 {Math.round((meal.fat_grams || 0) * meal.serving_multiplier)}g
+                          🥑 {Math.round((meal.fat_grams || 0) * getMultiplier(meal.id))}g
                         </span>
+                      </div>
+
+                      {/* Serving Size Control */}
+                      <div className="flex items-center justify-between mb-4 py-2 px-3 bg-muted/50 rounded-lg">
+                        <span className="text-sm text-muted-foreground">Serving</span>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleServingChange(meal.id, getMultiplier(meal.id) - 0.5)
+                            }}
+                            disabled={getMultiplier(meal.id) <= 0.5 || updatingMeals.has(meal.id)}
+                            className="flex size-8 items-center justify-center rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            aria-label="Decrease serving"
+                          >
+                            <Minus className="size-4 text-foreground" />
+                          </button>
+                          <span className={cn(
+                            "min-w-[40px] text-center font-semibold text-sm",
+                            updatingMeals.has(meal.id) && "opacity-50"
+                          )}>
+                            {getMultiplier(meal.id)}x
+                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleServingChange(meal.id, getMultiplier(meal.id) + 0.5)
+                            }}
+                            disabled={getMultiplier(meal.id) >= 3.0 || updatingMeals.has(meal.id)}
+                            className="flex size-8 items-center justify-center rounded-full bg-card border border-border hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            aria-label="Increase serving"
+                          >
+                            <Plus className="size-4 text-foreground" />
+                          </button>
+                        </div>
                       </div>
 
                       {/* Action Buttons - pushed to bottom */}
@@ -491,10 +573,11 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
-                            if (meal.spoonacular_id) {
-                              router.push(`/recipes/spoonacular/${meal.spoonacular_id}`)
+                            // Pass mealId so recipe page can link back to this meal plan entry
+                            if (meal.fatsecret_id) {
+                              router.push(`/recipes/fatsecret/${meal.fatsecret_id}?mealId=${meal.id}`)
                             } else if (meal.recipe_id) {
-                              router.push(`/recipes/${meal.recipe_id}`)
+                              router.push(`/recipes/${meal.recipe_id}?mealId=${meal.id}`)
                             }
                           }}
                           className="flex h-10 flex-1 items-center justify-center rounded-xl border-2 border-primary bg-card text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
@@ -515,6 +598,16 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                     </div>
                   </div>
                 ))}
+            {/* FatSecret Attribution - Required by API Terms */}
+            <div className="px-4 pb-8 lg:px-0 flex justify-center">
+              <a href="https://www.fatsecret.com" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="https://platform.fatsecret.com/api/static/images/powered_by_fatsecret.svg"
+                  alt="Powered by fatsecret"
+                  className="h-4 opacity-40 hover:opacity-100 transition-opacity"
+                />
+              </a>
+            </div>
             </div>
           </main>
         </div>
@@ -548,7 +641,7 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
             <AlertDialogAction
               onClick={confirmDelete}
               disabled={isPending}
-              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+              className="bg-destructive hover:bg-destructive/90 focus:ring-destructive"
             >
               {isPending ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>

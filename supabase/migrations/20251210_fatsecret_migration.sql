@@ -143,7 +143,7 @@ CREATE POLICY "Service can update fatsecret_search_cache"
   USING (true);
 
 -- ============================================================================
--- Step 5: Update meal_plan_recipes to support FatSecret
+-- Step 5: Update meal_plan_meals to support FatSecret
 -- ============================================================================
 
 -- Add recipe_source column if not exists
@@ -151,9 +151,9 @@ DO $$
 BEGIN
   IF NOT EXISTS (
     SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'meal_plan_recipes' AND column_name = 'recipe_source'
+    WHERE table_name = 'meal_plan_meals' AND column_name = 'recipe_source'
   ) THEN
-    ALTER TABLE meal_plan_recipes
+    ALTER TABLE meal_plan_meals
     ADD COLUMN recipe_source TEXT DEFAULT 'fatsecret'
     CHECK (recipe_source IN ('spoonacular', 'fatsecret', 'local'));
   END IF;
@@ -164,9 +164,9 @@ DO $$
 BEGIN
   IF NOT EXISTS (
     SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'meal_plan_recipes' AND column_name = 'fatsecret_id'
+    WHERE table_name = 'meal_plan_meals' AND column_name = 'fatsecret_id'
   ) THEN
-    ALTER TABLE meal_plan_recipes ADD COLUMN fatsecret_id TEXT;
+    ALTER TABLE meal_plan_meals ADD COLUMN fatsecret_id TEXT;
   END IF;
 END $$;
 

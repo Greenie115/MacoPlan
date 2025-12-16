@@ -123,7 +123,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
   const { mealId: loggedMealId } = await getLoggedMealForRecipe(id)
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-background pb-20">
       {/* Hero Image with Back/Favorite Buttons */}
       <RecipeHero
         recipeId={recipe.id}
@@ -134,11 +134,11 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
       <div className="flex flex-col gap-6 -mt-8 relative z-10 px-4 max-w-4xl mx-auto w-full">
         {/* Title & Meta Card */}
-        <div className="bg-white rounded-t-2xl pt-6 pb-2 shadow-sm">
-          <h1 className="text-gray-900 tracking-tight text-3xl font-bold leading-tight px-4 text-left pb-2">
+        <div className="bg-card rounded-t-2xl pt-6 pb-2 shadow-sm border border-border-strong">
+          <h1 className="text-foreground tracking-tight text-3xl font-bold leading-tight px-4 text-left pb-2">
             {recipe.name}
           </h1>
-          <div className="flex items-center gap-2 text-gray-700 text-sm font-medium leading-normal pb-3 pt-1 px-4">
+          <div className="flex items-center gap-2 text-muted-foreground text-sm font-medium leading-normal pb-3 pt-1 px-4">
             {/* Rating placeholder since we don't have ratings yet */}
             <span>⭐ 4.5 (120 ratings)</span>
             <span>|</span>
@@ -163,7 +163,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
             {recipeWithDetails.tags.map((tag) => (
               <span
                 key={tag.id}
-                className="bg-primary/20 text-primary font-semibold text-xs py-1.5 px-3 rounded-full"
+                className="bg-primary/10 text-primary font-semibold text-xs py-1.5 px-3 rounded-full"
               >
                 {tag.tag}
               </span>
@@ -182,7 +182,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
         )}
 
         {/* Nutrition Facts */}
-        <div className="bg-white rounded-xl p-4 shadow-sm">
+        <div className="bg-card rounded-xl p-4 shadow-sm border border-border-strong">
           <RecipeNutritionFacts
             servingSize={`1 serving (${recipe.servings || 1} total)`}
             calories={recipe.calories}
@@ -219,8 +219,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
             className="h-12 text-base"
           />
           <div className="flex items-center justify-center gap-2 pt-2">
-            <span className="text-xs text-gray-400">Recipe data powered by</span>
-            <span className="text-sm font-bold text-gray-500">Edamam</span>
+            <span className="text-xs text-muted-foreground">Recipe data powered by</span>
+            <span className="text-sm font-bold text-muted-foreground">Edamam</span>
           </div>
         </div>
       </div>

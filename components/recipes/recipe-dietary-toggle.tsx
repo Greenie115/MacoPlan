@@ -13,6 +13,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Filter, FilterX } from 'lucide-react'
+import { Switch } from '@/components/ui/switch'
 
 const STORAGE_KEY = 'macroplan_dietary_filter_enabled'
 
@@ -62,25 +63,16 @@ export function RecipeDietaryToggle() {
           )}
         </div>
 
-        {/* Toggle Switch */}
-        <button
-          onClick={handleToggle}
-          className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          style={{
-            backgroundColor: isEnabled ? '#F97316' : '#e8d5ce',
-          }}
+        {/* Toggle Switch - using shadcn Switch */}
+        <Switch
+          checked={isEnabled}
+          onCheckedChange={handleToggle}
           aria-label={
             isEnabled
               ? 'Disable dietary filtering'
               : 'Enable dietary filtering'
           }
-        >
-          <span
-            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-              isEnabled ? 'translate-x-6' : 'translate-x-1'
-            }`}
-          />
-        </button>
+        />
       </div>
 
       {/* Help Text */}

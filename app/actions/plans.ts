@@ -88,6 +88,33 @@ export async function getRecentPlansWithProgress() {
         const uniqueDays = new Set(loggedDays?.map((log) => log.date) || [])
         const daysCompleted = uniqueDays.size
 
+        // Fetch preview images from meal_plan_meals (first 4 unique recipes)
+        const { data: meals } = await supabase
+          .from('meal_plan_meals')
+          .select('recipe_image_url, fatsecret_id, spoonacular_id, meal_order')
+          .eq('meal_plan_id', plan.id)
+          .order('meal_order', { ascending: true })
+
+        // Get first 4 unique images (avoid duplicates from same recipe)
+        const seenIds = new Set<string>()
+        const previewImages: string[] = []
+
+        if (meals) {
+          for (const meal of meals) {
+            if (previewImages.length >= 4) break
+
+            // Create unique key from recipe ID
+            const uniqueKey = meal.fatsecret_id || meal.spoonacular_id?.toString() || meal.meal_order?.toString()
+            if (uniqueKey && seenIds.has(uniqueKey)) continue
+            if (uniqueKey) seenIds.add(uniqueKey)
+
+            // Only add if there's an actual image URL
+            if (meal.recipe_image_url) {
+              previewImages.push(meal.recipe_image_url)
+            }
+          }
+        }
+
         // Format date range for display
         const startDate = new Date(plan.start_date)
         const endDate = new Date(plan.end_date)
@@ -111,7 +138,7 @@ export async function getRecentPlansWithProgress() {
           isActive: plan.is_active,
           daysCompleted,
           totalDays: plan.total_days,
-          images: [], // Empty array for backward compatibility
+          images: previewImages, // Actual recipe images
           createdAt: new Date(plan.created_at),
         }
       })

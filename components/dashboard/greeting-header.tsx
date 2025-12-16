@@ -1,8 +1,6 @@
 'use client'
 
 import { useGreeting } from '@/lib/hooks/use-greeting'
-import { typography } from '@/lib/design-tokens'
-import { cn } from '@/lib/utils'
 
 interface GreetingHeaderProps {
   userName?: string
@@ -46,11 +44,16 @@ export function GreetingHeader({
     return "Let's crush your goals today"
   }
 
+  const contextMessage = getContextMessage()
+
   return (
-    <div className="px-4 pt-2 pb-4">
-      <h1 className="text-xl font-bold leading-tight tracking-[-0.015em] text-foreground">
+    <div className="pb-2">
+      <h1 className="text-2xl md:text-3xl font-bold leading-tight tracking-[-0.015em] text-foreground">
         {greeting} 👋
       </h1>
+      <p className="text-sm md:text-base text-muted-foreground mt-1">
+        {contextMessage}
+      </p>
     </div>
   )
 }

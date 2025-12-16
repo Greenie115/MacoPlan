@@ -230,6 +230,7 @@ export async function generateWeeklyMealPlan(params: {
 
 /**
  * Get available recipe type filters
+ * These are the valid recipe types from the FatSecret API (recipe_types.get endpoint)
  */
 export async function getRecipeTypeFilters(): Promise<{
   success: boolean
@@ -238,23 +239,20 @@ export async function getRecipeTypeFilters(): Promise<{
   return {
     success: true,
     data: [
-      { value: 'Appetizer', label: 'Appetizer' },
+      { value: 'Appetizers', label: 'Appetizers' },
       { value: 'Baked', label: 'Baked' },
-      { value: 'Beverage', label: 'Beverage' },
-      { value: 'Bread', label: 'Bread' },
+      { value: 'Beverages', label: 'Beverages' },
+      { value: 'Breads', label: 'Breads' },
       { value: 'Breakfast', label: 'Breakfast' },
-      { value: 'Brunch', label: 'Brunch' },
-      { value: 'Dessert', label: 'Dessert' },
-      { value: 'Dinner', label: 'Dinner' },
-      { value: 'Lunch', label: 'Lunch' },
-      { value: 'Main Dish', label: 'Main Dish' },
-      { value: 'Salad', label: 'Salad' },
-      { value: 'Sandwich', label: 'Sandwich' },
-      { value: 'Side Dish', label: 'Side Dish' },
-      { value: 'Smoothie', label: 'Smoothie' },
-      { value: 'Snack', label: 'Snack' },
-      { value: 'Soup', label: 'Soup' },
-      { value: 'Vegetarian', label: 'Vegetarian' },
+      { value: 'Desserts', label: 'Desserts' },
+      { value: 'Main Dishes', label: 'Main Dishes' },
+      { value: 'Preserving', label: 'Preserving' },
+      { value: 'Salads', label: 'Salads' },
+      { value: 'Sandwiches', label: 'Sandwiches' },
+      { value: 'Sauces and Condiments', label: 'Sauces & Condiments' },
+      { value: 'Side Dishes', label: 'Side Dishes' },
+      { value: 'Soups', label: 'Soups' },
+      { value: 'Vegetables', label: 'Vegetables' },
     ],
   }
 }

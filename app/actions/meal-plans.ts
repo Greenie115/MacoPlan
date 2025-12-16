@@ -34,6 +34,12 @@ import { z } from 'zod'
 
 const GenerateMealPlanRequestSchema = z.object({
   timeFrame: z.enum(['day', 'week']),
+  numberOfDays: z
+    .number()
+    .int()
+    .min(1, 'Number of days must be at least 1')
+    .max(7, 'Number of days cannot exceed 7')
+    .optional(),
   mealsPerDay: z
     .number()
     .int()
@@ -67,6 +73,7 @@ const GenerateMealPlanRequestSchema = z.object({
 
 interface GenerateMealPlanRequest {
   timeFrame: 'day' | 'week'
+  numberOfDays?: number // Specific number of days (1-7)
   mealsPerDay?: number
   targetCalories?: number // Override user profile
   customDiet?: string // Override user profile
@@ -224,13 +231,17 @@ export async function generateMealPlan(
       )
     }
 
+    // Calculate number of days: use numberOfDays if provided, otherwise 1 for 'day' and 7 for 'week'
+    const days = validatedRequest.numberOfDays
+      ?? (validatedRequest.timeFrame === 'day' ? 1 : 7)
+
     const params = {
       targetCalories,
       targetProtein,
       targetCarbs,
       targetFat,
       mealsPerDay: validatedRequest.mealsPerDay || 4,
-      days: validatedRequest.timeFrame === 'day' ? 1 : 7,
+      days,
       dietaryPreferences: dietaryPreferences.length > 0 ? dietaryPreferences : undefined,
       excludeIngredients: excludeIngredients.length > 0 ? excludeIngredients : undefined,
     }
@@ -283,17 +294,22 @@ export async function generateMealPlan(
     // Step 7: Save meal plan to database
     const startDate = new Date()
     const endDate = new Date()
-    if (validatedRequest.timeFrame === 'week') {
-      endDate.setDate(endDate.getDate() + 6)
+    if (days > 1) {
+      endDate.setDate(endDate.getDate() + days - 1)
     }
+
+    // Generate plan name based on number of days
+    const planName = days === 1
+      ? `Daily Meal Plan - ${startDate.toLocaleDateString()}`
+      : `${days}-Day Meal Plan - ${startDate.toLocaleDateString()}`
 
     const mealPlanData: MealPlanInsert = {
       user_id: user.id,
-      name: `${validatedRequest.timeFrame === 'day' ? 'Daily' : 'Weekly'} Meal Plan - ${startDate.toLocaleDateString()}`,
+      name: planName,
       description: `Generated meal plan with ${Math.round(actualCalories)} calories per day`,
       start_date: startDate.toISOString().split('T')[0],
       end_date: endDate.toISOString().split('T')[0],
-      total_days: validatedRequest.timeFrame === 'day' ? 1 : 7,
+      total_days: days,
       target_calories: targetCalories,
       protein_grams: targetProtein,
       carb_grams: targetCarbs,
@@ -306,6 +322,7 @@ export async function generateMealPlan(
       is_favorite: false,
       generation_params: {
         timeFrame: validatedRequest.timeFrame,
+        numberOfDays: days,
         targetCalories,
         mealsPerDay: params.mealsPerDay,
         diet: dietaryPreferences.join(',') || undefined,
@@ -386,6 +403,7 @@ export async function generateMealPlan(
 }
 
 // Helper to create meal plan meal entry from FatSecret data
+// Stores original recipe values with 1.0 multiplier - user adjusts servings manually
 function createMealPlanMealEntry(
   mealPlanId: string,
   meal: MealSlot,
@@ -394,6 +412,8 @@ function createMealPlanMealEntry(
 ): MealPlanMealInsert {
   const recipe = meal.recipe
 
+  // Always store original recipe values with 1.0 multiplier
+  // User can adjust serving_multiplier manually on meal cards
   return {
     meal_plan_id: mealPlanId,
     day_index: dayIndex,
@@ -407,10 +427,10 @@ function createMealPlanMealEntry(
     recipe_image_url: recipe?.imageUrl || null,
     servings: recipe?.servings || 1,
     ready_in_minutes: recipe?.totalTimeMinutes || null,
-    calories: recipe?.calories || meal.targetCalories,
-    protein_grams: recipe?.protein || meal.targetProtein,
-    carb_grams: recipe?.carbs || 0,
-    fat_grams: recipe?.fat || 0,
+    calories: recipe?.calories ? Math.round(recipe.calories) : Math.round(meal.targetCalories),
+    protein_grams: recipe?.protein ? Math.round(recipe.protein * 10) / 10 : Math.round(meal.targetProtein * 10) / 10,
+    carb_grams: recipe?.carbs ? Math.round(recipe.carbs * 10) / 10 : 0,
+    fat_grams: recipe?.fat ? Math.round(recipe.fat * 10) / 10 : 0,
     serving_multiplier: 1.0,
     notes: null,
   }
@@ -780,6 +800,7 @@ export async function regenerateMealPlan(
 
     return await generateMealPlan({
       timeFrame: params.timeFrame,
+      numberOfDays: params.numberOfDays,
       mealsPerDay: params.mealsPerDay,
       targetCalories: params.targetCalories,
       customDiet: params.diet,
@@ -843,52 +864,197 @@ export async function getSwapOptions(
       .eq('user_id', user.id)
       .single()
 
-    // Map meal type to FatSecret recipe type
-    const typeMap: Record<string, string> = {
-      breakfast: 'Breakfast',
-      lunch: 'Lunch',
-      dinner: 'Dinner',
-      snack: 'Snack',
+    // Import keyword extraction utilities
+    const {
+      extractRecipeKeywords,
+      checkDietaryConflict,
+      buildDietarySearchTerms,
+      calculateMacroSimilarity,
+    } = await import('@/lib/utils/recipe-keywords')
+
+    // Extract keywords from current meal title
+    const keywords = extractRecipeKeywords(meal.recipe_title)
+    console.log('[GetSwapOptions] Extracted keywords:', keywords)
+
+    // Original meal macros for similarity scoring
+    const originalMacros = {
+      calories: (meal.calories || 0) * meal.serving_multiplier,
+      protein: (meal.protein_grams || 0) * meal.serving_multiplier,
+      carbs: (meal.carb_grams || 0) * meal.serving_multiplier,
+      fat: (meal.fat_grams || 0) * meal.serving_multiplier,
     }
 
-    // Search for alternatives via FatSecret
-    const searchTerms = ['healthy', 'easy', 'quick']
-    const searchTerm = searchTerms[Math.floor(Math.random() * searchTerms.length)]
+    // Build search expressions with fallback strategy
+    const searchStrategies: string[] = []
 
-    const response = await fatSecretService.searchRecipes({
-      search_expression: searchTerm,
-      recipe_type: typeMap[mealType] as any || 'Main Dish',
-      max_results: 10,
-    })
-
-    if (!response.recipes?.recipe) {
-      return { success: true, data: [] }
+    // Strategy 1: Use extracted keywords (most specific)
+    if (keywords.searchExpression && keywords.searchExpression !== 'healthy meal') {
+      searchStrategies.push(keywords.searchExpression)
     }
 
-    const recipes = Array.isArray(response.recipes.recipe)
-      ? response.recipes.recipe
-      : [response.recipes.recipe]
+    // Strategy 2: Protein + meal type
+    if (keywords.protein) {
+      searchStrategies.push(`${keywords.protein} ${mealType}`)
+    }
 
-    // Filter by calorie range and transform results
+    // Strategy 3: Base ingredient + cooking method or cuisine
+    if (keywords.base) {
+      if (keywords.cookingMethod) {
+        searchStrategies.push(`${keywords.cookingMethod} ${keywords.base}`)
+      } else if (keywords.cuisine) {
+        searchStrategies.push(`${keywords.cuisine} ${keywords.base}`)
+      }
+    }
+
+    // Strategy 4: Dietary-aware search (for users with dietary preferences)
+    if (profile?.dietary_style && profile.dietary_style !== 'none') {
+      const dietaryTerms = buildDietarySearchTerms(profile.dietary_style)
+      if (dietaryTerms.length > 0) {
+        const randomDietaryTerm = dietaryTerms[Math.floor(Math.random() * dietaryTerms.length)]
+        searchStrategies.push(`${randomDietaryTerm} ${mealType}`)
+      }
+    }
+
+    // Strategy 5: Fallback to meal type categories
+    const mealTypeFallbacks: Record<string, string[]> = {
+      breakfast: ['breakfast eggs', 'oatmeal breakfast', 'healthy breakfast'],
+      lunch: ['lunch bowl', 'healthy salad', 'lunch sandwich'],
+      dinner: ['dinner protein', 'healthy dinner', 'grilled dinner'],
+      snack: ['healthy snack', 'protein snack', 'light snack'],
+    }
+    const fallbacks = mealTypeFallbacks[mealType] || ['healthy meal']
+    searchStrategies.push(fallbacks[Math.floor(Math.random() * fallbacks.length)])
+
+    // Remove duplicates while preserving order
+    const uniqueStrategies = [...new Set(searchStrategies)]
+    console.log('[GetSwapOptions] Search strategies:', uniqueStrategies)
+
+    // Calorie range for filtering
     const minCal = targetCalories * 0.7
     const maxCal = targetCalories * 1.3
 
-    const swapOptions: SwapOption[] = recipes
-      .filter(r => {
-        const cal = parseFloat(r.recipe_nutrition?.calories || '0')
-        return cal >= minCal && cal <= maxCal
+    // Try each search strategy until we get enough results
+    let allRecipes: Array<{
+      recipe_id: string
+      recipe_name: string
+      recipe_image?: string
+      recipe_nutrition?: {
+        calories?: string
+        protein?: string
+        carbohydrate?: string
+        fat?: string
+      }
+    }> = []
+
+    for (const searchExpression of uniqueStrategies) {
+      if (allRecipes.length >= 12) break // We have enough candidates
+
+      console.log('[GetSwapOptions] Trying search:', searchExpression)
+      const response = await fatSecretService.searchRecipes({
+        search_expression: searchExpression,
+        max_results: 15,
       })
+
+      if (response.recipes?.recipe) {
+        const recipes = Array.isArray(response.recipes.recipe)
+          ? response.recipes.recipe
+          : [response.recipes.recipe]
+
+        // Add new recipes (avoid duplicates)
+        const existingIds = new Set(allRecipes.map(r => r.recipe_id))
+        for (const recipe of recipes) {
+          if (!existingIds.has(recipe.recipe_id)) {
+            allRecipes.push(recipe)
+            existingIds.add(recipe.recipe_id)
+          }
+        }
+      }
+
+      // If first strategy gives good results, don't need fallbacks
+      if (allRecipes.length >= 8 && searchExpression === uniqueStrategies[0]) {
+        break
+      }
+    }
+
+    if (allRecipes.length === 0) {
+      return { success: true, data: [] }
+    }
+
+    // Filter and score results
+    const scoredOptions = allRecipes
+      .map(recipe => {
+        const calories = parseFloat(recipe.recipe_nutrition?.calories || '0')
+        const protein = parseFloat(recipe.recipe_nutrition?.protein || '0')
+        const carbs = parseFloat(recipe.recipe_nutrition?.carbohydrate || '0')
+        const fat = parseFloat(recipe.recipe_nutrition?.fat || '0')
+
+        // Check dietary conflicts
+        const hasDietaryConflict = checkDietaryConflict(
+          recipe.recipe_name,
+          profile?.dietary_style || null,
+          profile?.allergies || null
+        )
+
+        // Check foods to avoid
+        let hasAvoidedFood = false
+        if (profile?.foods_to_avoid) {
+          const avoidList = profile.foods_to_avoid.toLowerCase().split(',').map((s: string) => s.trim())
+          const recipeLower = recipe.recipe_name.toLowerCase()
+          hasAvoidedFood = avoidList.some((food: string) => food && recipeLower.includes(food))
+        }
+
+        // Calculate macro similarity score
+        const macroSimilarity = calculateMacroSimilarity(originalMacros, {
+          calories,
+          protein,
+          carbs,
+          fat,
+        })
+
+        // Calorie range check
+        const inCalorieRange = calories >= minCal && calories <= maxCal
+
+        // Exclude current meal from results
+        const isCurrentMeal = recipe.recipe_name.toLowerCase() === meal.recipe_title.toLowerCase()
+
+        return {
+          recipe,
+          calories,
+          protein,
+          carbs,
+          fat,
+          macroSimilarity,
+          hasDietaryConflict,
+          hasAvoidedFood,
+          inCalorieRange,
+          isCurrentMeal,
+        }
+      })
+      // Filter out conflicts and out-of-range
+      .filter(item =>
+        !item.hasDietaryConflict &&
+        !item.hasAvoidedFood &&
+        !item.isCurrentMeal &&
+        item.inCalorieRange
+      )
+      // Sort by macro similarity (best matches first)
+      .sort((a, b) => b.macroSimilarity - a.macroSimilarity)
+
+    console.log('[GetSwapOptions] Found', scoredOptions.length, 'valid options after filtering')
+
+    // Take top 6 results
+    const swapOptions: SwapOption[] = scoredOptions
       .slice(0, 6)
-      .map(recipe => ({
-        id: recipe.recipe_id,
-        title: recipe.recipe_name,
-        image: recipe.recipe_image || null,
+      .map(item => ({
+        id: item.recipe.recipe_id,
+        title: item.recipe.recipe_name,
+        image: item.recipe.recipe_image || null,
         readyInMinutes: null,
         servings: 1,
-        calories: parseFloat(recipe.recipe_nutrition?.calories || '0'),
-        protein: parseFloat(recipe.recipe_nutrition?.protein || '0'),
-        carbs: parseFloat(recipe.recipe_nutrition?.carbohydrate || '0'),
-        fat: parseFloat(recipe.recipe_nutrition?.fat || '0'),
+        calories: item.calories,
+        protein: item.protein,
+        carbs: item.carbs,
+        fat: item.fat,
       }))
 
     return { success: true, data: swapOptions }
@@ -1024,5 +1190,165 @@ export async function getMealPlanQuotaInfo(): Promise<{
   } catch (error) {
     console.error('[GetQuotaInfo] Unexpected error:', error)
     return { success: false, error: 'Failed to fetch quota info' }
+  }
+}
+
+// ============================================================================
+// Update Meal Serving Size
+// ============================================================================
+
+const UpdateMealServingSchema = z.object({
+  mealId: z.string().uuid('Invalid meal ID'),
+  servingMultiplier: z
+    .number()
+    .min(0.5, 'Serving size must be at least 0.5x')
+    .max(3.0, 'Serving size cannot exceed 3x'),
+})
+
+export async function updateMealServing(
+  mealId: string,
+  servingMultiplier: number
+): Promise<{
+  success: boolean
+  data?: {
+    servingMultiplier: number
+    adjustedCalories: number
+    adjustedProtein: number
+    adjustedCarbs: number
+    adjustedFat: number
+  }
+  error?: string
+}> {
+  try {
+    // Validate input
+    const validation = UpdateMealServingSchema.safeParse({ mealId, servingMultiplier })
+    if (!validation.success) {
+      return { success: false, error: validation.error.issues[0].message }
+    }
+
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return { success: false, error: 'Not authenticated' }
+    }
+
+    // Verify meal belongs to user's plan
+    const { data: meal, error: mealError } = await supabase
+      .from('meal_plan_meals')
+      .select('*, meal_plans!inner(user_id, id)')
+      .eq('id', mealId)
+      .single()
+
+    if (mealError || !meal) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    if ((meal.meal_plans as { user_id: string }).user_id !== user.id) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    // Update serving multiplier
+    const { error: updateError } = await supabase
+      .from('meal_plan_meals')
+      .update({
+        serving_multiplier: servingMultiplier,
+        notes: servingMultiplier !== 1.0 ? `${servingMultiplier}x serving size` : null,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', mealId)
+
+    if (updateError) {
+      console.error('[UpdateMealServing] Update error:', updateError)
+      return { success: false, error: 'Failed to update serving size' }
+    }
+
+    // Calculate adjusted values
+    const adjustedCalories = Math.round((meal.calories || 0) * servingMultiplier)
+    const adjustedProtein = Math.round((meal.protein_grams || 0) * servingMultiplier * 10) / 10
+    const adjustedCarbs = Math.round((meal.carb_grams || 0) * servingMultiplier * 10) / 10
+    const adjustedFat = Math.round((meal.fat_grams || 0) * servingMultiplier * 10) / 10
+
+    const planId = (meal.meal_plans as { id: string }).id
+    revalidatePath(`/meal-plans/${planId}`)
+
+    return {
+      success: true,
+      data: {
+        servingMultiplier,
+        adjustedCalories,
+        adjustedProtein,
+        adjustedCarbs,
+        adjustedFat,
+      },
+    }
+  } catch (error) {
+    console.error('[UpdateMealServing] Unexpected error:', error)
+    return { success: false, error: 'Failed to update serving size' }
+  }
+}
+
+// ============================================================================
+// Get Meal Plan Meal Info (for recipe page linking)
+// ============================================================================
+
+export async function getMealPlanMealInfo(
+  mealId: string
+): Promise<{
+  success: boolean
+  data?: {
+    id: string
+    mealPlanId: string
+    servingMultiplier: number
+    calories: number
+    protein: number
+    carbs: number
+    fat: number
+  }
+  error?: string
+}> {
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return { success: false, error: 'Not authenticated' }
+    }
+
+    const { data: meal, error: mealError } = await supabase
+      .from('meal_plan_meals')
+      .select('id, meal_plan_id, serving_multiplier, calories, protein_grams, carb_grams, fat_grams, meal_plans!inner(user_id)')
+      .eq('id', mealId)
+      .single()
+
+    if (mealError || !meal) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    // Verify ownership - meal_plans from inner join is an object (not array) due to single()
+    const mealPlan = meal.meal_plans as unknown as { user_id: string }
+    if (mealPlan.user_id !== user.id) {
+      return { success: false, error: 'Meal not found' }
+    }
+
+    return {
+      success: true,
+      data: {
+        id: meal.id,
+        mealPlanId: meal.meal_plan_id,
+        servingMultiplier: meal.serving_multiplier,
+        calories: meal.calories || 0,
+        protein: meal.protein_grams || 0,
+        carbs: meal.carb_grams || 0,
+        fat: meal.fat_grams || 0,
+      },
+    }
+  } catch (error) {
+    console.error('[GetMealPlanMealInfo] Unexpected error:', error)
+    return { success: false, error: 'Failed to fetch meal info' }
   }
 }

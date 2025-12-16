@@ -16,7 +16,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight, MoreHorizontal, Plus, ChefHat, Heart, Archive, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { getSpoonacularImageUrl } from '@/lib/utils/spoonacular-image'
+import { MealPlaceholder } from '@/components/meal-plans/meal-placeholder'
 import { PaywallModal, type PaywallTrigger } from '@/components/monetization/paywall-modal'
 import {
   DropdownMenu,
@@ -128,37 +128,37 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
   ]
 
   return (
-    <div className="min-h-screen bg-white pb-32">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm">
+    <div className="min-h-screen bg-background pb-32">
+      {/* Sub-header with back button, title, and actions */}
+      <div className="bg-background border-b border-border-strong">
         <div className="mx-auto max-w-5xl">
-          <div className="flex h-[60px] items-center px-4">
-            <div className="flex size-12 shrink-0 items-center justify-start">
+          <div className="flex h-14 items-center px-4">
+            <div className="flex size-10 shrink-0 items-center justify-start">
               <button
                 onClick={() => router.back()}
                 aria-label="Go back"
-                className="flex h-12 w-12 items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
+                className="flex h-10 w-10 items-center justify-center hover:bg-muted rounded-lg transition-colors"
               >
-                <ArrowLeft className="size-6 text-gray-900" />
+                <ArrowLeft className="size-5 text-foreground" />
               </button>
             </div>
-            <h1 className="flex-1 text-center text-xl font-semibold leading-tight tracking-[-0.015em]">
+            <h1 className="flex-1 text-center text-lg font-semibold leading-tight tracking-[-0.015em] text-foreground">
               Saved Plans
             </h1>
-            <div className="flex w-12 shrink-0 items-center justify-end">
+            <div className="flex w-10 shrink-0 items-center justify-end">
               <button
                 onClick={handleGenerateNew}
                 aria-label="Generate new plan"
-                className="flex h-12 w-12 items-center justify-center text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                className="flex h-10 w-10 items-center justify-center text-primary hover:bg-primary/10 rounded-lg transition-colors"
               >
-                <Plus className="size-6" />
+                <Plus className="size-5" />
               </button>
             </div>
           </div>
 
           {/* Tab Navigation */}
           <div className="px-4">
-            <div className="flex border-b border-gray-100">
+            <div className="flex border-b border-border">
               {tabs.map((tab) => (
                 <button
                   key={tab.key}
@@ -167,7 +167,7 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
                     'flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors md:flex-none md:px-6',
                     activeTab === tab.key
                       ? 'border-primary text-primary'
-                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                      : 'border-transparent text-muted-foreground hover:text-foreground'
                   )}
                 >
                   <p className="text-sm font-semibold leading-normal">{tab.label}</p>
@@ -200,8 +200,8 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
 
       {/* Quota Footer (Free tier only) */}
       {quotaInfo && quotaInfo.tier === 'free' && (
-        <div className="fixed bottom-0 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm p-4 border-t border-gray-100">
-          <div className="text-center text-sm text-gray-500">
+        <div className="fixed bottom-0 left-0 right-0 z-10 bg-card/95 backdrop-blur-sm p-4 border-t border-border">
+          <div className="text-center text-sm text-muted-foreground">
             <p>Free: {quotaInfo.used} of {quotaInfo.total} plans generated</p>
             <button
               onClick={() => {
@@ -237,7 +237,7 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
             <AlertDialogAction
               onClick={confirmDelete}
               disabled={isPending}
-              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+              className="bg-destructive hover:bg-destructive/90 focus:ring-destructive"
             >
               {isPending ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
@@ -280,8 +280,8 @@ function EmptyState({
       <div className="size-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
         <ChefHat className="size-10 text-primary" />
       </div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-2 text-center">{title}</h2>
-      <p className="text-gray-500 text-center mb-8 max-w-xs">{subtitle}</p>
+      <h2 className="text-xl font-semibold text-foreground mb-2 text-center">{title}</h2>
+      <p className="text-muted-foreground text-center mb-8 max-w-xs">{subtitle}</p>
       {activeTab !== 'favorites' && (
         <button
           onClick={onGenerate}
@@ -312,38 +312,33 @@ function MealPlanCard({
   onArchive: (planId: string) => void
   isPending: boolean
 }) {
-  // Get actual meal images from the plan, with fallbacks
-  const fallbackIds = [715538, 716429, 715394, 716627]
+  // Meal types for placeholder grid positions
+  const GRID_MEAL_TYPES = ['breakfast', 'lunch', 'dinner', 'snack'] as const
 
   // Build preview images array - use actual images when available, fallback otherwise
-  // Using 636x393 - the largest size reliably available for all recipes (no watermark)
-  // Note: 1200x900 is not available for all recipes and returns 404
   const previewImages = Array.from({ length: 4 }, (_, index) => {
     const preview = plan.preview_images?.[index]
-    if (preview?.spoonacular_id) {
-      // Use spoonacular_id to generate high-quality image URL
-      return {
-        src: getSpoonacularImageUrl(preview.spoonacular_id, '636x393'),
-        key: `meal-${preview.spoonacular_id}`,
-      }
-    } else if (preview?.image_url) {
+    if (preview?.image_url) {
       // Use direct image URL if available
       return {
         src: preview.image_url,
-        key: `url-${index}`,
+        key: `url-${preview.fatsecret_id || preview.spoonacular_id || index}`,
+        hasImage: true,
       }
     } else {
       // Fall back to placeholder
       return {
-        src: getSpoonacularImageUrl(fallbackIds[index], '636x393'),
+        src: null,
         key: `fallback-${index}`,
+        hasImage: false,
+        mealType: GRID_MEAL_TYPES[index],
       }
     }
   })
 
   return (
     <Link href={`/meal-plans/${plan.id}`}>
-      <div className="relative flex h-full flex-col items-stretch justify-start rounded-2xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-gray-100 p-4 hover:shadow-md transition-shadow">
+      <div className="relative flex h-full flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 hover:shadow-md transition-shadow">
         {/* More Options Button */}
         <div className="absolute top-2 right-2 z-10">
           <DropdownMenu>
@@ -354,7 +349,7 @@ function MealPlanCard({
                   e.stopPropagation()
                 }}
                 aria-label="More options"
-                className="flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 transition-colors"
+                className="flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:bg-muted transition-colors"
               >
                 <MoreHorizontal className="size-5" />
               </button>
@@ -368,7 +363,7 @@ function MealPlanCard({
                 }}
                 disabled={isPending}
               >
-                <Heart className={cn("size-4 mr-2", plan.is_favorite && "fill-red-500 text-red-500")} />
+                <Heart className={cn("size-4 mr-2", plan.is_favorite && "fill-destructive text-destructive")} />
                 {plan.is_favorite ? 'Remove from Favorites' : 'Add to Favorites'}
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -390,7 +385,7 @@ function MealPlanCard({
                   onDelete(plan)
                 }}
                 disabled={isPending}
-                className="text-red-600 focus:text-red-600"
+                className="text-destructive focus:text-destructive"
               >
                 <Trash2 className="size-4 mr-2" />
                 Delete Plan
@@ -401,20 +396,28 @@ function MealPlanCard({
 
         {/* 2x2 Image Grid - using actual meal images */}
         <div className="grid grid-cols-2 gap-1.5 mb-4 max-w-[200px]">
-          {previewImages.map((image) => (
+          {previewImages.map((image, index) => (
             <div
               key={image.key}
-              className="aspect-square rounded-lg overflow-hidden bg-gray-100 relative"
+              className="aspect-square rounded-lg overflow-hidden bg-muted relative"
             >
-              <Image
-                src={image.src}
-                alt=""
-                fill
-                sizes="100px"
-                className="object-cover"
-                quality={90}
-                unoptimized={!image.src.includes('spoonacular')}
-              />
+              {image.hasImage && image.src ? (
+                <Image
+                  src={image.src}
+                  alt=""
+                  fill
+                  sizes="100px"
+                  className="object-cover"
+                  quality={90}
+                  unoptimized
+                />
+              ) : (
+                <MealPlaceholder
+                  mealType={image.mealType || GRID_MEAL_TYPES[index]}
+                  className="w-full h-full"
+                  compact
+                />
+              )}
             </div>
           ))}
         </div>
@@ -422,19 +425,19 @@ function MealPlanCard({
         {/* Plan Info */}
         <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-col gap-0.5">
-            <h2 className="text-lg font-semibold leading-tight tracking-[-0.015em] text-gray-900 pr-8 line-clamp-2">
+            <h2 className="text-lg font-semibold leading-tight tracking-[-0.015em] text-foreground pr-8 line-clamp-2">
               {plan.name}
             </h2>
-            <p className="text-sm font-normal leading-normal text-gray-500">
+            <p className="text-sm font-normal leading-normal text-muted-foreground">
               {formatDateRange(plan.start_date, plan.end_date)}
             </p>
-            <p className="text-sm font-normal leading-normal text-gray-500">
+            <p className="text-sm font-normal leading-normal text-muted-foreground">
               {plan.target_calories.toLocaleString()} cal/day avg
             </p>
           </div>
 
           {/* Macro Display */}
-          <div className="flex items-center gap-3 text-sm text-gray-500">
+          <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <span className="text-protein">🥩</span>
               {plan.protein_grams}g
@@ -451,7 +454,7 @@ function MealPlanCard({
 
           {/* View Plan Button - pushed to bottom */}
           <div className="mt-auto pt-2">
-            <button className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-primary bg-white text-sm font-semibold leading-normal text-primary hover:bg-primary/10 transition-colors">
+            <button className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-card text-sm font-semibold leading-normal text-primary hover:bg-primary/10 transition-colors">
               <span className="truncate">View Plan</span>
               <ArrowRight className="size-4" />
             </button>

@@ -4,7 +4,7 @@ import { Recipe } from '@/lib/types/recipe'
 import { RecipeCard } from './recipe-card'
 
 interface RecipeGridProps {
-  recipes: (Recipe | any)[] // Allow both local Recipe and Spoonacular recipes
+  recipes: (Recipe | any)[] // Allow both local Recipe and FatSecret recipes
   favoriteIds: (string | number)[]
 }
 
@@ -26,7 +26,7 @@ export function RecipeGrid({ recipes, favoriteIds }: RecipeGridProps) {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5 lg:gap-6">
         {recipes.map((recipe) => {
           const source = (recipe as any).source || 'local'
-          const recipeId = source === 'spoonacular' ? recipe.id : recipe.id
+          const recipeId = recipe.id
 
           return (
             <RecipeCard

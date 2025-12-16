@@ -24,12 +24,24 @@ const nextConfig: NextConfig = {
         hostname: "dxhfjhprhxylnhufzaiu.supabase.co",
       },
       {
+        // FatSecret recipe images
         protocol: "https",
-        hostname: "spoonacular.com",
+        hostname: "www.fatsecret.com",
       },
       {
+        // FatSecret CDN images
         protocol: "https",
-        hostname: "img.spoonacular.com",
+        hostname: "m.fatsecret.com",
+      },
+      {
+        // FatSecret static CDN (m.ftscrt.com)
+        protocol: "https",
+        hostname: "m.ftscrt.com",
+      },
+      {
+        // FatSecret static images
+        protocol: "https",
+        hostname: "static.fatsecret.com",
       },
     ],
   },

@@ -5,9 +5,9 @@ import { Skeleton } from '@/components/ui/skeleton'
  */
 export default function MealPlanDetailLoading() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       {/* Sticky Header Skeleton */}
-      <div className="sticky top-0 z-10 bg-white p-4 pb-2 flex items-center justify-between border-b border-gray-100">
+      <div className="sticky top-0 z-10 bg-card p-4 pb-2 flex items-center justify-between border-b border-border">
         <Skeleton className="size-12 rounded-lg" />
         <div className="flex items-center gap-2">
           <Skeleton className="h-12 w-20 rounded-lg" />
@@ -23,7 +23,7 @@ export default function MealPlanDetailLoading() {
 
       {/* Daily Totals Card Skeleton */}
       <div className="px-4 pb-4">
-        <div className="rounded-xl border border-gray-100 p-4 space-y-3">
+        <div className="rounded-2xl border border-border-strong bg-card p-4 space-y-3">
           <div className="flex items-center justify-between">
             <Skeleton className="h-6 w-48" />
             <Skeleton className="h-4 w-24" />
@@ -39,11 +39,11 @@ export default function MealPlanDetailLoading() {
 
       {/* Generate Grocery List Button Skeleton */}
       <div className="px-4 pb-4">
-        <Skeleton className="h-12 w-full rounded-lg" />
+        <Skeleton className="h-12 w-full rounded-xl" />
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-gray-100 mx-4" />
+      <div className="h-px bg-border mx-4" />
 
       {/* Day Selector Pills Skeleton */}
       <div className="py-4">
@@ -75,14 +75,14 @@ export default function MealPlanDetailLoading() {
  */
 function MealCardSkeleton() {
   return (
-    <div className="rounded-xl border border-gray-100 overflow-hidden">
+    <div className="rounded-2xl border border-border-strong bg-card overflow-hidden">
       {/* Meal Type */}
       <div className="p-4">
         <Skeleton className="h-5 w-36" />
       </div>
 
       {/* Image */}
-      <Skeleton className="h-[200px] w-full" />
+      <Skeleton className="h-[180px] w-full" />
 
       {/* Info */}
       <div className="p-4 space-y-3">
@@ -99,8 +99,8 @@ function MealCardSkeleton() {
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-1">
-          <Skeleton className="h-12 flex-1 rounded-lg" />
-          <Skeleton className="h-12 flex-1 rounded-lg" />
+          <Skeleton className="h-10 flex-1 rounded-xl" />
+          <Skeleton className="h-10 flex-1 rounded-xl" />
         </div>
       </div>
     </div>

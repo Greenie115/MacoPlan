@@ -28,18 +28,18 @@ export default async function GenerateMealPlanPage() {
 
   if (!profile || !profile.target_calories) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
         <div className="max-w-md text-center">
           <div className="text-6xl mb-6">🎯</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl font-bold text-foreground mb-3">
             Complete Your Profile First
           </h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-muted-foreground mb-8">
             Please complete your onboarding to set your macro targets before generating meal plans.
           </p>
           <Link
             href="/onboarding/1"
-            className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-[#F97316] text-white font-semibold text-base shadow-lg hover:bg-[#EA580C] transition-colors"
+            className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-primary text-primary-foreground font-semibold text-base shadow-lg hover:bg-primary/90 transition-colors"
           >
             Complete Onboarding
           </Link>

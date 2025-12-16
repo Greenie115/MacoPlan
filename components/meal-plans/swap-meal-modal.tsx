@@ -4,7 +4,7 @@
  * Swap Meal Modal Component
  *
  * Allows users to swap a meal in their meal plan with an alternative
- * from Spoonacular API matching their calorie/macro targets
+ * from FatSecret API matching their calorie/macro targets
  */
 
 import { useState, useEffect } from 'react'
@@ -13,7 +13,7 @@ import { X, RefreshCw, Clock, Check, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { getSwapOptions, swapMeal } from '@/app/actions/meal-plans'
-import { getSpoonacularImageUrl } from '@/lib/utils/spoonacular-image'
+import { MealPlaceholder } from './meal-placeholder'
 import type { MealPlanMeal } from '@/lib/types/database'
 
 interface SwapOption {
@@ -158,8 +158,8 @@ export function SwapMealModal({
         <div className="px-4 py-3 bg-muted border-b border-border">
           <p className="text-sm text-muted-foreground mb-2">Current meal:</p>
           <div className="flex items-center gap-3">
-            {meal.recipe_image_url && (
-              <div className="relative size-14 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+            <div className="relative size-14 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+              {meal.recipe_image_url ? (
                 <Image
                   src={meal.recipe_image_url}
                   alt={meal.recipe_title}
@@ -168,8 +168,13 @@ export function SwapMealModal({
                   className="object-cover"
                   quality={85}
                 />
-              </div>
-            )}
+              ) : (
+                <MealPlaceholder
+                  mealType={meal.meal_type}
+                  className="h-full w-full"
+                />
+              )}
+            </div>
             <div className="flex-1 min-w-0">
               <p className="font-medium text-foreground truncate">{meal.recipe_title}</p>
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -223,14 +228,21 @@ export function SwapMealModal({
                 >
                   {/* Recipe Image */}
                   <div className="relative size-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
-                    <Image
-                      src={option.image || (typeof option.id === 'number' ? getSpoonacularImageUrl(option.id, '636x393') : '/placeholder.png')}
-                      alt={option.title}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                      quality={85}
-                    />
+                    {option.image ? (
+                      <Image
+                        src={option.image}
+                        alt={option.title}
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                        quality={85}
+                      />
+                    ) : (
+                      <MealPlaceholder
+                        mealType={meal.meal_type}
+                        className="h-full w-full"
+                      />
+                    )}
                     {selectedOption?.id === option.id && (
                       <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
                         <div className="size-6 rounded-full bg-primary flex items-center justify-center">
@@ -276,10 +288,10 @@ export function SwapMealModal({
             onClick={handleSwap}
             disabled={!selectedOption || isSwapping}
             className={cn(
-              'flex-1 h-12 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2',
+              'flex-1 h-12 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2',
               selectedOption
                 ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-muted text-muted-foreground cursor-not-allowed'
             )}
           >
             {isSwapping ? (
@@ -291,6 +303,17 @@ export function SwapMealModal({
               'Confirm Swap'
             )}
           </button>
+        </div>
+
+        {/* FatSecret Attribution - Required by API Terms */}
+        <div className="pt-3 flex justify-center border-t border-border">
+          <a href="https://www.fatsecret.com" target="_blank" rel="noopener noreferrer">
+            <img
+              src="https://platform.fatsecret.com/api/static/images/powered_by_fatsecret.svg"
+              alt="Powered by fatsecret"
+              className="h-4 opacity-40 hover:opacity-100 transition-opacity"
+            />
+          </a>
         </div>
       </div>
     </div>

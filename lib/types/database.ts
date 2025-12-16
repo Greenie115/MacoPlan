@@ -193,6 +193,7 @@ export interface MealPlanGenerationQuota {
  */
 export interface MealPlanGenerationParams {
   timeFrame: 'day' | 'week'
+  numberOfDays?: number
   targetCalories: number
   mealsPerDay?: number
   diet?: string
