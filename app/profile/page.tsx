@@ -8,8 +8,6 @@ import {
   FileText,
   LogOut,
   Moon,
-  Globe,
-  Bell,
   Lock,
   Shield,
   ArrowRight,
@@ -22,12 +20,17 @@ import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect } from 'react'
 import { UserProfile } from '@/lib/types/database'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useTheme } from 'next-themes'
+import { ChangePasswordModal } from '@/components/profile/change-password-modal'
 
 export default function ProfilePage() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [userEmail, setUserEmail] = useState('')
   const [loading, setLoading] = useState(true)
+  const [authProvider, setAuthProvider] = useState<string | null>(null)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
   const router = useRouter()
   const supabase = createClient()
 
@@ -45,6 +48,8 @@ export default function ProfilePage() {
         }
 
         setUserEmail(user.email || '')
+        // Detect auth provider (google, email, etc.)
+        setAuthProvider(user.app_metadata?.provider || 'email')
 
         const { data, error } = await supabase.from('user_profiles').select('*').eq('user_id', user.id).single()
 
@@ -69,6 +74,14 @@ export default function ProfilePage() {
 
     loadProfile()
   }, [supabase, router])
+
+  // Handle hydration for theme
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDarkMode = mounted ? resolvedTheme === 'dark' : false
+  const toggleDarkMode = () => setTheme(isDarkMode ? 'light' : 'dark')
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -190,23 +203,6 @@ export default function ProfilePage() {
 
         <div className="px-4 pt-6"><div className="h-px bg-border-strong w-full"></div></div>
 
-        {/* Stats */}
-        <section className="pt-6">
-          <h3 className="px-4 pb-2 text-lg font-bold text-foreground">Your Stats</h3>
-          <div className="grid grid-cols-2 gap-4 px-4">
-            <div className="bg-card p-4 rounded-2xl shadow-sm border border-border-strong">
-              <p className="text-2xl font-bold text-foreground">12</p>
-              <p className="text-sm text-muted-foreground">Plans Generated</p>
-            </div>
-            <div className="bg-card p-4 rounded-2xl shadow-sm border border-border-strong">
-              <p className="text-2xl font-bold text-foreground">45</p>
-              <p className="text-sm text-muted-foreground">Recipes Favorited</p>
-            </div>
-          </div>
-        </section>
-
-        <div className="px-4 pt-6"><div className="h-px bg-border-strong w-full"></div></div>
-
         {/* Macro Goals */}
         <section className="pt-6">
           <h3 className="px-4 pb-2 text-lg font-bold text-foreground">Macro Goals</h3>
@@ -280,23 +276,21 @@ export default function ProfilePage() {
         <section className="pt-6">
           <h3 className="px-4 pb-2 text-lg font-bold text-foreground">Account Settings</h3>
           <div className="px-4 flex flex-col gap-px rounded-2xl overflow-hidden border border-border-strong shadow-sm bg-border-strong">
-            <Link href="#" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
-              <div className="flex items-center gap-3">
-                <Lock className="size-5 text-icon" />
-                <span className="text-foreground font-medium">Change Password</span>
+            {authProvider === 'email' && (
+              <div
+                onClick={() => setShowPasswordModal(true)}
+                className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <Lock className="size-5 text-icon" />
+                  <span className="text-foreground font-medium">Change Password</span>
+                </div>
+                <ChevronRight className="size-5 text-icon" />
               </div>
-              <ChevronRight className="size-5 text-icon" />
-            </Link>
-            <Link href="#" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
-              <div className="flex items-center gap-3">
-                <Bell className="size-5 text-icon" />
-                <span className="text-foreground font-medium">Notifications</span>
-              </div>
-              <ChevronRight className="size-5 text-icon" />
-            </Link>
+            )}
             <div
               className="flex items-center justify-between p-4 bg-card cursor-pointer hover:bg-accent transition-colors"
-              onClick={() => setIsDarkMode(!isDarkMode)}
+              onClick={toggleDarkMode}
             >
               <div className="flex items-center gap-3">
                 <Moon className="size-5 text-icon" />
@@ -306,16 +300,6 @@ export default function ProfilePage() {
                 <div className={`absolute top-1 size-4 bg-white rounded-full shadow-sm transition-all ${isDarkMode ? 'left-6' : 'left-1'}`}></div>
               </div>
             </div>
-            <Link href="#" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
-              <div className="flex items-center gap-3">
-                <Globe className="size-5 text-icon" />
-                <span className="text-foreground font-medium">Language</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <span className="text-sm">English</span>
-                <ChevronRight className="size-5" />
-              </div>
-            </Link>
           </div>
         </section>
 
@@ -323,21 +307,21 @@ export default function ProfilePage() {
         <section className="pt-6">
           <h3 className="px-4 pb-2 text-lg font-bold text-foreground">Support & Legal</h3>
           <div className="px-4 flex flex-col gap-px rounded-2xl overflow-hidden border border-border-strong shadow-sm bg-border-strong">
-            <Link href="#" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
+            <Link href="/help" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
               <div className="flex items-center gap-3">
                 <HelpCircle className="size-5 text-icon" />
                 <span className="text-foreground font-medium">Help Center</span>
               </div>
               <ChevronRight className="size-5 text-icon" />
             </Link>
-            <Link href="#" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
+            <Link href="/privacy" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
               <div className="flex items-center gap-3">
                 <Shield className="size-5 text-icon" />
                 <span className="text-foreground font-medium">Privacy Policy</span>
               </div>
               <ChevronRight className="size-5 text-icon" />
             </Link>
-            <Link href="#" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
+            <Link href="/terms" className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors">
               <div className="flex items-center gap-3">
                 <FileText className="size-5 text-icon" />
                 <span className="text-foreground font-medium">Terms of Service</span>
@@ -364,6 +348,8 @@ export default function ProfilePage() {
       </main>
 
       <BottomNav activeTab="profile" />
+
+      <ChangePasswordModal open={showPasswordModal} onOpenChange={setShowPasswordModal} />
     </div>
   )
 }

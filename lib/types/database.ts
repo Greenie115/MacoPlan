@@ -43,6 +43,9 @@ export interface UserProfile {
   // Status
   onboarding_completed: boolean
 
+  // Settings
+  measurement_system: 'imperial' | 'metric' | null
+
   // Meal Planning Integration
   is_test_user: boolean
   stripe_customer_id: string | null

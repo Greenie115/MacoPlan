@@ -1,14 +1,34 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { macroColors, progressColors } from '@/lib/design-tokens'
 
 interface MacroProgressBarProps {
   type: 'protein' | 'carbs' | 'fat'
   eaten: number
   target: number
-  showCalories?: boolean // Show calorie breakdown
+  showCalories?: boolean
 }
+
+const macroConfig = {
+  protein: {
+    emoji: '🥩',
+    label: 'Protein',
+    barColor: 'bg-protein',
+    textColor: 'text-protein',
+  },
+  carbs: {
+    emoji: '🍚',
+    label: 'Carbs',
+    barColor: 'bg-carb',
+    textColor: 'text-carb',
+  },
+  fat: {
+    emoji: '🥑',
+    label: 'Fat',
+    barColor: 'bg-fat',
+    textColor: 'text-fat',
+  },
+} as const
 
 export function MacroProgressBar({
   type,
@@ -16,83 +36,60 @@ export function MacroProgressBar({
   target,
   showCalories = false,
 }: MacroProgressBarProps) {
-  const percentage = target > 0 ? (eaten / target) * 100 : 0
-  const remaining = Math.max(0, target - eaten)
-
-  // Determine progress color based on percentage
-  const getProgressColor = () => {
-    if (percentage >= 90 && percentage <= 110) return progressColors.onTrack
-    if (
-      (percentage >= 80 && percentage < 90) ||
-      (percentage > 110 && percentage <= 120)
-    ) {
-      return progressColors.warning
-    }
-    return progressColors.danger
-  }
-
-  // Get macro-specific colors
-  const colors = macroColors[type]
+  const config = macroConfig[type]
+  const percentage = target > 0 ? Math.round((eaten / target) * 100) : 0
+  const isOver = percentage > 100
 
   // Calculate calories for this macro
   const caloriesPerGram = type === 'fat' ? 9 : 4
-  const caloriesEaten = eaten * caloriesPerGram
-  const caloriesTarget = target * caloriesPerGram
+  const caloriesEaten = Math.round(eaten * caloriesPerGram)
 
   return (
-    <div className="space-y-2">
-      {/* Macro Name & Progress */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          {/* Icon/Emoji */}
-          <span className="text-lg">
-            {type === 'protein' ? '🥩' : type === 'carbs' ? '🍞' : '🥑'}
-          </span>
+    <div className="flex items-center gap-3">
+      {/* Emoji */}
+      <div className="w-8 h-8 rounded-full bg-background flex items-center justify-center flex-shrink-0">
+        <span className="text-base">{config.emoji}</span>
+      </div>
 
-          {/* Label */}
-          <div className="flex flex-col">
-            <p className="text-xs font-medium text-muted-foreground capitalize">
-              {type}
-            </p>
+      {/* Progress Section */}
+      <div className="flex-1 min-w-0">
+        {/* Label Row */}
+        <div className="flex items-baseline justify-between mb-1">
+          <span className="text-sm font-medium text-foreground">{config.label}</span>
+          <div className="flex items-baseline gap-1.5">
+            <span className={cn('text-sm font-bold', config.textColor)}>
+              {Math.round(eaten)}g
+            </span>
+            <span className="text-xs text-muted-foreground">/ {Math.round(target)}g</span>
             {showCalories && (
-              <p className="text-[10px] text-muted-foreground">
-                {caloriesEaten}/{caloriesTarget} cal
-              </p>
+              <span className="text-xs text-muted-foreground ml-1">
+                • {caloriesEaten} cal
+              </span>
             )}
           </div>
         </div>
 
-        {/* Eaten/Target */}
-        <div className="text-right">
-          <p className="text-sm font-bold text-charcoal">
-            <span className={cn(percentage > 100 && 'text-red-600')}>
-              {eaten}
+        {/* Progress Bar */}
+        <div className="w-full bg-background rounded-full h-2 overflow-hidden">
+          <div
+            className={cn(
+              'h-2 rounded-full transition-all duration-500 ease-out',
+              isOver ? 'bg-warning' : config.barColor
+            )}
+            style={{ width: `${Math.min(percentage, 100)}%` }}
+          />
+        </div>
+
+        {/* Percentage / Over indicator */}
+        <div className="flex justify-between items-center mt-1">
+          <span className="text-xs text-muted-foreground">{percentage}%</span>
+          {isOver && (
+            <span className="text-xs font-medium text-warning">
+              +{Math.round(eaten - target)}g over
             </span>
-            <span className="text-muted-foreground">/{target}g</span>
-          </p>
-          {remaining > 0 && (
-            <p className="text-[10px] text-muted-foreground">{remaining}g left</p>
           )}
         </div>
       </div>
-
-      {/* Progress Bar */}
-      <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
-        <div
-          className={cn(
-            'h-1.5 rounded-full transition-all duration-500',
-            getProgressColor()
-          )}
-          style={{ width: `${Math.min(percentage, 100)}%` }}
-        />
-      </div>
-
-      {/* Warning text if over */}
-      {percentage > 110 && (
-        <p className="text-xs text-red-600 font-medium">
-          {Math.round(percentage - 100)}% over target
-        </p>
-      )}
     </div>
   )
 }

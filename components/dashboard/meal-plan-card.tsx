@@ -17,6 +17,7 @@ interface MealPlanCardProps {
   totalDays?: number
   images?: string[]
   onClick?: () => void
+  className?: string
 }
 
 // Meal types for placeholder grid positions
@@ -35,6 +36,7 @@ export function MealPlanCard({
   totalDays = 7,
   images = [],
   onClick,
+  className,
 }: MealPlanCardProps) {
   const completionPercent =
     totalDays > 0 ? Math.round((daysCompleted / totalDays) * 100) : 0
@@ -45,10 +47,11 @@ export function MealPlanCard({
   return (
     <Card
       className={cn(
-        'p-4 cursor-pointer transition-all hover:shadow-lg relative flex flex-col h-full',
+        'p-4 cursor-pointer transition-all relative flex flex-col h-full',
         isActive
           ? 'border-primary border-2 bg-card'
-          : 'border-border-strong hover:border-primary/50 bg-card'
+          : 'border-border-strong hover:border-primary/50 bg-card',
+        className
       )}
       onClick={onClick}
       role="button"

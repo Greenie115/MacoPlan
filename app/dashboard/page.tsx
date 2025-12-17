@@ -142,14 +142,7 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6 pb-24 lg:pb-8">
         {/* Greeting - Full width */}
-        <GreetingHeader
-          userName={userName}
-          currentStreak={stats.currentStreak}
-          currentGoal={onboardingStore.goal || undefined}
-          activePlanName={recentPlans.find((p) => p.isActive)?.name}
-          activePlanDay={recentPlans.find((p) => p.isActive)?.daysCompleted}
-          activePlanTotalDays={recentPlans.find((p) => p.isActive)?.totalDays}
-        />
+        <GreetingHeader userName={userName} />
 
         {/* Dashboard Grid - Side by side on larger screens */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">

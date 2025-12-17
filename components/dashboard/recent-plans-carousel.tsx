@@ -124,15 +124,12 @@ export function RecentPlansCarousel({ plans }: RecentPlansCarouselProps) {
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {plans.map((plan) => (
-          <div
+          <MealPlanCard
             key={plan.id}
-            className="flex w-[280px] min-w-[280px] flex-shrink-0 flex-col rounded-2xl border border-border-strong bg-card p-3 snap-start shadow-sm hover:shadow-md transition-shadow"
-          >
-            <MealPlanCard
-              {...plan}
-              onClick={() => router.push(`/meal-plans/${plan.id}`)}
-            />
-          </div>
+            {...plan}
+            onClick={() => router.push(`/meal-plans/${plan.id}`)}
+            className="w-[280px] min-w-[280px] flex-shrink-0 snap-start shadow-sm hover:shadow-md transition-shadow"
+          />
         ))}
       </div>
 

@@ -65,6 +65,10 @@ export default function EditProfilePage() {
         }
 
         setProfile(data)
+        // Initialize measurement system from profile
+        if (data.measurement_system) {
+          setUseImperial(data.measurement_system === 'imperial')
+        }
       } catch (error) {
         toast.error('Failed to load profile')
       } finally {
@@ -352,7 +356,13 @@ export default function EditProfilePage() {
               <Label>Measurement System</Label>
               <div className="flex items-center gap-2">
                 <span className={!useImperial ? 'font-semibold' : 'text-muted-foreground'}>Metric</span>
-                <Switch checked={useImperial} onCheckedChange={setUseImperial} />
+                <Switch
+                  checked={useImperial}
+                  onCheckedChange={(checked) => {
+                    setUseImperial(checked)
+                    handleFieldUpdate('measurement_system', checked ? 'imperial' : 'metric')
+                  }}
+                />
                 <span className={useImperial ? 'font-semibold' : 'text-muted-foreground'}>Imperial</span>
               </div>
             </div>
