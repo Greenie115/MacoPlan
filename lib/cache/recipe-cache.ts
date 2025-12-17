@@ -1,15 +1,15 @@
 /**
  * Recipe Search Cache
  *
- * Implements intelligent caching to reduce Spoonacular API costs:
+ * Implements intelligent caching to reduce FatSecret API costs:
  * - In-memory LRU cache for filter combinations
- * - 15-minute cache duration (balances freshness vs cost)
+ * - 30-minute cache duration (balances freshness vs cost)
  * - Deduplicates concurrent requests
  * - Tracks cache hit rate for monitoring
  *
  * Expected savings:
- * - Without cache: 5 filters × 3 queries/filter = 15 API calls
- * - With cache: 5 filters × 1 query/filter = 5 API calls (first time)
+ * - Without cache: Multiple API calls per search
+ * - With cache: Single API call (first time)
  * - Subsequent visits: 0 API calls (cache hit)
  */
 

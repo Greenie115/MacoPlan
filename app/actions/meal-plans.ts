@@ -318,7 +318,7 @@ export async function generateMealPlan(
       archived: false,
       completed_at: null,
       plan_source: 'generated',
-      spoonacular_plan_id: null,
+      fatsecret_plan_id: null,
       is_favorite: false,
       generation_params: {
         timeFrame: validatedRequest.timeFrame,
@@ -420,8 +420,8 @@ function createMealPlanMealEntry(
     meal_type: meal.type,
     meal_order: mealOrder,
     recipe_id: null,
-    spoonacular_id: null,
     fatsecret_id: recipe?.id || null,
+    spoonacular_id: null, // Deprecated, kept for DB schema compatibility
     recipe_source: 'fatsecret',
     recipe_title: recipe?.title || `${meal.type} meal`,
     recipe_image_url: recipe?.imageUrl || null,
@@ -443,7 +443,6 @@ function createMealPlanMealEntry(
 export interface MealPlanWithPreviews extends MealPlan {
   preview_images: {
     fatsecret_id: string | null
-    spoonacular_id: number | null
     image_url: string | null
   }[]
 }
@@ -473,7 +472,6 @@ export async function getMealPlans(filters?: {
         *,
         meal_plan_meals (
           fatsecret_id,
-          spoonacular_id,
           recipe_image_url,
           meal_order
         )
@@ -505,24 +503,22 @@ export async function getMealPlans(filters?: {
     const plansWithPreviews: MealPlanWithPreviews[] = (data || []).map((plan) => {
       const meals = (plan.meal_plan_meals || []) as Array<{
         fatsecret_id: string | null
-        spoonacular_id: number | null
         recipe_image_url: string | null
         meal_order: number
       }>
 
       const sortedMeals = meals.sort((a, b) => a.meal_order - b.meal_order)
       const seenIds = new Set<string>()
-      const previewImages: { fatsecret_id: string | null; spoonacular_id: number | null; image_url: string | null }[] = []
+      const previewImages: { fatsecret_id: string | null; image_url: string | null }[] = []
 
       for (const meal of sortedMeals) {
         if (previewImages.length >= 4) break
-        const id = meal.fatsecret_id || String(meal.spoonacular_id)
+        const id = meal.fatsecret_id
         if (id && seenIds.has(id)) continue
         if (id) seenIds.add(id)
 
         previewImages.push({
           fatsecret_id: meal.fatsecret_id,
-          spoonacular_id: meal.spoonacular_id,
           image_url: meal.recipe_image_url,
         })
       }
@@ -1110,7 +1106,6 @@ export async function swapMeal(
       .from('meal_plan_meals')
       .update({
         fatsecret_id: normalized.id,
-        spoonacular_id: null,
         recipe_source: 'fatsecret',
         recipe_title: normalized.title,
         recipe_image_url: normalized.imageUrl,

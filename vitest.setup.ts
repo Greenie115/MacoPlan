@@ -4,4 +4,5 @@
  */
 
 // Set test environment variables
-process.env.SPOONACULAR_API_KEY = 'test-api-key-12345'
+process.env.FATSECRET_CLIENT_ID = 'test-client-id'
+process.env.FATSECRET_CLIENT_SECRET = 'test-client-secret'

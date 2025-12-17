@@ -4,9 +4,11 @@ import Link from 'next/link'
 import { ArrowLeft, Clock, Users, ExternalLink } from 'lucide-react'
 import { getRecipeDetails } from '@/app/actions/fatsecret-recipes'
 import { getMealPlanMealInfo } from '@/app/actions/meal-plans'
+import { isFatSecretFavorite } from '@/app/recipes/actions'
 import { TopAppBar } from '@/components/layout/top-app-bar'
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { RecipeNutritionCard } from '@/components/recipes/recipe-nutrition-card'
+import { FavoriteButton } from '@/components/recipes/favorite-button'
 import { createClient } from '@/lib/supabase/server'
 
 interface FatSecretRecipePageProps {
@@ -26,6 +28,9 @@ export default async function FatSecretRecipePage({ params, searchParams }: FatS
   }
 
   const recipe = result.data
+
+  // Check if recipe is favorited
+  const isFavorited = await isFatSecretFavorite(id)
 
   // If linked from a meal plan, fetch the meal info for current multiplier
   let mealPlanMealInfo: {
@@ -165,18 +170,35 @@ export default async function FatSecretRecipePage({ params, searchParams }: FatS
           </div>
         )}
 
-        {/* Source Link */}
-        {recipe.sourceUrl && (
-          <a
-            href={recipe.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
-          >
-            <ExternalLink className="size-4" />
-            View Original Recipe
-          </a>
-        )}
+        {/* Action Buttons */}
+        <div className="flex flex-col gap-3">
+          {recipe.sourceUrl && (
+            <a
+              href={recipe.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
+            >
+              <ExternalLink className="size-4" />
+              View Original Recipe
+            </a>
+          )}
+          <FavoriteButton
+            recipeId={id}
+            initialIsFavorited={isFavorited}
+            metadata={{
+              title: recipe.title,
+              description: recipe.description,
+              imageUrl: recipe.imageUrl,
+              calories: recipe.calories,
+              protein: recipe.protein,
+              carbs: recipe.carbs,
+              fat: recipe.fat,
+            }}
+            variant="button"
+            className="h-12"
+          />
+        </div>
 
         {/* FatSecret Attribution - Required by API Terms */}
         <div className="mt-8 pt-6 border-t border-border flex justify-center">

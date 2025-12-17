@@ -229,30 +229,41 @@ export async function generateWeeklyMealPlan(params: {
 // ============================================================================
 
 /**
- * Get available recipe type filters
- * These are the valid recipe types from the FatSecret API (recipe_types.get endpoint)
+ * Get available recipe type filters dynamically from FatSecret API
+ * Results are cached in-memory for 24 hours
  */
 export async function getRecipeTypeFilters(): Promise<{
   success: boolean
   data?: Array<{ value: string; label: string }>
+  error?: string
 }> {
-  return {
-    success: true,
-    data: [
-      { value: 'Appetizers', label: 'Appetizers' },
-      { value: 'Baked', label: 'Baked' },
-      { value: 'Beverages', label: 'Beverages' },
-      { value: 'Breads', label: 'Breads' },
-      { value: 'Breakfast', label: 'Breakfast' },
-      { value: 'Desserts', label: 'Desserts' },
-      { value: 'Main Dishes', label: 'Main Dishes' },
-      { value: 'Preserving', label: 'Preserving' },
-      { value: 'Salads', label: 'Salads' },
-      { value: 'Sandwiches', label: 'Sandwiches' },
-      { value: 'Sauces and Condiments', label: 'Sauces & Condiments' },
-      { value: 'Side Dishes', label: 'Side Dishes' },
-      { value: 'Soups', label: 'Soups' },
-      { value: 'Vegetables', label: 'Vegetables' },
-    ],
+  try {
+    const types = await fatSecretService.getRecipeTypes()
+    return {
+      success: true,
+      data: types,
+    }
+  } catch (error) {
+    console.error('[getRecipeTypeFilters] Error:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch recipe types',
+    }
   }
+}
+
+// ============================================================================
+// Sort Options
+// ============================================================================
+
+/**
+ * Get available sort options for recipe search
+ */
+export async function getSortOptions() {
+  return [
+    { value: 'newest', label: 'Newest First' },
+    { value: 'oldest', label: 'Oldest First' },
+    { value: 'caloriesPerServingAscending', label: 'Calories: Low to High' },
+    { value: 'caloriesPerServingDescending', label: 'Calories: High to Low' },
+  ]
 }

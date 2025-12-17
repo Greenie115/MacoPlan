@@ -18,6 +18,7 @@ import type {
   FatSecretRecipeSearchParams,
   FatSecretRecipeSearchResponse,
   FatSecretRecipeDetailResponse,
+  FatSecretRecipeTypesResponse,
   FatSecretFood,
   FatSecretRecipeDetail,
   FatSecretServing,
@@ -495,14 +496,64 @@ class FatSecretService {
     // Cache miss - call API
     console.log('[FatSecret] Recipe search cache MISS - calling API')
 
-    // Note: We don't pass recipe_type as it causes API errors (108: Invalid Type)
-    // The FatSecret API recipe_type values are undocumented/inconsistent
-    // Instead, we rely on search_expression to find appropriate recipes
-    const response = await this.apiRequest<FatSecretRecipeSearchResponse>('recipes.search', {
+    // Build API parameters with all available filters
+    const apiParams: Record<string, string | number | undefined> = {
       search_expression: params.search_expression,
       page_number: params.page_number,
       max_results: params.max_results || 20,
-    })
+    }
+
+    // Recipe type filters
+    if (params.recipe_types) {
+      apiParams.recipe_types = params.recipe_types
+    }
+    if (params.recipe_types_matchall !== undefined) {
+      apiParams.recipe_types_matchall = params.recipe_types_matchall ? 1 : 0
+    }
+
+    // Nutrition filters (ranges) - use dot notation for API
+    if (params.calories_from !== undefined) {
+      apiParams['calories.from'] = params.calories_from
+    }
+    if (params.calories_to !== undefined) {
+      apiParams['calories.to'] = params.calories_to
+    }
+    if (params.protein_percentage_from !== undefined) {
+      apiParams['protein_percentage.from'] = params.protein_percentage_from
+    }
+    if (params.protein_percentage_to !== undefined) {
+      apiParams['protein_percentage.to'] = params.protein_percentage_to
+    }
+    if (params.carb_percentage_from !== undefined) {
+      apiParams['carb_percentage.from'] = params.carb_percentage_from
+    }
+    if (params.carb_percentage_to !== undefined) {
+      apiParams['carb_percentage.to'] = params.carb_percentage_to
+    }
+    if (params.fat_percentage_from !== undefined) {
+      apiParams['fat_percentage.from'] = params.fat_percentage_from
+    }
+    if (params.fat_percentage_to !== undefined) {
+      apiParams['fat_percentage.to'] = params.fat_percentage_to
+    }
+
+    // Time filter
+    if (params.prep_time_from !== undefined) {
+      apiParams['prep_time.from'] = params.prep_time_from
+    }
+    if (params.prep_time_to !== undefined) {
+      apiParams['prep_time.to'] = params.prep_time_to
+    }
+
+    // Other filters
+    if (params.must_have_images !== undefined) {
+      apiParams.must_have_images = params.must_have_images ? 1 : 0
+    }
+    if (params.sort_by) {
+      apiParams.sort_by = params.sort_by
+    }
+
+    const response = await this.apiRequest<FatSecretRecipeSearchResponse>('recipes.search.v3', apiParams)
 
     // Cache results
     if (response.recipes?.recipe) {
@@ -569,6 +620,94 @@ class FatSecretService {
     }
 
     return response.recipe || null
+  }
+
+  // ==========================================================================
+  // Recipe Types
+  // ==========================================================================
+
+  // In-memory cache for recipe types (rarely changes)
+  private recipeTypesCache: { types: Array<{ value: string; label: string }>; expiresAt: number } | null = null
+  private recipeTypesPromise: Promise<Array<{ value: string; label: string }>> | null = null
+
+  /**
+   * Get all available recipe types from FatSecret API
+   * Results are cached in memory for 24 hours
+   */
+  async getRecipeTypes(): Promise<Array<{ value: string; label: string }>> {
+    // Check in-memory cache
+    if (this.recipeTypesCache && Date.now() < this.recipeTypesCache.expiresAt) {
+      console.log('[FatSecret] Recipe types cache HIT (in-memory)')
+      return this.recipeTypesCache.types
+    }
+
+    // If already fetching, wait for that promise
+    if (this.recipeTypesPromise) {
+      return this.recipeTypesPromise
+    }
+
+    // Fetch from API
+    this.recipeTypesPromise = this._fetchRecipeTypes()
+
+    try {
+      const types = await this.recipeTypesPromise
+      return types
+    } finally {
+      this.recipeTypesPromise = null
+    }
+  }
+
+  private async _fetchRecipeTypes(): Promise<Array<{ value: string; label: string }>> {
+    console.log('[FatSecret] Fetching recipe types from API')
+
+    try {
+      const response = await this.apiRequest<FatSecretRecipeTypesResponse>('recipe_types.get.v2', {})
+
+      if (!response.recipe_types?.recipe_type) {
+        console.warn('[FatSecret] No recipe types returned from API')
+        return this.getDefaultRecipeTypes()
+      }
+
+      const recipeTypes = this.ensureArray(response.recipe_types.recipe_type)
+      const types = recipeTypes.map(rt => ({
+        value: rt.recipe_type_name || (rt as unknown as string),
+        label: rt.recipe_type_name || (rt as unknown as string),
+      }))
+
+      // Cache for 24 hours
+      this.recipeTypesCache = {
+        types,
+        expiresAt: Date.now() + 24 * 60 * 60 * 1000,
+      }
+
+      console.log(`[FatSecret] Cached ${types.length} recipe types`)
+      return types
+    } catch (error) {
+      console.error('[FatSecret] Error fetching recipe types:', error)
+      return this.getDefaultRecipeTypes()
+    }
+  }
+
+  /**
+   * Fallback recipe types if API call fails
+   */
+  private getDefaultRecipeTypes(): Array<{ value: string; label: string }> {
+    return [
+      { value: 'Appetizers', label: 'Appetizers' },
+      { value: 'Baked', label: 'Baked' },
+      { value: 'Beverages', label: 'Beverages' },
+      { value: 'Breads', label: 'Breads' },
+      { value: 'Breakfast', label: 'Breakfast' },
+      { value: 'Desserts', label: 'Desserts' },
+      { value: 'Main Dishes', label: 'Main Dishes' },
+      { value: 'Preserving', label: 'Preserving' },
+      { value: 'Salads', label: 'Salads' },
+      { value: 'Sandwiches', label: 'Sandwiches' },
+      { value: 'Sauces and Condiments', label: 'Sauces & Condiments' },
+      { value: 'Side Dishes', label: 'Side Dishes' },
+      { value: 'Soups', label: 'Soups' },
+      { value: 'Vegetables', label: 'Vegetables' },
+    ]
   }
 
   // ==========================================================================

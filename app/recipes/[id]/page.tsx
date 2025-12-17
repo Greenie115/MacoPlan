@@ -6,13 +6,9 @@ import { RecipeIngredients } from '@/components/recipes/recipe-ingredients'
 import { RecipeInstructions } from '@/components/recipes/recipe-instructions'
 import { RecipeNutritionFacts } from '@/components/recipes/recipe-nutrition-facts'
 import { LogRecipeButton } from '@/components/recipes/log-recipe-button'
-import { FavoriteButton } from '@/components/recipes/favorite-button'
 import { RecipeWithDetails } from '@/lib/types/recipe'
-import { isFavorite } from '../actions'
 import { getLoggedMealForRecipe } from '@/app/actions/meal-logs'
-import { trackRecipeView } from '@/app/actions/recipe-tracking'
 import { z } from 'zod'
-import { getRecipeFallback } from '@/lib/services/recipe-service'
 
 interface RecipePageProps {
   params: Promise<{
@@ -82,32 +78,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
     notFound()
   }
 
-  // Track recipe view for recommendations (async, doesn't block render)
-  trackRecipeView(recipe.id, recipe.name, 'local').catch((err) =>
-    console.error('Failed to track recipe view:', err)
-  )
-
   // Sort ingredients and instructions in JS since Supabase ordering on nested relations can be tricky
-  let ingredients = (recipe.recipe_ingredients || []).sort(
+  const ingredients = (recipe.recipe_ingredients || []).sort(
     (a: any, b: any) => a.order_index - b.order_index
   )
-  let instructions = (recipe.recipe_instructions || []).sort(
+  const instructions = (recipe.recipe_instructions || []).sort(
     (a: any, b: any) => a.step_number - b.step_number
   )
-
-  // Fallback logic: If ingredients or instructions are missing, try to fetch them
-  if (ingredients.length === 0 || instructions.length === 0) {
-    const fallbackData = await getRecipeFallback(recipe.name)
-    
-    if (fallbackData) {
-      if (ingredients.length === 0 && fallbackData.ingredients) {
-        ingredients = fallbackData.ingredients
-      }
-      if (instructions.length === 0 && fallbackData.instructions) {
-        instructions = fallbackData.instructions
-      }
-    }
-  }
 
   const recipeWithDetails: RecipeWithDetails = {
     ...recipe,
@@ -116,20 +93,17 @@ export default async function RecipePage({ params }: RecipePageProps) {
     tags: recipe.recipe_tags || [],
   }
 
-  // Check if recipe is favorited
-  const isRecipeFavorite = await isFavorite(id)
-
   // Check if recipe is already logged today
   const { mealId: loggedMealId } = await getLoggedMealForRecipe(id)
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Hero Image with Back/Favorite Buttons */}
+      {/* Hero Image with Back Button */}
       <RecipeHero
         recipeId={recipe.id}
         imageUrl={recipe.image_url}
         recipeName={recipe.name}
-        isFavorite={isRecipeFavorite}
+        isFavorite={false}
       />
 
       <div className="flex flex-col gap-6 -mt-8 relative z-10 px-4 max-w-4xl mx-auto w-full">
@@ -212,16 +186,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
             loggedMealId={loggedMealId}
             className="h-12 text-base"
           />
-          <FavoriteButton
-            recipeId={recipe.id}
-            initialIsFavorited={isRecipeFavorite}
-            variant="button"
-            className="h-12 text-base"
-          />
-          <div className="flex items-center justify-center gap-2 pt-2">
-            <span className="text-xs text-muted-foreground">Recipe data powered by</span>
-            <span className="text-sm font-bold text-muted-foreground">Edamam</span>
-          </div>
         </div>
       </div>
     </div>

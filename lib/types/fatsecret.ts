@@ -222,9 +222,30 @@ export interface FatSecretFoodSearchParams {
 
 export interface FatSecretRecipeSearchParams {
   search_expression?: string
-  recipe_type?: FatSecretRecipeTypeFilter
   page_number?: number
   max_results?: number // Default 20, max 50
+
+  // Recipe type filters
+  recipe_types?: string // Comma-separated list of recipe types
+  recipe_types_matchall?: boolean // If true, recipes must match ALL types; false = ANY
+
+  // Nutrition filters (ranges)
+  calories_from?: number
+  calories_to?: number
+  protein_percentage_from?: number
+  protein_percentage_to?: number
+  carb_percentage_from?: number
+  carb_percentage_to?: number
+  fat_percentage_from?: number
+  fat_percentage_to?: number
+
+  // Time filter
+  prep_time_from?: number // Minutes
+  prep_time_to?: number // Minutes
+
+  // Other filters
+  must_have_images?: boolean
+  sort_by?: 'newest' | 'oldest' | 'caloriesPerServingAscending' | 'caloriesPerServingDescending'
 }
 
 // Valid FatSecret API recipe types (from recipe_types.get endpoint)

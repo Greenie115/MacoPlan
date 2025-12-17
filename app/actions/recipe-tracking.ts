@@ -15,7 +15,7 @@ import { createClient } from '@/lib/supabase/server'
 export async function trackRecipeView(
   recipeId: number | string,
   recipeTitle: string,
-  source: 'local' | 'spoonacular'
+  source: 'fatsecret'
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const supabase = await createClient()

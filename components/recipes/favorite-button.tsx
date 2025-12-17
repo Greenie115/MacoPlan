@@ -2,14 +2,26 @@
 
 import { useState } from 'react'
 import { Heart } from 'lucide-react'
-import { toggleFavorite } from '@/app/recipes/actions'
+import { toggleFatSecretFavorite } from '@/app/recipes/actions'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
+interface RecipeMetadata {
+  title: string
+  description?: string
+  imageUrl?: string | null
+  calories?: number
+  protein?: number
+  carbs?: number
+  fat?: number
+}
+
 interface FavoriteButtonProps {
   recipeId: string
   initialIsFavorited: boolean
+  /** Recipe metadata required for adding to favorites */
+  metadata: RecipeMetadata
   variant?: 'icon' | 'button'
   size?: 'sm' | 'md' | 'lg'
   className?: string
@@ -18,6 +30,7 @@ interface FavoriteButtonProps {
 export function FavoriteButton({
   recipeId,
   initialIsFavorited,
+  metadata,
   variant = 'icon',
   size = 'md',
   className,
@@ -35,7 +48,8 @@ export function FavoriteButton({
     const previousState = isFavorited
     setIsFavorited(!isFavorited)
 
-    const result = await toggleFavorite(recipeId)
+    // Pass metadata when adding to favorites
+    const result = await toggleFatSecretFavorite(recipeId, !previousState ? metadata : undefined)
 
     if (result.error) {
       // Rollback on error

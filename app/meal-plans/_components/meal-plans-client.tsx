@@ -322,7 +322,7 @@ function MealPlanCard({
       // Use direct image URL if available
       return {
         src: preview.image_url,
-        key: `url-${preview.fatsecret_id || preview.spoonacular_id || index}`,
+        key: `url-${preview.fatsecret_id || index}`,
         hasImage: true,
       }
     } else {

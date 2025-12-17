@@ -6,7 +6,11 @@ import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
 import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
 import { getFavoriteRecipeIds } from './actions'
 import { searchRecipes } from '@/app/actions/fatsecret-recipes'
-import { validateRecipeFilters } from '@/lib/utils/filter-validation'
+import {
+  validateRecipeFilters,
+  toSearchParams,
+  type FatSecretFilterParams,
+} from '@/lib/utils/filter-validation'
 
 // Pagination configuration
 const RECIPES_PER_PAGE = 20
@@ -14,65 +18,78 @@ const RECIPES_PER_PAGE = 20
 interface RecipesPageProps {
   searchParams: Promise<{
     search?: string
-    filters?: string
     page?: string
     tab?: string
-    dietFilter?: string
-    cuisine?: string
-    maxTime?: string
-    type?: string // Meal type filter
+    // FatSecret filter params
+    recipeTypes?: string
+    caloriesFrom?: string
+    caloriesTo?: string
+    proteinFrom?: string
+    proteinTo?: string
+    carbsFrom?: string
+    carbsTo?: string
+    fatFrom?: string
+    fatTo?: string
+    prepTimeFrom?: string
+    prepTimeTo?: string
+    mustHaveImages?: string
+    sortBy?: string
   }>
 }
 
 export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   const params = await searchParams
   const searchQuery = params.search?.trim() || ''
-  const filterTags = params.filters?.split(',').filter(Boolean) || []
   const currentPage = Math.max(1, parseInt(params.page || '1', 10))
   const activeTab = params.tab || 'all'
 
-  // Validate filter parameters
-  const validatedFilters = validateRecipeFilters({
-    cuisine: params.cuisine,
-    maxTime: params.maxTime,
-    type: params.type,
-  })
+  // Validate all filter parameters
+  const filterParams: FatSecretFilterParams = {
+    search: searchQuery,
+    recipeTypes: params.recipeTypes,
+    caloriesFrom: params.caloriesFrom,
+    caloriesTo: params.caloriesTo,
+    proteinFrom: params.proteinFrom,
+    proteinTo: params.proteinTo,
+    carbsFrom: params.carbsFrom,
+    carbsTo: params.carbsTo,
+    fatFrom: params.fatFrom,
+    fatTo: params.fatTo,
+    prepTimeFrom: params.prepTimeFrom,
+    prepTimeTo: params.prepTimeTo,
+    mustHaveImages: params.mustHaveImages,
+    sortBy: params.sortBy,
+    page: params.page,
+  }
 
-  const mealTypeFilter = validatedFilters.mealTypes?.[0] || undefined
+  const validatedFilters = validateRecipeFilters(filterParams)
+  const searchParams_api = toSearchParams(validatedFilters)
 
   // Fetch FatSecret recipes
-  let fatSecretRecipes: any[] = []
+  let fatSecretRecipes: Array<{
+    id: string
+    title: string
+    name: string
+    imageUrl?: string
+    image_url?: string
+    calories: number
+    protein: number
+    protein_grams: number
+    carbs: number
+    carb_grams: number
+    fat: number
+    fat_grams: number
+    source: 'fatsecret'
+  }> = []
   let fatSecretTotalResults = 0
   let fatSecretError: string | null = null
 
-  // Map meal type to FatSecret recipe type
-  const recipeTypeMap: Record<string, string> = {
-    'main-course': 'Main Dish',
-    'side-dish': 'Side Dish',
-    'dessert': 'Dessert',
-    'appetizer': 'Appetizer',
-    'salad': 'Salad',
-    'bread': 'Bread',
-    'breakfast': 'Breakfast',
-    'soup': 'Soup',
-    'beverage': 'Beverage',
-    'sauce': 'Sauce',
-    'marinade': 'Marinade',
-    'fingerfood': 'Snack',
-    'snack': 'Snack',
-    'drink': 'Beverage',
-  }
-
-  const fatSecretRecipeType = mealTypeFilter
-    ? recipeTypeMap[mealTypeFilter] || undefined
-    : undefined
-
-  // Search FatSecret
+  // Default search term if none provided
   const defaultSearchTerm = searchQuery || 'high protein healthy'
 
   const fatSecretResult = await searchRecipes({
+    ...searchParams_api,
     search_expression: defaultSearchTerm,
-    recipe_type: fatSecretRecipeType as any,
     max_results: RECIPES_PER_PAGE,
     page_number: currentPage - 1,
   })
@@ -82,8 +99,8 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       id: recipe.id,
       title: recipe.title,
       name: recipe.title,
-      imageUrl: recipe.imageUrl,
-      image_url: recipe.imageUrl,
+      imageUrl: recipe.imageUrl ?? undefined,
+      image_url: recipe.imageUrl ?? undefined,
       calories: recipe.calories,
       protein: recipe.protein,
       protein_grams: recipe.protein,
@@ -109,6 +126,34 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   const hasNextPage = currentPage < totalPages
   const hasPrevPage = currentPage > 1
 
+  // Build pagination URL preserving all current filters
+  const buildPaginationUrl = (page: number) => {
+    const urlParams = new URLSearchParams()
+
+    // Preserve search
+    if (searchQuery) urlParams.set('search', searchQuery)
+
+    // Preserve all filter params
+    if (params.recipeTypes) urlParams.set('recipeTypes', params.recipeTypes)
+    if (params.caloriesFrom) urlParams.set('caloriesFrom', params.caloriesFrom)
+    if (params.caloriesTo) urlParams.set('caloriesTo', params.caloriesTo)
+    if (params.proteinFrom) urlParams.set('proteinFrom', params.proteinFrom)
+    if (params.proteinTo) urlParams.set('proteinTo', params.proteinTo)
+    if (params.carbsFrom) urlParams.set('carbsFrom', params.carbsFrom)
+    if (params.carbsTo) urlParams.set('carbsTo', params.carbsTo)
+    if (params.fatFrom) urlParams.set('fatFrom', params.fatFrom)
+    if (params.fatTo) urlParams.set('fatTo', params.fatTo)
+    if (params.prepTimeFrom) urlParams.set('prepTimeFrom', params.prepTimeFrom)
+    if (params.prepTimeTo) urlParams.set('prepTimeTo', params.prepTimeTo)
+    if (params.mustHaveImages) urlParams.set('mustHaveImages', params.mustHaveImages)
+    if (params.sortBy) urlParams.set('sortBy', params.sortBy)
+
+    // Set the new page
+    urlParams.set('page', page.toString())
+
+    return `/recipes?${urlParams.toString()}`
+  }
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Search */}
@@ -123,7 +168,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         </div>
       )}
 
-      {/* Advanced Filters: Cuisine, Prep Time, Meal Type */}
+      {/* Advanced Filters */}
       <RecipeFiltersAdvanced />
 
       {/* Upgrade Banner */}
@@ -148,7 +193,8 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
               Unable to fetch recipes from FatSecret. Please try again later.
               {fatSecretError.includes('IP') && (
                 <span className="block mt-1 text-xs">
-                  Note: The FatSecret API requires IP whitelisting. Please check your FatSecret developer account.
+                  Note: The FatSecret API requires IP whitelisting. Please check your FatSecret
+                  developer account.
                 </span>
               )}
             </p>
@@ -161,17 +207,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-center gap-4">
             <a
-              href={
-                hasPrevPage
-                  ? `/recipes?${new URLSearchParams({
-                      ...(searchQuery && { search: searchQuery }),
-                      ...(filterTags.length > 0 && {
-                        filters: filterTags.join(','),
-                      }),
-                      page: (currentPage - 1).toString(),
-                    }).toString()}`
-                  : '#'
-              }
+              href={hasPrevPage ? buildPaginationUrl(currentPage - 1) : '#'}
               className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 hasPrevPage
                   ? 'bg-primary text-primary-foreground hover:bg-primary/90'
@@ -184,17 +220,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
               Page {currentPage} of {totalPages}
             </span>
             <a
-              href={
-                hasNextPage
-                  ? `/recipes?${new URLSearchParams({
-                      ...(searchQuery && { search: searchQuery }),
-                      ...(filterTags.length > 0 && {
-                        filters: filterTags.join(','),
-                      }),
-                      page: (currentPage + 1).toString(),
-                    }).toString()}`
-                  : '#'
-              }
+              href={hasNextPage ? buildPaginationUrl(currentPage + 1) : '#'}
               className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 hasNextPage
                   ? 'bg-primary text-primary-foreground hover:bg-primary/90'
@@ -207,7 +233,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         </div>
       )}
 
-      {/* FatSecret Attribution - Required by API Terms (visible without login) */}
+      {/* FatSecret Attribution - Required by API Terms */}
       <div className="max-w-7xl mx-auto px-4 pb-6 flex justify-center">
         <a href="https://www.fatsecret.com" target="_blank" rel="noopener noreferrer">
           <img

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import { Recipe } from '@/lib/types/recipe'
 import { macroColors } from '@/lib/design-tokens'
-import { toggleFavorite } from '@/app/recipes/actions'
+import { toggleFatSecretFavorite } from '@/app/recipes/actions'
 import { useOptimistic, useTransition } from 'react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
 
@@ -15,35 +15,48 @@ interface RecipeCardProps {
   source?: 'local' | 'fatsecret'
 }
 
-export function RecipeCard({ recipe, isFavorite, source = 'local' }: RecipeCardProps) {
+export function RecipeCard({ recipe, isFavorite, source = 'fatsecret' }: RecipeCardProps) {
   const [isPending, startTransition] = useTransition()
   const [optimisticFavorite, setOptimisticFavorite] = useOptimistic(isFavorite)
-
-  const handleFavoriteClick = async (e: React.MouseEvent) => {
-    e.preventDefault() // Prevent navigation to recipe detail
-    e.stopPropagation()
-
-    startTransition(() => {
-      setOptimisticFavorite(!optimisticFavorite)
-    })
-
-    // Call favorite action for local recipes
-    // FatSecret favorites can be added later if needed
-    if (source === 'local') {
-      await toggleFavorite(recipe.id)
-    }
-  }
 
   // Get appropriate values based on source
   const recipeTitle = source === 'fatsecret' ? recipe.title : recipe.name
   const recipeImage = source === 'fatsecret' ? recipe.imageUrl : recipe.image_url
-  const recipeLink = source === 'fatsecret' ? `/recipes/fatsecret/${recipe.id}` : `/recipes/${recipe.id}`
 
   // Get nutrition values
   const calories = source === 'fatsecret' ? recipe.calories : recipe.calories
   const protein = source === 'fatsecret' ? recipe.protein : recipe.protein_grams
   const carbs = source === 'fatsecret' ? recipe.carbs : recipe.carb_grams
   const fat = source === 'fatsecret' ? recipe.fat : recipe.fat_grams
+
+  const handleFavoriteClick = async (e: React.MouseEvent) => {
+    e.preventDefault() // Prevent navigation to recipe detail
+    e.stopPropagation()
+
+    // Only FatSecret recipes support favoriting now
+    if (source !== 'fatsecret') return
+
+    startTransition(() => {
+      setOptimisticFavorite(!optimisticFavorite)
+    })
+
+    // Pass metadata when adding to favorites
+    const metadata = !optimisticFavorite
+      ? {
+          title: recipeTitle,
+          description: recipe.description,
+          imageUrl: recipeImage,
+          calories,
+          protein,
+          carbs,
+          fat,
+        }
+      : undefined
+
+    await toggleFatSecretFavorite(recipe.id, metadata)
+  }
+
+  const recipeLink = source === 'fatsecret' ? `/recipes/fatsecret/${recipe.id}` : `/recipes/${recipe.id}`
 
   // Validate image URL for security
   const safeImageUrl = getSafeImageUrl(recipeImage)

@@ -16,7 +16,9 @@
       "Bash(git push:*)",
       "Bash(git commit:*)",
       "Bash(npm run test:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "WebSearch",
+      "WebFetch(domain:platform.fatsecret.com)"
     ],
     "deny": [],
     "ask": []

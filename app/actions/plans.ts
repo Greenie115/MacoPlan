@@ -91,7 +91,7 @@ export async function getRecentPlansWithProgress() {
         // Fetch preview images from meal_plan_meals (first 4 unique recipes)
         const { data: meals } = await supabase
           .from('meal_plan_meals')
-          .select('recipe_image_url, fatsecret_id, spoonacular_id, meal_order')
+          .select('recipe_image_url, fatsecret_id, meal_order')
           .eq('meal_plan_id', plan.id)
           .order('meal_order', { ascending: true })
 
@@ -104,7 +104,7 @@ export async function getRecentPlansWithProgress() {
             if (previewImages.length >= 4) break
 
             // Create unique key from recipe ID
-            const uniqueKey = meal.fatsecret_id || meal.spoonacular_id?.toString() || meal.meal_order?.toString()
+            const uniqueKey = meal.fatsecret_id || meal.meal_order?.toString()
             if (uniqueKey && seenIds.has(uniqueKey)) continue
             if (uniqueKey) seenIds.add(uniqueKey)
 
