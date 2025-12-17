@@ -65,15 +65,6 @@ export function RecipeResultsClient({
 
   return (
     <>
-      {/* Cache indicator for development */}
-      {process.env.NODE_ENV === 'development' && isFromCache && (
-        <div className="max-w-7xl mx-auto px-4 py-2">
-          <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-xs text-green-800">
-            ⚡ Showing cached results (no API call) - {recipes.length} recipes
-          </div>
-        </div>
-      )}
-
       {/* Recipe Grid */}
       <RecipeGrid recipes={recipes} favoriteIds={favoriteIds} />
 

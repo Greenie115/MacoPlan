@@ -9,6 +9,12 @@ const ALLOWED_IMAGE_DOMAINS = [
   'www.edamam.com',
   'images.unsplash.com',
   'lh3.googleusercontent.com',
+  'dxhfjhprhxylnhufzaiu.supabase.co',
+  // FatSecret domains
+  'www.fatsecret.com',
+  'm.fatsecret.com',
+  'm.ftscrt.com',
+  'static.fatsecret.com',
 ]
 
 /**

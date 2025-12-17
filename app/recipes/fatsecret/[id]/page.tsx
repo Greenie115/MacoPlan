@@ -5,11 +5,9 @@ import { ArrowLeft, Clock, Users, ExternalLink } from 'lucide-react'
 import { getRecipeDetails } from '@/app/actions/fatsecret-recipes'
 import { getMealPlanMealInfo } from '@/app/actions/meal-plans'
 import { isFatSecretFavorite } from '@/app/recipes/actions'
-import { TopAppBar } from '@/components/layout/top-app-bar'
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { RecipeNutritionCard } from '@/components/recipes/recipe-nutrition-card'
 import { FavoriteButton } from '@/components/recipes/favorite-button'
-import { createClient } from '@/lib/supabase/server'
 
 interface FatSecretRecipePageProps {
   params: Promise<{ id: string }>
@@ -50,31 +48,11 @@ export default async function FatSecretRecipePage({ params, searchParams }: FatS
     }
   }
 
-  // Fetch user profile for header
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  let userName = 'User'
-  let avatarUrl: string | null = null
-
-  if (user) {
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('full_name, avatar_url')
-      .eq('user_id', user.id)
-      .single()
-
-    if (profile) {
-      userName = profile.full_name || user.email?.split('@')[0] || 'User'
-      avatarUrl = profile.avatar_url
-    }
-  }
-
   return (
     <div className="min-h-screen bg-background pb-24">
-      <TopAppBar userName={userName} avatarUrl={avatarUrl} />
 
       {/* Header with Back Button */}
-      <div className="sticky top-0 z-10 bg-card border-b border-border">
+      <div className="sticky top-0 z-10 bg-background border-b border-border">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center">
           <Link
             href={mealPlanMealInfo ? `/meal-plans/${mealPlanMealInfo.mealPlanId}` : '/recipes'}
