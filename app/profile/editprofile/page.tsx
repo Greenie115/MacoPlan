@@ -11,16 +11,16 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Switch } from '@/components/ui/switch'
 import { Separator } from '@/components/ui/separator'
 import { updateProfileField, updateEmail, recalculateMacros } from '@/app/actions/profile'
 import { toast } from 'sonner'
 import { ArrowLeft, Check, Loader2, Mail, Calculator } from 'lucide-react'
 import { debounce } from '@/lib/utils/debounce'
-import { TopAppBar } from '@/components/layout/top-app-bar'
 import { BottomNav } from '@/components/layout/bottom-nav'
+
+// Spacing between labels and inputs - adjust this value to change all label margins
+const LABEL_SPACING = 'mb-3'
 
 export default function EditProfilePage() {
   const router = useRouter()
@@ -181,7 +181,7 @@ export default function EditProfilePage() {
   const FieldStatus = ({ field }: { field: string }) => {
     if (savingFields[field]) {
       return (
-        <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-100 text-xs font-medium text-gray-600">
+        <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary text-xs font-medium text-muted-foreground">
           <Loader2 className="h-3 w-3 animate-spin" />
           Saving
         </span>
@@ -189,7 +189,7 @@ export default function EditProfilePage() {
     }
     if (savedFields[field]) {
       return (
-        <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-xs font-medium text-green-700">
+        <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 text-xs font-medium text-success">
           <Check className="h-3 w-3" />
           Saved
         </span>
@@ -198,13 +198,9 @@ export default function EditProfilePage() {
     return null
   }
 
-  const tempUserName = userEmail.split('@')[0] || 'User'
-  const tempAvatarUrl = null
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24">
-        <TopAppBar userName={tempUserName} avatarUrl={tempAvatarUrl} />
+      <div className="min-h-screen bg-background pb-24">
         <div className="flex items-center justify-center min-h-[50vh]">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
@@ -215,22 +211,21 @@ export default function EditProfilePage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-gray-50 pb-24">
-        <TopAppBar userName={tempUserName} avatarUrl={tempAvatarUrl} />
+      <div className="min-h-screen bg-background pb-24">
         <main className="max-w-3xl mx-auto p-4">
           <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6">
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
               <ArrowLeft className="h-8 w-8 text-primary" />
             </div>
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold text-gray-900">Complete Your Profile</h2>
-              <p className="text-gray-500 max-w-md">
+              <h2 className="text-2xl font-bold text-foreground">Complete Your Profile</h2>
+              <p className="text-muted-foreground max-w-md">
                 You need to complete the onboarding process before you can edit your profile.
               </p>
             </div>
             <button
               onClick={() => router.push('/onboarding/1')}
-              className="px-6 py-3 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary/90 transition-colors"
+              className="px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors"
             >
               Go to Onboarding
             </button>
@@ -250,13 +245,8 @@ export default function EditProfilePage() {
         .slice(0, 2)
     : 'U'
 
-  const userName = profile.full_name || userEmail.split('@')[0] || 'User'
-  const avatarUrl = profile.avatar_url || null
-
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
-      <TopAppBar userName={userName} avatarUrl={avatarUrl} />
-
+    <div className="min-h-screen bg-background pb-24">
       <main className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="px-4 pt-6 pb-4">
@@ -267,8 +257,8 @@ export default function EditProfilePage() {
             <ArrowLeft className="h-5 w-5" />
             Back to Profile
           </button>
-          <h1 className="text-3xl lg:text-4xl font-bold text-charcoal">Edit Profile</h1>
-          <p className="text-base text-gray-500 mt-2">Update your personal information and preferences</p>
+          <h1 className="text-3xl lg:text-4xl font-bold text-foreground">Edit Profile</h1>
+          <p className="text-base text-muted-foreground mt-2">Update your personal information and preferences</p>
         </div>
 
         {/* Recalculate Macros Button */}
@@ -276,14 +266,14 @@ export default function EditProfilePage() {
           <button
             onClick={handleRecalculateMacros}
             disabled={recalculating}
-            className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-primary/10 text-primary font-semibold hover:bg-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Calculator className="h-5 w-5" />
             {recalculating ? 'Recalculating...' : 'Recalculate Macros'}
           </button>
         </div>
 
-        <div className="px-4 pt-2"><div className="h-px bg-gray-200 w-full"></div></div>
+        <div className="px-4 pt-2"><div className="h-px bg-border-strong w-full"></div></div>
 
       <div className="space-y-6 pb-6">
         {/* Profile Picture */}
@@ -304,7 +294,7 @@ export default function EditProfilePage() {
         <ProfileFormSection title="Basic Information" description="Your name and email address">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="full_name" className="flex items-center">
+              <Label htmlFor="full_name" className={`flex items-center ${LABEL_SPACING}`}>
                 Full Name
                 <FieldStatus field="full_name" />
               </Label>
@@ -322,11 +312,11 @@ export default function EditProfilePage() {
             </div>
 
             <div>
-              <Label htmlFor="email" className="flex items-center gap-2">
+              <Label htmlFor="email" className={`flex items-center gap-2 ${LABEL_SPACING}`}>
                 Email
                 <FieldStatus field="email" />
               </Label>
-              <div className="flex gap-2 mt-2">
+              <div className="flex gap-2">
                 <Input id="email" type="email" defaultValue={userEmail} placeholder="your@email.com" className="flex-1" />
                 <button
                   onClick={handleEmailUpdate}
@@ -336,9 +326,9 @@ export default function EditProfilePage() {
                   Update
                 </button>
               </div>
-              <div className="flex items-start gap-2 mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg">
-                <Mail className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                <p className="text-xs text-blue-700">
+              <div className="flex items-start gap-2 mt-2 p-2 bg-info-50 border border-info-500/20 rounded-lg">
+                <Mail className="h-4 w-4 text-info-500 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-info-700">
                   You'll receive a confirmation email to verify the change
                 </p>
               </div>
@@ -371,7 +361,7 @@ export default function EditProfilePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="age" className="flex items-center">
+                <Label htmlFor="age" className={`flex items-center ${LABEL_SPACING}`}>
                   Age
                   <FieldStatus field="age" />
                 </Label>
@@ -392,7 +382,7 @@ export default function EditProfilePage() {
               </div>
 
               <div>
-                <Label htmlFor="sex" className="flex items-center">
+                <Label htmlFor="sex" className={`flex items-center ${LABEL_SPACING}`}>
                   Sex
                   <FieldStatus field="sex" />
                 </Label>
@@ -415,7 +405,7 @@ export default function EditProfilePage() {
               </div>
 
               <div>
-                <Label htmlFor="weight" className="flex items-center">
+                <Label htmlFor="weight" className={`flex items-center ${LABEL_SPACING}`}>
                   Weight {useImperial ? '(lbs)' : '(kg)'}
                   <FieldStatus field="weight_kg" />
                 </Label>
@@ -441,7 +431,7 @@ export default function EditProfilePage() {
 
               {useImperial ? (
                 <div className="space-y-2">
-                  <Label className="flex items-center">
+                  <Label className={`flex items-center ${LABEL_SPACING}`}>
                     Height (ft/in)
                     <FieldStatus field="height_cm" />
                   </Label>
@@ -487,7 +477,7 @@ export default function EditProfilePage() {
                 </div>
               ) : (
                 <div>
-                  <Label htmlFor="height" className="flex items-center">
+                  <Label htmlFor="height" className={`flex items-center ${LABEL_SPACING}`}>
                     Height (cm)
                     <FieldStatus field="height_cm" />
                   </Label>
@@ -512,7 +502,7 @@ export default function EditProfilePage() {
         {/* Fitness Goals */}
         <ProfileFormSection title="Fitness Goal" description="Your current fitness objective">
           <div>
-            <Label htmlFor="goal" className="flex items-center">
+            <Label htmlFor="goal" className={`flex items-center ${LABEL_SPACING}`}>
               Goal
               <FieldStatus field="goal" />
             </Label>
@@ -540,7 +530,7 @@ export default function EditProfilePage() {
         {/* Activity Level */}
         <ProfileFormSection title="Activity Level" description="How active you are throughout the week">
           <div>
-            <Label htmlFor="activity_level" className="flex items-center">
+            <Label htmlFor="activity_level" className={`flex items-center ${LABEL_SPACING}`}>
               Activity Level
               <FieldStatus field="activity_level" />
             </Label>
@@ -570,7 +560,7 @@ export default function EditProfilePage() {
         <ProfileFormSection title="Dietary Preferences" description="Your eating style and restrictions">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="dietary_style" className="flex items-center">
+              <Label htmlFor="dietary_style" className={`flex items-center ${LABEL_SPACING}`}>
                 Dietary Style
                 <FieldStatus field="dietary_style" />
               </Label>
@@ -598,7 +588,7 @@ export default function EditProfilePage() {
             </div>
 
             <div>
-              <Label htmlFor="foods_to_avoid" className="flex items-center">
+              <Label htmlFor="foods_to_avoid" className={`flex items-center ${LABEL_SPACING}`}>
                 Foods to Avoid
                 <FieldStatus field="foods_to_avoid" />
               </Label>
@@ -622,7 +612,7 @@ export default function EditProfilePage() {
         <ProfileFormSection title="Experience Levels" description="Your familiarity with fitness and nutrition">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="fitness_experience" className="flex items-center">
+              <Label htmlFor="fitness_experience" className={`flex items-center ${LABEL_SPACING}`}>
                 Fitness Experience
                 <FieldStatus field="fitness_experience" />
               </Label>
@@ -646,7 +636,7 @@ export default function EditProfilePage() {
             </div>
 
             <div>
-              <Label htmlFor="tracking_experience" className="flex items-center">
+              <Label htmlFor="tracking_experience" className={`flex items-center ${LABEL_SPACING}`}>
                 Macro Tracking Experience
                 <FieldStatus field="tracking_experience" />
               </Label>
@@ -670,7 +660,7 @@ export default function EditProfilePage() {
             </div>
 
             <div>
-              <Label htmlFor="meal_prep_skills" className="flex items-center">
+              <Label htmlFor="meal_prep_skills" className={`flex items-center ${LABEL_SPACING}`}>
                 Meal Prep Skills
                 <FieldStatus field="meal_prep_skills" />
               </Label>
@@ -698,36 +688,40 @@ export default function EditProfilePage() {
         {/* Current Macros Display */}
         <ProfileFormSection title="Current Macros" description="Your calculated daily nutrition targets">
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">Calories</p>
-                <p className="text-xl font-bold text-gray-900">{profile.target_calories?.toLocaleString() || '-'}</p>
-              </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">Protein</p>
-                <p className="text-xl font-bold text-gray-900">{profile.protein_grams || '-'}g</p>
-              </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">Carbs</p>
-                <p className="text-xl font-bold text-gray-900">{profile.carb_grams || '-'}g</p>
-              </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">Fat</p>
-                <p className="text-xl font-bold text-gray-900">{profile.fat_grams || '-'}g</p>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm text-muted-foreground">Daily Target</p>
+                <p className="text-xl font-bold text-foreground">{profile.target_calories?.toLocaleString() || '-'} cal</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">BMR</p>
-                <p className="text-xl font-bold text-gray-900">{profile.bmr?.toLocaleString() || '-'}</p>
+
+            <div className="grid grid-cols-3 gap-2 text-center text-sm">
+              <div className="bg-protein/10 p-3 rounded-xl">
+                <p className="font-bold text-protein">{profile.protein_grams || '-'}g</p>
+                <p className="text-xs text-muted-foreground">Protein</p>
               </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">TDEE</p>
-                <p className="text-xl font-bold text-gray-900">{profile.tdee?.toLocaleString() || '-'}</p>
+              <div className="bg-carb/10 p-3 rounded-xl">
+                <p className="font-bold text-carb">{profile.carb_grams || '-'}g</p>
+                <p className="text-xs text-muted-foreground">Carbs</p>
+              </div>
+              <div className="bg-fat/10 p-3 rounded-xl">
+                <p className="font-bold text-fat">{profile.fat_grams || '-'}g</p>
+                <p className="text-xs text-muted-foreground">Fat</p>
               </div>
             </div>
-            <p className="text-xs text-gray-500 pt-2">
-              💡 Click "Recalculate Macros" after changing personal stats or goals to update these values.
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 bg-secondary rounded-xl">
+                <p className="text-xs text-muted-foreground">BMR</p>
+                <p className="text-lg font-bold text-foreground">{profile.bmr?.toLocaleString() || '-'}</p>
+              </div>
+              <div className="p-3 bg-secondary rounded-xl">
+                <p className="text-xs text-muted-foreground">TDEE</p>
+                <p className="text-lg font-bold text-foreground">{profile.tdee?.toLocaleString() || '-'}</p>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground pt-2">
+              Click "Recalculate Macros" after changing personal stats or goals to update these values.
             </p>
           </div>
         </ProfileFormSection>
