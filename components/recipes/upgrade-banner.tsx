@@ -3,13 +3,31 @@
 import { X, Sparkles, Crown } from 'lucide-react'
 import { useState } from 'react'
 
-export function UpgradeBanner() {
+interface UpgradeBannerProps {
+  isPremium?: boolean
+  favoritesUsed?: number
+  favoritesLimit?: number
+  mealPlansUsed?: number
+  mealPlansLimit?: number
+}
+
+export function UpgradeBanner({
+  isPremium = false,
+  favoritesUsed = 0,
+  favoritesLimit = 10,
+  mealPlansUsed = 0,
+  mealPlansLimit = 3,
+}: UpgradeBannerProps) {
   const [isVisible, setIsVisible] = useState(true)
 
-  if (!isVisible) return null
+  // Don't show banner for premium users or if dismissed
+  if (isPremium || !isVisible) return null
+
+  const favoritesNearLimit = favoritesUsed >= favoritesLimit - 2
+  const mealPlansNearLimit = mealPlansUsed >= mealPlansLimit - 1
 
   return (
-    <div className="px-4 py-2">
+    <div className="py-2">
       <div className="relative rounded-xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-2 border-primary/20 p-4 overflow-hidden">
         {/* Background decoration */}
         <div className="absolute top-0 right-0 opacity-10">
@@ -28,11 +46,13 @@ export function UpgradeBanner() {
             <div className="flex items-center gap-2 mb-1">
               <Crown className="h-4 w-4 text-primary sm:hidden" />
               <h3 className="text-sm font-bold text-foreground">
-                Free Tier: 100 Recipes Available
+                Free Tier: {favoritesUsed}/{favoritesLimit} Favorites · {mealPlansUsed}/{mealPlansLimit} Meal Plans
               </h3>
             </div>
             <p className="text-xs text-muted-foreground mb-3 sm:mb-2">
-              Unlock unlimited recipes, custom meal plans, and advanced nutrition tracking
+              {favoritesNearLimit || mealPlansNearLimit
+                ? 'Running low on your free tier limits! Upgrade for unlimited favorites and meal plans.'
+                : 'Upgrade to Premium for unlimited saved recipes, meal plans, and priority support.'}
             </p>
             <a
               className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors group"

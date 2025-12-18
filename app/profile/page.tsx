@@ -19,6 +19,8 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect } from 'react'
 import { UserProfile } from '@/lib/types/database'
+import { getSubscriptionStatus } from '@/app/actions/subscription'
+import type { SubscriptionStatus } from '@/lib/constants/subscription'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useTheme } from 'next-themes'
 import { ChangePasswordModal } from '@/components/profile/change-password-modal'
@@ -31,6 +33,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true)
   const [authProvider, setAuthProvider] = useState<string | null>(null)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
+  const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -65,6 +68,10 @@ export default function ProfilePage() {
         } else {
           setProfile(data)
         }
+
+        // Load subscription status
+        const status = await getSubscriptionStatus()
+        setSubscriptionStatus(status)
       } catch (error) {
         console.error('Failed to load profile:', error)
       } finally {
@@ -185,18 +192,56 @@ export default function ProfilePage() {
             <div className="bg-card p-4 rounded-2xl shadow-sm border border-border-strong space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">Current Plan</span>
-                <span className="px-2 py-1 rounded-lg bg-accent text-xs font-bold text-foreground">Free</span>
+                <span className={`px-2 py-1 rounded-lg text-xs font-bold ${
+                  subscriptionStatus?.isPremium
+                    ? 'bg-primary/20 text-primary'
+                    : 'bg-accent text-foreground'
+                }`}>
+                  {subscriptionStatus?.isPremium ? 'Premium' : 'Free'}
+                </span>
               </div>
-              <div>
-                <p className="text-lg font-bold text-foreground">2 of 3 meal plans generated</p>
-                <div className="w-full bg-secondary rounded-full h-2 mt-2">
-                  <div className="bg-primary h-2 rounded-full" style={{ width: '66%' }}></div>
+              {subscriptionStatus?.isPremium ? (
+                <div>
+                  <p className="text-lg font-bold text-foreground">
+                    {subscriptionStatus.quota.total - subscriptionStatus.quota.remaining} of {subscriptionStatus.quota.total} meal plans this month
+                  </p>
+                  <div className="w-full bg-secondary rounded-full h-2 mt-2">
+                    <div
+                      className="bg-primary h-2 rounded-full"
+                      style={{
+                        width: `${((subscriptionStatus.quota.total - subscriptionStatus.quota.remaining) / subscriptionStatus.quota.total) * 100}%`
+                      }}
+                    ></div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    {subscriptionStatus.quota.remaining} meal plans remaining this month
+                  </p>
                 </div>
-              </div>
-              <button className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors">
-                <span>Upgrade to Premium</span>
-                <ArrowRight className="size-4" />
-              </button>
+              ) : (
+                <div>
+                  <p className="text-lg font-bold text-foreground">
+                    {subscriptionStatus
+                      ? `${subscriptionStatus.quota.total - subscriptionStatus.quota.remaining} of ${subscriptionStatus.quota.total} meal plans generated`
+                      : 'Loading...'}
+                  </p>
+                  <div className="w-full bg-secondary rounded-full h-2 mt-2">
+                    <div
+                      className="bg-primary h-2 rounded-full"
+                      style={{
+                        width: subscriptionStatus
+                          ? `${((subscriptionStatus.quota.total - subscriptionStatus.quota.remaining) / subscriptionStatus.quota.total) * 100}%`
+                          : '0%'
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+              {!subscriptionStatus?.isPremium && (
+                <button className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors">
+                  <span>Upgrade to Premium</span>
+                  <ArrowRight className="size-4" />
+                </button>
+              )}
             </div>
           </div>
         </section>

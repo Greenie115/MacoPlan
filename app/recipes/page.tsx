@@ -6,6 +6,7 @@ import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
 import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
 import { getFavoriteRecipeIds } from './actions'
 import { searchRecipes } from '@/app/actions/fatsecret-recipes'
+import { getSubscriptionStatus } from '@/app/actions/subscription'
 import {
   validateRecipeFilters,
   toSearchParams,
@@ -115,8 +116,13 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     fatSecretError = fatSecretResult.error || 'Failed to fetch recipes'
   }
 
-  // Get user's favorite recipe IDs
-  const favoriteIds = await getFavoriteRecipeIds()
+  // Get user's favorite recipe IDs and subscription status
+  const [favoriteIds, subscriptionStatus] = await Promise.all([
+    getFavoriteRecipeIds(),
+    getSubscriptionStatus(),
+  ])
+
+  const isPremium = subscriptionStatus?.isPremium ?? false
 
   const allRecipes = fatSecretRecipes
   const totalResults = fatSecretTotalResults
@@ -173,7 +179,13 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
 
       {/* Upgrade Banner */}
       <div className="max-w-7xl mx-auto px-4">
-        <UpgradeBanner />
+        <UpgradeBanner
+          isPremium={isPremium}
+          favoritesUsed={subscriptionStatus?.favoritesQuota.used ?? 0}
+          favoritesLimit={subscriptionStatus?.favoritesQuota.limit ?? 10}
+          mealPlansUsed={subscriptionStatus ? subscriptionStatus.quota.total - subscriptionStatus.quota.remaining : 0}
+          mealPlansLimit={subscriptionStatus?.quota.total ?? 3}
+        />
       </div>
 
       {/* Recipe Grid with Session Cache */}

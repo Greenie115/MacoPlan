@@ -2,6 +2,9 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { getUserSubscriptionTier } from '@/lib/utils/subscription'
+import { FREE_FAVORITES_LIMIT } from '@/lib/constants/subscription'
+import { checkFavoritesQuota } from '@/app/actions/subscription'
 
 /**
  * Recipe metadata for FatSecret favorites
@@ -74,6 +77,17 @@ export async function toggleFatSecretFavorite(
     // Add to favorites - requires metadata for first-time save
     if (!metadata?.title) {
       return { error: 'Recipe metadata required to add favorite' }
+    }
+
+    // Check favorites quota before adding
+    const tier = await getUserSubscriptionTier(user.id)
+    const quota = await checkFavoritesQuota(user.id, tier)
+
+    if (!quota.allowed) {
+      return {
+        error: `You've reached the free tier limit of ${FREE_FAVORITES_LIMIT} favorites. Upgrade to Premium for unlimited favorites.`,
+        limitReached: true,
+      }
     }
 
     const { error } = await supabase.from('user_fatsecret_favorites').insert({
