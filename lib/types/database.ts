@@ -48,6 +48,7 @@ export interface UserProfile {
 
   // Meal Planning Integration
   is_test_user: boolean
+  simulated_tier: 'free' | 'paid' | null
   stripe_customer_id: string | null
 
   // Timestamps
@@ -181,6 +182,7 @@ export interface MealPlanGenerationQuota {
   total_generated: number
   free_tier_generated: number
   current_period_generated: number
+  free_tier_swaps: number
 
   stripe_subscription_id: string | null
   period_start_date: string

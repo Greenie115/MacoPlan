@@ -4,13 +4,17 @@ import { createClient } from '@/lib/supabase/server'
 import {
   getUserSubscriptionTier,
   checkMealPlanQuota,
+  checkSwapQuota,
   type SubscriptionTier,
   type QuotaCheckResult,
 } from '@/lib/utils/subscription'
 import {
   FREE_FAVORITES_LIMIT,
   PREMIUM_FAVORITES_LIMIT,
+  FREE_SWAPS_LIMIT,
+  PREMIUM_SWAPS_LIMIT,
   type FavoritesQuota,
+  type SwapQuota,
 } from '@/lib/constants/subscription'
 
 interface SubscriptionStatus {
@@ -18,6 +22,7 @@ interface SubscriptionStatus {
   isPremium: boolean
   quota: QuotaCheckResult
   favoritesQuota: FavoritesQuota
+  swapQuota: SwapQuota
 }
 
 /**
@@ -79,16 +84,26 @@ export async function getSubscriptionStatus(): Promise<SubscriptionStatus | null
     const tier = await getUserSubscriptionTier(user.id)
 
     // Get quota info
-    const [quota, favoritesQuota] = await Promise.all([
+    const [quota, favoritesQuota, swapQuotaResult] = await Promise.all([
       checkMealPlanQuota(user.id, tier),
       checkFavoritesQuota(user.id, tier),
+      checkSwapQuota(user.id, tier),
     ])
+
+    // Convert swap quota result to SwapQuota interface
+    const swapQuota: SwapQuota = {
+      used: swapQuotaResult.total - swapQuotaResult.remaining,
+      limit: swapQuotaResult.total,
+      remaining: swapQuotaResult.remaining,
+      allowed: swapQuotaResult.allowed,
+    }
 
     return {
       tier,
       isPremium: tier === 'paid',
       quota,
       favoritesQuota,
+      swapQuota,
     }
   } catch (err) {
     console.error('Unexpected error getting subscription status:', err)

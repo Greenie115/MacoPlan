@@ -12,6 +12,8 @@ import { fatSecretMealPlanService } from '@/lib/services/fatsecret-meal-plans'
 import { fatSecretService } from '@/lib/services/fatsecret'
 import {
   getUserSubscriptionTier,
+  checkSwapQuota,
+  incrementSwapQuota,
 } from '@/lib/utils/subscription'
 import type {
   MealPlan,
@@ -1067,7 +1069,7 @@ export async function getSwapOptions(
 export async function swapMeal(
   mealId: string,
   newRecipeId: string
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; error?: string; limitReached?: boolean }> {
   try {
     const supabase = await createClient()
     const {
@@ -1076,6 +1078,18 @@ export async function swapMeal(
 
     if (!user) {
       return { success: false, error: 'Not authenticated' }
+    }
+
+    // Check swap quota
+    const tier = await getUserSubscriptionTier(user.id)
+    const swapQuota = await checkSwapQuota(user.id, tier)
+
+    if (!swapQuota.allowed) {
+      return {
+        success: false,
+        error: swapQuota.reason || 'Swap limit reached',
+        limitReached: true,
+      }
     }
 
     const { data: meal, error: mealError } = await supabase
@@ -1123,6 +1137,9 @@ export async function swapMeal(
       console.error('[SwapMeal] Update error:', updateError)
       return { success: false, error: 'Failed to swap meal' }
     }
+
+    // Increment swap quota after successful swap
+    await incrementSwapQuota(user.id, tier)
 
     const planId = (meal.meal_plans as { id: string }).id
     revalidatePath(`/meal-plans/${planId}`)

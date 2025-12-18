@@ -14,10 +14,21 @@ export const PREMIUM_FAVORITES_LIMIT = Infinity
 export const FREE_MEAL_PLANS_LIMIT = 3
 export const PREMIUM_MEAL_PLANS_PER_MONTH = 100
 
+// Meal swap limits
+export const FREE_SWAPS_LIMIT = 3
+export const PREMIUM_SWAPS_LIMIT = Infinity
+
 // Types
 export type SubscriptionTier = 'free' | 'paid'
 
 export interface FavoritesQuota {
+  used: number
+  limit: number
+  remaining: number
+  allowed: boolean
+}
+
+export interface SwapQuota {
   used: number
   limit: number
   remaining: number
@@ -29,4 +40,5 @@ export interface SubscriptionStatus {
   isPremium: boolean
   quota: QuotaCheckResult
   favoritesQuota: FavoritesQuota
+  swapQuota: SwapQuota
 }

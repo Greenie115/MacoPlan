@@ -463,3 +463,63 @@ export async function recalculateMacros() {
     return { error: 'Failed to recalculate macros' }
   }
 }
+
+/**
+ * Update the simulated tier for test users
+ * Only test users can use this action
+ */
+export async function updateSimulatedTier(
+  tier: 'free' | 'paid' | null
+): Promise<{ success?: boolean; error?: string }> {
+  try {
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError || !user) {
+      return { error: 'Not authenticated' }
+    }
+
+    // Verify user is a test user
+    const { data: profile, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('is_test_user')
+      .eq('user_id', user.id)
+      .single()
+
+    if (profileError || !profile) {
+      return { error: 'Profile not found' }
+    }
+
+    if (!profile.is_test_user) {
+      console.warn(
+        `[SimulatedTier] Non-test user ${user.id} attempted to set simulated tier`
+      )
+      return { error: 'This feature is only available for test users' }
+    }
+
+    // Update simulated tier
+    const { error: updateError } = await supabase
+      .from('user_profiles')
+      .update({ simulated_tier: tier })
+      .eq('user_id', user.id)
+
+    if (updateError) {
+      console.error('Error updating simulated tier:', updateError)
+      return { error: 'Failed to update simulated tier' }
+    }
+
+    console.log(`[SimulatedTier] User ${user.id} set simulated tier to: ${tier}`)
+
+    revalidatePath('/dashboard')
+    revalidatePath('/profile')
+    revalidatePath('/plans')
+    return { success: true }
+  } catch (err) {
+    console.error('Unexpected error updating simulated tier:', err)
+    return { error: 'Failed to update simulated tier' }
+  }
+}

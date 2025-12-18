@@ -31,10 +31,10 @@ export async function getUserSubscriptionTier(
 ): Promise<SubscriptionTier> {
   const supabase = await createClient()
 
-  // Fetch user profile with test user flag and Stripe customer ID
+  // Fetch user profile with test user flag, simulated tier, and Stripe customer ID
   const { data: profile } = await supabase
     .from('user_profiles')
-    .select('is_test_user, stripe_customer_id')
+    .select('is_test_user, simulated_tier, stripe_customer_id')
     .eq('user_id', userId)
     .single()
 
@@ -43,11 +43,15 @@ export async function getUserSubscriptionTier(
     return 'free'
   }
 
-  // Test users get paid tier benefits
-  if (profile.is_test_user) {
-    console.log('[Subscription] Test user detected, granting paid tier access')
-    return 'paid'
+  // Check if test user has a simulated tier set
+  if (profile.is_test_user && profile.simulated_tier !== null) {
+    console.log(
+      `[Subscription] Test user with simulated tier: ${profile.simulated_tier}`
+    )
+    return profile.simulated_tier as SubscriptionTier
   }
+
+  // Test users without simulated_tier fall through to normal Stripe check
 
   // Check Stripe subscription if customer ID exists
   if (profile.stripe_customer_id && stripe) {
@@ -222,4 +226,119 @@ export async function resetMonthlyQuota(
   }
 
   console.log(`[Quota] Reset monthly quota for user ${userId}`)
+}
+
+// ============================================================================
+// Check Meal Swap Quota
+// ============================================================================
+
+export interface SwapQuotaResult {
+  allowed: boolean
+  remaining: number
+  total: number
+  reason?: string
+}
+
+/**
+ * Checks if user can perform another meal swap based on quota
+ * Free tier: 3 swaps lifetime
+ * Paid tier: Unlimited swaps
+ */
+export async function checkSwapQuota(
+  userId: string,
+  tier: SubscriptionTier
+): Promise<SwapQuotaResult> {
+  // Paid users have unlimited swaps
+  if (tier === 'paid') {
+    return {
+      allowed: true,
+      remaining: Infinity,
+      total: Infinity,
+    }
+  }
+
+  const supabase = await createClient()
+
+  // Get or create quota record
+  let { data: quota } = await supabase
+    .from('meal_plan_generation_quota')
+    .select('free_tier_swaps')
+    .eq('user_id', userId)
+    .single()
+
+  if (!quota) {
+    // Create quota record for new user
+    const { data, error } = await supabase
+      .from('meal_plan_generation_quota')
+      .insert({ user_id: userId })
+      .select('free_tier_swaps')
+      .single()
+
+    if (error) {
+      console.error('[SwapQuota] Error creating quota record:', error)
+      throw new Error('Failed to check swap quota')
+    }
+
+    quota = data
+  }
+
+  const FREE_SWAPS_LIMIT = 3
+  const swapsUsed = quota?.free_tier_swaps ?? 0
+  const remaining = Math.max(0, FREE_SWAPS_LIMIT - swapsUsed)
+  const allowed = remaining > 0
+
+  return {
+    allowed,
+    remaining,
+    total: FREE_SWAPS_LIMIT,
+    reason: allowed
+      ? undefined
+      : 'Free tier swap limit reached. Upgrade to Premium for unlimited swaps.',
+  }
+}
+
+// ============================================================================
+// Increment Swap Quota
+// ============================================================================
+
+/**
+ * Increments the meal swap counter after successful swap
+ * Only tracks for free tier users (paid users have unlimited)
+ */
+export async function incrementSwapQuota(
+  userId: string,
+  tier: SubscriptionTier
+): Promise<void> {
+  // Paid users don't need tracking
+  if (tier === 'paid') {
+    return
+  }
+
+  const supabase = await createClient()
+
+  const { error } = await supabase.rpc('increment_swap_quota', {
+    p_user_id: userId,
+  })
+
+  if (error) {
+    // Fallback to direct update if RPC doesn't exist
+    console.warn('[SwapQuota] RPC not found, using direct update')
+    const { data: quota } = await supabase
+      .from('meal_plan_generation_quota')
+      .select('free_tier_swaps')
+      .eq('user_id', userId)
+      .single()
+
+    if (quota) {
+      await supabase
+        .from('meal_plan_generation_quota')
+        .update({
+          free_tier_swaps: (quota.free_tier_swaps ?? 0) + 1,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('user_id', userId)
+    }
+  }
+
+  console.log(`[SwapQuota] Incremented swap count for user ${userId}`)
 }

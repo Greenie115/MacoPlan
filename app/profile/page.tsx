@@ -11,7 +11,8 @@ import {
   Lock,
   Shield,
   ArrowRight,
-  User
+  User,
+  FlaskConical
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -20,6 +21,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect } from 'react'
 import { UserProfile } from '@/lib/types/database'
 import { getSubscriptionStatus } from '@/app/actions/subscription'
+import { updateSimulatedTier } from '@/app/actions/profile'
 import type { SubscriptionStatus } from '@/lib/constants/subscription'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useTheme } from 'next-themes'
@@ -34,6 +36,8 @@ export default function ProfilePage() {
   const [authProvider, setAuthProvider] = useState<string | null>(null)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null)
+  const [simulatedTier, setSimulatedTier] = useState<'free' | 'paid' | null>(null)
+  const [isUpdatingTier, setIsUpdatingTier] = useState(false)
   const router = useRouter()
   const supabase = createClient()
 
@@ -67,6 +71,7 @@ export default function ProfilePage() {
           }
         } else {
           setProfile(data)
+          setSimulatedTier(data.simulated_tier)
         }
 
         // Load subscription status
@@ -89,6 +94,43 @@ export default function ProfilePage() {
 
   const isDarkMode = mounted ? resolvedTheme === 'dark' : false
   const toggleDarkMode = () => setTheme(isDarkMode ? 'light' : 'dark')
+
+  const handleSimulatedTierToggle = async () => {
+    if (!profile?.is_test_user || isUpdatingTier) return
+
+    setIsUpdatingTier(true)
+
+    // Toggle between 'free' and 'paid'
+    const nextTier = simulatedTier === 'paid' ? 'free' : 'paid'
+
+    const result = await updateSimulatedTier(nextTier)
+
+    if (result.success) {
+      setSimulatedTier(nextTier)
+      // Refresh subscription status to reflect new tier
+      const status = await getSubscriptionStatus()
+      setSubscriptionStatus(status)
+    } else {
+      console.error('Failed to update simulated tier:', result.error)
+    }
+
+    setIsUpdatingTier(false)
+  }
+
+  const handleClearSimulation = async () => {
+    if (!profile?.is_test_user || isUpdatingTier) return
+
+    setIsUpdatingTier(true)
+    const result = await updateSimulatedTier(null)
+
+    if (result.success) {
+      setSimulatedTier(null)
+      const status = await getSubscriptionStatus()
+      setSubscriptionStatus(status)
+    }
+
+    setIsUpdatingTier(false)
+  }
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -345,6 +387,46 @@ export default function ProfilePage() {
                 <div className={`absolute top-1 size-4 bg-white rounded-full shadow-sm transition-all ${isDarkMode ? 'left-6' : 'left-1'}`}></div>
               </div>
             </div>
+            {/* Test User Tier Toggle - only visible for test users */}
+            {profile?.is_test_user && (
+              <div className="flex flex-col gap-2 p-4 bg-card">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <FlaskConical className="size-5 text-icon" />
+                    <div>
+                      <span className="text-foreground font-medium">Simulate Tier</span>
+                      <p className="text-xs text-muted-foreground">
+                        {simulatedTier === null
+                          ? 'Using real subscription'
+                          : `Simulating: ${simulatedTier}`}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleSimulatedTierToggle}
+                    disabled={isUpdatingTier}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                      simulatedTier === 'paid'
+                        ? 'bg-primary text-white'
+                        : simulatedTier === 'free'
+                        ? 'bg-secondary text-foreground'
+                        : 'bg-accent text-muted-foreground'
+                    }`}
+                  >
+                    {isUpdatingTier ? '...' : simulatedTier === 'paid' ? 'Paid' : simulatedTier === 'free' ? 'Free' : 'None'}
+                  </button>
+                </div>
+                {simulatedTier !== null && (
+                  <button
+                    onClick={handleClearSimulation}
+                    disabled={isUpdatingTier}
+                    className="text-xs text-muted-foreground hover:text-foreground transition-colors text-left"
+                  >
+                    Clear simulation (use real tier)
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </section>
 

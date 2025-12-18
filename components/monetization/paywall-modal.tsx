@@ -32,7 +32,7 @@ const triggerMessages: Record<PaywallTrigger, { headline: string; subtitle: stri
   },
   swap_limit: {
     headline: 'Swap limit reached',
-    subtitle: 'Free users can swap up to 5 meals per plan. Upgrade for unlimited swaps.',
+    subtitle: "You've used all 3 free meal swaps. Upgrade to Premium for unlimited swaps.",
   },
   premium_feature: {
     headline: 'Premium Feature',
@@ -107,9 +107,7 @@ export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onS
             <ul className="space-y-3">
               {[
                 'Unlimited meal plan generation',
-                'Full recipe database (2M+)',
                 'Unlimited meal swaps',
-                'Advanced customization',
                 'Export plans as PDF',
                 'Priority support'
               ].map((feature) => (
