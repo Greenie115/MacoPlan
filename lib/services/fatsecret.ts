@@ -446,6 +446,10 @@ class FatSecretService {
   ): Promise<FatSecretRecipeSearchResponse> {
     const supabase = await createClient()
 
+    // Generate cache key for page 0 to get consistent total_results
+    const page0Params = { ...params, page_number: 0 }
+    const page0CacheKey = await this.generateCacheKey('recipe_search', page0Params)
+
     // Check cache
     const { data: cached } = await supabase
       .from('fatsecret_search_cache')
@@ -454,6 +458,22 @@ class FatSecretService {
       .eq('search_type', 'recipe')
       .gt('expires_at', new Date().toISOString())
       .single()
+
+    // Also get page 0's total for consistency (if we're not on page 0)
+    let consistentTotal = cached?.total_results
+    if (params.page_number && params.page_number > 0) {
+      const { data: page0Cached } = await supabase
+        .from('fatsecret_search_cache')
+        .select('total_results')
+        .eq('query_hash', page0CacheKey)
+        .eq('search_type', 'recipe')
+        .gt('expires_at', new Date().toISOString())
+        .single()
+
+      if (page0Cached) {
+        consistentTotal = page0Cached.total_results
+      }
+    }
 
     if (cached) {
       console.log('[FatSecret] Recipe search cache HIT')
@@ -487,7 +507,7 @@ class FatSecretService {
             })),
             max_results: String(params.max_results || 20),
             page_number: String(params.page_number || 0),
-            total_results: String(cached.total_results),
+            total_results: String(consistentTotal || cached.total_results),
           },
         }
       }
@@ -506,8 +526,8 @@ class FatSecretService {
     // Recipe type filters
     if (params.recipe_types) {
       apiParams.recipe_types = params.recipe_types
-    }
-    if (params.recipe_types_matchall !== undefined) {
+      // Default to OR matching (any type) unless explicitly set to AND (all types)
+      // This ensures selecting multiple types returns recipes matching ANY of them
       apiParams.recipe_types_matchall = params.recipe_types_matchall ? 1 : 0
     }
 
@@ -574,6 +594,11 @@ class FatSecretService {
       for (const recipe of recipes) {
         await this.cacheRecipeLightweight(recipe)
       }
+    }
+
+    // Use consistent total from page 0 if available (for pages > 0)
+    if (response.recipes && params.page_number && params.page_number > 0 && consistentTotal) {
+      response.recipes.total_results = String(consistentTotal)
     }
 
     return response

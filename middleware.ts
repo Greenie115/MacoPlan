@@ -6,30 +6,33 @@ export async function middleware(request: NextRequest) {
   const { response, user } = await updateSession(request)
 
   // Define public routes that don't require auth
-  const isPublicRoute = 
+  const isPublicRoute =
     request.nextUrl.pathname === '/' ||
     request.nextUrl.pathname.startsWith('/login') ||
     request.nextUrl.pathname.startsWith('/signup') ||
-    request.nextUrl.pathname.startsWith('/onboarding') ||
+    request.nextUrl.pathname.startsWith('/forgot-password') ||
+    request.nextUrl.pathname.startsWith('/reset-password') ||
     request.nextUrl.pathname.startsWith('/auth') ||
+    request.nextUrl.pathname.startsWith('/blog') ||
+    request.nextUrl.pathname.startsWith('/pricing') ||
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.includes('.') // static files like favicon.ico
 
-  // If user is NOT logged in and tries to access a protected route
+  // Onboarding requires auth - users must sign in first
+  const isOnboardingRoute = request.nextUrl.pathname.startsWith('/onboarding')
+
+  // If user is NOT logged in and tries to access a protected route (including onboarding)
   if (!user && !isPublicRoute) {
     // Redirect to login
     const loginUrl = new URL('/login', request.url)
-    // Optional: Add ?next= param to redirect back after login
-    // loginUrl.searchParams.set('next', request.nextUrl.pathname)
     return NextResponse.redirect(loginUrl)
   }
 
-  // If user IS logged in and tries to access login or onboarding, redirect to dashboard
-  // (Optional, but good UX)
-  // If user IS logged in and tries to access login or onboarding, redirect to dashboard
-  // (Optional, but good UX)
+  // If user IS logged in and tries to access login or signup, redirect appropriately
   if (user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup'))) {
-     return NextResponse.redirect(new URL('/dashboard', request.url))
+    // Check if user has completed onboarding by checking if they have a goal set
+    // For now, redirect to onboarding - they can skip to dashboard if already complete
+    return NextResponse.redirect(new URL('/onboarding/1', request.url))
   }
 
   return response

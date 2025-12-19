@@ -15,9 +15,10 @@ interface AutocompleteResult {
 export function RecipeSearch() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get('search') || ''
-  )
+  const initialSearch = searchParams.get('search') || ''
+  const [searchQuery, setSearchQuery] = useState(initialSearch)
+  const isInitialMount = useRef(true)
+  const lastSearchRef = useRef(initialSearch)
   const [autocompleteResults, setAutocompleteResults] = useState<
     AutocompleteResult[]
   >([])
@@ -53,6 +54,19 @@ export function RecipeSearch() {
 
   // Update URL when debounced search changes
   useEffect(() => {
+    // Skip initial mount to avoid resetting page on navigation
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      return
+    }
+
+    // Only update if search query actually changed
+    if (debouncedSearch === lastSearchRef.current) {
+      return
+    }
+
+    lastSearchRef.current = debouncedSearch
+
     const params = new URLSearchParams(searchParams.toString())
 
     if (debouncedSearch) {
@@ -64,19 +78,19 @@ export function RecipeSearch() {
     params.delete('page') // Reset to page 1 on new search
 
     const newUrl = `/recipes?${params.toString()}`
-    const currentUrl = `/recipes?${searchParams.toString()}`
-
-    // Only push if URL actually changed (prevents infinite loop)
-    if (newUrl !== currentUrl) {
-      router.push(newUrl, { scroll: false })
-    }
+    router.push(newUrl, { scroll: false })
   }, [debouncedSearch, router, searchParams])
 
   const handleSelectSuggestion = (suggestion: AutocompleteResult) => {
     setSearchQuery(suggestion.title)
     setShowAutocomplete(false)
-    // Navigate to FatSecret recipe detail page
-    router.push(`/recipes/fatsecret/${suggestion.id}`)
+    // Update the ref so the useEffect doesn't trigger another navigation
+    lastSearchRef.current = suggestion.title
+    // Search for the suggestion term
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('search', suggestion.title)
+    params.delete('page') // Reset to page 1
+    router.push(`/recipes?${params.toString()}`, { scroll: false })
   }
 
   return (

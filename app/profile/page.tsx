@@ -26,6 +26,7 @@ import type { SubscriptionStatus } from '@/lib/constants/subscription'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useTheme } from 'next-themes'
 import { ChangePasswordModal } from '@/components/profile/change-password-modal'
+import { TwoFactorSetup } from '@/components/profile/two-factor-setup'
 
 export default function ProfilePage() {
   const { theme, setTheme, resolvedTheme } = useTheme()
@@ -428,6 +429,11 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
+        </section>
+
+        {/* Two-Factor Authentication */}
+        <section className="pt-6 px-4">
+          <TwoFactorSetup />
         </section>
 
         {/* Support & Legal */}

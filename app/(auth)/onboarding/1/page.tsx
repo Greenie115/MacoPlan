@@ -1,7 +1,6 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { useOnboardingStore, type Goal } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
@@ -80,12 +79,6 @@ export default function GoalSelectionPage() {
               )}
             </Card>
           ))}
-        </div>
-        
-        <div className="mt-8 text-center">
-          <Link href="/login" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Already have an account? <span className="font-semibold">Log in</span>
-          </Link>
         </div>
       </StepContainer>
     </PageTransition>

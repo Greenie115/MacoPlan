@@ -7,18 +7,16 @@ import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { AuthModal } from '@/components/auth/auth-modal'
 import { MacroCustomizer } from '@/components/onboarding/macro-customizer'
-import { createClient } from '@/lib/supabase/client'
 import { createUserProfile } from '@/app/actions/profile'
 import { toast } from 'sonner'
 
 export default function MacroResultsPage() {
   const router = useRouter()
   const store = useOnboardingStore()
-  const [showAuthModal, setShowAuthModal] = useState(false)
   const [isValidating, setIsValidating] = useState(true)
   const [isCustomizing, setIsCustomizing] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     // Route guard: Must have all required data
@@ -44,27 +42,24 @@ export default function MacroResultsPage() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleComplete = async () => {
-    store.markStepComplete(6)
-    
-    // Check if user is already logged in (from signup flow)
-    const supabase = createClient()
-    const { data: { session } } = await supabase.auth.getSession()
+    if (isSaving) return
 
-    if (session?.user) {
-      // User is logged in, save data directly
-      await saveProfileData(session.user.id)
+    setIsSaving(true)
+    store.markStepComplete(6)
+
+    try {
+      await saveProfileData()
       router.push('/dashboard')
-    } else {
-      // User is not logged in, show auth modal
-      setShowAuthModal(true)
+    } catch (error) {
+      setIsSaving(false)
     }
   }
 
-  const saveProfileData = async (userId: string) => {
+  const saveProfileData = async () => {
     // Only save if we have data (at least a goal)
     if (!store.goal) {
       toast.error('Missing required data')
-      return
+      throw new Error('Missing required data')
     }
 
     // Convert weight to kg
@@ -334,8 +329,6 @@ export default function MacroResultsPage() {
           />
         )}
       </div>
-
-      <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
     </StepContainer>
     </PageTransition>
   )
