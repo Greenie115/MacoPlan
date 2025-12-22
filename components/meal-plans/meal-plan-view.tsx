@@ -16,6 +16,7 @@ import { toggleMealPlanFavorite, deleteMealPlan, archiveMealPlan, updateMealServ
 import { cn } from '@/lib/utils'
 import { SwapMealModal } from './swap-meal-modal'
 import { MealPlaceholder } from './meal-placeholder'
+import { LogRecipeModal } from '@/components/recipes/log-recipe-modal'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,6 +52,10 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
   // State for swap meal modal
   const [swapModalOpen, setSwapModalOpen] = useState(false)
   const [mealToSwap, setMealToSwap] = useState<MealPlanMeal | null>(null)
+
+  // State for log meal modal
+  const [logModalOpen, setLogModalOpen] = useState(false)
+  const [mealToLog, setMealToLog] = useState<MealPlanMeal | null>(null)
 
   // State for delete confirmation
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
@@ -119,6 +124,12 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
   function handleSwapMeal(meal: MealPlanMeal) {
     setMealToSwap(meal)
     setSwapModalOpen(true)
+  }
+
+  // Handle log meal click
+  function handleLogMeal(meal: MealPlanMeal) {
+    setMealToLog(meal)
+    setLogModalOpen(true)
   }
 
   // Handle swap complete - refresh router to get new data
@@ -587,6 +598,15 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
+                            handleLogMeal(meal)
+                          }}
+                          className="flex h-10 flex-1 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+                        >
+                          Log
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
                             handleSwapMeal(meal)
                           }}
                           className="flex h-10 flex-1 items-center justify-center gap-1 rounded-xl border-2 border-primary bg-card text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
@@ -624,6 +644,31 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
           meal={mealToSwap}
           targetCalories={plan.target_calories}
           onSwapComplete={handleSwapComplete}
+        />
+      )}
+
+      {/* Log Meal Modal */}
+      {logModalOpen && mealToLog && (
+        <LogRecipeModal
+          open={logModalOpen}
+          onClose={() => {
+            setLogModalOpen(false)
+            setMealToLog(null)
+          }}
+          recipe={{
+            id: '', // Meal plan meals use FatSecret IDs which aren't UUIDs, so we don't link to recipe
+            name: mealToLog.recipe_title,
+            calories: Math.round((mealToLog.calories || 0) * getMultiplier(mealToLog.id)),
+            protein_grams: Math.round((mealToLog.protein_grams || 0) * getMultiplier(mealToLog.id)),
+            carb_grams: Math.round((mealToLog.carb_grams || 0) * getMultiplier(mealToLog.id)),
+            fat_grams: Math.round((mealToLog.fat_grams || 0) * getMultiplier(mealToLog.id)),
+          }}
+          defaultMealType={mealToLog.meal_type as 'breakfast' | 'lunch' | 'dinner' | 'snack'}
+          onSuccess={() => {
+            toast.success('Meal logged!')
+            setLogModalOpen(false)
+            setMealToLog(null)
+          }}
         />
       )}
 

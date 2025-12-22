@@ -87,7 +87,6 @@ export interface MealPlan {
 
   // Enhanced fields for meal plan generation
   plan_source: 'manual' | 'generated'
-  fatsecret_plan_id: string | null
   is_favorite: boolean
   generation_params: MealPlanGenerationParams | null
   archived_at: string | null

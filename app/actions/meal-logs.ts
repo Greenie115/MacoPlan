@@ -64,7 +64,7 @@ export async function logMeal(input: LogMealInput, recipeId?: string) {
       fat_grams: Number(input.fatGrams.toFixed(1)),
       serving_size: input.servingSize?.trim() || null,
       description: input.description?.trim() || null,
-      recipe_id: recipeId || null,
+      recipe_id: recipeId && recipeId.length > 0 ? recipeId : null,
       plan_meal_id: null,
     })
     .select()

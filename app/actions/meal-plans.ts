@@ -320,7 +320,6 @@ export async function generateMealPlan(
       archived: false,
       completed_at: null,
       plan_source: 'generated',
-      fatsecret_plan_id: null,
       is_favorite: false,
       generation_params: {
         timeFrame: validatedRequest.timeFrame,

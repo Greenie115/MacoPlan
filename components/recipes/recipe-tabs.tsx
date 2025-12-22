@@ -2,16 +2,19 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { TrendingUp, Search, Heart } from 'lucide-react'
 
 export function RecipeTabs() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const activeTab = searchParams.get('tab') || 'all'
+  // Default to 'popular' instead of 'all'
+  const activeTab = searchParams.get('tab') || 'popular'
 
   const setTab = (tab: string) => {
     const params = new URLSearchParams(searchParams.toString())
 
-    if (tab === 'all') {
+    if (tab === 'popular') {
+      // 'popular' is the default, so remove tab param
       params.delete('tab')
     } else {
       params.set('tab', tab)
@@ -28,16 +31,24 @@ export function RecipeTabs() {
       <Tabs value={activeTab} onValueChange={setTab} className="w-full">
         <TabsList className="w-full h-12 p-1 bg-muted rounded-xl">
           <TabsTrigger
-            value="all"
-            className="flex-1 h-10 rounded-lg font-semibold text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none"
+            value="popular"
+            className="flex-1 h-10 rounded-lg font-semibold text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none gap-1.5"
           >
+            <TrendingUp className="w-4 h-4" />
+            Popular
+          </TabsTrigger>
+          <TabsTrigger
+            value="all"
+            className="flex-1 h-10 rounded-lg font-semibold text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none gap-1.5"
+          >
+            <Search className="w-4 h-4" />
             All Recipes
           </TabsTrigger>
           <TabsTrigger
             value="favorites"
-            className="flex-1 h-10 rounded-lg font-semibold text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none gap-2"
+            className="flex-1 h-10 rounded-lg font-semibold text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none gap-1.5"
           >
-            <span>❤️</span>
+            <Heart className="w-4 h-4" />
             Favorites
           </TabsTrigger>
         </TabsList>

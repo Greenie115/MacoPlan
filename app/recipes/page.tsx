@@ -4,7 +4,8 @@ import { RecipeFiltersAdvanced } from '@/components/recipes/recipe-filters-advan
 import { RecipeTabs } from '@/components/recipes/recipe-tabs'
 import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
 import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
-import { getFavoriteRecipeIds, getFavoriteRecipes } from './actions'
+import { getFavoriteRecipeIds, getFavoriteRecipes, getMostFavoritedRecipes, getCachedRecipes } from './actions'
+import { redirect } from 'next/navigation'
 import { searchRecipes } from '@/app/actions/fatsecret-recipes'
 import { getSubscriptionStatus } from '@/app/actions/subscription'
 import {
@@ -42,7 +43,46 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   const params = await searchParams
   const searchQuery = params.search?.trim() || ''
   const currentPage = Math.max(1, parseInt(params.page || '1', 10))
-  const activeTab = params.tab || 'all'
+  const activeTab = params.tab || 'popular'
+
+  // Check if any filters are applied (for auto-switching from popular tab)
+  const hasFilters =
+    searchQuery ||
+    params.recipeTypes ||
+    params.caloriesFrom ||
+    params.caloriesTo ||
+    params.proteinFrom ||
+    params.proteinTo ||
+    params.carbsFrom ||
+    params.carbsTo ||
+    params.fatFrom ||
+    params.fatTo ||
+    params.prepTimeFrom ||
+    params.prepTimeTo ||
+    params.mustHaveImages ||
+    params.sortBy
+
+  // Auto-switch to "all" tab when filters are applied on popular tab
+  if (activeTab === 'popular' && hasFilters) {
+    const redirectParams = new URLSearchParams()
+    redirectParams.set('tab', 'all')
+    if (searchQuery) redirectParams.set('search', searchQuery)
+    if (params.recipeTypes) redirectParams.set('recipeTypes', params.recipeTypes)
+    if (params.caloriesFrom) redirectParams.set('caloriesFrom', params.caloriesFrom)
+    if (params.caloriesTo) redirectParams.set('caloriesTo', params.caloriesTo)
+    if (params.proteinFrom) redirectParams.set('proteinFrom', params.proteinFrom)
+    if (params.proteinTo) redirectParams.set('proteinTo', params.proteinTo)
+    if (params.carbsFrom) redirectParams.set('carbsFrom', params.carbsFrom)
+    if (params.carbsTo) redirectParams.set('carbsTo', params.carbsTo)
+    if (params.fatFrom) redirectParams.set('fatFrom', params.fatFrom)
+    if (params.fatTo) redirectParams.set('fatTo', params.fatTo)
+    if (params.prepTimeFrom) redirectParams.set('prepTimeFrom', params.prepTimeFrom)
+    if (params.prepTimeTo) redirectParams.set('prepTimeTo', params.prepTimeTo)
+    if (params.mustHaveImages) redirectParams.set('mustHaveImages', params.mustHaveImages)
+    if (params.sortBy) redirectParams.set('sortBy', params.sortBy)
+    if (params.page) redirectParams.set('page', params.page)
+    redirect(`/recipes?${redirectParams.toString()}`)
+  }
 
   // Validate all filter parameters
   const filterParams: FatSecretFilterParams = {
@@ -93,7 +133,66 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
 
   const isPremium = subscriptionStatus?.isPremium ?? false
 
-  if (activeTab === 'favorites') {
+  if (activeTab === 'popular') {
+    // Fetch most favorited recipes across all users
+    const popularResult = await getMostFavoritedRecipes(currentPage, RECIPES_PER_PAGE)
+
+    // Start with popular recipes
+    let popularRecipes = popularResult.data.map((recipe) => ({
+      id: recipe.id,
+      title: recipe.title,
+      name: recipe.title,
+      imageUrl: recipe.imageUrl ?? undefined,
+      image_url: recipe.imageUrl ?? undefined,
+      calories: recipe.calories ?? 0,
+      protein: recipe.protein ?? 0,
+      protein_grams: recipe.protein ?? 0,
+      carbs: recipe.carbs ?? 0,
+      carb_grams: recipe.carbs ?? 0,
+      fat: recipe.fat ?? 0,
+      fat_grams: recipe.fat ?? 0,
+      source: 'fatsecret' as const,
+    }))
+
+    // If fewer than 20 popular recipes, supplement with FatSecret API
+    if (popularRecipes.length < RECIPES_PER_PAGE) {
+      const needed = RECIPES_PER_PAGE - popularRecipes.length
+      const supplementResult = await searchRecipes({
+        search_expression: 'healthy',
+        max_results: needed + 10, // Fetch extra in case of duplicates
+        page_number: 0,
+      })
+
+      if (supplementResult.success && supplementResult.data) {
+        // Deduplicate by recipe ID
+        const existingIds = new Set(popularRecipes.map((r) => r.id))
+        const supplementRecipes = supplementResult.data.recipes
+          .filter((r) => !existingIds.has(r.id))
+          .slice(0, needed)
+          .map((recipe) => ({
+            id: recipe.id,
+            title: recipe.title,
+            name: recipe.title,
+            imageUrl: recipe.imageUrl ?? undefined,
+            image_url: recipe.imageUrl ?? undefined,
+            calories: recipe.calories,
+            protein: recipe.protein,
+            protein_grams: recipe.protein,
+            carbs: recipe.carbs,
+            carb_grams: recipe.carbs,
+            fat: recipe.fat,
+            fat_grams: recipe.fat,
+            source: 'fatsecret' as const,
+          }))
+
+        popularRecipes = [...popularRecipes, ...supplementRecipes]
+      }
+    }
+
+    recipes = popularRecipes.slice(0, RECIPES_PER_PAGE)
+    // For popular tab, show total of popular recipes or 100 if blended with API
+    totalResults = popularResult.totalCount > 0 ? popularResult.totalCount : 100
+  } else if (activeTab === 'favorites') {
     // Fetch only favorite recipes
     const favoritesResult = await getFavoriteRecipes()
 
@@ -124,57 +223,81 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       totalResults = allFavorites.length
     }
   } else {
-    // Fetch all recipes from FatSecret
-    // Use broad default to give users access to full recipe library
-    const defaultSearchTerm = searchQuery || 'recipe'
+    // "All Recipes" tab - use cached recipes when no search, FatSecret API when searching
+    if (!searchQuery) {
+      // No search query - fetch from local cached recipes
+      const cachedResult = await getCachedRecipes(currentPage, RECIPES_PER_PAGE)
 
-    // When image filter is active, fetch more to compensate for client-side filtering
-    // FatSecret API max is 50 results per request
-    const needsImageFilter = validatedFilters.must_have_images === true
-    const maxResultsToFetch = needsImageFilter ? 50 : RECIPES_PER_PAGE
-
-    const fatSecretResult = await searchRecipes({
-      ...searchParams_api,
-      search_expression: defaultSearchTerm,
-      max_results: maxResultsToFetch,
-      page_number: currentPage - 1,
-    })
-
-    if (fatSecretResult.success && fatSecretResult.data) {
-      let mappedRecipes = fatSecretResult.data.recipes.map((recipe) => ({
-        id: recipe.id,
-        title: recipe.title,
-        name: recipe.title,
-        imageUrl: recipe.imageUrl ?? undefined,
-        image_url: recipe.imageUrl ?? undefined,
-        calories: recipe.calories,
-        protein: recipe.protein,
-        protein_grams: recipe.protein,
-        carbs: recipe.carbs,
-        carb_grams: recipe.carbs,
-        fat: recipe.fat,
-        fat_grams: recipe.fat,
-        source: 'fatsecret' as const,
-      }))
-
-      // Apply client-side image filter as fallback (API/cache may not filter reliably)
-      if (needsImageFilter) {
-        mappedRecipes = mappedRecipes.filter((recipe) => recipe.imageUrl)
-      }
-
-      // Ensure consistent page size after filtering
-      recipes = mappedRecipes.slice(0, RECIPES_PER_PAGE)
-
-      // Adjust total results estimate for image filter
-      // (rough estimate: assume same ratio of images across all results)
-      if (needsImageFilter && fatSecretResult.data.recipes.length > 0) {
-        const imageRatio = mappedRecipes.length / fatSecretResult.data.recipes.length
-        totalResults = Math.floor(fatSecretResult.data.totalResults * imageRatio)
+      if (cachedResult.error) {
+        fatSecretError = cachedResult.error
       } else {
-        totalResults = fatSecretResult.data.totalResults
+        recipes = cachedResult.data.map((recipe) => ({
+          id: recipe.id,
+          title: recipe.title,
+          name: recipe.title,
+          imageUrl: recipe.imageUrl ?? undefined,
+          image_url: recipe.imageUrl ?? undefined,
+          calories: recipe.calories,
+          protein: recipe.protein,
+          protein_grams: recipe.protein,
+          carbs: recipe.carbs,
+          carb_grams: recipe.carbs,
+          fat: recipe.fat,
+          fat_grams: recipe.fat,
+          source: 'fatsecret' as const,
+        }))
+        totalResults = cachedResult.totalCount
       }
     } else {
-      fatSecretError = fatSecretResult.error || 'Failed to fetch recipes'
+      // Has search query - use FatSecret API
+      // When image filter is active, fetch more to compensate for client-side filtering
+      // FatSecret API max is 50 results per request
+      const needsImageFilter = validatedFilters.must_have_images === true
+      const maxResultsToFetch = needsImageFilter ? 50 : RECIPES_PER_PAGE
+
+      const fatSecretResult = await searchRecipes({
+        ...searchParams_api,
+        search_expression: searchQuery,
+        max_results: maxResultsToFetch,
+        page_number: currentPage - 1,
+      })
+
+      if (fatSecretResult.success && fatSecretResult.data) {
+        let mappedRecipes = fatSecretResult.data.recipes.map((recipe) => ({
+          id: recipe.id,
+          title: recipe.title,
+          name: recipe.title,
+          imageUrl: recipe.imageUrl ?? undefined,
+          image_url: recipe.imageUrl ?? undefined,
+          calories: recipe.calories,
+          protein: recipe.protein,
+          protein_grams: recipe.protein,
+          carbs: recipe.carbs,
+          carb_grams: recipe.carbs,
+          fat: recipe.fat,
+          fat_grams: recipe.fat,
+          source: 'fatsecret' as const,
+        }))
+
+        // Apply client-side image filter as fallback (API/cache may not filter reliably)
+        if (needsImageFilter) {
+          mappedRecipes = mappedRecipes.filter((recipe) => recipe.imageUrl)
+        }
+
+        // Ensure consistent page size after filtering
+        recipes = mappedRecipes.slice(0, RECIPES_PER_PAGE)
+
+        // Adjust total results estimate for image filter
+        // (rough estimate: assume same ratio of images across all results)
+        if (needsImageFilter && fatSecretResult.data.recipes.length > 0) {
+          const imageRatio = mappedRecipes.length / fatSecretResult.data.recipes.length
+          totalResults = Math.floor(fatSecretResult.data.totalResults * imageRatio)
+        } else {
+          totalResults = fatSecretResult.data.totalResults
+        }
+      } else {
+        fatSecretError = fatSecretResult.error || 'Failed to fetch recipes'
+      }
     }
   }
 

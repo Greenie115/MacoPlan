@@ -211,3 +211,146 @@ export async function getFavoriteRecipes() {
     error: null,
   }
 }
+
+/**
+ * Get cached recipes from local database for browsing
+ * Used when no search query is provided to show all available recipes
+ */
+export async function getCachedRecipes(
+  page: number = 1,
+  limit: number = 20
+): Promise<{
+  data: Array<{
+    id: string
+    title: string
+    description: string | null
+    imageUrl: string | null
+    calories: number
+    protein: number
+    carbs: number
+    fat: number
+  }>
+  totalCount: number
+  error: string | null
+}> {
+  try {
+    const supabase = await createClient()
+    const offset = (page - 1) * limit
+
+    // Get total count
+    const { count } = await supabase
+      .from('fatsecret_recipes')
+      .select('*', { count: 'exact', head: true })
+
+    // Fetch paginated recipes from local cache
+    const { data, error } = await supabase
+      .from('fatsecret_recipes')
+      .select('fatsecret_id, recipe_name, recipe_description, image_url, calories, protein_grams, carb_grams, fat_grams')
+      .not('image_url', 'is', null) // Only recipes with images
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1)
+
+    if (error) {
+      console.error('Error fetching cached recipes:', error)
+      return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
+    }
+
+    const recipes = (data || []).map((recipe) => ({
+      id: recipe.fatsecret_id,
+      title: recipe.recipe_name,
+      description: recipe.recipe_description,
+      imageUrl: recipe.image_url,
+      calories: recipe.calories || 0,
+      protein: recipe.protein_grams || 0,
+      carbs: recipe.carb_grams || 0,
+      fat: recipe.fat_grams || 0,
+    }))
+
+    return {
+      data: recipes,
+      totalCount: count || 0,
+      error: null,
+    }
+  } catch (error) {
+    console.error('Unexpected error fetching cached recipes:', error)
+    return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
+  }
+}
+
+/**
+ * Get the most favorited recipes across all users
+ * Uses Supabase RPC to bypass RLS and aggregate data
+ */
+export async function getMostFavoritedRecipes(
+  page: number = 1,
+  limit: number = 20
+): Promise<{
+  data: Array<{
+    id: string
+    title: string
+    description: string | null
+    imageUrl: string | null
+    calories: number | null
+    protein: number | null
+    carbs: number | null
+    fat: number | null
+    favoriteCount: number
+  }>
+  totalCount: number
+  error: string | null
+}> {
+  try {
+    const supabase = await createClient()
+    const offset = (page - 1) * limit
+
+    // Fetch most favorited recipes using RPC
+    const [recipesResult, countResult] = await Promise.all([
+      supabase.rpc('get_most_favorited_recipes', {
+        p_limit: limit,
+        p_offset: offset,
+      }),
+      supabase.rpc('get_most_favorited_count'),
+    ])
+
+    if (recipesResult.error) {
+      console.error('Error fetching most favorited recipes:', recipesResult.error)
+      return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
+    }
+
+    if (countResult.error) {
+      console.error('Error fetching count:', countResult.error)
+      // Continue with recipes even if count fails
+    }
+
+    const recipes = (recipesResult.data || []).map((recipe: {
+      fatsecret_recipe_id: string
+      recipe_title: string
+      recipe_description: string | null
+      recipe_image_url: string | null
+      calories: number | null
+      protein_grams: number | null
+      carb_grams: number | null
+      fat_grams: number | null
+      favorite_count: number
+    }) => ({
+      id: recipe.fatsecret_recipe_id,
+      title: recipe.recipe_title,
+      description: recipe.recipe_description,
+      imageUrl: recipe.recipe_image_url,
+      calories: recipe.calories ? Number(recipe.calories) : null,
+      protein: recipe.protein_grams ? Number(recipe.protein_grams) : null,
+      carbs: recipe.carb_grams ? Number(recipe.carb_grams) : null,
+      fat: recipe.fat_grams ? Number(recipe.fat_grams) : null,
+      favoriteCount: Number(recipe.favorite_count),
+    }))
+
+    return {
+      data: recipes,
+      totalCount: countResult.data || 0,
+      error: null,
+    }
+  } catch (error) {
+    console.error('Unexpected error fetching most favorited:', error)
+    return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
+  }
+}

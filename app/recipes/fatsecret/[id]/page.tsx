@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { ArrowLeft, Clock, Users, ExternalLink } from 'lucide-react'
 import { getRecipeDetails } from '@/app/actions/fatsecret-recipes'
 import { getMealPlanMealInfo } from '@/app/actions/meal-plans'
+import { getLoggedMealForRecipe } from '@/app/actions/meal-logs'
 import { isFatSecretFavorite } from '@/app/recipes/actions'
 import { BottomNav } from '@/components/layout/bottom-nav'
 import { RecipeNutritionCard } from '@/components/recipes/recipe-nutrition-card'
 import { FavoriteButton } from '@/components/recipes/favorite-button'
+import { LogRecipeButton } from '@/components/recipes/log-recipe-button'
 
 interface FatSecretRecipePageProps {
   params: Promise<{ id: string }>
@@ -27,8 +29,12 @@ export default async function FatSecretRecipePage({ params, searchParams }: FatS
 
   const recipe = result.data
 
-  // Check if recipe is favorited
-  const isFavorited = await isFatSecretFavorite(id)
+  // Check if recipe is favorited and if already logged today
+  const [isFavorited, loggedMealResult] = await Promise.all([
+    isFatSecretFavorite(id),
+    getLoggedMealForRecipe(id),
+  ])
+  const loggedMealId = loggedMealResult.mealId
 
   // If linked from a meal plan, fetch the meal info for current multiplier
   let mealPlanMealInfo: {
@@ -81,10 +87,27 @@ export default async function FatSecretRecipePage({ params, searchParams }: FatS
           </div>
         )}
 
-        {/* Recipe Title */}
-        <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-          {recipe.title}
-        </h1>
+        {/* Recipe Title with Log Button */}
+        <div className="flex flex-wrap items-start gap-3 mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground flex-1">
+            {recipe.title}
+          </h1>
+          <LogRecipeButton
+            recipe={{
+              id: '', // FatSecret IDs are not UUIDs, so we don't link to recipe
+              name: recipe.title,
+              calories: recipe.calories,
+              protein_grams: recipe.protein,
+              carb_grams: recipe.carbs,
+              fat_grams: recipe.fat,
+              servings: recipe.servings,
+            }}
+            loggedMealId={loggedMealId}
+            variant="outline"
+            size="sm"
+            className="rounded-full px-4 shrink-0"
+          />
+        </div>
 
         {/* Quick Stats */}
         <div className="flex flex-wrap gap-4 mb-6">

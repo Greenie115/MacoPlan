@@ -39,6 +39,7 @@ interface LogRecipeModalProps {
   onClose: () => void
   recipe: Recipe
   onSuccess?: () => void
+  defaultMealType?: 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'other'
 }
 
 export function LogRecipeModal({
@@ -46,10 +47,11 @@ export function LogRecipeModal({
   onClose,
   recipe,
   onSuccess,
+  defaultMealType,
 }: LogRecipeModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [servingMultiplier, setServingMultiplier] = useState('1')
-  const [mealType, setMealType] = useState<string>('')
+  const [mealType, setMealType] = useState<string>(defaultMealType || '')
   const [description, setDescription] = useState('')
 
   // Calculate adjusted macros based on serving multiplier
@@ -96,7 +98,7 @@ export function LogRecipeModal({
         onClose()
         // Reset form
         setServingMultiplier('1')
-        setMealType('')
+        setMealType(defaultMealType || '')
         setDescription('')
         onSuccess?.()
       }
