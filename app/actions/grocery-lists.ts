@@ -2,6 +2,42 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { z } from 'zod'
+
+// ============================================================================
+// Input Validation Schemas
+// ============================================================================
+
+const GenerateGroceryListSchema = z.object({
+  planId: z.string().uuid('Invalid plan ID'),
+})
+
+const ToggleGroceryItemSchema = z.object({
+  itemId: z.string().uuid('Invalid item ID'),
+})
+
+const AddCustomItemSchema = z.object({
+  listId: z.string().uuid('Invalid list ID'),
+  ingredient: z
+    .string()
+    .min(1, 'Ingredient is required')
+    .max(200, 'Ingredient name is too long')
+    .regex(/^[a-zA-Z0-9\s,.'()-]+$/, 'Ingredient contains invalid characters'),
+  amount: z.string().max(50, 'Amount is too long').optional(),
+  unit: z.string().max(30, 'Unit is too long').optional(),
+  category: z
+    .enum(['produce', 'protein', 'dairy', 'grains', 'pantry', 'other'])
+    .default('other'),
+})
+
+const DeleteGroceryItemSchema = z.object({
+  itemId: z.string().uuid('Invalid item ID'),
+  listId: z.string().uuid('Invalid list ID'),
+})
+
+const GetGroceryListSchema = z.object({
+  listId: z.string().uuid('Invalid list ID'),
+})
 
 interface GroceryItem {
   category: string
@@ -15,6 +51,12 @@ interface GroceryItem {
  * Generate grocery list from a meal plan
  */
 export async function generateGroceryList(planId: string) {
+  // Validate input
+  const validation = GenerateGroceryListSchema.safeParse({ planId })
+  if (!validation.success) {
+    return { error: validation.error.issues[0].message }
+  }
+
   const supabase = await createClient()
   const {
     data: { user },
@@ -279,6 +321,12 @@ function parseFraction(str: string): number | null {
  * Toggle grocery item checked status
  */
 export async function toggleGroceryItem(itemId: string) {
+  // Validate input
+  const validation = ToggleGroceryItemSchema.safeParse({ itemId })
+  if (!validation.success) {
+    return { error: validation.error.issues[0].message }
+  }
+
   const supabase = await createClient()
   const {
     data: { user },
@@ -326,6 +374,20 @@ export async function addCustomGroceryItem(
   unit?: string,
   category: string = 'other'
 ) {
+  // Validate input with Zod
+  const validation = AddCustomItemSchema.safeParse({
+    listId,
+    ingredient,
+    amount,
+    unit,
+    category,
+  })
+  if (!validation.success) {
+    return { error: validation.error.issues[0].message }
+  }
+
+  const validated = validation.data
+
   const supabase = await createClient()
   const {
     data: { user },
@@ -336,19 +398,11 @@ export async function addCustomGroceryItem(
     return { error: 'Authentication required' }
   }
 
-  if (!ingredient || ingredient.trim().length === 0) {
-    return { error: 'Ingredient is required' }
-  }
-
-  if (ingredient.trim().length > 200) {
-    return { error: 'Ingredient name is too long' }
-  }
-
   // Get the highest order_index for this list
   const { data: maxOrderData } = await supabase
     .from('grocery_list_items')
     .select('order_index')
-    .eq('list_id', listId)
+    .eq('list_id', validated.listId)
     .order('order_index', { ascending: false })
     .limit(1)
     .maybeSingle()
@@ -356,11 +410,11 @@ export async function addCustomGroceryItem(
   const nextOrderIndex = (maxOrderData?.order_index ?? -1) + 1
 
   const { error } = await supabase.from('grocery_list_items').insert({
-    list_id: listId,
-    category,
-    ingredient: ingredient.trim(),
-    amount: amount?.trim() || '',
-    unit: unit?.trim() || '',
+    list_id: validated.listId,
+    category: validated.category,
+    ingredient: validated.ingredient.trim(),
+    amount: validated.amount?.trim() || '',
+    unit: validated.unit?.trim() || '',
     is_custom: true,
     checked: false,
     order_index: nextOrderIndex,
@@ -371,7 +425,7 @@ export async function addCustomGroceryItem(
     return { error: 'Failed to add item' }
   }
 
-  revalidatePath(`/grocery-lists/${listId}`)
+  revalidatePath(`/grocery-lists/${validated.listId}`)
   return { success: true }
 }
 
@@ -379,6 +433,12 @@ export async function addCustomGroceryItem(
  * Delete grocery list item (only custom items)
  */
 export async function deleteGroceryItem(itemId: string, listId: string) {
+  // Validate input
+  const validation = DeleteGroceryItemSchema.safeParse({ itemId, listId })
+  if (!validation.success) {
+    return { error: validation.error.issues[0].message }
+  }
+
   const supabase = await createClient()
   const {
     data: { user },
@@ -420,6 +480,12 @@ export async function deleteGroceryItem(itemId: string, listId: string) {
  * Get grocery list by ID
  */
 export async function getGroceryList(listId: string) {
+  // Validate input
+  const validation = GetGroceryListSchema.safeParse({ listId })
+  if (!validation.success) {
+    return { error: validation.error.issues[0].message, data: null }
+  }
+
   const supabase = await createClient()
   const {
     data: { user },

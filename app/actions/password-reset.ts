@@ -38,8 +38,8 @@ export async function updatePassword(newPassword: string): Promise<{
   success?: boolean
   error?: string
 }> {
-  if (!newPassword || newPassword.length < 8) {
-    return { error: 'Password must be at least 8 characters long' }
+  if (!newPassword || newPassword.length < 12) {
+    return { error: 'Password must be at least 12 characters long' }
   }
 
   const supabase = await createClient()

@@ -10,6 +10,7 @@ import {
   verifyBackupCode,
 } from '@/lib/security/totp'
 import { generateEmailCode, hashCode, sendEmail2FACode } from '@/lib/security/email-2fa'
+import { check2FACodeRateLimit, getMinutesUntilReset } from '@/lib/security/two-factor-rate-limit'
 
 // ============================================================================
 // TOTP (Authenticator App) Setup
@@ -180,6 +181,19 @@ export async function send2FAVerificationCode(
   success?: boolean
   error?: string
 }> {
+  // Rate limit check for email 2FA to prevent spam
+  if (method === 'email') {
+    const rateCheck = await check2FACodeRateLimit(userId)
+    if (!rateCheck.allowed) {
+      const minutesRemaining = rateCheck.resetAt
+        ? getMinutesUntilReset(rateCheck.resetAt)
+        : 15
+      return {
+        error: `Too many code requests. Please wait ${minutesRemaining} minute${minutesRemaining !== 1 ? 's' : ''} before requesting a new code.`,
+      }
+    }
+  }
+
   const supabase = await createClient()
 
   if (method === 'email') {

@@ -37,7 +37,7 @@ export async function createUserProfile(data: Partial<UserProfileInsert>) {
 
     if (error) {
       console.error('Error creating profile:', error)
-      return { error: error.message }
+      return { error: 'Failed to create profile. Please try again.' }
     }
 
     revalidatePath('/dashboard')
@@ -107,7 +107,7 @@ export async function updateUserProfile(updates: UserProfileUpdate) {
 
     if (error) {
       console.error('Error updating profile:', error)
-      return { error: error.message }
+      return { error: 'Failed to update profile. Please try again.' }
     }
 
     revalidatePath('/dashboard')
@@ -141,7 +141,7 @@ export async function deleteUserProfile() {
 
     if (error) {
       console.error('Error deleting profile:', error)
-      return { error: error.message }
+      return { error: 'Failed to delete profile. Please try again.' }
     }
 
     revalidatePath('/dashboard')
@@ -353,7 +353,7 @@ export async function updateEmail(newEmail: string) {
 
     if (error) {
       console.error('Error updating email:', error)
-      return { error: error.message }
+      return { error: 'Failed to update email. Please try again.' }
     }
 
     revalidatePath('/dashboard')
