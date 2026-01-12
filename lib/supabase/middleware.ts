@@ -34,5 +34,17 @@ export async function updateSession(request: NextRequest) {
   // refreshing the auth token
   const { data: { user } } = await supabase.auth.getUser()
 
-  return { response, user }
+  // Check if user has completed onboarding
+  let onboardingCompleted = false
+  if (user) {
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('onboarding_completed')
+      .eq('user_id', user.id)
+      .single()
+
+    onboardingCompleted = profile?.onboarding_completed ?? false
+  }
+
+  return { response, user, onboardingCompleted }
 }

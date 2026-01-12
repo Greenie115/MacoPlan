@@ -4,24 +4,26 @@
  * Paywall Modal Component
  *
  * Displays when free users hit their limits (meal plans, swaps, etc.)
- * Matches the Stitch paywall_modal design with context-aware messaging
+ * Integrates with Stripe for subscription checkout
  */
 
-import { useEffect } from 'react'
-import { X, Lock, CheckCircle, ArrowRight, ShieldCheck } from 'lucide-react'
+import { useEffect, useState, useTransition } from 'react'
+import { X, Lock, CheckCircle, ArrowRight, ShieldCheck, Loader2 } from 'lucide-react'
+import { createCheckoutSession } from '@/app/actions/stripe'
 
 export type PaywallTrigger =
   | 'meal_plan_limit'
   | 'swap_limit'
   | 'premium_feature'
   | 'export_pdf'
+  | 'favorites_limit'
 
 interface PaywallModalProps {
   isOpen: boolean
   onClose: () => void
   /** Context for why the paywall is shown */
   trigger?: PaywallTrigger
-  /** Called when user clicks subscribe (will integrate with Stripe) */
+  /** Called when user clicks subscribe (optional override) */
   onSubscribe?: (plan: 'monthly' | 'annual') => void
 }
 
@@ -42,10 +44,17 @@ const triggerMessages: Record<PaywallTrigger, { headline: string; subtitle: stri
     headline: 'Export to PDF',
     subtitle: 'PDF export is a Premium feature. Upgrade to download your meal plans and shopping lists.',
   },
+  favorites_limit: {
+    headline: 'Favorites limit reached',
+    subtitle: "You've saved 10 favorites. Upgrade to Premium for unlimited favorites.",
+  },
 }
 
 export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onSubscribe }: PaywallModalProps) {
   const { headline, subtitle } = triggerMessages[trigger]
+  const [isPending, startTransition] = useTransition()
+  const [loadingPlan, setLoadingPlan] = useState<'monthly' | 'annual' | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   // Close on escape key and prevent body scroll
   useEffect(() => {
@@ -62,13 +71,36 @@ export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onS
     }
   }, [isOpen, onClose])
 
-  const handleSubscribe = (plan: 'monthly' | 'annual') => {
+  // Reset error when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setError(null)
+      setLoadingPlan(null)
+    }
+  }, [isOpen])
+
+  const handleSubscribe = async (plan: 'monthly' | 'annual') => {
+    // Allow custom handler override
     if (onSubscribe) {
       onSubscribe(plan)
-    } else {
-      // Placeholder - will integrate with Stripe
-      console.log(`Subscribe to ${plan} plan`)
+      return
     }
+
+    // Use Stripe checkout
+    setError(null)
+    setLoadingPlan(plan)
+
+    startTransition(async () => {
+      const result = await createCheckoutSession(plan)
+
+      if (result.success && result.url) {
+        // Redirect to Stripe checkout
+        window.location.href = result.url
+      } else {
+        setError(result.error || 'Failed to start checkout')
+        setLoadingPlan(null)
+      }
+    })
   }
 
   if (!isOpen) return null
@@ -97,7 +129,14 @@ export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onS
           </div>
 
           <h2 id="paywall-title" className="text-2xl font-bold text-gray-900 mb-2">{headline}</h2>
-          <p className="text-gray-600 mb-8">{subtitle}</p>
+          <p className="text-gray-600 mb-4">{subtitle}</p>
+
+          {/* Error Message */}
+          {error && (
+            <div className="w-full bg-red-50 text-red-700 text-sm p-3 rounded-lg mb-4">
+              {error}
+            </div>
+          )}
 
           <div className="w-full h-px bg-gray-100 mb-6" />
 
@@ -138,10 +177,20 @@ export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onS
               <p className="text-sm text-gray-600 mb-4">Save 33% ($6.67/month)</p>
               <button
                 onClick={() => handleSubscribe('annual')}
-                className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors"
+                disabled={isPending}
+                className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Subscribe Annual
-                <ArrowRight className="size-5" />
+                {loadingPlan === 'annual' ? (
+                  <>
+                    <Loader2 className="size-5 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    Subscribe Annual
+                    <ArrowRight className="size-5" />
+                  </>
+                )}
               </button>
             </div>
 
@@ -154,9 +203,17 @@ export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onS
               <p className="text-sm text-gray-600 mb-4">Billed monthly</p>
               <button
                 onClick={() => handleSubscribe('monthly')}
-                className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-gray-100 text-gray-900 font-bold hover:bg-gray-200 transition-colors"
+                disabled={isPending}
+                className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-gray-100 text-gray-900 font-bold hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Subscribe Monthly
+                {loadingPlan === 'monthly' ? (
+                  <>
+                    <Loader2 className="size-5 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  'Subscribe Monthly'
+                )}
               </button>
             </div>
           </div>

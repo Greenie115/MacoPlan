@@ -12,15 +12,18 @@ import {
   Shield,
   ArrowRight,
   User,
-  FlaskConical
+  FlaskConical,
+  Settings,
+  Loader2
 } from 'lucide-react'
 import Link from 'next/link'
 
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import { UserProfile } from '@/lib/types/database'
 import { getSubscriptionStatus } from '@/app/actions/subscription'
+import { createPortalSession } from '@/app/actions/stripe'
 import { updateSimulatedTier } from '@/app/actions/profile'
 import type { SubscriptionStatus } from '@/lib/constants/subscription'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -39,6 +42,8 @@ export default function ProfilePage() {
   const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null)
   const [simulatedTier, setSimulatedTier] = useState<'free' | 'paid' | null>(null)
   const [isUpdatingTier, setIsUpdatingTier] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const [portalError, setPortalError] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -137,6 +142,18 @@ export default function ProfilePage() {
     await supabase.auth.signOut()
     router.push('/login')
     router.refresh()
+  }
+
+  const handleManageSubscription = () => {
+    setPortalError(null)
+    startTransition(async () => {
+      const result = await createPortalSession()
+      if (result.success && result.url) {
+        window.location.href = result.url
+      } else {
+        setPortalError(result.error || 'Failed to open subscription portal')
+      }
+    })
   }
 
   const userInitials = profile?.full_name
@@ -244,21 +261,38 @@ export default function ProfilePage() {
                 </span>
               </div>
               {subscriptionStatus?.isPremium ? (
-                <div>
-                  <p className="text-lg font-bold text-foreground">
-                    {subscriptionStatus.quota.total - subscriptionStatus.quota.remaining} of {subscriptionStatus.quota.total} meal plans this month
-                  </p>
-                  <div className="w-full bg-secondary rounded-full h-2 mt-2">
-                    <div
-                      className="bg-primary h-2 rounded-full"
-                      style={{
-                        width: `${((subscriptionStatus.quota.total - subscriptionStatus.quota.remaining) / subscriptionStatus.quota.total) * 100}%`
-                      }}
-                    ></div>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-lg font-bold text-foreground">
+                      {subscriptionStatus.quota.total - subscriptionStatus.quota.remaining} of {subscriptionStatus.quota.total} meal plans this month
+                    </p>
+                    <div className="w-full bg-secondary rounded-full h-2 mt-2">
+                      <div
+                        className="bg-primary h-2 rounded-full"
+                        style={{
+                          width: `${((subscriptionStatus.quota.total - subscriptionStatus.quota.remaining) / subscriptionStatus.quota.total) * 100}%`
+                        }}
+                      ></div>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {subscriptionStatus.quota.remaining} meal plans remaining this month
+                    </p>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    {subscriptionStatus.quota.remaining} meal plans remaining this month
-                  </p>
+                  <button
+                    onClick={handleManageSubscription}
+                    disabled={isPending}
+                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-secondary text-foreground font-semibold text-sm hover:bg-secondary/80 transition-colors disabled:opacity-50"
+                  >
+                    {isPending ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <Settings className="size-4" />
+                    )}
+                    <span>Manage Subscription</span>
+                  </button>
+                  {portalError && (
+                    <p className="text-xs text-destructive text-center">{portalError}</p>
+                  )}
                 </div>
               ) : (
                 <div>
@@ -280,10 +314,13 @@ export default function ProfilePage() {
                 </div>
               )}
               {!subscriptionStatus?.isPremium && (
-                <button className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors">
+                <Link
+                  href="/pricing"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors"
+                >
                   <span>Upgrade to Premium</span>
                   <ArrowRight className="size-4" />
-                </button>
+                </Link>
               )}
             </div>
           </div>

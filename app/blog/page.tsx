@@ -1,72 +1,105 @@
-import Link from 'next/link'
 import { blogPosts } from '@/lib/blog-data'
-import { ArrowRight } from 'lucide-react'
+import { BlogHeader } from '@/components/blog/BlogHeader'
+import { FeaturedPost } from '@/components/blog/FeaturedPost'
+import { BlogGrid } from '@/components/blog/BlogGrid'
+import { EmailCapture } from '@/components/blog/EmailCapture'
 
 export default function BlogIndexPage() {
+  const featuredPost = blogPosts[0]
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <header className="sticky top-0 z-50 w-full border-b border-border-strong bg-background/95 backdrop-blur-sm">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-            <span className="text-primary">MacroPlan</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Home</Link>
-            <Link href="/blog" className="text-sm font-semibold text-primary transition-colors">Blog</Link>
-            <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Login</Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/signup" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 px-5 rounded-xl transition-colors text-sm">
-              Sign Up
-            </Link>
-          </div>
-        </div>
-      </header>
+      <BlogHeader />
 
-      <main className="py-20">
+      <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">MacroPlan Blog</h1>
-            <p className="text-lg text-subtle-foreground">
-              Get tips, tricks, and delicious recipes to help you on your health journey.
-            </p>
+          {/* Hero Section - Featured Post */}
+          <div className="mb-20">
+            <FeaturedPost post={featuredPost} />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <Link 
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group bg-card text-card-foreground rounded-2xl shadow-lg border border-border-strong overflow-hidden flex flex-col hover:shadow-xl transition-shadow"
-              >
-                <div className="relative h-48 w-full overflow-hidden">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider">{post.category}</div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-subtle-foreground flex-grow line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-4 font-semibold text-primary flex items-center gap-1">
-                    Read More <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {/* Category Filter & Post Grid */}
+          <BlogGrid posts={blogPosts} featuredSlug={featuredPost.slug} />
         </div>
       </main>
 
+      {/* Email Capture Section */}
+      <EmailCapture />
+
+      {/* Footer */}
       <footer className="py-12 bg-muted border-t border-border-strong">
-        <div className="container mx-auto px-6 text-center text-muted-foreground">
-          <p>© 2025 MacroPlan. All rights reserved.</p>
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">MacroPlan</h3>
+              <p className="text-subtle-foreground text-sm">
+                Personalized meal plans that fit your macros and your lifestyle.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-sm text-subtle-foreground">
+                <li>
+                  <a href="/#features" className="hover:text-primary transition-colors">
+                    Features
+                  </a>
+                </li>
+                <li>
+                  <a href="/blog" className="hover:text-primary transition-colors">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="/#faq" className="hover:text-primary transition-colors">
+                    FAQ
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-sm text-subtle-foreground">
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    Terms of Service
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Connect</h4>
+              <ul className="space-y-2 text-sm text-subtle-foreground">
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    Twitter
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    Instagram
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-primary transition-colors">
+                    Facebook
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-center text-muted-foreground text-sm border-t border-border-strong pt-8">
+            <p>© 2025 MacroPlan. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>

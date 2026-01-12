@@ -81,7 +81,8 @@ export default function LoginPage() {
       }))
       router.push('/login/verify-2fa')
     } else if (result.success) {
-      router.push('/onboarding/1')
+      // Redirect to dashboard - middleware will handle routing based on onboarding status
+      router.push('/dashboard')
       router.refresh()
     }
   }

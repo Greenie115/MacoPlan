@@ -33,6 +33,7 @@ export function RecipeHero({
             className="object-cover"
             priority
             sizes="100vw"
+            quality={90}
             onError={(e) => {
               // Fallback on image load error
               e.currentTarget.style.display = 'none'

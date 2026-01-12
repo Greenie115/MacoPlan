@@ -3,7 +3,7 @@ import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
   // Update session and get user
-  const { response, user } = await updateSession(request)
+  const { response, user, onboardingCompleted } = await updateSession(request)
 
   // Define public routes that don't require auth
   const isPublicRoute =
@@ -30,9 +30,21 @@ export async function middleware(request: NextRequest) {
 
   // If user IS logged in and tries to access login or signup, redirect appropriately
   if (user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup'))) {
-    // Check if user has completed onboarding by checking if they have a goal set
-    // For now, redirect to onboarding - they can skip to dashboard if already complete
+    // Redirect to dashboard if onboarding is complete, otherwise to onboarding
+    if (onboardingCompleted) {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
     return NextResponse.redirect(new URL('/onboarding/1', request.url))
+  }
+
+  // If user IS logged in but hasn't completed onboarding, redirect protected routes to onboarding
+  if (user && !onboardingCompleted && !isPublicRoute && !isOnboardingRoute) {
+    return NextResponse.redirect(new URL('/onboarding/1', request.url))
+  }
+
+  // If user IS logged in and HAS completed onboarding, redirect onboarding routes to dashboard
+  if (user && onboardingCompleted && isOnboardingRoute) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   return response

@@ -15,6 +15,8 @@ import {
   checkSwapQuota,
   incrementSwapQuota,
 } from '@/lib/utils/subscription'
+import { calculateMacros as calculateMacrosLib, type Goal } from '@/lib/calculations/macros'
+import type { ActivityLevel } from '@/lib/calculations/tdee'
 import type {
   MealPlan,
   MealPlanInsert,
@@ -187,7 +189,7 @@ export async function generateMealPlan(
     const { data: profile } = await supabase
       .from('user_profiles')
       .select(
-        'target_calories, protein_grams, carb_grams, fat_grams, dietary_style, allergies, foods_to_avoid'
+        'target_calories, protein_grams, carb_grams, fat_grams, dietary_style, allergies, foods_to_avoid, weight_kg, activity_level, goal'
       )
       .eq('user_id', user.id)
       .single()
@@ -201,9 +203,35 @@ export async function generateMealPlan(
 
     // Step 3: Build FatSecret meal plan parameters
     const targetCalories = validatedRequest.targetCalories || profile.target_calories
-    const targetProtein = profile.protein_grams || Math.round(targetCalories * 0.3 / 4)
-    const targetCarbs = profile.carb_grams || Math.round(targetCalories * 0.4 / 4)
-    const targetFat = profile.fat_grams || Math.round(targetCalories * 0.3 / 9)
+
+    // If profile macros exist, use them. Otherwise calculate from profile data using ISSN evidence-based formulas.
+    let targetProtein: number
+    let targetCarbs: number
+    let targetFat: number
+
+    if (profile.protein_grams && profile.carb_grams && profile.fat_grams) {
+      targetProtein = profile.protein_grams
+      targetCarbs = profile.carb_grams
+      targetFat = profile.fat_grams
+    } else if (profile.weight_kg && profile.activity_level && profile.goal) {
+      // Calculate using ISSN evidence-based formulas (same as edit profile recalculation)
+      const macros = calculateMacrosLib(
+        targetCalories,
+        profile.goal as Goal,
+        profile.weight_kg,
+        'kg',
+        profile.activity_level as ActivityLevel
+      )
+      targetProtein = macros.protein
+      targetCarbs = macros.carbs
+      targetFat = macros.fat
+    } else {
+      // Profile is incomplete - should not happen after proper onboarding
+      return {
+        success: false,
+        error: 'Please complete your profile with weight, activity level, and goal to generate meal plans',
+      }
+    }
 
     // Build dietary preferences
     const dietaryPreferences = getDietaryPreferences(profile.dietary_style)
@@ -567,7 +595,13 @@ export async function getMealPlanById(
       .single()
 
     if (planError || !plan) {
-      console.error('[GetMealPlanById] Error:', planError)
+      // Log more details to help debug
+      console.error('[GetMealPlanById] Error:', {
+        planId,
+        userId: user.id,
+        error: planError?.message || 'Plan not found',
+        code: planError?.code,
+      })
       return { success: false, error: 'Meal plan not found' }
     }
 

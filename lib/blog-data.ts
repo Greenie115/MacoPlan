@@ -4,6 +4,8 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   author: string;
+  authorBio: string;
+  authorImage: string;
   date: string;
   readTime: string;
   image: string;
@@ -20,7 +22,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>What Are Macros?</h2>
       <p>Macronutrients, or "macros," are the three primary nutrients your body needs in large amounts to function correctly: protein, carbohydrates, and fats. Each macro provides a specific number of calories per gram and plays a unique role in your body's health.</p>
-      
+
       <blockquote>Understanding the balance between these three macronutrients is the key to unlocking sustainable results and a healthier relationship with food.</blockquote>
 
       <h2>How to Calculate Your Macros</h2>
@@ -30,6 +32,8 @@ export const blogPosts: BlogPost[] = [
       <p>Consistency is more important than perfection. Aim to hit your macro targets within a small range each day. Use a food scale for accuracy, plan your meals in advance, and don't be afraid to enjoy social events. The beauty of flexible dieting is its adaptability. Track your progress with the MacroPlan app, see what's working, and make small adjustments for long-term success.</p>
     `,
     author: 'Jane Doe, R.D.',
+    authorBio: 'Jane is a Registered Dietitian with over 10 years of experience helping clients achieve their nutrition goals through flexible, sustainable approaches. She specializes in macro-based nutrition and sports performance.',
+    authorImage: 'https://ui-avatars.com/api/?name=Jane+Doe&background=F97316&color=fff&size=128',
     date: 'October 26, 2023',
     readTime: '8 min read',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDdayOWEx3n30yvMdQwGNMr6cnPzF-pjFHaKtrZjkgECyuRv7gwW5bU2qS-VvjY7e4V3FaaUbFfia7OGrZaOiByIra8C4k_AhaBOhEtKDQF03HM5t8mnVieC1pzIIk-YCmxubEw4nq9KbiNwPSJd3KwXmbFaQEiY2U3QSxxAe0OD5B0MgnxNF00AFMT_URN6OU-s3UipdGyHNK0xDBkEaq8Awn-2xKAvyyN2MO02P1r3_BQJKvctzFcNnZ4TEc4flX0uJuJ0JGxuokR',
@@ -49,6 +53,8 @@ export const blogPosts: BlogPost[] = [
       <p>Start small. You don't need to prep every single meal for the week. Try prepping just your lunches or breakfasts to begin with. Invest in some good quality containers and set aside a couple of hours on Sunday to cook.</p>
     `,
     author: 'John Smith',
+    authorBio: 'John is a certified fitness coach and meal prep enthusiast who has helped hundreds of clients simplify their nutrition through strategic meal planning and batch cooking.',
+    authorImage: 'https://ui-avatars.com/api/?name=John+Smith&background=F97316&color=fff&size=128',
     date: 'November 15, 2023',
     readTime: '5 min read',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_LiAl5XL3dtrmNHUA1dSd9vIxGBQtAQmNmhgsZb7SxkhQn4CVFc1Peodlj_Y8oIHQa4Ilyuumjd5spGfCX9c_5UPd6A2vLexJeLULvtbk9D3CAWNwUoLyYHkAGYecX1Bs91qkBnnxbuJzS41wL5DkG0m-nxhkJoS-WEQ54yD8K1nTP9Kkpm3AxcKGE-Uh-RA7aaMrC6yxpwDH3iNJSJB3gUBZHBXoM9BXwXKOsrtCVQwYQhWpNevP6aZGqfKaGJDVPnh0dGdOkCob',
@@ -71,6 +77,8 @@ export const blogPosts: BlogPost[] = [
       <p>Healthy fats are crucial for hormone production and nutrient absorption. Include sources like avocados, nuts, and olive oil in your diet.</p>
     `,
     author: 'Sarah Johnson',
+    authorBio: 'Sarah is a nutrition scientist and health coach specializing in evidence-based approaches to sustainable weight management and athletic performance nutrition.',
+    authorImage: 'https://ui-avatars.com/api/?name=Sarah+Johnson&background=F97316&color=fff&size=128',
     date: 'December 2, 2023',
     readTime: '6 min read',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDTCckQtigJXnQVL6umvrRK_5xwlo1aqt44lWvdS-W2W-xDFm5r2adqmceoGZNJtGLNPYpTC7A6mpjd5tSS9XjaqkYzCMMW77M9p9Z9RPLZ8h-opwkTfSKbNdjFK-iMYj7jKAVcMAZnVWVaUrLY0YabSF-ckvIo41YpZmZVrH2Qrd-G9wT24t5tADuV_pg3dz7GgiXcaG22TWYofI8B3_83bKaXpGgRZY6fnTtOQAHW1AYkaLOQKvnZpnE6A5OWvlKa7mERBixNY6ce',
@@ -93,6 +101,8 @@ export const blogPosts: BlogPost[] = [
       <p>Whole grain toast topped with cream cheese and smoked salmon is a delicious savory option.</p>
     `,
     author: 'Mike Williams',
+    authorBio: 'Mike is a recipe developer and fitness enthusiast who creates delicious, macro-friendly meals that prove healthy eating doesn\'t have to be boring.',
+    authorImage: 'https://ui-avatars.com/api/?name=Mike+Williams&background=F97316&color=fff&size=128',
     date: 'December 10, 2023',
     readTime: '4 min read',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD2Yh-JKBwBpwvIvagriMdQPCRUz6gEJ4FEmkpXm-djjfvqSVeXNM9xwQFoQqbFGuVnLTkhiQLMPy9pnSdez0UoyQJNfaH9mLDqArr13onR7NmlrZ2JrqIqnuAZ50bsaakeJuAetYEu5D8Gbo-xht8apTx1F2eRyieT8BgaO6ROi_VKNWTBeTXthdM_XfC5SRNY1cTuTQP65KHK2DWA-13caDqE1COKhjhMHgEw3y6G3JIGjWCj2iOj8W65XDD_Ui02kO2OE3vn4pEm',

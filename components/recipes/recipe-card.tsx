@@ -73,7 +73,7 @@ export function RecipeCard({ recipe, isFavorite, source = 'fatsecret' }: RecipeC
               fill
               className="object-cover"
               sizes="(max-width: 768px) 50vw, 33vw"
-              quality={85}
+              quality={90}
               onError={(e) => {
                 // Fallback on image load error
                 e.currentTarget.style.display = 'none'

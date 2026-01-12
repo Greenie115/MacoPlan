@@ -1,18 +1,23 @@
 'use client'
 
-import { useOnboardingStore } from '@/stores/onboarding-store'
 import { useDashboardStore } from '@/stores/dashboard-store'
+import type { UserProfile } from '@/lib/types/database'
 
-export function useDashboardData() {
-  const onboardingStore = useOnboardingStore()
+interface UseDashboardDataParams {
+  profile?: UserProfile | null
+}
+
+export function useDashboardData(params?: UseDashboardDataParams) {
   const dashboardStore = useDashboardStore()
+  const profile = params?.profile
 
-  // Pull real macro targets from onboarding
+  // Use profile macros directly (authoritative source - same as settings page)
+  // Fall back to default values only if profile is not available yet
   const macros = {
-    targetCalories: onboardingStore.targetCalories || 2450,
-    proteinGrams: onboardingStore.proteinGrams || 180,
-    carbGrams: onboardingStore.carbGrams || 280,
-    fatGrams: onboardingStore.fatGrams || 68,
+    targetCalories: profile?.target_calories || 2000,
+    proteinGrams: profile?.protein_grams || 150,
+    carbGrams: profile?.carb_grams || 200,
+    fatGrams: profile?.fat_grams || 65,
   }
 
   // Get progress (dummy data for MVP)

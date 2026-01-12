@@ -1,3 +1,6 @@
+'use client'
+
+import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import {
   Utensils,
@@ -6,15 +9,13 @@ import {
   ChevronDown,
   ArrowRight,
   ShieldCheck,
-  Sparkles
+  Sparkles,
+  Loader2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
-export const metadata = {
-  title: 'Pricing - MacroPlan',
-  description: 'Choose the plan that fits your goals. Start free or upgrade to Premium for unlimited meal plans, swaps, and more.',
-}
+import { createCheckoutSession } from '@/app/actions/stripe'
+import { toast } from 'sonner'
 
 const freeTierFeatures = [
   { feature: 'Meal plan generations', value: '3 lifetime', included: true },
@@ -39,6 +40,22 @@ const premiumFeatures = [
 ]
 
 export default function PricingPage() {
+  const [isPending, startTransition] = useTransition()
+  const [loadingPlan, setLoadingPlan] = useState<'monthly' | 'annual' | null>(null)
+
+  const handleSubscribe = (plan: 'monthly' | 'annual') => {
+    setLoadingPlan(plan)
+    startTransition(async () => {
+      const result = await createCheckoutSession(plan)
+      if (result.success && result.url) {
+        window.location.href = result.url
+      } else {
+        toast.error(result.error || 'Failed to start checkout. Please log in first.')
+        setLoadingPlan(null)
+      }
+    })
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20">
       {/* Header */}
@@ -175,8 +192,21 @@ export default function PricingPage() {
                   </li>
                 </ul>
 
-                <Button variant="secondary" size="lg" className="w-full" asChild>
-                  <Link href="/signup">Start Monthly</Link>
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="w-full"
+                  onClick={() => handleSubscribe('monthly')}
+                  disabled={isPending}
+                >
+                  {loadingPlan === 'monthly' ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    'Start Monthly'
+                  )}
                 </Button>
               </CardContent>
             </Card>
@@ -233,11 +263,23 @@ export default function PricingPage() {
                   </li>
                 </ul>
 
-                <Button size="lg" className="w-full shadow-lg shadow-primary/25" asChild>
-                  <Link href="/signup">
-                    Get Premium Annual
-                    <ArrowRight className="w-5 h-5 ml-1" />
-                  </Link>
+                <Button
+                  size="lg"
+                  className="w-full shadow-lg shadow-primary/25"
+                  onClick={() => handleSubscribe('annual')}
+                  disabled={isPending}
+                >
+                  {loadingPlan === 'annual' ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      Get Premium Annual
+                      <ArrowRight className="w-5 h-5 ml-1" />
+                    </>
+                  )}
                 </Button>
               </CardContent>
             </Card>

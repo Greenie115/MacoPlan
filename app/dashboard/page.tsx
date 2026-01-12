@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { useOnboardingStore } from '@/stores/onboarding-store'
 import { useDashboardStore } from '@/stores/dashboard-store'
 import { useDashboardData } from '@/lib/hooks/use-dashboard-data'
 import { useUserProfile } from '@/lib/hooks/use-user-profile'
@@ -20,10 +19,9 @@ import type { LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
 
 export default function DashboardPage() {
   const router = useRouter()
-  const onboardingStore = useOnboardingStore()
   const dashboardStore = useDashboardStore()
-  const { macros, progress, stats, recentPlans } = useDashboardData()
-  const { userName } = useUserProfile()
+  const { profile, userName } = useUserProfile()
+  const { macros, progress, stats, recentPlans } = useDashboardData({ profile })
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Meal logging state
@@ -56,58 +54,25 @@ export default function DashboardPage() {
     async function initializeDashboard() {
       if (isInitialized) return
 
-      // 1. Check if we have local data
-      if (onboardingStore.targetCalories === null || onboardingStore.targetCalories === undefined) {
-        // No local data, check Supabase profile
-        const supabase = createClient()
-        const { data: { user } } = await supabase.auth.getUser()
+      // Check if user has completed onboarding
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
 
-        if (user) {
-          const { data: profile } = await supabase
-            .from('user_profiles')
-            .select('*')
-            .eq('user_id', user.id)
-            .single()
+      if (user) {
+        const { data: profileData } = await supabase
+          .from('user_profiles')
+          .select('onboarding_completed')
+          .eq('user_id', user.id)
+          .single()
 
-          if (profile && profile.onboarding_completed) {
-            // Hydrate store from profile
-            // Convert height cm -> feet/inches
-            const totalInches = profile.height_cm / 2.54
-            const feet = Math.floor(totalInches / 12)
-            const inches = Math.round(totalInches % 12)
-
-            onboardingStore.setGoal(profile.goal)
-            onboardingStore.setPersonalStats({
-              age: profile.age,
-              weight: profile.weight_kg,
-              weightUnit: 'kg', // Default to kg from DB
-              heightFeet: feet,
-              heightInches: inches,
-              sex: profile.sex,
-            })
-            onboardingStore.setActivityLevel(profile.activity_level)
-            onboardingStore.setDietaryPreferences({
-              dietaryStyle: profile.dietary_style,
-              allergies: profile.allergies,
-              foodsToAvoid: profile.foods_to_avoid,
-            })
-            onboardingStore.setExperienceLevel({
-              fitnessExperience: profile.fitness_experience,
-              trackingExperience: profile.tracking_experience,
-              mealPrepSkills: profile.meal_prep_skills,
-            })
-
-            // Recalculate macros to ensure consistency
-            onboardingStore.calculateMacros()
-          } else {
-            // No profile or incomplete -> Redirect to onboarding
-            router.replace('/onboarding/1')
-            return
-          }
+        if (!profileData || !profileData.onboarding_completed) {
+          // No profile or incomplete -> Redirect to onboarding
+          router.replace('/onboarding/1')
+          return
         }
       }
 
-      // 2. Fetch real plans data from Supabase
+      // Fetch real plans data from Supabase
       const plansResult = await getRecentPlansWithProgress()
       if (plansResult.success && plansResult.data) {
         dashboardStore.setRecentPlans(plansResult.data)
@@ -141,8 +106,10 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background">
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6 pb-24 lg:pb-8">
-        {/* Greeting - Full width */}
-        <GreetingHeader userName={userName} />
+        {/* Header with Greeting */}
+        <div className="mb-2">
+          <GreetingHeader userName={userName} />
+        </div>
 
         {/* Dashboard Grid - Side by side on larger screens */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
