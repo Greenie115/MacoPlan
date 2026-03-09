@@ -50,6 +50,9 @@ export interface UserProfile {
   is_test_user: boolean
   simulated_tier: 'free' | 'paid' | null
   stripe_customer_id: string | null
+  stripe_subscription_id: string | null
+  subscription_status: string | null
+  subscription_period_end: string | null
 
   // Timestamps
   created_at: string
