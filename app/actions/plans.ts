@@ -30,7 +30,8 @@ export async function setActivePlan(planId: string) {
       .eq('user_id', user.id)
 
     if (error) {
-      return { success: false, error: error.message }
+      console.error('Database error:', error)
+      return { success: false, error: 'An unexpected error occurred' }
     }
 
     revalidatePath('/dashboard')
@@ -66,7 +67,7 @@ export async function getRecentPlansWithProgress() {
 
     if (error) {
       console.error('Error fetching plans:', error)
-      return { success: false, error: error.message, data: [] }
+      return { success: false, error: 'Failed to fetch meal plans', data: [] }
     }
 
     if (!plans || plans.length === 0) {
@@ -186,7 +187,8 @@ export async function archiveOldCompletedPlans() {
 
     if (error) {
       console.error('Error archiving plans:', error)
-      return { success: false, error: error.message }
+      console.error('Database error:', error)
+      return { success: false, error: 'An unexpected error occurred' }
     }
 
     revalidatePath('/dashboard')
@@ -221,7 +223,8 @@ export async function markPlanCompleted(planId: string) {
       .eq('user_id', user.id)
 
     if (error) {
-      return { success: false, error: error.message }
+      console.error('Database error:', error)
+      return { success: false, error: 'An unexpected error occurred' }
     }
 
     revalidatePath('/dashboard')

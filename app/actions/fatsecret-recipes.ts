@@ -80,7 +80,7 @@ export async function searchRecipes(params: FatSecretRecipeSearchParams): Promis
     console.error('[searchRecipes] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to search recipes',
+      error: 'Failed to search recipes',
     }
   }
 }
@@ -111,7 +111,7 @@ export async function getRecipeDetails(recipeId: string): Promise<{
     console.error('[getRecipeDetails] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get recipe details',
+      error: 'Failed to get recipe details',
     }
   }
 }
@@ -142,7 +142,7 @@ export async function getMultipleRecipes(recipeIds: string[]): Promise<{
     console.error('[getMultipleRecipes] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get recipes',
+      error: 'Failed to get recipes',
     }
   }
 }
@@ -182,7 +182,7 @@ export async function generateDailyMealPlan(params: {
     console.error('[generateDailyMealPlan] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to generate meal plan',
+      error: 'Failed to generate meal plan',
     }
   }
 }
@@ -219,7 +219,7 @@ export async function generateWeeklyMealPlan(params: {
     console.error('[generateWeeklyMealPlan] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to generate meal plan',
+      error: 'Failed to generate meal plan',
     }
   }
 }
@@ -247,7 +247,7 @@ export async function getRecipeTypeFilters(): Promise<{
     console.error('[getRecipeTypeFilters] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to fetch recipe types',
+      error: 'Failed to fetch recipe types',
     }
   }
 }

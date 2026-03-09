@@ -6,14 +6,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
-import Stripe from 'stripe'
-
-// Initialize Stripe (only if key is available)
-const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2025-10-29.clover',
-    })
-  : null
+import { stripe } from '@/lib/stripe'
 
 export type SubscriptionTier = 'free' | 'paid'
 
@@ -39,15 +32,11 @@ export async function getUserSubscriptionTier(
     .single()
 
   if (!profile) {
-    console.warn('[Subscription] User profile not found:', userId)
     return 'free'
   }
 
   // Check if test user has a simulated tier set
   if (profile.is_test_user && profile.simulated_tier !== null) {
-    console.log(
-      `[Subscription] Test user with simulated tier: ${profile.simulated_tier}`
-    )
     return profile.simulated_tier as SubscriptionTier
   }
 
@@ -64,10 +53,6 @@ export async function getUserSubscriptionTier(
 
       const hasPaidSubscription = subscriptions.data.length > 0
 
-      console.log(
-        `[Subscription] User ${userId} tier: ${hasPaidSubscription ? 'paid' : 'free'}`
-      )
-
       return hasPaidSubscription ? 'paid' : 'free'
     } catch (error) {
       console.error('[Subscription] Error checking Stripe subscription:', error)
@@ -77,7 +62,6 @@ export async function getUserSubscriptionTier(
   }
 
   // No Stripe customer ID = free tier
-  console.log(`[Subscription] User ${userId} has no Stripe customer ID, tier: free`)
   return 'free'
 }
 
@@ -188,8 +172,6 @@ export async function incrementMealPlanQuota(
 
   if (error) {
     console.error('[Quota] Error incrementing quota:', error)
-  } else {
-    console.log(`[Quota] Incremented quota for user ${userId} (${tier} tier)`)
   }
 }
 
@@ -224,8 +206,6 @@ export async function resetMonthlyQuota(
     console.error('[Quota] Error resetting monthly quota:', error)
     throw error
   }
-
-  console.log(`[Quota] Reset monthly quota for user ${userId}`)
 }
 
 // ============================================================================
@@ -322,7 +302,6 @@ export async function incrementSwapQuota(
 
   if (error) {
     // Fallback to direct update if RPC doesn't exist
-    console.warn('[SwapQuota] RPC not found, using direct update')
     const { data: quota } = await supabase
       .from('meal_plan_generation_quota')
       .select('free_tier_swaps')
@@ -340,5 +319,4 @@ export async function incrementSwapQuota(
     }
   }
 
-  console.log(`[SwapQuota] Incremented swap count for user ${userId}`)
 }

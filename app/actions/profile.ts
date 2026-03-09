@@ -223,8 +223,13 @@ export async function uploadAvatar(formData: FormData) {
       return { error: 'File must be JPEG, PNG, or WebP' }
     }
 
-    // Get file extension
-    const fileExt = file.name.split('.').pop()
+    // Derive extension from validated MIME type (not filename) to prevent spoofing
+    const mimeToExt: Record<string, string> = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'image/webp': 'webp',
+    }
+    const fileExt = mimeToExt[file.type] || 'jpg'
     const filePath = `${user.id}/avatar.${fileExt}`
 
     // Upload to Supabase Storage
@@ -495,9 +500,6 @@ export async function updateSimulatedTier(
     }
 
     if (!profile.is_test_user) {
-      console.warn(
-        `[SimulatedTier] Non-test user ${user.id} attempted to set simulated tier`
-      )
       return { error: 'This feature is only available for test users' }
     }
 
@@ -511,8 +513,6 @@ export async function updateSimulatedTier(
       console.error('Error updating simulated tier:', updateError)
       return { error: 'Failed to update simulated tier' }
     }
-
-    console.log(`[SimulatedTier] User ${user.id} set simulated tier to: ${tier}`)
 
     revalidatePath('/dashboard')
     revalidatePath('/profile')

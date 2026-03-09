@@ -72,7 +72,7 @@ export async function searchFoods(params: FatSecretFoodSearchParams): Promise<{
     console.error('[searchFoods] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to search foods',
+      error: 'Failed to search foods',
     }
   }
 }
@@ -129,7 +129,7 @@ export async function getFoodDetails(foodId: string): Promise<{
     console.error('[getFoodDetails] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get food details',
+      error: 'Failed to get food details',
     }
   }
 }
@@ -184,7 +184,7 @@ export async function autocompleteFoods(query: string): Promise<{
     console.error('[autocompleteFoods] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to search foods',
+      error: 'Failed to search foods',
     }
   }
 }
@@ -234,7 +234,7 @@ export async function getFoodNutrition(
     console.error('[getFoodNutrition] Error:', error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get nutrition data',
+      error: 'Failed to get nutrition data',
     }
   }
 }

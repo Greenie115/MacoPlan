@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import Stripe from 'stripe'
-
-// Initialize Stripe
-const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2025-10-29.clover',
-    })
-  : null
+import { stripe } from '@/lib/stripe'
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 

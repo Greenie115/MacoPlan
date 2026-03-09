@@ -12,6 +12,33 @@ import {
 import { generateEmailCode, hashCode, sendEmail2FACode } from '@/lib/security/email-2fa'
 import { check2FACodeRateLimit, getMinutesUntilReset } from '@/lib/security/two-factor-rate-limit'
 
+// In-memory rate limiter for 2FA verification attempts (TOTP brute-force prevention)
+const verifyAttempts = new Map<string, { count: number; firstAttempt: number }>()
+const MAX_VERIFY_ATTEMPTS = 5
+const VERIFY_WINDOW_MS = 15 * 60 * 1000 // 15 minutes
+
+function checkVerifyRateLimit(userId: string): { allowed: boolean; minutesLeft: number } {
+  const now = Date.now()
+  const entry = verifyAttempts.get(userId)
+
+  if (!entry || now - entry.firstAttempt > VERIFY_WINDOW_MS) {
+    verifyAttempts.set(userId, { count: 1, firstAttempt: now })
+    return { allowed: true, minutesLeft: 0 }
+  }
+
+  if (entry.count >= MAX_VERIFY_ATTEMPTS) {
+    const minutesLeft = Math.ceil((VERIFY_WINDOW_MS - (now - entry.firstAttempt)) / 60000)
+    return { allowed: false, minutesLeft }
+  }
+
+  entry.count++
+  return { allowed: true, minutesLeft: 0 }
+}
+
+function clearVerifyRateLimit(userId: string): void {
+  verifyAttempts.delete(userId)
+}
+
 // ============================================================================
 // TOTP (Authenticator App) Setup
 // ============================================================================
@@ -50,7 +77,6 @@ export async function setupTOTP(): Promise<{
   )
 
   if (error) {
-    console.error('Failed to save TOTP setup:', error)
     return { error: 'Failed to setup 2FA' }
   }
 
@@ -252,6 +278,12 @@ export async function verify2FALogin(
   usedBackupCode?: boolean
   error?: string
 }> {
+  // Rate limit verification attempts to prevent brute-force
+  const rateLimit = checkVerifyRateLimit(userId)
+  if (!rateLimit.allowed) {
+    return { error: `Too many verification attempts. Try again in ${rateLimit.minutesLeft} minutes.` }
+  }
+
   const supabase = await createClient()
 
   if (method === 'totp') {
@@ -270,6 +302,7 @@ export async function verify2FALogin(
 
     // Try TOTP verification first
     if (verifyTOTPCode(setup.totp_secret, code)) {
+      clearVerifyRateLimit(userId)
       return { success: true }
     }
 
@@ -277,6 +310,7 @@ export async function verify2FALogin(
     if (setup.backup_codes && setup.backup_codes.length > 0) {
       const backupResult = verifyBackupCode(code, setup.backup_codes)
       if (backupResult.valid) {
+        clearVerifyRateLimit(userId)
         // Update remaining backup codes
         await supabase
           .from('user_2fa')
@@ -316,6 +350,7 @@ export async function verify2FALogin(
       .delete()
       .eq('user_id', userId)
 
+    clearVerifyRateLimit(userId)
     return { success: true }
   }
 }
