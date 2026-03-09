@@ -113,11 +113,53 @@ export default async function RecipePage({ params }: RecipePageProps) {
     tags: recipe.recipe_tags || [],
   }
 
+  // JSON-LD structured data for recipe rich results
+  const jsonLd = {
+    '@context': 'https://schema.org' as const,
+    '@type': 'Recipe' as const,
+    name: recipe.name,
+    description: recipe.description || `Recipe for ${recipe.name}`,
+    ...(recipe.image_url && { image: recipe.image_url }),
+    prepTime: recipe.prep_time_minutes ? `PT${recipe.prep_time_minutes}M` : undefined,
+    cookTime: recipe.cook_time_minutes ? `PT${recipe.cook_time_minutes}M` : undefined,
+    totalTime: recipe.total_time_minutes ? `PT${recipe.total_time_minutes}M` : undefined,
+    recipeYield: recipe.servings ? `${recipe.servings} servings` : undefined,
+    recipeCategory: recipeWithDetails.tags.length > 0
+      ? recipeWithDetails.tags.map((t) => t.tag).join(', ')
+      : undefined,
+    nutrition: {
+      '@type': 'NutritionInformation' as const,
+      calories: `${recipe.calories} calories`,
+      proteinContent: `${recipe.protein_grams}g`,
+      carbohydrateContent: `${recipe.carb_grams}g`,
+      fatContent: `${recipe.fat_grams}g`,
+      ...(recipe.fiber_grams && { fiberContent: `${recipe.fiber_grams}g` }),
+      ...(recipe.sugar_grams && { sugarContent: `${recipe.sugar_grams}g` }),
+      ...(recipe.sodium_mg && { sodiumContent: `${recipe.sodium_mg}mg` }),
+      ...(recipe.cholesterol_mg && { cholesterolContent: `${recipe.cholesterol_mg}mg` }),
+      ...(recipe.saturated_fat_grams && { saturatedFatContent: `${recipe.saturated_fat_grams}g` }),
+    },
+    recipeIngredient: recipeWithDetails.ingredients.map(
+      (i) => [i.amount, i.unit, i.ingredient].filter(Boolean).join(' ')
+    ),
+    recipeInstructions: recipeWithDetails.instructions.map((step) => ({
+      '@type': 'HowToStep' as const,
+      position: step.step_number,
+      text: step.instruction,
+    })),
+  }
+
   // Check if recipe is already logged today
   const { mealId: loggedMealId } = await getLoggedMealForRecipe(id)
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <>
+      {/* JSON-LD structured data for recipe rich results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-background pb-20">
       {/* Hero Image with Back Button */}
       <RecipeHero
         recipeId={recipe.id}
@@ -209,5 +251,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </div>
       </div>
     </div>
+    </>
   )
 }
