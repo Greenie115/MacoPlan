@@ -60,8 +60,35 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.vercel.app'
   const postUrl = `${baseUrl}/blog/${post.slug}`
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image,
+    datePublished: post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'MacroPlan',
+      url: baseUrl,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${baseUrl}/blog/${post.slug}`,
+    },
+  }
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-background text-foreground font-sans">
       <BlogHeader />
 
       <main className="pt-32 pb-20">
@@ -241,5 +268,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </footer>
     </div>
+    </>
   )
 }
