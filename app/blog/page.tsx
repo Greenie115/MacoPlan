@@ -1,8 +1,18 @@
+import type { Metadata } from 'next'
 import { blogPosts } from '@/lib/blog-data'
 import { BlogHeader } from '@/components/blog/BlogHeader'
 import { FeaturedPost } from '@/components/blog/FeaturedPost'
 import { BlogGrid } from '@/components/blog/BlogGrid'
 import { EmailCapture } from '@/components/blog/EmailCapture'
+
+export const metadata: Metadata = {
+  title: 'Blog',
+  description: 'Expert nutrition tips, meal planning guides, and macro tracking advice from the MacroPlan team.',
+  openGraph: {
+    title: 'MacroPlan Blog - Nutrition Tips & Meal Planning Guides',
+    description: 'Expert nutrition tips, meal planning guides, and macro tracking advice.',
+  },
+}
 
 export default function BlogIndexPage() {
   const featuredPost = blogPosts[0]

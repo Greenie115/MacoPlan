@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getBlogPost, blogPosts } from '@/lib/blog-data'
@@ -11,6 +12,33 @@ interface BlogPostPageProps {
   params: Promise<{
     slug: string
   }>
+}
+
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const post = getBlogPost(slug)
+
+  if (!post) {
+    return { title: 'Post Not Found' }
+  }
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.date,
+      authors: [post.author],
+      images: post.image ? [{ url: post.image }] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+    },
+  }
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -29,7 +57,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .filter((p) => p.slug !== post.slug)
     .slice(0, 3)
 
-  const postUrl = `https://macroplan.com/blog/${post.slug}`
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.vercel.app'
+  const postUrl = `${baseUrl}/blog/${post.slug}`
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">

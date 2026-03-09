@@ -1,5 +1,11 @@
+import type { Metadata } from 'next'
 import { ArrowLeft, Mail, MessageCircle, FileQuestion } from 'lucide-react'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Help Center',
+  description: 'Get help with your MacroPlan account, meal plans, and macro tracking.',
+}
 
 export default function HelpPage() {
   return (

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { RecipeHero } from '@/components/recipes/recipe-hero'
@@ -21,12 +22,32 @@ const recipeParamsSchema = z.object({
   id: z.string().uuid({ message: 'Invalid recipe ID format' }),
 })
 
+export async function generateMetadata({ params }: RecipePageProps): Promise<Metadata> {
+  const { id } = await params
+  const validationResult = recipeParamsSchema.safeParse({ id })
+  if (!validationResult.success) {
+    return { title: 'Recipe Not Found' }
+  }
+
+  const supabase = await createClient()
+  const { data: recipe } = await supabase
+    .from('recipes')
+    .select('title, description')
+    .eq('id', validationResult.data.id)
+    .single()
+
+  if (!recipe) {
+    return { title: 'Recipe Not Found' }
+  }
+
+  return {
+    title: recipe.title,
+    description: recipe.description || `View the full recipe for ${recipe.title} with nutritional information and macro breakdown.`,
+  }
+}
+
 export default async function RecipePage({ params }: RecipePageProps) {
   const resolvedParams = await params
-
-  if (process.env.NODE_ENV === 'development') {
-    console.log('RecipePage: Fetching recipe with ID:', resolvedParams.id)
-  }
 
   // Validate recipe ID parameter
   const validationResult = recipeParamsSchema.safeParse(resolvedParams)
@@ -74,7 +95,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
   }
 
   if (!recipe) {
-    console.log('RecipePage: Recipe not found for ID:', id)
     notFound()
   }
 
