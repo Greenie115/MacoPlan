@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     title: 'MacroPlan Blog - Nutrition Tips & Meal Planning Guides',
     description: 'Expert nutrition tips, meal planning guides, and macro tracking advice.',
   },
+  alternates: {
+    canonical: '/blog',
+  },
 }
 
 export default function BlogIndexPage() {

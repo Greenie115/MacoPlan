@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     title: 'MacroPlan - Meal Planning for Real Life',
     description: 'Stop wasting hours on meal prep. MacroPlan generates personalized meal plans that hit your exact macros instantly.',
   },
+  alternates: {
+    canonical: '/',
+  },
 }
 
 // JSON-LD structured data for SEO

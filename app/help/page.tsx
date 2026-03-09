@@ -5,6 +5,9 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Help Center',
   description: 'Get help with your MacroPlan account, meal plans, and macro tracking.',
+  alternates: {
+    canonical: '/help',
+  },
 }
 
 export default function HelpPage() {

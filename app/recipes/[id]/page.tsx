@@ -43,6 +43,9 @@ export async function generateMetadata({ params }: RecipePageProps): Promise<Met
   return {
     title: recipe.title,
     description: recipe.description || `View the full recipe for ${recipe.title} with nutritional information and macro breakdown.`,
+    alternates: {
+      canonical: `/recipes/${validationResult.data.id}`,
+    },
   }
 }
 
