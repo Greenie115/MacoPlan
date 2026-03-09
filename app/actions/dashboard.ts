@@ -49,14 +49,13 @@ export async function getFavoriteRecipesForDashboard() {
     .limit(10)
 
   if (error) {
-    console.error('Error fetching favorite recipes:', error)
     return { error: 'Failed to fetch favorite recipes', data: [] }
   }
 
   // Flatten the structure
   const recipes = data
-    .filter((fav) => fav.recipes)
-    .map((fav: any) => fav.recipes)
+    .filter((fav: { recipes: unknown }) => fav.recipes)
+    .map((fav: { recipes: unknown }) => fav.recipes)
 
   return { success: true, data: recipes }
 }

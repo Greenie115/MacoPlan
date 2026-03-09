@@ -56,7 +56,6 @@ export default function EditProfilePage() {
         if (error) {
           // PGRST116 = no rows returned (user has no profile)
           if (error.code === 'PGRST116') {
-            console.log('No profile found - redirecting to onboarding')
             router.push('/onboarding/1')
             return
           }

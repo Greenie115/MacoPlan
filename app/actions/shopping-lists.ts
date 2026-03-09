@@ -132,8 +132,6 @@ export async function generateShoppingListFromMealPlan(
       return { success: false, error: 'Failed to save shopping list' }
     }
 
-    console.log(`[ShoppingList] Generated for meal plan ${mealPlanId}`)
-
     return { success: true, data: savedList as ShoppingList }
   } catch (error) {
     console.error('[ShoppingList] Unexpected error:', error)

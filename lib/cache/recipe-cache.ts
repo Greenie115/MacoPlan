@@ -147,7 +147,7 @@ class RecipeCache {
     }
 
     if (removed > 0) {
-      console.log(`[RecipeCache] Cleaned up ${removed} expired entries`)
+      // Expired entries cleaned up
     }
   }
 }
@@ -179,12 +179,10 @@ export async function withCache<T>(
   // Try to get from cache
   const cached = recipeCache.get<T>(params)
   if (cached) {
-    console.log('[RecipeCache] Cache HIT', params)
     return cached
   }
 
   // Cache miss - fetch and store
-  console.log('[RecipeCache] Cache MISS', params)
   const data = await fetcher()
   recipeCache.set(params, data, ttl)
 

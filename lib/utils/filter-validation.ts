@@ -64,7 +64,6 @@ function validateSortOption(value: string | undefined): SortOption | undefined {
   if (ALLOWED_SORT_OPTIONS.includes(value as SortOption)) {
     return value as SortOption
   }
-  console.warn(`[FilterValidation] Invalid sort option: ${value}`)
   return undefined
 }
 

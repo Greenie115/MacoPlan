@@ -56,13 +56,6 @@ export function RecipeResultsClient({
     enableScrollRestoration: true,
   })
 
-  // Show cache indicator in development
-  if (process.env.NODE_ENV === 'development' && isFromCache) {
-    console.log(
-      `[RecipeResults] Showing ${recipes.length} cached recipes (scroll position restored)`
-    )
-  }
-
   return (
     <>
       {/* Recipe Grid */}

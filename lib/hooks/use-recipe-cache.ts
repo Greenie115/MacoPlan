@@ -72,7 +72,6 @@ export function useRecipeCache({
         requestAnimationFrame(() => {
           window.scrollTo(0, cached.scrollPosition)
           hasRestoredScroll.current = true
-          console.log('[RecipeCache] Restored scroll position:', cached.scrollPosition)
         })
       }
     } else {

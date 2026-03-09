@@ -128,14 +128,6 @@ export async function generateMealPlan(
   request: GenerateMealPlanRequest
 ): Promise<GenerateMealPlanResponse> {
   try {
-    console.log('[GenerateMealPlan] Incoming request:', {
-      timeFrame: request.timeFrame,
-      mealsPerDay: request.mealsPerDay,
-      targetCalories: request.targetCalories,
-      customDiet: request.customDiet,
-      customExclude: request.customExclude?.substring(0, 50),
-    })
-
     // Step 0: Validate input
     const validationResult = GenerateMealPlanRequestSchema.safeParse(request)
     if (!validationResult.success) {
@@ -277,8 +269,6 @@ export async function generateMealPlan(
     }
 
     // Step 4: Generate meal plan via FatSecret
-    console.log('[GenerateMealPlan] Calling FatSecret API with params:', params)
-
     const fatSecretPlan = await fatSecretMealPlanService.generateMealPlan(params)
 
     // Step 5: Calculate totals and validate macro match
@@ -405,10 +395,6 @@ export async function generateMealPlan(
     // Step 9: Revalidate paths
     revalidatePath('/meal-plans')
     revalidatePath('/dashboard')
-
-    console.log(
-      `[GenerateMealPlan] Successfully generated meal plan for user ${user.id}`
-    )
 
     return {
       success: true,
@@ -905,8 +891,6 @@ export async function getSwapOptions(
 
     // Extract keywords from current meal title
     const keywords = extractRecipeKeywords(meal.recipe_title)
-    console.log('[GetSwapOptions] Extracted keywords:', keywords)
-
     // Original meal macros for similarity scoring
     const originalMacros = {
       calories: (meal.calories || 0) * meal.serving_multiplier,
@@ -958,8 +942,6 @@ export async function getSwapOptions(
 
     // Remove duplicates while preserving order
     const uniqueStrategies = [...new Set(searchStrategies)]
-    console.log('[GetSwapOptions] Search strategies:', uniqueStrategies)
-
     // Calorie range for filtering
     const minCal = targetCalories * 0.7
     const maxCal = targetCalories * 1.3
@@ -977,10 +959,13 @@ export async function getSwapOptions(
       }
     }> = []
 
-    for (const searchExpression of uniqueStrategies) {
-      if (allRecipes.length >= 12) break // We have enough candidates
+    const MAX_SEARCH_ATTEMPTS = 3
+    let searchAttempts = 0
 
-      console.log('[GetSwapOptions] Trying search:', searchExpression)
+    for (const searchExpression of uniqueStrategies) {
+      if (allRecipes.length >= 12 || searchAttempts >= MAX_SEARCH_ATTEMPTS) break
+
+      searchAttempts++
       const response = await fatSecretService.searchRecipes({
         search_expression: searchExpression,
         max_results: 15,
@@ -1070,8 +1055,6 @@ export async function getSwapOptions(
       )
       // Sort by macro similarity (best matches first)
       .sort((a, b) => b.macroSimilarity - a.macroSimilarity)
-
-    console.log('[GetSwapOptions] Found', scoredOptions.length, 'valid options after filtering')
 
     // Take top 6 results
     const swapOptions: SwapOption[] = scoredOptions

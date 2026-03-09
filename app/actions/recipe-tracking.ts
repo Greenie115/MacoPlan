@@ -40,10 +40,6 @@ export async function trackRecipeView(
       return { success: true }
     }
 
-    console.log(
-      `[TrackRecipeView] Tracked keywords for recipe: "${recipeTitle}" (${source})`
-    )
-
     return { success: true }
   } catch (error) {
     console.error('[TrackRecipeView] Unexpected error:', error)

@@ -12,7 +12,6 @@ export class PlanService {
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error fetching plans:', error)
       return []
     }
 
@@ -39,7 +38,6 @@ export class PlanService {
   async getPlanById(id: string): Promise<Plan | null> {
     // Skip fetching dummy/test plans (they don't exist in the database)
     if (id.startsWith('00000000-0000-4000-8000-')) {
-      console.log('Skipping dummy plan fetch:', id)
       return null
     }
 
@@ -51,7 +49,6 @@ export class PlanService {
       .single()
 
     if (planError || !plan) {
-      console.error('Error fetching plan:', JSON.stringify(planError, null, 2))
       return null
     }
 
@@ -63,7 +60,6 @@ export class PlanService {
       .order('order_index', { ascending: true })
 
     if (daysError) {
-      console.error('Error fetching days:', daysError)
       return null
     }
 
@@ -78,7 +74,6 @@ export class PlanService {
       .order('order_index', { ascending: true })
 
     if (mealsError) {
-      console.error('Error fetching meals:', mealsError)
       return null
     }
 

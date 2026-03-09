@@ -69,10 +69,8 @@ export default function ProfilePage() {
         if (error) {
           // PGRST116 = no rows returned (user has no profile)
           if (error.code === 'PGRST116') {
-            console.log('No profile found - user needs to complete onboarding')
             setProfile(null)
           } else {
-            console.error('Failed to load profile:', error)
             setProfile(null)
           }
         } else {
@@ -84,7 +82,7 @@ export default function ProfilePage() {
         const status = await getSubscriptionStatus()
         setSubscriptionStatus(status)
       } catch (error) {
-        console.error('Failed to load profile:', error)
+        // Profile load failed silently
       } finally {
         setLoading(false)
       }
@@ -117,7 +115,7 @@ export default function ProfilePage() {
       const status = await getSubscriptionStatus()
       setSubscriptionStatus(status)
     } else {
-      console.error('Failed to update simulated tier:', result.error)
+      // Simulated tier update failed
     }
 
     setIsUpdatingTier(false)

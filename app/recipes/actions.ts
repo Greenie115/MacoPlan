@@ -61,7 +61,6 @@ export async function toggleFatSecretFavorite(
       .eq('fatsecret_recipe_id', recipeId)
 
     if (error) {
-      console.error('Failed to remove favorite:', error)
       return {
         error:
           error.code === 'PGRST116'
@@ -103,7 +102,6 @@ export async function toggleFatSecretFavorite(
     })
 
     if (error) {
-      console.error('Failed to add favorite:', error)
       if (error.code === '23505') {
         return { error: 'Recipe is already in your favorites' }
       }
@@ -192,7 +190,6 @@ export async function getFavoriteRecipes() {
     .order('created_at', { ascending: false })
 
   if (error) {
-    console.error('Error fetching favorites:', error)
     return { data: [], error: 'Failed to fetch favorites' }
   }
 
@@ -251,7 +248,6 @@ export async function getCachedRecipes(
       .range(offset, offset + limit - 1)
 
     if (error) {
-      console.error('Error fetching cached recipes:', error)
       return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
     }
 
@@ -272,7 +268,6 @@ export async function getCachedRecipes(
       error: null,
     }
   } catch (error) {
-    console.error('Unexpected error fetching cached recipes:', error)
     return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
   }
 }
@@ -313,12 +308,10 @@ export async function getMostFavoritedRecipes(
     ])
 
     if (recipesResult.error) {
-      console.error('Error fetching most favorited recipes:', recipesResult.error)
       return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
     }
 
     if (countResult.error) {
-      console.error('Error fetching count:', countResult.error)
       // Continue with recipes even if count fails
     }
 
@@ -350,7 +343,6 @@ export async function getMostFavoritedRecipes(
       error: null,
     }
   } catch (error) {
-    console.error('Unexpected error fetching most favorited:', error)
     return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
   }
 }

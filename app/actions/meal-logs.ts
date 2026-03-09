@@ -71,7 +71,6 @@ export async function logMeal(input: LogMealInput, recipeId?: string) {
     .single()
 
   if (error) {
-    console.error('Error logging meal:', error)
     return { error: 'Failed to log meal. Please try again.' }
   }
 
@@ -98,11 +97,11 @@ export async function getMealsForDate(date?: string) {
   const { data, error } = await supabase
     .from('logged_meals')
     .select('*')
+    .eq('user_id', user.id)
     .eq('date', targetDate)
     .order('logged_at', { ascending: true })
 
   if (error) {
-    console.error('Error fetching meals:', error)
     return { error: 'Failed to fetch meals', data: null }
   }
 
@@ -190,7 +189,6 @@ export async function updateMealLog(
     .single()
 
   if (error) {
-    console.error('Error updating meal:', error)
     return { error: 'Failed to update meal' }
   }
 
@@ -215,7 +213,6 @@ export async function deleteMealLog(mealId: string) {
   const { error } = await supabase.from('logged_meals').delete().eq('id', mealId)
 
   if (error) {
-    console.error('Error deleting meal:', error)
     return { error: 'Failed to delete meal' }
   }
 

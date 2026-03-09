@@ -123,7 +123,7 @@ export function cleanupExpiredEntries(): void {
   }
 
   if (removed > 0) {
-    console.log(`[SessionCache] Cleaned up ${removed} expired entries`)
+    // Expired entries cleaned up
   }
 }
 
@@ -158,7 +158,7 @@ function enforceMaxEntries(): void {
     sessionStorage.removeItem(entries[i].key)
   }
 
-  console.log(`[SessionCache] Evicted ${toRemove} oldest entries (LRU)`)
+  // LRU eviction complete
 }
 
 /**
@@ -176,7 +176,6 @@ export function saveSearchResults(
   scrollPosition?: number
 ): void {
   if (!isSessionStorageAvailable()) {
-    console.warn('[SessionCache] Session storage not available')
     return
   }
 
@@ -197,11 +196,7 @@ export function saveSearchResults(
     cleanupExpiredEntries()
     enforceMaxEntries()
 
-    console.log(
-      `[SessionCache] Saved ${recipes.length} recipes for params: ${data.searchParams}`
-    )
   } catch (e) {
-    console.error('[SessionCache] Failed to save results:', e)
     // If quota exceeded, clear old entries and retry
     if (e instanceof DOMException && e.name === 'QuotaExceededError') {
       cleanupExpiredEntries()
@@ -228,7 +223,6 @@ export function getSearchResults(
     const data = sessionStorage.getItem(key)
 
     if (!data) {
-      console.log('[SessionCache] Cache MISS for params:', searchParams.toString())
       return null
     }
 
@@ -239,16 +233,11 @@ export function getSearchResults(
     // Check if expired
     if (age > cached.ttl) {
       sessionStorage.removeItem(key)
-      console.log('[SessionCache] Cache EXPIRED (age:', age, 'ms)')
       return null
     }
 
-    console.log(
-      `[SessionCache] Cache HIT! ${cached.recipes.length} recipes (age: ${Math.round(age / 1000)}s)`
-    )
     return cached
   } catch (e) {
-    console.error('[SessionCache] Failed to retrieve results:', e)
     return null
   }
 }
@@ -262,7 +251,7 @@ export function clearAllSearchCaches(): void {
   const keys = getAllCacheKeys()
   keys.forEach((key) => sessionStorage.removeItem(key))
 
-  console.log(`[SessionCache] Cleared ${keys.length} cache entries`)
+  // Cache cleared
 }
 
 /**

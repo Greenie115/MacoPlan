@@ -1,3 +1,10 @@
+/**
+ * Rate Limiter for Login Attempts
+ *
+ * SECURITY NOTE: This module uses the Supabase service role client (bypasses RLS)
+ * because rate limiting must function before authentication completes. It only
+ * accesses `account_lockouts` and `login_attempts` tables — never user data.
+ */
 import { createServiceRoleClient } from '@/lib/supabase/server'
 
 // Rate limiting constants

@@ -42,18 +42,11 @@ export async function sendEmail2FACode(email: string, code: string): Promise<{ s
     })
 
     if (error) {
-      console.error('Failed to send 2FA email:', error.message)
-      // Fall back to a simpler approach - just log the code in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`[DEV] 2FA Code for ${email}: ${code}`)
-        return { success: true }
-      }
       return { error: 'Failed to send verification email' }
     }
 
     return { success: true }
-  } catch (err) {
-    console.error('Email 2FA error:', err)
+  } catch {
     return { error: 'Failed to send verification email' }
   }
 }
@@ -84,12 +77,6 @@ export async function sendEmail2FACodeCustom(
   //     <p>If you didn't request this code, you can ignore this email.</p>
   //   `,
   // })
-
-  // For development, just log the code
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[DEV] 2FA Code for ${email}: ${code}`)
-    return { success: true }
-  }
 
   return { error: 'Email service not configured' }
 }

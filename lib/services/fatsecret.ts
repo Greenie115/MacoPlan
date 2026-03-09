@@ -127,8 +127,6 @@ class FatSecretService {
    * Request a new access token from FatSecret
    */
   private async refreshToken(): Promise<string> {
-    console.log('[FatSecret] Refreshing OAuth 2.0 token...')
-
     const credentials = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')
 
     const response = await fetch(FATSECRET_TOKEN_URL, {
@@ -153,8 +151,6 @@ class FatSecretService {
     this.accessToken = data.access_token
     this.tokenExpiry = new Date(Date.now() + data.expires_in * 1000)
 
-    console.log(`[FatSecret] Token refreshed, expires at: ${this.tokenExpiry.toISOString()}`)
-
     return this.accessToken
   }
 
@@ -178,12 +174,10 @@ class FatSecretService {
     }
 
     if (this.minuteCallCount >= RATE_LIMIT.maxCallsPerMinute) {
-      console.warn('[FatSecret] Rate limit exceeded: calls per minute')
       return false
     }
 
     if (this.dailyCallCount >= RATE_LIMIT.maxCallsPerDay) {
-      console.warn('[FatSecret] Rate limit exceeded: calls per day')
       return false
     }
 
@@ -193,7 +187,6 @@ class FatSecretService {
   private incrementRateLimit(): void {
     this.minuteCallCount++
     this.dailyCallCount++
-    console.log(`[FatSecret] API call: ${this.dailyCallCount}/${RATE_LIMIT.maxCallsPerDay} daily, ${this.minuteCallCount}/${RATE_LIMIT.maxCallsPerMinute} per minute`)
   }
 
   // ==========================================================================
@@ -286,7 +279,6 @@ class FatSecretService {
 
     // Check for in-flight request
     if (this.inflightRequests.has(cacheKey)) {
-      console.log('[FatSecret] Food search deduplicated')
       return this.inflightRequests.get(cacheKey)!
     }
 
@@ -313,8 +305,6 @@ class FatSecretService {
       .single()
 
     if (cached) {
-      console.log('[FatSecret] Food search cache HIT')
-
       // Increment hit count
       await supabase
         .from('fatsecret_search_cache')
@@ -340,8 +330,6 @@ class FatSecretService {
     }
 
     // Cache miss - call API
-    console.log('[FatSecret] Food search cache MISS - calling API')
-
     const response = await this.apiRequest<FatSecretFoodSearchResponse>('foods.search', {
       search_expression: params.search_expression,
       page_number: params.page_number,
@@ -389,8 +377,6 @@ class FatSecretService {
       .single()
 
     if (cached?.servings) {
-      console.log('[FatSecret] Food details cache HIT:', foodId)
-
       // Update access tracking
       await supabase
         .from('fatsecret_foods')
@@ -404,8 +390,6 @@ class FatSecretService {
     }
 
     // Cache miss - call API
-    console.log('[FatSecret] Food details cache MISS - calling API for:', foodId)
-
     const response = await this.apiRequest<FatSecretFoodDetailResponse>('food.get.v4', {
       food_id: foodId,
     })
@@ -429,7 +413,6 @@ class FatSecretService {
 
     // Check for in-flight request
     if (this.inflightRequests.has(cacheKey)) {
-      console.log('[FatSecret] Recipe search deduplicated')
       return this.inflightRequests.get(cacheKey)!
     }
 
@@ -476,8 +459,6 @@ class FatSecretService {
     }
 
     if (cached) {
-      console.log('[FatSecret] Recipe search cache HIT')
-
       // Increment hit count
       await supabase
         .from('fatsecret_search_cache')
@@ -514,7 +495,6 @@ class FatSecretService {
     }
 
     // Cache miss - call API
-    console.log('[FatSecret] Recipe search cache MISS - calling API')
 
     // Build API parameters with all available filters
     const apiParams: Record<string, string | number | undefined> = {
@@ -619,8 +599,6 @@ class FatSecretService {
       .single()
 
     if (cached?.ingredients && cached?.directions) {
-      console.log('[FatSecret] Recipe details cache HIT:', recipeId)
-
       // Update access tracking
       await supabase
         .from('fatsecret_recipes')
@@ -634,8 +612,6 @@ class FatSecretService {
     }
 
     // Cache miss - call API
-    console.log('[FatSecret] Recipe details cache MISS - calling API for:', recipeId)
-
     const response = await this.apiRequest<FatSecretRecipeDetailResponse>('recipe.get.v2', {
       recipe_id: recipeId,
     })
@@ -662,7 +638,6 @@ class FatSecretService {
   async getRecipeTypes(): Promise<Array<{ value: string; label: string }>> {
     // Check in-memory cache
     if (this.recipeTypesCache && Date.now() < this.recipeTypesCache.expiresAt) {
-      console.log('[FatSecret] Recipe types cache HIT (in-memory)')
       return this.recipeTypesCache.types
     }
 
@@ -683,13 +658,10 @@ class FatSecretService {
   }
 
   private async _fetchRecipeTypes(): Promise<Array<{ value: string; label: string }>> {
-    console.log('[FatSecret] Fetching recipe types from API')
-
     try {
       const response = await this.apiRequest<FatSecretRecipeTypesResponse>('recipe_types.get.v2', {})
 
       if (!response.recipe_types?.recipe_type) {
-        console.warn('[FatSecret] No recipe types returned from API')
         return this.getDefaultRecipeTypes()
       }
 
@@ -705,7 +677,6 @@ class FatSecretService {
         expiresAt: Date.now() + 24 * 60 * 60 * 1000,
       }
 
-      console.log(`[FatSecret] Cached ${types.length} recipe types`)
       return types
     } catch (error) {
       console.error('[FatSecret] Error fetching recipe types:', error)
@@ -776,7 +747,6 @@ class FatSecretService {
         cache_expires_at: new Date(Date.now() + CACHE_TTL.foodDetails).toISOString(),
       }, { onConflict: 'fatsecret_id' })
 
-      console.log('[FatSecret] Cached food full details:', food.food_id)
     } catch (error) {
       console.error('[FatSecret] Error caching food:', error)
     }
@@ -850,7 +820,6 @@ class FatSecretService {
         cache_expires_at: new Date(Date.now() + CACHE_TTL.recipeDetails).toISOString(),
       }, { onConflict: 'fatsecret_id' })
 
-      console.log('[FatSecret] Cached recipe full details:', recipe.recipe_id)
     } catch (error) {
       console.error('[FatSecret] Error caching recipe:', error)
     }

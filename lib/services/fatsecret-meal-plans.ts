@@ -175,7 +175,6 @@ class FatSecretMealPlanService {
     const cacheKey = JSON.stringify(params)
 
     if (this.inflightGenerations.has(cacheKey)) {
-      console.log('[MealPlanGenerator] Generation deduplicated')
       return this.inflightGenerations.get(cacheKey)!
     }
 
@@ -195,22 +194,15 @@ class FatSecretMealPlanService {
    * Users can manually adjust serving sizes on the meal cards
    */
   async generateDailyPlan(params: MealPlanGenerationParams): Promise<DailyMealPlan> {
-    console.log('[MealPlanGenerator] Generating daily plan:', params)
-
     const mealsPerDay = params.mealsPerDay || 4
     const mealTargets = this.calculateMealTargets(params)
 
     // Find recipes in parallel (natural calorie ranges, no forced scaling)
-    console.log('[MealPlanGenerator] Finding natural recipe matches...')
-    const startTime = Date.now()
-
     const [breakfastResult, lunchResult, dinnerResult] = await Promise.all([
       this.findRecipeForMeal('breakfast', mealTargets.breakfast, params),
       this.findRecipeForMeal('lunch', mealTargets.lunch, params),
       this.findRecipeForMeal('dinner', mealTargets.dinner, params),
     ])
-
-    console.log(`[MealPlanGenerator] Main meals found in ${Date.now() - startTime}ms`)
 
     // Build meals with 1x multiplier (original recipe values)
     const meals: MealSlotWithMultiplier[] = [
@@ -249,10 +241,6 @@ class FatSecretMealPlanService {
 
     // Calculate totals (no automatic adjustment - user controls serving sizes)
     const totals = this.calculateTotals(meals)
-    const accuracy = Math.round((totals.totalCalories / params.targetCalories) * 100)
-
-    console.log(`[MealPlanGenerator] Daily plan complete: ${totals.totalCalories} cal / ${params.targetCalories} target (${accuracy}%)`)
-
     return {
       date: new Date().toISOString().split('T')[0],
       meals: meals as MealSlot[],
@@ -298,8 +286,6 @@ class FatSecretMealPlanService {
    * Generate a weekly meal plan
    */
   async generateWeeklyPlan(params: MealPlanGenerationParams): Promise<WeeklyMealPlan> {
-    console.log('[MealPlanGenerator] Generating weekly plan:', params)
-
     const days: DailyMealPlan[] = []
     const startDate = new Date()
 
@@ -390,8 +376,6 @@ class FatSecretMealPlanService {
         const term = searchTerms[(varietyIndex + attempt) % searchTerms.length]
         const searchExpression = `${prefix} ${term}`.trim()
 
-        console.log(`[MealPlanGenerator] Searching for ${mealType}: "${searchExpression}" (target: ${targets.calories} cal)`)
-
         const response = await fatSecretService.searchRecipes({
           search_expression: searchExpression,
           max_results: 30,
@@ -399,7 +383,6 @@ class FatSecretMealPlanService {
         })
 
         if (!response.recipes?.recipe) {
-          console.log(`[MealPlanGenerator] No results for "${searchExpression}", trying next term`)
           continue
         }
 
@@ -446,24 +429,21 @@ class FatSecretMealPlanService {
 
               // Check ingredients for dietary conflicts
               if (this.hasIngredientConflict(normalized, params)) {
-                console.log(`[MealPlanGenerator] Skipping "${normalized.title}" - ingredient conflict detected`)
                 continue
               }
 
               this.recipeCache.set(normalized.id, normalized)
-              console.log(`[MealPlanGenerator] Found ${mealType}: ${normalized.title} (${normalized.calories} cal, target was ${targets.calories})`)
               return normalized
             }
           }
 
-          console.log(`[MealPlanGenerator] All ${topCandidates.length} candidates had conflicts, trying next search`)
+          // All candidates had conflicts, trying next search
         }
       } catch (error) {
-        console.warn(`[MealPlanGenerator] Error searching for ${mealType}:`, error)
+        // Search attempt failed, continue to next
       }
     }
 
-    console.warn(`[MealPlanGenerator] Could not find recipe for ${mealType}`)
     return null
   }
 
@@ -528,7 +508,6 @@ class FatSecretMealPlanService {
 
     // Check against dietary style (vegetarian, vegan, pescatarian, etc.)
     if (checkDietaryConflict(recipeName, dietaryStyle, null)) {
-      console.log(`[MealPlanGenerator] Excluding "${recipeName}" - conflicts with ${dietaryStyle} diet`)
       return true
     }
 
@@ -539,7 +518,6 @@ class FatSecretMealPlanService {
       for (const ingredient of params.excludeIngredients) {
         const ingredientLower = ingredient.toLowerCase().trim()
         if (ingredientLower && recipeNameLower.includes(ingredientLower)) {
-          console.log(`[MealPlanGenerator] Excluding "${recipeName}" - contains avoided ingredient: ${ingredient}`)
           return true
         }
       }
@@ -598,13 +576,13 @@ class FatSecretMealPlanService {
         case 'vegetarian':
           for (const meat of meatProteins) {
             if (fullSearchText.includes(meat)) {
-              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${meat} (vegetarian diet)`)
+              // Ingredient conflict detected
               return true
             }
           }
           for (const seafood of seafoodProteins) {
             if (fullSearchText.includes(seafood)) {
-              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${seafood} (vegetarian diet)`)
+              // Ingredient conflict detected
               return true
             }
           }
@@ -613,7 +591,7 @@ class FatSecretMealPlanService {
         case 'vegan':
           for (const animal of animalProducts) {
             if (fullSearchText.includes(animal)) {
-              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${animal} (vegan diet)`)
+              // Ingredient conflict detected
               return true
             }
           }
@@ -622,7 +600,7 @@ class FatSecretMealPlanService {
         case 'pescatarian':
           for (const meat of meatProteins) {
             if (fullSearchText.includes(meat)) {
-              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${meat} (pescatarian diet)`)
+              // Ingredient conflict detected
               return true
             }
           }
@@ -632,7 +610,7 @@ class FatSecretMealPlanService {
           // Keto avoids high-carb foods
           for (const food of KETO_AVOID_FOODS) {
             if (fullSearchText.includes(food)) {
-              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${food} (keto diet)`)
+              // Ingredient conflict detected
               return true
             }
           }
@@ -642,7 +620,7 @@ class FatSecretMealPlanService {
           // Paleo avoids grains, legumes, dairy, processed foods
           for (const food of PALEO_AVOID_FOODS) {
             if (fullSearchText.includes(food)) {
-              console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains ${food} (paleo diet)`)
+              // Ingredient conflict detected
               return true
             }
           }
@@ -660,7 +638,6 @@ class FatSecretMealPlanService {
       for (const excluded of params.excludeIngredients) {
         const excludedLower = excluded.toLowerCase().trim()
         if (excludedLower && fullSearchText.includes(excludedLower)) {
-          console.log(`[MealPlanGenerator] Ingredient conflict: "${recipe.title}" contains avoided "${excluded}"`)
           return true
         }
       }
