@@ -30,6 +30,7 @@ export default function Verify2FAPage() {
   useEffect(() => {
     const pending = sessionStorage.getItem('pending2FA')
     if (!pending) {
+      sessionStorage.removeItem('pendingPassword')
       router.push('/login')
       return
     }
@@ -45,6 +46,7 @@ export default function Verify2FAPage() {
         setMethod(methods.preferred || (methods.totp ? 'totp' : 'email'))
       })
     } catch {
+      sessionStorage.removeItem('pendingPassword')
       router.push('/login')
     }
   }, [router])
@@ -130,27 +132,36 @@ export default function Verify2FAPage() {
     }
 
     if (result.usedBackupCode) {
-      // Show warning that backup code was used
-      console.log('Backup code used')
+      // Backup code was used - user should be aware their codes are depleting
     }
 
     // Clear pending 2FA data
     sessionStorage.removeItem('pending2FA')
 
     // Re-authenticate with Supabase to complete login
-    // The user credentials should still be valid after 2FA verification
     if (email) {
-      // Sign in again to complete the session
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password: sessionStorage.getItem('pendingPassword') || '',
-      })
-
+      const password = sessionStorage.getItem('pendingPassword')
+      // Clear stored password immediately before use
       sessionStorage.removeItem('pendingPassword')
 
+      if (!password) {
+        setError('Session expired. Please log in again.')
+        setLoading(false)
+        router.push('/login')
+        return
+      }
+
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
       if (signInError) {
-        // If re-auth fails, just redirect to dashboard anyway
-        // The session should be valid from the initial login attempt
+        // If re-auth fails, redirect to login to start fresh
+        setError('Authentication failed. Please log in again.')
+        setLoading(false)
+        router.push('/login')
+        return
       }
     }
 

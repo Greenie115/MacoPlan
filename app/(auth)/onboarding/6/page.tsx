@@ -97,13 +97,14 @@ export default function MacroResultsPage() {
     const result = await createUserProfile(profileData)
 
     if (result.error) {
-      console.error('Error saving profile:', result.error)
       toast.error(result.error)
       throw new Error(result.error)
     }
 
     // Clear localStorage after successful save
-    localStorage.removeItem('onboarding-storage')
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('onboarding-storage')
+    }
     store.resetOnboarding()
   }
 

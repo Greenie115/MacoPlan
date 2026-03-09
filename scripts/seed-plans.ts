@@ -3,6 +3,12 @@ import dotenv from 'dotenv'
 
 dotenv.config({ path: '.env.local' })
 
+// WARNING: This seed script must NEVER be run in production environments.
+if (process.env.NODE_ENV === 'production') {
+  console.error('Never run seed scripts in production!')
+  process.exit(1)
+}
+
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -135,7 +141,7 @@ async function seedPlans() {
     console.log('No users found. Creating a test user...')
     const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
       email: 'testuser@macoplan.com',
-      password: 'password123',
+      password: process.env.SEED_TEST_PASSWORD || 'CHANGE_ME_IN_ENV',
       email_confirm: true
     })
     

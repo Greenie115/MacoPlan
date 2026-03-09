@@ -43,7 +43,7 @@ export default function PersonalStatsPage() {
       return
     }
     setIsValidating(false)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional mount-only step guard
 
   const form = useForm<PersonalStatsForm>({
     resolver: zodResolver(personalStatsSchema),

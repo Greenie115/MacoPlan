@@ -404,7 +404,7 @@ function MealPlanCard({
               {image.hasImage && image.src ? (
                 <Image
                   src={image.src}
-                  alt=""
+                  alt={`Meal preview - ${image.mealType || 'recipe'}`}
                   fill
                   sizes="100px"
                   className="object-cover"

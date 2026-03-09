@@ -98,7 +98,7 @@ export default function ExperienceLevelPage() {
       return
     }
     setIsValidating(false)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional mount-only step guard
 
   const [localFitnessExperience, setLocalFitnessExperience] =
     useState<ExperienceLevel | null>(fitnessExperience)

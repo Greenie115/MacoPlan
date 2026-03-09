@@ -55,7 +55,7 @@ export default function DietaryPreferencesPage() {
       return
     }
     setIsValidating(false)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional mount-only step guard
 
   const [localDietaryStyle, setLocalDietaryStyle] = useState<DietaryStyle | null>(
     dietaryStyle
