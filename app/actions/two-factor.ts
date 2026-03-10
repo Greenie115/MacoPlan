@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createServiceRoleClient } from '@/lib/supabase/server'
 import {
   generateTOTPSecret,
   generateTOTPUri,
@@ -220,10 +220,11 @@ export async function send2FAVerificationCode(
     }
   }
 
-  const supabase = await createClient()
+  // Use service role client — user isn't fully authenticated during login 2FA flow
+  const supabase = createServiceRoleClient()
 
   if (method === 'email') {
-    // Get user email
+    // Get user email (requires admin/service role)
     const { data: userData } = await supabase.auth.admin.getUserById(userId)
 
     if (!userData?.user?.email) {
@@ -284,7 +285,8 @@ export async function verify2FALogin(
     return { error: `Too many verification attempts. Try again in ${rateLimit.minutesLeft} minutes.` }
   }
 
-  const supabase = await createClient()
+  // Use service role client — user isn't fully authenticated during login 2FA flow
+  const supabase = createServiceRoleClient()
 
   if (method === 'totp') {
     // Get TOTP secret

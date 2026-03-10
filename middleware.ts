@@ -5,6 +5,11 @@ export async function middleware(request: NextRequest) {
   // Update session and get user
   const { response, user, onboardingCompleted } = await updateSession(request)
 
+  // API routes handle their own auth (e.g., Stripe webhooks verify signatures)
+  if (request.nextUrl.pathname.startsWith('/api/')) {
+    return response
+  }
+
   // Define public routes that don't require auth
   const isPublicRoute =
     request.nextUrl.pathname === '/' ||
@@ -15,6 +20,9 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/auth') ||
     request.nextUrl.pathname.startsWith('/blog') ||
     request.nextUrl.pathname.startsWith('/pricing') ||
+    request.nextUrl.pathname.startsWith('/help') ||
+    request.nextUrl.pathname.startsWith('/terms') ||
+    request.nextUrl.pathname.startsWith('/privacy') ||
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.includes('.') // static files like favicon.ico
 

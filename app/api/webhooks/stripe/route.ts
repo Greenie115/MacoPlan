@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createServiceRoleClient } from '@/lib/supabase/server'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Idempotency check — skip already-processed events
-    const supabaseAdmin = await createClient()
+    const supabaseAdmin = createServiceRoleClient()
     const { data: existingEvent } = await supabaseAdmin
       .from('webhook_events')
       .select('id')
@@ -127,7 +127,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const subscription = await stripe!.subscriptions.retrieve(subscriptionId)
   const period = getSubscriptionPeriod(subscription)
 
-  const supabase = await createClient()
+  const supabase = createServiceRoleClient()
 
   // Update user profile with subscription info
   const { error } = await supabase
@@ -157,7 +157,7 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
     return
   }
 
-  const supabase = await createClient()
+  const supabase = createServiceRoleClient()
 
   const period = getSubscriptionPeriod(subscription)
 
@@ -182,7 +182,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const userId = subscription.metadata?.supabase_user_id
   if (!userId) {
     // Try to find user by customer ID
-    const supabase = await createClient()
+    const supabase = createServiceRoleClient()
     const { data: profile } = await supabase
       .from('user_profiles')
       .select('user_id')
@@ -202,7 +202,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
-  const supabase = await createClient()
+  const supabase = createServiceRoleClient()
 
   // Find user by subscription ID or customer ID
   let userId = subscription.metadata?.supabase_user_id
@@ -252,7 +252,7 @@ async function handleInvoicePaid(invoice: Stripe.Invoice) {
 
   const userId = subscription.metadata?.supabase_user_id
   if (!userId) {
-    const supabase = await createClient()
+    const supabase = createServiceRoleClient()
     const { data: profile } = await supabase
       .from('user_profiles')
       .select('user_id')
@@ -279,7 +279,7 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   // Get subscription to check status
   const subscription = await stripe!.subscriptions.retrieve(subscriptionId)
 
-  const supabase = await createClient()
+  const supabase = createServiceRoleClient()
 
   // Find user and update status
   const { data: profile } = await supabase
@@ -313,7 +313,7 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
 // ============================================================================
 
 async function updateSubscriptionInDb(userId: string, subscription: Stripe.Subscription) {
-  const supabase = await createClient()
+  const supabase = createServiceRoleClient()
   const period = getSubscriptionPeriod(subscription)
 
   const { error } = await supabase
@@ -333,7 +333,7 @@ async function updateSubscriptionInDb(userId: string, subscription: Stripe.Subsc
 }
 
 async function resetQuotaForUser(userId: string, subscriptionId: string, subscription: Stripe.Subscription) {
-  const supabase = await createClient()
+  const supabase = createServiceRoleClient()
   const period = getSubscriptionPeriod(subscription)
 
   // Reset quota for new billing period
