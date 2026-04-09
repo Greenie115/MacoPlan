@@ -178,8 +178,9 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key  # For middleware only
 
 Required for recipes/meal plans:
 ```
-RECIPE_API_KEY=your-recipe-api-key          # From recipe-api.com
+RECIPE_API_KEY=your-recipe-api-key          # From recipe-api.com (still used for /recipes browse)
 UNSPLASH_ACCESS_KEY=your-unsplash-key       # From unsplash.com/developers
+ANTHROPIC_API_KEY=sk-ant-...                # From console.anthropic.com (batch prep generation)
 ```
 
 Optional:
