@@ -1,7 +1,7 @@
 /**
  * Recipe Search Cache
  *
- * Implements intelligent caching to reduce FatSecret API costs:
+ * Implements intelligent caching to reduce Recipe-API.com costs:
  * - In-memory LRU cache for filter combinations
  * - 30-minute cache duration (balances freshness vs cost)
  * - Deduplicates concurrent requests

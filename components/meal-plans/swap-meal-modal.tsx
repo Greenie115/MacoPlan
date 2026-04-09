@@ -4,7 +4,7 @@
  * Swap Meal Modal Component
  *
  * Allows users to swap a meal in their meal plan with an alternative
- * from FatSecret API matching their calorie/macro targets
+ * from Recipe-API.com matching their calorie/macro targets
  */
 
 import { useState, useEffect } from 'react'
@@ -305,16 +305,6 @@ export function SwapMealModal({
           </button>
         </div>
 
-        {/* FatSecret Attribution - Required by API Terms */}
-        <div className="pt-3 flex justify-center border-t border-border">
-          <a href="https://www.fatsecret.com" target="_blank" rel="noopener noreferrer">
-            <img
-              src="https://platform.fatsecret.com/api/static/images/powered_by_fatsecret.svg"
-              alt="Powered by fatsecret"
-              className="h-4 opacity-40 hover:opacity-100 transition-opacity"
-            />
-          </a>
-        </div>
       </div>
     </div>
   )

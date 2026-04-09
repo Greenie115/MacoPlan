@@ -1,29 +1,31 @@
 'use server'
 
 /**
- * FatSecret Recipe Server Actions
+ * Recipe Search Server Actions
  *
- * Server-side actions for searching and retrieving recipe data from FatSecret API
+ * Server-side actions for searching and retrieving recipe data
+ * from Recipe-API.com + Unsplash images.
  */
 
-import { fatSecretService } from '@/lib/services/fatsecret'
-import { fatSecretMealPlanService } from '@/lib/services/fatsecret-meal-plans'
+import { recipeApiService } from '@/lib/services/recipe-api'
+import { unsplashService } from '@/lib/services/unsplash'
+import { mealPlanGeneratorService } from '@/lib/services/meal-plan-generator'
 import type {
-  FatSecretRecipeSearchParams,
   NormalizedRecipe,
   DailyMealPlan,
   WeeklyMealPlan,
   MealPlanGenerationParams,
-} from '@/lib/types/fatsecret'
+} from '@/lib/types/recipe'
+import type { RecipeApiSearchParams } from '@/lib/types/recipe-api'
 
 // ============================================================================
 // Recipe Search Actions
 // ============================================================================
 
 /**
- * Search for recipes in the FatSecret database
+ * Search for recipes via Recipe-API.com
  */
-export async function searchRecipes(params: FatSecretRecipeSearchParams): Promise<{
+export async function searchRecipes(params: RecipeApiSearchParams): Promise<{
   success: boolean
   data?: {
     recipes: Array<{
@@ -42,38 +44,33 @@ export async function searchRecipes(params: FatSecretRecipeSearchParams): Promis
   error?: string
 }> {
   try {
-    const response = await fatSecretService.searchRecipes(params)
+    const response = await recipeApiService.searchRecipes(params)
 
-    if (!response.recipes?.recipe) {
+    if (!response.data || response.data.length === 0) {
       return {
         success: true,
         data: {
           recipes: [],
           totalResults: 0,
-          page: params.page_number || 0,
+          page: params.page || 1,
         },
       }
     }
 
-    const recipes = Array.isArray(response.recipes.recipe)
-      ? response.recipes.recipe
-      : [response.recipes.recipe]
+    // Fetch images for all results in parallel
+    const imageMap = await unsplashService.getImagesForRecipes(
+      response.data.map(r => ({ id: r.id, name: r.name }))
+    )
 
     return {
       success: true,
       data: {
-        recipes: recipes.map(r => ({
-          id: r.recipe_id,
-          title: r.recipe_name,
-          description: r.recipe_description || '',
-          imageUrl: r.recipe_image || null,
-          calories: r.recipe_nutrition ? parseFloat(r.recipe_nutrition.calories) : 0,
-          protein: r.recipe_nutrition ? parseFloat(r.recipe_nutrition.protein) : 0,
-          carbs: r.recipe_nutrition ? parseFloat(r.recipe_nutrition.carbohydrate) : 0,
-          fat: r.recipe_nutrition ? parseFloat(r.recipe_nutrition.fat) : 0,
-        })),
-        totalResults: parseInt(response.recipes.total_results),
-        page: params.page_number || 0,
+        recipes: response.data.map(r => {
+          const image = imageMap.get(r.id)
+          return recipeApiService.normalizeListItem(r, image?.url || null)
+        }),
+        totalResults: response.meta.total,
+        page: params.page || 1,
       },
     }
   } catch (error) {
@@ -94,7 +91,7 @@ export async function getRecipeDetails(recipeId: string): Promise<{
   error?: string
 }> {
   try {
-    const recipe = await fatSecretService.getRecipeDetails(recipeId)
+    const recipe = await recipeApiService.getRecipeDetails(recipeId)
 
     if (!recipe) {
       return {
@@ -103,9 +100,12 @@ export async function getRecipeDetails(recipeId: string): Promise<{
       }
     }
 
+    // Fetch image
+    const image = await unsplashService.getImageForRecipe(recipeId, recipe.name)
+
     return {
       success: true,
-      data: fatSecretService.normalizeRecipe(recipe),
+      data: recipeApiService.normalizeRecipe(recipe, image?.url || null),
     }
   } catch (error) {
     console.error('[getRecipeDetails] Error:', error)
@@ -128,9 +128,10 @@ export async function getMultipleRecipes(recipeIds: string[]): Promise<{
     const recipes: NormalizedRecipe[] = []
 
     for (const id of recipeIds) {
-      const recipe = await fatSecretService.getRecipeDetails(id)
+      const recipe = await recipeApiService.getRecipeDetails(id)
       if (recipe) {
-        recipes.push(fatSecretService.normalizeRecipe(recipe))
+        const image = await unsplashService.getImageForRecipe(id, recipe.name)
+        recipes.push(recipeApiService.normalizeRecipe(recipe, image?.url || null))
       }
     }
 
@@ -168,7 +169,7 @@ export async function generateDailyMealPlan(params: {
   error?: string
 }> {
   try {
-    const mealPlan = await fatSecretMealPlanService.generateMealPlan({
+    const mealPlan = await mealPlanGeneratorService.generateMealPlan({
       ...params,
       mealsPerDay: params.mealsPerDay || 4,
       days: 1,
@@ -205,7 +206,7 @@ export async function generateWeeklyMealPlan(params: {
   error?: string
 }> {
   try {
-    const mealPlan = await fatSecretMealPlanService.generateMealPlan({
+    const mealPlan = await mealPlanGeneratorService.generateMealPlan({
       ...params,
       mealsPerDay: params.mealsPerDay || 4,
       days: params.days || 7,
@@ -229,8 +230,7 @@ export async function generateWeeklyMealPlan(params: {
 // ============================================================================
 
 /**
- * Get available recipe type filters dynamically from FatSecret API
- * Results are cached in-memory for 24 hours
+ * Get available recipe category filters from Recipe-API.com
  */
 export async function getRecipeTypeFilters(): Promise<{
   success: boolean
@@ -238,16 +238,19 @@ export async function getRecipeTypeFilters(): Promise<{
   error?: string
 }> {
   try {
-    const types = await fatSecretService.getRecipeTypes()
+    const categories = await recipeApiService.getCategories()
     return {
       success: true,
-      data: types,
+      data: categories.map(c => ({
+        value: c.name,
+        label: `${c.name} (${c.count})`,
+      })),
     }
   } catch (error) {
     console.error('[getRecipeTypeFilters] Error:', error)
     return {
       success: false,
-      error: 'Failed to fetch recipe types',
+      error: 'Failed to fetch recipe categories',
     }
   }
 }

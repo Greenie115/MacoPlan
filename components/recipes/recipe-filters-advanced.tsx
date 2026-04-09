@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * Advanced Recipe Filters Component for FatSecret API
+ * Advanced Recipe Filters Component for Recipe-API.com
  *
  * Filters:
  * - Recipe types (multi-select, dynamically fetched)
@@ -18,7 +18,7 @@ import { X, Filter, ChevronDown, ChevronUp, Image as ImageIcon, SlidersHorizonta
 import { Checkbox } from '@/components/ui/checkbox'
 import { cn } from '@/lib/utils'
 import { FILTER_LIMITS, ALLOWED_SORT_OPTIONS, type SortOption } from '@/lib/utils/filter-validation'
-import { getRecipeTypeFilters, getSortOptions } from '@/app/actions/fatsecret-recipes'
+import { getRecipeTypeFilters, getSortOptions } from '@/app/actions/recipe-search'
 
 // Types for recipe type options
 interface RecipeTypeOption {

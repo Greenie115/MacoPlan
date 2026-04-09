@@ -1,6 +1,6 @@
 /**
  * Recipe Type Definitions
- * TypeScript interfaces for the MacroPlan recipe system
+ * TypeScript interfaces for the Macro Plan recipe system
  */
 
 export interface Recipe {
@@ -108,4 +108,130 @@ export interface RecipeMacros {
   protein: number
   carbs: number
   fat: number
+}
+
+// ============================================================================
+// Normalized Types (Provider-agnostic)
+// Used throughout the app for recipe data from any external API
+// ============================================================================
+
+/**
+ * Normalized recipe format for consistent handling in the app
+ */
+export interface NormalizedRecipe {
+  id: string
+  source: 'recipe-api' | 'fatsecret'
+  title: string
+  description: string
+  imageUrl: string | null
+  sourceUrl: string
+  servings: number
+  prepTimeMinutes: number | null
+  cookTimeMinutes: number | null
+  totalTimeMinutes: number | null
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
+  fiber: number | null
+  sugar: number | null
+  ingredients: NormalizedIngredient[]
+  instructions: NormalizedInstruction[]
+  categories: string[]
+  recipeTypes: string[]
+  rating: number | null
+}
+
+export interface NormalizedIngredient {
+  foodId: string
+  name: string
+  amount: number
+  unit: string
+  description: string
+}
+
+export interface NormalizedInstruction {
+  stepNumber: number
+  instruction: string
+}
+
+/**
+ * Normalized serving/nutrition format
+ */
+export interface NormalizedNutrition {
+  servingDescription: string
+  servingSize: number | null
+  servingUnit: string | null
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
+  fiber: number | null
+  sugar: number | null
+  sodium: number | null
+  saturatedFat: number | null
+  cholesterol: number | null
+}
+
+// ============================================================================
+// Meal Plan Types
+// ============================================================================
+
+export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack'
+
+export interface MealSlot {
+  type: MealType
+  recipe: NormalizedRecipe | null
+  targetCalories: number
+  targetProtein: number
+}
+
+export interface DailyMealPlan {
+  date: string
+  meals: MealSlot[]
+  totalCalories: number
+  totalProtein: number
+  totalCarbs: number
+  totalFat: number
+}
+
+export interface WeeklyMealPlan {
+  startDate: string
+  days: DailyMealPlan[]
+  averageCalories: number
+  averageProtein: number
+  averageCarbs: number
+  averageFat: number
+}
+
+export interface MealPlanGenerationParams {
+  targetCalories: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
+  mealsPerDay: number // 3-6
+  days: number // 1-7
+  dietaryPreferences?: string[]
+  excludeIngredients?: string[]
+}
+
+// ============================================================================
+// Utility Functions
+// ============================================================================
+
+/**
+ * Helper to ensure arrays (some APIs return single objects when only 1 result)
+ */
+export function ensureArray<T>(value: T | T[] | undefined): T[] {
+  if (value === undefined) return []
+  return Array.isArray(value) ? value : [value]
+}
+
+/**
+ * Parse string number to number, with fallback
+ */
+export function parseNumber(value: string | undefined, fallback: number = 0): number {
+  if (value === undefined) return fallback
+  const parsed = parseFloat(value)
+  return isNaN(parsed) ? fallback : parsed
 }

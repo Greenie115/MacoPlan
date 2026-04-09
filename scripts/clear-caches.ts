@@ -5,7 +5,7 @@
  *
  * This script clears:
  * 1. Server-side in-memory recipe cache (by importing and calling clearCache)
- * 2. Database FatSecret cache tables
+ * 2. Database Recipe-API.com cache tables
  */
 
 import * as dotenv from 'dotenv'
@@ -25,8 +25,8 @@ async function clearAllCaches() {
   clearCache()
   console.log('   ✅ In-memory cache cleared\n')
 
-  // 2. Clear database FatSecret cache
-  console.log('2. Clearing database FatSecret cache...')
+  // 2. Clear database Recipe-API cache
+  console.log('2. Clearing database recipe cache...')
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -37,13 +37,13 @@ async function clearAllCaches() {
   } else {
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Clear FatSecret search cache
+    // Clear search cache
     const { count: searchCacheCount } = await supabase
-      .from('fatsecret_search_cache')
+      .from('recipe_api_search_cache')
       .select('*', { count: 'exact', head: true })
 
     const { error: searchError } = await supabase
-      .from('fatsecret_search_cache')
+      .from('recipe_api_search_cache')
       .delete()
       .neq('id', '00000000-0000-0000-0000-000000000000')
 
@@ -53,20 +53,36 @@ async function clearAllCaches() {
       console.log(`   ✅ Cleared ${searchCacheCount || 0} search cache entries`)
     }
 
-    // Clear FatSecret recipes cache
+    // Clear recipe details cache
     const { count: recipesCount } = await supabase
-      .from('fatsecret_recipes')
+      .from('recipe_api_cache')
       .select('*', { count: 'exact', head: true })
 
     const { error: recipesError } = await supabase
-      .from('fatsecret_recipes')
+      .from('recipe_api_cache')
       .delete()
       .neq('id', '00000000-0000-0000-0000-000000000000')
 
     if (recipesError) {
       console.log('   ⚠️ Error clearing recipes cache:', recipesError.message)
     } else {
-      console.log(`   ✅ Cleared ${recipesCount || 0} cached recipes\n`)
+      console.log(`   ✅ Cleared ${recipesCount || 0} cached recipes`)
+    }
+
+    // Clear image cache
+    const { count: imagesCount } = await supabase
+      .from('recipe_images')
+      .select('*', { count: 'exact', head: true })
+
+    const { error: imagesError } = await supabase
+      .from('recipe_images')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000')
+
+    if (imagesError) {
+      console.log('   ⚠️ Error clearing images cache:', imagesError.message)
+    } else {
+      console.log(`   ✅ Cleared ${imagesCount || 0} cached images\n`)
     }
   }
 

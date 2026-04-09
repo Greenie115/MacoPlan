@@ -32,7 +32,7 @@ async function getFavoritesCount(userId: string): Promise<number> {
   const supabase = await createClient()
 
   const { count, error } = await supabase
-    .from('user_fatsecret_favorites')
+    .from('user_recipe_favorites')
     .select('*', { count: 'exact', head: true })
     .eq('user_id', userId)
 

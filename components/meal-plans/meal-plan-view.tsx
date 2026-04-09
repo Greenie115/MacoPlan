@@ -585,8 +585,8 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                           onClick={(e) => {
                             e.stopPropagation()
                             // Pass mealId so recipe page can link back to this meal plan entry
-                            if (meal.fatsecret_id) {
-                              router.push(`/recipes/fatsecret/${meal.fatsecret_id}?mealId=${meal.id}`)
+                            if (meal.recipe_api_id) {
+                              router.push(`/recipes/${meal.recipe_api_id}?mealId=${meal.id}`)
                             } else if (meal.recipe_id) {
                               router.push(`/recipes/${meal.recipe_id}?mealId=${meal.id}`)
                             }
@@ -618,16 +618,6 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
                     </div>
                   </div>
                 ))}
-            {/* FatSecret Attribution - Required by API Terms */}
-            <div className="px-4 pb-8 lg:px-0 flex justify-center">
-              <a href="https://www.fatsecret.com" target="_blank" rel="noopener noreferrer">
-                <img
-                  src="https://platform.fatsecret.com/api/static/images/powered_by_fatsecret.svg"
-                  alt="Powered by fatsecret"
-                  className="h-4 opacity-40 hover:opacity-100 transition-opacity"
-                />
-              </a>
-            </div>
             </div>
           </main>
         </div>
@@ -656,7 +646,7 @@ export default function MealPlanView({ plan, meals }: MealPlanViewProps) {
             setMealToLog(null)
           }}
           recipe={{
-            id: '', // Meal plan meals use FatSecret IDs which aren't UUIDs, so we don't link to recipe
+            id: '', // Meal plan meals use Recipe-API IDs which aren't UUIDs, so we don't link to recipe
             name: mealToLog.recipe_title,
             calories: Math.round((mealToLog.calories || 0) * getMultiplier(mealToLog.id)),
             protein_grams: Math.round((mealToLog.protein_grams || 0) * getMultiplier(mealToLog.id)),

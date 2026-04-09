@@ -4,7 +4,7 @@ import { Recipe } from '@/lib/types/recipe'
 import { RecipeCard } from './recipe-card'
 
 interface RecipeGridProps {
-  recipes: (Recipe | any)[] // Allow both local Recipe and FatSecret recipes
+  recipes: (Recipe | any)[] // Allow both local Recipe and Recipe-API recipes
   favoriteIds: (string | number)[]
 }
 

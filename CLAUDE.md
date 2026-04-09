@@ -84,13 +84,36 @@ export function MyComponent() {
 - Protects routes: redirects unauthenticated users from `/dashboard`, `/plans`, etc.
 - Redirects authenticated users away from `/login`, `/signup`, `/` to `/dashboard`
 
+### Recipe & Meal Plan APIs
+
+**Recipe-API.com** (`lib/services/recipe-api.ts`):
+- Simple `X-API-Key` header auth (Vercel-compatible, no IP restrictions)
+- Singleton: `recipeApiService` (lazy-initialized)
+- Normalizes responses to `NormalizedRecipe` interface (`lib/types/recipe.ts`)
+- Supabase-backed caching: 7 days search, 30 days details
+- Request deduplication via `inflightRequests` Map
+
+**Unsplash** (`lib/services/unsplash.ts`):
+- `Client-ID` header auth, 50 req/hr free tier
+- Singleton: `unsplashService` (lazy-initialized)
+- Permanent image caching in `recipe_images` table
+- Attribution required: "Photo by {name} on Unsplash"
+
+**Meal Plan Generator** (`lib/services/meal-plan-generator.ts`):
+- Generates daily/weekly meal plans using Recipe-API.com search
+- Dietary search prefixes, scoring, conflict detection
+
 ### Database Schema
 
 **Key Tables**:
 - `user_profiles`: All onboarding data, macros, experience levels
 - `recipes`: Recipe catalog (title, ingredients, instructions, nutritional info)
 - `meal_plans`: User-generated meal plans
-- `meal_plan_recipes`: Junction table linking plans to recipes
+- `meal_plan_meals`: Links meals to recipes (has `recipe_api_id` column)
+- `user_recipe_favorites`: User's saved external recipes (column: `recipe_id`)
+- `recipe_api_cache`: Cached Recipe-API.com recipe details (30 day TTL)
+- `recipe_api_search_cache`: Cached search results (7 day TTL)
+- `recipe_images`: Permanently cached Unsplash image URLs
 
 **Row Level Security**: All tables use RLS with `auth.uid() = user_id` policies. Users can ONLY access their own data.
 
@@ -153,6 +176,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key  # For middleware only
 ```
 
+Required for recipes/meal plans:
+```
+RECIPE_API_KEY=your-recipe-api-key          # From recipe-api.com
+UNSPLASH_ACCESS_KEY=your-unsplash-key       # From unsplash.com/developers
+```
+
 Optional:
 ```
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
@@ -184,6 +213,12 @@ STRIPE_SECRET_KEY=sk_test_...
 - `middleware.ts`: Route protection logic
 - `app/actions/profile.ts`: Example server action with full error handling
 - `supabase/migrations/001_create_user_profiles.sql`: Database schema and RLS policies
+- `lib/services/recipe-api.ts`: Recipe-API.com service with caching
+- `lib/services/unsplash.ts`: Unsplash image service
+- `lib/services/meal-plan-generator.ts`: Meal plan generation engine
+- `app/actions/recipe-search.ts`: Recipe search server actions
+- `lib/types/recipe.ts`: Provider-agnostic recipe types (`NormalizedRecipe`)
+- `lib/types/recipe-api.ts`: Recipe-API.com response types
 
 ### Styling
 

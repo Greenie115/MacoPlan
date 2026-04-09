@@ -1,5 +1,5 @@
 /**
- * Centralized Filter Validation Utility for FatSecret API
+ * Centralized Filter Validation Utility for Recipe-API.com
  *
  * Validates and sanitizes recipe filter parameters from URL to prevent:
  * - XSS injection attacks
@@ -8,13 +8,13 @@
  * - API quota exhaustion
  */
 
-import type { FatSecretRecipeSearchParams } from '@/lib/types/fatsecret'
+import type { RecipeApiSearchParams } from '@/lib/types/recipe-api'
 
 // ============================================================================
 // Allowed Values
 // ============================================================================
 
-// Sort options supported by FatSecret API
+// Sort options
 export const ALLOWED_SORT_OPTIONS = [
   'newest',
   'oldest',
@@ -96,9 +96,9 @@ function validateBoolean(value: string | undefined): boolean | undefined {
 // ============================================================================
 
 /**
- * URL parameter names for FatSecret filters
+ * URL parameter names for recipe filters
  */
-export interface FatSecretFilterParams {
+export interface RecipeFilterParams {
   search?: string
   recipeTypes?: string
   caloriesFrom?: string
@@ -116,57 +116,59 @@ export interface FatSecretFilterParams {
   page?: string
 }
 
+// Backward compat alias
+export type RecipeAPIFilterParams = RecipeFilterParams
+
 /**
  * Validated and sanitized filter values ready for API
  */
 export interface ValidatedFilters {
-  search_expression?: string
-  recipe_types?: string
-  calories_from?: number
-  calories_to?: number
-  protein_percentage_from?: number
-  protein_percentage_to?: number
-  carb_percentage_from?: number
-  carb_percentage_to?: number
-  fat_percentage_from?: number
-  fat_percentage_to?: number
-  prep_time_from?: number
-  prep_time_to?: number
+  q?: string
+  category?: string
+  min_calories?: number
+  max_calories?: number
+  min_protein?: number
+  max_protein?: number
+  min_carbs?: number
+  max_carbs?: number
+  min_fat?: number
+  max_fat?: number
   must_have_images?: boolean
   sort_by?: SortOption
-  page_number?: number
+  page?: number
+  per_page?: number
 }
 
 /**
- * Main validation function for FatSecret recipe filter parameters
+ * Main validation function for recipe filter parameters
  *
  * @param params - Raw URL search parameters
- * @returns Validated and sanitized filter values for FatSecret API
+ * @returns Validated and sanitized filter values for Recipe-API.com
  */
-export function validateRecipeFilters(params: FatSecretFilterParams): ValidatedFilters {
+export function validateRecipeFilters(params: RecipeFilterParams): ValidatedFilters {
   const validated: ValidatedFilters = {}
 
-  // Search expression - basic sanitization (no script tags, etc.)
+  // Search query - basic sanitization (no script tags, etc.)
   if (params.search) {
     const sanitized = params.search
       .replace(/<[^>]*>/g, '') // Remove HTML tags
       .trim()
       .slice(0, 200) // Limit length
     if (sanitized.length > 0) {
-      validated.search_expression = sanitized
+      validated.q = sanitized
     }
   }
 
-  // Recipe types
-  validated.recipe_types = validateRecipeTypes(params.recipeTypes)
+  // Category (recipe types)
+  validated.category = validateRecipeTypes(params.recipeTypes)
 
   // Calorie range
-  validated.calories_from = validateNumber(
+  validated.min_calories = validateNumber(
     params.caloriesFrom,
     FILTER_LIMITS.minCalories,
     FILTER_LIMITS.maxCalories
   )
-  validated.calories_to = validateNumber(
+  validated.max_calories = validateNumber(
     params.caloriesTo,
     FILTER_LIMITS.minCalories,
     FILTER_LIMITS.maxCalories
@@ -174,62 +176,50 @@ export function validateRecipeFilters(params: FatSecretFilterParams): ValidatedF
 
   // Ensure from <= to
   if (
-    validated.calories_from !== undefined &&
-    validated.calories_to !== undefined &&
-    validated.calories_from > validated.calories_to
+    validated.min_calories !== undefined &&
+    validated.max_calories !== undefined &&
+    validated.min_calories > validated.max_calories
   ) {
-    ;[validated.calories_from, validated.calories_to] = [
-      validated.calories_to,
-      validated.calories_from,
+    ;[validated.min_calories, validated.max_calories] = [
+      validated.max_calories,
+      validated.min_calories,
     ]
   }
 
-  // Protein percentage range
-  validated.protein_percentage_from = validateNumber(
+  // Protein range (grams, not percentage)
+  validated.min_protein = validateNumber(
     params.proteinFrom,
     FILTER_LIMITS.minPercentage,
     FILTER_LIMITS.maxPercentage
   )
-  validated.protein_percentage_to = validateNumber(
+  validated.max_protein = validateNumber(
     params.proteinTo,
     FILTER_LIMITS.minPercentage,
     FILTER_LIMITS.maxPercentage
   )
 
-  // Carbs percentage range
-  validated.carb_percentage_from = validateNumber(
+  // Carbs range
+  validated.min_carbs = validateNumber(
     params.carbsFrom,
     FILTER_LIMITS.minPercentage,
     FILTER_LIMITS.maxPercentage
   )
-  validated.carb_percentage_to = validateNumber(
+  validated.max_carbs = validateNumber(
     params.carbsTo,
     FILTER_LIMITS.minPercentage,
     FILTER_LIMITS.maxPercentage
   )
 
-  // Fat percentage range
-  validated.fat_percentage_from = validateNumber(
+  // Fat range
+  validated.min_fat = validateNumber(
     params.fatFrom,
     FILTER_LIMITS.minPercentage,
     FILTER_LIMITS.maxPercentage
   )
-  validated.fat_percentage_to = validateNumber(
+  validated.max_fat = validateNumber(
     params.fatTo,
     FILTER_LIMITS.minPercentage,
     FILTER_LIMITS.maxPercentage
-  )
-
-  // Prep time range
-  validated.prep_time_from = validateNumber(
-    params.prepTimeFrom,
-    FILTER_LIMITS.minPrepTime,
-    FILTER_LIMITS.maxPrepTime
-  )
-  validated.prep_time_to = validateNumber(
-    params.prepTimeTo,
-    FILTER_LIMITS.minPrepTime,
-    FILTER_LIMITS.maxPrepTime
   )
 
   // Must have images
@@ -238,35 +228,32 @@ export function validateRecipeFilters(params: FatSecretFilterParams): ValidatedF
   // Sort option
   validated.sort_by = validateSortOption(params.sortBy)
 
-  // Page number (0-indexed for API)
-  const page = validateNumber(params.page, 0, 1000)
-  if (page !== undefined && page > 0) {
-    validated.page_number = page - 1 // Convert to 0-indexed
+  // Page number (1-indexed for Recipe-API.com)
+  const page = validateNumber(params.page, 1, 1000)
+  if (page !== undefined) {
+    validated.page = page
   }
 
   return validated
 }
 
 /**
- * Convert validated filters to FatSecretRecipeSearchParams
+ * Convert validated filters to RecipeApiSearchParams
  */
-export function toSearchParams(filters: ValidatedFilters): FatSecretRecipeSearchParams {
+export function toSearchParams(filters: ValidatedFilters): RecipeApiSearchParams {
   return {
-    search_expression: filters.search_expression,
-    recipe_types: filters.recipe_types,
-    calories_from: filters.calories_from,
-    calories_to: filters.calories_to,
-    protein_percentage_from: filters.protein_percentage_from,
-    protein_percentage_to: filters.protein_percentage_to,
-    carb_percentage_from: filters.carb_percentage_from,
-    carb_percentage_to: filters.carb_percentage_to,
-    fat_percentage_from: filters.fat_percentage_from,
-    fat_percentage_to: filters.fat_percentage_to,
-    prep_time_from: filters.prep_time_from,
-    prep_time_to: filters.prep_time_to,
-    must_have_images: filters.must_have_images,
-    sort_by: filters.sort_by,
-    page_number: filters.page_number,
+    q: filters.q,
+    category: filters.category,
+    min_calories: filters.min_calories,
+    max_calories: filters.max_calories,
+    min_protein: filters.min_protein,
+    max_protein: filters.max_protein,
+    min_carbs: filters.min_carbs,
+    max_carbs: filters.max_carbs,
+    min_fat: filters.min_fat,
+    max_fat: filters.max_fat,
+    page: filters.page,
+    per_page: filters.per_page,
   }
 }
 
@@ -275,17 +262,15 @@ export function toSearchParams(filters: ValidatedFilters): FatSecretRecipeSearch
  */
 export function hasActiveFilters(filters: ValidatedFilters): boolean {
   return !!(
-    filters.recipe_types ||
-    filters.calories_from !== undefined ||
-    filters.calories_to !== undefined ||
-    filters.protein_percentage_from !== undefined ||
-    filters.protein_percentage_to !== undefined ||
-    filters.carb_percentage_from !== undefined ||
-    filters.carb_percentage_to !== undefined ||
-    filters.fat_percentage_from !== undefined ||
-    filters.fat_percentage_to !== undefined ||
-    filters.prep_time_from !== undefined ||
-    filters.prep_time_to !== undefined ||
+    filters.category ||
+    filters.min_calories !== undefined ||
+    filters.max_calories !== undefined ||
+    filters.min_protein !== undefined ||
+    filters.max_protein !== undefined ||
+    filters.min_carbs !== undefined ||
+    filters.max_carbs !== undefined ||
+    filters.min_fat !== undefined ||
+    filters.max_fat !== undefined ||
     filters.must_have_images !== undefined ||
     filters.sort_by !== undefined
   )

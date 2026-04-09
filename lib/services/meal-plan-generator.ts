@@ -1,13 +1,16 @@
 /**
- * FatSecret Meal Plan Generator Service
+ * Meal Plan Generator Service
  *
  * Builds meal plans programmatically by:
  * 1. Finding recipes that naturally match calorie targets (no forced scaling)
  * 2. Running searches in parallel for speed
  * 3. Returning recipes with original nutritional values (user adjusts servings manually)
+ *
+ * Uses Recipe-API.com for recipe search and Unsplash for images.
  */
 
-import { fatSecretService } from './fatsecret'
+import { recipeApiService } from './recipe-api'
+import { unsplashService } from './unsplash'
 import { checkDietaryConflict } from '@/lib/utils/recipe-keywords'
 import type {
   NormalizedRecipe,
@@ -16,7 +19,7 @@ import type {
   DailyMealPlan,
   WeeklyMealPlan,
   MealPlanGenerationParams,
-} from '@/lib/types/fatsecret'
+} from '@/lib/types/recipe'
 
 // ============================================================================
 // Configuration
@@ -143,7 +146,7 @@ const PALEO_AVOID_FOODS = [
 const CALORIE_TOLERANCE = 0.15
 
 // ============================================================================
-// Extended Types (kept for backward compatibility but no longer used for scaling)
+// Extended Types
 // ============================================================================
 
 export interface RecipeWithMultiplier extends NormalizedRecipe {
@@ -162,7 +165,7 @@ export interface MealSlotWithMultiplier extends Omit<MealSlot, 'recipe'> {
 // Meal Plan Generator Service
 // ============================================================================
 
-class FatSecretMealPlanService {
+class MealPlanGeneratorService {
   private inflightGenerations = new Map<string, Promise<DailyMealPlan | WeeklyMealPlan>>()
   private recipeCache = new Map<string, NormalizedRecipe>()
 
@@ -374,32 +377,28 @@ class FatSecretMealPlanService {
       try {
         const prefix = mealPrefixes[(varietyIndex + attempt) % mealPrefixes.length]
         const term = searchTerms[(varietyIndex + attempt) % searchTerms.length]
-        const searchExpression = `${prefix} ${term}`.trim()
+        const searchQuery = `${prefix} ${term}`.trim()
 
-        const response = await fatSecretService.searchRecipes({
-          search_expression: searchExpression,
-          max_results: 30,
-          page_number: Math.floor(varietyIndex / 2),
+        const response = await recipeApiService.searchRecipes({
+          q: searchQuery,
+          per_page: 30,
+          page: Math.floor(varietyIndex / 2) + 1,
         })
 
-        if (!response.recipes?.recipe) {
+        if (!response.data || response.data.length === 0) {
           continue
         }
 
-        const recipes = Array.isArray(response.recipes.recipe)
-          ? response.recipes.recipe
-          : [response.recipes.recipe]
-
         // Score recipes based on natural fit (no multiplier)
-        const scoredRecipes = recipes
-          .filter(r => !usedRecipeIds.has(r.recipe_id) && r.recipe_nutrition)
+        const scoredRecipes = response.data
+          .filter(r => !usedRecipeIds.has(r.id) && r.nutrition_summary)
           // Filter out recipes that violate dietary restrictions
-          .filter(r => !this.hasDietaryConflict(r.recipe_name, params))
+          .filter(r => !this.hasDietaryConflict(r.name, params))
           .map(r => {
-            const calories = parseFloat(r.recipe_nutrition!.calories) || 0
-            const protein = parseFloat(r.recipe_nutrition!.protein) || 0
-            const carbs = parseFloat(r.recipe_nutrition!.carbohydrate) || 0
-            const fat = parseFloat(r.recipe_nutrition!.fat) || 0
+            const calories = r.nutrition_summary.calories || 0
+            const protein = r.nutrition_summary.protein_g || 0
+            const carbs = r.nutrition_summary.carbohydrates_g || 0
+            const fat = r.nutrition_summary.fat_g || 0
 
             const score = this.scoreRecipeNatural(
               { calories, protein, carbs, fat },
@@ -416,16 +415,17 @@ class FatSecretMealPlanService {
 
         if (scoredRecipes.length > 0) {
           // Try top candidates until we find one that passes ingredient check
-          const topCandidates = scoredRecipes.slice(0, 10) // Check more candidates
+          const topCandidates = scoredRecipes.slice(0, 10)
 
           // Shuffle for variety but still check in order
           const shuffledCandidates = this.shuffleArray([...topCandidates])
 
           for (const candidate of shuffledCandidates) {
-            const details = await fatSecretService.getRecipeDetails(candidate.recipe.recipe_id)
+            const details = await recipeApiService.getRecipeDetails(candidate.recipe.id)
 
             if (details) {
-              const normalized = fatSecretService.normalizeRecipe(details)
+              const image = await unsplashService.getImageForRecipe(details.id, details.name)
+              const normalized = recipeApiService.normalizeRecipe(details, image?.url || null)
 
               // Check ingredients for dietary conflicts
               if (this.hasIngredientConflict(normalized, params)) {
@@ -439,7 +439,7 @@ class FatSecretMealPlanService {
 
           // All candidates had conflicts, trying next search
         }
-      } catch (error) {
+      } catch {
         // Search attempt failed, continue to next
       }
     }
@@ -576,13 +576,11 @@ class FatSecretMealPlanService {
         case 'vegetarian':
           for (const meat of meatProteins) {
             if (fullSearchText.includes(meat)) {
-              // Ingredient conflict detected
               return true
             }
           }
           for (const seafood of seafoodProteins) {
             if (fullSearchText.includes(seafood)) {
-              // Ingredient conflict detected
               return true
             }
           }
@@ -591,7 +589,6 @@ class FatSecretMealPlanService {
         case 'vegan':
           for (const animal of animalProducts) {
             if (fullSearchText.includes(animal)) {
-              // Ingredient conflict detected
               return true
             }
           }
@@ -600,27 +597,22 @@ class FatSecretMealPlanService {
         case 'pescatarian':
           for (const meat of meatProteins) {
             if (fullSearchText.includes(meat)) {
-              // Ingredient conflict detected
               return true
             }
           }
           break
 
         case 'keto':
-          // Keto avoids high-carb foods
           for (const food of KETO_AVOID_FOODS) {
             if (fullSearchText.includes(food)) {
-              // Ingredient conflict detected
               return true
             }
           }
           break
 
         case 'paleo':
-          // Paleo avoids grains, legumes, dairy, processed foods
           for (const food of PALEO_AVOID_FOODS) {
             if (fullSearchText.includes(food)) {
-              // Ingredient conflict detected
               return true
             }
           }
@@ -628,7 +620,6 @@ class FatSecretMealPlanService {
 
         case 'mediterranean':
           // Mediterranean is more flexible - mainly emphasizes certain foods
-          // rather than strict exclusions, so no ingredient blocking
           break
       }
     }
@@ -844,7 +835,7 @@ class FatSecretMealPlanService {
     }
   }
 
-  private getSnackInsertPosition(snackIndex: number, totalSnacks: number, currentLength: number): number {
+  private getSnackInsertPosition(snackIndex: number, _totalSnacks: number, currentLength: number): number {
     const positions = [2, 1, currentLength]
     return Math.min(positions[snackIndex] ?? currentLength, currentLength)
   }
@@ -896,5 +887,5 @@ class FatSecretMealPlanService {
   }
 }
 
-export const fatSecretMealPlanService = new FatSecretMealPlanService()
-export { FatSecretMealPlanService }
+export const mealPlanGeneratorService = new MealPlanGeneratorService()
+export { MealPlanGeneratorService }

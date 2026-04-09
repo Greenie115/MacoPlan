@@ -5,36 +5,36 @@ import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import { Recipe } from '@/lib/types/recipe'
 import { macroColors } from '@/lib/design-tokens'
-import { toggleFatSecretFavorite } from '@/app/recipes/actions'
+import { toggleRecipeFavorite } from '@/app/recipes/actions'
 import { useOptimistic, useTransition } from 'react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
 
 interface RecipeCardProps {
-  recipe: Recipe | any // Allow both local Recipe and FatSecret recipe
+  recipe: Recipe | any // Allow both local Recipe and Recipe-API recipe
   isFavorite: boolean
-  source?: 'local' | 'fatsecret'
+  source?: 'local' | 'recipe-api'
 }
 
-export function RecipeCard({ recipe, isFavorite, source = 'fatsecret' }: RecipeCardProps) {
+export function RecipeCard({ recipe, isFavorite, source = 'recipe-api' }: RecipeCardProps) {
   const [isPending, startTransition] = useTransition()
   const [optimisticFavorite, setOptimisticFavorite] = useOptimistic(isFavorite)
 
   // Get appropriate values based on source
-  const recipeTitle = source === 'fatsecret' ? recipe.title : recipe.name
-  const recipeImage = source === 'fatsecret' ? recipe.imageUrl : recipe.image_url
+  const recipeTitle = source === 'recipe-api' ? recipe.title : recipe.name
+  const recipeImage = source === 'recipe-api' ? recipe.imageUrl : recipe.image_url
 
   // Get nutrition values
-  const calories = source === 'fatsecret' ? recipe.calories : recipe.calories
-  const protein = source === 'fatsecret' ? recipe.protein : recipe.protein_grams
-  const carbs = source === 'fatsecret' ? recipe.carbs : recipe.carb_grams
-  const fat = source === 'fatsecret' ? recipe.fat : recipe.fat_grams
+  const calories = source === 'recipe-api' ? recipe.calories : recipe.calories
+  const protein = source === 'recipe-api' ? recipe.protein : recipe.protein_grams
+  const carbs = source === 'recipe-api' ? recipe.carbs : recipe.carb_grams
+  const fat = source === 'recipe-api' ? recipe.fat : recipe.fat_grams
 
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.preventDefault() // Prevent navigation to recipe detail
     e.stopPropagation()
 
-    // Only FatSecret recipes support favoriting now
-    if (source !== 'fatsecret') return
+    // Only Recipe-API recipes support favoriting now
+    if (source !== 'recipe-api') return
 
     startTransition(() => {
       setOptimisticFavorite(!optimisticFavorite)
@@ -53,10 +53,10 @@ export function RecipeCard({ recipe, isFavorite, source = 'fatsecret' }: RecipeC
         }
       : undefined
 
-    await toggleFatSecretFavorite(recipe.id, metadata)
+    await toggleRecipeFavorite(recipe.id, metadata)
   }
 
-  const recipeLink = source === 'fatsecret' ? `/recipes/fatsecret/${recipe.id}` : `/recipes/${recipe.id}`
+  const recipeLink = `/recipes/${recipe.id}`
 
   // Validate image URL for security
   const safeImageUrl = getSafeImageUrl(recipeImage)

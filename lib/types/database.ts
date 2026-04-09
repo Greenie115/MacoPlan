@@ -124,7 +124,8 @@ export interface MealPlanMeal {
   recipe_id: string | null
   spoonacular_id: number | null
   fatsecret_id: string | null
-  recipe_source: 'local' | 'spoonacular' | 'fatsecret'
+  recipe_api_id: string | null
+  recipe_source: 'local' | 'spoonacular' | 'fatsecret' | 'recipe-api'
 
   // Cached Recipe Data
   recipe_title: string

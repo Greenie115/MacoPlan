@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https: http:",
               "font-src 'self' https://fonts.gstatic.com",
-              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://platform.fatsecret.com",
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://recipe-api.com https://api.unsplash.com",
               "frame-src 'self' https://js.stripe.com https://hooks.stripe.com",
               "object-src 'none'",
               "base-uri 'self'",
@@ -56,24 +56,9 @@ const nextConfig: NextConfig = {
         hostname: "dxhfjhprhxylnhufzaiu.supabase.co",
       },
       {
-        // FatSecret recipe images
+        // Unsplash images (used for recipe photos)
         protocol: "https",
-        hostname: "www.fatsecret.com",
-      },
-      {
-        // FatSecret CDN images
-        protocol: "https",
-        hostname: "m.fatsecret.com",
-      },
-      {
-        // FatSecret static CDN (m.ftscrt.com)
-        protocol: "https",
-        hostname: "m.ftscrt.com",
-      },
-      {
-        // FatSecret static images
-        protocol: "https",
-        hostname: "static.fatsecret.com",
+        hostname: "plus.unsplash.com",
       },
     ],
   },

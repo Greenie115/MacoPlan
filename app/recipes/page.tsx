@@ -6,12 +6,12 @@ import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
 import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
 import { getFavoriteRecipeIds, getFavoriteRecipes, getMostFavoritedRecipes, getCachedRecipes } from './actions'
 import { redirect } from 'next/navigation'
-import { searchRecipes } from '@/app/actions/fatsecret-recipes'
+import { searchRecipes } from '@/app/actions/recipe-search'
 import { getSubscriptionStatus } from '@/app/actions/subscription'
 import {
   validateRecipeFilters,
   toSearchParams,
-  type FatSecretFilterParams,
+  type RecipeAPIFilterParams,
 } from '@/lib/utils/filter-validation'
 
 // Pagination configuration
@@ -22,7 +22,7 @@ interface RecipesPageProps {
     search?: string
     page?: string
     tab?: string
-    // FatSecret filter params
+    // Recipe-API filter params
     recipeTypes?: string
     caloriesFrom?: string
     caloriesTo?: string
@@ -85,7 +85,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   }
 
   // Validate all filter parameters
-  const filterParams: FatSecretFilterParams = {
+  const filterParams: RecipeAPIFilterParams = {
     search: searchQuery,
     recipeTypes: params.recipeTypes,
     caloriesFrom: params.caloriesFrom,
@@ -120,10 +120,10 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     carb_grams: number
     fat: number
     fat_grams: number
-    source: 'fatsecret'
+    source: 'recipe-api'
   }> = []
   let totalResults = 0
-  let fatSecretError: string | null = null
+  let recipeApiError: string | null = null
 
   // Get user's favorite recipe IDs and subscription status
   const [favoriteIds, subscriptionStatus] = await Promise.all([
@@ -151,16 +151,16 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       carb_grams: recipe.carbs ?? 0,
       fat: recipe.fat ?? 0,
       fat_grams: recipe.fat ?? 0,
-      source: 'fatsecret' as const,
+      source: 'recipe-api' as const,
     }))
 
-    // If fewer than 20 popular recipes, supplement with FatSecret API
+    // If fewer than 20 popular recipes, supplement with Recipe-API
     if (popularRecipes.length < RECIPES_PER_PAGE) {
       const needed = RECIPES_PER_PAGE - popularRecipes.length
       const supplementResult = await searchRecipes({
-        search_expression: 'healthy',
-        max_results: needed + 10, // Fetch extra in case of duplicates
-        page_number: 0,
+        q: 'healthy',
+        per_page: needed + 10, // Fetch extra in case of duplicates
+        page: 1,
       })
 
       if (supplementResult.success && supplementResult.data) {
@@ -182,7 +182,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
             carb_grams: recipe.carbs,
             fat: recipe.fat,
             fat_grams: recipe.fat,
-            source: 'fatsecret' as const,
+            source: 'recipe-api' as const,
           }))
 
         popularRecipes = [...popularRecipes, ...supplementRecipes]
@@ -197,7 +197,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     const favoritesResult = await getFavoriteRecipes()
 
     if (favoritesResult.error) {
-      fatSecretError = favoritesResult.error
+      recipeApiError = favoritesResult.error
     } else {
       // Map all favorites to recipe format
       const allFavorites = favoritesResult.data.map((recipe) => ({
@@ -213,7 +213,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         carb_grams: recipe.carbs ?? 0,
         fat: recipe.fat ?? 0,
         fat_grams: recipe.fat ?? 0,
-        source: 'fatsecret' as const,
+        source: 'recipe-api' as const,
       }))
 
       // Apply pagination to favorites
@@ -223,13 +223,13 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       totalResults = allFavorites.length
     }
   } else {
-    // "All Recipes" tab - use cached recipes when no search, FatSecret API when searching
+    // "All Recipes" tab - use cached recipes when no search, Recipe-API when searching
     if (!searchQuery) {
       // No search query - fetch from local cached recipes
       const cachedResult = await getCachedRecipes(currentPage, RECIPES_PER_PAGE)
 
       if (cachedResult.error) {
-        fatSecretError = cachedResult.error
+        recipeApiError = cachedResult.error
       } else {
         recipes = cachedResult.data.map((recipe) => ({
           id: recipe.id,
@@ -244,26 +244,25 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
           carb_grams: recipe.carbs,
           fat: recipe.fat,
           fat_grams: recipe.fat,
-          source: 'fatsecret' as const,
+          source: 'recipe-api' as const,
         }))
         totalResults = cachedResult.totalCount
       }
     } else {
-      // Has search query - use FatSecret API
+      // Has search query - use Recipe-API
       // When image filter is active, fetch more to compensate for client-side filtering
-      // FatSecret API max is 50 results per request
       const needsImageFilter = validatedFilters.must_have_images === true
       const maxResultsToFetch = needsImageFilter ? 50 : RECIPES_PER_PAGE
 
-      const fatSecretResult = await searchRecipes({
+      const recipeApiResult = await searchRecipes({
         ...searchParams_api,
-        search_expression: searchQuery,
-        max_results: maxResultsToFetch,
-        page_number: currentPage - 1,
+        q: searchQuery,
+        per_page: maxResultsToFetch,
+        page: currentPage,
       })
 
-      if (fatSecretResult.success && fatSecretResult.data) {
-        let mappedRecipes = fatSecretResult.data.recipes.map((recipe) => ({
+      if (recipeApiResult.success && recipeApiResult.data) {
+        let mappedRecipes = recipeApiResult.data.recipes.map((recipe) => ({
           id: recipe.id,
           title: recipe.title,
           name: recipe.title,
@@ -276,7 +275,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
           carb_grams: recipe.carbs,
           fat: recipe.fat,
           fat_grams: recipe.fat,
-          source: 'fatsecret' as const,
+          source: 'recipe-api' as const,
         }))
 
         // Apply client-side image filter as fallback (API/cache may not filter reliably)
@@ -289,14 +288,14 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
 
         // Adjust total results estimate for image filter
         // (rough estimate: assume same ratio of images across all results)
-        if (needsImageFilter && fatSecretResult.data.recipes.length > 0) {
-          const imageRatio = mappedRecipes.length / fatSecretResult.data.recipes.length
-          totalResults = Math.floor(fatSecretResult.data.totalResults * imageRatio)
+        if (needsImageFilter && recipeApiResult.data.recipes.length > 0) {
+          const imageRatio = mappedRecipes.length / recipeApiResult.data.recipes.length
+          totalResults = Math.floor(recipeApiResult.data.totalResults * imageRatio)
         } else {
-          totalResults = fatSecretResult.data.totalResults
+          totalResults = recipeApiResult.data.totalResults
         }
       } else {
-        fatSecretError = fatSecretResult.error || 'Failed to fetch recipes'
+        recipeApiError = recipeApiResult.error || 'Failed to fetch recipes'
       }
     }
   }
@@ -374,17 +373,11 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
       />
 
       {/* Error Message */}
-      {fatSecretError && (
+      {recipeApiError && (
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4">
             <p className="text-sm text-destructive">
-              Unable to fetch recipes from FatSecret. Please try again later.
-              {fatSecretError.includes('IP') && (
-                <span className="block mt-1 text-xs">
-                  Note: The FatSecret API requires IP whitelisting. Please check your FatSecret
-                  developer account.
-                </span>
-              )}
+              Unable to fetch recipes. Please try again later.
             </p>
           </div>
         </div>
@@ -420,17 +413,6 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
           </div>
         </div>
       )}
-
-      {/* FatSecret Attribution - Required by API Terms */}
-      <div className="max-w-7xl mx-auto px-4 pb-6 flex justify-center">
-        <a href="https://www.fatsecret.com" target="_blank" rel="noopener noreferrer">
-          <img
-            src="https://platform.fatsecret.com/api/static/images/powered_by_fatsecret.svg"
-            alt="Powered by fatsecret"
-            className="h-5 opacity-50 hover:opacity-100 transition-opacity"
-          />
-        </a>
-      </div>
 
       {/* Bottom Navigation */}
       <BottomNav activeTab="recipes" />

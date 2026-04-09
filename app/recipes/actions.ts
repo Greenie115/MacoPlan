@@ -7,9 +7,9 @@ import { FREE_FAVORITES_LIMIT } from '@/lib/constants/subscription'
 import { checkFavoritesQuota } from '@/app/actions/subscription'
 
 /**
- * Recipe metadata for FatSecret favorites
+ * Recipe metadata for favorites
  */
-interface FatSecretRecipeMetadata {
+interface RecipeMetadata {
   title: string
   description?: string
   imageUrl?: string | null
@@ -20,15 +20,14 @@ interface FatSecretRecipeMetadata {
 }
 
 /**
- * Toggle a FatSecret recipe as favorite for the current user
+ * Toggle a recipe as favorite for the current user
  * Adds the recipe to favorites if not already favorited, removes it otherwise
  */
-export async function toggleFatSecretFavorite(
+export async function toggleRecipeFavorite(
   recipeId: string,
-  metadata?: FatSecretRecipeMetadata
+  metadata?: RecipeMetadata
 ) {
-  // FatSecret recipe IDs are numeric strings
-  if (!recipeId || !/^\d+$/.test(recipeId)) {
+  if (!recipeId) {
     return { error: 'Invalid recipe ID' }
   }
 
@@ -46,19 +45,19 @@ export async function toggleFatSecretFavorite(
 
   // Check if recipe is already favorited
   const { data: existing } = await supabase
-    .from('user_fatsecret_favorites')
+    .from('user_recipe_favorites')
     .select('id')
     .eq('user_id', user.id)
-    .eq('fatsecret_recipe_id', recipeId)
+    .eq('recipe_id', recipeId)
     .single()
 
   if (existing) {
     // Remove from favorites
     const { error } = await supabase
-      .from('user_fatsecret_favorites')
+      .from('user_recipe_favorites')
       .delete()
       .eq('user_id', user.id)
-      .eq('fatsecret_recipe_id', recipeId)
+      .eq('recipe_id', recipeId)
 
     if (error) {
       return {
@@ -70,7 +69,7 @@ export async function toggleFatSecretFavorite(
     }
 
     revalidatePath('/recipes')
-    revalidatePath(`/recipes/fatsecret/${recipeId}`)
+    revalidatePath(`/recipes/${recipeId}`)
     return { success: true, isFavorite: false }
   } else {
     // Add to favorites - requires metadata for first-time save
@@ -89,9 +88,9 @@ export async function toggleFatSecretFavorite(
       }
     }
 
-    const { error } = await supabase.from('user_fatsecret_favorites').insert({
+    const { error } = await supabase.from('user_recipe_favorites').insert({
       user_id: user.id,
-      fatsecret_recipe_id: recipeId,
+      recipe_id: recipeId,
       recipe_title: metadata.title,
       recipe_description: metadata.description || null,
       recipe_image_url: metadata.imageUrl || null,
@@ -109,13 +108,13 @@ export async function toggleFatSecretFavorite(
     }
 
     revalidatePath('/recipes')
-    revalidatePath(`/recipes/fatsecret/${recipeId}`)
+    revalidatePath(`/recipes/${recipeId}`)
     return { success: true, isFavorite: true }
   }
 }
 
 /**
- * Get all favorite FatSecret recipe IDs for the current user
+ * Get all favorite recipe IDs for the current user
  */
 export async function getFavoriteRecipeIds(): Promise<string[]> {
   const supabase = await createClient()
@@ -129,23 +128,22 @@ export async function getFavoriteRecipeIds(): Promise<string[]> {
   }
 
   const { data, error } = await supabase
-    .from('user_fatsecret_favorites')
-    .select('fatsecret_recipe_id')
+    .from('user_recipe_favorites')
+    .select('recipe_id')
     .eq('user_id', user.id)
 
   if (error || !data) {
     return []
   }
 
-  return data.map((fav) => fav.fatsecret_recipe_id)
+  return data.map((fav) => fav.recipe_id)
 }
 
 /**
- * Check if a specific FatSecret recipe is favorited by the current user
+ * Check if a specific recipe is favorited by the current user
  */
-export async function isFatSecretFavorite(recipeId: string): Promise<boolean> {
-  // FatSecret recipe IDs are numeric strings
-  if (!recipeId || !/^\d+$/.test(recipeId)) {
+export async function isRecipeFavorite(recipeId: string): Promise<boolean> {
+  if (!recipeId) {
     return false
   }
 
@@ -160,17 +158,17 @@ export async function isFatSecretFavorite(recipeId: string): Promise<boolean> {
   }
 
   const { data } = await supabase
-    .from('user_fatsecret_favorites')
+    .from('user_recipe_favorites')
     .select('id')
     .eq('user_id', user.id)
-    .eq('fatsecret_recipe_id', recipeId)
+    .eq('recipe_id', recipeId)
     .single()
 
   return !!data
 }
 
 /**
- * Get all favorite FatSecret recipes with metadata for display
+ * Get all favorite recipes with metadata for display
  */
 export async function getFavoriteRecipes() {
   const supabase = await createClient()
@@ -184,7 +182,7 @@ export async function getFavoriteRecipes() {
   }
 
   const { data, error } = await supabase
-    .from('user_fatsecret_favorites')
+    .from('user_recipe_favorites')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
@@ -195,7 +193,7 @@ export async function getFavoriteRecipes() {
 
   return {
     data: data.map((fav) => ({
-      id: fav.fatsecret_recipe_id,
+      id: fav.recipe_id,
       title: fav.recipe_title,
       description: fav.recipe_description,
       imageUrl: fav.recipe_image_url,
@@ -236,14 +234,13 @@ export async function getCachedRecipes(
 
     // Get total count
     const { count } = await supabase
-      .from('fatsecret_recipes')
+      .from('recipe_api_cache')
       .select('*', { count: 'exact', head: true })
 
     // Fetch paginated recipes from local cache
     const { data, error } = await supabase
-      .from('fatsecret_recipes')
-      .select('fatsecret_id, recipe_name, recipe_description, image_url, calories, protein_grams, carb_grams, fat_grams')
-      .not('image_url', 'is', null) // Only recipes with images
+      .from('recipe_api_cache')
+      .select('recipe_api_id, name, description, nutrition')
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1)
 
@@ -252,14 +249,14 @@ export async function getCachedRecipes(
     }
 
     const recipes = (data || []).map((recipe) => ({
-      id: recipe.fatsecret_id,
-      title: recipe.recipe_name,
-      description: recipe.recipe_description,
-      imageUrl: recipe.image_url,
-      calories: recipe.calories || 0,
-      protein: recipe.protein_grams || 0,
-      carbs: recipe.carb_grams || 0,
-      fat: recipe.fat_grams || 0,
+      id: recipe.recipe_api_id,
+      title: recipe.name,
+      description: recipe.description,
+      imageUrl: null,
+      calories: recipe.nutrition?.per_serving?.calories || 0,
+      protein: recipe.nutrition?.per_serving?.protein_g || 0,
+      carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,
+      fat: recipe.nutrition?.per_serving?.fat_g || 0,
     }))
 
     return {
@@ -267,7 +264,7 @@ export async function getCachedRecipes(
       totalCount: count || 0,
       error: null,
     }
-  } catch (error) {
+  } catch {
     return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
   }
 }
@@ -316,7 +313,7 @@ export async function getMostFavoritedRecipes(
     }
 
     const recipes = (recipesResult.data || []).map((recipe: {
-      fatsecret_recipe_id: string
+      recipe_id: string
       recipe_title: string
       recipe_description: string | null
       recipe_image_url: string | null
@@ -326,7 +323,7 @@ export async function getMostFavoritedRecipes(
       fat_grams: number | null
       favorite_count: number
     }) => ({
-      id: recipe.fatsecret_recipe_id,
+      id: recipe.recipe_id,
       title: recipe.recipe_title,
       description: recipe.recipe_description,
       imageUrl: recipe.recipe_image_url,
@@ -342,7 +339,7 @@ export async function getMostFavoritedRecipes(
       totalCount: countResult.data || 0,
       error: null,
     }
-  } catch (error) {
+  } catch {
     return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
   }
 }

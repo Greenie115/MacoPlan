@@ -7,7 +7,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
-import { fatSecretService } from '@/lib/services/fatsecret'
+import { recipeApiService } from '@/lib/services/recipe-api'
 import { generateShoppingList, generateShoppingListCSV, type RecipeIngredient } from '@/lib/utils/shopping-list-generator'
 import type {
   ShoppingList,
@@ -57,40 +57,30 @@ export async function generateShoppingListFromMealPlan(
       return { success: false, error: 'No meals found in meal plan' }
     }
 
-    // Step 2: Fetch full recipe details for all FatSecret recipes
+    // Step 2: Fetch full recipe details for all recipes
     const allIngredients: RecipeIngredient[] = []
 
     for (const meal of meals) {
-      if (meal.recipe_source === 'fatsecret' && meal.fatsecret_id) {
+      if (meal.recipe_source === 'recipe-api' && meal.recipe_api_id) {
         try {
-          const recipe = await fatSecretService.getRecipeDetails(meal.fatsecret_id)
+          const recipe = await recipeApiService.getRecipeDetails(meal.recipe_api_id)
 
-          if (recipe?.ingredients?.ingredient) {
-            const ingredientList = Array.isArray(recipe.ingredients.ingredient)
-              ? recipe.ingredients.ingredient
-              : [recipe.ingredients.ingredient]
-
-            // Convert FatSecret ingredients to RecipeIngredient format
-            const formattedIngredients: RecipeIngredient[] = ingredientList.map((ing, idx) => {
-              // Parse the ingredient description (e.g., "2 cups flour")
-              const match = ing.ingredient_description?.match(/^([\d.\/]+)?\s*(\w+)?\s*(.+)$/)
-              const amount = match?.[1] ? parseFloat(match[1]) : 1
-              const unit = match?.[2] || ''
-              const name = match?.[3] || ing.ingredient_description || 'Unknown'
-
-              return {
-                id: `${meal.fatsecret_id}-${idx}`,
-                name: name.trim(),
-                original: ing.ingredient_description || '',
-                amount: amount * meal.serving_multiplier,
-                unit: unit,
-              }
-            })
+          if (recipe?.ingredients) {
+            // Recipe-API.com returns ingredients in groups
+            const formattedIngredients: RecipeIngredient[] = recipe.ingredients.flatMap(
+              (group, groupIdx) => group.items.map((ing, idx) => ({
+                id: `${meal.recipe_api_id}-${groupIdx}-${idx}`,
+                name: ing.name,
+                original: [ing.quantity, ing.unit, ing.name, ing.preparation ? `(${ing.preparation})` : ''].filter(Boolean).join(' '),
+                amount: (ing.quantity || 1) * meal.serving_multiplier,
+                unit: ing.unit || '',
+              }))
+            )
             allIngredients.push(...formattedIngredients)
           }
         } catch (error) {
           console.error(
-            `[ShoppingList] Error fetching recipe ${meal.fatsecret_id}:`,
+            `[ShoppingList] Error fetching recipe ${meal.recipe_api_id}:`,
             error
           )
           // Continue with other recipes

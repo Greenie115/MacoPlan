@@ -3,13 +3,14 @@
 /**
  * Server Actions for Meal Plan Management
  *
- * Handles meal plan generation using FatSecret API, CRUD operations, and quota management
+ * Handles meal plan generation using Recipe-API.com, CRUD operations, and quota management
  */
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
-import { fatSecretMealPlanService } from '@/lib/services/fatsecret-meal-plans'
-import { fatSecretService } from '@/lib/services/fatsecret'
+import { mealPlanGeneratorService } from '@/lib/services/meal-plan-generator'
+import { recipeApiService } from '@/lib/services/recipe-api'
+import { unsplashService } from '@/lib/services/unsplash'
 import {
   getUserSubscriptionTier,
   checkSwapQuota,
@@ -29,7 +30,7 @@ import type {
   WeeklyMealPlan,
   MealSlot,
   NormalizedRecipe,
-} from '@/lib/types/fatsecret'
+} from '@/lib/types/recipe'
 import { z } from 'zod'
 
 // ============================================================================
@@ -268,8 +269,8 @@ export async function generateMealPlan(
       excludeIngredients: excludeIngredients.length > 0 ? excludeIngredients : undefined,
     }
 
-    // Step 4: Generate meal plan via FatSecret
-    const fatSecretPlan = await fatSecretMealPlanService.generateMealPlan(params)
+    // Step 4: Generate meal plan via Recipe-API.com
+    const generatedPlan = await mealPlanGeneratorService.generateMealPlan(params)
 
     // Step 5: Calculate totals and validate macro match
     let actualCalories = 0
@@ -278,20 +279,20 @@ export async function generateMealPlan(
     let totalFat = 0
 
     if (validatedRequest.timeFrame === 'day') {
-      const dailyPlan = fatSecretPlan as DailyMealPlan
+      const dailyPlan = generatedPlan as DailyMealPlan
       actualCalories = dailyPlan.totalCalories
       totalProtein = dailyPlan.totalProtein
       totalCarbs = dailyPlan.totalCarbs
       totalFat = dailyPlan.totalFat
     } else {
-      const weeklyPlan = fatSecretPlan as WeeklyMealPlan
+      const weeklyPlan = generatedPlan as WeeklyMealPlan
       actualCalories = weeklyPlan.averageCalories
       totalProtein = weeklyPlan.averageProtein
       totalCarbs = weeklyPlan.averageCarbs
       totalFat = weeklyPlan.averageFat
     }
 
-    const macroMatch = fatSecretMealPlanService.validateMacroMatch(
+    const macroMatch = mealPlanGeneratorService.validateMacroMatch(
       targetCalories,
       actualCalories
     )
@@ -365,14 +366,14 @@ export async function generateMealPlan(
     const mealsToInsert: MealPlanMealInsert[] = []
 
     if (validatedRequest.timeFrame === 'day') {
-      const dailyPlan = fatSecretPlan as DailyMealPlan
+      const dailyPlan = generatedPlan as DailyMealPlan
       dailyPlan.meals.forEach((meal, index) => {
         mealsToInsert.push(
           createMealPlanMealEntry(savedPlan.id, meal, 0, index)
         )
       })
     } else {
-      const weeklyPlan = fatSecretPlan as WeeklyMealPlan
+      const weeklyPlan = generatedPlan as WeeklyMealPlan
       weeklyPlan.days.forEach((dayPlan, dayIndex) => {
         dayPlan.meals.forEach((meal, mealIndex) => {
           mealsToInsert.push(
@@ -417,7 +418,7 @@ export async function generateMealPlan(
   }
 }
 
-// Helper to create meal plan meal entry from FatSecret data
+// Helper to create meal plan meal entry from Recipe-API.com data
 // Stores original recipe values with 1.0 multiplier - user adjusts servings manually
 function createMealPlanMealEntry(
   mealPlanId: string,
@@ -435,9 +436,10 @@ function createMealPlanMealEntry(
     meal_type: meal.type,
     meal_order: mealOrder,
     recipe_id: null,
-    fatsecret_id: recipe?.id || null,
-    spoonacular_id: null, // Deprecated, kept for DB schema compatibility
-    recipe_source: 'fatsecret',
+    recipe_api_id: recipe?.id || null,
+    fatsecret_id: null, // Deprecated
+    spoonacular_id: null, // Deprecated
+    recipe_source: 'recipe-api',
     recipe_title: recipe?.title || `${meal.type} meal`,
     recipe_image_url: recipe?.imageUrl || null,
     servings: recipe?.servings || 1,
@@ -457,7 +459,7 @@ function createMealPlanMealEntry(
 
 export interface MealPlanWithPreviews extends MealPlan {
   preview_images: {
-    fatsecret_id: string | null
+    recipe_api_id: string | null
     image_url: string | null
   }[]
 }
@@ -486,7 +488,7 @@ export async function getMealPlans(filters?: {
       .select(`
         *,
         meal_plan_meals (
-          fatsecret_id,
+          recipe_api_id,
           recipe_image_url,
           meal_order
         )
@@ -517,23 +519,23 @@ export async function getMealPlans(filters?: {
 
     const plansWithPreviews: MealPlanWithPreviews[] = (data || []).map((plan) => {
       const meals = (plan.meal_plan_meals || []) as Array<{
-        fatsecret_id: string | null
+        recipe_api_id: string | null
         recipe_image_url: string | null
         meal_order: number
       }>
 
       const sortedMeals = meals.sort((a, b) => a.meal_order - b.meal_order)
       const seenIds = new Set<string>()
-      const previewImages: { fatsecret_id: string | null; image_url: string | null }[] = []
+      const previewImages: { recipe_api_id: string | null; image_url: string | null }[] = []
 
       for (const meal of sortedMeals) {
         if (previewImages.length >= 4) break
-        const id = meal.fatsecret_id
+        const id = meal.recipe_api_id
         if (id && seenIds.has(id)) continue
         if (id) seenIds.add(id)
 
         previewImages.push({
-          fatsecret_id: meal.fatsecret_id,
+          recipe_api_id: meal.recipe_api_id,
           image_url: meal.recipe_image_url,
         })
       }
@@ -948,14 +950,13 @@ export async function getSwapOptions(
 
     // Try each search strategy until we get enough results
     let allRecipes: Array<{
-      recipe_id: string
-      recipe_name: string
-      recipe_image?: string
-      recipe_nutrition?: {
-        calories?: string
-        protein?: string
-        carbohydrate?: string
-        fat?: string
+      id: string
+      name: string
+      nutrition_summary: {
+        calories: number | null
+        protein_g: number | null
+        carbohydrates_g: number | null
+        fat_g: number | null
       }
     }> = []
 
@@ -966,22 +967,18 @@ export async function getSwapOptions(
       if (allRecipes.length >= 12 || searchAttempts >= MAX_SEARCH_ATTEMPTS) break
 
       searchAttempts++
-      const response = await fatSecretService.searchRecipes({
-        search_expression: searchExpression,
-        max_results: 15,
+      const response = await recipeApiService.searchRecipes({
+        q: searchExpression,
+        per_page: 15,
       })
 
-      if (response.recipes?.recipe) {
-        const recipes = Array.isArray(response.recipes.recipe)
-          ? response.recipes.recipe
-          : [response.recipes.recipe]
-
+      if (response.data && response.data.length > 0) {
         // Add new recipes (avoid duplicates)
-        const existingIds = new Set(allRecipes.map(r => r.recipe_id))
-        for (const recipe of recipes) {
-          if (!existingIds.has(recipe.recipe_id)) {
+        const existingIds = new Set(allRecipes.map(r => r.id))
+        for (const recipe of response.data) {
+          if (!existingIds.has(recipe.id)) {
             allRecipes.push(recipe)
-            existingIds.add(recipe.recipe_id)
+            existingIds.add(recipe.id)
           }
         }
       }
@@ -999,14 +996,14 @@ export async function getSwapOptions(
     // Filter and score results
     const scoredOptions = allRecipes
       .map(recipe => {
-        const calories = parseFloat(recipe.recipe_nutrition?.calories || '0')
-        const protein = parseFloat(recipe.recipe_nutrition?.protein || '0')
-        const carbs = parseFloat(recipe.recipe_nutrition?.carbohydrate || '0')
-        const fat = parseFloat(recipe.recipe_nutrition?.fat || '0')
+        const calories = recipe.nutrition_summary?.calories || 0
+        const protein = recipe.nutrition_summary?.protein_g || 0
+        const carbs = recipe.nutrition_summary?.carbohydrates_g || 0
+        const fat = recipe.nutrition_summary?.fat_g || 0
 
         // Check dietary conflicts
         const hasDietaryConflict = checkDietaryConflict(
-          recipe.recipe_name,
+          recipe.name,
           profile?.dietary_style || null,
           profile?.allergies || null
         )
@@ -1015,7 +1012,7 @@ export async function getSwapOptions(
         let hasAvoidedFood = false
         if (profile?.foods_to_avoid) {
           const avoidList = profile.foods_to_avoid.toLowerCase().split(',').map((s: string) => s.trim())
-          const recipeLower = recipe.recipe_name.toLowerCase()
+          const recipeLower = recipe.name.toLowerCase()
           hasAvoidedFood = avoidList.some((food: string) => food && recipeLower.includes(food))
         }
 
@@ -1031,7 +1028,7 @@ export async function getSwapOptions(
         const inCalorieRange = calories >= minCal && calories <= maxCal
 
         // Exclude current meal from results
-        const isCurrentMeal = recipe.recipe_name.toLowerCase() === meal.recipe_title.toLowerCase()
+        const isCurrentMeal = recipe.name.toLowerCase() === meal.recipe_title.toLowerCase()
 
         return {
           recipe,
@@ -1060,9 +1057,9 @@ export async function getSwapOptions(
     const swapOptions: SwapOption[] = scoredOptions
       .slice(0, 6)
       .map(item => ({
-        id: item.recipe.recipe_id,
-        title: item.recipe.recipe_name,
-        image: item.recipe.recipe_image || null,
+        id: item.recipe.id,
+        title: item.recipe.name,
+        image: null,
         readyInMinutes: null,
         servings: 1,
         calories: item.calories,
@@ -1122,21 +1119,22 @@ export async function swapMeal(
       return { success: false, error: 'Meal not found' }
     }
 
-    // Fetch new recipe details from FatSecret
-    const newRecipe = await fatSecretService.getRecipeDetails(newRecipeId)
+    // Fetch new recipe details from Recipe-API.com
+    const newRecipe = await recipeApiService.getRecipeDetails(newRecipeId)
 
     if (!newRecipe) {
       return { success: false, error: 'Failed to fetch recipe details' }
     }
 
-    const normalized = fatSecretService.normalizeRecipe(newRecipe)
+    const image = await unsplashService.getImageForRecipe(newRecipeId, newRecipe.name)
+    const normalized = recipeApiService.normalizeRecipe(newRecipe, image?.url || null)
 
     // Update the meal with new recipe
     const { error: updateError } = await supabase
       .from('meal_plan_meals')
       .update({
-        fatsecret_id: normalized.id,
-        recipe_source: 'fatsecret',
+        recipe_api_id: normalized.id,
+        recipe_source: 'recipe-api',
         recipe_title: normalized.title,
         recipe_image_url: normalized.imageUrl,
         servings: normalized.servings,

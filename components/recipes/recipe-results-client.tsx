@@ -31,7 +31,7 @@ interface RecipeData {
   carb_grams?: number
   fat?: number
   fat_grams?: number
-  source?: 'local' | 'fatsecret'
+  source?: 'local' | 'recipe-api'
 }
 
 interface RecipeResultsClientProps {

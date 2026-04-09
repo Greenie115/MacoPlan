@@ -32,7 +32,7 @@ export interface CachedRecipe {
   carb_grams?: number
   fat?: number
   fat_grams?: number
-  source?: 'local' | 'fatsecret'
+  source?: 'local' | 'recipe-api'
 }
 
 const CACHE_PREFIX = 'recipe_search_'
