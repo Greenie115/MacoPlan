@@ -232,3 +232,62 @@ export interface ShoppingListIngredient {
   original: string
   aisle?: string
 }
+
+/**
+ * User Training Profile (Batch Prep Mode)
+ */
+export interface UserTrainingProfile {
+  id: string
+  user_id: string
+  training_days_per_week: number
+  training_day_macros: {
+    calories: number
+    protein_g: number
+    carbs_g: number
+    fat_g: number
+  }
+  rest_day_macros: {
+    calories: number
+    protein_g: number
+    carbs_g: number
+    fat_g: number
+  }
+  prep_day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
+  containers_per_week: number
+  max_prep_time_mins: number
+  created_at: string
+  updated_at: string
+}
+
+/**
+ * Batch Prep Plan DB row (JSONB fields validated via Zod in service layer)
+ */
+export interface BatchPrepPlanRow {
+  id: string
+  user_id: string
+  week_starting: string
+  training_day_plan: unknown
+  rest_day_plan: unknown
+  prep_timeline: unknown
+  shopping_list: unknown
+  container_assignments: unknown
+  total_containers: number
+  estimated_prep_time_mins: number
+  generation_params: unknown | null
+  created_at: string
+}
+
+/**
+ * Anthropic Usage Log row (observability)
+ */
+export interface AnthropicUsageLogRow {
+  id: string
+  user_id: string | null
+  endpoint: string
+  model: string
+  input_tokens: number
+  output_tokens: number
+  status: 'success' | 'validation_fail' | 'retry' | 'error'
+  error_message: string | null
+  created_at: string
+}
