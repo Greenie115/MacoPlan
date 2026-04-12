@@ -18,23 +18,23 @@ import { createCheckoutSession } from '@/app/actions/stripe'
 import { toast } from 'sonner'
 
 const freeTierFeatures = [
-  { feature: 'Meal plan generations', value: '3 lifetime', included: true },
-  { feature: 'Meal swaps', value: '3 lifetime', included: true },
-  { feature: 'Favorite recipes', value: '10 max', included: true },
+  { feature: 'Batch prep plans', value: '3 lifetime', included: true },
+  { feature: 'Shopping list', value: true, included: true },
   { feature: 'Recipe browsing', value: 'Unlimited', included: true },
   { feature: 'Macro calculations', value: true, included: true },
-  { feature: 'Shopping lists', value: true, included: true },
+  { feature: 'Training / rest day split', value: false, included: false },
+  { feature: 'Cooking timeline', value: false, included: false },
   { feature: 'PDF export', value: false, included: false },
   { feature: 'Priority support', value: false, included: false },
 ]
 
 const premiumFeatures = [
-  { feature: 'Meal plan generations', value: 'Unlimited', included: true },
-  { feature: 'Meal swaps', value: 'Unlimited', included: true },
-  { feature: 'Favorite recipes', value: 'Unlimited', included: true },
+  { feature: 'Batch prep plans', value: 'Unlimited', included: true },
+  { feature: 'Shopping list', value: true, included: true },
   { feature: 'Recipe browsing', value: 'Unlimited', included: true },
   { feature: 'Macro calculations', value: true, included: true },
-  { feature: 'Shopping lists', value: true, included: true },
+  { feature: 'Training / rest day split', value: true, included: true },
+  { feature: 'Cooking timeline', value: true, included: true },
   { feature: 'PDF export', value: true, included: true },
   { feature: 'Priority support', value: true, included: true },
 ]
@@ -64,7 +64,7 @@ export default function PricingPage() {
           <nav className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
               <Utensils className="w-8 h-8 text-primary" />
-              <span>MacroPlan</span>
+              <span>Macro Plan</span>
             </Link>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -115,15 +115,11 @@ export default function PricingPage() {
                 <ul className="space-y-4 mb-8 flex-grow">
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>3 meal plan generations</span>
+                    <span>3 batch prep plans</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>3 meal swaps</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>10 favorite recipes</span>
+                    <span>Shopping list</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
@@ -135,11 +131,15 @@ export default function PricingPage() {
                   </li>
                   <li className="flex items-center gap-3 text-subtle-foreground">
                     <X className="w-5 h-5 shrink-0" />
-                    <span>PDF export</span>
+                    <span>Training / rest day split</span>
                   </li>
                   <li className="flex items-center gap-3 text-subtle-foreground">
                     <X className="w-5 h-5 shrink-0" />
-                    <span>Priority support</span>
+                    <span>Cooking timeline</span>
+                  </li>
+                  <li className="flex items-center gap-3 text-subtle-foreground">
+                    <X className="w-5 h-5 shrink-0" />
+                    <span>PDF export</span>
                   </li>
                 </ul>
 
@@ -164,27 +164,27 @@ export default function PricingPage() {
                 <ul className="space-y-4 mb-8 flex-grow">
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> meal plans</span>
+                    <span><strong>Unlimited</strong> batch prep plans</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> meal swaps</span>
+                    <span>Training / rest day split</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> favorites</span>
+                    <span>Cooking timeline</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Unlimited recipe browsing</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Macro calculations</span>
+                    <span>Shopping list</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
                     <span>PDF export</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-success shrink-0" />
+                    <span>Unlimited recipe browsing</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
@@ -235,27 +235,27 @@ export default function PricingPage() {
                 <ul className="space-y-4 mb-8 flex-grow">
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> meal plans</span>
+                    <span><strong>Unlimited</strong> batch prep plans</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> meal swaps</span>
+                    <span>Training / rest day split</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> favorites</span>
+                    <span>Cooking timeline</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Unlimited recipe browsing</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Macro calculations</span>
+                    <span>Shopping list</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
                     <span>PDF export</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-success shrink-0" />
+                    <span>Unlimited recipe browsing</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
@@ -328,40 +328,30 @@ export default function PricingPage() {
                 </thead>
                 <tbody>
                   <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Meal plan generations</td>
+                    <td className="p-6">Batch prep plans</td>
                     <td className="text-center p-6 text-subtle-foreground">3 lifetime</td>
                     <td className="text-center p-6 font-semibold bg-primary/5">Unlimited</td>
                   </tr>
                   <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Meal swaps</td>
-                    <td className="text-center p-6 text-subtle-foreground">3 lifetime</td>
-                    <td className="text-center p-6 font-semibold bg-primary/5">Unlimited</td>
-                  </tr>
-                  <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Favorite recipes</td>
-                    <td className="text-center p-6 text-subtle-foreground">10 max</td>
-                    <td className="text-center p-6 font-semibold bg-primary/5">Unlimited</td>
-                  </tr>
-                  <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Recipe browsing</td>
+                    <td className="p-6">Training / rest day split</td>
                     <td className="text-center p-6">
-                      <Check className="w-5 h-5 text-success mx-auto" />
+                      <X className="w-5 h-5 text-subtle-foreground mx-auto" />
                     </td>
                     <td className="text-center p-6 bg-primary/5">
                       <Check className="w-5 h-5 text-success mx-auto" />
                     </td>
                   </tr>
                   <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Macro calculations</td>
+                    <td className="p-6">Cooking timeline</td>
                     <td className="text-center p-6">
-                      <Check className="w-5 h-5 text-success mx-auto" />
+                      <X className="w-5 h-5 text-subtle-foreground mx-auto" />
                     </td>
                     <td className="text-center p-6 bg-primary/5">
                       <Check className="w-5 h-5 text-success mx-auto" />
                     </td>
                   </tr>
                   <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Shopping lists</td>
+                    <td className="p-6">Shopping list</td>
                     <td className="text-center p-6">
                       <Check className="w-5 h-5 text-success mx-auto" />
                     </td>
@@ -372,7 +362,7 @@ export default function PricingPage() {
                   <tr className="border-b border-border-strong/50">
                     <td className="p-6">PDF export</td>
                     <td className="text-center p-6">
-                      <X className="w-5 h-5 text-subtle-foreground mx-auto" />
+                      <Check className="w-5 h-5 text-success mx-auto" />
                     </td>
                     <td className="text-center p-6 bg-primary/5">
                       <Check className="w-5 h-5 text-success mx-auto" />
@@ -403,21 +393,21 @@ export default function PricingPage() {
             <div className="space-y-4">
               <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  Can I try MacroPlan for free?
+                  Can I try Macro Plan for free?
                   <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
                 </summary>
                 <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  Yes! Our Free plan lets you generate up to 3 meal plans, make 3 meal swaps, and save up to 10 favorite recipes. It's a great way to experience MacroPlan before deciding to upgrade.
+                  Yes! Our Free plan lets you generate up to 3 batch prep plans with shopping lists included. It&apos;s a great way to experience MacroPlan before deciding to upgrade.
                 </p>
               </details>
 
               <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  What happens after I use my free meal plans?
+                  What happens after I use my free batch prep plans?
                   <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
                 </summary>
                 <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  Once you've used your 3 free meal plan generations, you can still browse recipes, view your existing plans, and use all the basic features. To generate new meal plans, you'll need to upgrade to Premium.
+                  Once you&apos;ve used your 3 free batch prep plans, you can still browse recipes, view your existing plans, and use all the basic features. To generate new prep plans, you&apos;ll need to upgrade to Premium.
                 </p>
               </details>
 
@@ -475,7 +465,7 @@ export default function PricingPage() {
 
               <h2 className="text-3xl md:text-5xl font-bold mb-6 relative z-10">Ready to hit your macros?</h2>
               <p className="text-lg md:text-xl text-primary-foreground/90 mb-10 max-w-2xl mx-auto relative z-10">
-                Join thousands of users achieving their fitness goals with personalized meal plans.
+                Cook once, eat all week. AI-generated batch prep plans that hit your exact macros.
               </p>
               <Link href="/signup" className="inline-block bg-white text-primary font-bold py-4 px-10 rounded-xl hover:bg-white/90 transition-colors shadow-lg relative z-10">
                 Start Free Today
@@ -488,7 +478,7 @@ export default function PricingPage() {
       <footer className="py-12 bg-muted border-t border-border-strong">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground">© 2025 MacroPlan. All rights reserved.</p>
+            <p className="text-muted-foreground">© 2026 Macro Plan. All rights reserved.</p>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
