@@ -115,6 +115,25 @@ export async function getSubscriptionStatus(): Promise<SubscriptionStatus | null
  * Check if the current user is on the premium tier
  * Lightweight check for components that only need boolean status
  */
+const FREE_TIER_BATCH_PREP_LIMIT = 3
+
+export async function canGenerateBatchPrepPlan(
+  userId: string
+): Promise<{ allowed: boolean; reason?: 'free_tier_limit'; used?: number; limit?: number }> {
+  const tier = await getUserSubscriptionTier(userId)
+
+  if (tier === 'paid') {
+    return { allowed: true }
+  }
+
+  const { countBatchPrepPlans } = await import('@/lib/services/batch-prep-persistence')
+  const used = await countBatchPrepPlans(userId)
+  if (used >= FREE_TIER_BATCH_PREP_LIMIT) {
+    return { allowed: false, reason: 'free_tier_limit', used, limit: FREE_TIER_BATCH_PREP_LIMIT }
+  }
+  return { allowed: true, used, limit: FREE_TIER_BATCH_PREP_LIMIT }
+}
+
 export async function isPremiumUser(): Promise<boolean> {
   try {
     const supabase = await createClient()
