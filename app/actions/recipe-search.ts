@@ -9,12 +9,8 @@
 
 import { recipeApiService } from '@/lib/services/recipe-api'
 import { unsplashService } from '@/lib/services/unsplash'
-import { mealPlanGeneratorService } from '@/lib/services/meal-plan-generator'
 import type {
   NormalizedRecipe,
-  DailyMealPlan,
-  WeeklyMealPlan,
-  MealPlanGenerationParams,
 } from '@/lib/types/recipe'
 import type { RecipeApiSearchParams } from '@/lib/types/recipe-api'
 
@@ -144,83 +140,6 @@ export async function getMultipleRecipes(recipeIds: string[]): Promise<{
     return {
       success: false,
       error: 'Failed to get recipes',
-    }
-  }
-}
-
-// ============================================================================
-// Meal Plan Generation Actions
-// ============================================================================
-
-/**
- * Generate a daily meal plan
- */
-export async function generateDailyMealPlan(params: {
-  targetCalories: number
-  targetProtein: number
-  targetCarbs: number
-  targetFat: number
-  mealsPerDay?: number
-  dietaryPreferences?: string[]
-  excludeIngredients?: string[]
-}): Promise<{
-  success: boolean
-  data?: DailyMealPlan
-  error?: string
-}> {
-  try {
-    const mealPlan = await mealPlanGeneratorService.generateMealPlan({
-      ...params,
-      mealsPerDay: params.mealsPerDay || 4,
-      days: 1,
-    }) as DailyMealPlan
-
-    return {
-      success: true,
-      data: mealPlan,
-    }
-  } catch (error) {
-    console.error('[generateDailyMealPlan] Error:', error)
-    return {
-      success: false,
-      error: 'Failed to generate meal plan',
-    }
-  }
-}
-
-/**
- * Generate a weekly meal plan
- */
-export async function generateWeeklyMealPlan(params: {
-  targetCalories: number
-  targetProtein: number
-  targetCarbs: number
-  targetFat: number
-  mealsPerDay?: number
-  days?: number
-  dietaryPreferences?: string[]
-  excludeIngredients?: string[]
-}): Promise<{
-  success: boolean
-  data?: WeeklyMealPlan
-  error?: string
-}> {
-  try {
-    const mealPlan = await mealPlanGeneratorService.generateMealPlan({
-      ...params,
-      mealsPerDay: params.mealsPerDay || 4,
-      days: params.days || 7,
-    }) as WeeklyMealPlan
-
-    return {
-      success: true,
-      data: mealPlan,
-    }
-  } catch (error) {
-    console.error('[generateWeeklyMealPlan] Error:', error)
-    return {
-      success: false,
-      error: 'Failed to generate meal plan',
     }
   }
 }
