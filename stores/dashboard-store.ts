@@ -93,6 +93,15 @@ export const useDashboardStore = create<DashboardState>()(
     }),
     {
       name: 'dashboard-storage',
+      // Do not persist server-sourced data like recentPlans — always refetch.
+      // Persisting them causes divergence from /meal-plans when plans are deleted.
+      partialize: (state) => ({
+        caloriesEaten: state.caloriesEaten,
+        proteinEaten: state.proteinEaten,
+        carbsEaten: state.carbsEaten,
+        fatEaten: state.fatEaten,
+        stats: state.stats,
+      }),
     }
   )
 )

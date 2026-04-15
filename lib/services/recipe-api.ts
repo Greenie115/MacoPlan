@@ -289,15 +289,24 @@ export class RecipeApiService {
   // ==========================================================================
 
   async getCategories(): Promise<RecipeApiCategoryCount[]> {
-    return this.apiRequest<RecipeApiCategoryCount[]>('/categories')
+    const response = await this.apiRequest<RecipeApiListResponse<RecipeApiCategoryCount> | RecipeApiCategoryCount[]>(
+      '/categories'
+    )
+    return Array.isArray(response) ? response : (response.data ?? [])
   }
 
   async getCuisines(): Promise<RecipeApiCategoryCount[]> {
-    return this.apiRequest<RecipeApiCategoryCount[]>('/cuisines')
+    const response = await this.apiRequest<RecipeApiListResponse<RecipeApiCategoryCount> | RecipeApiCategoryCount[]>(
+      '/cuisines'
+    )
+    return Array.isArray(response) ? response : (response.data ?? [])
   }
 
   async getDietaryFlags(): Promise<RecipeApiCategoryCount[]> {
-    return this.apiRequest<RecipeApiCategoryCount[]>('/dietary-flags')
+    const response = await this.apiRequest<RecipeApiListResponse<RecipeApiCategoryCount> | RecipeApiCategoryCount[]>(
+      '/dietary-flags'
+    )
+    return Array.isArray(response) ? response : (response.data ?? [])
   }
 
   // ==========================================================================

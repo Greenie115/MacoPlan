@@ -5,7 +5,7 @@ import { getMealPlans, getMealPlanQuotaInfo } from '@/app/actions/meal-plans'
 import { MealPlansClient } from './_components/meal-plans-client'
 
 export const metadata: Metadata = {
-  title: 'My Meal Plans | Macro Plan',
+  title: 'My Meal Plans',
   description: 'View and manage your meal plans',
 }
 

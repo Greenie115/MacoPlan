@@ -7,7 +7,7 @@ import { GeneratorForm } from '@/components/batch-prep/generator-form'
 import type { TrainingProfile } from '@/lib/types/batch-prep'
 
 export const metadata: Metadata = {
-  title: 'Generate Batch Prep Plan | Macro Plan',
+  title: 'Generate Batch Prep Plan',
   description: 'Generate AI-powered batch meal prep plans that hit your exact macros',
 }
 

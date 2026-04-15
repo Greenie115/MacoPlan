@@ -10,7 +10,7 @@ import type {
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Your prep plan | Macro Plan',
+  title: 'Your prep plan',
   description: 'View your batch meal prep plan',
 }
 
