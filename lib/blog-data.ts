@@ -26,10 +26,10 @@ export const blogPosts: BlogPost[] = [
       <blockquote>Understanding the balance between these three macronutrients is the key to unlocking sustainable results and a healthier relationship with food.</blockquote>
 
       <h2>How to Calculate Your Macros</h2>
-      <p>Calculating your ideal macro split depends on several factors, including your age, sex, activity level, and specific goals (e.g., weight loss, muscle gain, or maintenance). While online calculators can provide a starting point, using an app like MacroPlan can give you a more personalized and adaptive recommendation. The key is to start with a baseline and adjust based on your progress and how you feel.</p>
+      <p>Calculating your ideal macro split depends on several factors, including your age, sex, activity level, and specific goals (e.g., weight loss, muscle gain, or maintenance). While online calculators can provide a starting point, using an app like Macro Plan can give you a more personalized and adaptive recommendation. The key is to start with a baseline and adjust based on your progress and how you feel.</p>
 
-      <h2>Tips for Success with MacroPlan</h2>
-      <p>Consistency is more important than perfection. Aim to hit your macro targets within a small range each day. Use a food scale for accuracy, plan your meals in advance, and don't be afraid to enjoy social events. The beauty of flexible dieting is its adaptability. Track your progress with the MacroPlan app, see what's working, and make small adjustments for long-term success.</p>
+      <h2>Tips for Success with Macro Plan</h2>
+      <p>Consistency is more important than perfection. Aim to hit your macro targets within a small range each day. Use a food scale for accuracy, plan your meals in advance, and don't be afraid to enjoy social events. The beauty of flexible dieting is its adaptability. Track your progress with the Macro Plan app, see what's working, and make small adjustments for long-term success.</p>
     `,
     author: 'Jane Doe, R.D.',
     authorBio: 'Jane is a Registered Dietitian with over 10 years of experience helping clients achieve their nutrition goals through flexible, sustainable approaches. She specializes in macro-based nutrition and sports performance.',

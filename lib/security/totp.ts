@@ -13,7 +13,7 @@ export function generateTOTPSecret(): string {
  * This URI can be scanned by authenticator apps like Google Authenticator.
  */
 export function generateTOTPUri(secret: string, email: string): string {
-  return authenticator.keyuri(email, 'MacroPlan', secret)
+  return authenticator.keyuri(email, 'Macro Plan', secret)
 }
 
 /**

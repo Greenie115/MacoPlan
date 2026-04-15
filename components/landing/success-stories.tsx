@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react'
 
 const testimonials = [
   {
-    quote: "MacroPlan helped me gain muscle, get a 6-pack, and simply achieve all my body goals.",
+    quote: "Macro Plan helped me gain muscle, get a 6-pack, and simply achieve all my body goals.",
     highlight: "simply achieve all my body goals",
     name: "Synthia J.",
     result: "Gained 8 lbs muscle"
   },
   {
-    quote: "I was 230 lbs, and today I am 185 lbs. MacroPlan taught me how proper nutrition and exercise are essential. I still use it everyday.",
+    quote: "I was 230 lbs, and today I am 185 lbs. Macro Plan taught me how proper nutrition and exercise are essential. I still use it everyday.",
     highlight: "proper nutrition and exercise are essential",
     name: "Larry S.",
     result: "Lost 45 lbs"
@@ -22,14 +22,14 @@ const testimonials = [
     result: "Transformed mindset"
   },
   {
-    quote: "My biggest realization with MacroPlan was being able to understand the food I ate... we don't need to jump on some diet fad, but understand our goals and adjust our calories and macros to achieve those goals.",
+    quote: "My biggest realization with Macro Plan was being able to understand the food I ate... we don't need to jump on some diet fad, but understand our goals and adjust our calories and macros to achieve those goals.",
     highlight: "being able to understand the food I ate",
     name: "Rohit S.",
     result: "Lost 30 lbs"
   },
   {
-    quote: "The biggest realization is that I can do better. It is actually possible to eat healthy, and the food can taste good. MacroPlan helped me overhaul my habits.",
-    highlight: "MacroPlan helped me overhaul my habits",
+    quote: "The biggest realization is that I can do better. It is actually possible to eat healthy, and the food can taste good. Macro Plan helped me overhaul my habits.",
+    highlight: "Macro Plan helped me overhaul my habits",
     name: "Quincy D.",
     result: "Healthier lifestyle"
   },

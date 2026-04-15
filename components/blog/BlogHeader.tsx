@@ -8,7 +8,7 @@ export function BlogHeader() {
         <nav className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
             <Utensils className="w-8 h-8 text-primary" />
-            <span>MacroPlan</span>
+            <span>Macro Plan</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">

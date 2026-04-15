@@ -1,5 +1,5 @@
 /**
- * MacroPlan Design System Tokens
+ * Macro Plan Design System Tokens
  * Centralized design system for consistent theming
  */
 

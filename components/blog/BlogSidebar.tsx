@@ -18,9 +18,9 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
   }
 
   return (
-    <aside className="space-y-6">
+    <aside className="space-y-6 sticky top-24">
       {/* Lead Magnet Box */}
-      <div className="bg-primary/5 border-2 border-primary/20 rounded-2xl p-6 sticky top-24">
+      <div className="bg-primary/5 border-2 border-primary/20 rounded-2xl p-6">
         <div className="text-3xl mb-3">📧</div>
         <h3 className="text-xl font-bold mb-2">Get the Guide</h3>
         <p className="text-sm text-subtle-foreground mb-4">

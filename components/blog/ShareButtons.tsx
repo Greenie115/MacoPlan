@@ -30,7 +30,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
   return (
     <div className="border-t border-border-strong pt-8 mt-12">
       <h3 className="text-xl font-bold mb-4">Share this post</h3>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex gap-3 flex-wrap justify-start">
         <a
           href={shareUrls.twitter}
           target="_blank"

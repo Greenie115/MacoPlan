@@ -18,21 +18,21 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.vercel.app'),
   title: {
-    default: 'MacroPlan - Smart Meal Planning & Macro Tracking',
-    template: '%s | MacroPlan',
+    default: 'Macro Plan - Smart Meal Planning & Macro Tracking',
+    template: '%s | Macro Plan',
   },
-  description: 'Stop wasting hours on meal prep. MacroPlan generates personalized meal plans that hit your exact macros instantly. Join 10,000+ users eating better with less effort.',
+  description: 'Stop wasting hours on meal prep. Macro Plan generates personalized meal plans that hit your exact macros instantly. Join 10,000+ users eating better with less effort.',
   keywords: ['meal planning', 'macro calculator', 'nutrition', 'diet', 'fitness', 'personalized meal plans', 'healthy eating', 'macro tracking'],
   openGraph: {
     type: 'website',
-    siteName: 'MacroPlan',
-    title: 'MacroPlan - Smart Meal Planning & Macro Tracking',
-    description: 'Stop wasting hours on meal prep. MacroPlan generates personalized meal plans that hit your exact macros instantly.',
+    siteName: 'Macro Plan',
+    title: 'Macro Plan - Smart Meal Planning & Macro Tracking',
+    description: 'Stop wasting hours on meal prep. Macro Plan generates personalized meal plans that hit your exact macros instantly.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MacroPlan - Smart Meal Planning & Macro Tracking',
-    description: 'Stop wasting hours on meal prep. MacroPlan generates personalized meal plans that hit your exact macros instantly.',
+    title: 'Macro Plan - Smart Meal Planning & Macro Tracking',
+    description: 'Stop wasting hours on meal prep. Macro Plan generates personalized meal plans that hit your exact macros instantly.',
   },
   robots: {
     index: true,

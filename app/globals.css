@@ -1,8 +1,9 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   /* ============================================
-     MacroPlan Brand Kit - UI Style Guide
+     Macro Plan Brand Kit - UI Style Guide
      Reference: ui_designs/stitch_macroplan_app_landing_page/brand_kit/
      ============================================ */
 

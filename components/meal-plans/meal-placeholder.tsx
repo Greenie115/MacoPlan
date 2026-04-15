@@ -38,7 +38,7 @@ export function MealPlaceholder({ mealType, className, compact = false }: MealPl
 
 /**
  * Returns the appropriate icon and gradient for each meal type.
- * Uses MacroPlan brand colors for consistency.
+ * Uses Macro Plan brand colors for consistency.
  */
 function getMealTypeVisuals(mealType: string) {
   const type = mealType.toLowerCase()

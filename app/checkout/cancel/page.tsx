@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { XCircle, ArrowLeft, MessageCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Checkout Cancelled - MacroPlan',
+  title: 'Checkout Cancelled - Macro Plan',
   description: 'Your checkout was cancelled. No charges were made.',
 }
 

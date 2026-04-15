@@ -1,6 +1,6 @@
-# MacroPlan UI Style Guide
+# Macro Plan UI Style Guide
 
-This document defines the UI design system for MacroPlan. All new features and components should follow these guidelines to maintain visual consistency across the app.
+This document defines the UI design system for Macro Plan. All new features and components should follow these guidelines to maintain visual consistency across the app.
 
 **Reference:** `ui_designs/stitch_macroplan_app_landing_page/brand_kit/`
 

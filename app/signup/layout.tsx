@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Sign Up',
-  description: 'Create your free MacroPlan account and get personalized meal plans that hit your macros perfectly.',
+  description: 'Create your free Macro Plan account and get personalized meal plans that hit your macros perfectly.',
   alternates: {
     canonical: '/signup',
   },

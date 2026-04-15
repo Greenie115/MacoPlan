@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { CheckCircle, ArrowRight, Sparkles } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Welcome to Premium - MacroPlan',
+  title: 'Welcome to Premium - Macro Plan',
   description: 'Your subscription is now active. Enjoy unlimited meal plans and premium features.',
 }
 
@@ -35,7 +35,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
           </h1>
 
           <p className="text-muted-foreground text-lg">
-            Your MacroPlan Premium subscription is now active. Get ready to enjoy unlimited meal plans!
+            Your Macro Plan Premium subscription is now active. Get ready to enjoy unlimited meal plans!
           </p>
         </div>
 

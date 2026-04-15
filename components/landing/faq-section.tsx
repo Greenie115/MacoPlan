@@ -5,12 +5,12 @@ import { ChevronDown } from 'lucide-react'
 export function FAQSection() {
   const faqs = [
     {
-      question: 'Is MacroPlan really free to start?',
+      question: 'Is Macro Plan really free to start?',
       answer: 'Yes! You can create your first meal plan completely free. No credit card required. Our free tier gives you access to basic meal planning features. Upgrade to Pro for unlimited meal plans, custom recipes, and advanced features.',
     },
     {
       question: 'How is this different from MyFitnessPal?',
-      answer: 'MyFitnessPal is a tracking app—you log what you already ate. MacroPlan tells you what TO eat. We generate complete meal plans that hit your exact macros, so you never have to guess or manually track. Think of us as the planning tool, not just the tracking tool.',
+      answer: 'MyFitnessPal is a tracking app—you log what you already ate. Macro Plan tells you what TO eat. We generate complete meal plans that hit your exact macros, so you never have to guess or manually track. Think of us as the planning tool, not just the tracking tool.',
     },
     {
       question: 'Can I customize meals for dietary restrictions?',

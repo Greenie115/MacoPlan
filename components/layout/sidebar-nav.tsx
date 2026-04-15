@@ -96,7 +96,7 @@ export function SidebarNav() {
           <div className="p-4 border-t border-border-strong">
             {!isCollapsed ? (
               <p className="text-xs text-muted-foreground text-center whitespace-nowrap">
-                MacroPlan v1.0
+                Macro Plan v1.0
               </p>
             ) : (
               <p className="text-xs text-muted-foreground text-center">v1.0</p>

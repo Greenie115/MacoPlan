@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Help Center',
-  description: 'Get help with your MacroPlan account, meal plans, and macro tracking.',
+  description: 'Get help with your Macro Plan account, meal plans, and macro tracking.',
   alternates: {
     canonical: '/help',
   },
@@ -28,7 +28,7 @@ export default function HelpPage() {
           <h2 className="text-lg font-semibold text-foreground">Contact Us</h2>
           <div className="bg-card rounded-2xl border border-border-strong p-6 space-y-4">
             <p className="text-muted-foreground">
-              Need help with MacroPlan? We're here to assist you with any questions or issues.
+              Need help with Macro Plan? We're here to assist you with any questions or issues.
             </p>
             <div className="flex items-center gap-3 text-foreground">
               <Mail className="size-5 text-primary" />
@@ -66,7 +66,7 @@ export default function HelpPage() {
               <div className="px-4 pb-4 text-muted-foreground">
                 <p>
                   From the Dashboard, tap "Generate Meal Plan" or navigate to the Plans tab. Select your preferences
-                  and MacroPlan will generate a personalized meal plan based on your macro targets.
+                  and Macro Plan will generate a personalized meal plan based on your macro targets.
                 </p>
               </div>
             </details>

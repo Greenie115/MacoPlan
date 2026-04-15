@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold text-foreground">1. Introduction</h2>
             <p className="text-muted-foreground">
-              Welcome to MacroPlan. We respect your privacy and are committed to protecting your personal data. This
+              Welcome to Macro Plan. We respect your privacy and are committed to protecting your personal data. This
               privacy policy explains how we collect, use, and safeguard your information when you use our application.
             </p>
           </section>

@@ -14,7 +14,7 @@ export function TopAppBar({ userName, avatarUrl }: TopAppBarProps) {
     <div className="sticky top-0 z-10 flex h-16 items-center bg-background px-4">
       <div className="flex shrink-0 items-center justify-start">
         <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] text-foreground">
-          MacroPlan
+          Macro Plan
         </h2>
       </div>
 

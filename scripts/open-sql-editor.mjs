@@ -15,7 +15,7 @@ const __dirname = dirname(__filename)
 const PROJECT_REF = 'dxhfjhprhxylnhufzaiu'
 const SQL_EDITOR_URL = `https://supabase.com/dashboard/project/${PROJECT_REF}/sql/new`
 
-console.log('\n🔧 MacroPlan Database Migration Helper\n')
+console.log('\n🔧 Macro Plan Database Migration Helper\n')
 console.log('=' .repeat(60))
 
 console.log('\n📋 To apply the recipes migration, follow these steps:\n')

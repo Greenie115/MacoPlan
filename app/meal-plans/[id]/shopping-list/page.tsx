@@ -5,7 +5,7 @@ import { getShoppingList } from '@/app/actions/shopping-lists'
 import ShoppingListView from '@/components/meal-plans/shopping-list-view'
 
 export const metadata: Metadata = {
-  title: 'Shopping List | MacroPlan',
+  title: 'Shopping List | Macro Plan',
   description: 'Your meal plan shopping list',
 }
 

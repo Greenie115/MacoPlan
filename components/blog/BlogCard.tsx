@@ -12,10 +12,11 @@ export function BlogCard({ post }: BlogCardProps) {
       href={`/blog/${post.slug}`}
       className="group bg-card text-card-foreground rounded-2xl shadow-lg border border-border-strong overflow-hidden flex flex-col hover:shadow-xl transition-shadow"
     >
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative aspect-video w-full overflow-hidden">
         <img
           src={post.image}
           alt={post.title}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>

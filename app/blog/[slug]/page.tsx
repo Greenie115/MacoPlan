@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .filter((p) => p.slug !== post.slug)
     .slice(0, 3)
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.app'
   const postUrl = `${baseUrl}/blog/${post.slug}`
 
   const jsonLd = {
@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'MacroPlan',
+      name: 'Macro Plan',
       url: baseUrl,
     },
     mainEntityOfPage: {
@@ -108,7 +108,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
 
           {/* Two-column layout on desktop */}
-          <div className="grid lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-3 items-start gap-8 lg:gap-12 max-w-7xl mx-auto">
             {/* Main Content Area */}
             <div className="lg:col-span-2">
               {/* Category Badge */}
@@ -127,7 +127,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <img
                     src={post.authorImage}
                     alt={post.author}
-                    className="w-10 h-10 rounded-full"
+                    className="w-10 h-10 rounded-full bg-muted object-cover"
                   />
                   <div>
                     <div className="font-semibold text-foreground">{post.author}</div>
@@ -148,6 +148,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <img
                   src={post.image}
                   alt={post.title}
+                  loading="eager"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -197,9 +198,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Footer */}
       <footer className="py-12 bg-muted border-t border-border-strong">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-lg mb-4">MacroPlan</h3>
+              <h3 className="font-bold text-lg mb-4">Macro Plan</h3>
               <p className="text-subtle-foreground text-sm">
                 Personalized meal plans that fit your macros and your lifestyle.
               </p>
@@ -228,45 +229,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-subtle-foreground">
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <a href="/privacy" className="hover:text-primary transition-colors">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <a href="/terms" className="hover:text-primary transition-colors">
                     Terms of Service
                   </a>
                 </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Connect</h4>
-              <ul className="space-y-2 text-sm text-subtle-foreground">
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
-                    Twitter
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-primary transition-colors">
-                    Instagram
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-primary transition-colors">
-                    Facebook
+                  <a href="/help" className="hover:text-primary transition-colors">
+                    Help Centre
                   </a>
                 </li>
               </ul>
             </div>
           </div>
           <div className="text-center text-muted-foreground text-sm border-t border-border-strong pt-8">
-            <p>© 2025 MacroPlan. All rights reserved.</p>
+            <p>© 2026 Macro Plan. All rights reserved.</p>
           </div>
         </div>
       </footer>

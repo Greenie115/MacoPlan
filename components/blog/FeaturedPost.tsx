@@ -12,10 +12,11 @@ export function FeaturedPost({ post }: FeaturedPostProps) {
       href={`/blog/${post.slug}`}
       className="group grid md:grid-cols-2 gap-8 bg-card rounded-2xl border border-border-strong shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
     >
-      <div className="relative h-64 md:h-auto overflow-hidden">
+      <div className="relative aspect-video overflow-hidden">
         <img
           src={post.image}
           alt={post.title}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

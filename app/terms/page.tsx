@@ -20,7 +20,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold text-foreground">1. Acceptance of Terms</h2>
             <p className="text-muted-foreground">
-              By accessing or using MacroPlan, you agree to be bound by these Terms of Service. If you do not agree to
+              By accessing or using Macro Plan, you agree to be bound by these Terms of Service. If you do not agree to
               these terms, please do not use our application.
             </p>
           </section>
@@ -28,7 +28,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold text-foreground">2. Description of Service</h2>
             <p className="text-muted-foreground">
-              MacroPlan is a meal planning and macro tracking application that provides personalized nutritional
+              Macro Plan is a meal planning and macro tracking application that provides personalized nutritional
               calculations, meal plan generation, and recipe recommendations based on your profile information and
               fitness goals.
             </p>
@@ -46,7 +46,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold text-foreground">4. Health Disclaimer</h2>
             <p className="text-muted-foreground">
-              MacroPlan provides general nutritional information and meal planning suggestions. Our service is not
+              Macro Plan provides general nutritional information and meal planning suggestions. Our service is not
               intended to replace professional medical advice, diagnosis, or treatment. Always consult with a qualified
               healthcare provider before making significant changes to your diet or exercise routine.
             </p>
@@ -71,7 +71,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold text-foreground">6. Intellectual Property</h2>
             <p className="text-muted-foreground">
-              All content, features, and functionality of MacroPlan are owned by us and are protected by copyright,
+              All content, features, and functionality of Macro Plan are owned by us and are protected by copyright,
               trademark, and other intellectual property laws. You may not copy, modify, or distribute our content
               without permission.
             </p>
@@ -80,7 +80,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold text-foreground">7. Subscription and Payments</h2>
             <p className="text-muted-foreground">
-              Some features of MacroPlan may require a paid subscription. By subscribing, you agree to pay all
+              Some features of Macro Plan may require a paid subscription. By subscribing, you agree to pay all
               applicable fees. Subscriptions automatically renew unless cancelled before the renewal date. Refunds are
               handled according to our refund policy.
             </p>
@@ -89,7 +89,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold text-foreground">8. Limitation of Liability</h2>
             <p className="text-muted-foreground">
-              To the fullest extent permitted by law, MacroPlan shall not be liable for any indirect, incidental,
+              To the fullest extent permitted by law, Macro Plan shall not be liable for any indirect, incidental,
               special, consequential, or punitive damages resulting from your use of the service. Our total liability
               shall not exceed the amount you paid for the service in the past twelve months.
             </p>

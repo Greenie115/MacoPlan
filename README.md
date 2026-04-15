@@ -1,4 +1,4 @@
-# MacroPlan
+# Macro Plan
 
 AI-powered macro tracking and meal planning app built with Next.js 16, React 19, and Supabase.
 
@@ -108,7 +108,7 @@ supabase/
 
 ## Onboarding Flow
 
-MacroPlan guides users through a 6-step onboarding process:
+Macro Plan guides users through a 6-step onboarding process:
 
 1. **Goal Selection** - Choose fitness goal (Cut, Bulk, Maintain, or Recomp)
 2. **Personal Stats** - Enter age, weight, height, and sex
@@ -124,7 +124,7 @@ After viewing results, users can:
 
 ## Macro Calculation
 
-MacroPlan uses scientifically-validated formulas:
+Macro Plan uses scientifically-validated formulas:
 
 **BMR (Basal Metabolic Rate)**:
 - Formula: Mifflin-St Jeor equation
@@ -195,7 +195,7 @@ npm run test:coverage
 
 ## Security
 
-MacroPlan follows security best practices:
+Macro Plan follows security best practices:
 
 - ✅ **Semgrep Scans**: 0 vulnerabilities detected
 - ✅ **Row Level Security**: All database access restricted by user
