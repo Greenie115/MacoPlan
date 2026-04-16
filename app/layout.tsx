@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppLayoutWrapper } from "@/components/layout/app-layout-wrapper";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { CookieConsent } from "@/components/cookie-consent";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,6 +61,7 @@ export default function RootLayout({
           <AppLayoutWrapper>{children}</AppLayoutWrapper>
         </ThemeProvider>
         <CookieConsent />
+        <SpeedInsights />
       </body>
     </html>
   );
