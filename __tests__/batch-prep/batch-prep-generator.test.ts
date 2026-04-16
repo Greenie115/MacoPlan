@@ -93,7 +93,7 @@ describe('generateBatchPrepPlan retry behaviour', () => {
     expect(anthropicService.generate).toHaveBeenCalledTimes(2)
   })
 
-  it('throws after retry still fails', async () => {
+  it('returns best attempt when both retries miss accuracy target', async () => {
     const offPlan = {
       ...validPlanFixture,
       training_day: {
@@ -108,7 +108,8 @@ describe('generateBatchPrepPlan retry behaviour', () => {
         usage: { input_tokens: 1500, output_tokens: 3000 },
       })
 
-    await expect(generateBatchPrepPlan(null, profile, prefs)).rejects.toThrow('Macro accuracy')
+    const plan = await generateBatchPrepPlan(null, profile, prefs)
+    expect(plan.training_day.daily_totals.calories).toBe(3500)
     expect(anthropicService.generate).toHaveBeenCalledTimes(2)
   })
 })

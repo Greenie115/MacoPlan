@@ -89,7 +89,7 @@ export async function generateBatchPrepPlan(
     return firstAttempt.plan
   }
 
-  // Retry once with correction
+  // Retry once with correction hint
   await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'retry', firstAttempt.accuracy.reason)
   const retryAttempt = await callAndValidate(
     userId,
@@ -97,13 +97,19 @@ export async function generateBatchPrepPlan(
     preferences,
     firstAttempt.accuracy.reason || 'macros were off target'
   )
-  if (!retryAttempt.accuracy.passed) {
-    await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'error', retryAttempt.accuracy.reason)
-    throw new BatchPrepValidationError(
-      `Macro accuracy check failed after retry: ${retryAttempt.accuracy.reason}`
-    )
+
+  // Return the better of the two attempts — never hard-fail on macro accuracy.
+  // LLMs cannot reliably hit exact macro targets, so we pick whichever attempt
+  // was closer and let the user see the actual macros in the UI.
+  if (retryAttempt.accuracy.passed) {
+    await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'success')
+    return retryAttempt.plan
   }
 
-  await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'success')
-  return retryAttempt.plan
+  // Both missed — return the attempt with fewer failures
+  const firstFailCount = firstAttempt.accuracy.reason?.split(';').length ?? 0
+  const retryFailCount = retryAttempt.accuracy.reason?.split(';').length ?? 0
+  const best = retryFailCount <= firstFailCount ? retryAttempt : firstAttempt
+  await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'success', `approx: ${best.accuracy.reason}`)
+  return best.plan
 }
