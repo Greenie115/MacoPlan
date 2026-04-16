@@ -11,7 +11,7 @@ import {
 } from '@/lib/types/batch-prep'
 
 const MODEL = 'claude-sonnet-4-6'
-const MAX_TOKENS = 8000
+const MAX_TOKENS = 16000
 
 function extractTextContent(response: { content: Array<{ type: string; text?: string }> }): string {
   const textBlock = response.content.find((b) => b.type === 'text')
@@ -52,9 +52,10 @@ async function callAndValidate(
   const response = await anthropicService.generate({
     model: MODEL,
     max_tokens: MAX_TOKENS,
+    thinking: { type: 'adaptive' },
     system: BATCH_PREP_SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userPrompt }],
-  })
+  } as Parameters<typeof anthropicService.generate>[0])
 
   const usage = (response as any).usage ?? { input_tokens: 0, output_tokens: 0 }
 

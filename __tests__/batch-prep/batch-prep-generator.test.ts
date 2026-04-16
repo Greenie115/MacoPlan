@@ -74,7 +74,7 @@ describe('generateBatchPrepPlan retry behaviour', () => {
       ...validPlanFixture,
       training_day: {
         ...validPlanFixture.training_day,
-        daily_totals: { calories: 3200, protein_g: 200, carbs_g: 280, fat_g: 70 },
+        daily_totals: { calories: 3500, protein_g: 200, carbs_g: 280, fat_g: 70 },
       },
     }
 
@@ -98,7 +98,7 @@ describe('generateBatchPrepPlan retry behaviour', () => {
       ...validPlanFixture,
       training_day: {
         ...validPlanFixture.training_day,
-        daily_totals: { calories: 3200, protein_g: 200, carbs_g: 280, fat_g: 70 },
+        daily_totals: { calories: 3500, protein_g: 200, carbs_g: 280, fat_g: 70 },
       },
     }
 

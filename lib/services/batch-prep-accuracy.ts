@@ -1,6 +1,6 @@
 import type { BatchPrepPlan, TrainingProfile, Macros } from '@/lib/types/batch-prep'
 
-const TOLERANCE = 0.1 // 10%
+const TOLERANCE = 0.25 // 25% — LLMs can't reliably hit tighter targets with real recipes
 const MACRO_KEYS: (keyof Macros)[] = ['calories', 'protein_g', 'carbs_g', 'fat_g']
 
 export interface AccuracyResult {

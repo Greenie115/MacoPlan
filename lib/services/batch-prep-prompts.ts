@@ -14,6 +14,31 @@ HARD RULES:
 9. Spread protein 30–50g per meal; never concentrate 100g+ in a single sitting.
 10. Respect dietary exclusions absolutely — no prohibited ingredients anywhere.
 
+MACRO REFERENCE (per 100g raw weight — use these for accuracy):
+Chicken breast: 165cal, 31g P, 0g C, 3.6g F
+Chicken thigh (skinless): 177cal, 24g P, 0g C, 8.4g F
+Lean ground beef (93/7): 152cal, 21g P, 0g C, 7g F
+Salmon fillet: 208cal, 20g P, 0g C, 13g F
+Whole eggs (2 large ~100g): 155cal, 13g P, 1.1g C, 11g F
+Greek yogurt (2% fat): 73cal, 10g P, 4g C, 2g F
+White rice (cooked): 130cal, 2.7g P, 28g C, 0.3g F
+Brown rice (cooked): 123cal, 2.7g P, 26g C, 1g F
+Sweet potato (cooked): 90cal, 2g P, 21g C, 0.1g F
+Oats (dry): 389cal, 17g P, 66g C, 7g F
+Broccoli: 34cal, 2.8g P, 7g C, 0.4g F
+Spinach: 23cal, 2.9g P, 3.6g C, 0.4g F
+Olive oil: 884cal, 0g P, 0g C, 100g F
+Peanut butter: 588cal, 25g P, 20g C, 50g F
+Black beans (cooked): 132cal, 8.9g P, 24g C, 0.5g F
+Avocado: 160cal, 2g P, 9g C, 15g F
+Cheddar cheese: 403cal, 25g P, 1.3g C, 33g F
+
+VERIFICATION STEP — before outputting JSON:
+1. For each meal, multiply each ingredient's quantity_g by its per-gram macros to compute ingredient-level macros.
+2. Sum all ingredient macros within each meal to get total_macros.
+3. Sum all meal total_macros within each day to get daily_totals.
+4. Compare daily_totals to the user's targets. If any macro is off by more than 5%, adjust portion sizes before outputting.
+
 OUTPUT SCHEMA:
 {
   "training_day": {
@@ -71,11 +96,29 @@ export function buildUserPrompt(
     ? `\nDIET TYPE: ${JSON.stringify(preferences.diet_type)}`
     : ''
 
+  const mealsPerDay = 4
+  const tPerMeal = {
+    calories: Math.round(td.calories / mealsPerDay),
+    protein_g: Math.round(td.protein_g / mealsPerDay),
+    carbs_g: Math.round(td.carbs_g / mealsPerDay),
+    fat_g: Math.round(td.fat_g / mealsPerDay),
+  }
+  const rPerMeal = {
+    calories: Math.round(rd.calories / mealsPerDay),
+    protein_g: Math.round(rd.protein_g / mealsPerDay),
+    carbs_g: Math.round(rd.carbs_g / mealsPerDay),
+    fat_g: Math.round(rd.fat_g / mealsPerDay),
+  }
+
   return `Generate a batch meal prep plan for this lifter:
 
-MACROS:
+DAILY MACRO TARGETS:
 - Training days (${profile.training_days_per_week}x/week): ${td.calories} cal | ${td.protein_g}g P | ${td.carbs_g}g C | ${td.fat_g}g F
 - Rest days (${restDaysPerWeek}x/week): ${rd.calories} cal | ${rd.protein_g}g P | ${rd.carbs_g}g C | ${rd.fat_g}g F
+
+PER-MEAL BUDGET (${mealsPerDay} meals/day — aim for these per meal):
+- Training: ~${tPerMeal.calories} cal | ~${tPerMeal.protein_g}g P | ~${tPerMeal.carbs_g}g C | ~${tPerMeal.fat_g}g F
+- Rest: ~${rPerMeal.calories} cal | ~${rPerMeal.protein_g}g P | ~${rPerMeal.carbs_g}g C | ~${rPerMeal.fat_g}g F
 
 PREFERENCES:
 - Prep day: ${profile.prep_day}

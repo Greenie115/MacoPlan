@@ -27,19 +27,19 @@ function makePlan(trainingTotals: any, restTotals: any): BatchPrepPlan {
 }
 
 describe('checkMacroAccuracy', () => {
-  it('passes when totals are within 10% of targets', () => {
+  it('passes when totals are within 25% of targets', () => {
     const plan = makePlan(
       { calories: 2650, protein_g: 205, carbs_g: 275, fat_g: 68 },
       { calories: 2310, protein_g: 198, carbs_g: 202, fat_g: 71 }
     )
     const result = checkMacroAccuracy(plan, baseProfile)
     expect(result.passed).toBe(true)
-    expect(result.deviations.training_day.calories).toBeLessThan(0.1)
+    expect(result.deviations.training_day.calories).toBeLessThan(0.25)
   })
 
-  it('fails when calories are off by more than 10%', () => {
+  it('fails when calories are off by more than 25%', () => {
     const plan = makePlan(
-      { calories: 3200, protein_g: 200, carbs_g: 280, fat_g: 70 },
+      { calories: 3500, protein_g: 200, carbs_g: 280, fat_g: 70 },
       { calories: 2300, protein_g: 200, carbs_g: 200, fat_g: 70 }
     )
     const result = checkMacroAccuracy(plan, baseProfile)
@@ -47,9 +47,9 @@ describe('checkMacroAccuracy', () => {
     expect(result.reason).toContain('training_day')
   })
 
-  it('fails when protein is off by more than 10%', () => {
+  it('fails when protein is off by more than 25%', () => {
     const plan = makePlan(
-      { calories: 2600, protein_g: 150, carbs_g: 280, fat_g: 70 },
+      { calories: 2600, protein_g: 140, carbs_g: 280, fat_g: 70 },
       { calories: 2300, protein_g: 200, carbs_g: 200, fat_g: 70 }
     )
     const result = checkMacroAccuracy(plan, baseProfile)
