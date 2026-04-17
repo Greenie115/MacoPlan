@@ -18,7 +18,11 @@
       "WebSearch",
       "WebFetch(domain:platform.fatsecret.com)",
       "WebFetch(domain:www.myfitnesspal.com)",
-      "Skill(superpowers:brainstorming)"
+      "Skill(superpowers:brainstorming)",
+      "Bash(npx vitest *)",
+      "Bash(npm run *)",
+      "Bash(RUN_LIVE_BATCH_PREP=1 npx vitest run __tests__/batch-prep/live-api.test.ts)",
+      "Bash(RUN_LIVE_BATCH_PREP=1 npx vitest run __tests__/batch-prep/live-api.test.ts --reporter=verbose)"
     ],
     "deny": [],
     "ask": []
