@@ -40,10 +40,12 @@ function planToTags(plan: BatchPrepPlan): string {
               `<ing name="${i.name}" g="${i.quantity_g}" cal="${i.macros.calories}" p="${i.macros.protein_g}" c="${i.macros.carbs_g}" f="${i.macros.fat_g}"/>`
           )
           .join('\n')
+        const instrs = m.cooking_instructions.map((s) => `<instr>${s}</instr>`).join('\n')
         const tm = m.total_macros
         return `<meal slot="${m.meal_slot}" equipment="${m.equipment}" servings="${m.servings_to_prep}" storage_days="${m.storage_days}" cal="${tm.calories}" p="${tm.protein_g}" c="${tm.carbs_g}" f="${tm.fat_g}">
 <name>${m.name}</name>
 ${ings}
+${instrs}
 </meal>`
       })
       .join('\n')

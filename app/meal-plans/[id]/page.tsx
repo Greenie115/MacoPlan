@@ -1,7 +1,9 @@
 import { notFound, redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getBatchPrepPlan } from '@/lib/services/batch-prep-persistence'
+import { getImagesForMealNames } from '@/lib/services/batch-prep-images'
 import { PlanView } from '@/components/batch-prep/plan-view'
+import type { MealImage } from '@/components/batch-prep/meal-card'
 import type {
   DayPlan,
   ShoppingItem,
@@ -56,15 +58,30 @@ export default async function MealPlanPage({
     notFound()
   }
 
+  const trainingDay = plan.training_day_plan as DayPlan
+  const restDay = plan.rest_day_plan as DayPlan
+  const mealNames = [...trainingDay.meals, ...restDay.meals].map((m) => m.name)
+  const photoMap = await getImagesForMealNames(mealNames)
+  const mealImages: Record<string, MealImage> = {}
+  for (const [name, photo] of photoMap) {
+    mealImages[name] = {
+      url: photo.url,
+      smallUrl: photo.smallUrl,
+      photographerName: photo.photographerName,
+      photographerUrl: photo.photographerUrl,
+    }
+  }
+
   return (
     <PlanView
       planId={plan.id}
-      trainingDay={plan.training_day_plan as DayPlan}
-      restDay={plan.rest_day_plan as DayPlan}
+      trainingDay={trainingDay}
+      restDay={restDay}
       shoppingList={plan.shopping_list as ShoppingItem[]}
       containerAssignments={plan.container_assignments as ContainerAssignment[]}
       totalContainers={plan.total_containers}
       estimatedPrepTimeMins={plan.estimated_prep_time_mins}
+      mealImages={mealImages}
     />
   )
 }

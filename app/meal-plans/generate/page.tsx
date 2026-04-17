@@ -104,7 +104,7 @@ export default async function GenerateBatchPrepPage() {
       <h1 className="text-3xl font-bold mb-2">Your batch prep plan</h1>
       <p className="text-muted-foreground mb-6">
         Tell us your training schedule and we&apos;ll generate a batch cooking plan that hits
-        your macros. Takes about 3 seconds.
+        your macros. Usually takes 20–40 seconds.
       </p>
       <GeneratorForm
         defaults={defaults}

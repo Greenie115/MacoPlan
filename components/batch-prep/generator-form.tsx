@@ -1,15 +1,26 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { TrainingProfileSchema, type TrainingProfile } from '@/lib/types/batch-prep'
 import { generateBatchPrepPlanAction } from '@/app/actions/batch-prep'
+
+const PROGRESS_MESSAGES = [
+  'Designing your batch recipes…',
+  'Balancing training and rest day macros…',
+  'Picking ingredients that overlap across meals…',
+  'Sequencing the prep timeline…',
+  'Writing cooking instructions…',
+  'Building your shopping list…',
+  'Almost there — final checks…',
+]
 
 interface Props {
   defaults: TrainingProfile
@@ -20,7 +31,19 @@ interface Props {
 export function GeneratorForm({ defaults, userDietType, userExclusions }: Props) {
   const [isPending, startTransition] = useTransition()
   const [serverError, setServerError] = useState<string | null>(null)
+  const [progressIndex, setProgressIndex] = useState(0)
   const router = useRouter()
+
+  useEffect(() => {
+    if (!isPending) {
+      setProgressIndex(0)
+      return
+    }
+    const interval = setInterval(() => {
+      setProgressIndex((i) => Math.min(i + 1, PROGRESS_MESSAGES.length - 1))
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [isPending])
 
   const { register, handleSubmit, setValue, formState: { errors } } =
     useForm<TrainingProfile>({
@@ -124,8 +147,20 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
       {serverError && <p className="text-red-500">{serverError}</p>}
 
       <Button type="submit" disabled={isPending} className="w-full">
-        {isPending ? 'Generating your prep plan\u2026' : 'Generate my prep plan \u2192'}
+        {isPending ? (
+          <span className="inline-flex items-center gap-2">
+            <Loader2 className="size-4 animate-spin" />
+            {PROGRESS_MESSAGES[progressIndex]}
+          </span>
+        ) : (
+          'Generate my prep plan \u2192'
+        )}
       </Button>
+      {isPending && (
+        <p className="text-center text-xs text-muted-foreground">
+          This usually takes 20–40 seconds. Don&apos;t close this tab.
+        </p>
+      )}
     </form>
   )
 }
