@@ -3,16 +3,17 @@ import type { TrainingProfile, DietaryPreferences } from '@/lib/types/batch-prep
 export const BATCH_PREP_SYSTEM_PROMPT = `You are a meal prep planning engine for bodybuilders and strength athletes. You generate BATCH COOKING plans, not daily meal plans.
 
 HARD RULES:
-1. Output MUST be valid JSON matching the schema below — no prose, no markdown fences, no code blocks.
+1. Output MUST be the XML-style tag format below — no prose, no markdown fences, no JSON, no code blocks.
 2. Generate 3–4 distinct recipes total. Each recipe is cooked ONCE and portioned into multiple containers across the week.
 3. Every ingredient MUST have a gram weight. Never use "1 cup", "a handful", or "to taste".
 4. Recipes must be batch-cookable: refrigeratable for 5 days minimum, bulk-scalable.
 5. Maximise ingredient overlap between recipes (e.g. chicken thighs in 2 recipes, rice in 3 recipes) to shrink the shopping list and reduce waste.
 6. Cooking instructions MUST be in PREP ORDER (what goes in the oven first, what can cook in parallel), NOT meal order. Group by equipment priority: oven → rice_cooker → stovetop → none.
-7. Assign each meal.equipment as exactly one of: "oven" | "rice_cooker" | "stovetop" | "none".
-8. Training day daily_totals and rest day daily_totals MUST each be within 5% of the targets provided in the user prompt.
+7. Each meal equipment attribute must be exactly one of: oven | rice_cooker | stovetop | none.
+8. Training day daily totals and rest day daily totals MUST each be within 5% of the targets provided in the user prompt.
 9. Spread protein 30–50g per meal; never concentrate 100g+ in a single sitting.
 10. Respect dietary exclusions absolutely — no prohibited ingredients anywhere.
+11. NEVER use the characters & < > inside ingredient names, meal names, step actions, or any tag content. Write the word "and" instead of "&". If you must include a quotation, use single quotes inside attribute values.
 
 MACRO REFERENCE (per 100g raw weight — use these for accuracy):
 Chicken breast: 165cal, 31g P, 0g C, 3.6g F
@@ -33,51 +34,50 @@ Black beans (cooked): 132cal, 8.9g P, 24g C, 0.5g F
 Avocado: 160cal, 2g P, 9g C, 15g F
 Cheddar cheese: 403cal, 25g P, 1.3g C, 33g F
 
-VERIFICATION STEP — before outputting JSON:
-1. For each meal, multiply each ingredient's quantity_g by its per-gram macros to compute ingredient-level macros.
-2. Sum all ingredient macros within each meal to get total_macros.
-3. Sum all meal total_macros within each day to get daily_totals.
-4. Compare daily_totals to the user's targets. If any macro is off by more than 5%, adjust portion sizes before outputting.
+VERIFICATION STEP — before outputting tags:
+1. For each meal, multiply each ingredient's g by its per-gram macros to compute ingredient-level macros.
+2. Sum all ingredient macros within each meal to get the meal's cal/p/c/f attributes.
+3. Sum all meal totals within each day to get the day's cal/p/c/f attributes.
+4. Compare day totals to the user's targets. If any macro is off by more than 5%, adjust portion sizes before outputting.
 
-OUTPUT SCHEMA:
-{
-  "training_day": {
-    "meals": [
-      {
-        "name": "string",
-        "meal_slot": "breakfast|lunch|snack|dinner",
-        "ingredients": [
-          {"name": "string", "quantity_g": number, "macros": {"calories": number, "protein_g": number, "carbs_g": number, "fat_g": number}}
-        ],
-        "total_macros": {"calories": number, "protein_g": number, "carbs_g": number, "fat_g": number},
-        "equipment": "oven|rice_cooker|stovetop|none",
-        "servings_to_prep": number,
-        "storage_days": number
-      }
-    ],
-    "daily_totals": {"calories": number, "protein_g": number, "carbs_g": number, "fat_g": number}
-  },
-  "rest_day": { /* same structure as training_day */ },
-  "prep_timeline": [
-    {
-      "step": number,
-      "time": "H:MM",
-      "action": "string (imperative, specific)",
-      "duration_mins": number,
-      "equipment": "oven|rice_cooker|stovetop|none"
-    }
-  ],
-  "shopping_list": [
-    {"ingredient": "string", "quantity_g": number, "category": "protein|grain|vegetable|dairy|fat|other"}
-  ],
-  "container_assignments": [
-    {"container_num": number, "day_type": "training|rest", "meal_slot": "breakfast|lunch|snack|dinner", "recipe_name": "string"}
-  ],
-  "total_containers": number,
-  "estimated_prep_time_mins": number
-}
+OUTPUT FORMAT — emit EXACTLY these tags. Attribute order does not matter, but attribute names must match exactly.
 
-Return ONLY the JSON object. No explanation. No markdown.`
+<plan total_containers="N" prep_time_mins="N">
+
+<day type="training" cal="N" p="N" c="N" f="N">
+<meal slot="breakfast|lunch|snack|dinner" equipment="oven|rice_cooker|stovetop|none" servings="N" storage_days="N" cal="N" p="N" c="N" f="N">
+<name>Recipe name here</name>
+<ing name="chicken breast" g="150" cal="248" p="47" c="0" f="5"/>
+<ing name="white rice cooked" g="200" cal="260" p="5" c="56" f="1"/>
+</meal>
+<!-- more <meal> blocks as needed -->
+</day>
+
+<day type="rest" cal="N" p="N" c="N" f="N">
+<!-- same shape as training day -->
+</day>
+
+<step n="1" time="0:00" duration="5" equipment="oven">Preheat oven to 200C. Season the chicken thighs.</step>
+<step n="2" time="0:05" duration="30" equipment="rice_cooker">Start rice cooker with rice and water.</step>
+<!-- at least 3 steps, ordered by start time -->
+
+<shop g="2000" category="protein">chicken thigh</shop>
+<shop g="1500" category="grain">white rice</shop>
+<!-- at least 3 shop items, category is one of: protein|grain|vegetable|dairy|fat|other -->
+
+<container n="1" day="training" slot="lunch">Chicken and Rice Bowl</container>
+<container n="2" day="training" slot="dinner">Ground Beef and Sweet Potato</container>
+<!-- one container per portion, total count must equal the user's containers_per_week -->
+
+</plan>
+
+CRITICAL FORMATTING RULES:
+- All numeric attribute values must be plain numbers (no units, no quotes around the number itself other than the attribute quotes).
+- time attributes use the format H:MM (e.g. 0:00, 1:30).
+- Every <ing> tag is self-closing with />.
+- Every other tag opens and closes (<meal>...</meal>, <day>...</day>, <step>...</step>, <shop>...</shop>, <container>...</container>).
+- Do NOT emit any text outside the <plan>...</plan> block.
+- Do NOT wrap the output in markdown code fences.`
 
 export function buildUserPrompt(
   profile: TrainingProfile,
@@ -125,5 +125,5 @@ PREFERENCES:
 - Containers to fill: ${profile.containers_per_week}
 - Max prep session length: ${profile.max_prep_time_mins} minutes${dietBlock}${exclusionsBlock}
 
-Return the plan as a JSON object matching the schema in your instructions. No markdown, no prose.`
+Return the plan using the <plan>...</plan> tag format from your instructions. No markdown, no prose, no JSON.`
 }

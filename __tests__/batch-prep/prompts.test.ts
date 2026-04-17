@@ -8,9 +8,10 @@ describe('batch-prep prompts', () => {
       expect(BATCH_PREP_SYSTEM_PROMPT).toContain('BATCH COOKING')
     })
 
-    it('requires JSON output without markdown', () => {
-      expect(BATCH_PREP_SYSTEM_PROMPT).toContain('valid JSON')
+    it('requires tag output without markdown or JSON', () => {
+      expect(BATCH_PREP_SYSTEM_PROMPT).toContain('<plan')
       expect(BATCH_PREP_SYSTEM_PROMPT).toContain('no markdown fences')
+      expect(BATCH_PREP_SYSTEM_PROMPT).toContain('no JSON')
     })
 
     it('requires gram weights', () => {
