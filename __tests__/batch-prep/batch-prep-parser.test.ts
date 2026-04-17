@@ -8,21 +8,29 @@ const VALID_TAGS = `<plan total_containers="10" prep_time_mins="90">
 <name>Chicken and Rice Bowl</name>
 <ing name="chicken thigh" g="200" cal="440" p="52" c="0" f="25"/>
 <ing name="white rice" g="150" cal="195" p="4" c="42" f="0"/>
+<instr>Season chicken thighs with salt and pepper.</instr>
+<instr>Bake chicken at 200C for 25 minutes.</instr>
+<instr>Cook rice in rice cooker with 1.5x water.</instr>
 </meal>
 <meal slot="dinner" equipment="stovetop" servings="5" storage_days="5" cal="760" p="69" c="60" f="25">
 <name>Ground Beef and Sweet Potato</name>
 <ing name="lean ground beef" g="250" cal="500" p="65" c="0" f="25"/>
 <ing name="sweet potato" g="300" cal="260" p="4" c="60" f="0"/>
+<instr>Cube sweet potatoes and roast at 200C for 30 minutes.</instr>
+<instr>Brown ground beef on stovetop over medium-high heat.</instr>
+<instr>Portion beef and sweet potato into containers.</instr>
 </meal>
 </day>
 <day type="rest" cal="2300" p="200" c="200" f="70">
 <meal slot="lunch" equipment="oven" servings="2" storage_days="5" cal="396" p="47" c="0" f="22">
 <name>Chicken and Rice Bowl smaller</name>
 <ing name="chicken thigh" g="180" cal="396" p="47" c="0" f="22"/>
+<instr>Use chicken from the main batch, portioned to 180g per container.</instr>
 </meal>
 <meal slot="dinner" equipment="stovetop" servings="2" storage_days="5" cal="400" p="52" c="0" f="20">
 <name>Ground Beef and Sweet Potato smaller</name>
 <ing name="lean ground beef" g="200" cal="400" p="52" c="0" f="20"/>
+<instr>Use beef from the main batch, portioned to 200g per container.</instr>
 </meal>
 </day>
 <step n="1" time="0:00" duration="5" equipment="oven">Preheat oven to 200C.</step>
@@ -44,6 +52,8 @@ describe('parseBatchPrepPlan', () => {
     expect(plan.training_day.meals[0].name).toBe('Chicken and Rice Bowl')
     expect(plan.training_day.meals[0].ingredients).toHaveLength(2)
     expect(plan.training_day.meals[0].ingredients[0].quantity_g).toBe(200)
+    expect(plan.training_day.meals[0].cooking_instructions.length).toBeGreaterThanOrEqual(3)
+    expect(plan.training_day.meals[0].cooking_instructions[0]).toContain('Season chicken')
     expect(plan.training_day.daily_totals.calories).toBe(2600)
     expect(plan.rest_day.meals).toHaveLength(2)
     expect(plan.prep_timeline).toHaveLength(3)

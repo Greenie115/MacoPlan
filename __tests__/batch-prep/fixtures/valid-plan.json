@@ -2,11 +2,17 @@
   "training_day": {
     "meals": [
       {
-        "name": "Chicken & Rice Bowl",
+        "name": "Chicken and Rice Bowl",
         "meal_slot": "lunch",
         "ingredients": [
           { "name": "chicken thigh", "quantity_g": 200, "macros": { "calories": 440, "protein_g": 52, "carbs_g": 0, "fat_g": 25 } },
           { "name": "white rice", "quantity_g": 150, "macros": { "calories": 195, "protein_g": 4, "carbs_g": 42, "fat_g": 0 } }
+        ],
+        "cooking_instructions": [
+          "Season chicken thighs with salt, pepper, and paprika.",
+          "Bake chicken at 200C for 25 minutes until internal temp hits 74C.",
+          "Cook rice in rice cooker with a 1.5x water ratio.",
+          "Slice chicken and portion over rice into containers."
         ],
         "total_macros": { "calories": 635, "protein_g": 56, "carbs_g": 42, "fat_g": 25 },
         "equipment": "oven",
@@ -14,11 +20,17 @@
         "storage_days": 5
       },
       {
-        "name": "Ground Beef & Sweet Potato",
+        "name": "Ground Beef and Sweet Potato",
         "meal_slot": "dinner",
         "ingredients": [
           { "name": "lean ground beef", "quantity_g": 250, "macros": { "calories": 500, "protein_g": 65, "carbs_g": 0, "fat_g": 25 } },
           { "name": "sweet potato", "quantity_g": 300, "macros": { "calories": 260, "protein_g": 4, "carbs_g": 60, "fat_g": 0 } }
+        ],
+        "cooking_instructions": [
+          "Cube sweet potatoes and roast at 200C for 30 minutes.",
+          "Brown ground beef on stovetop over medium-high heat, breaking it up.",
+          "Season beef with salt, cumin, and garlic powder.",
+          "Portion beef and sweet potato evenly into containers."
         ],
         "total_macros": { "calories": 760, "protein_g": 69, "carbs_g": 60, "fat_g": 25 },
         "equipment": "stovetop",
@@ -31,10 +43,14 @@
   "rest_day": {
     "meals": [
       {
-        "name": "Chicken & Rice Bowl (smaller)",
+        "name": "Chicken and Rice Bowl smaller",
         "meal_slot": "lunch",
         "ingredients": [
           { "name": "chicken thigh", "quantity_g": 180, "macros": { "calories": 396, "protein_g": 47, "carbs_g": 0, "fat_g": 22 } }
+        ],
+        "cooking_instructions": [
+          "Use the same baked chicken from the main batch.",
+          "Portion 180g of chicken per container for rest-day servings."
         ],
         "total_macros": { "calories": 396, "protein_g": 47, "carbs_g": 0, "fat_g": 22 },
         "equipment": "oven",
@@ -42,10 +58,14 @@
         "storage_days": 5
       },
       {
-        "name": "Ground Beef & Sweet Potato (smaller)",
+        "name": "Ground Beef and Sweet Potato smaller",
         "meal_slot": "dinner",
         "ingredients": [
           { "name": "lean ground beef", "quantity_g": 200, "macros": { "calories": 400, "protein_g": 52, "carbs_g": 0, "fat_g": 20 } }
+        ],
+        "cooking_instructions": [
+          "Use the same browned beef from the main batch.",
+          "Portion 200g of beef per container for rest-day servings."
         ],
         "total_macros": { "calories": 400, "protein_g": 52, "carbs_g": 0, "fat_g": 20 },
         "equipment": "stovetop",
@@ -56,8 +76,8 @@
     "daily_totals": { "calories": 2300, "protein_g": 200, "carbs_g": 200, "fat_g": 70 }
   },
   "prep_timeline": [
-    { "step": 1, "time": "0:00", "action": "Preheat oven to 200°C. Season 2kg chicken thighs.", "duration_mins": 5, "equipment": "oven" },
-    { "step": 2, "time": "0:05", "action": "Put rice cooker on with 1.5kg rice + 2.25L water.", "duration_mins": 0, "equipment": "rice_cooker" },
+    { "step": 1, "time": "0:00", "action": "Preheat oven to 200C. Season 2kg chicken thighs.", "duration_mins": 5, "equipment": "oven" },
+    { "step": 2, "time": "0:05", "action": "Put rice cooker on with 1.5kg rice and 2.25L water.", "duration_mins": 0, "equipment": "rice_cooker" },
     { "step": 3, "time": "0:10", "action": "Brown 2.5kg ground beef on stovetop.", "duration_mins": 20, "equipment": "stovetop" }
   ],
   "shopping_list": [
@@ -67,8 +87,8 @@
     { "ingredient": "sweet potato", "quantity_g": 3000, "category": "vegetable" }
   ],
   "container_assignments": [
-    { "container_num": 1, "day_type": "training", "meal_slot": "lunch", "recipe_name": "Chicken & Rice Bowl" },
-    { "container_num": 2, "day_type": "training", "meal_slot": "dinner", "recipe_name": "Ground Beef & Sweet Potato" }
+    { "container_num": 1, "day_type": "training", "meal_slot": "lunch", "recipe_name": "Chicken and Rice Bowl" },
+    { "container_num": 2, "day_type": "training", "meal_slot": "dinner", "recipe_name": "Ground Beef and Sweet Potato" }
   ],
   "total_containers": 10,
   "estimated_prep_time_mins": 90

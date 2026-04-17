@@ -25,6 +25,7 @@ export const MealSchema = z.object({
   name: z.string().min(1),
   meal_slot: MealSlotSchema,
   ingredients: z.array(IngredientSchema).min(1),
+  cooking_instructions: z.array(z.string().min(1)).min(1),
   total_macros: MacrosSchema,
   equipment: EquipmentSchema,
   servings_to_prep: z.number().int().positive(),

@@ -58,10 +58,21 @@ function parseMeal(body: string, attrs: Record<string, string>): Meal {
     })
   }
 
+  const cooking_instructions: string[] = []
+  const instrRe = /<instr(?:\s[^>]*)?>([\s\S]*?)<\/instr>/g
+  while ((m = instrRe.exec(body)) !== null) {
+    const step = decodeEntities(m[1].trim())
+    if (step) cooking_instructions.push(step)
+  }
+  if (cooking_instructions.length === 0) {
+    cooking_instructions.push('See batch prep timeline for cooking steps.')
+  }
+
   return {
     name,
     meal_slot: (attrs.slot as Meal['meal_slot']) ?? 'lunch',
     ingredients,
+    cooking_instructions,
     total_macros: {
       calories: toNum(attrs.cal),
       protein_g: toNum(attrs.p),
