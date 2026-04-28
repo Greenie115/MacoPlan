@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { blogPosts } from '@/lib/blog-data'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.app'
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {

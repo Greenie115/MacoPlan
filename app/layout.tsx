@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.app'),
   title: {
     default: 'Macro Plan - Smart Meal Planning & Macro Tracking',
     template: '%s | Macro Plan',
