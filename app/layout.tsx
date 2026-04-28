@@ -5,6 +5,7 @@ import "./globals.css";
 import { AppLayoutWrapper } from "@/components/layout/app-layout-wrapper";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { CookieConsent } from "@/components/cookie-consent";
+import { Analytics } from "@/components/analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,6 +62,7 @@ export default function RootLayout({
           <AppLayoutWrapper>{children}</AppLayoutWrapper>
         </ThemeProvider>
         <CookieConsent />
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
