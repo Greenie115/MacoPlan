@@ -107,6 +107,85 @@ export const blogPosts: BlogPost[] = [
     readTime: '4 min read',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD2Yh-JKBwBpwvIvagriMdQPCRUz6gEJ4FEmkpXm-djjfvqSVeXNM9xwQFoQqbFGuVnLTkhiQLMPy9pnSdez0UoyQJNfaH9mLDqArr13onR7NmlrZ2JrqIqnuAZ50bsaakeJuAetYEu5D8Gbo-xht8apTx1F2eRyieT8BgaO6ROi_VKNWTBeTXthdM_XfC5SRNY1cTuTQP65KHK2DWA-13caDqE1COKhjhMHgEw3y6G3JIGjWCj2iOj8W65XDD_Ui02kO2OE3vn4pEm',
     category: 'Recipes'
+  },
+  {
+    slug: 'protein-on-rest-days',
+    title: 'Rest Day Protein: Hit Your Target When Appetite Drops',
+    excerpt: 'Rest day protein is the quiet leak in most lifters\' weeks. Here\'s why appetite drops on off days and five tactics to keep your weekly average where it needs to be.',
+    content: `
+      <p>It's 3 p.m. on Sunday. Yesterday, your last training day, you hit 215 g of protein without thinking about it. Today you're at 48 g, mildly bored of food, and the chicken in the fridge feels like a chore.</p>
+
+      <p>Rest day protein is the quiet leak in most lifters' weeks. Training-day appetite carries you through 200 g without effort. On rest days the cues drop out, you eat half as much, and the weekly average sags. Over a 16-week cut or a lean bulk, that gap is the difference between holding muscle and watching the scale lie about your composition.</p>
+
+      <p>Here's why it happens, and five tactics that fix it without forcing yourself to eat when you're genuinely not hungry.</p>
+
+      <h2>Why Hitting Protein on Rest Days Is Harder</h2>
+      <p>It feels like a willpower problem. It's mostly biology and routine.</p>
+
+      <p><strong>Energy expenditure is lower.</strong> A heavy training session burns 400–700 calories on top of your baseline. Lose that and your overall hunger drive softens by mid-afternoon. Less expenditure, less ghrelin, less appetite.</p>
+
+      <p><strong>The post-workout hunger window is gone.</strong> Most lifters know that 60–90 minute window after a session where the first big meal goes down easy. Without training, that window never opens, and your largest protein hit of the day vanishes with it.</p>
+
+      <p><strong>Your environmental cues disappear.</strong> Training-day eating runs on rails: pre-workout meal at 11, intra-workout shake, post-workout chicken and rice at 3, dinner at 7. Rest days have no anchors. Meals drift later, get smaller, or get skipped.</p>
+
+      <p><strong>Cortisol and acute stress drop.</strong> Lower training stress means lower acute appetite signaling. Counter-intuitively, calmer days often mean less hunger, not more.</p>
+
+      <p>The fix isn't to eat the same way you do on training days. It's to design rest days as a separate problem with their own rules.</p>
+
+      <h2>Five Ways to Hit Protein on Rest Days</h2>
+
+      <h3>1. Front-Load Protein Before Noon</h3>
+      <p>The simplest fix. Get 60–80 g of protein in before lunch, while morning hunger is still doing the work for you. Three eggs plus a 40 g whey shake plus 200 g of Greek yogurt is 65 g and takes ten minutes.</p>
+
+      <p>If your appetite reliably drops after lunch on rest days, that one habit alone can move you from 130 g to 180 g without any further effort.</p>
+
+      <h3>2. Lean on Liquid Protein</h3>
+      <p>Whey, casein, and milk go down when solid food doesn't. A casein shake before bed is one of the highest-leverage tactics on a rest day: 30–40 g of slow-digesting protein with no chewing required.</p>
+
+      <p>Two shakes a day on rest days is fine. The "always eat whole foods" advice is usually given to people who don't lift or track. As a lifter you're already getting plenty of whole-food protein on training days.</p>
+
+      <h3>3. Pre-Portion the Night Before</h3>
+      <p>Decisions cost more than calories on rest days. If you have to look at the fridge and decide what to eat, you'll eat less. If 200 g of cooked chicken is already weighed into a container, labeled with macros, and sitting at the front of the shelf, it goes in.</p>
+
+      <p>This is where batch cooking pays off twice. The plan you cooked Sunday is already portioned. You don't decide — you just eat the next container.</p>
+
+      <h3>4. Build Protein-Dense Snack Defaults</h3>
+      <p>Identify three high-protein snacks you actually like and keep them stocked. Options that work for most lifters:</p>
+      <ul>
+        <li>Cottage cheese with a drizzle of honey (200 g = 26 g protein)</li>
+        <li>Skyr or 0% Greek yogurt with frozen berries (170 g = 17 g protein)</li>
+        <li>Beef jerky or biltong (50 g = 25 g protein)</li>
+        <li>Cold rotisserie chicken pulled apart by hand (150 g = 45 g protein)</li>
+        <li>Protein pudding: a scoop of whey stirred into Greek yogurt (50 g protein)</li>
+      </ul>
+      <p>The goal is zero decision. You're not hungry, you don't want to cook, but you can absolutely eat a tub of cottage cheese while you watch a movie.</p>
+
+      <h3>5. Lower the Bar Slightly, But Not Much</h3>
+      <p>Some lifters aim for 100% of their training-day protein on rest days. That's overkill. Total weekly protein matters more than any single day; if your training-day intake is 220 g, hitting 180–200 g on rest days keeps your weekly average where it needs to be.</p>
+
+      <p>The consensus on protein distribution is straightforward: most lifters benefit from 1.6–2.2 g per kg (0.7–1 g per lb) of bodyweight averaged across the week, spread across 3–5 meals at roughly 0.4 g per kg per meal. Missing your training-day target by 20 g once a week isn't a problem. Missing it by 80 g twice a week is.</p>
+
+      <p>Set a rest-day target around 90% of training-day. It removes the all-or-nothing feeling and makes the day winnable.</p>
+
+      <blockquote>Protein is a weekly target, not a daily one. The lifters who hold muscle through a cut aren't the ones who never miss. They're the ones who don't let two missed days become five.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan generates separate macro targets for training and rest days based on your training frequency, then builds the prep around both. The Sunday batch cook fills the week's containers, including portioned rest-day meals at a slightly lower calorie target with the same protein density. You don't have to decide what to eat on a rest day. The container is already in the fridge with the macros printed on it.</p>
+
+      <p>You can read more about how training-day and rest-day splits get calculated in our <a href="/blog/decoding-macros">guide to calculating your macros</a>, or our broader <a href="/blog/meal-prepping-for-weight-loss">meal prep playbook for weight loss</a>.</p>
+
+      <h2>The Real Test</h2>
+      <p>Track your protein for one week with separate training-day and rest-day numbers. Average them. If your rest-day intake is more than 30 g below training day, you've found the leak. The five tactics above close it within a week or two for most lifters.</p>
+
+      <p>Ready to stop guessing what to eat on rest days? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
+    `,
+    author: 'Macro Plan Team',
+    authorBio: 'The Macro Plan team writes practical, evidence-informed content for lifters who track macros and meal-prep their week.',
+    authorImage: 'https://ui-avatars.com/api/?name=Macro+Plan&background=F97316&color=fff&size=128',
+    date: 'April 29, 2026',
+    readTime: '6 min read',
+    image: 'https://placehold.co/1200x630/F97316/ffffff?text=Rest+Day+Protein',
+    category: 'Nutrition'
   }
 ];
 
