@@ -14,6 +14,10 @@ function getBaseUrl(): string {
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`
   }
+  // In production we must never fall back to localhost (would break checkout redirects)
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('NEXT_PUBLIC_APP_URL must be set in production for Stripe checkout redirects')
+  }
   // Default to localhost for development
   return 'http://localhost:3000'
 }
