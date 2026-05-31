@@ -10,7 +10,7 @@ export function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2 text-xl font-bold mb-4">
               <Utensils className="w-7 h-7 text-primary" aria-hidden="true" />
-              <span>Macro Plan</span>
+              <span>MacroPlan</span>
             </Link>
             <p className="text-muted-foreground mb-6">
               Meal planning for real life.
@@ -39,7 +39,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/recipes" className="hover:text-primary transition-colors">
+                <Link href="/signup" className="hover:text-primary transition-colors">
                   Recipes
                 </Link>
               </li>
@@ -96,7 +96,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Copyright */}
             <p className="text-muted-foreground text-sm">
-              &copy; {new Date().getFullYear()} Macro Plan. All rights reserved.
+              &copy; {new Date().getFullYear()} MacroPlan. All rights reserved.
             </p>
 
             {/* Contact */}
