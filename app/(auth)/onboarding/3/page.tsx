@@ -113,7 +113,7 @@ export default function ActivityLevelPage() {
               <div className="flex-1">
                 <p className={cn(
                   "text-base font-medium",
-                  activityLevel === level.id ? "text-white" : "text-charcoal"
+                  activityLevel === level.id ? "text-white" : "text-foreground"
                 )}>{level.label}</p>
                 <p className={cn(
                   "text-sm",
