@@ -96,9 +96,13 @@ export const TrainingProfileSchema = z.object({
 })
 export type TrainingProfile = z.infer<typeof TrainingProfileSchema>
 
+export const MealVarietySchema = z.enum(['low', 'medium', 'high']).default('medium')
+export type MealVariety = z.infer<typeof MealVarietySchema>
+
 export const DietaryPreferencesSchema = z.object({
   diet_type: z.string().optional(),
   exclusions: z.array(z.string()).default([]),
+  meal_variety: MealVarietySchema.optional(),
 })
 export type DietaryPreferences = z.infer<typeof DietaryPreferencesSchema>
 

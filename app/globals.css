@@ -3,72 +3,73 @@
 
 @theme {
   /* ============================================
-     Macro Plan Brand Kit - UI Style Guide
-     Reference: ui_designs/stitch_macroplan_app_landing_page/brand_kit/
+     MacroPlan Brand Kit — "Clean Athletic" (Coral Pulse)
+     Dark-first premium system. Light theme = :root values,
+     dark theme overrides in .dark below.
      ============================================ */
 
-  /* Primary Brand Color */
-  --color-primary: #F97316;
+  /* Primary Brand Color — Coral Pulse */
+  --color-primary: #FF6B5C;
   --color-primary-foreground: #FFFFFF;
 
   /* Text Colors */
-  --color-charcoal: #1c110d;
-  --color-foreground: #1c110d;
+  --color-charcoal: #0B0F10;
+  --color-foreground: #0B0F10;
 
   /* Macro Colors - Used for nutritional indicators */
-  --color-protein: #ef4444;
-  --color-carb: #3b82f6;
-  --color-fat: #eab308;
+  --color-protein: #FF6B5C;
+  --color-carb: #38BDF8;
+  --color-fat: #FBBF24;
 
   /* Semantic Colors */
-  --color-success: #22C55E;
-  --color-warning: #DC2626;
+  --color-success: #16A34A;
+  --color-warning: #D97706;
   --color-destructive: #DC2626;
   --color-destructive-foreground: #FFFFFF;
 
   /* UI Element Colors */
-  --color-border: #e8d5ce;
-  --color-input: #e8d5ce;
-  --color-icon: #9c5f49;
-  --color-ring: #F97316;
+  --color-border: #E4E6E4;
+  --color-input: #E4E6E4;
+  --color-icon: #6B7280;
+  --color-ring: #FF6B5C;
 
   /* Background Colors */
-  --color-background: #f8f6f5;
+  --color-background: #F5F6F5;
 
   /* Secondary/Muted Colors */
-  --color-muted: #f8f6f5;
-  --color-muted-foreground: #9c5f49;
-  --color-secondary: #f8f6f5;
-  --color-secondary-foreground: #1c110d;
+  --color-muted: #EEF0EE;
+  --color-muted-foreground: #6B7280;
+  --color-secondary: #EEF0EE;
+  --color-secondary-foreground: #0B0F10;
 
   /* Popover/Dropdown Colors */
   --color-popover: #FFFFFF;
-  --color-popover-foreground: #1c110d;
+  --color-popover-foreground: #0B0F10;
 
-  /* Accent Colors */
-  --color-accent: #FFF7ED;
-  --color-accent-foreground: #1c110d;
+  /* Accent Colors (soft coral tint) */
+  --color-accent: #FFEDEA;
+  --color-accent-foreground: #0B0F10;
 
   /* Semantic Color Scales */
   --color-success-50: #F0FDF4;
-  --color-success-500: #22C55E;
+  --color-success-500: #16A34A;
   --color-success-700: #15803d;
-  --color-warning-50: #FEF2F2;
-  --color-warning-500: #DC2626;
-  --color-warning-700: #991b1b;
+  --color-warning-50: #FFFBEB;
+  --color-warning-500: #D97706;
+  --color-warning-700: #92400E;
   --color-danger-50: #FEF2F2;
   --color-danger-500: #EF4444;
   --color-danger-700: #B91C1C;
   --color-info-50: #EFF6FF;
-  --color-info-500: #3B82F6;
-  --color-info-700: #1D4ED8;
+  --color-info-500: #38BDF8;
+  --color-info-700: #0369A1;
 
   /* Macro-specific colors (aliases for consistency) */
-  --color-macro-protein: #ef4444;
-  --color-macro-carbs: #3b82f6;
-  --color-macro-fat: #eab308;
+  --color-macro-protein: #FF6B5C;
+  --color-macro-carbs: #38BDF8;
+  --color-macro-fat: #FBBF24;
 
-  /* Border Radius - Brand Kit specifies 1rem (16px) for cards */
+  /* Border Radius */
   --radius-default: 0.5rem;
   --radius-card: 1rem;
   --radius-lg: 0.75rem;
@@ -77,42 +78,49 @@
 
   /* Card Colors */
   --color-card: #FFFFFF;
-  --color-card-foreground: #1c110d;
+  --color-card-foreground: #0B0F10;
 
   /* Subtle/Secondary Text */
-  --color-subtle: #9c5f49;
-  --color-subtle-foreground: #9c5f49;
+  --color-subtle: #6B7280;
+  --color-subtle-foreground: #6B7280;
 
   /* Strong Border (for card borders) */
-  --color-border-strong: #e8d5ce;
+  --color-border-strong: #DDE0DD;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* Dark Mode - Brand Kit Reference: #18181B background */
+/* Dark Mode — the signature MacroPlan brand look (near-black + coral) */
 .dark {
-  --color-background: #18181B;
-  --color-foreground: #f4f4f5;
-  --color-card: #27272a;
-  --color-card-foreground: #f4f4f5;
-  --color-muted: #27272a;
-  --color-muted-foreground: #a1a1aa;
-  --color-secondary: #27272a;
-  --color-secondary-foreground: #f4f4f5;
-  --color-border: #3f3f46;
-  --color-border-strong: #52525b;
-  --color-input: #3f3f46;
-  --color-accent: #3f3f46;
-  --color-accent-foreground: #f4f4f5;
-  --color-popover: #27272a;
-  --color-popover-foreground: #f4f4f5;
-  --color-subtle: #a1a1aa;
-  --color-subtle-foreground: #a1a1aa;
-  --color-icon: #d4d4d8;
+  --color-background: #0B0F10;
+  --color-foreground: #F6F8F7;
+  --color-card: #14181B;
+  --color-card-foreground: #F6F8F7;
+  --color-muted: #14181B;
+  --color-muted-foreground: #8B9298;
+  --color-secondary: #1A1F22;
+  --color-secondary-foreground: #F6F8F7;
+  --color-border: #242A2D;
+  --color-border-strong: #2E3539;
+  --color-input: #242A2D;
+  --color-accent: #221512;
+  --color-accent-foreground: #F6F8F7;
+  --color-popover: #14181B;
+  --color-popover-foreground: #F6F8F7;
+  --color-subtle: #8B9298;
+  --color-subtle-foreground: #8B9298;
+  --color-icon: #C7CBC9;
+  /* macros pop slightly brighter on dark */
+  --color-protein: #FF7C6E;
+  --color-carb: #4FC3F7;
+  --color-fat: #FFCB47;
+  --color-macro-protein: #FF7C6E;
+  --color-macro-carbs: #4FC3F7;
+  --color-macro-fat: #FFCB47;
 }
 
 /* Hide scrollbar but keep functionality */

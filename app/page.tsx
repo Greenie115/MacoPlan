@@ -1,8 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Utensils, ArrowRight, Target, Zap, TrendingUp, Clock, CalendarCheck, RefreshCw } from 'lucide-react'
+import { Utensils, ArrowRight, Target, Zap, TrendingUp, Clock, CalendarCheck, RefreshCw, Check } from 'lucide-react'
 import { FAQSection } from '@/components/landing/faq-section'
 import { Footer } from '@/components/landing/footer'
+import { Logo } from '@/components/brand/logo'
+import { SuccessStories } from '@/components/landing/success-stories'
+import { Reveal } from '@/components/landing/reveal'
 
 export const metadata: Metadata = {
   title: 'MacroPlan - The Meal Prep Planner That Actually Understands How Lifters Eat',
@@ -28,7 +31,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Macro Plan',
+  name: 'MacroPlan',
   applicationCategory: 'HealthApplication',
   operatingSystem: 'Web',
   description: 'AI-powered meal planning application that generates personalized meal plans based on your macro targets and dietary preferences.',
@@ -74,15 +77,12 @@ export default function LandingPage() {
         <header className="fixed top-0 left-0 right-0 z-50 py-4 bg-background/95 backdrop-blur-md border-b border-border-strong" role="banner">
           <div className="container mx-auto px-6">
             <nav className="flex items-center justify-between" aria-label="Main navigation">
-              <Link href="/" className="flex items-center gap-2 text-2xl font-bold" aria-label="Macro Plan - Home">
-                <Utensils className="w-8 h-8 text-primary" aria-hidden="true" />
-                <span>Macro Plan</span>
-              </Link>
+              <Logo href="/" markSize={32} textClassName="text-2xl font-bold tracking-tight" />
 
               <div className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Page sections">
-                <a href="/#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">How It Works</a>
+                <Link href="/#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">How It Works</Link>
                 <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</Link>
-                <a href="/#faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</a>
+                <Link href="/#faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
               </div>
 
               <div className="flex items-center gap-4">
@@ -126,7 +126,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Right Column - Simplified Mockup */}
-                <div className="hidden lg:block">
+                <Reveal delay={0.1} className="hidden lg:block">
                   <div className="bg-card border border-border-strong rounded-2xl shadow-2xl p-6 max-w-md mx-auto">
                     {/* Mockup Header */}
                     <div className="flex items-center justify-between mb-6">
@@ -183,7 +183,7 @@ export default function LandingPage() {
                       ))}
                     </div>
                   </div>
-                </div>
+                </Reveal>
               </div>
             </div>
           </section>
@@ -224,7 +224,7 @@ export default function LandingPage() {
 
               <div className="grid md:grid-cols-3 gap-8 md:gap-12">
                 {/* Step 1 */}
-                <div className="text-center">
+                <Reveal className="text-center">
                   <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
                     <Target className="w-7 h-7 text-primary" />
                   </div>
@@ -233,10 +233,10 @@ export default function LandingPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     Training 5x/week? We calculate your training day and rest day targets automatically.
                   </p>
-                </div>
+                </Reveal>
 
                 {/* Step 2 */}
-                <div className="text-center">
+                <Reveal delay={0.1} className="text-center">
                   <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
                     <Zap className="w-7 h-7 text-primary" />
                   </div>
@@ -245,10 +245,10 @@ export default function LandingPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     AI builds a batch-cook plan optimised for cooking once, eating all week. 3-4 recipes, one shopping list, one prep session.
                   </p>
-                </div>
+                </Reveal>
 
                 {/* Step 3 */}
-                <div className="text-center">
+                <Reveal delay={0.2} className="text-center">
                   <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
                     <TrendingUp className="w-7 h-7 text-primary" />
                   </div>
@@ -257,7 +257,7 @@ export default function LandingPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     Follow the step-by-step cooking timeline. Fill your containers. Hit your macros every day without thinking.
                   </p>
-                </div>
+                </Reveal>
               </div>
             </div>
           </section>
@@ -307,14 +307,17 @@ export default function LandingPage() {
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                     <RefreshCw className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Fridge-aware replanning</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed italic">
-                    Coming soon
+                  <h3 className="text-lg font-bold mb-2">One-tap shopping list</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Every plan generates a consolidated grocery list — buy once, prep once.
                   </p>
                 </div>
               </div>
             </div>
           </section>
+
+          {/* ==================== WHY IT WORKS ==================== */}
+          <SuccessStories />
 
           {/* ==================== CTA ==================== */}
           <section className="py-20 bg-muted/30 border-y border-border-strong">
@@ -323,7 +326,7 @@ export default function LandingPage() {
                 Ready to stop guessing?
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Join thousands who&apos;ve replaced calorie counting with smart meal planning.
+                Replace endless calorie counting with one smart prep session a week. Your first plan is free.
               </p>
               <Link
                 href="/signup"
@@ -333,6 +336,11 @@ export default function LandingPage() {
                 <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </Link>
               <p className="text-sm text-muted-foreground mt-4">Free plan available · No credit card required</p>
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-muted-foreground">
+                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-success" aria-hidden="true" /> No credit card</span>
+                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-success" aria-hidden="true" /> Cancel anytime</span>
+                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-success" aria-hidden="true" /> Secure checkout via Stripe</span>
+              </div>
             </div>
           </section>
 

@@ -217,7 +217,7 @@ export function MacroCustomizer({
     <Card className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-charcoal">
+          <h3 className="text-lg font-semibold text-foreground">
             Customize Your Macros
           </h3>
           <p className="text-sm text-muted-foreground mt-1">
@@ -312,7 +312,7 @@ export function MacroCustomizer({
 
       {/* Total Display */}
       <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-        <span className="font-medium text-charcoal">Total</span>
+        <span className="font-medium text-foreground">Total</span>
         <div className="flex items-center gap-2">
           {mode === 'grams' ? (
             <span className="text-lg font-semibold">

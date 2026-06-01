@@ -66,6 +66,9 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "2mb",
     },
+    // Use the system trust store when fetching Google Fonts at build time so the
+    // build doesn't fail on networks/CI where Node can't establish the TLS chain.
+    turbopackUseSystemTlsCerts: true,
   },
 };
 

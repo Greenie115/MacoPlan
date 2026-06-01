@@ -36,7 +36,7 @@ export function StatsCard({
       <div className="flex items-start justify-between">
         <div className="space-y-1 flex-1">
           <p className="text-xs font-medium text-muted-foreground">{label}</p>
-          <p className={cn(typography.h2, 'text-charcoal')}>{value}</p>
+          <p className={cn(typography.h2, 'text-foreground')}>{value}</p>
 
           {trend && (
             <div className="flex items-center gap-1 mt-1">

@@ -15,17 +15,17 @@ export default function RecipesError({
   }, [error])
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-muted flex items-center justify-center p-4">
       <div className="text-center space-y-4 max-w-md">
         <div className="flex justify-center">
           <div className="rounded-full bg-red-100 p-4">
             <AlertCircle className="h-8 w-8 text-red-600" />
           </div>
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-foreground">
           Something went wrong!
         </h1>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           We couldn't load the recipes. Please try again.
         </p>
         <button

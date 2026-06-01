@@ -58,37 +58,37 @@ export const semanticColors = {
   },
 } as const
 
-// Brand Colors
+// Brand Colors — Clean Athletic (Coral Pulse)
 export const brandColors = {
-  primary: '#FF6B35', // Brand orange - primary CTA color
-  primaryLight: '#FFE5DB', // Light orange for backgrounds
-  primaryDark: '#E85A24', // Darker orange for hover states
+  primary: '#FF6B5C', // Coral Pulse - primary CTA color
+  primaryLight: '#FFEDEA', // Light coral tint for backgrounds
+  primaryDark: '#F0513F', // Deeper coral for hover states
 } as const
 
 // Macro Category Colors
 export const macroColors = {
   protein: {
-    primary: '#E63946', // Red
-    light: '#FECDD3', // red-200
+    primary: '#FF6B5C', // Coral
+    light: '#FFD9D3',
     bg: 'bg-red-50',
     text: 'text-red-700',
     border: 'border-red-200',
     emoji: '🥩',
   },
   carbs: {
-    primary: '#457B9D', // Blue
-    light: '#BFDBFE', // blue-200
-    bg: 'bg-blue-50',
-    text: 'text-blue-700',
-    border: 'border-blue-200',
+    primary: '#38BDF8', // Sky
+    light: '#BAE6FD',
+    bg: 'bg-sky-50',
+    text: 'text-sky-700',
+    border: 'border-sky-200',
     emoji: '🍞',
   },
   fat: {
-    primary: '#F4A261', // Orange/tan
-    light: '#FED7AA', // orange-200
-    bg: 'bg-orange-50',
-    text: 'text-orange-700',
-    border: 'border-orange-200',
+    primary: '#FBBF24', // Amber
+    light: '#FDE68A',
+    bg: 'bg-amber-50',
+    text: 'text-amber-700',
+    border: 'border-amber-200',
     emoji: '🥑',
   },
 } as const

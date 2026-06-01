@@ -162,7 +162,7 @@ export default function DietaryPreferencesPage() {
                 <span className="text-2xl">{style.emoji}</span>
                 <p className={cn(
                   "flex-1 text-base font-medium",
-                  localDietaryStyle === style.id ? "text-white" : "text-charcoal"
+                  localDietaryStyle === style.id ? "text-white" : "text-foreground"
                 )}>
                   {style.label}
                 </p>

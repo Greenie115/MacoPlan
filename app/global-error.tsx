@@ -17,19 +17,21 @@ export default function GlobalError({
           justifyContent: 'center',
           padding: '1rem',
           fontFamily: 'system-ui, sans-serif',
+          backgroundColor: '#0B0F10',
+          color: '#F6F8F7',
         }}>
           <div style={{ maxWidth: '28rem', textAlign: 'center' }}>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
               Something went wrong
             </h1>
-            <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>
+            <p style={{ color: '#8B9298', marginBottom: '1.5rem' }}>
               A critical error occurred. Please try refreshing the page.
             </p>
             <button
               onClick={reset}
               style={{
                 padding: '0.75rem 1.5rem',
-                backgroundColor: '#f97316',
+                backgroundColor: '#FF6B5C',
                 color: 'white',
                 border: 'none',
                 borderRadius: '0.75rem',

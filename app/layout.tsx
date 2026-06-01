@@ -20,21 +20,21 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.app'),
   title: {
-    default: 'Macro Plan - Smart Meal Planning & Macro Tracking',
-    template: '%s | Macro Plan',
+    default: 'MacroPlan - Smart Meal Planning & Macro Tracking',
+    template: '%s | MacroPlan',
   },
-  description: 'Stop wasting hours on meal prep. Macro Plan generates personalized meal plans that hit your exact macros instantly. Join 10,000+ users eating better with less effort.',
-  keywords: ['meal planning', 'macro calculator', 'nutrition', 'diet', 'fitness', 'personalized meal plans', 'healthy eating', 'macro tracking'],
+  description: 'Stop wasting hours on meal prep. MacroPlan generates batch-cook meal plans that hit your exact macros in seconds. Built for lifters who actually meal prep.',
+  keywords: ['meal planning', 'macro calculator', 'nutrition', 'diet', 'fitness', 'personalized meal plans', 'healthy eating', 'macro tracking', 'meal prep', 'batch cooking'],
   openGraph: {
     type: 'website',
-    siteName: 'Macro Plan',
-    title: 'Macro Plan - Smart Meal Planning & Macro Tracking',
-    description: 'Stop wasting hours on meal prep. Macro Plan generates personalized meal plans that hit your exact macros instantly.',
+    siteName: 'MacroPlan',
+    title: 'MacroPlan - Smart Meal Planning & Macro Tracking',
+    description: 'Stop wasting hours on meal prep. MacroPlan generates batch-cook meal plans that hit your exact macros in seconds.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Macro Plan - Smart Meal Planning & Macro Tracking',
-    description: 'Stop wasting hours on meal prep. Macro Plan generates personalized meal plans that hit your exact macros instantly.',
+    title: 'MacroPlan - Smart Meal Planning & Macro Tracking',
+    description: 'Stop wasting hours on meal prep. MacroPlan generates batch-cook meal plans that hit your exact macros in seconds.',
   },
   robots: {
     index: true,
@@ -55,8 +55,8 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <AppLayoutWrapper>{children}</AppLayoutWrapper>

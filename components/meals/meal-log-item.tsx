@@ -48,7 +48,7 @@ export function MealLogItem({ meal, onEdit, onDelete }: MealLogItemProps) {
             {/* Header: Name and Time */}
             <div className="flex items-start justify-between gap-2 mb-1">
               <div className="min-w-0">
-                <h4 className="font-semibold text-sm md:text-base text-charcoal truncate">
+                <h4 className="font-semibold text-sm md:text-base text-foreground truncate">
                   {meal.name}
                 </h4>
                 <p className="text-xs md:text-sm text-muted-foreground">
@@ -81,7 +81,7 @@ export function MealLogItem({ meal, onEdit, onDelete }: MealLogItemProps) {
 
             {/* Macro Summary */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm text-muted-foreground mt-2">
-              <span className="font-medium text-charcoal">
+              <span className="font-medium text-foreground">
                 {meal.calories} cal
               </span>
               <span className="text-muted-foreground">•</span>
