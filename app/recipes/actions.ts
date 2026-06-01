@@ -235,22 +235,18 @@ export async function getCachedRecipes(
     const supabase = await createClient()
     const offset = (page - 1) * limit
 
-    // On page 1, check if cache needs seeding
+    // On page 1, seed the cache if it's sparse.
+    // Uses a direct API call (bypasses search cache) so it always adds fresh records.
     if (page === 1) {
       const { count: existingCount } = await supabase
         .from('recipe_api_cache')
         .select('*', { count: 'exact', head: true })
 
       if ((existingCount || 0) < 50) {
-        // Seed with common fitness/meal-prep search terms in parallel
         try {
-          await Promise.all([
-            recipeApiService.searchRecipes({ q: 'healthy meal prep', per_page: 20, page: 1 }),
-            recipeApiService.searchRecipes({ q: 'high protein chicken', per_page: 20, page: 1 }),
-            recipeApiService.searchRecipes({ q: 'low calorie dinner', per_page: 20, page: 1 }),
-          ])
+          await recipeApiService.seedCache(60)
         } catch {
-          // Seeding failure is non-fatal — continue with whatever is cached
+          // Non-fatal — serve whatever is cached
         }
       }
     }

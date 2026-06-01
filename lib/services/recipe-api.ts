@@ -392,6 +392,56 @@ export class RecipeApiService {
   }
 
   // ==========================================================================
+  // Cache Seeding (bypasses search cache, calls API directly)
+  // ==========================================================================
+
+  /**
+   * Populate recipe_api_cache with fresh recipes from the API.
+   * Skips the search cache entirely so it always fetches new records.
+   * Uses a single batch upsert and ignoreDuplicates to avoid overwriting
+   * full records that already have ingredients/instructions.
+   */
+  async seedCache(targetCount: number = 60): Promise<void> {
+    const supabase = await createClient()
+    const pages = Math.ceil(targetCount / 20)
+
+    const batches = await Promise.allSettled(
+      Array.from({ length: pages }, (_, i) =>
+        this.apiRequest<RecipeApiListResponse<RecipeApiListItem>>('/recipes', {
+          per_page: 20,
+          page: i + 1,
+        })
+      )
+    )
+
+    const allRecipes: RecipeApiListItem[] = []
+    for (const result of batches) {
+      if (result.status === 'fulfilled' && result.value.data) {
+        allRecipes.push(...result.value.data)
+      }
+    }
+
+    if (allRecipes.length === 0) return
+
+    const expiresAt = new Date(Date.now() + CACHE_TTL.recipeDetails).toISOString()
+    await supabase.from('recipe_api_cache').upsert(
+      allRecipes.map((recipe) => ({
+        recipe_api_id: recipe.id,
+        name: recipe.name,
+        description: recipe.description || null,
+        category: recipe.category || null,
+        cuisine: recipe.cuisine || null,
+        difficulty: recipe.difficulty || null,
+        tags: recipe.tags || [],
+        nutrition: { per_serving: recipe.nutrition_summary },
+        meta: recipe.meta,
+        cache_expires_at: expiresAt,
+      })),
+      { onConflict: 'recipe_api_id', ignoreDuplicates: true }
+    )
+  }
+
+  // ==========================================================================
   // Cache Storage Helpers
   // ==========================================================================
 
