@@ -187,7 +187,7 @@ export default function ExperienceLevelPage() {
                   <div className="flex-1">
                     <p className={cn(
                       "font-semibold",
-                      localFitnessExperience === level.id ? "text-white" : "text-charcoal"
+                      localFitnessExperience === level.id ? "text-white" : "text-foreground"
                     )}>{level.label}</p>
                     <p className={cn(
                       "text-sm",
@@ -231,7 +231,7 @@ export default function ExperienceLevelPage() {
                   <div className="flex-1">
                     <p className={cn(
                       "font-semibold",
-                      localTrackingExperience === level.id ? "text-white" : "text-charcoal"
+                      localTrackingExperience === level.id ? "text-white" : "text-foreground"
                     )}>{level.label}</p>
                     <p className={cn(
                       "text-sm",
@@ -275,7 +275,7 @@ export default function ExperienceLevelPage() {
                   <div className="flex-1">
                     <p className={cn(
                       "font-semibold",
-                      localMealPrepSkills === level.id ? "text-white" : "text-charcoal"
+                      localMealPrepSkills === level.id ? "text-white" : "text-foreground"
                     )}>{level.label}</p>
                     <p className={cn(
                       "text-sm",

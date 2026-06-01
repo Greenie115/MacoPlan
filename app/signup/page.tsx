@@ -182,7 +182,7 @@ export default function SignupPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loading}
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-muted-foreground">
                   Must be at least 8 characters
                 </p>
               </div>

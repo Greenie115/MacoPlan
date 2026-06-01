@@ -41,7 +41,7 @@ export function QuickLogWidget({ favoriteRecipes }: QuickLogWidgetProps) {
     return (
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-charcoal">Quick Log</h3>
+          <h3 className="text-lg font-bold text-foreground">Quick Log</h3>
           <Link
             href="/recipes?tab=favorites"
             className="text-sm text-primary font-medium hover:underline"
@@ -69,7 +69,7 @@ export function QuickLogWidget({ favoriteRecipes }: QuickLogWidgetProps) {
     <>
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-charcoal">Quick Log</h3>
+          <h3 className="text-lg font-bold text-foreground">Quick Log</h3>
           <Link
             href="/recipes?tab=favorites"
             className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
@@ -88,14 +88,14 @@ export function QuickLogWidget({ favoriteRecipes }: QuickLogWidgetProps) {
             <button
               key={recipe.id}
               onClick={() => handleRecipeClick(recipe)}
-              className="w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:bg-gray-50 hover:border-primary/50 transition-all group"
+              className="w-full flex items-center justify-between p-3 rounded-lg border border-border hover:bg-muted hover:border-primary/50 transition-all group"
             >
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary font-bold shrink-0">
                   <Plus className="w-5 h-5" />
                 </div>
                 <div className="text-left min-w-0">
-                  <p className="text-sm font-semibold text-charcoal truncate">
+                  <p className="text-sm font-semibold text-foreground truncate">
                     {recipe.name}
                   </p>
                   <p className="text-xs text-muted-foreground">
@@ -103,7 +103,7 @@ export function QuickLogWidget({ favoriteRecipes }: QuickLogWidgetProps) {
                   </p>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-primary shrink-0" />
+              <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary shrink-0" />
             </button>
           ))}
         </div>

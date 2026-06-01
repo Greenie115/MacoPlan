@@ -87,7 +87,7 @@ export function MacroLegend({
               </p>
 
               {/* Values */}
-              <p className="text-sm lg:text-lg xl:text-xl font-bold text-charcoal">
+              <p className="text-sm lg:text-lg xl:text-xl font-bold text-foreground">
                 <span
                   className={cn(percentage > 100 && 'text-red-600')}
                   style={{ color: percentage <= 100 ? macro.color : undefined }}
@@ -139,7 +139,7 @@ export function MacroLegend({
 
               {/* Info */}
               <div>
-                <p className="text-sm font-semibold text-charcoal">
+                <p className="text-sm font-semibold text-foreground">
                   {macro.label}
                 </p>
                 <p className="text-xs text-muted-foreground">
@@ -150,7 +150,7 @@ export function MacroLegend({
 
             {/* Values */}
             <div className="text-right">
-              <p className="text-base font-bold text-charcoal">
+              <p className="text-base font-bold text-foreground">
                 <span
                   className={cn(percentage > 100 && 'text-red-600')}
                   style={{

@@ -32,7 +32,7 @@ export function EmptyState({
       </div>
 
       {/* Text */}
-      <h3 className={cn(typography.h3, 'text-charcoal mb-2')}>{title}</h3>
+      <h3 className={cn(typography.h3, 'text-foreground mb-2')}>{title}</h3>
       <p className="text-base text-muted-foreground max-w-md mb-6">
         {description}
       </p>
