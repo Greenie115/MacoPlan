@@ -15,8 +15,8 @@ export default function OpengraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          background: '#f8f6f5',
-          color: '#1c110d',
+          background: '#0B0F10',
+          color: '#F6F8F7',
           padding: '80px',
           fontFamily: 'sans-serif',
         }}
@@ -29,7 +29,7 @@ export default function OpengraphImage() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: '#F97316',
+              background: '#FF6B5C',
               color: '#FFFFFF',
               fontSize: 44,
               fontWeight: 700,
@@ -51,9 +51,9 @@ export default function OpengraphImage() {
           }}
         >
           <span>Your meal prep,&nbsp;</span>
-          <span style={{ color: '#F97316' }}>planned.</span>
+          <span style={{ color: '#FF6B5C' }}>planned.</span>
         </div>
-        <div style={{ fontSize: 34, color: '#9c5f49', marginTop: 28, maxWidth: 880 }}>
+        <div style={{ fontSize: 34, color: '#8B9298', marginTop: 28, maxWidth: 880 }}>
           AI-generated batch cooking plans that hit your exact macros — in seconds.
         </div>
       </div>

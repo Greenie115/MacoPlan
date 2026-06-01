@@ -157,7 +157,7 @@ export function MacroDonutChart({
           cy={centerY}
           r={config.outerRadius}
           fill="none"
-          stroke="#F3F4F6"
+          stroke="var(--color-border-strong)"
           strokeWidth={config.outerStroke}
         />
 
@@ -188,7 +188,7 @@ export function MacroDonutChart({
           cy={centerY}
           r={config.innerRadius}
           fill="none"
-          stroke="#F3F4F6"
+          stroke="var(--color-border-strong)"
           strokeWidth={config.innerStroke}
         />
 

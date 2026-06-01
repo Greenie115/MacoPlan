@@ -16,7 +16,7 @@ const TEAM_AUTHOR = 'MacroPlan Team';
 const TEAM_BIO =
   'The MacroPlan team writes practical, evidence-informed guides for lifters who track macros and meal-prep their week.';
 const TEAM_IMAGE =
-  'https://ui-avatars.com/api/?name=MacroPlan&background=F97316&color=fff&size=128';
+  'https://ui-avatars.com/api/?name=MacroPlan&background=FF6B5C&color=fff&size=128';
 
 export const blogPosts: BlogPost[] = [
   {
@@ -44,7 +44,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'October 26, 2023',
     readTime: '8 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=Flexible+Dieting',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Flexible+Dieting',
     category: 'Nutrition'
   },
   {
@@ -70,7 +70,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'November 15, 2023',
     readTime: '5 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=Meal+Prep+for+Weight+Loss',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Meal+Prep+for+Weight+Loss',
     category: 'Meal Prep'
   },
   {
@@ -99,7 +99,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'December 2, 2023',
     readTime: '6 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=Decoding+Macros',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Decoding+Macros',
     category: 'Nutrition'
   },
   {
@@ -131,7 +131,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'December 10, 2023',
     readTime: '4 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=High-Protein+Breakfasts',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=High-Protein+Breakfasts',
     category: 'Recipes'
   },
   {
@@ -179,7 +179,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'January 14, 2026',
     readTime: '7 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=High-Protein+Meal+Prep',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=High-Protein+Meal+Prep',
     category: 'Meal Prep'
   },
   {
@@ -224,7 +224,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'February 3, 2026',
     readTime: '6 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=How+Much+Protein',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=How+Much+Protein',
     category: 'Nutrition'
   },
   {
@@ -267,7 +267,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'March 9, 2026',
     readTime: '7 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=Meal+Prep+on+a+Cut',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Meal+Prep+on+a+Cut',
     category: 'Meal Prep'
   },
   {
@@ -311,7 +311,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'April 6, 2026',
     readTime: '6 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=Calorie+Cycling',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Calorie+Cycling',
     category: 'Nutrition'
   },
   {
@@ -364,7 +364,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'May 4, 2026',
     readTime: '7 min read',
-    image: 'https://placehold.co/1200x630/F97316/ffffff?text=Best+Foods+for+Batch+Cooking',
+    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Best+Foods+for+Batch+Cooking',
     category: 'Meal Prep'
   }
 ];

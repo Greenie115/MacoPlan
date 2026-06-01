@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Macro Plan',
+      name: 'MacroPlan',
       url: baseUrl,
     },
     mainEntityOfPage: {
@@ -200,7 +200,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-lg mb-4">Macro Plan</h3>
+              <h3 className="font-bold text-lg mb-4">MacroPlan</h3>
               <p className="text-subtle-foreground text-sm">
                 Personalized meal plans that fit your macros and your lifestyle.
               </p>
@@ -247,7 +247,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </div>
           <div className="text-center text-muted-foreground text-sm border-t border-border-strong pt-8">
-            <p>© 2026 Macro Plan. All rights reserved.</p>
+            <p>© 2026 MacroPlan. All rights reserved.</p>
           </div>
         </div>
       </footer>
