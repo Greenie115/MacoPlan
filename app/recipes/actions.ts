@@ -6,6 +6,7 @@ import { getUserSubscriptionTier } from '@/lib/utils/subscription'
 import { FREE_FAVORITES_LIMIT } from '@/lib/constants/subscription'
 import { checkFavoritesQuota } from '@/app/actions/subscription'
 import { createCacheClient } from '@/lib/supabase/cache-client'
+import { recipeApiService } from '@/lib/services/recipe-api'
 
 /**
  * Recipe metadata for favorites
@@ -211,6 +212,7 @@ export async function getFavoriteRecipes() {
 /**
  * Get cached recipes from local database for browsing.
  * Used when no search query is provided to show all available recipes.
+ * On first load (page 1) with a sparse cache, seeds the cache from Recipe-API.com.
  */
 export async function getCachedRecipes(
   page: number = 1,
@@ -232,6 +234,26 @@ export async function getCachedRecipes(
   try {
     const supabase = await createClient()
     const offset = (page - 1) * limit
+
+    // On page 1, check if cache needs seeding
+    if (page === 1) {
+      const { count: existingCount } = await supabase
+        .from('recipe_api_cache')
+        .select('*', { count: 'exact', head: true })
+
+      if ((existingCount || 0) < 50) {
+        // Seed with common fitness/meal-prep search terms in parallel
+        try {
+          await Promise.all([
+            recipeApiService.searchRecipes({ q: 'healthy meal prep', per_page: 20, page: 1 }),
+            recipeApiService.searchRecipes({ q: 'high protein chicken', per_page: 20, page: 1 }),
+            recipeApiService.searchRecipes({ q: 'low calorie dinner', per_page: 20, page: 1 }),
+          ])
+        } catch {
+          // Seeding failure is non-fatal — continue with whatever is cached
+        }
+      }
+    }
 
     const [countResult, dataResult] = await Promise.all([
       supabase.from('recipe_api_cache').select('*', { count: 'exact', head: true }),

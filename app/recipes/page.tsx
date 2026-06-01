@@ -4,6 +4,7 @@ import { RecipeFiltersAdvanced } from '@/components/recipes/recipe-filters-advan
 import { RecipeTabs } from '@/components/recipes/recipe-tabs'
 import { UpgradeBanner } from '@/components/recipes/upgrade-banner'
 import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
+import { RecipeInfiniteScroll } from '@/components/recipes/recipe-infinite-scroll'
 import { getFavoriteRecipeIds, getFavoriteRecipes, getMostFavoritedRecipes, getCachedRecipes } from './actions'
 import { redirect } from 'next/navigation'
 import { searchRecipes } from '@/app/actions/recipe-search'
@@ -124,6 +125,8 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
   }> = []
   let totalResults = 0
   let recipeApiError: string | null = null
+  // True when the all-tab is active with no search — infinite scroll handles paging
+  const useInfiniteScroll = activeTab !== 'popular' && activeTab !== 'favorites' && !searchQuery
 
   // Get user's favorite recipe IDs and subscription status
   const [favoriteIds, subscriptionStatus] = await Promise.all([
@@ -300,19 +303,14 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     }
   }
 
-  // Calculate pagination info
+  // Pagination (for non-infinite-scroll tabs)
   const totalPages = Math.ceil(totalResults / RECIPES_PER_PAGE)
   const hasNextPage = currentPage < totalPages
   const hasPrevPage = currentPage > 1
 
-  // Build pagination URL preserving all current filters
   const buildPaginationUrl = (page: number) => {
     const urlParams = new URLSearchParams()
-
-    // Preserve search
     if (searchQuery) urlParams.set('search', searchQuery)
-
-    // Preserve all filter params
     if (params.recipeTypes) urlParams.set('recipeTypes', params.recipeTypes)
     if (params.caloriesFrom) urlParams.set('caloriesFrom', params.caloriesFrom)
     if (params.caloriesTo) urlParams.set('caloriesTo', params.caloriesTo)
@@ -326,13 +324,8 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
     if (params.prepTimeTo) urlParams.set('prepTimeTo', params.prepTimeTo)
     if (params.mustHaveImages) urlParams.set('mustHaveImages', params.mustHaveImages)
     if (params.sortBy) urlParams.set('sortBy', params.sortBy)
-
-    // Preserve tab selection
     if (params.tab) urlParams.set('tab', params.tab)
-
-    // Set the new page
     urlParams.set('page', page.toString())
-
     return `/recipes?${urlParams.toString()}`
   }
 
@@ -343,7 +336,7 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         <RecipeSearch />
       </div>
 
-      {/* Tabs: All / Favorites */}
+      {/* Tabs */}
       <div className="max-w-7xl mx-auto">
         <RecipeTabs />
       </div>
@@ -362,16 +355,6 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         />
       </div>
 
-      {/* Recipe Grid with Session Cache */}
-      <RecipeResultsClient
-        key={`${activeTab}-${currentPage}-${searchQuery}`}
-        initialRecipes={recipes}
-        totalResults={totalResults}
-        favoriteIds={favoriteIds}
-        searchQuery={searchQuery}
-        isAdaptiveRecommendation={false}
-      />
-
       {/* Error Message */}
       {recipeApiError && (
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -383,35 +366,57 @@ export default async function RecipesPage({ searchParams }: RecipesPageProps) {
         </div>
       )}
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-center gap-4">
-            <a
-              href={hasPrevPage ? buildPaginationUrl(currentPage - 1) : '#'}
-              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
-                hasPrevPage
-                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                  : 'bg-muted text-muted-foreground cursor-not-allowed pointer-events-none'
-              }`}
-            >
-              Previous
-            </a>
-            <span className="text-sm text-muted-foreground">
-              Page {currentPage} of {totalPages}
-            </span>
-            <a
-              href={hasNextPage ? buildPaginationUrl(currentPage + 1) : '#'}
-              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
-                hasNextPage
-                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                  : 'bg-muted text-muted-foreground cursor-not-allowed pointer-events-none'
-              }`}
-            >
-              Next
-            </a>
-          </div>
-        </div>
+      {/* All Recipes tab (no search) — infinite scroll */}
+      {useInfiniteScroll ? (
+        <RecipeInfiniteScroll
+          key="all-recipes-infinite"
+          initialRecipes={recipes}
+          totalCount={totalResults}
+          favoriteIds={favoriteIds}
+        />
+      ) : (
+        <>
+          {/* All other tabs — paginated grid */}
+          <RecipeResultsClient
+            key={`${activeTab}-${currentPage}-${searchQuery}`}
+            initialRecipes={recipes}
+            totalResults={totalResults}
+            favoriteIds={favoriteIds}
+            searchQuery={searchQuery}
+            isAdaptiveRecommendation={false}
+          />
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="max-w-7xl mx-auto px-4 py-6">
+              <div className="flex items-center justify-center gap-4">
+                <a
+                  href={hasPrevPage ? buildPaginationUrl(currentPage - 1) : '#'}
+                  className={`px-4 py-2 rounded-xl font-medium transition-colors ${
+                    hasPrevPage
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      : 'bg-muted text-muted-foreground cursor-not-allowed pointer-events-none'
+                  }`}
+                >
+                  Previous
+                </a>
+                <span className="text-sm text-muted-foreground">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <a
+                  href={hasNextPage ? buildPaginationUrl(currentPage + 1) : '#'}
+                  className={`px-4 py-2 rounded-xl font-medium transition-colors ${
+                    hasNextPage
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      : 'bg-muted text-muted-foreground cursor-not-allowed pointer-events-none'
+                  }`}
+                >
+                  Next
+                </a>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* Bottom Navigation */}
