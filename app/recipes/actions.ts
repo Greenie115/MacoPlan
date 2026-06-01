@@ -209,82 +209,75 @@ export async function getFavoriteRecipes() {
 }
 
 /**
- * Get cached recipes from local database for browsing
+ * Get cached recipes from local database for browsing.
  * Used when no search query is provided to show all available recipes.
- * Cached for 10 minutes — shared data, not user-specific.
  */
-export const getCachedRecipes = unstable_cache(
-  async (
-    page: number = 1,
-    limit: number = 20
-  ): Promise<{
-    data: Array<{
-      id: string
-      title: string
-      description: string | null
-      imageUrl: string | null
-      calories: number
-      protein: number
-      carbs: number
-      fat: number
-    }>
-    totalCount: number
-    error: string | null
-  }> => {
-    try {
-      const supabase = createCacheClient()
-      const offset = (page - 1) * limit
+export async function getCachedRecipes(
+  page: number = 1,
+  limit: number = 20
+): Promise<{
+  data: Array<{
+    id: string
+    title: string
+    description: string | null
+    imageUrl: string | null
+    calories: number
+    protein: number
+    carbs: number
+    fat: number
+  }>
+  totalCount: number
+  error: string | null
+}> {
+  try {
+    const supabase = await createClient()
+    const offset = (page - 1) * limit
 
-      // Parallelise count + data + images (images don't depend on data IDs here,
-      // but we can at least run count in parallel with data)
-      const [countResult, dataResult] = await Promise.all([
-        supabase.from('recipe_api_cache').select('*', { count: 'exact', head: true }),
-        supabase
-          .from('recipe_api_cache')
-          .select('recipe_api_id, name, description, nutrition')
-          .order('created_at', { ascending: false })
-          .range(offset, offset + limit - 1),
-      ])
+    const [countResult, dataResult] = await Promise.all([
+      supabase.from('recipe_api_cache').select('*', { count: 'exact', head: true }),
+      supabase
+        .from('recipe_api_cache')
+        .select('recipe_api_id, name, description, nutrition')
+        .order('created_at', { ascending: false })
+        .range(offset, offset + limit - 1),
+    ])
 
-      if (dataResult.error) {
-        return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
-      }
-
-      const recipeIds = (dataResult.data || []).map((r) => r.recipe_api_id)
-      const imageMap = new Map<string, string>()
-      if (recipeIds.length > 0) {
-        const { data: images } = await supabase
-          .from('recipe_images')
-          .select('recipe_api_id, unsplash_url')
-          .in('recipe_api_id', recipeIds)
-        for (const img of images || []) {
-          if (img.unsplash_url) imageMap.set(img.recipe_api_id, img.unsplash_url)
-        }
-      }
-
-      const recipes = (dataResult.data || []).map((recipe) => ({
-        id: recipe.recipe_api_id,
-        title: recipe.name,
-        description: recipe.description,
-        imageUrl: imageMap.get(recipe.recipe_api_id) ?? null,
-        calories: recipe.nutrition?.per_serving?.calories || 0,
-        protein: recipe.nutrition?.per_serving?.protein_g || 0,
-        carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,
-        fat: recipe.nutrition?.per_serving?.fat_g || 0,
-      }))
-
-      return {
-        data: recipes,
-        totalCount: countResult.count || 0,
-        error: null,
-      }
-    } catch {
+    if (dataResult.error) {
       return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
     }
-  },
-  ['all-recipes'],
-  { revalidate: 600 } // 10 minutes
-)
+
+    const recipeIds = (dataResult.data || []).map((r) => r.recipe_api_id)
+    const imageMap = new Map<string, string>()
+    if (recipeIds.length > 0) {
+      const { data: images } = await supabase
+        .from('recipe_images')
+        .select('recipe_api_id, unsplash_url')
+        .in('recipe_api_id', recipeIds)
+      for (const img of images || []) {
+        if (img.unsplash_url) imageMap.set(img.recipe_api_id, img.unsplash_url)
+      }
+    }
+
+    const recipes = (dataResult.data || []).map((recipe) => ({
+      id: recipe.recipe_api_id,
+      title: recipe.name,
+      description: recipe.description,
+      imageUrl: imageMap.get(recipe.recipe_api_id) ?? null,
+      calories: recipe.nutrition?.per_serving?.calories || 0,
+      protein: recipe.nutrition?.per_serving?.protein_g || 0,
+      carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,
+      fat: recipe.nutrition?.per_serving?.fat_g || 0,
+    }))
+
+    return {
+      data: recipes,
+      totalCount: countResult.count || 0,
+      error: null,
+    }
+  } catch {
+    return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
+  }
+}
 
 /**
  * Get the most favorited recipes across all users.

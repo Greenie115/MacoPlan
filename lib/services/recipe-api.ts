@@ -246,16 +246,20 @@ export class RecipeApiService {
   async getRecipeDetails(recipeId: string): Promise<RecipeApiRecipe | null> {
     const supabase = await createClient()
 
-    // Check cache for full details
+    // Fetch any cached record (including lightweight/expired) — used as fallback
     const { data: cached } = await supabase
       .from('recipe_api_cache')
       .select('*')
       .eq('recipe_api_id', recipeId)
-      .gt('cache_expires_at', new Date().toISOString())
       .single()
 
-    if (cached?.ingredients && cached?.instructions) {
-      // Update access tracking
+    // Use a non-expired full record (has ingredients + instructions)
+    if (
+      cached?.ingredients &&
+      cached?.instructions &&
+      cached?.cache_expires_at &&
+      new Date(cached.cache_expires_at) > new Date()
+    ) {
       await supabase
         .from('recipe_api_cache')
         .update({
@@ -267,7 +271,7 @@ export class RecipeApiService {
       return this.convertCachedRecipe(cached)
     }
 
-    // Cache miss - call API
+    // Lightweight or expired — attempt live API fetch
     try {
       const response = await this.apiRequest<RecipeApiResponse<RecipeApiRecipe>>(
         `/recipes/${recipeId}`
@@ -280,7 +284,8 @@ export class RecipeApiService {
       return response.data || null
     } catch (error) {
       console.error(`[RecipeApi] Failed to get recipe ${recipeId}:`, error)
-      return null
+      // Fall back to whatever cached data exists (lightweight, no ingredients/instructions)
+      return cached ? this.convertCachedRecipe(cached) : null
     }
   }
 
