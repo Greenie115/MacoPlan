@@ -248,11 +248,24 @@ export async function getCachedRecipes(
       return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
     }
 
+    // Look up cached Unsplash images for these recipes
+    const recipeIds = (data || []).map((r) => r.recipe_api_id)
+    const imageMap = new Map<string, string>()
+    if (recipeIds.length > 0) {
+      const { data: images } = await supabase
+        .from('recipe_images')
+        .select('recipe_api_id, unsplash_url')
+        .in('recipe_api_id', recipeIds)
+      for (const img of images || []) {
+        if (img.unsplash_url) imageMap.set(img.recipe_api_id, img.unsplash_url)
+      }
+    }
+
     const recipes = (data || []).map((recipe) => ({
       id: recipe.recipe_api_id,
       title: recipe.name,
       description: recipe.description,
-      imageUrl: null,
+      imageUrl: imageMap.get(recipe.recipe_api_id) ?? null,
       calories: recipe.nutrition?.per_serving?.calories || 0,
       protein: recipe.nutrition?.per_serving?.protein_g || 0,
       carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,

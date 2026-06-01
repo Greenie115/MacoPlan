@@ -32,6 +32,7 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
   const [isPending, startTransition] = useTransition()
   const [serverError, setServerError] = useState<string | null>(null)
   const [progressIndex, setProgressIndex] = useState(0)
+  const [mealVariety, setMealVariety] = useState<'low' | 'medium' | 'high'>('medium')
   const router = useRouter()
 
   useEffect(() => {
@@ -57,6 +58,7 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
       const result = await generateBatchPrepPlanAction(data, {
         diet_type: userDietType,
         exclusions: userExclusions,
+        meal_variety: mealVariety,
       })
       if (result.success) {
         router.push(`/meal-plans/${result.planId}`)
@@ -117,6 +119,21 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
             min={30}
             {...register('max_prep_time_mins', { valueAsNumber: true })}
           />
+        </div>
+
+        <div>
+          <Label htmlFor="meal_variety">Meal variety</Label>
+          <Select
+            defaultValue="medium"
+            onValueChange={(v) => setMealVariety(v as 'low' | 'medium' | 'high')}
+          >
+            <SelectTrigger id="meal_variety"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="low">Low — 3–4 recipes (less shopping, more repetition)</SelectItem>
+              <SelectItem value="medium">Medium — 5–6 recipes (balanced)</SelectItem>
+              <SelectItem value="high">High — 7–8 recipes (maximum variety)</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 

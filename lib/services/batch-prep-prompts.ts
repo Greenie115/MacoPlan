@@ -4,7 +4,7 @@ export const BATCH_PREP_SYSTEM_PROMPT = `You are a meal prep planning engine for
 
 HARD RULES:
 1. Output MUST be the XML-style tag format below — no prose, no markdown fences, no JSON, no code blocks.
-2. Generate 3–4 distinct recipes total. Each recipe is cooked ONCE and portioned into multiple containers across the week.
+2. Generate the number of distinct recipes specified in the user prompt. Each recipe is cooked ONCE and portioned into multiple containers across the week.
 3. Every ingredient MUST have a gram weight. Never use "1 cup", "a handful", or "to taste".
 4. Recipes must be batch-cookable: refrigeratable for 5 days minimum, bulk-scalable.
 5. Maximise ingredient overlap between recipes (e.g. chicken thighs in 2 recipes, rice in 3 recipes) to shrink the shopping list and reduce waste.
@@ -84,6 +84,12 @@ CRITICAL FORMATTING RULES:
 - Do NOT emit any text outside the <plan>...</plan> block.
 - Do NOT wrap the output in markdown code fences.`
 
+const VARIETY_RECIPE_COUNT: Record<string, string> = {
+  low: '3–4',
+  medium: '5–6',
+  high: '7–8',
+}
+
 export function buildUserPrompt(
   profile: TrainingProfile,
   preferences: DietaryPreferences
@@ -100,6 +106,9 @@ export function buildUserPrompt(
   const dietBlock = preferences.diet_type
     ? `\nDIET TYPE: ${JSON.stringify(preferences.diet_type)}`
     : ''
+
+  const varietyCount = VARIETY_RECIPE_COUNT[preferences.meal_variety ?? 'medium']
+  const varietyBlock = `\nRECIPE COUNT: Generate exactly ${varietyCount} distinct recipes. Use different recipes for training and rest days where possible to maximise variety.`
 
   const mealsPerDay = 4
   const tPerMeal = {
@@ -128,7 +137,7 @@ PER-MEAL BUDGET (${mealsPerDay} meals/day — aim for these per meal):
 PREFERENCES:
 - Prep day: ${profile.prep_day}
 - Containers to fill: ${profile.containers_per_week}
-- Max prep session length: ${profile.max_prep_time_mins} minutes${dietBlock}${exclusionsBlock}
+- Max prep session length: ${profile.max_prep_time_mins} minutes${dietBlock}${exclusionsBlock}${varietyBlock}
 
 Return the plan using the <plan>...</plan> tag format from your instructions. No markdown, no prose, no JSON.`
 }
