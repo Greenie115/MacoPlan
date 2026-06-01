@@ -1,10 +1,11 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, unstable_cache } from 'next/cache'
 import { getUserSubscriptionTier } from '@/lib/utils/subscription'
 import { FREE_FAVORITES_LIMIT } from '@/lib/constants/subscription'
 import { checkFavoritesQuota } from '@/app/actions/subscription'
+import { createCacheClient } from '@/lib/supabase/cache-client'
 
 /**
  * Recipe metadata for favorites
@@ -209,150 +210,152 @@ export async function getFavoriteRecipes() {
 
 /**
  * Get cached recipes from local database for browsing
- * Used when no search query is provided to show all available recipes
+ * Used when no search query is provided to show all available recipes.
+ * Cached for 10 minutes — shared data, not user-specific.
  */
-export async function getCachedRecipes(
-  page: number = 1,
-  limit: number = 20
-): Promise<{
-  data: Array<{
-    id: string
-    title: string
-    description: string | null
-    imageUrl: string | null
-    calories: number
-    protein: number
-    carbs: number
-    fat: number
-  }>
-  totalCount: number
-  error: string | null
-}> {
-  try {
-    const supabase = await createClient()
-    const offset = (page - 1) * limit
+export const getCachedRecipes = unstable_cache(
+  async (
+    page: number = 1,
+    limit: number = 20
+  ): Promise<{
+    data: Array<{
+      id: string
+      title: string
+      description: string | null
+      imageUrl: string | null
+      calories: number
+      protein: number
+      carbs: number
+      fat: number
+    }>
+    totalCount: number
+    error: string | null
+  }> => {
+    try {
+      const supabase = createCacheClient()
+      const offset = (page - 1) * limit
 
-    // Get total count
-    const { count } = await supabase
-      .from('recipe_api_cache')
-      .select('*', { count: 'exact', head: true })
+      // Parallelise count + data + images (images don't depend on data IDs here,
+      // but we can at least run count in parallel with data)
+      const [countResult, dataResult] = await Promise.all([
+        supabase.from('recipe_api_cache').select('*', { count: 'exact', head: true }),
+        supabase
+          .from('recipe_api_cache')
+          .select('recipe_api_id, name, description, nutrition')
+          .order('created_at', { ascending: false })
+          .range(offset, offset + limit - 1),
+      ])
 
-    // Fetch paginated recipes from local cache
-    const { data, error } = await supabase
-      .from('recipe_api_cache')
-      .select('recipe_api_id, name, description, nutrition')
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1)
+      if (dataResult.error) {
+        return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
+      }
 
-    if (error) {
+      const recipeIds = (dataResult.data || []).map((r) => r.recipe_api_id)
+      const imageMap = new Map<string, string>()
+      if (recipeIds.length > 0) {
+        const { data: images } = await supabase
+          .from('recipe_images')
+          .select('recipe_api_id, unsplash_url')
+          .in('recipe_api_id', recipeIds)
+        for (const img of images || []) {
+          if (img.unsplash_url) imageMap.set(img.recipe_api_id, img.unsplash_url)
+        }
+      }
+
+      const recipes = (dataResult.data || []).map((recipe) => ({
+        id: recipe.recipe_api_id,
+        title: recipe.name,
+        description: recipe.description,
+        imageUrl: imageMap.get(recipe.recipe_api_id) ?? null,
+        calories: recipe.nutrition?.per_serving?.calories || 0,
+        protein: recipe.nutrition?.per_serving?.protein_g || 0,
+        carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,
+        fat: recipe.nutrition?.per_serving?.fat_g || 0,
+      }))
+
+      return {
+        data: recipes,
+        totalCount: countResult.count || 0,
+        error: null,
+      }
+    } catch {
       return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
     }
-
-    // Look up cached Unsplash images for these recipes
-    const recipeIds = (data || []).map((r) => r.recipe_api_id)
-    const imageMap = new Map<string, string>()
-    if (recipeIds.length > 0) {
-      const { data: images } = await supabase
-        .from('recipe_images')
-        .select('recipe_api_id, unsplash_url')
-        .in('recipe_api_id', recipeIds)
-      for (const img of images || []) {
-        if (img.unsplash_url) imageMap.set(img.recipe_api_id, img.unsplash_url)
-      }
-    }
-
-    const recipes = (data || []).map((recipe) => ({
-      id: recipe.recipe_api_id,
-      title: recipe.name,
-      description: recipe.description,
-      imageUrl: imageMap.get(recipe.recipe_api_id) ?? null,
-      calories: recipe.nutrition?.per_serving?.calories || 0,
-      protein: recipe.nutrition?.per_serving?.protein_g || 0,
-      carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,
-      fat: recipe.nutrition?.per_serving?.fat_g || 0,
-    }))
-
-    return {
-      data: recipes,
-      totalCount: count || 0,
-      error: null,
-    }
-  } catch {
-    return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
-  }
-}
+  },
+  ['all-recipes'],
+  { revalidate: 600 } // 10 minutes
+)
 
 /**
- * Get the most favorited recipes across all users
- * Uses Supabase RPC to bypass RLS and aggregate data
+ * Get the most favorited recipes across all users.
+ * Cached for 5 minutes — aggregate data, same for all users.
  */
-export async function getMostFavoritedRecipes(
-  page: number = 1,
-  limit: number = 20
-): Promise<{
-  data: Array<{
-    id: string
-    title: string
-    description: string | null
-    imageUrl: string | null
-    calories: number | null
-    protein: number | null
-    carbs: number | null
-    fat: number | null
-    favoriteCount: number
-  }>
-  totalCount: number
-  error: string | null
-}> {
-  try {
-    const supabase = await createClient()
-    const offset = (page - 1) * limit
+export const getMostFavoritedRecipes = unstable_cache(
+  async (
+    page: number = 1,
+    limit: number = 20
+  ): Promise<{
+    data: Array<{
+      id: string
+      title: string
+      description: string | null
+      imageUrl: string | null
+      calories: number | null
+      protein: number | null
+      carbs: number | null
+      fat: number | null
+      favoriteCount: number
+    }>
+    totalCount: number
+    error: string | null
+  }> => {
+    try {
+      const supabase = createCacheClient()
+      const offset = (page - 1) * limit
 
-    // Fetch most favorited recipes using RPC
-    const [recipesResult, countResult] = await Promise.all([
-      supabase.rpc('get_most_favorited_recipes', {
-        p_limit: limit,
-        p_offset: offset,
-      }),
-      supabase.rpc('get_most_favorited_count'),
-    ])
+      const [recipesResult, countResult] = await Promise.all([
+        supabase.rpc('get_most_favorited_recipes', {
+          p_limit: limit,
+          p_offset: offset,
+        }),
+        supabase.rpc('get_most_favorited_count'),
+      ])
 
-    if (recipesResult.error) {
+      if (recipesResult.error) {
+        return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
+      }
+
+      const recipes = (recipesResult.data || []).map((recipe: {
+        recipe_id: string
+        recipe_title: string
+        recipe_description: string | null
+        recipe_image_url: string | null
+        calories: number | null
+        protein_grams: number | null
+        carb_grams: number | null
+        fat_grams: number | null
+        favorite_count: number
+      }) => ({
+        id: recipe.recipe_id,
+        title: recipe.recipe_title,
+        description: recipe.recipe_description,
+        imageUrl: recipe.recipe_image_url,
+        calories: recipe.calories ? Number(recipe.calories) : null,
+        protein: recipe.protein_grams ? Number(recipe.protein_grams) : null,
+        carbs: recipe.carb_grams ? Number(recipe.carb_grams) : null,
+        fat: recipe.fat_grams ? Number(recipe.fat_grams) : null,
+        favoriteCount: Number(recipe.favorite_count),
+      }))
+
+      return {
+        data: recipes,
+        totalCount: countResult.data || 0,
+        error: null,
+      }
+    } catch {
       return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
     }
-
-    if (countResult.error) {
-      // Continue with recipes even if count fails
-    }
-
-    const recipes = (recipesResult.data || []).map((recipe: {
-      recipe_id: string
-      recipe_title: string
-      recipe_description: string | null
-      recipe_image_url: string | null
-      calories: number | null
-      protein_grams: number | null
-      carb_grams: number | null
-      fat_grams: number | null
-      favorite_count: number
-    }) => ({
-      id: recipe.recipe_id,
-      title: recipe.recipe_title,
-      description: recipe.recipe_description,
-      imageUrl: recipe.recipe_image_url,
-      calories: recipe.calories ? Number(recipe.calories) : null,
-      protein: recipe.protein_grams ? Number(recipe.protein_grams) : null,
-      carbs: recipe.carb_grams ? Number(recipe.carb_grams) : null,
-      fat: recipe.fat_grams ? Number(recipe.fat_grams) : null,
-      favoriteCount: Number(recipe.favorite_count),
-    }))
-
-    return {
-      data: recipes,
-      totalCount: countResult.data || 0,
-      error: null,
-    }
-  } catch {
-    return { data: [], totalCount: 0, error: 'Failed to fetch popular recipes' }
-  }
-}
+  },
+  ['popular-recipes'],
+  { revalidate: 300 } // 5 minutes
+)

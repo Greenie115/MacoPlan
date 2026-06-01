@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter, usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Home, BookOpen, Calendar, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -16,7 +17,6 @@ const tabs = [
 ]
 
 export function BottomNav({ activeTab = 'home' }: BottomNavProps) {
-  const router = useRouter()
   const pathname = usePathname()
 
   // Determine active tab from pathname if not explicitly provided
@@ -37,9 +37,9 @@ export function BottomNav({ activeTab = 'home' }: BottomNavProps) {
           const isActive = currentTab === tab.id
 
           return (
-            <button
+            <Link
               key={tab.id}
-              onClick={() => router.push(tab.path)}
+              href={tab.path}
               className={cn(
                 'inline-flex flex-col items-center justify-center px-5 transition-colors',
                 isActive ? 'text-primary' : 'text-icon hover:text-foreground'
@@ -59,7 +59,7 @@ export function BottomNav({ activeTab = 'home' }: BottomNavProps) {
               >
                 {tab.label}
               </span>
-            </button>
+            </Link>
           )
         })}
       </div>

@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter, usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Home, BookOpen, Calendar, User, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useSidebarStore } from '@/stores/sidebar-store'
@@ -13,7 +14,6 @@ const tabs = [
 ]
 
 export function SidebarNav() {
-  const router = useRouter()
   const pathname = usePathname()
   const { isCollapsed, toggle } = useSidebarStore()
 
@@ -62,18 +62,16 @@ export function SidebarNav() {
 
                 return (
                   <li key={tab.id}>
-                    <button
-                      onClick={() => {
-                        router.push(tab.path)
-                      }}
+                    <Link
+                      href={tab.path}
                       className={cn(
-                        'w-full flex items-center gap-3 px-4 py-3 rounded-xl',
+                        'flex items-center gap-3 px-4 py-3 rounded-xl',
                         'transition-colors duration-200',
                         'hover:bg-accent',
                         isActive
                           ? 'bg-primary text-primary-foreground font-semibold'
                           : 'text-icon hover:text-foreground',
-                        isCollapsed && 'justify-center px-2'
+                        isCollapsed ? 'justify-center px-2' : 'w-full'
                       )}
                       aria-label={`Navigate to ${tab.label}`}
                       aria-current={isActive ? 'page' : undefined}
@@ -85,7 +83,7 @@ export function SidebarNav() {
                           {tab.label}
                         </span>
                       )}
-                    </button>
+                    </Link>
                   </li>
                 )
               })}

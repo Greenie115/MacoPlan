@@ -23,16 +23,21 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
   const [userName, setUserName] = useState('User')
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
 
-  // Check if user has a profile in database (more reliable than localStorage)
+  // Check user profile once on mount and on auth state change — not on every navigation.
   useEffect(() => {
-    async function checkUserProfile() {
-      // Skip check on auth pages
-      if (pathname.startsWith('/login') || pathname.startsWith('/signup') || pathname.startsWith('/onboarding')) {
+    const supabase = createClient()
+
+    async function loadProfile() {
+      // Skip check on auth/onboarding pages
+      if (
+        pathname.startsWith('/login') ||
+        pathname.startsWith('/signup') ||
+        pathname.startsWith('/onboarding')
+      ) {
         setCheckingProfile(false)
         return
       }
 
-      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
 
       if (user) {
@@ -52,8 +57,18 @@ export function AppLayoutWrapper({ children }: AppLayoutWrapperProps) {
       setCheckingProfile(false)
     }
 
-    checkUserProfile()
-  }, [pathname])
+    loadProfile()
+
+    // Re-run on auth state changes (login / logout) — not on every navigation
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
+        loadProfile()
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Check if user has completed onboarding (either from localStorage or database)
   const hasCompletedOnboarding = completedSteps.includes(6) || hasProfile
