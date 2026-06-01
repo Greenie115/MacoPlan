@@ -1,14 +1,14 @@
 import Link from 'next/link'
-import { Utensils } from 'lucide-react'
+import { LogoMark } from '@/components/brand/logo'
 
 export function BlogHeader() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 py-4 bg-background/95 backdrop-blur-md border-b border-border-strong">
       <div className="container mx-auto px-6">
         <nav className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-            <Utensils className="w-8 h-8 text-primary" />
-            <span>Macro Plan</span>
+          <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
+            <LogoMark size={32} />
+            <span>MacroPlan</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">

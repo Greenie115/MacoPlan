@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Utensils, ArrowRight, Target, Zap, TrendingUp, Clock, CalendarCheck, RefreshCw, Check } from 'lucide-react'
 import { FAQSection } from '@/components/landing/faq-section'
 import { Footer } from '@/components/landing/footer'
+import { Logo } from '@/components/brand/logo'
 import { SuccessStories } from '@/components/landing/success-stories'
 import { Reveal } from '@/components/landing/reveal'
 
@@ -76,10 +77,7 @@ export default function LandingPage() {
         <header className="fixed top-0 left-0 right-0 z-50 py-4 bg-background/95 backdrop-blur-md border-b border-border-strong" role="banner">
           <div className="container mx-auto px-6">
             <nav className="flex items-center justify-between" aria-label="Main navigation">
-              <Link href="/" className="flex items-center gap-2 text-2xl font-bold" aria-label="MacroPlan - Home">
-                <Utensils className="w-8 h-8 text-primary" aria-hidden="true" />
-                <span>MacroPlan</span>
-              </Link>
+              <Logo href="/" markSize={32} textClassName="text-2xl font-bold tracking-tight" />
 
               <div className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Page sections">
                 <Link href="/#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">How It Works</Link>

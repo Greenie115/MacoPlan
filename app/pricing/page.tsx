@@ -3,7 +3,6 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import {
-  Utensils,
   Check,
   X,
   ChevronDown,
@@ -12,6 +11,7 @@ import {
   Sparkles,
   Loader2,
 } from 'lucide-react'
+import { LogoMark } from '@/components/brand/logo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createCheckoutSession } from '@/app/actions/stripe'
@@ -62,9 +62,9 @@ export default function PricingPage() {
       <header className="fixed top-0 left-0 right-0 z-50 py-4 bg-background/95 backdrop-blur-md border-b border-border-strong">
         <div className="container mx-auto px-6">
           <nav className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-              <Utensils className="w-8 h-8 text-primary" />
-              <span>Macro Plan</span>
+            <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
+              <LogoMark size={32} />
+              <span>MacroPlan</span>
             </Link>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -393,7 +393,7 @@ export default function PricingPage() {
             <div className="space-y-4">
               <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  Can I try Macro Plan for free?
+                  Can I try MacroPlan for free?
                   <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
                 </summary>
                 <p className="text-subtle-foreground mt-4 leading-relaxed">
@@ -478,7 +478,7 @@ export default function PricingPage() {
       <footer className="py-12 bg-muted border-t border-border-strong">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground">© 2026 Macro Plan. All rights reserved.</p>
+            <p className="text-muted-foreground">© 2026 MacroPlan. All rights reserved.</p>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>

@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Utensils, ArrowRight, Mail } from 'lucide-react'
+import { ArrowRight, Mail } from 'lucide-react'
+import { LogoMark } from '@/components/brand/logo'
 
 export function Footer() {
   return (
@@ -9,7 +10,7 @@ export function Footer() {
           {/* Column 1: Logo and tagline */}
           <div>
             <Link href="/" className="flex items-center gap-2 text-xl font-bold mb-4">
-              <Utensils className="w-7 h-7 text-primary" aria-hidden="true" />
+              <LogoMark size={28} />
               <span>MacroPlan</span>
             </Link>
             <p className="text-muted-foreground mb-6">

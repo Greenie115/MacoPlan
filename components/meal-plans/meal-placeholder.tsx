@@ -43,37 +43,37 @@ export function MealPlaceholder({ mealType, className, compact = false }: MealPl
 function getMealTypeVisuals(mealType: string) {
   const type = mealType.toLowerCase()
 
-  // All use primary orange (#F97316) as base with slight variations
-  // to maintain brand consistency while differentiating meal types
+  // Coral (primary) base with macro-palette accents, varied per meal type
+  // to differentiate while staying on-brand
 
   if (type.includes('breakfast')) {
     return {
       icon: Coffee,
-      // Primary orange to warm amber
-      gradient: 'bg-gradient-to-br from-primary to-amber-500'
+      // Coral to amber (fat)
+      gradient: 'bg-gradient-to-br from-primary to-amber-400'
     }
   }
 
   if (type.includes('lunch')) {
     return {
       icon: Sandwich,
-      // Primary orange to deeper orange
-      gradient: 'bg-gradient-to-br from-primary to-orange-600'
+      // Coral to sky (carbs)
+      gradient: 'bg-gradient-to-br from-primary to-sky-400'
     }
   }
 
   if (type.includes('dinner')) {
     return {
       icon: UtensilsCrossed,
-      // Primary orange to warm red-orange
-      gradient: 'bg-gradient-to-br from-primary to-red-500'
+      // Coral to rose
+      gradient: 'bg-gradient-to-br from-primary to-rose-500'
     }
   }
 
   if (type.includes('snack')) {
     return {
       icon: Cookie,
-      // Lighter orange tones
+      // Amber to coral
       gradient: 'bg-gradient-to-br from-amber-400 to-primary'
     }
   }
@@ -81,8 +81,8 @@ function getMealTypeVisuals(mealType: string) {
   if (type.includes('salad') || type.includes('side')) {
     return {
       icon: Salad,
-      // Orange to yellow for fresh feel
-      gradient: 'bg-gradient-to-br from-primary to-yellow-500'
+      // Coral to emerald for a fresh feel
+      gradient: 'bg-gradient-to-br from-primary to-emerald-400'
     }
   }
 
