@@ -2,6 +2,17 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { listBatchPrepPlans } from '@/lib/services/batch-prep-persistence'
+
+function formatWeekOf(dateString: string): string {
+  const date = new Date(`${dateString}T00:00:00Z`)
+  return `Week of ${date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })}`
+}
 
 /**
  * Set a plan as active (deactivates all other plans for user)
@@ -55,23 +66,42 @@ export async function getRecentPlansWithProgress() {
   }
 
   try {
-    // Fetch up to 4 recent non-archived plans (active first, then by start_date)
-    const { data: plans, error } = await supabase
-      .from('meal_plans')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('archived', false)
-      .order('is_active', { ascending: false }) // Active plans first
-      .order('start_date', { ascending: false }) // Then by most recent
-      .limit(4)
+    // Batch prep plans are the primary plan type; legacy meal_plans are kept
+    // for users who generated plans before the batch-prep pivot.
+    const [batchPlansResult, legacyResult] = await Promise.all([
+      listBatchPrepPlans(user.id).catch(() => []),
+      supabase
+        .from('meal_plans')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('archived', false)
+        .order('is_active', { ascending: false }) // Active plans first
+        .order('start_date', { ascending: false }) // Then by most recent
+        .limit(4),
+    ])
+
+    const batchPlanCards = batchPlansResult.slice(0, 4).map((plan, index) => ({
+      id: plan.id,
+      name: 'Batch Prep',
+      dateRange: formatWeekOf(plan.week_starting),
+      caloriesPerDay: plan.calories ?? 0,
+      proteinGrams: plan.protein_g ?? 0,
+      carbGrams: plan.carbs_g ?? 0,
+      fatGrams: plan.fat_g ?? 0,
+      isActive: index === 0,
+      images: [] as string[],
+      createdAt: new Date(plan.created_at),
+    }))
+
+    const { data: plans, error } = legacyResult
 
     if (error) {
       console.error('Error fetching plans:', error)
-      return { success: false, error: 'Failed to fetch meal plans', data: [] }
+      return { success: false, error: 'Failed to fetch meal plans', data: batchPlanCards }
     }
 
     if (!plans || plans.length === 0) {
-      return { success: true, data: [] }
+      return { success: true, data: batchPlanCards }
     }
 
     // Calculate days completed for each plan based on actual meal logging
@@ -129,8 +159,11 @@ export async function getRecentPlansWithProgress() {
         })}`
 
         return {
+          // Stored legacy names embed an ambiguous locale date
+          // ("Daily Meal Plan - 08/01/2026"); the dateRange line below
+          // already shows the dates unambiguously.
           id: plan.id,
-          name: plan.name,
+          name: String(plan.name || 'Meal Plan').replace(/\s*-\s*\d{1,2}\/\d{1,2}\/\d{2,4}$/, ''),
           dateRange,
           caloriesPerDay: plan.target_calories,
           proteinGrams: plan.protein_grams,
@@ -145,7 +178,15 @@ export async function getRecentPlansWithProgress() {
       })
     )
 
-    return { success: true, data: plansWithProgress }
+    // Batch preps first (newest first), then legacy plans; cap at 4 cards.
+    // If a legacy plan is explicitly active, let it keep the badge.
+    const hasActiveLegacy = plansWithProgress.some((p) => p.isActive)
+    const combined = [
+      ...batchPlanCards.map((p) => (hasActiveLegacy ? { ...p, isActive: false } : p)),
+      ...plansWithProgress,
+    ].slice(0, 4)
+
+    return { success: true, data: combined }
   } catch (error) {
     console.error('Error calculating plan progress:', error)
     return { success: false, error: 'Failed to load plans', data: [] }

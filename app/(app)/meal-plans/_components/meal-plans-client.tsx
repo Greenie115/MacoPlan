@@ -36,11 +36,13 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { deleteMealPlan, toggleMealPlanFavorite, archiveMealPlan, type MealPlanWithPreviews } from '@/app/actions/meal-plans'
+import type { BatchPrepPlanSummary } from '@/lib/services/batch-prep-persistence'
 
 type TabFilter = 'all' | 'this_week' | 'favorites'
 
 interface MealPlansClientProps {
   initialPlans: MealPlanWithPreviews[]
+  batchPlans?: BatchPrepPlanSummary[]
   quotaInfo: {
     tier: 'free' | 'paid'
     remaining: number
@@ -49,7 +51,7 @@ interface MealPlansClientProps {
   } | null
 }
 
-export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProps) {
+export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: MealPlansClientProps) {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<TabFilter>('all')
   const [showPaywall, setShowPaywall] = useState(false)
@@ -64,6 +66,17 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
     if (activeTab === 'favorites') {
       return plan.is_favorite
     }
+    if (activeTab === 'this_week') {
+      const weekAgo = new Date()
+      weekAgo.setDate(weekAgo.getDate() - 7)
+      return new Date(plan.created_at) > weekAgo
+    }
+    return true
+  })
+
+  // Batch prep plans don't support favorites (yet)
+  const filteredBatchPlans = batchPlans.filter((plan) => {
+    if (activeTab === 'favorites') return false
     if (activeTab === 'this_week') {
       const weekAgo = new Date()
       weekAgo.setDate(weekAgo.getDate() - 7)
@@ -180,20 +193,40 @@ export function MealPlansClient({ initialPlans, quotaInfo }: MealPlansClientProp
 
       {/* Content */}
       <main className="mx-auto max-w-5xl p-4">
-        {filteredPlans.length === 0 ? (
+        {filteredPlans.length === 0 && filteredBatchPlans.length === 0 ? (
           <EmptyState activeTab={activeTab} onGenerate={handleGenerateNew} />
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPlans.map((plan) => (
-              <MealPlanCard
-                key={plan.id}
-                plan={plan}
-                onDelete={handleDeletePlan}
-                onToggleFavorite={handleToggleFavorite}
-                onArchive={handleArchivePlan}
-                isPending={isPending}
-              />
-            ))}
+          <div className="space-y-6">
+            {filteredBatchPlans.length > 0 && (
+              <section aria-label="Batch prep plans">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredBatchPlans.map((plan) => (
+                    <BatchPrepCard key={plan.id} plan={plan} />
+                  ))}
+                </div>
+              </section>
+            )}
+            {filteredPlans.length > 0 && (
+              <section aria-label="Saved meal plans">
+                {filteredBatchPlans.length > 0 && (
+                  <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    Older plans
+                  </h2>
+                )}
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredPlans.map((plan) => (
+                    <MealPlanCard
+                      key={plan.id}
+                      plan={plan}
+                      onDelete={handleDeletePlan}
+                      onToggleFavorite={handleToggleFavorite}
+                      onArchive={handleArchivePlan}
+                      isPending={isPending}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         )}
       </main>
@@ -482,4 +515,49 @@ function formatDateRange(startDate: string, endDate: string): string {
     return `${startMonth} ${startDay}-${endDay}, ${year}`
   }
   return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${year}`
+}
+
+// ============================================================================
+// Batch Prep Card
+// ============================================================================
+
+function BatchPrepCard({ plan }: { plan: BatchPrepPlanSummary }) {
+  const weekLabel = new Date(`${plan.week_starting}T00:00:00Z`).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+
+  return (
+    <Link
+      href={`/meal-plans/${plan.id}`}
+      className="group flex flex-col gap-3 rounded-2xl border border-border-strong bg-card p-4 shadow-sm transition-shadow hover:shadow-md"
+      aria-label={`View batch prep plan for week of ${weekLabel}`}
+    >
+      <div className="flex items-start justify-between">
+        <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <ChefHat className="size-5" />
+        </div>
+        <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+      </div>
+
+      <div>
+        <p className="font-semibold leading-tight text-foreground">Batch Prep</p>
+        <p className="text-sm text-muted-foreground">Week of {weekLabel}</p>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+        <span>{plan.total_containers} containers</span>
+        <span aria-hidden="true">·</span>
+        <span>{plan.estimated_prep_time_mins} min prep</span>
+        {plan.calories !== null && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span className="font-medium text-primary">{plan.calories.toLocaleString()} cal/day</span>
+          </>
+        )}
+      </div>
+    </Link>
+  )
 }

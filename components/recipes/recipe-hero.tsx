@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
+import { RecipeImageFallback } from './recipe-image-fallback'
 
 interface RecipeHeroProps {
   recipeId: string
@@ -40,9 +41,7 @@ export function RecipeHero({
             }}
           />
         ) : (
-          <div className="w-full h-full bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground">No image</span>
-          </div>
+          <RecipeImageFallback title={recipeName} iconClassName="size-12" />
         )}
         {/* Gradient overlay for better text visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-50" />

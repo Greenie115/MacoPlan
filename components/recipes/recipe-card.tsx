@@ -8,6 +8,7 @@ import { macroColors } from '@/lib/design-tokens'
 import { toggleRecipeFavorite } from '@/app/actions/recipes'
 import { useOptimistic, useTransition } from 'react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
+import { RecipeImageFallback } from './recipe-image-fallback'
 
 interface RecipeCardProps {
   recipe: Recipe | any // Allow both local Recipe and Recipe-API recipe
@@ -80,9 +81,7 @@ export function RecipeCard({ recipe, isFavorite, source = 'recipe-api' }: Recipe
               }}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
-              No image
-            </div>
+            <RecipeImageFallback title={recipeTitle} />
           )}
 
           {/* Favorite Button */}

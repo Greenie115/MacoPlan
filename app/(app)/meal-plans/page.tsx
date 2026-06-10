@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getMealPlans, getMealPlanQuotaInfo } from '@/app/actions/meal-plans'
+import { listBatchPrepPlans } from '@/lib/services/batch-prep-persistence'
 import { MealPlansClient } from './_components/meal-plans-client'
 
 export const metadata: Metadata = {
@@ -19,8 +20,9 @@ export default async function MealPlansPage() {
     redirect('/login')
   }
 
-  // Fetch plans and quota info in parallel
-  const [plansResult, quotaResult] = await Promise.all([
+  // Fetch batch preps, legacy plans, and quota info in parallel
+  const [batchPlans, plansResult, quotaResult] = await Promise.all([
+    listBatchPrepPlans(user.id).catch(() => []),
     getMealPlans(),
     getMealPlanQuotaInfo(),
   ])
@@ -31,6 +33,7 @@ export default async function MealPlansPage() {
   return (
     <MealPlansClient
       initialPlans={plans}
+      batchPlans={batchPlans}
       quotaInfo={quotaInfo}
     />
   )

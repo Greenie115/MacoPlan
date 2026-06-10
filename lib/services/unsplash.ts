@@ -13,6 +13,15 @@ import { createClient } from '@/lib/supabase/server'
 
 const UNSPLASH_API_URL = 'https://api.unsplash.com'
 
+// Unsplash free tier allows 50 requests/hour. When we hit the limit (403/429)
+// we stop calling the API entirely for a cooldown window instead of burning
+// requests on guaranteed failures.
+const RATE_LIMIT_COOLDOWN_MS = 60 * 60 * 1000 // 1 hour
+
+// Recipes with no result (or failures) are negative-cached in memory so we
+// don't re-query Unsplash for them on every page view.
+const NEGATIVE_CACHE_TTL_MS = 6 * 60 * 60 * 1000 // 6 hours
+
 // ============================================================================
 // Types
 // ============================================================================
@@ -49,6 +58,26 @@ interface UnsplashSearchResponse {
 export class UnsplashService {
   private _accessKey: string | null = null
 
+  // recipeId → timestamp when the negative entry expires
+  private negativeCache = new Map<string, number>()
+
+  // While Date.now() < rateLimitedUntil, skip all API calls
+  private rateLimitedUntil = 0
+
+  private isNegativeCached(recipeId: string): boolean {
+    const expiry = this.negativeCache.get(recipeId)
+    if (!expiry) return false
+    if (Date.now() > expiry) {
+      this.negativeCache.delete(recipeId)
+      return false
+    }
+    return true
+  }
+
+  private markNegative(recipeId: string): void {
+    this.negativeCache.set(recipeId, Date.now() + NEGATIVE_CACHE_TTL_MS)
+  }
+
   private get accessKey(): string {
     if (!this._accessKey) {
       const key = process.env.UNSPLASH_ACCESS_KEY
@@ -65,6 +94,10 @@ export class UnsplashService {
    * Returns the first relevant result or null.
    */
   async searchFoodPhoto(recipeName: string): Promise<UnsplashPhoto | null> {
+    if (Date.now() < this.rateLimitedUntil) {
+      return null
+    }
+
     try {
       const url = new URL(`${UNSPLASH_API_URL}/search/photos`)
       url.searchParams.set('query', `${recipeName} food`)
@@ -80,7 +113,12 @@ export class UnsplashService {
       })
 
       if (!response.ok) {
-        console.error(`[Unsplash] API error: ${response.status}`)
+        if (response.status === 403 || response.status === 429) {
+          this.rateLimitedUntil = Date.now() + RATE_LIMIT_COOLDOWN_MS
+          console.error(`[Unsplash] Rate limited (${response.status}); pausing requests for 1h`)
+        } else {
+          console.error(`[Unsplash] API error: ${response.status}`)
+        }
         return null
       }
 
@@ -108,6 +146,10 @@ export class UnsplashService {
    * Caches permanently in Supabase `recipe_images` table.
    */
   async getImageForRecipe(recipeId: string, recipeName: string): Promise<UnsplashPhoto | null> {
+    if (this.isNegativeCached(recipeId)) {
+      return null
+    }
+
     const supabase = await createClient()
 
     // Check cache first
@@ -130,6 +172,8 @@ export class UnsplashService {
     const photo = await this.searchFoodPhoto(recipeName)
 
     if (!photo) {
+      // Remember the miss so the next page view doesn't re-query
+      this.markNegative(recipeId)
       return null
     }
 
@@ -146,6 +190,34 @@ export class UnsplashService {
     })
 
     return photo
+  }
+
+  /**
+   * Cache-only batch lookup: returns whatever is already in `recipe_images`
+   * without ever calling the Unsplash API. Use on hot paths (search results)
+   * and warm missing images out-of-band with `getImagesForRecipes`.
+   */
+  async getCachedImages(recipeIds: string[]): Promise<Map<string, UnsplashPhoto>> {
+    const imageMap = new Map<string, UnsplashPhoto>()
+    if (recipeIds.length === 0) return imageMap
+
+    const supabase = await createClient()
+    const { data: cachedImages } = await supabase
+      .from('recipe_images')
+      .select('recipe_api_id, unsplash_url, unsplash_small_url, photographer_name, photographer_url')
+      .in('recipe_api_id', recipeIds)
+
+    for (const img of cachedImages || []) {
+      if (!img.unsplash_url) continue
+      imageMap.set(img.recipe_api_id, {
+        url: img.unsplash_url,
+        smallUrl: img.unsplash_small_url || img.unsplash_url,
+        photographerName: img.photographer_name,
+        photographerUrl: img.photographer_url,
+      })
+    }
+
+    return imageMap
   }
 
   /**
