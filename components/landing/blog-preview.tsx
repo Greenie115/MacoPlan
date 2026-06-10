@@ -44,7 +44,7 @@ export function BlogPreview() {
                   href={`/blog/${post.slug}`}
                   className="text-primary font-medium text-sm hover:underline"
                 >
-                  Read more on Macro Plan blog ›
+                  Read more on MacroPlan blog ›
                 </Link>
               </div>
             </article>

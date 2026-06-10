@@ -20,7 +20,7 @@ export default async function GroceryListPage({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <GroceryListView list={result.data} />
     </div>
   )

@@ -31,7 +31,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
-      images: post.image ? [{ url: post.image }] : [],
+      // Social crawlers don't render SVG og:images — fall back to the
+      // root /opengraph-image (PNG) for SVG covers.
+      images: post.image && !post.image.endsWith('.svg') ? [{ url: post.image }] : [],
     },
     twitter: {
       card: 'summary_large_image',

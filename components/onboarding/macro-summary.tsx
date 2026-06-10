@@ -70,7 +70,7 @@ export function MacroSummary({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-foreground">
-            Your Macro Plan
+            Your MacroPlan
           </h3>
           {isCustom && (
             <p className="text-xs text-muted-foreground mt-1">
