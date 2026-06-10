@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import Link from 'next/link'
 import { TrainingProfileSchema, type TrainingProfile } from '@/lib/types/batch-prep'
 import { generateBatchPrepPlanAction } from '@/app/actions/batch-prep'
 
@@ -31,6 +32,7 @@ interface Props {
 export function GeneratorForm({ defaults, userDietType, userExclusions }: Props) {
   const [isPending, startTransition] = useTransition()
   const [serverError, setServerError] = useState<string | null>(null)
+  const [limitReached, setLimitReached] = useState(false)
   const [progressIndex, setProgressIndex] = useState(0)
   const [mealVariety, setMealVariety] = useState<'low' | 'medium' | 'high'>('medium')
   const router = useRouter()
@@ -54,6 +56,7 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
 
   const onSubmit = (data: TrainingProfile) => {
     setServerError(null)
+    setLimitReached(false)
     startTransition(async () => {
       const result = await generateBatchPrepPlanAction(data, {
         diet_type: userDietType,
@@ -62,6 +65,8 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
       })
       if (result.success) {
         router.push(`/meal-plans/${result.planId}`)
+      } else if (result.code === 'free_tier_limit') {
+        setLimitReached(true)
       } else {
         setServerError(result.error)
       }
@@ -81,7 +86,7 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
             {...register('training_days_per_week', { valueAsNumber: true })}
           />
           {errors.training_days_per_week && (
-            <p className="text-sm text-red-500">{errors.training_days_per_week.message}</p>
+            <p className="text-sm text-destructive">{errors.training_days_per_week.message}</p>
           )}
         </div>
 
@@ -161,7 +166,22 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
         </div>
       </details>
 
-      {serverError && <p className="text-red-500">{serverError}</p>}
+      {limitReached && (
+        <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 text-center">
+          <p className="font-semibold text-foreground">You&apos;ve used all 3 free batch prep plans</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Premium gives you unlimited plans, training/rest day splits, and PDF export.
+          </p>
+          <Link
+            href="/pricing"
+            className="mt-3 inline-block rounded-xl bg-primary px-6 py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Upgrade to Premium
+          </Link>
+        </div>
+      )}
+
+      {serverError && <p className="text-destructive">{serverError}</p>}
 
       <Button type="submit" disabled={isPending} className="w-full">
         {isPending ? (

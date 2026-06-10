@@ -3,14 +3,35 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Heart } from 'lucide-react'
-import { Recipe } from '@/lib/types/recipe'
 import { macroColors } from '@/lib/design-tokens'
-import { toggleRecipeFavorite } from '@/app/recipes/actions'
+import { toggleRecipeFavorite } from '@/app/actions/recipes'
 import { useOptimistic, useTransition } from 'react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
+import { RecipeImageFallback } from './recipe-image-fallback'
+
+/**
+ * Card data arrives from three sources with different field names and
+ * varying completeness (Recipe-API search results, the local `recipes`
+ * table, and the session cache). The card normalizes via fallbacks.
+ */
+export interface RecipeCardData {
+  id: string | number
+  title?: string
+  name?: string
+  description?: string
+  imageUrl?: string | null
+  image_url?: string | null
+  calories?: number
+  protein?: number
+  protein_grams?: number
+  carbs?: number
+  carb_grams?: number
+  fat?: number
+  fat_grams?: number
+}
 
 interface RecipeCardProps {
-  recipe: Recipe | any // Allow both local Recipe and Recipe-API recipe
+  recipe: RecipeCardData
   isFavorite: boolean
   source?: 'local' | 'recipe-api'
 }
@@ -19,15 +40,14 @@ export function RecipeCard({ recipe, isFavorite, source = 'recipe-api' }: Recipe
   const [isPending, startTransition] = useTransition()
   const [optimisticFavorite, setOptimisticFavorite] = useOptimistic(isFavorite)
 
-  // Get appropriate values based on source
-  const recipeTitle = source === 'recipe-api' ? recipe.title : recipe.name
-  const recipeImage = source === 'recipe-api' ? recipe.imageUrl : recipe.image_url
-
-  // Get nutrition values
-  const calories = source === 'recipe-api' ? recipe.calories : recipe.calories
-  const protein = source === 'recipe-api' ? recipe.protein : recipe.protein_grams
-  const carbs = source === 'recipe-api' ? recipe.carbs : recipe.carb_grams
-  const fat = source === 'recipe-api' ? recipe.fat : recipe.fat_grams
+  // Normalize the two shapes (Recipe-API uses title/imageUrl/protein,
+  // local rows use name/image_url/protein_grams)
+  const recipeTitle = recipe.title ?? recipe.name ?? 'Recipe'
+  const recipeImage = recipe.imageUrl ?? recipe.image_url ?? null
+  const calories = recipe.calories ?? 0
+  const protein = recipe.protein ?? recipe.protein_grams ?? 0
+  const carbs = recipe.carbs ?? recipe.carb_grams ?? 0
+  const fat = recipe.fat ?? recipe.fat_grams ?? 0
 
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.preventDefault() // Prevent navigation to recipe detail
@@ -53,7 +73,7 @@ export function RecipeCard({ recipe, isFavorite, source = 'recipe-api' }: Recipe
         }
       : undefined
 
-    await toggleRecipeFavorite(recipe.id, metadata)
+    await toggleRecipeFavorite(String(recipe.id), metadata)
   }
 
   const recipeLink = `/recipes/${recipe.id}`
@@ -80,9 +100,7 @@ export function RecipeCard({ recipe, isFavorite, source = 'recipe-api' }: Recipe
               }}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
-              No image
-            </div>
+            <RecipeImageFallback title={recipeTitle} />
           )}
 
           {/* Favorite Button */}

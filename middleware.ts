@@ -2,8 +2,22 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+
+  // Content routes never branch on onboarding state — skip the profile query
+  const skipProfileCheck =
+    pathname.startsWith('/blog') ||
+    pathname.startsWith('/pricing') ||
+    pathname.startsWith('/help') ||
+    pathname.startsWith('/terms') ||
+    pathname.startsWith('/privacy') ||
+    pathname.startsWith('/forgot-password') ||
+    pathname.startsWith('/reset-password') ||
+    pathname.startsWith('/api/') ||
+    pathname.includes('.')
+
   // Update session and get user
-  const { response, user, onboardingCompleted } = await updateSession(request)
+  const { response, user, onboardingCompleted } = await updateSession(request, { skipProfileCheck })
 
   // API routes handle their own auth (e.g., Stripe webhooks verify signatures)
   if (request.nextUrl.pathname.startsWith('/api/')) {
@@ -23,13 +37,15 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/help') ||
     request.nextUrl.pathname.startsWith('/terms') ||
     request.nextUrl.pathname.startsWith('/privacy') ||
+    request.nextUrl.pathname.startsWith('/onboarding') ||
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.includes('.') // static files like favicon.ico
 
-  // Onboarding requires auth - users must sign in first
+  // Onboarding is open to guests: data lives in localStorage until they sign
+  // up, then /onboarding/complete migrates it to Supabase.
   const isOnboardingRoute = request.nextUrl.pathname.startsWith('/onboarding')
 
-  // If user is NOT logged in and tries to access a protected route (including onboarding)
+  // If user is NOT logged in and tries to access a protected route
   if (!user && !isPublicRoute) {
     // Redirect to login
     const loginUrl = new URL('/login', request.url)

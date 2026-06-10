@@ -1,6 +1,6 @@
 /**
  * Recipe Type Definitions
- * TypeScript interfaces for the Macro Plan recipe system
+ * TypeScript interfaces for the MacroPlan recipe system
  */
 
 export interface Recipe {

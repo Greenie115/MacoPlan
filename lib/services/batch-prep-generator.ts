@@ -49,7 +49,11 @@ async function callAndValidate(
   profile: TrainingProfile,
   preferences: DietaryPreferences,
   correctionHint: string | null
-): Promise<{ plan: BatchPrepPlan; accuracy: ReturnType<typeof checkMacroAccuracy> }> {
+): Promise<{
+  plan: BatchPrepPlan
+  accuracy: ReturnType<typeof checkMacroAccuracy>
+  usage: { input_tokens: number; output_tokens: number }
+}> {
   const userPrompt = correctionHint
     ? buildUserPrompt(profile, preferences) +
       `\n\nIMPORTANT: Your previous attempt had this problem: ${correctionHint}. Regenerate with the macros strictly within 5% of the targets.`
@@ -85,7 +89,7 @@ async function callAndValidate(
   }
 
   const accuracy = checkMacroAccuracy(plan, profile)
-  return { plan, accuracy }
+  return { plan, accuracy, usage }
 }
 
 export async function generateBatchPrepPlan(
@@ -96,12 +100,12 @@ export async function generateBatchPrepPlan(
   // First attempt
   const firstAttempt = await callAndValidate(userId, profile, preferences, null)
   if (firstAttempt.accuracy.passed) {
-    await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'success')
+    await logUsage(userId, 'batch-prep-generate', firstAttempt.usage, 'success')
     return firstAttempt.plan
   }
 
   // Retry once with correction hint
-  await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'retry', firstAttempt.accuracy.reason)
+  await logUsage(userId, 'batch-prep-generate', firstAttempt.usage, 'retry', firstAttempt.accuracy.reason)
   const retryAttempt = await callAndValidate(
     userId,
     profile,
@@ -113,7 +117,7 @@ export async function generateBatchPrepPlan(
   // LLMs cannot reliably hit exact macro targets, so we pick whichever attempt
   // was closer and let the user see the actual macros in the UI.
   if (retryAttempt.accuracy.passed) {
-    await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'success')
+    await logUsage(userId, 'batch-prep-generate', retryAttempt.usage, 'success')
     return retryAttempt.plan
   }
 
@@ -121,6 +125,6 @@ export async function generateBatchPrepPlan(
   const firstFailCount = firstAttempt.accuracy.reason?.split(';').length ?? 0
   const retryFailCount = retryAttempt.accuracy.reason?.split(';').length ?? 0
   const best = retryFailCount <= firstFailCount ? retryAttempt : firstAttempt
-  await logUsage(userId, 'batch-prep-generate', { input_tokens: 0, output_tokens: 0 }, 'success', `approx: ${best.accuracy.reason}`)
+  await logUsage(userId, 'batch-prep-generate', retryAttempt.usage, 'success', `approx: ${best.accuracy.reason}`)
   return best.plan
 }

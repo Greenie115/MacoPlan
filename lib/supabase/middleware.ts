@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function updateSession(request: NextRequest) {
+export async function updateSession(request: NextRequest, options?: { skipProfileCheck?: boolean }) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -34,9 +34,10 @@ export async function updateSession(request: NextRequest) {
   // refreshing the auth token
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Check if user has completed onboarding
+  // Check if user has completed onboarding (skipped on routes that don't
+  // branch on it, to avoid a DB round-trip per request)
   let onboardingCompleted = false
-  if (user) {
+  if (user && !options?.skipProfileCheck) {
     const { data: profile } = await supabase
       .from('user_profiles')
       .select('onboarding_completed')

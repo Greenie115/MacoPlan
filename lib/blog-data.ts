@@ -44,7 +44,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'October 26, 2023',
     readTime: '8 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Flexible+Dieting',
+    image: '/blog/ultimate-guide-to-flexible-dieting.svg',
     category: 'Nutrition'
   },
   {
@@ -70,7 +70,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'November 15, 2023',
     readTime: '5 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Meal+Prep+for+Weight+Loss',
+    image: '/blog/meal-prepping-for-weight-loss.svg',
     category: 'Meal Prep'
   },
   {
@@ -99,7 +99,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'December 2, 2023',
     readTime: '6 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Decoding+Macros',
+    image: '/blog/decoding-macros.svg',
     category: 'Nutrition'
   },
   {
@@ -131,7 +131,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'December 10, 2023',
     readTime: '4 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=High-Protein+Breakfasts',
+    image: '/blog/high-protein-breakfasts.svg',
     category: 'Recipes'
   },
   {
@@ -179,7 +179,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'January 14, 2026',
     readTime: '7 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=High-Protein+Meal+Prep',
+    image: '/blog/high-protein-meal-prep-muscle.svg',
     category: 'Meal Prep'
   },
   {
@@ -224,7 +224,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'February 3, 2026',
     readTime: '6 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=How+Much+Protein',
+    image: '/blog/how-much-protein-to-build-muscle.svg',
     category: 'Nutrition'
   },
   {
@@ -267,7 +267,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'March 9, 2026',
     readTime: '7 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Meal+Prep+on+a+Cut',
+    image: '/blog/meal-prep-on-a-cut.svg',
     category: 'Meal Prep'
   },
   {
@@ -311,7 +311,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'April 6, 2026',
     readTime: '6 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Calorie+Cycling',
+    image: '/blog/calorie-cycling-training-rest-days.svg',
     category: 'Nutrition'
   },
   {
@@ -364,7 +364,7 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'May 4, 2026',
     readTime: '7 min read',
-    image: 'https://placehold.co/1200x630/0B0F10/FF6B5C?text=Best+Foods+for+Batch+Cooking',
+    image: '/blog/best-foods-for-batch-cooking.svg',
     category: 'Meal Prep'
   }
 ];

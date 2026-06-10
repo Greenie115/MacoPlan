@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { RecipeGrid } from './recipe-grid'
-import { getCachedRecipes } from '@/app/recipes/actions'
+import { getCachedRecipes } from '@/app/actions/recipes'
 import { getSearchResults, saveSearchResults } from '@/lib/cache/session-cache'
 
 const PER_PAGE = 20

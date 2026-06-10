@@ -17,7 +17,7 @@ export function Footer() {
               Meal planning for real life.
             </p>
             <Link
-              href="/signup"
+              href="/onboarding/1"
               className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 px-5 rounded-xl transition-all text-sm"
             >
               Start Today
@@ -40,7 +40,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/signup" className="hover:text-primary transition-colors">
+                <Link href="/onboarding/1" className="hover:text-primary transition-colors">
                   Recipes
                 </Link>
               </li>

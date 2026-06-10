@@ -158,7 +158,7 @@ export function HeroDemo() {
             </div>
 
             <div className="mt-4 text-center text-sm text-muted-foreground">
-              Want the full week? <a href="/signup" className="text-primary font-semibold hover:underline">Sign up free.</a>
+              Want the full week? <a href="/onboarding/1" className="text-primary font-semibold hover:underline">Sign up free.</a>
             </div>
           </div>
         </div>

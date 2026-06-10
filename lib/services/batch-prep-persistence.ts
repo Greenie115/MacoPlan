@@ -90,6 +90,44 @@ export async function getBatchPrepPlan(userId: string, id: string) {
   return data
 }
 
+export interface BatchPrepPlanSummary {
+  id: string
+  week_starting: string
+  total_containers: number
+  estimated_prep_time_mins: number
+  created_at: string
+  calories: number | null
+  protein_g: number | null
+  carbs_g: number | null
+  fat_g: number | null
+}
+
+export async function listBatchPrepPlans(userId: string): Promise<BatchPrepPlanSummary[]> {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('batch_prep_plans')
+    .select('id, week_starting, total_containers, estimated_prep_time_mins, created_at, generation_params')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) throw new Error(`Failed to list batch prep plans: ${error.message}`)
+
+  return (data ?? []).map((row) => {
+    const macros = (row.generation_params as TrainingProfile | null)?.training_day_macros
+    return {
+      id: row.id,
+      week_starting: row.week_starting,
+      total_containers: row.total_containers,
+      estimated_prep_time_mins: row.estimated_prep_time_mins,
+      created_at: row.created_at,
+      calories: macros?.calories ?? null,
+      protein_g: macros?.protein_g ?? null,
+      carbs_g: macros?.carbs_g ?? null,
+      fat_g: macros?.fat_g ?? null,
+    }
+  })
+}
+
 export async function countBatchPrepPlans(userId: string): Promise<number> {
   const supabase = await createClient()
   const { count, error } = await supabase

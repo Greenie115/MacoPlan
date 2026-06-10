@@ -66,9 +66,9 @@ export async function sendEmail2FACodeCustom(
   // const resend = new Resend(process.env.RESEND_API_KEY)
   //
   // const { error } = await resend.emails.send({
-  //   from: 'Macro Plan <noreply@macroplan.com>',
+  //   from: 'MacroPlan <noreply@macroplan.com>',
   //   to: email,
-  //   subject: 'Your Macro Plan verification code',
+  //   subject: 'Your MacroPlan verification code',
   //   html: `
   //     <h1>Your verification code</h1>
   //     <p>Enter this code to complete your login:</p>

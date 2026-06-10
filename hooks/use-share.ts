@@ -30,9 +30,9 @@ export function useShare() {
         await navigator.clipboard.writeText(text)
         toast.success('Copied to clipboard!')
       }
-    } catch (error: any) {
+    } catch (error) {
       // User cancelled share or error occurred
-      if (error.name !== 'AbortError') {
+      if (!(error instanceof Error) || error.name !== 'AbortError') {
         console.error('Share error:', error)
         toast.error('Failed to share. Please try again.')
       }

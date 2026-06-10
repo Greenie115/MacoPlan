@@ -7,6 +7,7 @@
  * from Recipe-API.com + Unsplash images.
  */
 
+import { after } from 'next/server'
 import { recipeApiService } from '@/lib/services/recipe-api'
 import { unsplashService } from '@/lib/services/unsplash'
 import type {
@@ -53,10 +54,22 @@ export async function searchRecipes(params: RecipeApiSearchParams): Promise<{
       }
     }
 
-    // Fetch images for all results in parallel
-    const imageMap = await unsplashService.getImagesForRecipes(
-      response.data.map(r => ({ id: r.id, name: r.name }))
-    )
+    // Serve whatever images are already cached — never block search results
+    // on the Unsplash API. Missing images are warmed after the response is
+    // sent, so subsequent views fill in progressively.
+    const recipeRefs = response.data.map(r => ({ id: r.id, name: r.name }))
+    const imageMap = await unsplashService.getCachedImages(recipeRefs.map(r => r.id))
+
+    const missing = recipeRefs.filter(r => !imageMap.has(r.id))
+    if (missing.length > 0) {
+      after(async () => {
+        try {
+          await unsplashService.getImagesForRecipes(missing)
+        } catch {
+          // Best-effort warm-up; failures are negative-cached by the service
+        }
+      })
+    }
 
     return {
       success: true,

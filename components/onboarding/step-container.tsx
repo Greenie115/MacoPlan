@@ -12,6 +12,7 @@ interface StepContainerProps {
   onBack: () => void
   onContinue: () => void
   continueDisabled?: boolean
+  continueLabel?: string
   children: React.ReactNode
   completedSteps?: number[]
 }
@@ -24,6 +25,7 @@ export function StepContainer({
   onBack,
   onContinue,
   continueDisabled = false,
+  continueLabel = 'Continue',
   children,
   completedSteps = [],
 }: StepContainerProps) {
@@ -73,7 +75,7 @@ export function StepContainer({
             size="lg"
             aria-label="Continue to next step"
           >
-            Continue <ArrowRight className="ml-2 size-4" />
+            {continueLabel} <ArrowRight className="ml-2 size-4" />
           </Button>
         </div>
       </div>

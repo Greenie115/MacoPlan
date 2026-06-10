@@ -166,7 +166,14 @@ export async function generateGroceryList(planId: string) {
 /**
  * Aggregate and combine similar ingredients
  */
-function aggregateIngredients(ingredients: any[]): GroceryItem[] {
+interface RawIngredient {
+  ingredient: string
+  amount?: string
+  unit?: string
+  recipe_id?: string
+}
+
+function aggregateIngredients(ingredients: RawIngredient[]): GroceryItem[] {
   const ingredientMap = new Map<string, GroceryItem>()
 
   ingredients.forEach((ing) => {
@@ -175,7 +182,7 @@ function aggregateIngredients(ingredients: any[]): GroceryItem[] {
 
     if (existing) {
       // Combine quantities (simplified - just concatenate for now)
-      existing.amount = combineAmounts(existing.amount, ing.amount)
+      existing.amount = combineAmounts(existing.amount, ing.amount || '')
     } else {
       ingredientMap.set(key, {
         category: categorizeIngredient(ing.ingredient),

@@ -6,6 +6,11 @@ export async function GET(request: Request) {
   const code = requestUrl.searchParams.get('code')
   const origin = requestUrl.origin
 
+  // Optional post-auth destination, restricted to onboarding paths so the
+  // param can't be abused as an open redirect.
+  const next = requestUrl.searchParams.get('next')
+  const safeNext = next && /^\/onboarding(\/|$)/.test(next) ? next : '/onboarding/1'
+
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
@@ -31,6 +36,6 @@ export async function GET(request: Request) {
     }
   }
 
-  // After successful auth, redirect to onboarding
-  return NextResponse.redirect(`${origin}/onboarding/1`)
+  // After successful auth, migrate a pending guest plan or start onboarding
+  return NextResponse.redirect(`${origin}${safeNext}`)
 }

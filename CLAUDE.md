@@ -81,8 +81,16 @@ export function MyComponent() {
 
 **Middleware** (`middleware.ts` + `lib/supabase/middleware.ts`):
 - Uses `SUPABASE_SERVICE_ROLE_KEY` (not anon key) for auth token refresh
-- Protects routes: redirects unauthenticated users from `/dashboard`, `/plans`, etc.
+- Protects routes: redirects unauthenticated users from `/dashboard`, `/meal-plans`, etc.
+- `/onboarding` is PUBLIC — guests complete it with localStorage state, then sign up
 - Redirects authenticated users away from `/login`, `/signup`, `/` to `/dashboard`
+- Skips the per-request `user_profiles` query on content routes (blog/pricing/help/...)
+
+**Browser client is lazy**: `lib/supabase/client.ts` returns a Proxy that only
+constructs the real client on first property access, so calling `createClient()`
+in a client-component body is safe during static prerendering (builds succeed
+without env vars). Never access client properties during render (e.g. in a
+useEffect dependency array like `[supabase.auth]`).
 
 ### Recipe & Meal Plan APIs
 
@@ -99,16 +107,25 @@ export function MyComponent() {
 - Permanent image caching in `recipe_images` table
 - Attribution required: "Photo by {name} on Unsplash"
 
-**Meal Plan Generator** (`lib/services/meal-plan-generator.ts`):
-- Generates daily/weekly meal plans using Recipe-API.com search
-- Dietary search prefixes, scoring, conflict detection
+**Unsplash hardening**: image misses are negative-cached in memory (6h) and a
+403/429 pauses all API calls for 1h. Hot paths (search) use cache-only
+`getCachedImages()` and warm misses with `next/server` `after()`.
+
+**Batch Prep Generator** (`lib/services/batch-prep-*.ts`):
+- Claude (`claude-sonnet-4-6`) generates batch-cookable meal plans as structured JSON
+- `batch-prep-generator.ts` orchestrates: prompt → Zod parse → macro accuracy check → one retry with correction hint → best-of-two (never hard-fails on macro misses)
+- Persisted to `batch_prep_plans` (+ `user_training_profile` snapshot); listed via `listBatchPrepPlans()`; token usage logged to `anthropic_usage_log`
+- The old Recipe-API.com `meal-plan-generator.ts` was deleted in the 2026-04 batch-prep pivot; Recipe-API.com is only used for `/recipes` browse
 
 ### Database Schema
 
 **Key Tables**:
 - `user_profiles`: All onboarding data, macros, experience levels
+- `batch_prep_plans`: Claude-generated batch prep plans (the primary plan type)
+- `user_training_profile`: Lifter prefs snapshot (training days, prep day, containers)
+- `anthropic_usage_log`: Token usage per generation (admin-only read)
 - `recipes`: Recipe catalog (title, ingredients, instructions, nutritional info)
-- `meal_plans`: User-generated meal plans
+- `meal_plans`: LEGACY pre-pivot meal plans (still listed as "Older plans")
 - `meal_plan_meals`: Links meals to recipes (has `recipe_api_id` column)
 - `user_recipe_favorites`: User's saved external recipes (column: `recipe_id`)
 - `recipe_api_cache`: Cached Recipe-API.com recipe details (30 day TTL)
@@ -142,17 +159,24 @@ All server actions in `app/actions/*.ts` follow this structure:
 
 ```
 app/
+├── (marketing)/              # Public pages, no app chrome
+│   ├── page.tsx              # Landing
+│   ├── pricing/ blog/ help/ terms/ privacy/
+├── (app)/                    # Authenticated app, wrapped by AppShell
+│   ├── layout.tsx            # Renders components/layout/app-shell.tsx
+│   ├── dashboard/ meal-plans/ recipes/ profile/ grocery-lists/
 ├── (auth)/
-│   └── onboarding/[1-6]     # Guest onboarding flow
+│   └── onboarding/[1-6]      # Guest-accessible onboarding flow
 ├── onboarding/complete/      # Post-auth data migration
-├── auth/callback/            # OAuth redirect handler
-├── login/                    # Email/password login
-├── signup/                   # Email signup
-├── dashboard/                # Main authenticated dashboard
-├── plans/                    # Meal plan CRUD
-├── recipes/                  # Recipe browsing
+├── auth/callback/            # OAuth redirect handler (honors safe ?next=)
+├── login/ signup/            # Bare auth pages (no chrome)
+├── checkout/                 # Stripe success/cancel (no chrome)
 └── actions/                  # Server actions (not routes)
 ```
+
+**Chrome rule**: sidebar/bottom-nav/top-bar come from `app/(app)/layout.tsx`
+via `AppShell` — never from pathname sniffing. Marketing and auth pages render
+their own headers. Route protection lives in `middleware.ts`.
 
 ### Component Patterns
 
@@ -213,10 +237,11 @@ STRIPE_SECRET_KEY=sk_test_...
 - `lib/supabase/server.ts` + `client.ts`: Supabase client creation patterns
 - `middleware.ts`: Route protection logic
 - `app/actions/profile.ts`: Example server action with full error handling
-- `supabase/migrations/001_create_user_profiles.sql`: Database schema and RLS policies
+- `supabase/migrations/`: NOTE — only post-2026-03 migrations exist in the repo; founding tables (`user_profiles`, `recipes`, `meal_plans`, `logged_meals`, ...) live only in production Supabase
 - `lib/services/recipe-api.ts`: Recipe-API.com service with caching
-- `lib/services/unsplash.ts`: Unsplash image service
-- `lib/services/meal-plan-generator.ts`: Meal plan generation engine
+- `lib/services/unsplash.ts`: Unsplash image service (negative caching + rate-limit breaker)
+- `lib/services/batch-prep-generator.ts`: Claude-powered batch prep generation engine
+- `lib/services/batch-prep-persistence.ts`: batch_prep_plans CRUD + listBatchPrepPlans
 - `app/actions/recipe-search.ts`: Recipe search server actions
 - `lib/types/recipe.ts`: Provider-agnostic recipe types (`NormalizedRecipe`)
 - `lib/types/recipe-api.ts`: Recipe-API.com response types

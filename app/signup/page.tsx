@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -8,6 +8,7 @@ import { Loader2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { useOnboardingStore } from '@/stores/onboarding-store'
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState('')
@@ -18,6 +19,16 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
+  // Guests who finished onboarding have a macro plan waiting in localStorage;
+  // after auth they go to /onboarding/complete which migrates it to Supabase.
+  // Read after mount so the statically prerendered HTML hydrates cleanly.
+  const { completedSteps } = useOnboardingStore()
+  const [hasPendingPlan, setHasPendingPlan] = useState(false)
+  useEffect(() => {
+    setHasPendingPlan(completedSteps.includes(6))
+  }, [completedSteps])
+  const postAuthPath = hasPendingPlan ? '/onboarding/complete' : '/onboarding/1'
+
   const handleGoogleSignUp = async () => {
     setGoogleLoading(true)
     setError(null)
@@ -27,7 +38,7 @@ export default function SignupPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(postAuthPath)}`,
         },
       })
 
@@ -67,9 +78,9 @@ export default function SignupPage() {
 
       if (authData.user) {
         // 2. Profile is created automatically by database trigger
-        
-        // 3. Redirect to onboarding
-        router.push('/onboarding/1')
+
+        // 3. Migrate a pending guest plan, or start onboarding fresh
+        router.push(postAuthPath)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to sign up')
@@ -82,10 +93,12 @@ export default function SignupPage() {
     <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-foreground">
-          Create your account
+          {hasPendingPlan ? 'Your macros are ready' : 'Create your account'}
         </h2>
         <p className="mt-2 text-center text-sm text-muted-foreground">
-          Start your journey to better nutrition
+          {hasPendingPlan
+            ? 'Create a free account to save your personalized plan'
+            : 'Start your journey to better nutrition'}
         </p>
       </div>
 
