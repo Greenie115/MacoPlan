@@ -20,7 +20,7 @@ export function FinalCTA() {
             </p>
 
             <Link
-              href="/signup"
+              href="/onboarding/1"
               className="inline-block bg-white text-primary font-bold py-5 px-12 rounded-xl hover:bg-white/95 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg"
             >
               Generate My Free Plan

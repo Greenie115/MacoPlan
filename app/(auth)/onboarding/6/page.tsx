@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { MacroCustomizer } from '@/components/onboarding/macro-customizer'
 import { createUserProfile } from '@/app/actions/profile'
+import { createClient } from '@/lib/supabase/client'
 import { toast } from 'sonner'
 
 export default function MacroResultsPage() {
@@ -17,6 +18,13 @@ export default function MacroResultsPage() {
   const [isValidating, setIsValidating] = useState(true)
   const [isCustomizing, setIsCustomizing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [isGuest, setIsGuest] = useState(false)
+
+  useEffect(() => {
+    // Guests keep their data in localStorage and sign up to save it
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => setIsGuest(!user))
+  }, [])
 
   useEffect(() => {
     // Route guard: Must have all required data
@@ -46,6 +54,13 @@ export default function MacroResultsPage() {
 
     setIsSaving(true)
     store.markStepComplete(6)
+
+    if (isGuest) {
+      // Data is already persisted in localStorage by the store; signup will
+      // forward to /onboarding/complete which migrates it to Supabase.
+      router.push('/signup')
+      return
+    }
 
     try {
       await saveProfileData()
@@ -217,6 +232,7 @@ export default function MacroResultsPage() {
         subtitle="Based on your goals and activity level"
         onBack={handleBack}
         onContinue={handleComplete}
+        continueLabel={isGuest ? 'Create a free account to save' : 'Save my plan'}
         completedSteps={store.completedSteps}
       >
       <div className="space-y-4">

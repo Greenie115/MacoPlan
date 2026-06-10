@@ -41,7 +41,7 @@ export function PricingPreview() {
             </ul>
 
             <Link
-              href="/signup"
+              href="/onboarding/1"
               className="block w-full text-center bg-muted hover:bg-muted/80 text-foreground font-semibold py-3 px-6 rounded-xl transition-colors border border-border-strong"
             >
               Get Started Free
