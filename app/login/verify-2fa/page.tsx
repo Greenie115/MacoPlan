@@ -24,7 +24,6 @@ export default function Verify2FAPage() {
   const [codeSent, setCodeSent] = useState(false)
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const router = useRouter()
-  const supabase = createClient()
 
   // Load pending 2FA data from session storage
   useEffect(() => {
@@ -151,6 +150,8 @@ export default function Verify2FAPage() {
         return
       }
 
+      // Created lazily so static prerendering never needs Supabase env vars
+      const supabase = createClient()
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,

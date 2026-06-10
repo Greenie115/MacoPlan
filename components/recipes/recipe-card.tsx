@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import { Recipe } from '@/lib/types/recipe'
 import { macroColors } from '@/lib/design-tokens'
-import { toggleRecipeFavorite } from '@/app/recipes/actions'
+import { toggleRecipeFavorite } from '@/app/actions/recipes'
 import { useOptimistic, useTransition } from 'react'
 import { getSafeImageUrl } from '@/lib/utils/image-validation'
 

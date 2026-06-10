@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Heart } from 'lucide-react'
-import { toggleRecipeFavorite } from '@/app/recipes/actions'
+import { toggleRecipeFavorite } from '@/app/actions/recipes'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'

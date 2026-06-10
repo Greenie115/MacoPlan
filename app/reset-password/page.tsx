@@ -35,7 +35,8 @@ export default function ResetPasswordPage() {
     })
 
     return () => subscription.unsubscribe()
-  }, [supabase.auth])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const validatePassword = () => {
     if (password.length < 8) {
