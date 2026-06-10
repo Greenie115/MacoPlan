@@ -124,10 +124,10 @@ export default async function RecipePage({ params, searchParams }: RecipePagePro
 
   // Sort ingredients and instructions in JS since Supabase ordering on nested relations can be tricky
   const ingredients = (recipe.recipe_ingredients || []).sort(
-    (a: any, b: any) => a.order_index - b.order_index
+    (a: { order_index: number }, b: { order_index: number }) => a.order_index - b.order_index
   )
   const instructions = (recipe.recipe_instructions || []).sort(
-    (a: any, b: any) => a.step_number - b.step_number
+    (a: { step_number: number }, b: { step_number: number }) => a.step_number - b.step_number
   )
 
   const recipeWithDetails: RecipeWithDetails = {

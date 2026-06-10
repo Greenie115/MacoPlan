@@ -78,7 +78,7 @@ export default function EditProfilePage() {
   }, [supabase, router])
 
   // Auto-save field handler with debounce
-  const handleFieldUpdate = debounce(async (field: keyof UserProfileUpdate, value: any) => {
+  const handleFieldUpdate = debounce(async (field: keyof UserProfileUpdate, value: UserProfileUpdate[keyof UserProfileUpdate]) => {
     if (!profile) return
 
     setSavingFields((prev) => ({ ...prev, [field]: true }))

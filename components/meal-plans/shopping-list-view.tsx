@@ -14,11 +14,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import type { ShoppingList, CategorizedIngredients, ShoppingListIngredient } from '@/lib/types/database'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
+import type { Content, TDocumentDefinitions } from 'pdfmake/interfaces'
 
 // Initialize pdfMake fonts
-// Note: pdfFonts structure is not correctly typed, using type assertion
+// Note: pdfFonts ships without accurate types, narrow via unknown
 if (typeof window !== 'undefined') {
-  (pdfMake as any).vfs = (pdfFonts as any).pdfMake?.vfs || (pdfFonts as any).vfs
+  const fonts = pdfFonts as unknown as { pdfMake?: { vfs: Record<string, string> }; vfs?: Record<string, string> }
+  ;(pdfMake as unknown as { vfs?: Record<string, string> }).vfs = fonts.pdfMake?.vfs || fonts.vfs
 }
 
 interface ShoppingListViewProps {
@@ -69,7 +71,7 @@ export default function ShoppingListView({ shoppingList, mealPlanId }: ShoppingL
   function handleExportPDF() {
     setIsExporting(true)
     try {
-      const content: any[] = [
+      const content: Content[] = [
         { text: 'Shopping List', style: 'header' },
         { text: shoppingList.name, style: 'subheader' },
         { text: `${new Date(shoppingList.start_date).toLocaleDateString()} - ${new Date(shoppingList.end_date).toLocaleDateString()}`, style: 'date' },
@@ -100,7 +102,7 @@ export default function ShoppingListView({ shoppingList, mealPlanId }: ShoppingL
         }
       })
 
-      const docDefinition: any = {
+      const docDefinition: TDocumentDefinitions = {
         content,
         styles: {
           header: {

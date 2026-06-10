@@ -211,19 +211,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-sm text-subtle-foreground">
                 <li>
-                  <a href="/#features" className="hover:text-primary transition-colors">
+                  <Link href="/#features" className="hover:text-primary transition-colors">
                     Features
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/blog" className="hover:text-primary transition-colors">
+                  <Link href="/blog" className="hover:text-primary transition-colors">
                     Blog
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/#faq" className="hover:text-primary transition-colors">
+                  <Link href="/#faq" className="hover:text-primary transition-colors">
                     FAQ
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -231,19 +231,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-subtle-foreground">
                 <li>
-                  <a href="/privacy" className="hover:text-primary transition-colors">
+                  <Link href="/privacy" className="hover:text-primary transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/terms" className="hover:text-primary transition-colors">
+                  <Link href="/terms" className="hover:text-primary transition-colors">
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/help" className="hover:text-primary transition-colors">
+                  <Link href="/help" className="hover:text-primary transition-colors">
                     Help Centre
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

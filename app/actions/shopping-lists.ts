@@ -103,7 +103,7 @@ export async function generateShoppingListFromMealPlan(
       name: `Shopping List - ${plan.name}`,
       start_date: plan.start_date,
       end_date: plan.end_date,
-      ingredients: categorizedIngredients as any,
+      ingredients: categorizedIngredients as unknown as ShoppingListInsert['ingredients'],
       checked_items: [],
       last_exported_pdf_at: null,
       last_exported_csv_at: null,

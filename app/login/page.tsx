@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { AlertTriangle, Clock, Loader2, Eye, EyeOff } from 'lucide-react'
 import { loginWithRateLimit } from '@/app/actions/login'
 import { createClient } from '@/lib/supabase/client'
+import { useOnboardingStore } from '@/stores/onboarding-store'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -17,6 +18,15 @@ export default function LoginPage() {
   const [lockedUntil, setLockedUntil] = useState<Date | null>(null)
   const [remainingTime, setRemainingTime] = useState<string | null>(null)
   const router = useRouter()
+
+  // A guest who finished onboarding has a macro plan waiting in localStorage;
+  // route through /onboarding/complete after login so it gets migrated.
+  // (Middleware sends already-onboarded accounts straight to the dashboard.)
+  const { completedSteps } = useOnboardingStore()
+  const [hasPendingPlan, setHasPendingPlan] = useState(false)
+  useEffect(() => {
+    setHasPendingPlan(completedSteps.includes(6))
+  }, [completedSteps])
 
   // Countdown timer for lockout
   useEffect(() => {
@@ -81,8 +91,9 @@ export default function LoginPage() {
       }))
       router.push('/login/verify-2fa')
     } else if (result.success) {
-      // Redirect to dashboard - middleware will handle routing based on onboarding status
-      router.push('/dashboard')
+      // Migrate a pending guest plan, otherwise the middleware routes
+      // based on onboarding status
+      router.push(hasPendingPlan ? '/onboarding/complete' : '/dashboard')
       router.refresh()
     }
   }
@@ -98,7 +109,9 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: hasPendingPlan
+            ? `${window.location.origin}/auth/callback?next=${encodeURIComponent('/onboarding/complete')}`
+            : `${window.location.origin}/auth/callback`,
         },
       })
 

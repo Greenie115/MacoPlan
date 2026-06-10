@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getBatchPrepPlan } from '@/lib/services/batch-prep-persistence'
@@ -45,12 +46,12 @@ export default async function MealPlanPage({
             This plan was created before the batch prep update. Generate a new batch prep plan to
             see the new experience.
           </p>
-          <a
+          <Link
             href="/meal-plans/generate"
             className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded"
           >
             Generate new plan
-          </a>
+          </Link>
         </main>
       )
     }

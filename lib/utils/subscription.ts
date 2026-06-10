@@ -152,15 +152,15 @@ export async function incrementMealPlanQuota(
 ): Promise<void> {
   const supabase = await createClient()
 
-  // Build update object
-  const updates: any = {
-    total_generated: { increment: 1 } as any,
-    current_period_generated: { increment: 1 } as any,
+  // Build update object (increments are applied by the RPC, not PostgREST)
+  const updates: Record<string, { increment: number } | string> = {
+    total_generated: { increment: 1 },
+    current_period_generated: { increment: 1 },
     last_generation_at: new Date().toISOString(),
   }
 
   if (tier === 'free') {
-    updates.free_tier_generated = { increment: 1 } as any
+    updates.free_tier_generated = { increment: 1 }
   }
 
   // Note: Supabase doesn't support increment syntax directly in TypeScript

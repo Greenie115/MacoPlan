@@ -26,7 +26,7 @@ interface CacheStats {
 }
 
 class RecipeCache {
-  private cache: Map<string, CacheEntry<any>>
+  private cache: Map<string, CacheEntry<unknown>>
   private stats: CacheStats
   private maxSize: number
   private defaultTTL: number
@@ -42,7 +42,7 @@ class RecipeCache {
   /**
    * Generates a cache key from search parameters
    */
-  private generateKey(params: Record<string, any>): string {
+  private generateKey(params: Record<string, unknown>): string {
     // Sort keys for consistent cache keys
     const sortedParams = Object.keys(params)
       .sort()
@@ -63,7 +63,7 @@ class RecipeCache {
   /**
    * Gets cached value if exists and not expired
    */
-  get<T>(params: Record<string, any>): T | null {
+  get<T>(params: Record<string, unknown>): T | null {
     const key = this.generateKey(params)
     const entry = this.cache.get(key)
 
@@ -89,7 +89,7 @@ class RecipeCache {
   /**
    * Sets a value in cache with optional TTL
    */
-  set<T>(params: Record<string, any>, data: T, ttl?: number): void {
+  set<T>(params: Record<string, unknown>, data: T, ttl?: number): void {
     const key = this.generateKey(params)
 
     // Evict oldest entry if cache is full (LRU)
@@ -172,7 +172,7 @@ export { recipeCache }
  * )
  */
 export async function withCache<T>(
-  params: Record<string, any>,
+  params: Record<string, unknown>,
   fetcher: () => Promise<T>,
   ttl?: number
 ): Promise<T> {

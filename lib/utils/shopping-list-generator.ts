@@ -5,7 +5,7 @@
  * Handles unit conversions and categorization
  */
 
-import convert from 'convert-units'
+import convert, { type Unit } from 'convert-units'
 import type {
   CategorizedIngredients,
   ShoppingListIngredient,
@@ -240,7 +240,7 @@ function canConvertUnits(unit1: string, unit2: string): boolean {
     if (!normalized1 || !normalized2) return false
 
     // Try to convert between units
-    convert(1).from(normalized1 as any).to(normalized2 as any)
+    convert(1).from(normalized1 as Unit).to(normalized2 as Unit)
     return true
   } catch {
     return false
@@ -256,7 +256,7 @@ function convertUnit(amount: number, fromUnit: string, toUnit: string): number {
   if (!normalized1 || !normalized2) return amount
 
   try {
-    return convert(amount).from(normalized1 as any).to(normalized2 as any)
+    return convert(amount).from(normalized1 as Unit).to(normalized2 as Unit)
   } catch {
     return amount
   }

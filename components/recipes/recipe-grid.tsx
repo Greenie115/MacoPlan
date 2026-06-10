@@ -1,10 +1,11 @@
 'use client'
 
-import { Recipe } from '@/lib/types/recipe'
-import { RecipeCard } from './recipe-card'
+import { RecipeCard, type RecipeCardData } from './recipe-card'
+
+type GridRecipe = RecipeCardData & { source?: 'local' | 'recipe-api' }
 
 interface RecipeGridProps {
-  recipes: (Recipe | any)[] // Allow both local Recipe and Recipe-API recipes
+  recipes: GridRecipe[]
   favoriteIds: (string | number)[]
 }
 
@@ -31,7 +32,7 @@ export function RecipeGrid({ recipes, favoriteIds }: RecipeGridProps) {
       {/* Responsive grid: 2 cols mobile, 3 cols tablet, 4 cols desktop, 5 cols large */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5 lg:gap-6">
         {validRecipes.map((recipe) => {
-          const source = (recipe as any).source || 'local'
+          const source = recipe.source || 'local'
           const recipeId = recipe.id
 
           return (
