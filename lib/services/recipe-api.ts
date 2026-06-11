@@ -398,33 +398,45 @@ export class RecipeApiService {
   /**
    * Populate recipe_api_cache with fresh recipes from the API.
    * Skips the search cache entirely so it always fetches new records.
+   * `existingCount` skips API pages that are likely already cached, so
+   * infinite scroll can extend the cache without refetching from page 1.
    * Uses a single batch upsert and ignoreDuplicates to avoid overwriting
    * full records that already have ingredients/instructions.
    */
-  async seedCache(targetCount: number = 60): Promise<void> {
+  async seedCache(targetCount: number = 60, existingCount: number = 0): Promise<void> {
     const supabase = await createClient()
-    const pages = Math.ceil(targetCount / 20)
+    const perPage = 20
+    const startPage = Math.floor(existingCount / perPage) + 1
+    const endPage = Math.ceil(targetCount / perPage)
+    if (endPage < startPage) return
 
     const batches = await Promise.allSettled(
-      Array.from({ length: pages }, (_, i) =>
+      Array.from({ length: endPage - startPage + 1 }, (_, i) =>
         this.apiRequest<RecipeApiListResponse<RecipeApiListItem>>('/recipes', {
-          per_page: 20,
-          page: i + 1,
+          per_page: perPage,
+          page: startPage + i,
         })
       )
     )
 
     const allRecipes: RecipeApiListItem[] = []
+    let firstFailure: unknown = null
     for (const result of batches) {
       if (result.status === 'fulfilled' && result.value.data) {
         allRecipes.push(...result.value.data)
+      } else if (result.status === 'rejected' && firstFailure === null) {
+        firstFailure = result.reason
       }
+    }
+
+    if (firstFailure !== null) {
+      console.error('[RecipeApi] seedCache: API fetch failed:', firstFailure)
     }
 
     if (allRecipes.length === 0) return
 
     const expiresAt = new Date(Date.now() + CACHE_TTL.recipeDetails).toISOString()
-    await supabase.from('recipe_api_cache').upsert(
+    const { error } = await supabase.from('recipe_api_cache').upsert(
       allRecipes.map((recipe) => ({
         recipe_api_id: recipe.id,
         name: recipe.name,
@@ -439,6 +451,10 @@ export class RecipeApiService {
       })),
       { onConflict: 'recipe_api_id', ignoreDuplicates: true }
     )
+
+    if (error) {
+      console.error('[RecipeApi] seedCache: cache upsert failed:', error.message)
+    }
   }
 
   // ==========================================================================

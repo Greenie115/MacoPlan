@@ -2,11 +2,13 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath, unstable_cache } from 'next/cache'
+import { after } from 'next/server'
 import { getUserSubscriptionTier } from '@/lib/utils/subscription'
 import { FREE_FAVORITES_LIMIT } from '@/lib/constants/subscription'
 import { checkFavoritesQuota } from '@/app/actions/subscription'
 import { createCacheClient } from '@/lib/supabase/cache-client'
 import { recipeApiService } from '@/lib/services/recipe-api'
+import { unsplashService } from '@/lib/services/unsplash'
 
 /**
  * Recipe metadata for favorites
@@ -235,19 +237,21 @@ export async function getCachedRecipes(
     const supabase = await createClient()
     const offset = (page - 1) * limit
 
-    // On page 1, seed the cache if it's sparse.
-    // Uses a direct API call (bypasses search cache) so it always adds fresh records.
-    if (page === 1) {
-      const { count: existingCount } = await supabase
-        .from('recipe_api_cache')
-        .select('*', { count: 'exact', head: true })
+    // Extend the cache from the API whenever the requested window reaches
+    // past what's cached — covers both the initial seed and infinite-scroll
+    // growth. Fetches one page ahead so scrolling stays smooth.
+    const { count: existingCount } = await supabase
+      .from('recipe_api_cache')
+      .select('*', { count: 'exact', head: true })
 
-      if ((existingCount || 0) < 50) {
-        try {
-          await recipeApiService.seedCache(60)
-        } catch {
-          // Non-fatal — serve whatever is cached
-        }
+    const existing = existingCount || 0
+    const target = Math.max(60, offset + 2 * limit)
+    if (existing < target) {
+      try {
+        await recipeApiService.seedCache(target, existing)
+      } catch (error) {
+        // Non-fatal — serve whatever is cached
+        console.error('[getCachedRecipes] Cache seeding failed:', error)
       }
     }
 
@@ -264,23 +268,27 @@ export async function getCachedRecipes(
       return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
     }
 
-    const recipeIds = (dataResult.data || []).map((r) => r.recipe_api_id)
-    const imageMap = new Map<string, string>()
-    if (recipeIds.length > 0) {
-      const { data: images } = await supabase
-        .from('recipe_images')
-        .select('recipe_api_id, unsplash_url')
-        .in('recipe_api_id', recipeIds)
-      for (const img of images || []) {
-        if (img.unsplash_url) imageMap.set(img.recipe_api_id, img.unsplash_url)
-      }
+    // Serve cached images without blocking; warm misses out-of-band so
+    // they fill in on the next view (same pattern as searchRecipes).
+    const recipeRefs = (dataResult.data || []).map((r) => ({ id: r.recipe_api_id, name: r.name }))
+    const imageMap = await unsplashService.getCachedImages(recipeRefs.map((r) => r.id))
+
+    const missingImages = recipeRefs.filter((r) => !imageMap.has(r.id))
+    if (missingImages.length > 0) {
+      after(async () => {
+        try {
+          await unsplashService.getImagesForRecipes(missingImages)
+        } catch {
+          // Best-effort warm-up; failures are negative-cached by the service
+        }
+      })
     }
 
     const recipes = (dataResult.data || []).map((recipe) => ({
       id: recipe.recipe_api_id,
       title: recipe.name,
       description: recipe.description,
-      imageUrl: imageMap.get(recipe.recipe_api_id) ?? null,
+      imageUrl: imageMap.get(recipe.recipe_api_id)?.url ?? null,
       calories: recipe.nutrition?.per_serving?.calories || 0,
       protein: recipe.nutrition?.per_serving?.protein_g || 0,
       carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,
