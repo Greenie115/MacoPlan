@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getAuthUser } from '@/lib/supabase/server'
 
 interface FavoriteWithRecipe {
   recipe_id: string
@@ -20,12 +20,9 @@ interface FavoriteWithRecipe {
  */
 export async function getFavoriteRecipesForDashboard() {
   const supabase = await createClient()
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
-  if (authError || !user) {
+  if (!user) {
     return { error: 'Authentication required', data: [] }
   }
 

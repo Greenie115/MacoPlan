@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr"
-import { createClient as createSupabaseClient } from "@supabase/supabase-js"
+import { createClient as createSupabaseClient, type User } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
+import { cache } from "react"
 
 export async function createClient() {
   const cookieStore = await cookies()
@@ -28,6 +29,20 @@ export async function createClient() {
     }
   )
 }
+
+/**
+ * Per-request cached auth lookup. `supabase.auth.getUser()` is a network
+ * round trip to Supabase Auth; pages that compose several actions were
+ * paying it 3-5x per render. React's cache() collapses those into one
+ * call per request — always prefer this in server components/actions.
+ */
+export const getAuthUser = cache(async (): Promise<User | null> => {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  return user
+})
 
 /**
  * Create a Supabase client with service role key.

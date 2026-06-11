@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getAuthUser } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import type { LogMealInput, LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
@@ -13,12 +13,9 @@ const recipeIdSchema = z.string().uuid({ message: 'Invalid recipe ID format' })
  */
 export async function logMeal(input: LogMealInput, recipeId?: string) {
   const supabase = await createClient()
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
-  if (authError || !user) {
+  if (!user) {
     return { error: 'Authentication required' }
   }
 
@@ -83,12 +80,9 @@ export async function logMeal(input: LogMealInput, recipeId?: string) {
  */
 export async function getMealsForDate(date?: string) {
   const supabase = await createClient()
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
-  if (authError || !user) {
+  if (!user) {
     return { error: 'Authentication required', data: null }
   }
 
@@ -144,12 +138,9 @@ export async function updateMealLog(
   updates: Partial<LogMealInput>
 ) {
   const supabase = await createClient()
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
-  if (authError || !user) {
+  if (!user) {
     return { error: 'Authentication required' }
   }
 
@@ -201,12 +192,9 @@ export async function updateMealLog(
  */
 export async function deleteMealLog(mealId: string) {
   const supabase = await createClient()
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
-  if (authError || !user) {
+  if (!user) {
     return { error: 'Authentication required' }
   }
 
@@ -235,12 +223,9 @@ export async function getLoggedMealForRecipe(
   }
 
   const supabase = await createClient()
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
-  if (authError || !user) {
+  if (!user) {
     return { mealId: null }
   }
 

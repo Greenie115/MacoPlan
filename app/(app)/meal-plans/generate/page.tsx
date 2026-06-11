@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getAuthUser } from '@/lib/supabase/server'
 import { getTrainingProfile } from '@/lib/services/batch-prep-persistence'
 import { GeneratorForm } from '@/components/batch-prep/generator-form'
 import type { TrainingProfile } from '@/lib/types/batch-prep'
@@ -45,7 +45,7 @@ function computeDefaultProfile(userProfile: {
 
 export default async function GenerateBatchPrepPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getAuthUser()
   if (!user) redirect('/login')
 
   // Try existing training profile first

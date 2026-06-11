@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getAuthUser } from '@/lib/supabase/server'
 import {
   getUserSubscriptionTier,
   checkMealPlanQuota,
@@ -71,12 +71,9 @@ export async function getSubscriptionStatus(): Promise<SubscriptionStatus | null
   try {
     const supabase = await createClient()
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser()
+    const user = await getAuthUser()
 
-    if (userError || !user) {
+    if (!user) {
       return null
     }
 
@@ -138,12 +135,9 @@ export async function isPremiumUser(): Promise<boolean> {
   try {
     const supabase = await createClient()
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser()
+    const user = await getAuthUser()
 
-    if (userError || !user) {
+    if (!user) {
       return false
     }
 

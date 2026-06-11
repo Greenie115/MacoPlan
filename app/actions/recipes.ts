@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getAuthUser } from '@/lib/supabase/server'
 import { revalidatePath, unstable_cache } from 'next/cache'
 import { after } from 'next/server'
 import { getUserSubscriptionTier } from '@/lib/utils/subscription'
@@ -38,12 +38,9 @@ export async function toggleRecipeFavorite(
   const supabase = await createClient()
 
   // Check if user is authenticated
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
-  if (authError || !user) {
+  if (!user) {
     return { error: 'You must be logged in to favorite recipes' }
   }
 
@@ -123,9 +120,7 @@ export async function toggleRecipeFavorite(
 export async function getFavoriteRecipeIds(): Promise<string[]> {
   const supabase = await createClient()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (!user) {
     return []
@@ -153,9 +148,7 @@ export async function isRecipeFavorite(recipeId: string): Promise<boolean> {
 
   const supabase = await createClient()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (!user) {
     return false
@@ -177,9 +170,7 @@ export async function isRecipeFavorite(recipeId: string): Promise<boolean> {
 export async function getFavoriteRecipes() {
   const supabase = await createClient()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (!user) {
     return { data: [], error: 'Not authenticated' }
