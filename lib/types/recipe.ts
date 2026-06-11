@@ -140,6 +140,19 @@ export interface NormalizedRecipe {
   categories: string[]
   recipeTypes: string[]
   rating: number | null
+  // Rich detail fields (present when the provider supplies them)
+  cuisine?: string | null
+  difficulty?: string | null
+  dietaryFlags?: string[]
+  yields?: string | null
+  overnightRequired?: boolean
+  ingredientGroups?: NormalizedIngredientGroup[]
+  equipment?: NormalizedEquipment[]
+  storage?: NormalizedStorage | null
+  chefNotes?: string[]
+  troubleshooting?: NormalizedTroubleshooting[]
+  culturalContext?: string | null
+  nutritionDetail?: NormalizedNutritionDetail | null
 }
 
 export interface NormalizedIngredient {
@@ -150,9 +163,58 @@ export interface NormalizedIngredient {
   description: string
 }
 
+export interface NormalizedIngredientDetail extends NormalizedIngredient {
+  preparation: string | null
+  notes: string | null
+  substitutions: string[]
+}
+
+export interface NormalizedIngredientGroup {
+  groupName: string
+  items: NormalizedIngredientDetail[]
+}
+
 export interface NormalizedInstruction {
   stepNumber: number
   instruction: string
+  phase?: 'prep' | 'cook' | 'assemble' | 'finish'
+  tips?: string[]
+}
+
+export interface NormalizedEquipment {
+  name: string
+  required: boolean
+  alternative: string | null
+}
+
+export interface NormalizedStorage {
+  refrigerator: { duration: string; notes: string } | null
+  freezer: { duration: string; notes: string } | null
+  reheating: string | null
+  doesNotKeep: boolean
+}
+
+export interface NormalizedTroubleshooting {
+  symptom: string
+  likelyCause: string
+  prevention: string
+  fix: string
+}
+
+/** Extended per-serving nutrition beyond the core macros (all optional). */
+export interface NormalizedNutritionDetail {
+  saturatedFat: number | null
+  sodium: number | null
+  cholesterol: number | null
+  potassium: number | null
+  calcium: number | null
+  iron: number | null
+  magnesium: number | null
+  zinc: number | null
+  vitaminC: number | null
+  vitaminD: number | null
+  vitaminB12: number | null
+  folate: number | null
 }
 
 /**

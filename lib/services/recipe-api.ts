@@ -24,6 +24,7 @@ import { parseISODuration } from '@/lib/types/recipe-api'
 import type {
   NormalizedRecipe,
   NormalizedIngredient,
+  NormalizedIngredientGroup,
   NormalizedInstruction,
 } from '@/lib/types/recipe'
 
@@ -78,20 +79,31 @@ export class RecipeApiService {
       })
     }
 
-    const response = await fetch(url.toString(), {
-      headers: {
-        'X-API-Key': this.apiKey,
-        'Accept': 'application/json',
-      },
-    })
+    // The detail endpoint rate-limits aggressively (HTTP 429 with a short
+    // retry-after), so retry once after the indicated delay before giving up.
+    for (let attempt = 0; ; attempt++) {
+      const response = await fetch(url.toString(), {
+        headers: {
+          'X-API-Key': this.apiKey,
+          'Accept': 'application/json',
+        },
+      })
 
-    if (!response.ok) {
-      const errorBody = await response.json().catch(() => null) as RecipeApiError | null
-      const errorMessage = errorBody?.error?.message || `HTTP ${response.status}`
-      throw new Error(`Recipe API error: ${errorMessage}`)
+      if (response.status === 429 && attempt === 0) {
+        const retryAfter = parseInt(response.headers.get('retry-after') || '1', 10)
+        const waitMs = Math.min((isNaN(retryAfter) ? 1 : retryAfter) * 1000 + 250, 3000)
+        await new Promise((resolve) => setTimeout(resolve, waitMs))
+        continue
+      }
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null) as RecipeApiError | null
+        const errorMessage = errorBody?.error?.message || `HTTP ${response.status}`
+        throw new Error(`Recipe API error: ${errorMessage}`)
+      }
+
+      return response.json() as Promise<T>
     }
-
-    return response.json() as Promise<T>
   }
 
   // ==========================================================================
@@ -319,24 +331,34 @@ export class RecipeApiService {
   // ==========================================================================
 
   normalizeRecipe(recipe: RecipeApiRecipe, imageUrl: string | null): NormalizedRecipe {
-    const ingredients: NormalizedIngredient[] = recipe.ingredients.flatMap(
-      (group) => group.items.map((item) => ({
-        foodId: item.ingredient_id || '',
-        name: item.name,
-        amount: item.quantity || 0,
-        unit: item.unit || '',
-        description: [
-          item.quantity,
-          item.unit,
-          item.name,
-          item.preparation ? `(${item.preparation})` : '',
-        ].filter(Boolean).join(' '),
-      }))
-    )
+    const toIngredientDetail = (item: RecipeApiRecipe['ingredients'][number]['items'][number]) => ({
+      foodId: item.ingredient_id || '',
+      name: item.name,
+      amount: item.quantity || 0,
+      unit: item.unit || '',
+      description: [
+        item.quantity,
+        item.unit,
+        item.name,
+        item.preparation ? `(${item.preparation})` : '',
+      ].filter(Boolean).join(' '),
+      preparation: item.preparation,
+      notes: item.notes,
+      substitutions: item.substitutions || [],
+    })
+
+    const ingredientGroups: NormalizedIngredientGroup[] = (recipe.ingredients || []).map((group) => ({
+      groupName: group.group_name,
+      items: group.items.map(toIngredientDetail),
+    }))
+
+    const ingredients: NormalizedIngredient[] = ingredientGroups.flatMap((g) => g.items)
 
     const instructions: NormalizedInstruction[] = recipe.instructions.map((step) => ({
       stepNumber: step.step_number,
       instruction: step.text,
+      phase: step.phase,
+      tips: step.tips || [],
     }))
 
     const nutrition = recipe.nutrition.per_serving
@@ -363,6 +385,43 @@ export class RecipeApiService {
       categories: [recipe.category],
       recipeTypes: recipe.tags,
       rating: null,
+      cuisine: recipe.cuisine || null,
+      difficulty: recipe.difficulty || null,
+      dietaryFlags: recipe.dietary?.flags || [],
+      yields: recipe.meta.yields || null,
+      overnightRequired: recipe.meta.overnight_required || false,
+      ingredientGroups,
+      equipment: recipe.equipment || [],
+      storage: recipe.storage
+        ? {
+            refrigerator: recipe.storage.refrigerator,
+            freezer: recipe.storage.freezer,
+            reheating: recipe.storage.reheating,
+            doesNotKeep: recipe.storage.does_not_keep,
+          }
+        : null,
+      chefNotes: recipe.chef_notes || [],
+      troubleshooting: (recipe.troubleshooting || []).map((t) => ({
+        symptom: t.symptom,
+        likelyCause: t.likely_cause,
+        prevention: t.prevention,
+        fix: t.fix,
+      })),
+      culturalContext: recipe.cultural_context,
+      nutritionDetail: {
+        saturatedFat: nutrition.saturated_fat_g,
+        sodium: nutrition.sodium_mg,
+        cholesterol: nutrition.cholesterol_mg,
+        potassium: nutrition.potassium_mg,
+        calcium: nutrition.calcium_mg,
+        iron: nutrition.iron_mg,
+        magnesium: nutrition.magnesium_mg,
+        zinc: nutrition.zinc_mg,
+        vitaminC: nutrition.vitamin_c_mg,
+        vitaminD: nutrition.vitamin_d_mcg,
+        vitaminB12: nutrition.vitamin_b12_mcg,
+        folate: nutrition.folate_mcg,
+      },
     }
   }
 
@@ -497,7 +556,19 @@ export class RecipeApiService {
         nutrition: recipe.nutrition,
         ingredients: recipe.ingredients,
         instructions: recipe.instructions,
-        meta: recipe.meta,
+        // The table has no dedicated columns for the rich detail fields, so
+        // they ride along inside the meta JSONB under `rich` (stripped on read).
+        meta: {
+          ...recipe.meta,
+          rich: {
+            dietary: recipe.dietary,
+            storage: recipe.storage,
+            equipment: recipe.equipment,
+            troubleshooting: recipe.troubleshooting,
+            chef_notes: recipe.chef_notes,
+            cultural_context: recipe.cultural_context,
+          },
+        },
         cache_expires_at: new Date(Date.now() + CACHE_TTL.recipeDetails).toISOString(),
       }, { onConflict: 'recipe_api_id' })
     } catch (error) {
@@ -507,6 +578,18 @@ export class RecipeApiService {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private convertCachedRecipe(cached: Record<string, any>): RecipeApiRecipe {
+    // Rich detail fields are cached inside meta.rich (no dedicated columns)
+    const { rich, ...meta } = (cached.meta as RecipeApiRecipe['meta'] & {
+      rich?: {
+        dietary?: RecipeApiRecipe['dietary']
+        storage?: RecipeApiRecipe['storage']
+        equipment?: RecipeApiRecipe['equipment']
+        troubleshooting?: RecipeApiRecipe['troubleshooting']
+        chef_notes?: string[]
+        cultural_context?: string | null
+      }
+    }) || {}
+
     return {
       id: cached.recipe_api_id as string,
       name: cached.name as string,
@@ -515,18 +598,18 @@ export class RecipeApiService {
       cuisine: (cached.cuisine as string) || '',
       difficulty: (cached.difficulty as string) || '',
       tags: (cached.tags as string[]) || [],
-      meta: (cached.meta as RecipeApiRecipe['meta']) || {
+      meta: Object.keys(meta).length > 0 ? (meta as RecipeApiRecipe['meta']) : {
         active_time: '', passive_time: '', total_time: '',
         overnight_required: false, yields: '', yield_count: 1, serving_size_g: null,
       },
-      dietary: { flags: [], not_suitable_for: [] },
-      storage: null,
-      equipment: [],
+      dietary: rich?.dietary || { flags: [], not_suitable_for: [] },
+      storage: rich?.storage || null,
+      equipment: rich?.equipment || [],
       ingredients: (cached.ingredients as RecipeApiRecipe['ingredients']) || [],
       instructions: (cached.instructions as RecipeApiRecipe['instructions']) || [],
-      troubleshooting: [],
-      chef_notes: [],
-      cultural_context: null,
+      troubleshooting: rich?.troubleshooting || [],
+      chef_notes: rich?.chef_notes || [],
+      cultural_context: rich?.cultural_context || null,
       nutrition: (cached.nutrition as RecipeApiRecipe['nutrition']) || {
         per_serving: {
           calories: null, protein_g: null, carbohydrates_g: null, fat_g: null,

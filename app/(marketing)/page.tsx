@@ -1,11 +1,30 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Utensils, ArrowRight, Target, Zap, TrendingUp, Clock, CalendarCheck, RefreshCw, Check } from 'lucide-react'
+import { Bricolage_Grotesque } from 'next/font/google'
+import {
+  Utensils,
+  ArrowRight,
+  ArrowDown,
+  Target,
+  Zap,
+  TrendingUp,
+  Clock,
+  CalendarCheck,
+  RefreshCw,
+  Check,
+} from 'lucide-react'
 import { FAQSection } from '@/components/landing/faq-section'
 import { Footer } from '@/components/landing/footer'
 import { Logo } from '@/components/brand/logo'
 import { SuccessStories } from '@/components/landing/success-stories'
 import { Reveal } from '@/components/landing/reveal'
+import { HeroPrepCard } from '@/components/landing/hero-prep-card'
+
+const display = Bricolage_Grotesque({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-display',
+})
 
 export const metadata: Metadata = {
   title: 'MacroPlan - The Meal Prep Planner That Actually Understands How Lifters Eat',
@@ -27,7 +46,7 @@ export const metadata: Metadata = {
   },
 }
 
-// JSON-LD structured data for SEO
+// JSON-LD structured data for SEO (static content, < escaped for safe inlining)
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -64,254 +83,271 @@ const jsonLd = {
   },
 }
 
+const jsonLdScript = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+
+const PROOF_STATS = [
+  { value: '500+', label: 'batch-tested recipes', accent: 'text-protein' },
+  { value: '15+', label: 'diet styles covered', accent: 'text-carb' },
+  { value: '3s', label: 'to a full week of meals', accent: 'text-fat' },
+  { value: '100%', label: 'macro-calculated', accent: 'text-primary' },
+] as const
+
+const STEPS = [
+  {
+    number: '01',
+    icon: Target,
+    title: 'Set your macros + training days',
+    copy: 'Training 5x/week? We calculate your training day and rest day targets automatically.',
+  },
+  {
+    number: '02',
+    icon: Zap,
+    title: 'Generate your prep plan',
+    copy: 'AI builds a batch-cook plan optimised for cooking once, eating all week. 3-4 recipes, one shopping list, one prep session.',
+  },
+  {
+    number: '03',
+    icon: TrendingUp,
+    title: 'Cook, container, crush it',
+    copy: 'Follow the step-by-step cooking timeline. Fill your containers. Hit your macros every day without thinking.',
+  },
+] as const
+
+const FEATURES = [
+  {
+    icon: Utensils,
+    title: 'Batch-optimised recipes',
+    copy: 'Every meal designed for bulk cooking and 5-day refrigeration.',
+  },
+  {
+    icon: Clock,
+    title: 'Cooking timeline',
+    copy: 'Oven first, rice cooker second, stovetop third. We tell you what to do and when.',
+  },
+  {
+    icon: CalendarCheck,
+    title: 'Training day / rest day macros',
+    copy: 'Different targets for different days, automatically.',
+  },
+  {
+    icon: RefreshCw,
+    title: 'One-tap shopping list',
+    copy: 'Every plan generates a consolidated grocery list — buy once, prep once.',
+  },
+] as const
+
 export default function LandingPage() {
   return (
     <>
       {/* JSON-LD structured data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript }}
       />
-      <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20">
-        {/* Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 py-4 bg-background/95 backdrop-blur-md border-b border-border-strong" role="banner">
+      <div className={`${display.variable} min-h-screen bg-background text-foreground font-sans selection:bg-primary/30`}>
+        {/* ==================== HEADER ==================== */}
+        <header
+          className="fixed top-0 left-0 right-0 z-50 bg-charcoal/90 backdrop-blur-xl border-b border-white/10"
+          role="banner"
+        >
           <div className="container mx-auto px-6">
-            <nav className="flex items-center justify-between" aria-label="Main navigation">
-              <Logo href="/" markSize={32} textClassName="text-2xl font-bold tracking-tight" />
+            <nav className="flex h-16 items-center justify-between" aria-label="Main navigation">
+              <Logo href="/" markSize={30} textClassName="text-xl font-bold tracking-tight text-white" />
 
-              <div className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Page sections">
-                <Link href="/#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">How It Works</Link>
-                <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</Link>
-                <Link href="/#faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
+              <div className="hidden md:flex items-center gap-8 text-sm font-medium" role="navigation" aria-label="Page sections">
+                <Link href="/#how-it-works" className="text-white/60 hover:text-white transition-colors">How it works</Link>
+                <Link href="/pricing" className="text-white/60 hover:text-white transition-colors">Pricing</Link>
+                <Link href="/blog" className="text-white/60 hover:text-white transition-colors">Blog</Link>
+                <Link href="/#faq" className="text-white/60 hover:text-white transition-colors">FAQ</Link>
               </div>
 
-              <div className="flex items-center gap-4">
-                <Link href="/login" className="hidden md:block text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                  Log In
+              <div className="flex items-center gap-3">
+                <Link href="/login" className="hidden md:block text-sm font-medium text-white/60 hover:text-white transition-colors px-3 py-2">
+                  Log in
                 </Link>
-                <Link href="/onboarding/1" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-primary/20 hover:shadow-primary/30">
-                  Start Free
+                <Link
+                  href="/signup"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-bold py-2.5 px-5 rounded-full transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-px"
+                >
+                  Start free
                 </Link>
               </div>
             </nav>
           </div>
         </header>
 
-        <main className="pt-20" role="main">
-          {/* ==================== HERO ==================== */}
-          <section className="pt-16 pb-12 md:pt-24 md:pb-20" aria-labelledby="hero-heading">
-            <div className="container mx-auto px-6">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                {/* Left Column - Copy */}
-                <div className="text-center lg:text-left">
-                  <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight">
-                    Your meal prep,{' '}
-                    <span className="text-primary">planned.</span>
-                  </h1>
+        <main role="main">
+          {/* ==================== HERO (dark) ==================== */}
+          <section
+            className="relative overflow-hidden bg-charcoal text-white pt-28 pb-20 md:pt-36 md:pb-24"
+            aria-labelledby="hero-heading"
+          >
+            {/* Atmosphere: coral glow + faint grid */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_75%_15%,rgba(255,107,92,0.16),transparent_65%)]"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:56px_56px]"
+            />
 
-                  <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                    AI-generated batch cooking plans that hit your exact macros. Tell us your prep day, your macros, and how many containers to fill — done in 3 seconds.
+            <div className="container mx-auto px-6 relative">
+              <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-16 lg:gap-12 items-center">
+                {/* Copy */}
+                <div className="text-center lg:text-left">
+                  <p
+                    className="landing-rise inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/70"
+                    style={{ animationDelay: '0.05s' }}
+                  >
+                    <span className="pulse-dot size-1.5 rounded-full bg-primary" />
+                    AI batch-cooking planner
                   </p>
 
-                  <div className="flex flex-col sm:flex-row items-center gap-4 lg:justify-start justify-center">
+                  <h1
+                    id="hero-heading"
+                    className="landing-rise mt-6 text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[0.98] tracking-tight [font-family:var(--font-display)]"
+                    style={{ animationDelay: '0.15s' }}
+                  >
+                    Cook once.
+                    <span className="block text-primary">Hit your macros all&nbsp;week.</span>
+                  </h1>
+
+                  <p
+                    className="landing-rise mt-6 text-lg md:text-xl text-white/65 leading-relaxed max-w-xl mx-auto lg:mx-0"
+                    style={{ animationDelay: '0.25s' }}
+                  >
+                    Tell MacroPlan your targets and your prep day. It hands back 3-4 batch
+                    recipes, a cooking timeline, and a shopping list that fills every
+                    container — in 3 seconds.
+                  </p>
+
+                  <div
+                    className="landing-rise mt-9 flex flex-col sm:flex-row items-center gap-4 lg:justify-start justify-center"
+                    style={{ animationDelay: '0.35s' }}
+                  >
                     <Link
-                      href="/onboarding/1"
-                      className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
+                      href="/meal-plans/generate"
+                      className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-full transition-all shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 text-base"
                     >
-                      <span>Start your first prep — free</span>
+                      <span>Generate my prep plan — free</span>
                       <ArrowRight className="w-5 h-5" aria-hidden="true" />
                     </Link>
-                    <span className="text-sm text-muted-foreground">No credit card required</span>
+                    <Link
+                      href="/#how-it-works"
+                      className="inline-flex items-center gap-2 text-white/70 hover:text-white font-semibold py-4 px-4 transition-colors"
+                    >
+                      <span>See how it works</span>
+                      <ArrowDown className="w-4 h-4" aria-hidden="true" />
+                    </Link>
                   </div>
+
+                  <ul
+                    className="landing-rise mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-sm text-white/50"
+                    style={{ animationDelay: '0.45s' }}
+                  >
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-primary" aria-hidden="true" /> No credit card</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-primary" aria-hidden="true" /> Free plan included</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-primary" aria-hidden="true" /> Cancel anytime</li>
+                  </ul>
                 </div>
 
-                {/* Right Column - Simplified Mockup */}
-                <Reveal delay={0.1} className="hidden lg:block">
-                  <div className="bg-card border border-border-strong rounded-2xl shadow-2xl p-6 max-w-md mx-auto">
-                    {/* Mockup Header */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Monday</p>
-                        <h3 className="text-lg font-bold">Your Meal Plan</h3>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-2xl font-bold">2,150</p>
-                        <p className="text-xs text-muted-foreground">calories</p>
-                      </div>
-                    </div>
-
-                    {/* Macro Bars */}
-                    <div className="grid grid-cols-3 gap-3 mb-6">
-                      <div className="text-center">
-                        <div className="h-2 bg-protein/20 rounded-full mb-1.5 overflow-hidden">
-                          <div className="h-full bg-protein rounded-full" style={{ width: '85%' }} />
-                        </div>
-                        <p className="text-xs font-semibold">Protein</p>
-                        <p className="text-xs text-muted-foreground">170g</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="h-2 bg-carb/20 rounded-full mb-1.5 overflow-hidden">
-                          <div className="h-full bg-carb rounded-full" style={{ width: '75%' }} />
-                        </div>
-                        <p className="text-xs font-semibold">Carbs</p>
-                        <p className="text-xs text-muted-foreground">230g</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="h-2 bg-fat/20 rounded-full mb-1.5 overflow-hidden">
-                          <div className="h-full bg-fat rounded-full" style={{ width: '65%' }} />
-                        </div>
-                        <p className="text-xs font-semibold">Fat</p>
-                        <p className="text-xs text-muted-foreground">72g</p>
-                      </div>
-                    </div>
-
-                    {/* Meal List */}
-                    <div className="space-y-3">
-                      {[
-                        { meal: 'Breakfast', name: 'Greek Yogurt Parfait', cal: 420 },
-                        { meal: 'Lunch', name: 'Grilled Chicken Bowl', cal: 650 },
-                        { meal: 'Snack', name: 'Protein Smoothie', cal: 280 },
-                        { meal: 'Dinner', name: 'Salmon & Sweet Potato', cal: 800 },
-                      ].map((item) => (
-                        <div key={item.meal} className="flex items-center justify-between py-3 px-4 bg-muted/50 rounded-xl">
-                          <div>
-                            <p className="text-xs text-muted-foreground">{item.meal}</p>
-                            <p className="font-medium text-sm">{item.name}</p>
-                          </div>
-                          <p className="text-sm font-semibold text-muted-foreground">{item.cal} cal</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </Reveal>
+                {/* Product proof */}
+                <div className="landing-rise px-2 pt-6 lg:pt-0 sm:px-0" style={{ animationDelay: '0.3s' }}>
+                  <HeroPrepCard />
+                </div>
               </div>
-            </div>
-          </section>
 
-          {/* ==================== PROOF STRIP ==================== */}
-          <section className="py-8 border-y border-border-strong bg-muted/30">
-            <div className="container mx-auto px-6">
-              <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold">500+</p>
-                  <p className="text-sm text-muted-foreground">Recipes</p>
-                </div>
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold">15+</p>
-                  <p className="text-sm text-muted-foreground">Diet Types</p>
-                </div>
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold">3s</p>
-                  <p className="text-sm text-muted-foreground">Plan Generation</p>
-                </div>
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold">100%</p>
-                  <p className="text-sm text-muted-foreground">Macro-Calculated</p>
-                </div>
+              {/* Proof strip */}
+              <div className="landing-rise mt-24 border-t border-white/10 pt-10" style={{ animationDelay: '0.55s' }}>
+                <dl className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 text-center">
+                  {PROOF_STATS.map((stat) => (
+                    <div key={stat.label}>
+                      <dt className="sr-only">{stat.label}</dt>
+                      <dd className={`text-4xl md:text-5xl font-extrabold tabular-nums [font-family:var(--font-display)] ${stat.accent}`}>
+                        {stat.value}
+                      </dd>
+                      <dd className="mt-1.5 text-sm text-white/50">{stat.label}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </div>
           </section>
 
           {/* ==================== HOW IT WORKS ==================== */}
-          <section className="py-20 md:py-28" id="how-it-works">
-            <div className="container mx-auto px-6 max-w-5xl">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">How it works</h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <section className="py-24 md:py-32" id="how-it-works" aria-labelledby="how-heading">
+            <div className="container mx-auto px-6 max-w-6xl">
+              <Reveal className="max-w-2xl mb-16">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-3">How it works</p>
+                <h2 id="how-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight [font-family:var(--font-display)]">
+                  Three steps to a stocked fridge.
+                </h2>
+                <p className="mt-4 text-lg text-muted-foreground">
                   Three steps. Three seconds. A full week of prep.
                 </p>
-              </div>
+              </Reveal>
 
-              <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-                {/* Step 1 */}
-                <Reveal className="text-center">
-                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                    <Target className="w-7 h-7 text-primary" />
-                  </div>
-                  <div className="text-sm font-bold text-primary mb-2">Step 1</div>
-                  <h3 className="text-xl font-bold mb-3">Set your macros + training days</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Training 5x/week? We calculate your training day and rest day targets automatically.
-                  </p>
-                </Reveal>
-
-                {/* Step 2 */}
-                <Reveal delay={0.1} className="text-center">
-                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                    <Zap className="w-7 h-7 text-primary" />
-                  </div>
-                  <div className="text-sm font-bold text-primary mb-2">Step 2</div>
-                  <h3 className="text-xl font-bold mb-3">Generate your prep plan</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    AI builds a batch-cook plan optimised for cooking once, eating all week. 3-4 recipes, one shopping list, one prep session.
-                  </p>
-                </Reveal>
-
-                {/* Step 3 */}
-                <Reveal delay={0.2} className="text-center">
-                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                    <TrendingUp className="w-7 h-7 text-primary" />
-                  </div>
-                  <div className="text-sm font-bold text-primary mb-2">Step 3</div>
-                  <h3 className="text-xl font-bold mb-3">Cook, container, crush it</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Follow the step-by-step cooking timeline. Fill your containers. Hit your macros every day without thinking.
-                  </p>
-                </Reveal>
+              <div className="grid md:grid-cols-3 gap-6">
+                {STEPS.map((step, i) => (
+                  <Reveal key={step.number} delay={i * 0.1}>
+                    <div className="relative h-full bg-card border border-border-strong rounded-3xl p-7 pt-6 overflow-hidden transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-charcoal/5">
+                      <span
+                        aria-hidden="true"
+                        className="absolute -top-3 right-4 text-[5.5rem] font-extrabold leading-none text-primary/10 [font-family:var(--font-display)] select-none"
+                      >
+                        {step.number}
+                      </span>
+                      <div className="relative">
+                        <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
+                          <step.icon className="w-6 h-6 text-primary" aria-hidden="true" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3 [font-family:var(--font-display)]">{step.title}</h3>
+                        <p className="text-muted-foreground leading-relaxed text-[15px]">{step.copy}</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
               </div>
             </div>
           </section>
 
           {/* ==================== DIFFERENTIATOR ==================== */}
-          <section className="py-20 md:py-28 bg-muted/30 border-y border-border-strong">
-            <div className="container mx-auto px-6 max-w-5xl">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Built for people who actually meal prep</h2>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                  Other apps give you 28 different recipes for 28 meals. You&apos;re not cooking 28 meals. You&apos;re cooking on Sunday and eating from containers all week. MacroPlan is the only planner that understands this.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-                <div className="bg-card border border-border-strong rounded-2xl p-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                    <Utensils className="w-6 h-6 text-primary" />
+          <section className="pb-24 md:pb-32" aria-labelledby="diff-heading">
+            <div className="container mx-auto px-6 max-w-6xl">
+              {/* Statement card */}
+              <Reveal>
+                <div className="relative overflow-hidden bg-charcoal text-white rounded-3xl px-8 py-14 md:px-16 md:py-20 text-center">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_50%_120%,rgba(255,107,92,0.22),transparent_70%)]"
+                  />
+                  <div className="relative max-w-3xl mx-auto">
+                    <h2 id="diff-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.08] [font-family:var(--font-display)]">
+                      Other apps plan 28 different meals.{' '}
+                      <span className="text-primary">You&apos;re cooking on Sunday.</span>
+                    </h2>
+                    <p className="mt-6 text-lg text-white/60 leading-relaxed">
+                      You&apos;re not cooking 28 meals — you&apos;re cooking once and eating from
+                      containers all week. MacroPlan is the only planner built around that.
+                    </p>
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Batch-optimised recipes</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Every meal designed for bulk cooking and 5-day refrigeration
-                  </p>
                 </div>
+              </Reveal>
 
-                <div className="bg-card border border-border-strong rounded-2xl p-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                    <Clock className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">Cooking timeline</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Oven first, rice cooker second, stovetop third. We tell you what to do and when.
-                  </p>
-                </div>
-
-                <div className="bg-card border border-border-strong rounded-2xl p-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                    <CalendarCheck className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">Training day / rest day macros</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Different targets for different days, automatically
-                  </p>
-                </div>
-
-                <div className="bg-card border border-border-strong rounded-2xl p-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                    <RefreshCw className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">One-tap shopping list</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Every plan generates a consolidated grocery list — buy once, prep once.
-                  </p>
-                </div>
+              {/* Feature grid */}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
+                {FEATURES.map((feature, i) => (
+                  <Reveal key={feature.title} delay={i * 0.08}>
+                    <div className="h-full bg-card border border-border-strong rounded-3xl p-6 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-charcoal/5 hover:border-primary/30">
+                      <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                        <feature.icon className="w-5 h-5 text-primary" aria-hidden="true" />
+                      </div>
+                      <h3 className="text-base font-bold mb-2 [font-family:var(--font-display)]">{feature.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{feature.copy}</p>
+                    </div>
+                  </Reveal>
+                ))}
               </div>
             </div>
           </section>
@@ -320,27 +356,37 @@ export default function LandingPage() {
           <SuccessStories />
 
           {/* ==================== CTA ==================== */}
-          <section className="py-20 bg-muted/30 border-y border-border-strong">
-            <div className="container mx-auto px-6 max-w-2xl text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Ready to stop guessing?
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Replace endless calorie counting with one smart prep session a week. Your first plan is free.
-              </p>
-              <Link
-                href="/onboarding/1"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
-              >
-                <span>Start for free</span>
-                <ArrowRight className="w-5 h-5" aria-hidden="true" />
-              </Link>
-              <p className="text-sm text-muted-foreground mt-4">Free plan available · No credit card required</p>
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-muted-foreground">
-                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-success" aria-hidden="true" /> No credit card</span>
-                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-success" aria-hidden="true" /> Cancel anytime</span>
-                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-success" aria-hidden="true" /> Secure checkout via Stripe</span>
-              </div>
+          <section className="py-24 md:py-28" aria-labelledby="cta-heading">
+            <div className="container mx-auto px-6 max-w-6xl">
+              <Reveal>
+                <div className="relative overflow-hidden bg-primary text-primary-foreground rounded-3xl px-8 py-16 md:px-16 md:py-20 text-center">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:48px_48px]"
+                  />
+                  <div className="relative max-w-2xl mx-auto">
+                    <h2 id="cta-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.05] [font-family:var(--font-display)]">
+                      Your next prep day is already planned.
+                    </h2>
+                    <p className="mt-5 text-lg text-white/85">
+                      Replace endless calorie counting with one smart prep session a week.
+                      Your first plan is free.
+                    </p>
+                    <Link
+                      href="/signup"
+                      className="mt-9 inline-flex items-center gap-2 bg-charcoal text-white hover:bg-charcoal/90 font-bold py-4 px-9 rounded-full transition-all shadow-xl shadow-charcoal/30 hover:-translate-y-0.5"
+                    >
+                      <span>Start for free</span>
+                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                    </Link>
+                    <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/80">
+                      <span className="flex items-center gap-2"><Check className="w-4 h-4" aria-hidden="true" /> No credit card</span>
+                      <span className="flex items-center gap-2"><Check className="w-4 h-4" aria-hidden="true" /> Cancel anytime</span>
+                      <span className="flex items-center gap-2"><Check className="w-4 h-4" aria-hidden="true" /> Secure checkout via Stripe</span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
             </div>
           </section>
 

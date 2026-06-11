@@ -14,10 +14,23 @@ import { getRecipeDetails } from '@/app/actions/recipe-search'
 import { getMealPlanMealInfo } from '@/app/actions/meal-plans'
 import { getLoggedMealForRecipe } from '@/app/actions/meal-logs'
 import { isRecipeFavorite } from '@/app/actions/recipes'
+import { RecipeImageFallback } from '@/components/recipes/recipe-image-fallback'
 import { z } from 'zod'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Clock, Users, ExternalLink } from 'lucide-react'
+import {
+  ArrowLeft,
+  Clock,
+  Users,
+  Flame,
+  Moon,
+  UtensilsCrossed,
+  Refrigerator,
+  Snowflake,
+  ChefHat,
+  Lightbulb,
+  Wrench,
+} from 'lucide-react'
 
 interface RecipePageProps {
   params: Promise<{
@@ -317,8 +330,42 @@ async function RecipeApiDetailPage({ id, mealId }: { id: string; mealId?: string
     }
   }
 
+  // JSON-LD structured data for recipe rich results.
+  // Recipe content comes from an external API, so `<` is escaped to prevent
+  // </script> breakout when serialized into the inline script tag.
+  const jsonLd = {
+    '@context': 'https://schema.org' as const,
+    '@type': 'Recipe' as const,
+    name: recipe.title,
+    description: recipe.description || `Recipe for ${recipe.title}`,
+    ...(recipe.imageUrl && { image: recipe.imageUrl }),
+    ...(recipe.totalTimeMinutes && { totalTime: `PT${recipe.totalTimeMinutes}M` }),
+    ...(recipe.yields && { recipeYield: recipe.yields }),
+    ...(recipe.categories[0] && { recipeCategory: recipe.categories[0] }),
+    ...(recipe.cuisine && { recipeCuisine: recipe.cuisine }),
+    ...(recipe.recipeTypes.length > 0 && { keywords: recipe.recipeTypes.join(', ') }),
+    nutrition: {
+      '@type': 'NutritionInformation' as const,
+      calories: `${recipe.calories} calories`,
+      proteinContent: `${recipe.protein}g`,
+      carbohydrateContent: `${recipe.carbs}g`,
+      fatContent: `${recipe.fat}g`,
+    },
+    recipeIngredient: recipe.ingredients.map((i) => i.description || i.name),
+    recipeInstructions: recipe.instructions.map((step) => ({
+      '@type': 'HowToStep' as const,
+      position: step.stepNumber,
+      text: step.instruction,
+    })),
+  }
+  const jsonLdScript = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+
   return (
     <div className="min-h-screen bg-background pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript }}
+      />
       {/* Header with Back Button */}
       <div className="sticky top-0 z-10 bg-background border-b border-border">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center">
@@ -336,8 +383,8 @@ async function RecipeApiDetailPage({ id, mealId }: { id: string; mealId?: string
 
       <main className="max-w-4xl mx-auto px-4 py-6">
         {/* Recipe Image */}
-        {recipe.imageUrl && (
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-muted mb-6">
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-muted mb-6">
+          {recipe.imageUrl ? (
             <Image
               src={recipe.imageUrl}
               alt={recipe.title}
@@ -346,11 +393,13 @@ async function RecipeApiDetailPage({ id, mealId }: { id: string; mealId?: string
               priority
               unoptimized
             />
-          </div>
-        )}
+          ) : (
+            <RecipeImageFallback title={recipe.title} />
+          )}
+        </div>
 
         {/* Recipe Title with Log Button */}
-        <div className="flex flex-wrap items-start gap-3 mb-4">
+        <div className="flex flex-wrap items-start gap-3 mb-3">
           <h1 className="text-2xl md:text-3xl font-bold text-foreground flex-1">
             {recipe.title}
           </h1>
@@ -371,18 +420,72 @@ async function RecipeApiDetailPage({ id, mealId }: { id: string; mealId?: string
           />
         </div>
 
+        {/* Category / cuisine / difficulty / dietary badges */}
+        {(recipe.categories.some(Boolean) || recipe.cuisine || recipe.difficulty || (recipe.dietaryFlags?.length ?? 0) > 0) && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {recipe.categories.filter(Boolean).map((category) => (
+              <span key={category} className="bg-primary/10 text-primary font-semibold text-xs py-1.5 px-3 rounded-full">
+                {category}
+              </span>
+            ))}
+            {recipe.cuisine && (
+              <span className="bg-primary/10 text-primary font-semibold text-xs py-1.5 px-3 rounded-full">
+                {recipe.cuisine}
+              </span>
+            )}
+            {recipe.difficulty && (
+              <span className="bg-muted text-muted-foreground font-semibold text-xs py-1.5 px-3 rounded-full">
+                {recipe.difficulty}
+              </span>
+            )}
+            {recipe.dietaryFlags?.map((flag) => (
+              <span key={flag} className="bg-success/10 text-success font-semibold text-xs py-1.5 px-3 rounded-full">
+                {flag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Description */}
+        {recipe.description && (
+          <p className="text-muted-foreground leading-relaxed mb-6">{recipe.description}</p>
+        )}
+
         {/* Quick Stats */}
-        <div className="flex flex-wrap gap-4 mb-6">
-          {recipe.servings && (
+        <div className="flex flex-wrap gap-x-5 gap-y-2 mb-6 text-sm">
+          {recipe.yields ? (
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Users className="size-5 text-icon" />
+              <Users className="size-4 text-icon" />
+              <span>{recipe.yields}</span>
+            </div>
+          ) : recipe.servings ? (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Users className="size-4 text-icon" />
               <span>{recipe.servings} servings</span>
             </div>
-          )}
-          {recipe.totalTimeMinutes && (
+          ) : null}
+          {recipe.prepTimeMinutes ? (
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Clock className="size-5 text-icon" />
-              <span>{recipe.totalTimeMinutes} min</span>
+              <Clock className="size-4 text-icon" />
+              <span>{recipe.prepTimeMinutes} min active</span>
+            </div>
+          ) : null}
+          {recipe.cookTimeMinutes ? (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Flame className="size-4 text-icon" />
+              <span>{recipe.cookTimeMinutes} min passive</span>
+            </div>
+          ) : null}
+          {recipe.totalTimeMinutes ? (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Clock className="size-4 text-icon" />
+              <span>{recipe.totalTimeMinutes} min total</span>
+            </div>
+          ) : null}
+          {recipe.overnightRequired && (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Moon className="size-4 text-icon" />
+              <span>Overnight required</span>
             </div>
           )}
         </div>
@@ -401,37 +504,215 @@ async function RecipeApiDetailPage({ id, mealId }: { id: string; mealId?: string
           />
         </div>
 
-        {/* Ingredients */}
-        {recipe.ingredients && recipe.ingredients.length > 0 && (
+        {/* Equipment */}
+        {(recipe.equipment?.length ?? 0) > 0 && (
           <div className="bg-card rounded-2xl border border-border-strong p-4 mb-6">
-            <h2 className="text-lg font-semibold text-foreground mb-3">Ingredients</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <UtensilsCrossed className="size-5 text-primary" />
+              Equipment
+            </h2>
             <ul className="space-y-2">
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.equipment!.map((item, index) => (
                 <li key={index} className="flex items-start gap-2 text-foreground">
                   <span className="text-primary font-medium">•</span>
-                  <span>{ingredient.description || `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`}</span>
+                  <span>
+                    {item.name}
+                    {!item.required && <span className="text-muted-foreground text-sm"> (optional)</span>}
+                    {item.alternative && (
+                      <span className="text-muted-foreground text-sm"> — or use {item.alternative}</span>
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        {/* Instructions */}
+        {/* Ingredients (grouped) */}
+        {recipe.ingredients && recipe.ingredients.length > 0 && (
+          <div className="bg-card rounded-2xl border border-border-strong p-4 mb-6">
+            <h2 className="text-lg font-semibold text-foreground mb-3">Ingredients</h2>
+            {(recipe.ingredientGroups?.length ?? 0) > 0 ? (
+              <div className="space-y-4">
+                {recipe.ingredientGroups!.map((group, groupIndex) => (
+                  <div key={groupIndex}>
+                    {recipe.ingredientGroups!.length > 1 && group.groupName && (
+                      <h3 className="text-sm font-semibold text-primary uppercase tracking-wide mb-2">
+                        {group.groupName}
+                      </h3>
+                    )}
+                    <ul className="space-y-2">
+                      {group.items.map((ingredient, index) => (
+                        <li key={index} className="flex items-start gap-2 text-foreground">
+                          <span className="text-primary font-medium">•</span>
+                          <span>
+                            {ingredient.description || `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`}
+                            {ingredient.notes && (
+                              <span className="block text-sm text-muted-foreground">{ingredient.notes}</span>
+                            )}
+                            {ingredient.substitutions.length > 0 && (
+                              <span className="block text-sm text-muted-foreground">
+                                Swap: {ingredient.substitutions.join(', ')}
+                              </span>
+                            )}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ul className="space-y-2">
+                {recipe.ingredients.map((ingredient, index) => (
+                  <li key={index} className="flex items-start gap-2 text-foreground">
+                    <span className="text-primary font-medium">•</span>
+                    <span>{ingredient.description || `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* Instructions with phases and tips */}
         {recipe.instructions && recipe.instructions.length > 0 && (
           <div className="bg-card rounded-2xl border border-border-strong p-4 mb-6">
             <h2 className="text-lg font-semibold text-foreground mb-3">Instructions</h2>
-            <ol className="space-y-4">
-              {recipe.instructions.map((step, index) => (
-                <li key={step.stepNumber || index} className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-medium">
-                    {step.stepNumber || index + 1}
-                  </span>
-                  <p className="text-foreground">{step.instruction}</p>
-                </li>
-              ))}
+            <ol className="space-y-5">
+              {recipe.instructions.map((step, index) => {
+                const prevPhase = index > 0 ? recipe.instructions[index - 1].phase : undefined
+                const showPhase = step.phase && step.phase !== prevPhase
+                return (
+                  <li key={step.stepNumber || index}>
+                    {showPhase && (
+                      <p className="text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-9">
+                        {step.phase}
+                      </p>
+                    )}
+                    <div className="flex gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-medium">
+                        {step.stepNumber || index + 1}
+                      </span>
+                      <div className="flex-1">
+                        <p className="text-foreground">{step.instruction}</p>
+                        {(step.tips?.length ?? 0) > 0 && (
+                          <div className="mt-2 space-y-1.5">
+                            {step.tips!.map((tip, tipIndex) => (
+                              <p key={tipIndex} className="flex items-start gap-2 text-sm text-muted-foreground bg-muted/50 rounded-lg px-3 py-2">
+                                <Lightbulb className="size-4 shrink-0 mt-0.5 text-warning" />
+                                <span>{tip}</span>
+                              </p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                )
+              })}
             </ol>
           </div>
         )}
+
+        {/* Storage & Reheating */}
+        {recipe.storage && (recipe.storage.refrigerator || recipe.storage.freezer || recipe.storage.reheating || recipe.storage.doesNotKeep) && (
+          <div className="bg-card rounded-2xl border border-border-strong p-4 mb-6">
+            <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Refrigerator className="size-5 text-primary" />
+              Storage &amp; Meal Prep
+            </h2>
+            <div className="space-y-3 text-sm">
+              {recipe.storage.doesNotKeep && (
+                <p className="text-warning font-medium">Best eaten fresh — this recipe doesn&apos;t keep well.</p>
+              )}
+              {recipe.storage.refrigerator && (
+                <div className="flex items-start gap-2">
+                  <Refrigerator className="size-4 shrink-0 mt-0.5 text-icon" />
+                  <p className="text-foreground">
+                    <span className="font-semibold">Fridge: {recipe.storage.refrigerator.duration}.</span>{' '}
+                    <span className="text-muted-foreground">{recipe.storage.refrigerator.notes}</span>
+                  </p>
+                </div>
+              )}
+              {recipe.storage.freezer && (
+                <div className="flex items-start gap-2">
+                  <Snowflake className="size-4 shrink-0 mt-0.5 text-icon" />
+                  <p className="text-foreground">
+                    <span className="font-semibold">Freezer: {recipe.storage.freezer.duration}.</span>{' '}
+                    <span className="text-muted-foreground">{recipe.storage.freezer.notes}</span>
+                  </p>
+                </div>
+              )}
+              {recipe.storage.reheating && (
+                <div className="flex items-start gap-2">
+                  <Flame className="size-4 shrink-0 mt-0.5 text-icon" />
+                  <p className="text-foreground">
+                    <span className="font-semibold">Reheating:</span>{' '}
+                    <span className="text-muted-foreground">{recipe.storage.reheating}</span>
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Chef Notes */}
+        {(recipe.chefNotes?.length ?? 0) > 0 && (
+          <div className="bg-card rounded-2xl border border-border-strong p-4 mb-6">
+            <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <ChefHat className="size-5 text-primary" />
+              Chef&apos;s Notes
+            </h2>
+            <ul className="space-y-2">
+              {recipe.chefNotes!.map((note, index) => (
+                <li key={index} className="flex items-start gap-2 text-muted-foreground text-sm leading-relaxed">
+                  <span className="text-primary font-medium">•</span>
+                  <span>{note}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Troubleshooting */}
+        {(recipe.troubleshooting?.length ?? 0) > 0 && (
+          <div className="bg-card rounded-2xl border border-border-strong p-4 mb-6">
+            <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Wrench className="size-5 text-primary" />
+              Troubleshooting
+            </h2>
+            <div className="space-y-4">
+              {recipe.troubleshooting!.map((item, index) => (
+                <div key={index} className="text-sm">
+                  <p className="font-semibold text-foreground">{item.symptom}</p>
+                  <p className="text-muted-foreground mt-1">
+                    <span className="font-medium text-foreground/80">Why:</span> {item.likelyCause}
+                  </p>
+                  <p className="text-muted-foreground">
+                    <span className="font-medium text-foreground/80">Fix:</span> {item.fix}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Full Nutrition Facts */}
+        <div className="bg-card rounded-2xl border border-border-strong mb-6 overflow-hidden">
+          <RecipeNutritionFacts
+            servingSize={`1 serving (${recipe.servings || 1} total)`}
+            calories={recipe.calories}
+            protein={recipe.protein}
+            carbs={recipe.carbs}
+            fat={recipe.fat}
+            fiber={recipe.fiber ?? undefined}
+            sugar={recipe.sugar ?? undefined}
+            sodium={recipe.nutritionDetail?.sodium ?? undefined}
+            cholesterol={recipe.nutritionDetail?.cholesterol ?? undefined}
+            saturatedFat={recipe.nutritionDetail?.saturatedFat ?? undefined}
+          />
+        </div>
 
         {/* Action Buttons */}
         <div className="flex flex-col gap-3">
