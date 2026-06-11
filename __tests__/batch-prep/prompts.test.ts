@@ -87,6 +87,33 @@ describe('batch-prep prompts', () => {
       const prompt = buildUserPrompt(profile, { exclusions: [] }, { avoidRecipes: [] })
       expect(prompt).not.toContain('DO NOT REPEAT')
     })
+
+    it('includes per-slot cuisine choices when provided', () => {
+      const prompt = buildUserPrompt(profile, {
+        exclusions: [],
+        meal_cuisines: { breakfast: 'American', lunch: 'Mediterranean', dinner: 'Indian' },
+      })
+      expect(prompt).toContain('CUISINE BY MEAL SLOT')
+      expect(prompt).toContain('breakfast: "American"')
+      expect(prompt).toContain('lunch: "Mediterranean"')
+      expect(prompt).toContain('dinner: "Indian"')
+      expect(prompt).not.toContain('snack:')
+    })
+
+    it('scopes rotation cuisines to unchosen slots when per-slot cuisines exist', () => {
+      const prompt = buildUserPrompt(
+        profile,
+        { exclusions: [], meal_cuisines: { dinner: 'Indian' } },
+        { cuisines: ['Thai'] }
+      )
+      expect(prompt).toContain('WITHOUT a user-chosen cuisine')
+      expect(prompt).toContain('Thai')
+    })
+
+    it('omits the per-slot block when no cuisines are chosen', () => {
+      const prompt = buildUserPrompt(profile, { exclusions: [], meal_cuisines: {} })
+      expect(prompt).not.toContain('CUISINE BY MEAL SLOT')
+    })
   })
 
   describe('variety guardrails in the system prompt', () => {

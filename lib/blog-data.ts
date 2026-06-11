@@ -22,115 +22,271 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'ultimate-guide-to-flexible-dieting',
     title: 'The Ultimate Guide to Flexible Dieting and Macro Tracking',
-    excerpt: 'Flexible dieting, often referred to as "If It Fits Your Macros" (IIFYM), is a popular nutritional approach that focuses on meeting specific macronutrient targets rather than restricting food groups.',
+    excerpt: 'Flexible dieting lets you hit your macros without banning foods. This guide covers calculating targets, tracking accurately, and making IIFYM stick long term.',
     content: `
-      <p>Flexible dieting, often referred to as "If It Fits Your Macros" (IIFYM), is a popular nutritional approach that focuses on meeting specific macronutrient targets rather than restricting food groups. This guide will walk you through the fundamentals of macro tracking and how it can help you achieve your health and fitness goals without sacrificing the foods you love.</p>
+      <p>Flexible dieting — usually called <strong>"If It Fits Your Macros" (IIFYM)</strong> — is a nutrition approach built on one idea: your body composition responds to your total calories and macronutrients, not to whether a specific food is on an approved list. Hit your protein, carb, and fat targets, and you can build the day from foods you actually want to eat. This guide covers how flexible dieting works, how to set your numbers, and how to track without letting it take over your life.</p>
 
       <h2>What Are Macros?</h2>
-      <p>Macronutrients, or "macros," are the three primary nutrients your body needs in large amounts to function correctly: protein, carbohydrates, and fats. Each macro provides a specific number of calories per gram and plays a unique role in your body's health.</p>
+      <p>Macronutrients are the three nutrients your body needs in large amounts, and each carries a fixed calorie value:</p>
+      <ul>
+        <li><strong>Protein</strong> — 4 calories per gram. Drives muscle repair, growth, and satiety. The macro lifters under-eat most often.</li>
+        <li><strong>Carbohydrates</strong> — 4 calories per gram. Your primary training fuel; refills the glycogen hard sessions drain.</li>
+        <li><strong>Fat</strong> — 9 calories per gram. Supports hormone production and vitamin absorption. Needs a floor, not a ceiling of zero.</li>
+      </ul>
+      <p>Because each macro has a fixed calorie value, a macro target is also a calorie target. Hit 180g protein, 250g carbs, and 70g fat and you've eaten about 2,350 calories whether that came from chicken and rice or from a burrito.</p>
 
-      <blockquote>Understanding the balance between these three macronutrients is the key to unlocking sustainable results and a healthier relationship with food.</blockquote>
+      <h2>Flexible Dieting vs. Clean Eating</h2>
+      <p>The traditional alternative is "clean eating": a list of approved foods and a longer list of banned ones. It can work, but it tends to fail in a specific way — the banned list makes every social event a test, and one slice of pizza becomes a failed diet instead of 400 calories that fit fine.</p>
+      <p>Flexible dieting removes the moral layer. There are no good or bad foods, just foods with different macro profiles and different levels of usefulness for your goal. In practice most successful flexible dieters land on something like an 80/20 split: mostly whole foods because they're filling and nutrient-dense, with a deliberate margin for the foods that make eating enjoyable.</p>
+
+      <blockquote>A diet you can hold for six months beats a perfect diet you abandon in three weeks. Flexibility is not a loophole — it's the mechanism that makes the results stick.</blockquote>
 
       <h2>How to Calculate Your Macros</h2>
-      <p>Calculating your ideal macro split depends on several factors, including your age, sex, activity level, and specific goals (e.g., weight loss, muscle gain, or maintenance). While online calculators can provide a starting point, using an app like MacroPlan can give you a more personalized and adaptive recommendation. The key is to start with a baseline and adjust based on your progress and how you feel. For a deeper breakdown, see our <a href="/blog/decoding-macros">guide to calculating your perfect ratio</a>.</p>
+      <p>You can get a baseline in four steps:</p>
+      <ul>
+        <li><strong>1. Estimate maintenance calories.</strong> Bodyweight in kg × 22, multiplied by an activity factor (1.4–1.6 for most lifters training 3–5x/week), gets you close. An 80 kg (176 lb) lifter lands around 2,600–2,800 calories.</li>
+        <li><strong>2. Adjust for your goal.</strong> Subtract 300–500 calories for a cut; add 150–300 for a lean bulk; leave it alone for maintenance.</li>
+        <li><strong>3. Set protein first.</strong> 1.6–2.2 g per kg of bodyweight (0.7–1 g per lb), per the <a href="https://jissn.biomedcentral.com/articles/10.1186/s12970-017-0177-8" target="_blank" rel="noopener noreferrer">International Society of Sports Nutrition's position stand</a>. Go toward the top of the range in a deficit.</li>
+        <li><strong>4. Give fat a floor, fill the rest with carbs.</strong> Around 0.5–0.8 g of fat per kg, then carbs take whatever calories remain.</li>
+      </ul>
+      <p>For the full math with worked examples, see our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a>. If you'd rather skip the spreadsheet, <a href="https://macroplan.app">MacroPlan</a> calculates your targets from your stats and goal, then builds the meal plan to match.</p>
 
-      <h2>Tips for Success with MacroPlan</h2>
-      <p>Consistency is more important than perfection. Aim to hit your macro targets within a small range each day. Use a food scale for accuracy, plan your meals in advance, and don't be afraid to enjoy social events. The beauty of flexible dieting is its adaptability. Track your progress with MacroPlan, see what's working, and make small adjustments for long-term success.</p>
+      <h2>How to Track Macros Without Losing Your Mind</h2>
+      <p>Tracking accuracy fails in predictable places. These habits fix most of them:</p>
+      <ul>
+        <li><strong>Use a food scale for calorie-dense foods.</strong> Eyeballed peanut butter, oils, rice, and granola are where hidden hundreds of calories live. Weigh those; estimate the lettuce.</li>
+        <li><strong>Pre-log your day in the morning.</strong> Deciding what you'll eat before you're hungry turns tracking from confession into planning.</li>
+        <li><strong>Repeat meals on weekdays.</strong> A rotation of known meals means most of your day is pre-counted. Save the novelty for evenings and weekends.</li>
+        <li><strong>Count cooking oil.</strong> A tablespoon is about 120 calories. Three untracked tablespoons a day can erase an entire deficit.</li>
+        <li><strong>Aim for ranges, not bullseyes.</strong> Within ±5g protein and ±10g carbs and fat is a hit. Chasing exact zeros burns people out for no extra result.</li>
+      </ul>
+
+      <h2>Training Days vs. Rest Days</h2>
+      <p>You don't burn the same energy on a heavy lower-body day as you do on the couch, and your macros can reflect that. The standard approach: keep protein constant every day, hold fat near its floor, and swing carbs up on training days and down on rest days while the weekly average stays on target. Our <a href="/blog/calorie-cycling-training-rest-days">calorie cycling guide</a> covers the setup in detail.</p>
+
+      <h2>Where Meal Prep Fits</h2>
+      <p>Flexible dieting tells you <em>what</em> to eat in numbers. It doesn't put the food in the fridge. The lifters who hold their macros for months almost all converge on the same logistics: batch-cook the structure of the week — proteins, carb bases, vegetables — and flex around it. A prepped container is a pre-counted meal; no negotiation at 8 p.m., no guess-tracking a takeaway. Our <a href="/blog/meal-prepping-for-weight-loss">meal prep guide</a> covers the Sunday workflow.</p>
+
+      <h2>Common Flexible Dieting Mistakes</h2>
+      <ul>
+        <li><strong>Treating it as a junk-food diet.</strong> Technically you can hit macros on pop-tarts and whey. You'll also be hungry, under-fibered, and feel terrible in week two.</li>
+        <li><strong>Ignoring fiber and micronutrients.</strong> A practical floor: around 14g of fiber per 1,000 calories, mostly from plants you'd recognize in a garden.</li>
+        <li><strong>Changing targets weekly.</strong> Give any macro setup 2–3 weeks of consistent data before adjusting. Scale weight noise settles; trends don't lie.</li>
+        <li><strong>All-or-nothing weekends.</strong> Five compliant weekdays don't survive a 5,000-calorie Saturday. Budget the weekend into the week instead of pretending it won't happen.</li>
+      </ul>
+
+      <h2>FAQ</h2>
+      <h3>Is flexible dieting good for weight loss?</h3>
+      <p>Yes — for weight loss, flexible dieting works as well as stricter approaches with the same calorie deficit, and most people sustain it longer because no foods are banned. The deficit drives the fat loss; flexibility drives the adherence. Individual results vary, and persistent issues with eating are worth raising with a professional.</p>
+      <h3>Do I have to track forever?</h3>
+      <p>No. Most people track strictly for a few months, learn what their portions actually look like, and then move to a looser structure — prepped meals on weekdays, estimation elsewhere — returning to strict tracking only when progress stalls.</p>
+      <h3>What's the difference between IIFYM and counting calories?</h3>
+      <p>Calorie counting tracks one number; IIFYM tracks three. The difference matters because 2,400 calories with 180g of protein produces a very different physique outcome than 2,400 calories with 60g of protein, especially while training.</p>
+      <h3>Can I do flexible dieting as a vegetarian or vegan?</h3>
+      <p>Yes. The targets don't change — the food list does. Plant-based lifters usually need more deliberate protein planning (tofu, tempeh, seitan, legumes, protein powder), but the macro framework is identical.</p>
 
       <p>Ready to stop guessing? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
     `,
     author: TEAM_AUTHOR,
     authorBio: TEAM_BIO,
     authorImage: TEAM_IMAGE,
-    date: 'October 26, 2023',
-    readTime: '8 min read',
+    date: 'June 2, 2026',
+    readTime: '9 min read',
     image: '/blog/ultimate-guide-to-flexible-dieting.svg',
     category: 'Nutrition'
   },
   {
     slug: 'meal-prepping-for-weight-loss',
     title: 'The Ultimate Guide to Meal Prepping for Weight Loss',
-    excerpt: 'Save time, money, and stress with our simple strategies for meal prepping your way to success.',
+    excerpt: 'Meal prep makes a calorie deficit something you eat, not something you fight. A step-by-step Sunday system for losing fat without weeknight willpower.',
     content: `
-      <p>Meal prepping is one of the most effective tools for weight loss. By preparing your meals in advance, you remove the guesswork and temptation that often leads to unhealthy choices.</p>
+      <p>Meal prepping for weight loss works for an unglamorous reason: it moves every food decision to a moment when you're full, calm, and holding a plan — and away from the moments when you're hungry, tired, and standing in front of an open fridge. The deficit still does the fat loss. Prep is what makes the deficit survivable. Here's the complete system, from setting your numbers to keeping food good until Friday.</p>
 
-      <h2>Why Meal Prep?</h2>
-      <p>Meal prepping ensures you always have a healthy option ready to go. It saves you time during the busy work week and helps you stick to your macro goals. The single biggest driver of a failed diet is the unplanned meal eaten when you're hungry and have no good option ready.</p>
+      <h2>Why Meal Prep Works for Weight Loss</h2>
+      <p>Most diets don't fail because the plan was wrong. They fail at around 8 p.m. on a Tuesday, when the day's willpower is spent and the fastest available food is the worst available food. Prepping removes that failure point three ways:</p>
+      <ul>
+        <li><strong>Pre-counted portions.</strong> A weighed container is a known quantity. No estimating, no "that was probably fine."</li>
+        <li><strong>No decision fatigue.</strong> You made the food choice once, on Sunday. The weekday version of you just eats it.</li>
+        <li><strong>Speed parity with junk.</strong> The prepped meal microwaves in two minutes — finally faster than delivery.</li>
+      </ul>
 
-      <h2>Getting Started</h2>
-      <p>Start small. You don't need to prep every single meal for the week. Try prepping just your lunches or breakfasts to begin with. Invest in some good quality containers and set aside a couple of hours on Sunday to cook.</p>
+      <h2>Step 1: Set Your Deficit and Protein</h2>
+      <p>Before you cook anything, you need two numbers. First, a <strong>moderate calorie deficit</strong> — roughly 300–500 calories below maintenance. Bigger deficits read as faster progress but collapse adherence, energy, and training within weeks. Second, a <strong>high protein target</strong>: in a deficit, aim for 2–2.2 g per kg of bodyweight (about 1 g per lb) to protect muscle and stay full. Our <a href="/blog/decoding-macros">macro calculation guide</a> walks through the math, and <a href="https://macroplan.app">MacroPlan</a> will do it for you from your stats.</p>
 
-      <h2>Build Around Protein</h2>
-      <p>Whatever your calorie target, anchor each prepped meal around a protein source first, then add vegetables and a measured carb. Protein keeps you full in a deficit, which is exactly where weight loss happens. If you struggle to hit your protein target, our <a href="/blog/high-protein-breakfasts">high-protein breakfast ideas</a> are an easy place to start.</p>
+      <h2>Step 2: The Sunday System</h2>
+      <p>A full week of weight-loss food takes about two hours once you've done it twice. The workflow:</p>
+      <ul>
+        <li><strong>Plan (10 min).</strong> Pick 3–4 recipes that share ingredients. Decide which meals of the week they cover — most people start with lunches and dinners and keep breakfast simple.</li>
+        <li><strong>Shop (30–40 min).</strong> One consolidated list, sorted by aisle. Shopping from a list after eating is the cheapest diet hack that exists.</li>
+        <li><strong>Cook in parallel (60–90 min).</strong> Oven first (proteins and roasting vegetables), then rice cooker or pot (carb bases), then stovetop (mince, sauces). Longest cook time starts first.</li>
+        <li><strong>Portion by weight (15 min).</strong> Weigh food into containers rather than eyeballing — this is where the deficit gets locked in.</li>
+        <li><strong>Label and store.</strong> Days 1–3 in the fridge, days 4–5 toward the back (coldest part) or the freezer.</li>
+      </ul>
 
-      <p>Want the prep done for you? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
+      <h2>What to Cook: A Starter Template</h2>
+      <p>Every weight-loss container follows the same anatomy. Pick one from each column and you can't really get it wrong:</p>
+      <ul>
+        <li><strong>Lean protein (150–200g cooked):</strong> chicken breast or thigh, turkey mince, white fish, lean beef, tofu</li>
+        <li><strong>Measured carb (100–150g cooked):</strong> rice, potatoes, sweet potato, pasta, quinoa</li>
+        <li><strong>High-volume vegetables (as much as fits):</strong> roasted broccoli, peppers, zucchini, green beans, cauliflower</li>
+        <li><strong>Flavor that costs nothing:</strong> hot sauce, mustard, vinegar, salsa, herbs, spice rubs</li>
+      </ul>
+      <p>The protein and vegetables do the filling; the weighed carb controls the calories; the sauce keeps you from quitting out of boredom. For which specific foods survive five days in the fridge, see <a href="/blog/best-foods-for-batch-cooking">the best foods for batch cooking</a>.</p>
+
+      <blockquote>Weigh the carbs and the oil. Those two habits alone account for most of the gap between "I'm eating clean but not losing" and actual fat loss.</blockquote>
+
+      <h2>Step 3: Container Math</h2>
+      <p>Count the meals you genuinely need covered, not an idealized 21. Most people's danger zone is weekday lunch and dinner: that's 10 containers. Breakfast can repeat daily from a 5-minute option — our <a href="/blog/high-protein-breakfasts">high-protein breakfast list</a> has prep-ahead choices — and weekends can stay flexible within your weekly calorie budget.</p>
+
+      <h2>Mistakes That Quietly Stall Weight Loss</h2>
+      <ul>
+        <li><strong>Untracked cooking oil.</strong> At 120 calories per tablespoon, generous pours can hide 300+ daily calories. Measure it or use spray.</li>
+        <li><strong>Prepped weekdays, untracked weekends.</strong> Two loose days can refill a five-day deficit. Budget weekends on purpose.</li>
+        <li><strong>Liquid calories.</strong> Lattes, juice, and alcohol don't trigger fullness. They count anyway.</li>
+        <li><strong>Going too aggressive.</strong> A deficit you can't hold isn't a deficit — it's a cycle. If hunger is unmanageable, our <a href="/blog/meal-prep-on-a-cut">guide to staying full on a cut</a> covers volume eating.</li>
+        <li><strong>All-or-nothing thinking.</strong> One off-plan meal is a few hundred calories. The damage comes from the "week's ruined" spiral that follows it.</li>
+      </ul>
+      <p>One honest caveat: sustainable rates of fat loss are around 0.5–1% of bodyweight per week, and individual circumstances vary — persistent struggles with weight or eating are worth discussing with a professional.</p>
+
+      <h2>FAQ</h2>
+      <h3>How many days in advance can I meal prep?</h3>
+      <p>Five days is the practical ceiling for refrigerated cooked food, and days 4–5 should be your most storage-friendly recipes or frozen portions. Most preppers cook Sunday for Monday–Friday and keep weekends flexible.</p>
+      <h3>Does meal prep work without counting calories?</h3>
+      <p>Better than almost any other approach. If the containers were portioned for a deficit when you cooked them, eating the containers <em>is</em> the calorie counting. That's the entire trick.</p>
+      <h3>What if I get bored eating the same meals?</h3>
+      <p>Cook proteins and carbs fairly plain, then vary the sauce and toppings day to day. Same chicken becomes a burrito bowl Monday and a curry Wednesday. Rotating 3–4 recipes per week beats cooking seven different ones.</p>
+      <h3>Is meal prep expensive?</h3>
+      <p>It's usually the cheapest way to eat for fat loss. Bulk proteins, rice, potatoes, and frozen or seasonal vegetables cost far less per meal than convenience food — and a consolidated list means you stop buying ingredients that rot unused.</p>
+
+      <p>Want the plan, the portions, and the shopping list done for you? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
     `,
     author: TEAM_AUTHOR,
     authorBio: TEAM_BIO,
     authorImage: TEAM_IMAGE,
-    date: 'November 15, 2023',
-    readTime: '5 min read',
+    date: 'May 20, 2026',
+    readTime: '8 min read',
     image: '/blog/meal-prepping-for-weight-loss.svg',
     category: 'Meal Prep'
   },
   {
     slug: 'decoding-macros',
     title: 'Decoding Macros: How to Calculate Your Perfect Ratio',
-    excerpt: 'Protein, carbs, and fats explained. Learn how to tailor your macronutrient intake to your specific goals.',
+    excerpt: 'Set protein first, give fat a floor, fill the rest with carbs. A step-by-step guide to calculating a macro split that fits your goal, with worked examples.',
     content: `
-      <p>Understanding macros is the first step to taking control of your nutrition. But how do you know what ratio is right for you?</p>
+      <p>How to calculate your macros comes down to a four-step order of operations: find your calories, set protein, give fat a floor, and let carbs fill what's left. That ordering matters more than any "perfect ratio" — percentages like 40/30/30 sound scientific but scale badly across bodyweights and goals. This guide walks the steps with real numbers.</p>
 
-      <h2>Protein</h2>
-      <p>Protein is essential for muscle repair and growth. A higher protein intake can also help with satiety, making it easier to stick to a calorie deficit. Most lifters do well on roughly 1.6–2.2 g per kg (0.7–1 g per lb) of bodyweight per day.</p>
+      <h2>What Each Macro Actually Does</h2>
+      <h3>Protein — 4 cal/g</h3>
+      <p>Protein supplies the raw material for muscle repair and growth, and it's the most satiating macro, which is why it anchors every cut. Most trained people do best on <strong>1.6–2.2 g per kg of bodyweight (0.7–1 g per lb)</strong> per day. Below that range you're leaving results on the table; far above it, the extra does little.</p>
+      <h3>Carbohydrates — 4 cal/g</h3>
+      <p>Carbs are your training fuel. They fill muscle glycogen, support hard sessions, and spare protein for its actual job. They're also the flex variable: the macro that swings up on training days and down on rest days while everything else holds steady.</p>
+      <h3>Fat — 9 cal/g</h3>
+      <p>Fat supports hormone production and absorbs fat-soluble vitamins. It needs a floor — chronically very low fat is where energy and hormone issues start — but past that floor, more fat mostly just costs calories that carbs could use. A sensible minimum is around <strong>0.5–0.8 g per kg</strong>.</p>
 
-      <h2>Carbohydrates</h2>
-      <p>Carbs are your body's primary energy source. Don't fear them! They fuel your workouts and brain function. They're also the macro you'll flex up and down depending on whether it's a training or rest day.</p>
+      <h2>Step 1: Find Your Calorie Target</h2>
+      <p>Estimate maintenance with bodyweight in kg × 22, times an activity factor: about 1.3–1.4 if you're mostly sedentary outside training, 1.5–1.6 training 3–5x/week, up to 1.7+ for very active jobs. Then adjust for the goal: subtract 300–500 calories to cut, add 150–300 to lean bulk, keep it for maintenance.</p>
+      <p>An 80 kg (176 lb) lifter training four days a week lands near 2,700 maintenance calories — call it 2,300 on a cut or 2,900 on a lean bulk.</p>
 
-      <h2>Fats</h2>
-      <p>Healthy fats are crucial for hormone production and nutrient absorption. Include sources like avocados, nuts, and olive oil in your diet, and keep fat at a minimum of around 0.5 g per kg of bodyweight.</p>
+      <h2>Step 2–4: Protein, Then Fat, Then Carbs</h2>
+      <p>Using that 80 kg lifter on a 2,300-calorie cut:</p>
+      <ul>
+        <li><strong>Protein:</strong> 2.2 g/kg on a cut → 176g → 704 calories</li>
+        <li><strong>Fat:</strong> 0.7 g/kg floor → 56g → 504 calories</li>
+        <li><strong>Carbs:</strong> the remaining 1,092 calories → 273g</li>
+      </ul>
+      <p>Same lifter, lean bulk at 2,900: protein eases to 1.8 g/kg (144g), fat to 0.9 g/kg (72g), and carbs climb to about 419g — the surplus goes to training fuel, exactly where you want it.</p>
 
-      <h2>Putting It Together</h2>
-      <p>Set protein first, set a fat floor, and let carbohydrates fill the rest of your calorie budget. If you train some days and rest others, your carb number is where most of the adjustment happens — more on that in our guide to <a href="/blog/calorie-cycling-training-rest-days">calorie cycling across training and rest days</a>.</p>
+      <blockquote>Protein is set by your bodyweight, fat by a floor, carbs by whatever calories remain. Ratios fall out of the process — you never pick them directly.</blockquote>
 
-      <p><a href="https://macroplan.app/signup">Let MacroPlan calculate your ratio for free →</a></p>
+      <h2>Adjust From Data, Not Vibes</h2>
+      <p>Whatever you calculate is a starting estimate, not a verdict. Run the numbers for two to three weeks, weigh yourself a few mornings a week, and compare the weekly averages:</p>
+      <ul>
+        <li><strong>Cutting</strong> and losing roughly 0.5–1% of bodyweight per week? Hold. Losing nothing? Drop 150–200 calories, from carbs or fat.</li>
+        <li><strong>Bulking</strong> and gaining about 0.25–0.5% per week? Hold. Gaining much faster? You're mostly gaining fat — trim the surplus.</li>
+        <li><strong>Maintaining</strong> within a kilo? You've found maintenance. That number is gold; remember it.</li>
+      </ul>
+      <p>Daily scale weight is noise — water, sodium, and glycogen swing it by a kilo or more. Only trends over weeks mean anything.</p>
+
+      <h2>Training Days vs. Rest Days</h2>
+      <p>One refinement worth making once the basics work: eat more carbs on training days and fewer on rest days, keeping protein constant. Your weekly calories stay identical, but the fuel lands where it's used. The setup is covered in our <a href="/blog/calorie-cycling-training-rest-days">calorie cycling guide</a>, and it pairs naturally with <a href="/blog/meal-prepping-for-weight-loss">batch-prepped meals</a> — cook both day-types on Sunday and grab the right container.</p>
+
+      <h2>FAQ</h2>
+      <h3>What is the best macro ratio for fat loss?</h3>
+      <p>There isn't a universal one. Fat loss comes from the calorie deficit; the best "ratio" is high protein (2–2.2 g/kg), a fat floor (0.5–0.8 g/kg), and the rest in carbs. For most lifters that works out near 35/35/30 protein/carb/fat — but it's a result, not a rule.</p>
+      <h3>Should I count net carbs or total carbs?</h3>
+      <p>Total carbs, unless you're running keto. Fiber's metabolic contribution is small and tracking total keeps your numbers consistent with most food labels and databases.</p>
+      <h3>Do macros matter if I hit my calories?</h3>
+      <p>For weight on the scale, calories decide. For what that weight is made of — muscle kept or lost, training quality, hunger — the split matters a lot, and protein matters most. Two diets with equal calories and different protein produce visibly different physiques.</p>
+      <h3>How often should I recalculate my macros?</h3>
+      <p>Whenever bodyweight changes by roughly 3–5 kg, your training volume changes meaningfully, or progress stalls for three or more weeks. Otherwise leave the targets alone and let consistency work.</p>
+
+      <p>If you'd rather skip the math entirely, MacroPlan calculates your targets and builds the week of food to hit them. <a href="https://macroplan.app/signup">Get your numbers free →</a></p>
     `,
     author: TEAM_AUTHOR,
     authorBio: TEAM_BIO,
     authorImage: TEAM_IMAGE,
-    date: 'December 2, 2023',
-    readTime: '6 min read',
+    date: 'May 12, 2026',
+    readTime: '8 min read',
     image: '/blog/decoding-macros.svg',
     category: 'Nutrition'
   },
   {
     slug: 'high-protein-breakfasts',
-    title: '5 High-Protein Breakfasts to Fuel Your Day',
-    excerpt: 'Tired of eggs? Try these delicious and macro-friendly breakfast ideas that will keep you full until lunch.',
+    title: '10 High-Protein Breakfasts to Fuel Your Day (30g+ Each)',
+    excerpt: 'Ten breakfasts with 30g+ protein each, most prepped ahead in minutes. Macros included, so hitting your protein target starts before you leave the house.',
     content: `
-      <p>Breakfast is the most important meal of the day, especially when you're tracking macros. Here are 5 high-protein options to switch up your morning routine.</p>
+      <p>High-protein breakfasts are the easiest lever in your whole diet. Front-load 30–50g of protein before you leave the house and the rest of the day's target stops being a chase. Skip it, and you're staring at 140g still to eat at 6 p.m. Here are ten options that deliver at least 30g each — approximate macros included, and most can be prepped the night before.</p>
 
-      <h2>1. Greek Yogurt Bowl</h2>
-      <p>Mix Greek yogurt with protein powder and top with berries and granola. Around 40 g of protein with almost no effort.</p>
+      <h2>1. Greek Yogurt Power Bowl</h2>
+      <p>Mix 250g of 2% Greek yogurt with half a scoop of whey, top with berries and 30g of granola. <strong>~420 cal, 42g protein.</strong> Ninety seconds of effort, no cooking, endlessly variable.</p>
 
-      <h2>2. Protein Pancakes</h2>
-      <p>Use a protein pancake mix or make your own with oats, egg whites, and cottage cheese.</p>
+      <h2>2. Cottage Cheese Scramble</h2>
+      <p>Stir 100g of cottage cheese into three eggs as they scramble. The curds melt into a creamy, diner-style plate. <strong>~330 cal, 32g protein.</strong> Add toast for another 15g of carbs that actually keep you full.</p>
 
-      <h2>3. Smoked Salmon Toast</h2>
-      <p>Whole grain toast topped with cream cheese and smoked salmon is a delicious savory option.</p>
+      <h2>3. Protein Pancakes</h2>
+      <p>Blend 50g oats, 150g egg whites, 100g cottage cheese, and a banana; cook like normal pancakes. <strong>~450 cal, 35g protein.</strong> Make a double batch on prep day — they reheat from the fridge all week.</p>
 
-      <h2>4. Cottage Cheese Scramble</h2>
-      <p>Stir cottage cheese into scrambled eggs for a creamy, protein-dense plate that holds you to lunch.</p>
+      <h2>4. Overnight Protein Oats</h2>
+      <p>50g oats, a scoop of whey, 150ml milk, and a spoon of chia in a jar; shake and refrigerate overnight. <strong>~440 cal, 38g protein.</strong> The definitive grab-and-go option — make five jars on Sunday.</p>
 
-      <h2>5. Overnight Oats with Whey</h2>
-      <p>Oats, milk, a scoop of whey, and chia seeds prepped the night before — grab-and-go protein for busy mornings.</p>
+      <h2>5. Smoked Salmon Bagel</h2>
+      <p>A toasted bagel with light cream cheese and 100g of smoked salmon. <strong>~430 cal, 33g protein.</strong> The savory option that feels like a weekend even on a Tuesday.</p>
 
-      <p>Front-loading protein at breakfast makes the rest of your day easier to hit. <a href="https://macroplan.app/signup">Build your full plan free with MacroPlan →</a></p>
+      <h2>6. Baked Egg Muffins</h2>
+      <p>Whisk a dozen eggs with diced peppers, spinach, and ham; bake in a muffin tin at 180°C (350°F) for 20 minutes. Three muffins: <strong>~310 cal, 28g protein</strong> — add a yogurt to clear 35g. They keep four days refrigerated and microwave in 30 seconds.</p>
+
+      <h2>7. Breakfast Burritos (Freezer-Friendly)</h2>
+      <p>Scrambled eggs, turkey sausage, black beans, and cheese in a large tortilla. Wrap individually in foil and freeze. <strong>~480 cal, 36g protein.</strong> Two minutes from freezer to breakfast — the meal-preppers' classic for a reason.</p>
+
+      <h2>8. Tofu Scramble (Plant-Based)</h2>
+      <p>Crumble 200g of firm tofu into a hot pan with turmeric, garlic powder, and nutritional yeast. <strong>~280 cal, 26g protein</strong> — add a slice of toast with peanut butter to pass 30g. The strongest vegan option that doesn't lean on powder.</p>
+
+      <h2>9. Post-Workout Breakfast Smoothie</h2>
+      <p>Whey, 60g oats, a banana, a spoon of peanut butter, and milk. <strong>~560 cal, 42g protein.</strong> Drinks in two minutes, which makes it the answer for people who "can't eat in the morning."</p>
+
+      <h2>10. Skyr Parfait</h2>
+      <p>Layer 250g of skyr with granola and honey. Skyr runs even higher in protein than Greek yogurt per calorie. <strong>~390 cal, 45g protein.</strong></p>
+
+      <h2>How Much Protein Should Breakfast Have?</h2>
+      <p>Aim for roughly 0.4 g per kg of bodyweight at each meal — for most lifters that's 30–50g at breakfast. Spreading protein across 3–5 meals keeps muscle protein synthesis elevated through the day rather than relying on a giant dinner; our guide on <a href="/blog/how-much-protein-to-build-muscle">how much protein you actually need</a> covers the daily totals.</p>
+
+      <blockquote>The lifters who hit their protein target consistently aren't more disciplined at dinner. They're 40g ahead by 9 a.m.</blockquote>
+
+      <h2>FAQ</h2>
+      <h3>What breakfast has the most protein?</h3>
+      <p>Per minute of effort, a skyr or Greek yogurt bowl with added whey wins: 40–45g of protein in under two minutes with no cooking. Per sit-down meal, an egg-and-meat scramble with dairy added can clear 50g.</p>
+      <h3>Can I meal prep high-protein breakfasts?</h3>
+      <p>Yes — six of the ten above prep ahead. Egg muffins and frozen burritos cover hot breakfasts for a week, and overnight oats jars cover cold ones. Prepping breakfast is usually the highest-value 20 minutes of a <a href="/blog/meal-prepping-for-weight-loss">Sunday prep session</a>.</p>
+      <h3>Is skipping breakfast bad for muscle gain?</h3>
+      <p>Not inherently — total daily protein and calories still rule. But practically, skipping breakfast crams your full protein target into fewer meals, which is harder to eat and slightly less favorable for muscle protein synthesis. If you skip it, plan the other meals deliberately.</p>
+
+      <p>Breakfast is one meal — MacroPlan plans the other twenty. <a href="https://macroplan.app/signup">Build your full week free →</a></p>
     `,
     author: TEAM_AUTHOR,
     authorBio: TEAM_BIO,
     authorImage: TEAM_IMAGE,
-    date: 'December 10, 2023',
-    readTime: '4 min read',
+    date: 'May 27, 2026',
+    readTime: '7 min read',
     image: '/blog/high-protein-breakfasts.svg',
     category: 'Recipes'
   },
@@ -366,6 +522,104 @@ export const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     image: '/blog/best-foods-for-batch-cooking.svg',
     category: 'Meal Prep'
+  },
+  {
+    slug: 'best-protein-for-meal-prep',
+    title: 'Chicken vs. Beef vs. Salmon: Best Protein for Meal Prep',
+    excerpt: 'Chicken, beef, or salmon? We compare macros, cost, fridge life, and reheat quality to find the best protein for meal prep — and when to use each one.',
+    content: `
+      <p>The best protein for meal prep isn't decided by macros alone. A protein that's perfect on paper but dry by Wednesday, or blows the food budget, isn't the one you'll still be prepping in March. Here's how chicken, beef, and salmon actually compare across the four things that matter: macros, cost, fridge life, and how they survive a microwave.</p>
+
+      <h2>The Comparison at a Glance</h2>
+      <p>Per 100g raw, approximately:</p>
+      <ul>
+        <li><strong>Chicken breast:</strong> 165 cal, 31g protein, 3.6g fat — highest protein per calorie, lowest cost per gram of protein</li>
+        <li><strong>Chicken thigh:</strong> 177 cal, 24g protein, 8.4g fat — slightly fewer protein points, far more forgiving in storage</li>
+        <li><strong>Lean beef mince (93/7):</strong> 152 cal, 21g protein, 7g fat — mid-priced, excellent reheater in sauces, brings iron and B12</li>
+        <li><strong>Salmon:</strong> 208 cal, 20g protein, 13g fat — the expensive one, but the only one carrying meaningful omega-3s</li>
+      </ul>
+
+      <h2>Chicken: The Volume Pick</h2>
+      <p><strong>Breast</strong> wins every spreadsheet: most protein per calorie and per dollar. Its weakness is storage — cooked dry, it's rubbery by day three. If you prep breast, slightly undercook it, store it in its juices or a sauce, and reheat gently. <strong>Thighs</strong> trade a little protein for fat that acts as insurance: they come out of a microwave on day four still tasting like food. For most preppers, thighs are the better default and breast is the cut-season specialist.</p>
+
+      <h2>Beef: The Flavor Workhorse</h2>
+      <p>Lean mince cooked into chili, bolognese, or taco meat is arguably the single best-storing protein there is — sauce-based dishes improve over a few days as flavors develop. Beef also brings heme iron, zinc, and B12, which matter if your diet skews chicken-only. Watch the fat percentage: 93/7 keeps calories close to thigh territory, while 80/20 nearly doubles the fat. On a strict cut, drain the pan.</p>
+
+      <h2>Salmon: The Health Pick With a Deadline</h2>
+      <p>Salmon is the only one of the three with substantial <a href="https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/" target="_blank" rel="noopener noreferrer">omega-3 fatty acids</a>, and its fat keeps it moist through reheating. Two caveats: it's typically 2–3× the price of chicken per portion, and cooked fish is best eaten within 2–3 days — schedule salmon containers early in the week. Reheat gently or eat it cold over a grain salad to spare your office microwave's reputation.</p>
+
+      <blockquote>Run all three in one prep: thighs as the base, a beef sauce dish for mid-week, salmon for days one and two. Variety is what keeps a prep streak alive.</blockquote>
+
+      <h2>The Verdict by Goal</h2>
+      <ul>
+        <li><strong>Cutting:</strong> chicken breast and 93/7 beef — maximum protein and fullness per calorie</li>
+        <li><strong>Lean bulking:</strong> thighs and salmon — the extra fat is calorie headroom you need anyway</li>
+        <li><strong>Tightest budget:</strong> whole chicken or thighs, plus eggs and <a href="/blog/best-foods-for-batch-cooking">legumes from the batch-cooking list</a></li>
+        <li><strong>Maximum prep-life:</strong> beef in sauce, then thighs, then breast-in-sauce, with salmon eaten first</li>
+      </ul>
+
+      <h2>FAQ</h2>
+      <h3>What protein lasts longest in meal prep?</h3>
+      <p>Mince cooked into a sauce — chili, bolognese, curry — comfortably holds five days refrigerated and arguably tastes better on day three. Plain grilled chicken breast has the shortest enjoyable window; fish should be eaten within 2–3 days.</p>
+      <h3>Is salmon worth the price for meal prep?</h3>
+      <p>For one or two meals a week, yes: it's the easiest whole-food source of omega-3s and reheats better than lean white fish. As your only protein it's expensive and ages fastest — use it as the rotation's highlight, not the base.</p>
+      <h3>Can I mix proteins in one prep session?</h3>
+      <p>You should. A tray of thighs in the oven, mince in a pan, and salmon for early-week containers all cook in parallel in under 90 minutes, and the variety stops the Wednesday boredom that kills prep habits. Our <a href="/blog/high-protein-meal-prep-muscle">muscle-gain prep playbook</a> shows a full rotation.</p>
+
+      <p>MacroPlan rotates proteins across your week automatically and portions them to your macros. <a href="https://macroplan.app/meal-plans/generate">Start your first prep — free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'June 8, 2026',
+    readTime: '7 min read',
+    image: '/blog/best-protein-for-meal-prep.svg',
+    category: 'Meal Prep'
+  },
+  {
+    slug: 'stop-tracking-macros-burnout',
+    title: 'Macro Tracking Burnout: How to Keep Results Without Logging',
+    excerpt: 'Macro tracking works until logging every gram burns you out. Here’s how to keep your results with structure instead of a food diary — containers do the counting.',
+    content: `
+      <p>Macro tracking burnout is real, predictable, and almost never discussed by the apps that depend on you logging forever. After months of weighing rice and scanning barcodes, the act of tracking itself becomes the diet's biggest cost — and when it collapses, it tends to take the whole routine down with it. You don't have to choose between logging every gram and flying blind. There's a middle path: structure.</p>
+
+      <h2>Why Tracking Burns People Out</h2>
+      <p>Logging is a tax on every single eating decision. Twenty-plus times a day you stop, weigh, search a database, and judge the result. That's manageable when motivation is high and results are fast. It corrodes when life gets busy, progress slows to maintenance pace, or eating out turns every meal into estimation homework. The failure mode is familiar: a missed day becomes a missed week, and without the tracker you realize you never actually learned what to eat — only how to record it.</p>
+
+      <h2>The Insight: Structure Replaces Surveillance</h2>
+      <p>Tracking solves one problem: knowing your numbers. But there's another way to know them — <strong>decide them in advance</strong>. If Sunday-you cooks ten containers portioned to your targets, then weekday-you eating a container <em>is</em> hitting your macros. Nothing to log, because nothing is unknown. The counting happened once, at the cutting board, instead of twenty times a day at the table.</p>
+
+      <blockquote>A tracked diet measures what you ate. A structured diet decides what you'll eat. The second one is less work every single day.</blockquote>
+
+      <h2>The Step-Down Protocol</h2>
+      <p>Don't quit tracking cold. Step down through three phases:</p>
+      <ul>
+        <li><strong>Phase 1 — Track + prep (2–3 weeks).</strong> Keep logging, but batch-prep your weekday meals. You'll notice your log becomes copy-paste; that's the system proving itself. If prep is new to you, start with the <a href="/blog/meal-prepping-for-weight-loss">Sunday system</a>.</li>
+        <li><strong>Phase 2 — Prep + spot-check (a month or more).</strong> Stop logging prepped meals; they're pre-counted. Only track the unstructured edges — weekends, restaurants. Most people are now logging two or three entries a day instead of twenty.</li>
+        <li><strong>Phase 3 — Structure + bodyweight trend.</strong> Stop logging entirely. Your feedback loop becomes a few morning weigh-ins a week and how training feels. Trend moving the wrong way for two or three weeks? Tighten the structure or briefly re-track to recalibrate.</li>
+      </ul>
+
+      <h2>What You Keep Doing</h2>
+      <p>Structure isn't zero awareness. Three habits carry the result:</p>
+      <ul>
+        <li><strong>Protein anchors at every meal.</strong> You learned what 40g looks like during your tracking months — keep serving it. A <a href="/blog/high-protein-breakfasts">high-protein breakfast</a> makes the day's total nearly automatic.</li>
+        <li><strong>Weigh-ins as the dashboard.</strong> The scale's weekly average replaces the food log as your data source.</li>
+        <li><strong>Honest edges.</strong> The structure covers ~80% of meals. The other 20% stays sane because it's a known, budgeted share — not a blind spot.</li>
+      </ul>
+
+      <h2>When to Go Back to Tracking</h2>
+      <p>Re-tracking isn't failure; it's a tool you pull out for precision phases. Worth it when you're starting an aggressive cut, pushing a contest prep, or genuinely stalled and unsure why. Two weeks of honest logging usually finds the leak — then you fold the fix into the structure and put the scale app away again. And if tracking has ever tipped into something that feels compulsive rather than useful, that's a conversation for a professional, not a protocol.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>This is exactly the gap MacroPlan was built for: it's not a tracker, it's the structure. Tell it your targets, your prep day, and your container count, and it generates the batch-cook plan, the portions, and the shopping list — the pre-counted week that makes logging unnecessary. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'June 10, 2026',
+    readTime: '6 min read',
+    image: '/blog/stop-tracking-macros-burnout.svg',
+    category: 'Nutrition'
   }
 ];
 

@@ -10,8 +10,18 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Link from 'next/link'
-import { TrainingProfileSchema, type TrainingProfile } from '@/lib/types/batch-prep'
+import { TrainingProfileSchema, type TrainingProfile, type MealCuisines } from '@/lib/types/batch-prep'
 import { generateBatchPrepPlanAction } from '@/app/actions/batch-prep'
+import { CUISINE_POOL } from '@/lib/services/batch-prep-prompts'
+
+const SURPRISE_ME = '__any__'
+
+const MEAL_SLOTS = [
+  { key: 'breakfast', label: 'Breakfast' },
+  { key: 'lunch', label: 'Lunch' },
+  { key: 'snack', label: 'Snack' },
+  { key: 'dinner', label: 'Dinner' },
+] as const
 
 const PROGRESS_MESSAGES = [
   'Designing your batch recipes…',
@@ -35,6 +45,7 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
   const [limitReached, setLimitReached] = useState(false)
   const [progressIndex, setProgressIndex] = useState(0)
   const [mealVariety, setMealVariety] = useState<'low' | 'medium' | 'high'>('medium')
+  const [mealCuisines, setMealCuisines] = useState<MealCuisines>({})
   const router = useRouter()
 
   useEffect(() => {
@@ -58,10 +69,12 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
     setServerError(null)
     setLimitReached(false)
     startTransition(async () => {
+      const hasCuisines = Object.values(mealCuisines).some(Boolean)
       const result = await generateBatchPrepPlanAction(data, {
         diet_type: userDietType,
         exclusions: userExclusions,
         meal_variety: mealVariety,
+        ...(hasCuisines && { meal_cuisines: mealCuisines }),
       })
       if (result.success) {
         router.push(`/meal-plans/${result.planId}`)
@@ -139,6 +152,37 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
               <SelectItem value="high">High — 7–8 recipes (maximum variety)</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-border p-4">
+        <p className="font-medium">Cuisine by meal <span className="text-muted-foreground text-sm font-normal">(optional)</span></p>
+        <p className="text-sm text-muted-foreground mt-0.5 mb-3">
+          Pick a cuisine for any slot — e.g. American breakfast, Mediterranean lunch, Indian dinner. Leave on &quot;Surprise me&quot; and we&apos;ll rotate cuisines for you.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {MEAL_SLOTS.map((slot) => (
+            <div key={slot.key}>
+              <Label htmlFor={`cuisine_${slot.key}`}>{slot.label}</Label>
+              <Select
+                defaultValue={SURPRISE_ME}
+                onValueChange={(v) =>
+                  setMealCuisines((prev) => ({
+                    ...prev,
+                    [slot.key]: v === SURPRISE_ME ? undefined : v,
+                  }))
+                }
+              >
+                <SelectTrigger id={`cuisine_${slot.key}`}><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={SURPRISE_ME}>Surprise me</SelectItem>
+                  {CUISINE_POOL.map((cuisine) => (
+                    <SelectItem key={cuisine} value={cuisine}>{cuisine}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          ))}
         </div>
       </div>
 

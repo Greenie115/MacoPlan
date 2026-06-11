@@ -1,0 +1,24 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chicken vs. Beef vs. Salmon: Best Protein for Meal Prep">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#16191B"/>
+      <stop offset="100%" stop-color="#0B0F10"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF6B5C"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="880" y="150" width="90" height="330" rx="14" fill="#FF6B5C" fill-opacity="0.85"/>
+  <rect x="990" y="230" width="90" height="250" rx="14" fill="#38BDF8" fill-opacity="0.8"/>
+  <rect x="1100" y="290" width="90" height="190" rx="14" fill="#FBBF24" fill-opacity="0.8"/>
+  <rect x="880" y="500" width="310" height="8" rx="4" fill="#2E3539"/>
+  <rect x="80" y="120" width="64" height="8" rx="4" fill="url(#accent)"/>
+  <text x="80" y="180" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="600" letter-spacing="4" fill="#FF6B5C">MEAL PREP</text>
+  <text x="80" y="290" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#FAFAF9">Chicken vs. Beef</text>
+  <text x="80" y="368" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#FAFAF9">vs. Salmon</text>
+  <text x="80" y="430" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="600" fill="#A8A29E">The best protein for meal prep</text>
+  <text x="80" y="540" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#F5F5F4">MacroPlan</text>
+  <text x="80" y="572" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#A8A29E">macroplan.app</text>
+</svg>

@@ -109,9 +109,11 @@ const VARIETY_RECIPE_COUNT: Record<string, string> = {
 /**
  * Batch-prep-friendly cuisines: bold flavors that survive 5 days in the
  * fridge. Sampled per generation so identical inputs still produce
- * different plans week to week.
+ * different plans week to week. Also offered in the generator form for
+ * per-meal-slot cuisine selection.
  */
-const CUISINE_POOL = [
+export const CUISINE_POOL = [
+  'American',
   'Mexican',
   'Tex-Mex',
   'Thai',
@@ -169,10 +171,25 @@ export function buildUserPrompt(
   const varietyCount = VARIETY_RECIPE_COUNT[preferences.meal_variety ?? 'medium']
   const varietyBlock = `\nRECIPE COUNT: Generate exactly ${varietyCount} distinct recipes. Use different recipes for training and rest days where possible to maximise variety.`
 
+  // Per-slot cuisine choices take precedence; the rotation cuisines cover
+  // any slots the user left open.
+  const slotCuisines = Object.entries(preferences.meal_cuisines ?? {}).filter(
+    ([, cuisine]) => typeof cuisine === 'string' && cuisine.length > 0
+  ) as Array<[string, string]>
+
+  const slotCuisineBlock =
+    slotCuisines.length > 0
+      ? `\nCUISINE BY MEAL SLOT (user-chosen — recipes for these slots MUST belong to the named cuisine, with an authentic sauce/seasoning identity):\n${slotCuisines
+          .map(([slot, cuisine]) => `- ${slot}: ${JSON.stringify(cuisine)}`)
+          .join('\n')}`
+      : ''
+
   const cuisines = variety.cuisines ?? []
   const cuisineBlock =
     cuisines.length > 0
-      ? `\nFLAVOR DIRECTION: Draw this week's recipes from these cuisines: ${cuisines.join(', ')}. Each recipe should commit to one cuisine with an authentic sauce/seasoning identity — not a token spice on a plain bowl.`
+      ? slotCuisines.length > 0
+        ? `\nFLAVOR DIRECTION: For meal slots WITHOUT a user-chosen cuisine above, draw recipes from: ${cuisines.join(', ')}. Each recipe should commit to one cuisine with an authentic sauce/seasoning identity — not a token spice on a plain bowl.`
+        : `\nFLAVOR DIRECTION: Draw this week's recipes from these cuisines: ${cuisines.join(', ')}. Each recipe should commit to one cuisine with an authentic sauce/seasoning identity — not a token spice on a plain bowl.`
       : ''
 
   const avoidRecipes = variety.avoidRecipes ?? []
@@ -208,7 +225,7 @@ PER-MEAL BUDGET (${mealsPerDay} meals/day — aim for these per meal):
 PREFERENCES:
 - Prep day: ${profile.prep_day}
 - Containers to fill: ${profile.containers_per_week}
-- Max prep session length: ${profile.max_prep_time_mins} minutes${dietBlock}${exclusionsBlock}${varietyBlock}${cuisineBlock}${avoidBlock}
+- Max prep session length: ${profile.max_prep_time_mins} minutes${dietBlock}${exclusionsBlock}${varietyBlock}${slotCuisineBlock}${cuisineBlock}${avoidBlock}
 
 Return the plan using the <plan>...</plan> tag format from your instructions. No markdown, no prose, no JSON.`
 }

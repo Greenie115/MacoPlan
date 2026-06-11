@@ -99,10 +99,20 @@ export type TrainingProfile = z.infer<typeof TrainingProfileSchema>
 export const MealVarietySchema = z.enum(['low', 'medium', 'high']).default('medium')
 export type MealVariety = z.infer<typeof MealVarietySchema>
 
+/** Optional per-slot cuisine choices, e.g. American breakfast, Indian dinner. */
+export const MealCuisinesSchema = z.object({
+  breakfast: z.string().max(40).optional(),
+  lunch: z.string().max(40).optional(),
+  snack: z.string().max(40).optional(),
+  dinner: z.string().max(40).optional(),
+})
+export type MealCuisines = z.infer<typeof MealCuisinesSchema>
+
 export const DietaryPreferencesSchema = z.object({
   diet_type: z.string().optional(),
   exclusions: z.array(z.string()).default([]),
   meal_variety: MealVarietySchema.optional(),
+  meal_cuisines: MealCuisinesSchema.optional(),
 })
 export type DietaryPreferences = z.infer<typeof DietaryPreferencesSchema>
 
