@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { BATCH_PREP_SYSTEM_PROMPT, buildUserPrompt } from '@/lib/services/batch-prep-prompts'
+import { BATCH_PREP_SYSTEM_PROMPT, buildUserPrompt, pickCuisines } from '@/lib/services/batch-prep-prompts'
 import type { TrainingProfile } from '@/lib/types/batch-prep'
 
 describe('batch-prep prompts', () => {
@@ -60,6 +60,62 @@ describe('batch-prep prompts', () => {
       const prompt = buildUserPrompt(profile, { exclusions: ['"); DROP TABLE users; --'] })
       expect(prompt).toContain('DROP TABLE')
       expect(prompt).toContain('\\"')
+    })
+
+    it('includes cuisine direction when cuisines are provided', () => {
+      const prompt = buildUserPrompt(profile, { exclusions: [] }, { cuisines: ['Thai', 'Mexican'] })
+      expect(prompt).toContain('FLAVOR DIRECTION')
+      expect(prompt).toContain('Thai')
+      expect(prompt).toContain('Mexican')
+    })
+
+    it('omits cuisine direction by default', () => {
+      const prompt = buildUserPrompt(profile, { exclusions: [] })
+      expect(prompt).not.toContain('FLAVOR DIRECTION')
+    })
+
+    it('lists recent recipes to avoid when provided', () => {
+      const prompt = buildUserPrompt(profile, { exclusions: [] }, {
+        avoidRecipes: ['Gochujang Chicken Bowls', 'Turkey Chili'],
+      })
+      expect(prompt).toContain('DO NOT REPEAT')
+      expect(prompt).toContain('Gochujang Chicken Bowls')
+      expect(prompt).toContain('Turkey Chili')
+    })
+
+    it('omits the avoid block when there is no history', () => {
+      const prompt = buildUserPrompt(profile, { exclusions: [] }, { avoidRecipes: [] })
+      expect(prompt).not.toContain('DO NOT REPEAT')
+    })
+  })
+
+  describe('variety guardrails in the system prompt', () => {
+    it('frames the macro table as calibration, not a whitelist', () => {
+      expect(BATCH_PREP_SYSTEM_PROMPT).toContain('NOT A WHITELIST')
+    })
+
+    it('requires a sauce/seasoning identity per recipe', () => {
+      expect(BATCH_PREP_SYSTEM_PROMPT).toContain('sauce, marinade, or spice mix')
+    })
+
+    it('caps ingredient overlap between recipes', () => {
+      expect(BATCH_PREP_SYSTEM_PROMPT).toContain('at most one primary protein')
+    })
+  })
+
+  describe('pickCuisines', () => {
+    it('returns the requested number of distinct cuisines', () => {
+      const cuisines = pickCuisines(3)
+      expect(cuisines).toHaveLength(3)
+      expect(new Set(cuisines).size).toBe(3)
+    })
+
+    it('varies across calls', () => {
+      // 20 draws of 3-of-18 virtually never produce a single unique set
+      const draws = new Set(
+        Array.from({ length: 20 }, () => pickCuisines(3).sort().join('|'))
+      )
+      expect(draws.size).toBeGreaterThan(1)
     })
   })
 })

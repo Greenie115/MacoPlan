@@ -7,6 +7,7 @@ import {
   persistBatchPrepPlan,
   upsertTrainingProfile,
   getTrainingProfile,
+  getRecentRecipeNames,
 } from '@/lib/services/batch-prep-persistence'
 import { canGenerateBatchPrepPlan } from './subscription'
 import {
@@ -52,7 +53,10 @@ export async function generateBatchPrepPlanAction(
   }
 
   try {
-    const plan = await generateBatchPrepPlan(user.id, profile, preferences)
+    // Steer the generator away from recipes the user already received
+    const recentRecipeNames = await getRecentRecipeNames(user.id).catch(() => [])
+
+    const plan = await generateBatchPrepPlan(user.id, profile, preferences, recentRecipeNames)
     const planId = await persistBatchPrepPlan(user.id, plan, profile)
     await upsertTrainingProfile(user.id, profile)
     revalidatePath('/meal-plans')

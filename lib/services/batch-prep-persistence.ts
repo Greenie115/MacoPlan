@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import type { BatchPrepPlan, TrainingProfile } from '@/lib/types/batch-prep'
+import type { BatchPrepPlan, DayPlan, TrainingProfile } from '@/lib/types/batch-prep'
 
 function startOfWeekISO(): string {
   const now = new Date()
@@ -126,6 +126,35 @@ export async function listBatchPrepPlans(userId: string): Promise<BatchPrepPlanS
       fat_g: macros?.fat_g ?? null,
     }
   })
+}
+
+/**
+ * Recipe names from the user's most recent plans, used to steer the
+ * generator away from repeating last week's meals.
+ */
+export async function getRecentRecipeNames(
+  userId: string,
+  planLimit: number = 3
+): Promise<string[]> {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('batch_prep_plans')
+    .select('training_day_plan, rest_day_plan')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(planLimit)
+
+  if (error || !data) return []
+
+  const names = new Set<string>()
+  for (const row of data) {
+    for (const dayPlan of [row.training_day_plan, row.rest_day_plan]) {
+      for (const meal of (dayPlan as DayPlan | null)?.meals ?? []) {
+        if (meal?.name) names.add(meal.name)
+      }
+    }
+  }
+  return [...names]
 }
 
 export async function countBatchPrepPlans(userId: string): Promise<number> {

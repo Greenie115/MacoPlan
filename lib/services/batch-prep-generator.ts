@@ -1,5 +1,10 @@
 import { anthropicService } from './anthropic'
-import { BATCH_PREP_SYSTEM_PROMPT, buildUserPrompt } from './batch-prep-prompts'
+import {
+  BATCH_PREP_SYSTEM_PROMPT,
+  buildUserPrompt,
+  pickCuisines,
+  type VarietyOptions,
+} from './batch-prep-prompts'
 import { parseBatchPrepPlan } from './batch-prep-parser'
 import { checkMacroAccuracy } from './batch-prep-accuracy'
 import { logUsage } from './anthropic-usage-log'
@@ -48,6 +53,7 @@ async function callAndValidate(
   userId: string | null,
   profile: TrainingProfile,
   preferences: DietaryPreferences,
+  variety: VarietyOptions,
   correctionHint: string | null
 ): Promise<{
   plan: BatchPrepPlan
@@ -55,9 +61,9 @@ async function callAndValidate(
   usage: { input_tokens: number; output_tokens: number }
 }> {
   const userPrompt = correctionHint
-    ? buildUserPrompt(profile, preferences) +
+    ? buildUserPrompt(profile, preferences, variety) +
       `\n\nIMPORTANT: Your previous attempt had this problem: ${correctionHint}. Regenerate with the macros strictly within 5% of the targets.`
-    : buildUserPrompt(profile, preferences)
+    : buildUserPrompt(profile, preferences, variety)
 
   const response = (await anthropicService.generate({
     model: MODEL,
@@ -95,10 +101,18 @@ async function callAndValidate(
 export async function generateBatchPrepPlan(
   userId: string | null,
   profile: TrainingProfile,
-  preferences: DietaryPreferences
+  preferences: DietaryPreferences,
+  recentRecipeNames: string[] = []
 ): Promise<BatchPrepPlan> {
+  // Sampled once per generation so the macro-correction retry doesn't
+  // change flavor direction mid-flight, but successive generations differ.
+  const variety: VarietyOptions = {
+    cuisines: pickCuisines(3),
+    avoidRecipes: recentRecipeNames,
+  }
+
   // First attempt
-  const firstAttempt = await callAndValidate(userId, profile, preferences, null)
+  const firstAttempt = await callAndValidate(userId, profile, preferences, variety, null)
   if (firstAttempt.accuracy.passed) {
     await logUsage(userId, 'batch-prep-generate', firstAttempt.usage, 'success')
     return firstAttempt.plan
@@ -110,6 +124,7 @@ export async function generateBatchPrepPlan(
     userId,
     profile,
     preferences,
+    variety,
     firstAttempt.accuracy.reason || 'macros were off target'
   )
 

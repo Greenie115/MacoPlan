@@ -7,7 +7,7 @@ HARD RULES:
 2. Generate the number of distinct recipes specified in the user prompt. Each recipe is cooked ONCE and portioned into multiple containers across the week.
 3. Every ingredient MUST have a gram weight. Never use "1 cup", "a handful", or "to taste".
 4. Recipes must be batch-cookable: refrigeratable for 5 days minimum, bulk-scalable.
-5. Maximise ingredient overlap between recipes (e.g. chicken thighs in 2 recipes, rice in 3 recipes) to shrink the shopping list and reduce waste.
+5. Reuse staple ingredients where sensible to keep the shopping list small, BUT recipes may share at most one primary protein and one staple carb. Every recipe must be clearly distinct in flavor and main components.
 6. The batch-level <step> timeline MUST be in PREP ORDER (what goes in the oven first, what can cook in parallel), NOT meal order. Group by equipment priority: oven → rice_cooker → stovetop → none.
 7. Each <meal> MUST contain 3–8 <instr> tags describing how to COOK that specific recipe from raw ingredients, in order. These are per-recipe cooking instructions, not reheating instructions and not the batch timeline. Do NOT include reheating/serving steps.
 8. Each meal equipment attribute must be exactly one of: oven | rice_cooker | stovetop | none.
@@ -15,8 +15,9 @@ HARD RULES:
 10. Spread protein 30–50g per meal; never concentrate 100g+ in a single sitting.
 11. Respect dietary exclusions absolutely — no prohibited ingredients anywhere.
 12. NEVER use the characters & < > inside ingredient names, meal names, step actions, instr text, or any tag content. Write the word "and" instead of "&". If you must include a quotation, use single quotes inside attribute values.
+13. Every recipe MUST have a clear cuisine identity and a named sauce, marinade, or spice mix listed in its ingredients with gram weights (oils, sauces, and pastes count toward macros). NEVER output a plain unseasoned 'protein + carb + vegetable' bowl. Recipe names should reflect the dish (e.g. 'Gochujang Chicken Thigh Bowls', not 'Chicken and Rice').
 
-MACRO REFERENCE (per 100g raw weight — use these for accuracy):
+MACRO REFERENCE (per 100g raw weight unless stated — CALIBRATION DATA, NOT A WHITELIST. Use ANY whole-food ingredient you know; estimate macros for unlisted ingredients from your nutrition knowledge and keep the math consistent):
 Chicken breast: 165cal, 31g P, 0g C, 3.6g F
 Chicken thigh (skinless): 177cal, 24g P, 0g C, 8.4g F
 Lean ground beef (93/7): 152cal, 21g P, 0g C, 7g F
@@ -34,6 +35,21 @@ Peanut butter: 588cal, 25g P, 20g C, 50g F
 Black beans (cooked): 132cal, 8.9g P, 24g C, 0.5g F
 Avocado: 160cal, 2g P, 9g C, 15g F
 Cheddar cheese: 403cal, 25g P, 1.3g C, 33g F
+Turkey breast: 114cal, 24g P, 0g C, 1.5g F
+Shrimp: 85cal, 20g P, 0g C, 0.5g F
+White fish (cod): 82cal, 18g P, 0g C, 0.7g F
+Firm tofu: 76cal, 8g P, 2g C, 4.5g F
+Lentils (cooked): 116cal, 9g P, 20g C, 0.4g F
+Chickpeas (cooked): 164cal, 8.9g P, 27g C, 2.6g F
+Quinoa (cooked): 120cal, 4.4g P, 21g C, 1.9g F
+Pasta (cooked): 158cal, 5.8g P, 31g C, 0.9g F
+White potato (cooked): 87cal, 1.9g P, 20g C, 0.1g F
+Corn tortillas: 218cal, 5.7g P, 45g C, 2.9g F
+Cottage cheese (2%): 84cal, 11g P, 4.3g C, 2.3g F
+Soy sauce: 53cal, 8g P, 4.9g C, 0.6g F
+Coconut milk (canned): 197cal, 2g P, 2.8g C, 21g F
+Salsa: 36cal, 1.5g P, 7g C, 0.2g F
+Honey: 304cal, 0.3g P, 82g C, 0g F
 
 VERIFICATION STEP — before outputting tags:
 1. For each meal, multiply each ingredient's g by its per-gram macros to compute ingredient-level macros.
@@ -90,9 +106,52 @@ const VARIETY_RECIPE_COUNT: Record<string, string> = {
   high: '7–8',
 }
 
+/**
+ * Batch-prep-friendly cuisines: bold flavors that survive 5 days in the
+ * fridge. Sampled per generation so identical inputs still produce
+ * different plans week to week.
+ */
+const CUISINE_POOL = [
+  'Mexican',
+  'Tex-Mex',
+  'Thai',
+  'Korean',
+  'Japanese',
+  'Sichuan Chinese',
+  'Indian',
+  'Mediterranean',
+  'Greek',
+  'Italian',
+  'Middle Eastern',
+  'Moroccan',
+  'Cajun/Creole',
+  'Caribbean',
+  'Vietnamese',
+  'Spanish',
+  'American BBQ',
+  'Peruvian',
+] as const
+
+export function pickCuisines(count: number = 3): string[] {
+  const shuffled = [...CUISINE_POOL]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled.slice(0, count)
+}
+
+export interface VarietyOptions {
+  /** Cuisines to draw this week's recipes from (see pickCuisines). */
+  cuisines?: string[]
+  /** Recipe names from the user's recent plans — must not be repeated. */
+  avoidRecipes?: string[]
+}
+
 export function buildUserPrompt(
   profile: TrainingProfile,
-  preferences: DietaryPreferences
+  preferences: DietaryPreferences,
+  variety: VarietyOptions = {}
 ): string {
   const td = profile.training_day_macros
   const rd = profile.rest_day_macros
@@ -109,6 +168,18 @@ export function buildUserPrompt(
 
   const varietyCount = VARIETY_RECIPE_COUNT[preferences.meal_variety ?? 'medium']
   const varietyBlock = `\nRECIPE COUNT: Generate exactly ${varietyCount} distinct recipes. Use different recipes for training and rest days where possible to maximise variety.`
+
+  const cuisines = variety.cuisines ?? []
+  const cuisineBlock =
+    cuisines.length > 0
+      ? `\nFLAVOR DIRECTION: Draw this week's recipes from these cuisines: ${cuisines.join(', ')}. Each recipe should commit to one cuisine with an authentic sauce/seasoning identity — not a token spice on a plain bowl.`
+      : ''
+
+  const avoidRecipes = variety.avoidRecipes ?? []
+  const avoidBlock =
+    avoidRecipes.length > 0
+      ? `\nDO NOT REPEAT: The user already received these recipes in recent weeks. Do not generate them again, nor trivially renamed variants of them:\n${avoidRecipes.map((name) => `- ${name}`).join('\n')}`
+      : ''
 
   const mealsPerDay = 4
   const tPerMeal = {
@@ -137,7 +208,7 @@ PER-MEAL BUDGET (${mealsPerDay} meals/day — aim for these per meal):
 PREFERENCES:
 - Prep day: ${profile.prep_day}
 - Containers to fill: ${profile.containers_per_week}
-- Max prep session length: ${profile.max_prep_time_mins} minutes${dietBlock}${exclusionsBlock}${varietyBlock}
+- Max prep session length: ${profile.max_prep_time_mins} minutes${dietBlock}${exclusionsBlock}${varietyBlock}${cuisineBlock}${avoidBlock}
 
 Return the plan using the <plan>...</plan> tag format from your instructions. No markdown, no prose, no JSON.`
 }
