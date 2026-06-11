@@ -5,6 +5,7 @@ import { searchRecipes } from '@/app/actions/recipe-search'
 import {
   validateRecipeFilters,
   toSearchParams,
+  hasActiveFilters,
   type RecipeAPIFilterParams,
 } from '@/lib/utils/filter-validation'
 
@@ -81,8 +82,12 @@ export async function RecipeResults({ params }: { params: RecipesSearchParams })
   }> = []
   let totalResults = 0
   let recipeApiError: string | null = null
-  // True when the all-tab is active with no search — infinite scroll handles paging
-  const useInfiniteScroll = activeTab !== 'popular' && activeTab !== 'favorites' && !searchQuery
+  // Active filters must go through the Recipe-API search path — the cached
+  // browse path can't filter. Infinite scroll only serves the unfiltered,
+  // no-search "All Recipes" view.
+  const filtersActive = hasActiveFilters(validatedFilters)
+  const useInfiniteScroll =
+    activeTab !== 'popular' && activeTab !== 'favorites' && !searchQuery && !filtersActive
 
   const favoriteIds = await getFavoriteRecipeIds()
 
@@ -176,8 +181,9 @@ export async function RecipeResults({ params }: { params: RecipesSearchParams })
       totalResults = allFavorites.length
     }
   } else {
-    // "All Recipes" tab - use cached recipes when no search, Recipe-API when searching
-    if (!searchQuery) {
+    // "All Recipes" tab — cached recipes for plain browsing, Recipe-API when
+    // searching or when any filter is active (the API filters server-side)
+    if (!searchQuery && !filtersActive) {
       // No search query - fetch from local cached recipes
       const cachedResult = await getCachedRecipes(currentPage, RECIPES_PER_PAGE)
 
@@ -202,14 +208,14 @@ export async function RecipeResults({ params }: { params: RecipesSearchParams })
         totalResults = cachedResult.totalCount
       }
     } else {
-      // Has search query - use Recipe-API
+      // Search query and/or active filters - use Recipe-API
       // When image filter is active, fetch more to compensate for client-side filtering
       const needsImageFilter = validatedFilters.must_have_images === true
       const maxResultsToFetch = needsImageFilter ? 50 : RECIPES_PER_PAGE
 
       const recipeApiResult = await searchRecipes({
         ...searchParams_api,
-        q: searchQuery,
+        q: searchQuery || undefined,
         per_page: maxResultsToFetch,
         page: currentPage,
       })

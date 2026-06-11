@@ -243,7 +243,9 @@ export function validateRecipeFilters(params: RecipeFilterParams): ValidatedFilt
 export function toSearchParams(filters: ValidatedFilters): RecipeApiSearchParams {
   return {
     q: filters.q,
-    category: filters.category,
+    // Recipe-API.com only filters by a single category — comma-joined values
+    // return zero results — so send the first selected one.
+    category: filters.category?.split(',')[0],
     min_calories: filters.min_calories,
     max_calories: filters.max_calories,
     min_protein: filters.min_protein,
