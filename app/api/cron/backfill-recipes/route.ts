@@ -28,10 +28,12 @@ export async function GET(request: Request) {
 
   const supabase = createServiceRoleClient()
 
+  // Rows missing instructions entirely, or cached before the rich detail
+  // fields (storage/equipment/chef notes) were added to meta.rich
   const { data: lightweight, error: queryError } = await supabase
     .from('recipe_api_cache')
     .select('recipe_api_id')
-    .is('instructions', null)
+    .or('instructions.is.null,meta->rich.is.null')
     .order('created_at', { ascending: true })
     .limit(BATCH_SIZE)
 
@@ -102,7 +104,7 @@ export async function GET(request: Request) {
   const { count: remaining } = await supabase
     .from('recipe_api_cache')
     .select('*', { count: 'exact', head: true })
-    .is('instructions', null)
+    .or('instructions.is.null,meta->rich.is.null')
 
   console.log(`[cron/backfill-recipes] backfilled=${backfilled} rateLimited=${rateLimited} remaining=${remaining}`)
   return NextResponse.json({ ok: true, backfilled, rateLimited, remaining: remaining ?? null })
