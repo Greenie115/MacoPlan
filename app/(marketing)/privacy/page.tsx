@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Read how MacroPlan collects, uses, and protects your personal data.',
+  alternates: {
+    canonical: '/privacy',
+  },
+}
 
 export default function PrivacyPage() {
   return (
