@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/blog', '/blog/*', '/pricing'],
+        allow: ['/', '/blog', '/blog/*', '/pricing', '/help', '/privacy', '/terms'],
         disallow: [
           '/dashboard',
           '/profile',
@@ -17,7 +17,6 @@ export default function robots(): MetadataRoute.Robots {
           '/checkout',
           '/api',
           '/auth',
-          '/help',
           '/forgot-password',
           '/reset-password',
           '/login/verify-2fa',

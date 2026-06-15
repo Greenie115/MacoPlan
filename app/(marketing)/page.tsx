@@ -227,7 +227,7 @@ export default function LandingPage() {
                     style={{ animationDelay: '0.35s' }}
                   >
                     <Link
-                      href="/meal-plans/generate"
+                      href="/onboarding/1"
                       className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-full transition-all shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 text-base"
                     >
                       <span>Generate my prep plan — free</span>
