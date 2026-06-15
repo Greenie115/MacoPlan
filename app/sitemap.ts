@@ -1,55 +1,64 @@
 import type { MetadataRoute } from 'next'
 import { blogPosts } from '@/lib/blog-data'
 
+// Privacy/Terms show their own "Last updated" date in the page content.
+const LEGAL_LAST_MODIFIED = new Date('2025-12-17')
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.app'
+
+  // Most recent blog post date — used as the "last changed" signal for the
+  // pages whose content changes when a new post is published.
+  const latestPostDate = blogPosts.reduce(
+    (latest, post) => {
+      const postDate = new Date(post.date)
+      return postDate > latest ? postDate : latest
+    },
+    new Date(blogPosts[0].date)
+  )
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: latestPostDate,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: new Date(),
+      lastModified: latestPostDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/pricing`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/login`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.3,
     },
     {
       url: `${baseUrl}/signup`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/help`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
+      lastModified: LEGAL_LAST_MODIFIED,
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${baseUrl}/terms`,
-      lastModified: new Date(),
+      lastModified: LEGAL_LAST_MODIFIED,
       changeFrequency: 'yearly',
       priority: 0.3,
     },
