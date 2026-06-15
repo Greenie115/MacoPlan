@@ -14,6 +14,10 @@ interface BlogPostPageProps {
   }>
 }
 
+export function generateStaticParams() {
+  return blogPosts.map((post) => ({ slug: post.slug }))
+}
+
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params
   const post = getBlogPost(slug)
