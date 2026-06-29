@@ -1,10 +1,8 @@
 import { RecipeResultsClient } from '@/components/recipes/recipe-results-client'
 import { RecipeInfiniteScroll } from '@/components/recipes/recipe-infinite-scroll'
-import { getFavoriteRecipeIds, getFavoriteRecipes, getMostFavoritedRecipes, getCachedRecipes } from '@/app/actions/recipes'
-import { searchRecipes } from '@/app/actions/recipe-search'
+import { getFavoriteRecipeIds, getFavoriteRecipes, getMostFavoritedRecipes, getCachedRecipes, searchLibraryRecipes } from '@/app/actions/recipes'
 import {
   validateRecipeFilters,
-  toSearchParams,
   hasActiveFilters,
   type RecipeAPIFilterParams,
 } from '@/lib/utils/filter-validation'
@@ -62,7 +60,6 @@ export async function RecipeResults({ params }: { params: RecipesSearchParams })
   }
 
   const validatedFilters = validateRecipeFilters(filterParams)
-  const searchParams_api = toSearchParams(validatedFilters)
 
   // Fetch recipes based on active tab
   let recipes: Array<{
@@ -112,39 +109,33 @@ export async function RecipeResults({ params }: { params: RecipesSearchParams })
       source: 'recipe-api' as const,
     }))
 
-    // If fewer than 20 popular recipes, supplement with Recipe-API
+    // If fewer than 20 popular recipes, supplement from the library
+    // (quality-first browse order) so the popular tab is never sparse.
     if (popularRecipes.length < RECIPES_PER_PAGE) {
       const needed = RECIPES_PER_PAGE - popularRecipes.length
-      const supplementResult = await searchRecipes({
-        q: 'healthy',
-        per_page: needed + 10, // Fetch extra in case of duplicates
-        page: 1,
-      })
+      const supplement = await getCachedRecipes(1, needed + 10)
 
-      if (supplementResult.success && supplementResult.data) {
-        // Deduplicate by recipe ID
-        const existingIds = new Set(popularRecipes.map((r) => r.id))
-        const supplementRecipes = supplementResult.data.recipes
-          .filter((r) => !existingIds.has(r.id))
-          .slice(0, needed)
-          .map((recipe) => ({
-            id: recipe.id,
-            title: recipe.title,
-            name: recipe.title,
-            imageUrl: recipe.imageUrl ?? undefined,
-            image_url: recipe.imageUrl ?? undefined,
-            calories: recipe.calories,
-            protein: recipe.protein,
-            protein_grams: recipe.protein,
-            carbs: recipe.carbs,
-            carb_grams: recipe.carbs,
-            fat: recipe.fat,
-            fat_grams: recipe.fat,
-            source: 'recipe-api' as const,
-          }))
+      const existingIds = new Set(popularRecipes.map((r) => r.id))
+      const supplementRecipes = supplement.data
+        .filter((r) => !existingIds.has(r.id))
+        .slice(0, needed)
+        .map((recipe) => ({
+          id: recipe.id,
+          title: recipe.title,
+          name: recipe.title,
+          imageUrl: recipe.imageUrl ?? undefined,
+          image_url: recipe.imageUrl ?? undefined,
+          calories: recipe.calories,
+          protein: recipe.protein,
+          protein_grams: recipe.protein,
+          carbs: recipe.carbs,
+          carb_grams: recipe.carbs,
+          fat: recipe.fat,
+          fat_grams: recipe.fat,
+          source: 'recipe-api' as const,
+        }))
 
-        popularRecipes = [...popularRecipes, ...supplementRecipes]
-      }
+      popularRecipes = [...popularRecipes, ...supplementRecipes]
     }
 
     recipes = popularRecipes.slice(0, RECIPES_PER_PAGE)
@@ -208,20 +199,13 @@ export async function RecipeResults({ params }: { params: RecipesSearchParams })
         totalResults = cachedResult.totalCount
       }
     } else {
-      // Search query and/or active filters - use Recipe-API
-      // When image filter is active, fetch more to compensate for client-side filtering
-      const needsImageFilter = validatedFilters.must_have_images === true
-      const maxResultsToFetch = needsImageFilter ? 50 : RECIPES_PER_PAGE
+      // Search query and/or active filters - query the self-hosted library
+      const libraryResult = await searchLibraryRecipes(validatedFilters, currentPage, RECIPES_PER_PAGE)
 
-      const recipeApiResult = await searchRecipes({
-        ...searchParams_api,
-        q: searchQuery || undefined,
-        per_page: maxResultsToFetch,
-        page: currentPage,
-      })
-
-      if (recipeApiResult.success && recipeApiResult.data) {
-        let mappedRecipes = recipeApiResult.data.recipes.map((recipe) => ({
+      if (libraryResult.error) {
+        recipeApiError = libraryResult.error
+      } else {
+        recipes = libraryResult.recipes.map((recipe) => ({
           id: recipe.id,
           title: recipe.title,
           name: recipe.title,
@@ -236,25 +220,7 @@ export async function RecipeResults({ params }: { params: RecipesSearchParams })
           fat_grams: recipe.fat,
           source: 'recipe-api' as const,
         }))
-
-        // Apply client-side image filter as fallback (API/cache may not filter reliably)
-        if (needsImageFilter) {
-          mappedRecipes = mappedRecipes.filter((recipe) => recipe.imageUrl)
-        }
-
-        // Ensure consistent page size after filtering
-        recipes = mappedRecipes.slice(0, RECIPES_PER_PAGE)
-
-        // Adjust total results estimate for image filter
-        // (rough estimate: assume same ratio of images across all results)
-        if (needsImageFilter && recipeApiResult.data.recipes.length > 0) {
-          const imageRatio = mappedRecipes.length / recipeApiResult.data.recipes.length
-          totalResults = Math.floor(recipeApiResult.data.totalResults * imageRatio)
-        } else {
-          totalResults = recipeApiResult.data.totalResults
-        }
-      } else {
-        recipeApiError = recipeApiResult.error || 'Failed to fetch recipes'
+        totalResults = libraryResult.totalResults
       }
     }
   }

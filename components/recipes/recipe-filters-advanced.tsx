@@ -18,7 +18,7 @@ import { X, Filter, ChevronDown, ChevronUp, Image as ImageIcon, SlidersHorizonta
 import { Checkbox } from '@/components/ui/checkbox'
 import { cn } from '@/lib/utils'
 import { FILTER_LIMITS, ALLOWED_SORT_OPTIONS, type SortOption } from '@/lib/utils/filter-validation'
-import { getRecipeTypeFilters, getSortOptions } from '@/app/actions/recipe-search'
+import { getRecipeTypeFilters } from '@/app/actions/recipes'
 
 // Types for recipe type options
 interface RecipeTypeOption {

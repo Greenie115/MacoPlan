@@ -7,8 +7,8 @@ import { getUserSubscriptionTier } from '@/lib/utils/subscription'
 import { FREE_FAVORITES_LIMIT } from '@/lib/constants/subscription'
 import { checkFavoritesQuota } from '@/app/actions/subscription'
 import { createCacheClient } from '@/lib/supabase/cache-client'
-import { recipeApiService } from '@/lib/services/recipe-api'
 import { unsplashService } from '@/lib/services/unsplash'
+import type { ValidatedFilters } from '@/lib/utils/filter-validation'
 
 /**
  * Recipe metadata for favorites
@@ -203,24 +203,78 @@ export async function getFavoriteRecipes() {
 }
 
 /**
- * Get cached recipes from local database for browsing.
- * Used when no search query is provided to show all available recipes.
- * On first load (page 1) with a sparse cache, seeds the cache from Recipe-API.com.
+ * A recipe list item as consumed by the browse grid and infinite scroll.
+ */
+export interface LibraryRecipeListItem {
+  id: string
+  title: string
+  description: string | null
+  imageUrl: string | null
+  calories: number
+  protein: number
+  carbs: number
+  fat: number
+}
+
+/** Columns selected from the recipes table for list views. */
+type LibraryRow = {
+  id: string
+  name: string
+  description: string | null
+  image_url: string | null
+  calories: number | null
+  protein_grams: number | null
+  carb_grams: number | null
+  fat_grams: number | null
+}
+
+/**
+ * Map library rows to list items, attaching images: prefer a stored
+ * `image_url`, otherwise fall back to a cached Unsplash image keyed by recipe
+ * id. Misses are warmed out-of-band (after the response) so they fill in on the
+ * next view without ever blocking the query.
+ */
+async function toListItems(rows: LibraryRow[]): Promise<LibraryRecipeListItem[]> {
+  const needImages = rows.filter((r) => !r.image_url)
+  const imageMap = needImages.length > 0
+    ? await unsplashService.getCachedImages(needImages.map((r) => r.id))
+    : new Map<string, { url: string }>()
+
+  const missing = needImages.filter((r) => !imageMap.has(r.id)).map((r) => ({ id: r.id, name: r.name }))
+  if (missing.length > 0) {
+    after(async () => {
+      try {
+        await unsplashService.getImagesForRecipes(missing)
+      } catch {
+        // Best-effort warm-up; failures are negative-cached by the service
+      }
+    })
+  }
+
+  return rows.map((r) => ({
+    id: r.id,
+    title: r.name,
+    description: r.description,
+    imageUrl: r.image_url ?? imageMap.get(r.id)?.url ?? null,
+    calories: r.calories ?? 0,
+    protein: r.protein_grams ?? 0,
+    carbs: r.carb_grams ?? 0,
+    fat: r.fat_grams ?? 0,
+  }))
+}
+
+const LIBRARY_COLUMNS = 'id, name, description, image_url, calories, protein_grams, carb_grams, fat_grams'
+
+/**
+ * Browse the self-hosted recipe library (no search/filters). Quality-first,
+ * stable order (batch_prep_score desc, id) so pagination and infinite scroll
+ * stay consistent across requests. Replaces the old Recipe-API.com cache path.
  */
 export async function getCachedRecipes(
   page: number = 1,
   limit: number = 20
 ): Promise<{
-  data: Array<{
-    id: string
-    title: string
-    description: string | null
-    imageUrl: string | null
-    calories: number
-    protein: number
-    carbs: number
-    fat: number
-  }>
+  data: LibraryRecipeListItem[]
   totalCount: number
   error: string | null
 }> {
@@ -228,71 +282,117 @@ export async function getCachedRecipes(
     const supabase = await createClient()
     const offset = (page - 1) * limit
 
-    // Extend the cache from the API whenever the requested window reaches
-    // past what's cached — covers both the initial seed and infinite-scroll
-    // growth. Fetches one page ahead so scrolling stays smooth.
-    const { count: existingCount } = await supabase
-      .from('recipe_api_cache')
-      .select('*', { count: 'exact', head: true })
+    const { data, count, error } = await supabase
+      .from('recipes')
+      .select(LIBRARY_COLUMNS, { count: 'exact' })
+      .order('batch_prep_score', { ascending: false, nullsFirst: false })
+      .order('id', { ascending: true })
+      .range(offset, offset + limit - 1)
 
-    const existing = existingCount || 0
-    const target = Math.max(60, offset + 2 * limit)
-    if (existing < target) {
-      try {
-        await recipeApiService.seedCache(target, existing)
-      } catch (error) {
-        // Non-fatal — serve whatever is cached
-        console.error('[getCachedRecipes] Cache seeding failed:', error)
-      }
-    }
-
-    const [countResult, dataResult] = await Promise.all([
-      supabase.from('recipe_api_cache').select('*', { count: 'exact', head: true }),
-      supabase
-        .from('recipe_api_cache')
-        .select('recipe_api_id, name, description, nutrition')
-        .order('created_at', { ascending: false })
-        .range(offset, offset + limit - 1),
-    ])
-
-    if (dataResult.error) {
+    if (error) {
       return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
     }
 
-    // Serve cached images without blocking; warm misses out-of-band so
-    // they fill in on the next view (same pattern as searchRecipes).
-    const recipeRefs = (dataResult.data || []).map((r) => ({ id: r.recipe_api_id, name: r.name }))
-    const imageMap = await unsplashService.getCachedImages(recipeRefs.map((r) => r.id))
-
-    const missingImages = recipeRefs.filter((r) => !imageMap.has(r.id))
-    if (missingImages.length > 0) {
-      after(async () => {
-        try {
-          await unsplashService.getImagesForRecipes(missingImages)
-        } catch {
-          // Best-effort warm-up; failures are negative-cached by the service
-        }
-      })
-    }
-
-    const recipes = (dataResult.data || []).map((recipe) => ({
-      id: recipe.recipe_api_id,
-      title: recipe.name,
-      description: recipe.description,
-      imageUrl: imageMap.get(recipe.recipe_api_id)?.url ?? null,
-      calories: recipe.nutrition?.per_serving?.calories || 0,
-      protein: recipe.nutrition?.per_serving?.protein_g || 0,
-      carbs: recipe.nutrition?.per_serving?.carbohydrates_g || 0,
-      fat: recipe.nutrition?.per_serving?.fat_g || 0,
-    }))
-
     return {
-      data: recipes,
-      totalCount: countResult.count || 0,
+      data: await toListItems((data as LibraryRow[]) || []),
+      totalCount: count || 0,
       error: null,
     }
   } catch {
     return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
+  }
+}
+
+/**
+ * Search and filter the self-hosted recipe library. Replaces the Recipe-API.com
+ * search path: text match on name, macro/calorie ranges, cuisine ("category"),
+ * and sort all run as SQL against the recipes table.
+ */
+export async function searchLibraryRecipes(
+  filters: ValidatedFilters,
+  page: number = 1,
+  limit: number = 20
+): Promise<{
+  recipes: LibraryRecipeListItem[]
+  totalResults: number
+  error: string | null
+}> {
+  try {
+    const supabase = await createClient()
+    const offset = (page - 1) * limit
+
+    let query = supabase.from('recipes').select(LIBRARY_COLUMNS, { count: 'exact' })
+
+    if (filters.q) query = query.ilike('name', `%${filters.q}%`)
+    // "category" maps to cuisine (filter options are sourced from cuisines).
+    if (filters.category) query = query.in('cuisine', filters.category.split(','))
+    if (filters.min_calories !== undefined) query = query.gte('calories', filters.min_calories)
+    if (filters.max_calories !== undefined) query = query.lte('calories', filters.max_calories)
+    if (filters.min_protein !== undefined) query = query.gte('protein_grams', filters.min_protein)
+    if (filters.max_protein !== undefined) query = query.lte('protein_grams', filters.max_protein)
+    if (filters.min_carbs !== undefined) query = query.gte('carb_grams', filters.min_carbs)
+    if (filters.max_carbs !== undefined) query = query.lte('carb_grams', filters.max_carbs)
+    if (filters.min_fat !== undefined) query = query.gte('fat_grams', filters.min_fat)
+    if (filters.max_fat !== undefined) query = query.lte('fat_grams', filters.max_fat)
+
+    switch (filters.sort_by) {
+      case 'newest':
+        query = query.order('created_at', { ascending: false })
+        break
+      case 'oldest':
+        query = query.order('created_at', { ascending: true })
+        break
+      case 'caloriesPerServingAscending':
+        query = query.order('calories', { ascending: true })
+        break
+      case 'caloriesPerServingDescending':
+        query = query.order('calories', { ascending: false })
+        break
+      default:
+        // Relevance: best batch-prep recipes first, stable via id.
+        query = query.order('batch_prep_score', { ascending: false, nullsFirst: false })
+    }
+    query = query.order('id', { ascending: true })
+
+    const { data, count, error } = await query.range(offset, offset + limit - 1)
+
+    if (error) {
+      return { recipes: [], totalResults: 0, error: 'Failed to search recipes' }
+    }
+
+    return {
+      recipes: await toListItems((data as LibraryRow[]) || []),
+      totalResults: count || 0,
+      error: null,
+    }
+  } catch {
+    return { recipes: [], totalResults: 0, error: 'Failed to search recipes' }
+  }
+}
+
+/**
+ * Lightweight title autocomplete for the search bar — name match only, no
+ * images or macros. Replaces the Recipe-API.com autocomplete call.
+ */
+export async function getRecipeAutocomplete(
+  query: string
+): Promise<Array<{ id: string; title: string }>> {
+  const q = query.trim()
+  if (q.length < 3) return []
+
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from('recipes')
+      .select('id, name')
+      .ilike('name', `%${q}%`)
+      .order('batch_prep_score', { ascending: false, nullsFirst: false })
+      .limit(5)
+
+    if (error || !data) return []
+    return data.map((r) => ({ id: r.id as string, title: r.name as string }))
+  } catch {
+    return []
   }
 }
 
@@ -368,4 +468,51 @@ export const getMostFavoritedRecipes = unstable_cache(
   },
   ['popular-recipes'],
   { revalidate: 300 } // 5 minutes
+)
+
+/**
+ * Recipe "type" filter options, sourced from the distinct cuisines present in
+ * the library (replaces the Recipe-API.com categories endpoint). Cached for an
+ * hour since the library's cuisine set rarely changes.
+ */
+export const getRecipeTypeFilters = unstable_cache(
+  async (): Promise<{
+    success: boolean
+    data?: Array<{ value: string; label: string }>
+    error?: string
+  }> => {
+    try {
+      const supabase = createCacheClient()
+
+      // Paginate past Supabase's 1000-row default so every cuisine is counted.
+      const counts = new Map<string, number>()
+      const pageSize = 1000
+      for (let from = 0; ; from += pageSize) {
+        const { data, error } = await supabase
+          .from('recipes')
+          .select('cuisine')
+          .range(from, from + pageSize - 1)
+        if (error) return { success: false, error: 'Failed to fetch cuisines' }
+        if (!data || data.length === 0) break
+        for (const row of data as Array<{ cuisine: string | null }>) {
+          const cuisine = row.cuisine?.trim()
+          if (cuisine) counts.set(cuisine, (counts.get(cuisine) || 0) + 1)
+        }
+        if (data.length < pageSize) break
+      }
+
+      const options = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .map(([cuisine, count]) => ({
+          value: cuisine,
+          label: `${cuisine.charAt(0).toUpperCase()}${cuisine.slice(1)} (${count})`,
+        }))
+
+      return { success: true, data: options }
+    } catch {
+      return { success: false, error: 'Failed to fetch cuisines' }
+    }
+  },
+  ['library-cuisine-filters'],
+  { revalidate: 3600 } // 1 hour
 )

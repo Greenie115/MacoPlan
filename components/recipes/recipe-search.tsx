@@ -4,7 +4,7 @@ import { Search, Loader2 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebounce } from '@/lib/hooks/use-debounce'
 import { useState, useEffect, useRef } from 'react'
-import { searchRecipes } from '@/app/actions/recipe-search'
+import { getRecipeAutocomplete } from '@/app/actions/recipes'
 import { Input } from '@/components/ui/input'
 
 interface AutocompleteResult {
@@ -34,13 +34,9 @@ export function RecipeSearch() {
   useEffect(() => {
     if (debouncedAutocomplete.length >= 3 && showAutocomplete) {
       setIsLoadingAutocomplete(true)
-      searchRecipes({ q: debouncedAutocomplete, per_page: 5 })
-        .then((response) => {
-          if (response.success && response.data) {
-            setAutocompleteResults(
-              response.data.recipes.map(r => ({ id: r.id, title: r.title }))
-            )
-          }
+      getRecipeAutocomplete(debouncedAutocomplete)
+        .then((results) => {
+          setAutocompleteResults(results)
           setIsLoadingAutocomplete(false)
         })
         .catch((error) => {
