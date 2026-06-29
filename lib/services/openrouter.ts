@@ -40,6 +40,7 @@ export async function chatCompletion(
     temperature?: number
     maxTokens?: number
     jsonMode?: boolean
+    reasoning?: { enabled: boolean }
   } = {}
 ): Promise<OpenRouterResponse> {
   const {
@@ -47,6 +48,7 @@ export async function chatCompletion(
     temperature = 0.3,
     maxTokens = 4096,
     jsonMode = false,
+    reasoning,
   } = options
 
   const body: Record<string, unknown> = {
@@ -58,6 +60,12 @@ export async function chatCompletion(
 
   if (jsonMode) {
     body.response_format = { type: 'json_object' }
+  }
+
+  // GLM models reason by default — slow and token-heavy. Pass { enabled: false }
+  // to turn it off for tasks that don't need it.
+  if (reasoning) {
+    body.reasoning = reasoning
   }
 
   const res = await fetch(`${OPENROUTER_BASE_URL}/chat/completions`, {

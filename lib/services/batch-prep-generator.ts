@@ -1,4 +1,4 @@
-import { anthropicService } from './anthropic'
+import { chatCompletion, extractContent } from './openrouter'
 import {
   BATCH_PREP_SYSTEM_PROMPT,
   buildUserPrompt,
@@ -15,24 +15,12 @@ import {
   type DietaryPreferences,
 } from '@/lib/types/batch-prep'
 
-const MODEL = 'claude-sonnet-4-6'
+// Cheap GLM via OpenRouter instead of Claude Sonnet. Not Flash — assembling a
+// macro-verified plan in the strict XML format needs real capability.
+const MODEL = process.env.BATCH_PREP_MODEL || 'z-ai/glm-4.7'
 const MAX_TOKENS = 8000
 
 const DEBUG = process.env.BATCH_PREP_DEBUG === '1'
-
-type AnthropicResponse = {
-  content: Array<{ type: string; text?: string }>
-  usage?: { input_tokens: number; output_tokens: number }
-  stop_reason?: string
-}
-
-function extractTextContent(response: AnthropicResponse): string {
-  const textBlock = response.content.find((b) => b.type === 'text')
-  if (!textBlock?.text) {
-    throw new BatchPrepValidationError('No text content in Claude response')
-  }
-  return textBlock.text
-}
 
 function logRaw(
   label: string,
@@ -65,17 +53,20 @@ async function callAndValidate(
       `\n\nIMPORTANT: Your previous attempt had this problem: ${correctionHint}. Regenerate with the macros strictly within 5% of the targets.`
     : buildUserPrompt(profile, preferences, variety)
 
-  const response = (await anthropicService.generate({
-    model: MODEL,
-    max_tokens: MAX_TOKENS,
-    system: BATCH_PREP_SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userPrompt }],
-  })) as unknown as AnthropicResponse
+  const response = await chatCompletion(
+    [
+      { role: 'system', content: BATCH_PREP_SYSTEM_PROMPT },
+      { role: 'user', content: userPrompt },
+    ],
+    { model: MODEL, maxTokens: MAX_TOKENS, temperature: 0.7, reasoning: { enabled: false } }
+  )
 
-  const usage = response.usage ?? { input_tokens: 0, output_tokens: 0 }
-  const stopReason = response.stop_reason
+  const u = response.usage ?? { prompt_tokens: 0, completion_tokens: 0 }
+  const usage = { input_tokens: u.prompt_tokens, output_tokens: u.completion_tokens }
+  const stopReason = response.choices[0]?.finish_reason
 
-  const text = extractTextContent(response)
+  const text = extractContent(response)
+  if (!text) throw new BatchPrepValidationError('No text content in model response')
   logRaw(correctionHint ? 'retry' : 'first', text, usage, stopReason)
 
   let plan: BatchPrepPlan

@@ -24,9 +24,9 @@ function loadRealEnv(): { loaded: boolean; source?: string } {
   for (const path of candidates) {
     try {
       const content = readFileSync(path, 'utf8')
-      const match = content.match(/^ANTHROPIC_API_KEY=(.+)$/m)
-      if (match && match[1].startsWith('sk-ant-')) {
-        process.env.ANTHROPIC_API_KEY = match[1].trim()
+      const match = content.match(/^OPENROUTER_API_KEY=(.+)$/m)
+      if (match && match[1].trim().length > 0) {
+        process.env.OPENROUTER_API_KEY = match[1].trim()
         return { loaded: true, source: path }
       }
     } catch {
@@ -40,7 +40,7 @@ const envResult = loadRealEnv()
 const shouldRun =
   process.env.RUN_LIVE_BATCH_PREP === '1' &&
   envResult.loaded &&
-  (process.env.ANTHROPIC_API_KEY ?? '').startsWith('sk-ant-')
+  (process.env.OPENROUTER_API_KEY ?? '').length > 0
 
 // Enable raw-response debug logging for this test run
 process.env.BATCH_PREP_DEBUG = '1'
@@ -100,7 +100,7 @@ describe.skipIf(!shouldRun)('batch-prep live API', () => {
 
 if (!shouldRun) {
   const reason = !envResult.loaded
-    ? 'no real ANTHROPIC_API_KEY found in .env.local'
+    ? 'no OPENROUTER_API_KEY found in .env.local'
     : process.env.RUN_LIVE_BATCH_PREP !== '1'
       ? 'RUN_LIVE_BATCH_PREP=1 not set'
       : 'key does not look valid'

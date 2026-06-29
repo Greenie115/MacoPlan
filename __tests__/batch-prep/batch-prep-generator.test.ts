@@ -2,11 +2,11 @@ import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import type { BatchPrepPlan, TrainingProfile, DietaryPreferences } from '@/lib/types/batch-prep'
 import validPlanFixture from './fixtures/valid-plan.json'
 
-// Mock the anthropic service BEFORE importing the generator
-vi.mock('@/lib/services/anthropic', () => ({
-  anthropicService: {
-    generate: vi.fn(),
-  },
+// Mock the OpenRouter client BEFORE importing the generator
+vi.mock('@/lib/services/openrouter', () => ({
+  chatCompletion: vi.fn(),
+  extractContent: (r: { choices?: Array<{ message?: { content?: string } }> }) =>
+    r.choices?.[0]?.message?.content ?? '',
 }))
 
 // Mock usage log (no-op)
@@ -14,7 +14,7 @@ vi.mock('@/lib/services/anthropic-usage-log', () => ({
   logUsage: vi.fn().mockResolvedValue(undefined),
 }))
 
-import { anthropicService } from '@/lib/services/anthropic'
+import { chatCompletion } from '@/lib/services/openrouter'
 import { generateBatchPrepPlan } from '@/lib/services/batch-prep-generator'
 
 const profile: TrainingProfile = {
@@ -83,14 +83,17 @@ ${containers}
 </plan>`
 }
 
-const generateMock = anthropicService.generate as unknown as Mock
+const generateMock = chatCompletion as unknown as Mock
 
-function mockClaudeResponse(text: string) {
-  generateMock.mockResolvedValue({
-    content: [{ type: 'text', text }],
-    usage: { input_tokens: 1500, output_tokens: 3000 },
-    stop_reason: 'end_turn',
-  })
+function llmResponse(text: string) {
+  return {
+    choices: [{ message: { content: text }, finish_reason: 'stop' }],
+    usage: { prompt_tokens: 1500, completion_tokens: 3000 },
+  }
+}
+
+function mockLLMResponse(text: string) {
+  generateMock.mockResolvedValue(llmResponse(text))
 }
 
 describe('generateBatchPrepPlan', () => {
@@ -99,7 +102,7 @@ describe('generateBatchPrepPlan', () => {
   })
 
   it('returns validated plan when Claude returns valid tag output with accurate macros', async () => {
-    mockClaudeResponse(planToTags(validPlanFixture as BatchPrepPlan))
+    mockLLMResponse(planToTags(validPlanFixture as BatchPrepPlan))
     const plan = await generateBatchPrepPlan(null, profile, prefs)
     expect(plan.total_containers).toBe(10)
     expect(plan.training_day.meals).toHaveLength(2)
@@ -107,18 +110,18 @@ describe('generateBatchPrepPlan', () => {
 
   it('ignores surrounding prose and extracts the plan', async () => {
     const tags = planToTags(validPlanFixture as BatchPrepPlan)
-    mockClaudeResponse(`Here is your plan:\n\n${tags}\n\nEnjoy!`)
+    mockLLMResponse(`Here is your plan:\n\n${tags}\n\nEnjoy!`)
     const plan = await generateBatchPrepPlan(null, profile, prefs)
     expect(plan.total_containers).toBe(10)
   })
 
   it('throws BatchPrepValidationError when no <day> tags are present', async () => {
-    mockClaudeResponse('not valid tags at all')
+    mockLLMResponse('not valid tags at all')
     await expect(generateBatchPrepPlan(null, profile, prefs)).rejects.toThrow()
   })
 
   it('throws BatchPrepValidationError when required structure is missing', async () => {
-    mockClaudeResponse('<plan><day type="training" cal="0" p="0" c="0" f="0"></day></plan>')
+    mockLLMResponse('<plan><day type="training" cal="0" p="0" c="0" f="0"></day></plan>')
     await expect(generateBatchPrepPlan(null, profile, prefs)).rejects.toThrow()
   })
 })
@@ -138,20 +141,12 @@ describe('generateBatchPrepPlan retry behaviour', () => {
     }
 
     generateMock
-      .mockResolvedValueOnce({
-        content: [{ type: 'text', text: planToTags(offPlan) }],
-        usage: { input_tokens: 1500, output_tokens: 3000 },
-        stop_reason: 'end_turn',
-      })
-      .mockResolvedValueOnce({
-        content: [{ type: 'text', text: planToTags(validPlanFixture as BatchPrepPlan) }],
-        usage: { input_tokens: 1700, output_tokens: 3000 },
-        stop_reason: 'end_turn',
-      })
+      .mockResolvedValueOnce(llmResponse(planToTags(offPlan)))
+      .mockResolvedValueOnce(llmResponse(planToTags(validPlanFixture as BatchPrepPlan)))
 
     const plan = await generateBatchPrepPlan(null, profile, prefs)
     expect(plan.training_day.daily_totals.calories).toBe(2600)
-    expect(anthropicService.generate).toHaveBeenCalledTimes(2)
+    expect(chatCompletion).toHaveBeenCalledTimes(2)
   })
 
   it('returns best attempt when both retries miss accuracy target', async () => {
@@ -163,14 +158,10 @@ describe('generateBatchPrepPlan retry behaviour', () => {
       },
     }
 
-    generateMock.mockResolvedValue({
-      content: [{ type: 'text', text: planToTags(offPlan) }],
-      usage: { input_tokens: 1500, output_tokens: 3000 },
-      stop_reason: 'end_turn',
-    })
+    generateMock.mockResolvedValue(llmResponse(planToTags(offPlan)))
 
     const plan = await generateBatchPrepPlan(null, profile, prefs)
     expect(plan.training_day.daily_totals.calories).toBe(3500)
-    expect(anthropicService.generate).toHaveBeenCalledTimes(2)
+    expect(chatCompletion).toHaveBeenCalledTimes(2)
   })
 })
