@@ -24,6 +24,14 @@ export interface Recipe {
   difficulty: 'easy' | 'medium' | 'hard' | null
   rating: number
   rating_count: number
+  cuisine?: string | null
+  dietary_flags?: string[]
+  batch_prep_score?: number | null
+  storage_fridge_days?: number | null
+  storage_freezer_days?: number | null
+  reheating_notes?: string | null
+  source?: string | null
+  source_id?: string | null
   created_at: string
   updated_at: string
 }
@@ -120,7 +128,7 @@ export interface RecipeMacros {
  */
 export interface NormalizedRecipe {
   id: string
-  source: 'recipe-api' | 'fatsecret'
+  source: 'recipe-api' | 'fatsecret' | 'library'
   title: string
   description: string
   imageUrl: string | null

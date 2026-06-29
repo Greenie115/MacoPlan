@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Recipe dataset (large CSV, download separately)
+/data/*.csv
+
 # Auto Claude data directory
 .auto-claude/
 
