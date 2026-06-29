@@ -1,98 +1,20 @@
 'use server'
 
 /**
- * Recipe Search Server Actions
+ * Recipe Detail Server Action (legacy)
  *
- * Server-side actions for searching and retrieving recipe data
- * from Recipe-API.com + Unsplash images.
+ * Recipe-API.com is no longer used for browsing or generation. This remains
+ * only to render recipes from pre-pivot meal plans / old favorites that store a
+ * Recipe-API id (see recipes/[id] detail fallback and shopping-lists). Remove
+ * once legacy meal_plans are sunset.
  */
 
-import { after } from 'next/server'
 import { recipeApiService } from '@/lib/services/recipe-api'
 import { unsplashService } from '@/lib/services/unsplash'
-import type {
-  NormalizedRecipe,
-} from '@/lib/types/recipe'
-import type { RecipeApiSearchParams } from '@/lib/types/recipe-api'
-
-// ============================================================================
-// Recipe Search Actions
-// ============================================================================
+import type { NormalizedRecipe } from '@/lib/types/recipe'
 
 /**
- * Search for recipes via Recipe-API.com
- */
-export async function searchRecipes(params: RecipeApiSearchParams): Promise<{
-  success: boolean
-  data?: {
-    recipes: Array<{
-      id: string
-      title: string
-      description: string
-      imageUrl: string | null
-      calories: number
-      protein: number
-      carbs: number
-      fat: number
-    }>
-    totalResults: number
-    page: number
-  }
-  error?: string
-}> {
-  try {
-    const response = await recipeApiService.searchRecipes(params)
-
-    if (!response.data || response.data.length === 0) {
-      return {
-        success: true,
-        data: {
-          recipes: [],
-          totalResults: 0,
-          page: params.page || 1,
-        },
-      }
-    }
-
-    // Serve whatever images are already cached — never block search results
-    // on the Unsplash API. Missing images are warmed after the response is
-    // sent, so subsequent views fill in progressively.
-    const recipeRefs = response.data.map(r => ({ id: r.id, name: r.name }))
-    const imageMap = await unsplashService.getCachedImages(recipeRefs.map(r => r.id))
-
-    const missing = recipeRefs.filter(r => !imageMap.has(r.id))
-    if (missing.length > 0) {
-      after(async () => {
-        try {
-          await unsplashService.getImagesForRecipes(missing)
-        } catch {
-          // Best-effort warm-up; failures are negative-cached by the service
-        }
-      })
-    }
-
-    return {
-      success: true,
-      data: {
-        recipes: response.data.map(r => {
-          const image = imageMap.get(r.id)
-          return recipeApiService.normalizeListItem(r, image?.url || null)
-        }),
-        totalResults: response.meta.total,
-        page: params.page || 1,
-      },
-    }
-  } catch (error) {
-    console.error('[searchRecipes] Error:', error)
-    return {
-      success: false,
-      error: 'Failed to search recipes',
-    }
-  }
-}
-
-/**
- * Get detailed recipe information by ID
+ * Get detailed recipe information by Recipe-API id (legacy data only).
  */
 export async function getRecipeDetails(recipeId: string): Promise<{
   success: boolean
@@ -103,13 +25,9 @@ export async function getRecipeDetails(recipeId: string): Promise<{
     const recipe = await recipeApiService.getRecipeDetails(recipeId)
 
     if (!recipe) {
-      return {
-        success: false,
-        error: 'Recipe not found',
-      }
+      return { success: false, error: 'Recipe not found' }
     }
 
-    // Fetch image
     const image = await unsplashService.getImageForRecipe(recipeId, recipe.name)
 
     return {
@@ -118,87 +36,6 @@ export async function getRecipeDetails(recipeId: string): Promise<{
     }
   } catch (error) {
     console.error('[getRecipeDetails] Error:', error)
-    return {
-      success: false,
-      error: 'Failed to get recipe details',
-    }
+    return { success: false, error: 'Failed to get recipe details' }
   }
-}
-
-/**
- * Get multiple recipes by IDs (for meal plan display)
- */
-export async function getMultipleRecipes(recipeIds: string[]): Promise<{
-  success: boolean
-  data?: NormalizedRecipe[]
-  error?: string
-}> {
-  try {
-    const recipes: NormalizedRecipe[] = []
-
-    for (const id of recipeIds) {
-      const recipe = await recipeApiService.getRecipeDetails(id)
-      if (recipe) {
-        const image = await unsplashService.getImageForRecipe(id, recipe.name)
-        recipes.push(recipeApiService.normalizeRecipe(recipe, image?.url || null))
-      }
-    }
-
-    return {
-      success: true,
-      data: recipes,
-    }
-  } catch (error) {
-    console.error('[getMultipleRecipes] Error:', error)
-    return {
-      success: false,
-      error: 'Failed to get recipes',
-    }
-  }
-}
-
-// ============================================================================
-// Recipe Type Filters
-// ============================================================================
-
-/**
- * Get available recipe category filters from Recipe-API.com
- */
-export async function getRecipeTypeFilters(): Promise<{
-  success: boolean
-  data?: Array<{ value: string; label: string }>
-  error?: string
-}> {
-  try {
-    const categories = await recipeApiService.getCategories()
-    return {
-      success: true,
-      data: categories.map(c => ({
-        value: c.name,
-        label: `${c.name} (${c.count})`,
-      })),
-    }
-  } catch (error) {
-    console.error('[getRecipeTypeFilters] Error:', error)
-    return {
-      success: false,
-      error: 'Failed to fetch recipe categories',
-    }
-  }
-}
-
-// ============================================================================
-// Sort Options
-// ============================================================================
-
-/**
- * Get available sort options for recipe search
- */
-export async function getSortOptions() {
-  return [
-    { value: 'newest', label: 'Newest First' },
-    { value: 'oldest', label: 'Oldest First' },
-    { value: 'caloriesPerServingAscending', label: 'Calories: Low to High' },
-    { value: 'caloriesPerServingDescending', label: 'Calories: High to Low' },
-  ]
 }

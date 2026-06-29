@@ -1,9 +1,3 @@
 {
-  "regions": ["arn1"],
-  "crons": [
-    {
-      "path": "/api/cron/backfill-recipes",
-      "schedule": "30 4 * * *"
-    }
-  ]
+  "regions": ["arn1"]
 }
