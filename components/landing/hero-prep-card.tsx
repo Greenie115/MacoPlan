@@ -29,7 +29,7 @@ export function HeroPrepCard() {
       </div>
 
       {/* Main prep card */}
-      <div className="relative z-10 bg-white text-charcoal rounded-3xl p-6 sm:p-7 shadow-2xl shadow-black/40 ring-1 ring-white/10">
+      <div className="relative z-10 bg-white text-charcoal rounded-3xl p-6 sm:p-7 shadow-2xl shadow-charcoal/30 ring-1 ring-white/10">
         {/* Header */}
         <div className="flex items-start justify-between mb-5">
           <div>
@@ -88,7 +88,7 @@ export function HeroPrepCard() {
 
       {/* Floating shopping list chip */}
       <div
-        className="float-slow absolute -bottom-7 -left-2 sm:-left-8 z-20 bg-white text-charcoal rounded-2xl px-4 py-3 shadow-xl shadow-black/30 ring-1 ring-black/5 [--float-rot:-3deg]"
+        className="float-slow absolute -bottom-7 -left-2 sm:-left-8 z-20 bg-white text-charcoal rounded-2xl px-4 py-3 shadow-xl shadow-charcoal/25 ring-1 ring-charcoal/5 [--float-rot:-3deg]"
         style={{ animationDelay: '1.2s' }}
       >
         <p className="text-[11px] font-bold uppercase tracking-wide text-charcoal/45">Shopping list</p>

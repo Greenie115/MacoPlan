@@ -25,8 +25,10 @@ const pillars = [
 
 export function SuccessStories() {
   return (
-    <section className="py-20 md:py-28 bg-muted/30 border-y border-border-strong" id="why-it-works">
-      <div className="container mx-auto px-6 max-w-5xl">
+    <section className="py-20 md:py-28 bg-muted/40 border-y border-border-strong relative overflow-hidden" id="why-it-works">
+      {/* Ambient glow */}
+      <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_80%,rgba(255,107,92,0.06),transparent_60%)]" />
+      <div className="container mx-auto px-6 max-w-5xl relative">
         <div className="text-center mb-4">
           <p className="text-primary font-semibold uppercase tracking-wide text-sm">Why it works</p>
         </div>
@@ -42,7 +44,7 @@ export function SuccessStories() {
           {pillars.map((pillar) => (
             <div
               key={pillar.title}
-              className="bg-card border border-border-strong rounded-2xl p-6 flex gap-4"
+              className="bg-card border border-border-strong rounded-2xl p-6 flex gap-4 transition-all hover:shadow-lg hover:shadow-primary/8 hover:border-primary/20"
             >
               <div className="w-12 h-12 shrink-0 bg-primary/10 rounded-xl flex items-center justify-center">
                 <pillar.icon className="w-6 h-6 text-primary" aria-hidden="true" />

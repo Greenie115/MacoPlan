@@ -58,6 +58,7 @@ export function AppShell({ children }: AppShellProps) {
       <BottomNav />
 
       <main
+        id="main-content"
         className={cn(
           'flex-1 overflow-auto transition-all duration-300 ease-in-out',
           // Bottom padding on mobile for the bottom nav

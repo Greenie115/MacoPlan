@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { ArrowRight, Mail } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { LogoMark } from '@/components/brand/logo'
 
 export function Footer() {
   return (
     <footer className="py-16 bg-card border-t border-border-strong">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Column 1: Logo and tagline */}
           <div>
             <Link href="/" className="flex items-center gap-2 text-xl font-bold mb-4">
@@ -18,20 +18,20 @@ export function Footer() {
             </p>
             <Link
               href="/onboarding/1"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 px-5 rounded-xl transition-all text-sm"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 active:scale-[0.97] text-primary-foreground font-semibold py-2.5 px-5 rounded-xl transition-all text-sm"
             >
-              Start Today
+              Start today
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>
 
-          {/* Column 2: Product */}
+          {/* Column 2: Product & resources */}
           <div>
             <h3 className="font-bold mb-4">Product</h3>
             <ul className="space-y-2 text-muted-foreground">
               <li>
                 <Link href="/#how-it-works" className="hover:text-primary transition-colors">
-                  How It Works
+                  How it works
                 </Link>
               </li>
               <li>
@@ -40,8 +40,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/onboarding/1" className="hover:text-primary transition-colors">
-                  Recipes
+                <Link href="/blog" className="hover:text-primary transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/help" className="hover:text-primary transition-colors">
+                  Help centre
                 </Link>
               </li>
               <li>
@@ -52,41 +57,24 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Resources */}
+          {/* Column 3: Legal */}
           <div>
-            <h3 className="font-bold mb-4">Resources</h3>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>
-                <Link href="/blog" className="hover:text-primary transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/help" className="hover:text-primary transition-colors">
-                  Help Center
-                </Link>
-              </li>
-              <li>
-                <Link href="/help" className="hover:text-primary transition-colors">
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Company */}
-          <div>
-            <h3 className="font-bold mb-4">Company</h3>
+            <h3 className="font-bold mb-4">Legal</h3>
             <ul className="space-y-2 text-muted-foreground">
               <li>
                 <Link href="/privacy" className="hover:text-primary transition-colors">
-                  Privacy Policy
+                  Privacy policy
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className="hover:text-primary transition-colors">
-                  Terms of Service
+                  Terms of service
                 </Link>
+              </li>
+              <li>
+                <a href="mailto:support@macroplan.app" className="hover:text-primary transition-colors">
+                  Contact us
+                </a>
               </li>
             </ul>
           </div>
@@ -94,21 +82,9 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-border-strong pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Copyright */}
-            <p className="text-muted-foreground text-sm">
-              &copy; {new Date().getFullYear()} MacroPlan. All rights reserved.
-            </p>
-
-            {/* Contact */}
-            <a
-              href="mailto:support@macroplan.app"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm"
-            >
-              <Mail className="w-4 h-4" aria-hidden="true" />
-              support@macroplan.app
-            </a>
-          </div>
+          <p className="text-muted-foreground text-sm text-center md:text-left">
+            &copy; {new Date().getFullYear()} MacroPlan. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

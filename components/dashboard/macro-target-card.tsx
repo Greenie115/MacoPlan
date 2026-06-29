@@ -77,7 +77,7 @@ export function MacroTargetCard({
           </p>
           {/* Calories Display */}
           <div className="flex items-baseline gap-2 pt-1">
-            <p className="text-foreground text-3xl md:text-4xl font-extrabold leading-tight tracking-tighter">
+            <p className="text-foreground text-3xl md:text-4xl font-extrabold leading-tight tracking-tighter tabular-nums">
               {targetCalories.toLocaleString()}
             </p>
             <p className="text-muted-foreground text-base font-normal">cal</p>
@@ -194,7 +194,7 @@ export function MacroTargetCard({
       <div className="pt-4 mt-auto">
         <button
           onClick={onViewPlan || (() => router.push('/meal-plans'))}
-          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 md:h-12 px-4 bg-primary/10 text-primary text-sm md:text-base font-semibold leading-normal hover:bg-primary/20 transition-colors"
+          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 md:h-12 px-4 bg-primary/10 text-primary text-sm md:text-base font-semibold leading-normal hover:bg-primary/20 active:scale-[0.98] transition-all"
         >
           <span className="truncate">View Today's Plan →</span>
         </button>

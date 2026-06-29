@@ -167,7 +167,7 @@ export default function LandingPage() {
                 </Link>
                 <Link
                   href="/signup"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-bold py-2.5 px-5 rounded-full transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-px"
+                  className="bg-primary hover:bg-primary/90 active:scale-[0.97] text-primary-foreground text-sm font-bold py-2.5 px-5 rounded-full transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-px"
                 >
                   Start free
                 </Link>
@@ -176,7 +176,7 @@ export default function LandingPage() {
           </div>
         </header>
 
-        <main role="main">
+        <main role="main" id="main-content">
           {/* ==================== HERO (dark) ==================== */}
           <section
             className="relative overflow-hidden bg-charcoal text-white pt-28 pb-20 md:pt-36 md:pb-24"
@@ -206,7 +206,7 @@ export default function LandingPage() {
 
                   <h1
                     id="hero-heading"
-                    className="landing-rise mt-6 text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[0.98] tracking-tight [font-family:var(--font-display)]"
+                    className="landing-rise mt-6 text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[0.98] tracking-tight [font-family:var(--font-display)] [text-wrap:balance]"
                     style={{ animationDelay: '0.15s' }}
                   >
                     Cook once.
@@ -228,7 +228,7 @@ export default function LandingPage() {
                   >
                     <Link
                       href="/onboarding/1"
-                      className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-full transition-all shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 text-base"
+                      className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 active:scale-[0.97] text-primary-foreground font-bold py-4 px-8 rounded-full transition-all shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 text-base"
                     >
                       <span>Generate my prep plan — free</span>
                       <ArrowRight className="w-5 h-5" aria-hidden="true" />
@@ -280,7 +280,7 @@ export default function LandingPage() {
             <div className="container mx-auto px-6 max-w-6xl">
               <Reveal className="max-w-2xl mb-16">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-3">How it works</p>
-                <h2 id="how-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight [font-family:var(--font-display)]">
+                <h2 id="how-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight [font-family:var(--font-display)] [text-wrap:balance]">
                   Three steps to a stocked fridge.
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
@@ -288,26 +288,30 @@ export default function LandingPage() {
                 </p>
               </Reveal>
 
-              <div className="grid md:grid-cols-3 gap-6">
-                {STEPS.map((step, i) => (
-                  <Reveal key={step.number} delay={i * 0.1}>
-                    <div className="relative h-full bg-card border border-border-strong rounded-3xl p-7 pt-6 overflow-hidden transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-charcoal/5">
-                      <span
-                        aria-hidden="true"
-                        className="absolute -top-3 right-4 text-[5.5rem] font-extrabold leading-none text-primary/10 [font-family:var(--font-display)] select-none"
-                      >
-                        {step.number}
-                      </span>
-                      <div className="relative">
-                        <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
-                          <step.icon className="w-6 h-6 text-primary" aria-hidden="true" />
+              <div className="relative max-w-3xl">
+                {/* Vertical connector line */}
+                <div aria-hidden="true" className="absolute left-6 top-0 bottom-0 w-px bg-border-strong hidden md:block" />
+
+                <div className="space-y-8 md:space-y-12">
+                  {STEPS.map((step, i) => (
+                    <Reveal key={step.number} delay={i * 0.12}>
+                      <div className="relative flex gap-6 md:gap-8 items-start">
+                        {/* Step number circle */}
+                        <div className="relative z-10 flex-shrink-0 w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center text-lg font-extrabold [font-family:var(--font-display)] shadow-lg shadow-primary/20">
+                          {step.number}
                         </div>
-                        <h3 className="text-xl font-bold mb-3 [font-family:var(--font-display)]">{step.title}</h3>
-                        <p className="text-muted-foreground leading-relaxed text-[15px]">{step.copy}</p>
+                        {/* Content */}
+                        <div className="flex-1 bg-card border border-border-strong rounded-2xl p-6 transition-all hover:shadow-lg hover:shadow-primary/8 hover:border-primary/20">
+                          <div className="flex items-center gap-3 mb-2">
+                            <step.icon className="w-5 h-5 text-primary" aria-hidden="true" />
+                            <h3 className="text-lg font-bold [font-family:var(--font-display)]">{step.title}</h3>
+                          </div>
+                          <p className="text-muted-foreground leading-relaxed text-[15px]">{step.copy}</p>
+                        </div>
                       </div>
-                    </div>
-                  </Reveal>
-                ))}
+                    </Reveal>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
@@ -323,7 +327,7 @@ export default function LandingPage() {
                     className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_50%_120%,rgba(255,107,92,0.22),transparent_70%)]"
                   />
                   <div className="relative max-w-3xl mx-auto">
-                    <h2 id="diff-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.08] [font-family:var(--font-display)]">
+                    <h2 id="diff-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.08] [font-family:var(--font-display)] [text-wrap:balance]">
                       Other apps plan 28 different meals.{' '}
                       <span className="text-primary">You&apos;re cooking on Sunday.</span>
                     </h2>
@@ -335,12 +339,12 @@ export default function LandingPage() {
                 </div>
               </Reveal>
 
-              {/* Feature grid */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
+              {/* Feature grid — 2×2 with breathing room */}
+              <div className="grid sm:grid-cols-2 gap-5 mt-6">
                 {FEATURES.map((feature, i) => (
                   <Reveal key={feature.title} delay={i * 0.08}>
-                    <div className="h-full bg-card border border-border-strong rounded-3xl p-6 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-charcoal/5 hover:border-primary/30">
-                      <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                    <div className="h-full bg-card border border-border-strong rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/8 hover:border-primary/25 group">
+                      <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mb-4 transition-colors group-hover:bg-primary/15">
                         <feature.icon className="w-5 h-5 text-primary" aria-hidden="true" />
                       </div>
                       <h3 className="text-base font-bold mb-2 [font-family:var(--font-display)]">{feature.title}</h3>
@@ -365,7 +369,7 @@ export default function LandingPage() {
                     className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:48px_48px]"
                   />
                   <div className="relative max-w-2xl mx-auto">
-                    <h2 id="cta-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.05] [font-family:var(--font-display)]">
+                    <h2 id="cta-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.05] [font-family:var(--font-display)] [text-wrap:balance]">
                       Your next prep day is already planned.
                     </h2>
                     <p className="mt-5 text-lg text-white/85">
@@ -374,7 +378,7 @@ export default function LandingPage() {
                     </p>
                     <Link
                       href="/signup"
-                      className="mt-9 inline-flex items-center gap-2 bg-charcoal text-white hover:bg-charcoal/90 font-bold py-4 px-9 rounded-full transition-all shadow-xl shadow-charcoal/30 hover:-translate-y-0.5"
+                      className="mt-9 inline-flex items-center gap-2 bg-charcoal text-white hover:bg-charcoal/90 active:scale-[0.97] font-bold py-4 px-9 rounded-full transition-all shadow-xl shadow-charcoal/30 hover:-translate-y-0.5"
                     >
                       <span>Start for free</span>
                       <ArrowRight className="w-5 h-5" aria-hidden="true" />

@@ -66,7 +66,7 @@ export function GeneratePlanCTA({
       </div>
       <button
         onClick={handleClick}
-        className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 md:h-12 px-5 bg-white text-primary text-sm md:text-base font-bold leading-normal hover:bg-white/90 transition-colors"
+        className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 md:h-12 px-5 bg-white text-primary text-sm md:text-base font-bold leading-normal hover:bg-white/90 active:scale-[0.98] transition-all"
       >
         <span className="truncate">Generate Now →</span>
       </button>

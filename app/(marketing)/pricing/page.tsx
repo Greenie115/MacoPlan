@@ -86,10 +86,10 @@ export default function PricingPage() {
         </div>
       </header>
 
-      <main className="pt-32 pb-20">
+      <main id="main-content" className="pt-32 pb-20">
         {/* Hero Section */}
         <section className="container mx-auto px-6 text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6 tracking-tight [text-wrap:balance]">
             Simple, transparent <span className="text-primary">pricing</span>
           </h1>
           <p className="text-lg text-subtle-foreground max-w-2xl mx-auto">
@@ -212,11 +212,11 @@ export default function PricingPage() {
             </Card>
 
             {/* Premium Annual - Best Value */}
-            <Card className="relative flex flex-col border-2 border-primary md:col-span-2 lg:col-span-1">
+            <Card className="relative flex flex-col border-2 border-primary md:col-span-2 lg:col-span-1 shadow-xl shadow-primary/10 ring-1 ring-primary/20">
               {/* Best Value Badge */}
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-sm font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-sm font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg shadow-primary/25">
                 <ShieldCheck className="w-4 h-4" />
-                BEST VALUE
+                Best value
               </div>
 
               <CardHeader className="text-center pb-4 pt-8">
@@ -458,12 +458,18 @@ export default function PricingPage() {
         <section className="py-20">
           <div className="container mx-auto px-6">
             <div className="bg-primary text-primary-foreground rounded-3xl p-10 md:p-20 text-center shadow-2xl shadow-primary/20 relative overflow-hidden">
-              {/* Background Pattern */}
-              <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                <div className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[radial-gradient(circle,white_1px,transparent_1px)] bg-[length:20px_20px]"></div>
-              </div>
+              {/* Subtle grid overlay */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none"
+              />
+              {/* Radial glow at bottom */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_110%,rgba(255,255,255,0.15),transparent_70%)] pointer-events-none"
+              />
 
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 relative z-10">Ready to hit your macros?</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 relative z-10 [text-wrap:balance]">Ready to hit your macros?</h2>
               <p className="text-lg md:text-xl text-primary-foreground/90 mb-10 max-w-2xl mx-auto relative z-10">
                 Cook once, eat all week. AI-generated batch prep plans that hit your exact macros.
               </p>
