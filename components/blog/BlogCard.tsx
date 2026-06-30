@@ -31,7 +31,7 @@ export function BlogCard({ post }: BlogCardProps) {
           {post.excerpt}
         </p>
         <div className="mt-4 font-semibold text-primary flex items-center gap-1">
-          Read More <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          Read more <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </Link>

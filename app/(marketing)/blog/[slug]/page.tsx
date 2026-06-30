@@ -150,14 +150,28 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               {/* Featured Image */}
-              <div className="mb-12 rounded-2xl overflow-hidden shadow-lg aspect-video">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  loading="eager"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <figure className="mb-12">
+                <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    loading="eager"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {post.imageCredit && (
+                  <figcaption className="mt-2 text-xs text-muted-foreground text-right">
+                    <a
+                      href={post.imageCreditUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-foreground transition-colors"
+                    >
+                      {post.imageCredit}
+                    </a>
+                  </figcaption>
+                )}
+              </figure>
 
               {/* Article Content */}
               <div

@@ -34,7 +34,7 @@ export function FeaturedPost({ post }: FeaturedPostProps) {
           {post.excerpt}
         </p>
         <div className="flex items-center gap-2 font-semibold text-primary">
-          Read Article <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+          Read more <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </Link>
