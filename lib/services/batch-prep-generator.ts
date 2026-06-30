@@ -18,7 +18,10 @@ import {
 // Cheap GLM via OpenRouter instead of Claude Sonnet. Not Flash — assembling a
 // macro-verified plan in the strict XML format needs real capability.
 const MODEL = process.env.BATCH_PREP_MODEL || 'z-ai/glm-4.7'
-const MAX_TOKENS = 8000
+// GLM 4.7 is a reasoning model; even with reasoning disabled it can spend tokens
+// thinking before emitting the plan. 8000 (the old Claude budget) truncated the
+// XML mid-output, which the parser can't recover from. Give it real headroom.
+const MAX_TOKENS = 16000
 
 const DEBUG = process.env.BATCH_PREP_DEBUG === '1'
 
@@ -66,8 +69,23 @@ async function callAndValidate(
   const stopReason = response.choices[0]?.finish_reason
 
   const text = extractContent(response)
-  if (!text) throw new BatchPrepValidationError('No text content in model response')
   logRaw(correctionHint ? 'retry' : 'first', text, usage, stopReason)
+
+  if (!text) {
+    await logUsage(userId, 'batch-prep-generate', usage, 'validation_fail', 'empty model content')
+    throw new BatchPrepValidationError(
+      stopReason === 'length'
+        ? 'Model returned no plan content before hitting the token limit (likely consumed by reasoning).'
+        : 'No text content in model response'
+    )
+  }
+  // A length-stopped response is a truncated plan — the XML will be missing its
+  // closing tags, so surface it as a clear, retryable error rather than letting
+  // the parser fail with a confusing Zod message.
+  if (stopReason === 'length') {
+    await logUsage(userId, 'batch-prep-generate', usage, 'validation_fail', 'output truncated (max_tokens)')
+    throw new BatchPrepValidationError('Model output was truncated before the plan was complete (hit max_tokens).')
+  }
 
   let plan: BatchPrepPlan
   try {
@@ -89,6 +107,29 @@ async function callAndValidate(
   return { plan, accuracy, usage }
 }
 
+// Call the model and, if the output can't be parsed/validated (a truncated or
+// malformed plan — the most common transient failure when an LLM slips the
+// strict tag format), try once more with a hint to re-emit the full plan.
+// Macro inaccuracy is NOT a parse failure and is handled separately by the
+// caller's best-of-two logic.
+async function callWithParseRetry(
+  userId: string | null,
+  profile: TrainingProfile,
+  preferences: DietaryPreferences,
+  variety: VarietyOptions,
+  correctionHint: string | null
+): Promise<Awaited<ReturnType<typeof callAndValidate>>> {
+  try {
+    return await callAndValidate(userId, profile, preferences, variety, correctionHint)
+  } catch (err) {
+    if (!(err instanceof BatchPrepValidationError)) throw err
+    const hint =
+      (correctionHint ? `${correctionHint} ` : '') +
+      'Your previous output was incomplete or not in the required format. Output the COMPLETE plan using ONLY the <plan>...</plan> tag format described above — no prose, no markdown, no truncation.'
+    return await callAndValidate(userId, profile, preferences, variety, hint)
+  }
+}
+
 export async function generateBatchPrepPlan(
   userId: string | null,
   profile: TrainingProfile,
@@ -102,22 +143,37 @@ export async function generateBatchPrepPlan(
     avoidRecipes: recentRecipeNames,
   }
 
-  // First attempt
-  const firstAttempt = await callAndValidate(userId, profile, preferences, variety, null)
+  // First attempt (retries once on its own if the output is unparseable)
+  const firstAttempt = await callWithParseRetry(userId, profile, preferences, variety, null)
   if (firstAttempt.accuracy.passed) {
     await logUsage(userId, 'batch-prep-generate', firstAttempt.usage, 'success')
     return firstAttempt.plan
   }
 
-  // Retry once with correction hint
+  // Retry once with correction hint. If the correction attempt itself comes
+  // back unparseable, don't fail the whole generation — ship the first attempt,
+  // which is already a structurally valid plan (just off on macros).
   await logUsage(userId, 'batch-prep-generate', firstAttempt.usage, 'retry', firstAttempt.accuracy.reason)
-  const retryAttempt = await callAndValidate(
-    userId,
-    profile,
-    preferences,
-    variety,
-    firstAttempt.accuracy.reason || 'macros were off target'
-  )
+  let retryAttempt: Awaited<ReturnType<typeof callAndValidate>>
+  try {
+    retryAttempt = await callWithParseRetry(
+      userId,
+      profile,
+      preferences,
+      variety,
+      firstAttempt.accuracy.reason || 'macros were off target'
+    )
+  } catch (err) {
+    if (!(err instanceof BatchPrepValidationError)) throw err
+    await logUsage(
+      userId,
+      'batch-prep-generate',
+      firstAttempt.usage,
+      'success',
+      `approx (correction unparseable): ${firstAttempt.accuracy.reason}`
+    )
+    return firstAttempt.plan
+  }
 
   // Return the better of the two attempts — never hard-fail on macro accuracy.
   // LLMs cannot reliably hit exact macro targets, so we pick whichever attempt
