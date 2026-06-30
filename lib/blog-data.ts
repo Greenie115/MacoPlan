@@ -64,7 +64,9 @@ export const blogPosts: BlogPost[] = [
     authorImage: TEAM_IMAGE,
     date: 'June 30, 2026',
     readTime: '7 min read',
-    image: '/blog/glp-1-muscle-loss-protein-resistance-training.svg',
+    image: 'https://images.unsplash.com/photo-1758875568800-29fb434c7b17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfGFsbHx8fHx8fHx8fDE3ODI4MDMyNDR8&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Vitaly Gariev on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@silverkblack?utm_source=MacroPlan&utm_medium=referral",
     category: 'Nutrition'
   },
   {
