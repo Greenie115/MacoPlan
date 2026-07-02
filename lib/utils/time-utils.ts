@@ -21,3 +21,30 @@ export function getGreeting(userName?: string): string {
   const baseGreeting = greetingMap[timeOfDay]
   return userName ? `${baseGreeting}, ${userName}!` : `${baseGreeting}!`
 }
+
+/**
+ * One-line coach note under the dashboard greeting, driven by today's
+ * protein progress. Returns null when there's nothing worth saying.
+ */
+export function getGreetingSubline(
+  proteinTarget: number,
+  proteinEaten: number,
+  mealsLogged: number
+): string | null {
+  if (proteinTarget <= 0) return null
+
+  const left = Math.round(proteinTarget - proteinEaten)
+
+  if (mealsLogged === 0) {
+    return getTimeOfDay() === 'evening'
+      ? `Nothing logged yet — still time to get your protein in.`
+      : `Full day ahead — ${proteinTarget}g protein on the plan.`
+  }
+  if (left <= 0) {
+    return 'Protein target hit — day won. 💪'
+  }
+  if (left <= 30) {
+    return `${left}g protein to go — one more meal closes it out.`
+  }
+  return `${left}g protein left today. Keep stacking.`
+}

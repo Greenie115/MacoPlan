@@ -12,6 +12,26 @@ import { createUserProfile } from '@/app/actions/profile'
 import { createClient } from '@/lib/supabase/client'
 import { toast } from 'sonner'
 
+/** Counts up to `target` over ~600ms — makes the reveal read as "computed for you" */
+function useCountUp(target: number, ms = 600): number {
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    let frame: number
+    const start = performance.now()
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / ms, 1)
+      // ease-out cubic
+      setValue(Math.round(target * (1 - Math.pow(1 - t, 3))))
+      if (t < 1) frame = requestAnimationFrame(tick)
+    }
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [target, ms])
+
+  return value
+}
+
 export default function MacroResultsPage() {
   const router = useRouter()
   const store = useOnboardingStore()
@@ -166,6 +186,12 @@ export default function MacroResultsPage() {
   // Calculate actual total calories from displayed macros
   const displayCalories = (displayProtein * 4) + (displayCarbs * 4) + (displayFat * 9)
 
+  // Animated reveal — numbers count up so the result reads as computed, not templated
+  const animCalories = useCountUp(Math.round(displayCalories))
+  const animProtein = useCountUp(displayProtein)
+  const animCarbs = useCountUp(displayCarbs)
+  const animFat = useCountUp(displayFat)
+
   if (isValidating) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -229,7 +255,7 @@ export default function MacroResultsPage() {
         step={6}
         title="Your Macro Targets"
         emoji="🎯"
-        subtitle="Based on your goals and activity level"
+        subtitle="Built from your numbers — your weight, your training, your goal. Not a template."
         onBack={handleBack}
         onContinue={handleComplete}
         continueLabel={isGuest ? 'Create a free account to save' : 'Save my plan'}
@@ -247,7 +273,7 @@ export default function MacroResultsPage() {
                     <span className="ml-2 text-xs text-primary font-semibold">Custom</span>
                   )}
                 </p>
-                <p className="text-4xl font-bold text-primary">{Math.round(displayCalories)}</p>
+                <p className="text-4xl font-bold text-primary">{animCalories}</p>
                 <p className="text-sm text-muted-foreground mt-1">calories per day</p>
                 {store.isCustomMacros && store.targetCalories !== Math.round(displayCalories) && (
                   <p className="text-xs text-muted-foreground mt-2">
@@ -264,7 +290,7 @@ export default function MacroResultsPage() {
                 <div className="size-12 mx-auto mb-2 rounded-full bg-protein/10 flex items-center justify-center">
                   <span className="text-xl">🥩</span>
                 </div>
-                <p className="text-2xl font-bold text-protein">{displayProtein}g</p>
+                <p className="text-2xl font-bold text-protein">{animProtein}g</p>
                 <p className="text-xs text-muted-foreground mt-1">Protein</p>
                 {store.isCustomMacros && (
                   <p className="text-xs text-primary mt-1 font-medium">Custom</p>
@@ -276,7 +302,7 @@ export default function MacroResultsPage() {
                 <div className="size-12 mx-auto mb-2 rounded-full bg-carb/10 flex items-center justify-center">
                   <span className="text-xl">🍞</span>
                 </div>
-                <p className="text-2xl font-bold text-carb">{displayCarbs}g</p>
+                <p className="text-2xl font-bold text-carb">{animCarbs}g</p>
                 <p className="text-xs text-muted-foreground mt-1">Carbs</p>
                 {store.isCustomMacros && (
                   <p className="text-xs text-primary mt-1 font-medium">Custom</p>
@@ -288,7 +314,7 @@ export default function MacroResultsPage() {
                 <div className="size-12 mx-auto mb-2 rounded-full bg-fat/10 flex items-center justify-center">
                   <span className="text-xl">🥑</span>
                 </div>
-                <p className="text-2xl font-bold text-fat">{displayFat}g</p>
+                <p className="text-2xl font-bold text-fat">{animFat}g</p>
                 <p className="text-xs text-muted-foreground mt-1">Fat</p>
                 {store.isCustomMacros && (
                   <p className="text-xs text-primary mt-1 font-medium">Custom</p>
