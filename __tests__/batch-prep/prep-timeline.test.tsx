@@ -31,7 +31,7 @@ describe('PrepTimeline', () => {
   it('restores checkbox state from localStorage on mount', () => {
     localStorage.setItem('prep-timeline:test-plan', JSON.stringify({ 1: true }))
     render(<PrepTimeline planId="test-plan" steps={steps} />)
-    const firstCheckbox = screen.getAllByRole('checkbox')[0] as HTMLInputElement
-    expect(firstCheckbox.checked).toBe(true)
+    const firstCheckbox = screen.getAllByRole('checkbox')[0]
+    expect(firstCheckbox.getAttribute('aria-checked')).toBe('true')
   })
 })

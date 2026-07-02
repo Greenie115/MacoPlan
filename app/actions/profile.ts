@@ -1,6 +1,7 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createServiceRoleClient } from '@/lib/supabase/server'
+import { canSimulateTier } from '@/lib/utils/subscription'
 import { UserProfile, UserProfileInsert, UserProfileUpdate } from '@/lib/types/database'
 import { revalidatePath } from 'next/cache'
 import { calculateBMR } from '@/lib/calculations/bmr'
@@ -470,8 +471,19 @@ export async function recalculateMacros() {
 }
 
 /**
- * Update the simulated tier for test users
- * Only test users can use this action
+ * Whether the current user may use the tier-simulation controls.
+ * Lets the client render the toggle without exposing the server-only allowlist.
+ */
+export async function canSimulateTierAction(): Promise<boolean> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  return canSimulateTier(user?.email)
+}
+
+/**
+ * Update the simulated tier for allowlisted internal accounts only.
  */
 export async function updateSimulatedTier(
   tier: 'free' | 'paid' | null
@@ -488,23 +500,14 @@ export async function updateSimulatedTier(
       return { error: 'Not authenticated' }
     }
 
-    // Verify user is a test user
-    const { data: profile, error: profileError } = await supabase
-      .from('user_profiles')
-      .select('is_test_user')
-      .eq('user_id', user.id)
-      .single()
-
-    if (profileError || !profile) {
-      return { error: 'Profile not found' }
+    if (!canSimulateTier(user.email)) {
+      return { error: 'This feature is only available for internal testing accounts' }
     }
 
-    if (!profile.is_test_user) {
-      return { error: 'This feature is only available for test users' }
-    }
-
-    // Update simulated tier
-    const { error: updateError } = await supabase
+    // Write via service role: the protect_tier_simulation_columns trigger blocks
+    // this column for every non-service role, so this action is the only writer.
+    const admin = createServiceRoleClient()
+    const { error: updateError } = await admin
       .from('user_profiles')
       .update({ simulated_tier: tier })
       .eq('user_id', user.id)

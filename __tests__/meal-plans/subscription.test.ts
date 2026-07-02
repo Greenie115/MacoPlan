@@ -43,14 +43,19 @@ describe('Subscription Utilities', () => {
     vi.restoreAllMocks()
   })
 
+  // Simulation is gated on the authenticated email being in the allowlist.
+  const ALLOWED_EMAIL = 'dggreen545@gmail.com'
+  const mockAuthUser = (id: string, email: string | null) =>
+    mockSupabase.auth.getUser.mockResolvedValue({ data: { user: { id, email } } })
+
   describe('getUserSubscriptionTier', () => {
-    it('should return simulated tier for test users with simulation active', async () => {
+    it('should return simulated tier for allowlisted account with simulation active', async () => {
+      mockAuthUser('test-user-id', ALLOWED_EMAIL)
       mockFrom.mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
             single: vi.fn().mockResolvedValue({
               data: {
-                is_test_user: true,
                 simulated_tier: 'paid',
                 stripe_customer_id: null,
               },
@@ -63,13 +68,13 @@ describe('Subscription Utilities', () => {
       expect(tier).toBe('paid')
     })
 
-    it('should return free simulated tier when test user simulates free', async () => {
+    it('should return free simulated tier when allowlisted account simulates free', async () => {
+      mockAuthUser('test-user-id', ALLOWED_EMAIL)
       mockFrom.mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
             single: vi.fn().mockResolvedValue({
               data: {
-                is_test_user: true,
                 simulated_tier: 'free',
                 stripe_customer_id: 'cus_xxx',
               },
@@ -82,13 +87,13 @@ describe('Subscription Utilities', () => {
       expect(tier).toBe('free')
     })
 
-    it('should return real tier for test users when simulated_tier is null', async () => {
+    it('should return real tier for allowlisted account when simulated_tier is null', async () => {
+      mockAuthUser('test-user-id', ALLOWED_EMAIL)
       mockFrom.mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
             single: vi.fn().mockResolvedValue({
               data: {
-                is_test_user: true,
                 simulated_tier: null,
                 stripe_customer_id: null,
               },
@@ -133,13 +138,13 @@ describe('Subscription Utilities', () => {
       expect(tier).toBe('free')
     })
 
-    it('should ignore simulated_tier for non-test users', async () => {
+    it('should ignore simulated_tier for non-allowlisted accounts', async () => {
+      mockAuthUser('test-user-id', 'someone-else@example.com')
       mockFrom.mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({
             single: vi.fn().mockResolvedValue({
               data: {
-                is_test_user: false,
                 simulated_tier: 'paid', // This should be ignored
                 stripe_customer_id: null,
               },
@@ -149,7 +154,7 @@ describe('Subscription Utilities', () => {
       })
 
       const tier = await getUserSubscriptionTier('test-user-id')
-      expect(tier).toBe('free') // Non-test users use real tier
+      expect(tier).toBe('free') // Non-allowlisted accounts use real tier
     })
   })
 

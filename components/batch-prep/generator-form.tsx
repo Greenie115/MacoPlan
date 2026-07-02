@@ -4,7 +4,7 @@ import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { Loader2 } from 'lucide-react'
+import { Loader2, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -155,8 +155,8 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
         </div>
       </div>
 
-      <div className="rounded-xl border border-border p-4">
-        <p className="font-medium">Cuisine by meal <span className="text-muted-foreground text-sm font-normal">(optional)</span></p>
+      <div className="rounded-2xl bg-card shadow-sm border border-border-strong p-4">
+        <p className="font-bold text-foreground">Cuisine by meal <span className="text-muted-foreground text-sm font-normal">(optional)</span></p>
         <p className="text-sm text-muted-foreground mt-0.5 mb-3">
           Pick a cuisine for any slot — e.g. American breakfast, Mediterranean lunch, Indian dinner. Leave on &quot;Surprise me&quot; and we&apos;ll rotate cuisines for you.
         </p>
@@ -186,8 +186,11 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
         </div>
       </div>
 
-      <details className="rounded border p-4">
-        <summary className="cursor-pointer font-medium">Macro targets (click to override)</summary>
+      <details className="group rounded-2xl bg-card shadow-sm border border-border-strong p-4 [&_summary::-webkit-details-marker]:hidden">
+        <summary className="flex items-center justify-between cursor-pointer font-bold text-foreground list-none">
+          Macro targets (click to override)
+          <ChevronDown className="size-4 text-icon transition-transform group-open:rotate-180" />
+        </summary>
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div>
             <p className="text-sm font-semibold mb-2">Training days</p>

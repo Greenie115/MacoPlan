@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Badge } from '@/components/ui/badge'
 import type { PrepStep } from '@/lib/types/batch-prep'
 
 interface Props {
@@ -42,30 +44,30 @@ export function PrepTimeline({ planId, steps }: Props) {
   }
 
   return (
-    <ol className="space-y-4">
+    <ol className="space-y-3">
       {steps.map((step) => {
         const isChecked = !!checked[step.step]
         return (
           <li
             key={step.step}
-            className={`flex gap-4 p-4 border rounded ${isChecked ? 'opacity-50' : ''}`}
+            className={`flex gap-4 rounded-2xl bg-card shadow-sm border border-border-strong p-4 transition-opacity ${isChecked ? 'opacity-50' : ''}`}
           >
-            <input
-              type="checkbox"
+            <Checkbox
+              id={`prep-step-${step.step}`}
               checked={isChecked}
-              onChange={() => toggle(step.step)}
+              onCheckedChange={() => toggle(step.step)}
               className="mt-1"
             />
-            <div className="flex-1">
+            <label htmlFor={`prep-step-${step.step}`} className="flex-1 cursor-pointer">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span className="font-mono">{step.time}</span>
-                <span className="px-2 py-0.5 bg-muted rounded uppercase text-[10px]">
+                <Badge variant="tag" className="uppercase text-[10px]">
                   {equipmentLabel[step.equipment]}
-                </span>
+                </Badge>
                 {step.duration_mins > 0 && <span>{step.duration_mins} min</span>}
               </div>
-              <p className={`mt-1 ${isChecked ? 'line-through' : ''}`}>{step.action}</p>
-            </div>
+              <p className={`mt-1 text-foreground ${isChecked ? 'line-through' : ''}`}>{step.action}</p>
+            </label>
           </li>
         )
       })}

@@ -59,7 +59,7 @@ export const ContainerAssignmentSchema = z.object({
 export type ContainerAssignment = z.infer<typeof ContainerAssignmentSchema>
 
 export const DayPlanSchema = z.object({
-  meals: z.array(MealSchema).min(2).max(5),
+  meals: z.array(MealSchema).min(2).max(6),
   daily_totals: MacrosSchema,
 })
 export type DayPlan = z.infer<typeof DayPlanSchema>

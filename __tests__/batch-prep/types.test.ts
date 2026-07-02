@@ -45,7 +45,7 @@ describe('batch-prep types', () => {
   })
 
   describe('BatchPrepPlanSchema', () => {
-    it('requires 2-5 meals per day', () => {
+    it('requires 2-6 meals per day', () => {
       const planWithOneMeal = {
         training_day: {
           meals: [{ name: 'x', meal_slot: 'breakfast', ingredients: [{ name: 'chicken', quantity_g: 200, macros: { calories: 330, protein_g: 62, carbs_g: 0, fat_g: 7 } }], total_macros: { calories: 330, protein_g: 62, carbs_g: 0, fat_g: 7 }, equipment: 'oven', servings_to_prep: 5, storage_days: 5 }],

@@ -22,8 +22,8 @@ import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect, useTransition } from 'react'
 import { UserProfile } from '@/lib/types/database'
 import { getSubscriptionStatus } from '@/app/actions/subscription'
-import { createPortalSession } from '@/app/actions/stripe'
-import { updateSimulatedTier } from '@/app/actions/profile'
+import { createPortalSession, createCheckoutSession } from '@/app/actions/stripe'
+import { updateSimulatedTier, canSimulateTierAction } from '@/app/actions/profile'
 import type { SubscriptionStatus } from '@/lib/constants/subscription'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useTheme } from 'next-themes'
@@ -40,6 +40,7 @@ export default function ProfilePage() {
   const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null)
   const [simulatedTier, setSimulatedTier] = useState<'free' | 'paid' | null>(null)
+  const [canSimulate, setCanSimulate] = useState(false)
   const [isUpdatingTier, setIsUpdatingTier] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [portalError, setPortalError] = useState<string | null>(null)
@@ -80,6 +81,9 @@ export default function ProfilePage() {
         // Load subscription status
         const status = await getSubscriptionStatus()
         setSubscriptionStatus(status)
+
+        // Tier-simulation controls are limited to allowlisted internal accounts
+        setCanSimulate(await canSimulateTierAction())
       } catch (error) {
         // Profile load failed silently
       } finally {
@@ -99,7 +103,7 @@ export default function ProfilePage() {
   const toggleDarkMode = () => setTheme(isDarkMode ? 'light' : 'dark')
 
   const handleSimulatedTierToggle = async () => {
-    if (!profile?.is_test_user || isUpdatingTier) return
+    if (!canSimulate || isUpdatingTier) return
 
     setIsUpdatingTier(true)
 
@@ -121,7 +125,7 @@ export default function ProfilePage() {
   }
 
   const handleClearSimulation = async () => {
-    if (!profile?.is_test_user || isUpdatingTier) return
+    if (!canSimulate || isUpdatingTier) return
 
     setIsUpdatingTier(true)
     const result = await updateSimulatedTier(null)
@@ -149,6 +153,18 @@ export default function ProfilePage() {
         window.location.href = result.url
       } else {
         setPortalError(result.error || 'Failed to open subscription portal')
+      }
+    })
+  }
+
+  const handleUpgrade = () => {
+    setPortalError(null)
+    startTransition(async () => {
+      const result = await createCheckoutSession('monthly')
+      if (result.success && result.url) {
+        window.location.href = result.url
+      } else {
+        setPortalError(result.error || 'Failed to start checkout')
       }
     })
   }
@@ -309,13 +325,31 @@ export default function ProfilePage() {
                 </div>
               )}
               {!subscriptionStatus?.isPremium && (
-                <Link
-                  href="/pricing"
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors"
-                >
-                  <span>Upgrade to Premium</span>
-                  <ArrowRight className="size-4" />
-                </Link>
+                <>
+                  <button
+                    onClick={handleUpgrade}
+                    disabled={isPending}
+                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
+                  >
+                    {isPending ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <>
+                        <span>Upgrade to Premium</span>
+                        <ArrowRight className="size-4" />
+                      </>
+                    )}
+                  </button>
+                  <Link
+                    href="/pricing"
+                    className="block text-center text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Compare monthly and annual plans
+                  </Link>
+                  {portalError && (
+                    <p className="text-xs text-destructive text-center">{portalError}</p>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -420,8 +454,8 @@ export default function ProfilePage() {
                 <div className={`absolute top-1 size-4 bg-white rounded-full shadow-sm transition-all ${isDarkMode ? 'left-6' : 'left-1'}`}></div>
               </div>
             </div>
-            {/* Test User Tier Toggle - only visible for test users */}
-            {profile?.is_test_user && (
+            {/* Tier Toggle - only visible for allowlisted internal accounts */}
+            {canSimulate && (
               <div className="flex flex-col gap-2 p-4 bg-card">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
