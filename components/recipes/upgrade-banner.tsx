@@ -56,7 +56,7 @@ export function UpgradeBanner({
             </p>
             <a
               className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors group"
-              href="#"
+              href="/pricing"
             >
               <span>Upgrade to Premium</span>
               <span className="group-hover:translate-x-1 transition-transform">→</span>
