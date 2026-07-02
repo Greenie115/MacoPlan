@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import { useDashboardStore } from '@/stores/dashboard-store'
 import { useDashboardData } from '@/lib/hooks/use-dashboard-data'
 import { useUserProfile } from '@/lib/hooks/use-user-profile'
@@ -19,7 +18,7 @@ import type { LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
 export default function DashboardPage() {
   const router = useRouter()
   const dashboardStore = useDashboardStore()
-  const { profile, userName } = useUserProfile()
+  const { profile, loading: profileLoading, userName } = useUserProfile()
   const { macros, progress, stats, recentPlans } = useDashboardData({ profile })
   const [isInitialized, setIsInitialized] = useState(false)
 
@@ -35,14 +34,15 @@ export default function DashboardPage() {
     mealsLogged: 0,
   })
 
-  // Fetch meal data
+  // Fetch meal data (both reads fired in parallel)
   const fetchMealData = async () => {
-    const mealsResult = await getMealsForDate()
+    const [mealsResult, totalsResult] = await Promise.all([
+      getMealsForDate(),
+      getDailyTotals(),
+    ])
     if (mealsResult.success && mealsResult.data) {
       setTodaysMeals(mealsResult.data)
     }
-
-    const totalsResult = await getDailyTotals()
     if (totalsResult.success && totalsResult.data) {
       setDailyTotals(totalsResult.data)
     }
@@ -50,35 +50,28 @@ export default function DashboardPage() {
 
   // Initialize data
   useEffect(() => {
+    // Wait for useUserProfile to resolve, then run once
+    if (profileLoading || isInitialized) return
+
     async function initializeDashboard() {
-      if (isInitialized) return
-
-      // Check if user has completed onboarding
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (user) {
-        const { data: profileData } = await supabase
-          .from('user_profiles')
-          .select('onboarding_completed')
-          .eq('user_id', user.id)
-          .single()
-
-        if (!profileData || !profileData.onboarding_completed) {
-          // No profile or incomplete -> Redirect to onboarding
-          router.replace('/onboarding/1')
-          return
-        }
+      // Gate on onboarding using the profile useUserProfile already fetched
+      // (no duplicate getUser()/user_profiles round-trip)
+      if (!profile || !profile.onboarding_completed) {
+        router.replace('/onboarding/1')
+        return
       }
 
-      // Fetch real plans data from Supabase
-      const plansResult = await getRecentPlansWithProgress()
+      // Fire independent reads in parallel instead of one-after-another
+      const [plansResult] = await Promise.all([
+        getRecentPlansWithProgress(),
+        fetchMealData(),
+      ])
       if (plansResult.success && plansResult.data) {
         dashboardStore.setRecentPlans(plansResult.data)
       }
 
-      // Archive old completed plans (runs in background)
-      await archiveOldCompletedPlans()
+      // Background maintenance — fire-and-forget, must not block first render
+      archiveOldCompletedPlans()
 
       if (stats.currentStreak === 0) {
         dashboardStore.setStats({
@@ -91,15 +84,12 @@ export default function DashboardPage() {
         })
       }
 
-      // Fetch real meal data instead of using dummy data
-      await fetchMealData()
-
       setIsInitialized(true)
     }
 
     initializeDashboard()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [profileLoading, profile])
 
   return (
     <div className="min-h-screen bg-background">
