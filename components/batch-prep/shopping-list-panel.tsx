@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Checkbox } from '@/components/ui/checkbox'
 import type { ShoppingItem } from '@/lib/types/batch-prep'
 
 export function ShoppingListPanel({ items }: { items: ShoppingItem[] }) {
@@ -15,25 +16,33 @@ export function ShoppingListPanel({ items }: { items: ShoppingItem[] }) {
   return (
     <div className="space-y-4">
       {Object.entries(grouped).map(([category, categoryItems]) => (
-        <div key={category}>
-          <h3 className="font-semibold uppercase text-sm text-muted-foreground mb-2">
+        <div key={category} className="rounded-2xl bg-card shadow-sm border border-border-strong p-4">
+          <h3 className="font-bold uppercase text-xs tracking-wide text-muted-foreground mb-3">
             {category}
           </h3>
-          <ul className="space-y-1">
+          <ul className="space-y-2.5">
             {categoryItems.map((item, idx) => {
               const globalIdx = items.indexOf(item)
+              const isChecked = !!checked[globalIdx]
               return (
-                <li key={idx} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={!!checked[globalIdx]}
-                    onChange={(e) =>
-                      setChecked({ ...checked, [globalIdx]: e.target.checked })
+                <li key={idx} className="flex items-center gap-3">
+                  <Checkbox
+                    id={`shopping-item-${globalIdx}`}
+                    checked={isChecked}
+                    onCheckedChange={(value) =>
+                      setChecked({ ...checked, [globalIdx]: value === true })
                     }
                   />
-                  <span className={checked[globalIdx] ? 'line-through text-muted-foreground' : ''}>
+                  <label
+                    htmlFor={`shopping-item-${globalIdx}`}
+                    className={
+                      isChecked
+                        ? 'line-through text-muted-foreground cursor-pointer'
+                        : 'text-foreground cursor-pointer'
+                    }
+                  >
                     {item.quantity_g}g {item.ingredient}
-                  </span>
+                  </label>
                 </li>
               )
             })}

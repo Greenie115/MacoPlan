@@ -41,14 +41,14 @@ export default async function MealPlanPage({
     if (legacy) {
       return (
         <main className="max-w-2xl mx-auto p-6 text-center">
-          <h1 className="text-2xl font-bold mb-4">Legacy plan</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">Legacy plan</h1>
           <p className="text-muted-foreground mb-6">
             This plan was created before the batch prep update. Generate a new batch prep plan to
             see the new experience.
           </p>
           <Link
             href="/meal-plans/generate"
-            className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded"
+            className="inline-block rounded-xl bg-primary px-6 py-3 font-bold text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Generate new plan
           </Link>
