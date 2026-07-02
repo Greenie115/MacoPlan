@@ -1,18 +1,26 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
+// Public content pages that never branch on auth/onboarding state.
+// Used for both the profile-query skip and the public-route check — one
+// list to update when adding a content route.
+const CONTENT_ROUTES = [
+  '/blog',
+  '/pricing',
+  '/help',
+  '/terms',
+  '/privacy',
+  '/forgot-password',
+  '/reset-password',
+]
+
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
+  const isContentRoute = CONTENT_ROUTES.some((r) => pathname.startsWith(r))
 
   // Content routes never branch on onboarding state — skip the profile query
   const skipProfileCheck =
-    pathname.startsWith('/blog') ||
-    pathname.startsWith('/pricing') ||
-    pathname.startsWith('/help') ||
-    pathname.startsWith('/terms') ||
-    pathname.startsWith('/privacy') ||
-    pathname.startsWith('/forgot-password') ||
-    pathname.startsWith('/reset-password') ||
+    isContentRoute ||
     pathname.startsWith('/api/') ||
     pathname.includes('.')
 
@@ -26,20 +34,14 @@ export async function proxy(request: NextRequest) {
 
   // Define public routes that don't require auth
   const isPublicRoute =
-    request.nextUrl.pathname === '/' ||
-    request.nextUrl.pathname.startsWith('/login') ||
-    request.nextUrl.pathname.startsWith('/signup') ||
-    request.nextUrl.pathname.startsWith('/forgot-password') ||
-    request.nextUrl.pathname.startsWith('/reset-password') ||
-    request.nextUrl.pathname.startsWith('/auth') ||
-    request.nextUrl.pathname.startsWith('/blog') ||
-    request.nextUrl.pathname.startsWith('/pricing') ||
-    request.nextUrl.pathname.startsWith('/help') ||
-    request.nextUrl.pathname.startsWith('/terms') ||
-    request.nextUrl.pathname.startsWith('/privacy') ||
-    request.nextUrl.pathname.startsWith('/onboarding') ||
-    request.nextUrl.pathname.startsWith('/_next') ||
-    request.nextUrl.pathname.includes('.') // static files like favicon.ico
+    isContentRoute ||
+    pathname === '/' ||
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/signup') ||
+    pathname.startsWith('/auth') ||
+    pathname.startsWith('/onboarding') ||
+    pathname.startsWith('/_next') ||
+    pathname.includes('.') // static files like favicon.ico
 
   // Onboarding is open to guests: data lives in localStorage until they sign
   // up, then /onboarding/complete migrates it to Supabase.

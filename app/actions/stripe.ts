@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
 // Get base URL for redirects
@@ -177,76 +176,3 @@ export async function createPortalSession(): Promise<PortalResult> {
   }
 }
 
-// ============================================================================
-// Get Subscription Status (for display purposes)
-// ============================================================================
-
-export interface SubscriptionInfo {
-  isActive: boolean
-  plan: 'free' | 'monthly' | 'annual'
-  currentPeriodEnd?: Date
-  cancelAtPeriodEnd?: boolean
-}
-
-/**
- * Gets the current subscription status for display
- */
-export async function getSubscriptionInfo(): Promise<SubscriptionInfo> {
-  try {
-    if (!stripe) {
-      return { isActive: false, plan: 'free' }
-    }
-
-    const supabase = await createClient()
-
-    const { data: { user } } = await supabase.auth.getUser()
-
-    if (!user) {
-      return { isActive: false, plan: 'free' }
-    }
-
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('stripe_customer_id')
-      .eq('user_id', user.id)
-      .single()
-
-    if (!profile?.stripe_customer_id) {
-      return { isActive: false, plan: 'free' }
-    }
-
-    // Get active subscriptions
-    const subscriptions = await stripe.subscriptions.list({
-      customer: profile.stripe_customer_id,
-      status: 'active',
-      limit: 1,
-      expand: ['data.items.data.price'],
-    })
-
-    if (subscriptions.data.length === 0) {
-      return { isActive: false, plan: 'free' }
-    }
-
-    const subscription = subscriptions.data[0] as Stripe.Subscription
-    const priceId = subscription.items.data[0]?.price?.id
-
-    // Determine plan type from price ID
-    let plan: 'monthly' | 'annual' = 'monthly'
-    if (priceId === process.env.STRIPE_ANNUAL_PRICE_ID) {
-      plan = 'annual'
-    }
-
-    // Access period end (Stripe API returns as number timestamp)
-    const periodEnd = (subscription as unknown as { current_period_end: number }).current_period_end
-
-    return {
-      isActive: true,
-      plan,
-      currentPeriodEnd: periodEnd ? new Date(periodEnd * 1000) : undefined,
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-    }
-
-  } catch (error) {
-    return { isActive: false, plan: 'free' }
-  }
-}

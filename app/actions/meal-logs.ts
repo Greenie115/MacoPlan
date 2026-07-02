@@ -3,10 +3,36 @@
 import { createClient, getAuthUser } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import type { LogMealInput, LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
+import type { LogMealInput, LoggedMeal } from '@/lib/types/meal-log'
 
 // Validation schema for recipe ID
 const recipeIdSchema = z.string().uuid({ message: 'Invalid recipe ID format' })
+
+// Client-supplied local date (YYYY-MM-DD); falls back to server UTC date if
+// absent/invalid so old callers keep working
+const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
+function resolveDate(date?: string): string {
+  return dateSchema.safeParse(date).success
+    ? (date as string)
+    : new Date().toISOString().split('T')[0]
+}
+
+// Bounds check shared by logMeal and updateMealLog; skips absent fields so
+// partial updates validate only what they change
+function validateMacros(input: Partial<LogMealInput>): string | null {
+  const bounds: [number | undefined, number][] = [
+    [input.calories, 10000],
+    [input.proteinGrams, 1000],
+    [input.carbGrams, 1000],
+    [input.fatGrams, 1000],
+  ]
+  for (const [value, max] of bounds) {
+    if (value === undefined) continue
+    if (value < 0) return 'Nutritional values must be non-negative'
+    if (value > max) return 'Nutritional values seem too high. Please check your input.'
+  }
+  return null
+}
 
 /**
  * Log a new meal for the authenticated user
@@ -28,31 +54,16 @@ export async function logMeal(input: LogMealInput, recipeId?: string) {
     return { error: 'Meal name must be less than 100 characters' }
   }
 
-  if (
-    input.calories < 0 ||
-    input.proteinGrams < 0 ||
-    input.carbGrams < 0 ||
-    input.fatGrams < 0
-  ) {
-    return { error: 'Nutritional values must be non-negative' }
+  const macroError = validateMacros(input)
+  if (macroError) {
+    return { error: macroError }
   }
-
-  if (
-    input.calories > 10000 ||
-    input.proteinGrams > 1000 ||
-    input.carbGrams > 1000 ||
-    input.fatGrams > 1000
-  ) {
-    return { error: 'Nutritional values seem too high. Please check your input.' }
-  }
-
-  const today = new Date().toISOString().split('T')[0] // YYYY-MM-DD
 
   const { data, error } = await supabase
     .from('logged_meals')
     .insert({
       user_id: user.id,
-      date: today,
+      date: resolveDate(input.date),
       name: input.name.trim(),
       meal_type: input.mealType,
       calories: Math.round(input.calories),
@@ -86,7 +97,7 @@ export async function getMealsForDate(date?: string) {
     return { error: 'Authentication required', data: null }
   }
 
-  const targetDate = date || new Date().toISOString().split('T')[0]
+  const targetDate = resolveDate(date)
 
   const { data, error } = await supabase
     .from('logged_meals')
@@ -100,34 +111,6 @@ export async function getMealsForDate(date?: string) {
   }
 
   return { success: true, data: data as LoggedMeal[] }
-}
-
-/**
- * Get daily totals for dashboard
- */
-export async function getDailyTotals(date?: string): Promise<{
-  success?: boolean
-  error?: string
-  data?: DailyTotals
-}> {
-  const result = await getMealsForDate(date)
-
-  if (result.error || !result.data) {
-    return { error: result.error || 'No data', data: undefined }
-  }
-
-  const totals = result.data.reduce(
-    (acc, meal) => ({
-      calories: acc.calories + meal.calories,
-      protein: acc.protein + meal.protein_grams,
-      carbs: acc.carbs + meal.carb_grams,
-      fat: acc.fat + meal.fat_grams,
-      mealsLogged: acc.mealsLogged + 1,
-    }),
-    { calories: 0, protein: 0, carbs: 0, fat: 0, mealsLogged: 0 }
-  )
-
-  return { success: true, data: totals }
 }
 
 /**
@@ -152,6 +135,11 @@ export async function updateMealLog(
     if (updates.name.trim().length > 100) {
       return { error: 'Meal name must be less than 100 characters' }
     }
+  }
+
+  const macroError = validateMacros(updates)
+  if (macroError) {
+    return { error: macroError }
   }
 
   // Build update object
@@ -229,7 +217,7 @@ export async function getLoggedMealForRecipe(
     return { mealId: null }
   }
 
-  const targetDate = date || new Date().toISOString().split('T')[0] // YYYY-MM-DD
+  const targetDate = resolveDate(date)
 
   const { data, error } = await supabase
     .from('logged_meals')

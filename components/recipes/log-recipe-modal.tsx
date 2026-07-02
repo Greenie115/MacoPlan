@@ -22,7 +22,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { logMeal } from '@/app/actions/meal-logs'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
-import { MEAL_TYPE_LABELS, type LogMealInput } from '@/lib/types/meal-log'
+import { MEAL_TYPE_LABELS, localToday, type LogMealInput } from '@/lib/types/meal-log'
 
 interface Recipe {
   id: string
@@ -87,6 +87,7 @@ export function LogRecipeModal({
           fatGrams: adjustedMacros.fat,
           servingSize: `${multiplier}x serving${multiplier !== 1 ? 's' : ''}`,
           description: description.trim() || undefined,
+          date: localToday(),
         },
         recipe.id
       )

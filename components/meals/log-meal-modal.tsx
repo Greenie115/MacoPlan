@@ -11,7 +11,7 @@ import {
 import { LogMealForm } from './log-meal-form'
 import { logMeal, updateMealLog } from '@/app/actions/meal-logs'
 import { toast } from 'sonner'
-import type { LoggedMeal } from '@/lib/types/meal-log'
+import { localToday, type LoggedMeal } from '@/lib/types/meal-log'
 
 interface LogMealModalProps {
   open: boolean
@@ -47,8 +47,8 @@ export function LogMealModal({
         // Update existing meal
         result = await updateMealLog(editMeal.id, values)
       } else {
-        // Create new meal
-        result = await logMeal(values)
+        // Create new meal (date from the browser so it lands on the user's local day)
+        result = await logMeal({ ...values, date: localToday() })
       }
 
       if (result.error) {
