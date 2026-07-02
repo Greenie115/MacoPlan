@@ -16,6 +16,7 @@ HARD RULES:
 11. Respect dietary exclusions absolutely — no prohibited ingredients anywhere.
 12. NEVER use the characters & < > inside ingredient names, meal names, step actions, instr text, or any tag content. Write the word "and" instead of "&". If you must include a quotation, use single quotes inside attribute values.
 13. Every recipe MUST have a clear cuisine identity and a named sauce, marinade, or spice mix listed in its ingredients with gram weights (oils, sauces, and pastes count toward macros). NEVER output a plain unseasoned 'protein + carb + vegetable' bowl. Recipe names should reflect the dish (e.g. 'Gochujang Chicken Thigh Bowls', not 'Chicken and Rice').
+14. MEALS PER DAY is a separate concept from weekly RECIPE COUNT. The user prompt states an exact "MEALS PER DAY: Generate exactly N meals..." target — follow it precisely for both the training day and the rest day. A day's meals do NOT need N distinct recipes; reuse that week's recipes across multiple meal slots/containers to reach the target meal count. When N is greater than 4, use multiple <meal slot="snack"> entries (e.g. two separate snack occasions) rather than inventing new slot names — the schema only accepts breakfast|lunch|snack|dinner.
 
 MACRO REFERENCE (per 100g raw weight unless stated — CALIBRATION DATA, NOT A WHITELIST. Use ANY whole-food ingredient you know; estimate macros for unlisted ingredients from your nutrition knowledge and keep the math consistent):
 Chicken breast: 165cal, 31g P, 0g C, 3.6g F
@@ -104,6 +105,12 @@ const VARIETY_RECIPE_COUNT: Record<string, string> = {
   low: '3–4',
   medium: '5–6',
   high: '7–8',
+}
+
+const VARIETY_MEALS_PER_DAY: Record<string, number> = {
+  low: 3,
+  medium: 4,
+  high: 6,
 }
 
 /**
@@ -198,7 +205,7 @@ export function buildUserPrompt(
       ? `\nDO NOT REPEAT: The user already received these recipes in recent weeks. Do not generate them again, nor trivially renamed variants of them:\n${avoidRecipes.map((name) => `- ${name}`).join('\n')}`
       : ''
 
-  const mealsPerDay = 4
+  const mealsPerDay = VARIETY_MEALS_PER_DAY[preferences.meal_variety ?? 'medium']
   const tPerMeal = {
     calories: Math.round(td.calories / mealsPerDay),
     protein_g: Math.round(td.protein_g / mealsPerDay),
@@ -217,6 +224,8 @@ export function buildUserPrompt(
 DAILY MACRO TARGETS:
 - Training days (${profile.training_days_per_week}x/week): ${td.calories} cal | ${td.protein_g}g P | ${td.carbs_g}g C | ${td.fat_g}g F
 - Rest days (${restDaysPerWeek}x/week): ${rd.calories} cal | ${rd.protein_g}g P | ${rd.carbs_g}g C | ${rd.fat_g}g F
+
+MEALS PER DAY: Generate exactly ${mealsPerDay} meals for EACH day type (training and rest). This is separate from the weekly RECIPE COUNT below — reuse that week's recipes across multiple meal slots/containers rather than inventing extra recipes.${mealsPerDay > 4 ? ` Since ${mealsPerDay} exceeds the 4 named slots (breakfast|lunch|snack|dinner), use multiple <meal slot="snack"> entries (e.g. two separate snack occasions) instead of inventing new slot names.` : ''}
 
 PER-MEAL BUDGET (${mealsPerDay} meals/day — aim for these per meal):
 - Training: ~${tPerMeal.calories} cal | ~${tPerMeal.protein_g}g P | ~${tPerMeal.carbs_g}g C | ~${tPerMeal.fat_g}g F
