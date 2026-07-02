@@ -4,26 +4,14 @@ import { createClient, getAuthUser } from '@/lib/supabase/server'
 import {
   getUserSubscriptionTier,
   checkMealPlanQuota,
-  checkSwapQuota,
   type SubscriptionTier,
-  type QuotaCheckResult,
 } from '@/lib/utils/subscription'
 import {
   FREE_FAVORITES_LIMIT,
   PREMIUM_FAVORITES_LIMIT,
-  FREE_SWAPS_LIMIT,
-  PREMIUM_SWAPS_LIMIT,
   type FavoritesQuota,
-  type SwapQuota,
+  type SubscriptionStatus,
 } from '@/lib/constants/subscription'
-
-interface SubscriptionStatus {
-  tier: SubscriptionTier
-  isPremium: boolean
-  quota: QuotaCheckResult
-  favoritesQuota: FavoritesQuota
-  swapQuota: SwapQuota
-}
 
 /**
  * Get the count of favorites for a user
@@ -81,38 +69,22 @@ export async function getSubscriptionStatus(): Promise<SubscriptionStatus | null
     const tier = await getUserSubscriptionTier(user.id)
 
     // Get quota info
-    const [quota, favoritesQuota, swapQuotaResult] = await Promise.all([
+    const [quota, favoritesQuota] = await Promise.all([
       checkMealPlanQuota(user.id, tier),
       checkFavoritesQuota(user.id, tier),
-      checkSwapQuota(user.id, tier),
     ])
-
-    // Convert swap quota result to SwapQuota interface
-    const swapQuota: SwapQuota = {
-      used: swapQuotaResult.total - swapQuotaResult.remaining,
-      limit: swapQuotaResult.total,
-      remaining: swapQuotaResult.remaining,
-      allowed: swapQuotaResult.allowed,
-    }
 
     return {
       tier,
       isPremium: tier === 'paid',
       quota,
       favoritesQuota,
-      swapQuota,
     }
   } catch (err) {
     console.error('Unexpected error getting subscription status:', err)
     return null
   }
 }
-
-/**
- * Check if the current user is on the premium tier
- * Lightweight check for components that only need boolean status
- */
-const FREE_TIER_BATCH_PREP_LIMIT = 3
 
 export async function canGenerateBatchPrepPlan(
   userId: string
@@ -123,12 +95,11 @@ export async function canGenerateBatchPrepPlan(
     return { allowed: true }
   }
 
-  const { countBatchPrepPlans } = await import('@/lib/services/batch-prep-persistence')
-  const used = await countBatchPrepPlans(userId)
-  if (used >= FREE_TIER_BATCH_PREP_LIMIT) {
-    return { allowed: false, reason: 'free_tier_limit', used, limit: FREE_TIER_BATCH_PREP_LIMIT }
-  }
-  return { allowed: true, used, limit: FREE_TIER_BATCH_PREP_LIMIT }
+  // Same count-based check the quota UI shows, so gate and display agree
+  const quota = await checkMealPlanQuota(userId, tier)
+  return quota.allowed
+    ? { allowed: true, used: quota.used, limit: quota.total }
+    : { allowed: false, reason: 'free_tier_limit', used: quota.used, limit: quota.total }
 }
 
 export async function isPremiumUser(): Promise<boolean> {

@@ -66,10 +66,6 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
           <ArrowRight className="size-5" />
         </Link>
 
-        <p className="text-xs text-muted-foreground mt-4">
-          A confirmation email has been sent to your inbox.
-        </p>
-
         {/* Debug info - hidden in production */}
         {sessionId && process.env.NODE_ENV === 'development' && (
           <p className="text-xs text-muted-foreground mt-4 font-mono">

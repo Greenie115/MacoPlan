@@ -159,45 +159,34 @@ describe('Subscription Utilities', () => {
   })
 
   describe('checkMealPlanQuota', () => {
-    it('should allow free tier users with less than 3 plans', async () => {
+    // checkMealPlanQuota counts batch_prep_plans rows. The count query is a
+    // thenable builder: free tier awaits after .eq(), paid chains .gte() first.
+    const mockPlanCount = (count: number) => {
+      const result = { count, error: null }
+      const query = Object.assign(Promise.resolve(result), {
+        gte: vi.fn().mockResolvedValue(result),
+      })
       mockFrom.mockReturnValue({
         select: vi.fn().mockReturnValue({
-          eq: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue({
-              data: {
-                user_id: 'test-user',
-                free_tier_generated: 2,
-                current_period_generated: 2,
-                total_generated: 2,
-              },
-            }),
-          }),
+          eq: vi.fn().mockReturnValue(query),
         }),
       })
+    }
+
+    it('should allow free tier users with less than 3 plans', async () => {
+      mockPlanCount(2)
 
       const result = await checkMealPlanQuota('test-user', 'free')
 
       expect(result.allowed).toBe(true)
+      expect(result.used).toBe(2)
       expect(result.remaining).toBe(1)
       expect(result.total).toBe(3)
       expect(result.reason).toBeUndefined()
     })
 
     it('should block free tier users at 3 plans limit', async () => {
-      mockFrom.mockReturnValue({
-        select: vi.fn().mockReturnValue({
-          eq: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue({
-              data: {
-                user_id: 'test-user',
-                free_tier_generated: 3,
-                current_period_generated: 3,
-                total_generated: 3,
-              },
-            }),
-          }),
-        }),
-      })
+      mockPlanCount(3)
 
       const result = await checkMealPlanQuota('test-user', 'free')
 
@@ -207,21 +196,8 @@ describe('Subscription Utilities', () => {
       expect(result.reason).toContain('Free tier limit reached')
     })
 
-    it('should allow paid tier users with less than 100 plans', async () => {
-      mockFrom.mockReturnValue({
-        select: vi.fn().mockReturnValue({
-          eq: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue({
-              data: {
-                user_id: 'test-user',
-                free_tier_generated: 0,
-                current_period_generated: 50,
-                total_generated: 50,
-              },
-            }),
-          }),
-        }),
-      })
+    it('should allow paid tier users with less than 100 plans this month', async () => {
+      mockPlanCount(50)
 
       const result = await checkMealPlanQuota('test-user', 'paid')
 
@@ -231,20 +207,7 @@ describe('Subscription Utilities', () => {
     })
 
     it('should block paid tier users at 100 plans limit', async () => {
-      mockFrom.mockReturnValue({
-        select: vi.fn().mockReturnValue({
-          eq: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue({
-              data: {
-                user_id: 'test-user',
-                free_tier_generated: 0,
-                current_period_generated: 100,
-                total_generated: 100,
-              },
-            }),
-          }),
-        }),
-      })
+      mockPlanCount(100)
 
       const result = await checkMealPlanQuota('test-user', 'paid')
 
@@ -254,35 +217,52 @@ describe('Subscription Utilities', () => {
       expect(result.reason).toContain('Monthly generation limit reached')
     })
 
-    it('should create quota record for new users', async () => {
-      const insertMock = vi.fn().mockReturnValue({
-        select: vi.fn().mockReturnValue({
-          single: vi.fn().mockResolvedValue({
-            data: {
-              user_id: 'new-user',
-              free_tier_generated: 0,
-              current_period_generated: 0,
-              total_generated: 0,
-            },
-            error: null,
-          }),
-        }),
-      })
-
-      mockFrom.mockReturnValue({
-        select: vi.fn().mockReturnValue({
-          eq: vi.fn().mockReturnValue({
-            single: vi.fn().mockResolvedValue({ data: null }),
-          }),
-        }),
-        insert: insertMock,
-      })
+    it('should treat users with no plans as full quota', async () => {
+      mockPlanCount(0)
 
       const result = await checkMealPlanQuota('new-user', 'free')
 
-      expect(insertMock).toHaveBeenCalledWith({ user_id: 'new-user' })
       expect(result.allowed).toBe(true)
+      expect(result.used).toBe(0)
       expect(result.remaining).toBe(3)
+    })
+  })
+
+  describe('getUserSubscriptionTier via subscription_status column', () => {
+    const mockProfile = (subscription_status: string | null) => {
+      mockFrom.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue({
+              data: {
+                simulated_tier: null,
+                stripe_customer_id: 'cus_xxx',
+                subscription_status,
+              },
+            }),
+          }),
+        }),
+      })
+    }
+
+    it('returns paid for active status without calling Stripe', async () => {
+      mockProfile('active')
+      expect(await getUserSubscriptionTier('u1')).toBe('paid')
+    })
+
+    it('returns paid for trialing status', async () => {
+      mockProfile('trialing')
+      expect(await getUserSubscriptionTier('u1')).toBe('paid')
+    })
+
+    it('returns free for canceled status', async () => {
+      mockProfile('canceled')
+      expect(await getUserSubscriptionTier('u1')).toBe('free')
+    })
+
+    it('returns free for past_due status', async () => {
+      mockProfile('past_due')
+      expect(await getUserSubscriptionTier('u1')).toBe('free')
     })
   })
 })

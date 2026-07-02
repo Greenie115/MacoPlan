@@ -79,7 +79,7 @@ export function MyComponent() {
 }
 ```
 
-**Middleware** (`middleware.ts` + `lib/supabase/middleware.ts`):
+**Middleware** (`proxy.ts` + `lib/supabase/middleware.ts` — Next.js 16 renamed the middleware convention to proxy):
 - Uses `SUPABASE_SERVICE_ROLE_KEY` (not anon key) for auth token refresh
 - Protects routes: redirects unauthenticated users from `/dashboard`, `/meal-plans`, etc.
 - `/onboarding` is PUBLIC — guests complete it with localStorage state, then sign up
@@ -176,7 +176,7 @@ app/
 
 **Chrome rule**: sidebar/bottom-nav/top-bar come from `app/(app)/layout.tsx`
 via `AppShell` — never from pathname sniffing. Marketing and auth pages render
-their own headers. Route protection lives in `middleware.ts`.
+their own headers. Route protection lives in `proxy.ts`.
 
 ### Component Patterns
 
@@ -235,7 +235,7 @@ STRIPE_SECRET_KEY=sk_test_...
 
 - `stores/onboarding-store.ts`: Complete onboarding state definition
 - `lib/supabase/server.ts` + `client.ts`: Supabase client creation patterns
-- `middleware.ts`: Route protection logic
+- `proxy.ts`: Route protection logic (Next.js 16 proxy convention, formerly middleware.ts)
 - `app/actions/profile.ts`: Example server action with full error handling
 - `supabase/migrations/`: NOTE — only post-2026-03 migrations exist in the repo; founding tables (`user_profiles`, `recipes`, `meal_plans`, `logged_meals`, ...) live only in production Supabase
 - `lib/services/recipe-api.ts`: Recipe-API.com service with caching

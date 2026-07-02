@@ -30,6 +30,18 @@ export interface LogMealInput {
   fatGrams: number
   servingSize?: string
   description?: string
+  /** YYYY-MM-DD in the user's local timezone (see localToday) */
+  date?: string
+}
+
+/**
+ * Today as YYYY-MM-DD in the *caller's* timezone. Call this on the client and
+ * pass it to meal-log actions — the server runs in UTC, so deriving "today"
+ * there puts a US user's evening meals on tomorrow's date.
+ * (en-CA locale formats as YYYY-MM-DD.)
+ */
+export function localToday(): string {
+  return new Date().toLocaleDateString('en-CA')
 }
 
 export interface DailyTotals {

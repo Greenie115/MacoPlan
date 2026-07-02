@@ -64,26 +64,23 @@ export default function ProfilePage() {
         // Detect auth provider (google, email, etc.)
         setAuthProvider(user.app_metadata?.provider || 'email')
 
-        const { data, error } = await supabase.from('user_profiles').select('*').eq('user_id', user.id).single()
+        // Independent reads — fire together instead of as a waterfall
+        const [{ data, error }, status, canSimulateResult] = await Promise.all([
+          supabase.from('user_profiles').select('*').eq('user_id', user.id).single(),
+          getSubscriptionStatus(),
+          // Tier-simulation controls are limited to allowlisted internal accounts
+          canSimulateTierAction(),
+        ])
 
         if (error) {
-          // PGRST116 = no rows returned (user has no profile)
-          if (error.code === 'PGRST116') {
-            setProfile(null)
-          } else {
-            setProfile(null)
-          }
+          setProfile(null)
         } else {
           setProfile(data)
           setSimulatedTier(data.simulated_tier)
         }
 
-        // Load subscription status
-        const status = await getSubscriptionStatus()
         setSubscriptionStatus(status)
-
-        // Tier-simulation controls are limited to allowlisted internal accounts
-        setCanSimulate(await canSimulateTierAction())
+        setCanSimulate(canSimulateResult)
       } catch (error) {
         // Profile load failed silently
       } finally {

@@ -38,20 +38,4 @@ describe('Stripe Checkout Integration', () => {
     })
   })
 
-  describe('getSubscriptionInfo', () => {
-    it('should be defined as a server action', async () => {
-      const { getSubscriptionInfo } = await import('@/app/actions/stripe')
-      expect(typeof getSubscriptionInfo).toBe('function')
-    })
-
-    it('should return expected shape for free tier', async () => {
-      // When Stripe is not configured, should return free tier
-      const { getSubscriptionInfo } = await import('@/app/actions/stripe')
-      const result = await getSubscriptionInfo()
-
-      // Should return a valid subscription info object
-      expect(result).toHaveProperty('isActive')
-      expect(result).toHaveProperty('plan')
-    })
-  })
 })

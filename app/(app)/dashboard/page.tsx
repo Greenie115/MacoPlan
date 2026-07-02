@@ -11,15 +11,15 @@ import { MacroTargetCard } from '@/components/dashboard/macro-target-card'
 import { GeneratePlanCTA } from '@/components/dashboard/generate-plan-cta'
 import { RecentPlansCarousel } from '@/components/dashboard/recent-plans-carousel'
 import { LogMealModal } from '@/components/meals/log-meal-modal'
-import { getMealsForDate, getDailyTotals, deleteMealLog } from '@/app/actions/meal-logs'
+import { getMealsForDate, deleteMealLog } from '@/app/actions/meal-logs'
 import { toast } from 'sonner'
-import type { LoggedMeal, DailyTotals } from '@/lib/types/meal-log'
+import { localToday, type LoggedMeal, type DailyTotals } from '@/lib/types/meal-log'
 
 export default function DashboardPage() {
   const router = useRouter()
   const dashboardStore = useDashboardStore()
   const { profile, loading: profileLoading, userName } = useUserProfile()
-  const { macros, progress, stats, recentPlans } = useDashboardData({ profile })
+  const { macros, recentPlans } = useDashboardData({ profile })
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Meal logging state
@@ -34,17 +34,23 @@ export default function DashboardPage() {
     mealsLogged: 0,
   })
 
-  // Fetch meal data (both reads fired in parallel)
+  // One fetch (browser-local date), totals derived from the same rows
   const fetchMealData = async () => {
-    const [mealsResult, totalsResult] = await Promise.all([
-      getMealsForDate(),
-      getDailyTotals(),
-    ])
+    const mealsResult = await getMealsForDate(localToday())
     if (mealsResult.success && mealsResult.data) {
       setTodaysMeals(mealsResult.data)
-    }
-    if (totalsResult.success && totalsResult.data) {
-      setDailyTotals(totalsResult.data)
+      setDailyTotals(
+        mealsResult.data.reduce(
+          (acc, meal) => ({
+            calories: acc.calories + meal.calories,
+            protein: acc.protein + meal.protein_grams,
+            carbs: acc.carbs + meal.carb_grams,
+            fat: acc.fat + meal.fat_grams,
+            mealsLogged: acc.mealsLogged + 1,
+          }),
+          { calories: 0, protein: 0, carbs: 0, fat: 0, mealsLogged: 0 }
+        )
+      )
     }
   }
 
@@ -72,17 +78,6 @@ export default function DashboardPage() {
 
       // Background maintenance — fire-and-forget, must not block first render
       archiveOldCompletedPlans()
-
-      if (stats.currentStreak === 0) {
-        dashboardStore.setStats({
-          currentStreak: 7,
-          daysLoggedThisWeek: 5,
-          macroAccuracy: 94,
-          plansCreated: 12,
-          mealsLogged: 45,
-          monthlyTrend: 3,
-        })
-      }
 
       setIsInitialized(true)
     }

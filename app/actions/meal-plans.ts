@@ -11,6 +11,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient, getAuthUser } from '@/lib/supabase/server'
 import {
   getUserSubscriptionTier,
+  checkMealPlanQuota,
 } from '@/lib/utils/subscription'
 import type {
   MealPlan,
@@ -362,7 +363,6 @@ export async function getMealPlanQuotaInfo(): Promise<{
   error?: string
 }> {
   try {
-    const supabase = await createClient()
     const user = await getAuthUser()
 
     if (!user) {
@@ -370,27 +370,12 @@ export async function getMealPlanQuotaInfo(): Promise<{
     }
 
     const tier = await getUserSubscriptionTier(user.id)
-
-    const { data: quota } = await supabase
-      .from('meal_plan_generation_quota')
-      .select('*')
-      .eq('user_id', user.id)
-      .single()
-
-    const total = tier === 'free' ? 3 : 100
-    const used = tier === 'free'
-      ? (quota?.free_tier_generated || 0)
-      : (quota?.current_period_generated || 0)
-    const remaining = Math.max(0, total - used)
+    // Count-based check — same source as the generation gate
+    const { used, remaining, total } = await checkMealPlanQuota(user.id, tier)
 
     return {
       success: true,
-      data: {
-        tier,
-        remaining,
-        total,
-        used,
-      },
+      data: { tier, remaining, total, used },
     }
   } catch (error) {
     console.error('[GetQuotaInfo] Unexpected error:', error)

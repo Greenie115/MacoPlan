@@ -37,10 +37,10 @@ export async function getUserSubscriptionTier(
 ): Promise<SubscriptionTier> {
   const supabase = await createClient()
 
-  // Fetch simulated tier and Stripe customer ID
+  // Fetch simulated tier, webhook-maintained status, and Stripe customer ID
   const { data: profile } = await supabase
     .from('user_profiles')
-    .select('simulated_tier, stripe_customer_id')
+    .select('simulated_tier, stripe_customer_id, subscription_status')
     .eq('user_id', userId)
     .single()
 
@@ -58,7 +58,17 @@ export async function getUserSubscriptionTier(
 
   // Otherwise fall through to the normal Stripe check
 
-  // Check Stripe subscription if customer ID exists
+  // Webhooks keep subscription_status current (checkout.completed,
+  // subscription.updated/deleted, invoice.payment_failed) — trust it and skip
+  // the live Stripe API round-trip that used to run on every tier check.
+  if (profile.subscription_status) {
+    return profile.subscription_status === 'active' ||
+      profile.subscription_status === 'trialing'
+      ? 'paid'
+      : 'free'
+  }
+
+  // Stripe fallback: customer exists but no status column yet (pre-webhook rows)
   if (profile.stripe_customer_id && stripe) {
     try {
       const subscriptions = await stripe.subscriptions.list({
@@ -87,15 +97,19 @@ export async function getUserSubscriptionTier(
 
 export interface QuotaCheckResult {
   allowed: boolean
+  used: number
   remaining: number
   total: number
   reason?: string
 }
 
 /**
- * Checks if user can generate another meal plan based on quota
- * Free tier: 3 plans lifetime
- * Paid tier: 100 plans per month
+ * Checks if user can generate another meal plan based on quota.
+ * Free tier: 3 plans lifetime. Paid tier: 100 plans per month.
+ *
+ * Counts rows in batch_prep_plans — the same source the generation gate
+ * uses — so the numbers shown to users can't drift from what's enforced.
+ * (The old meal_plan_generation_quota counters were never incremented.)
  */
 export async function checkMealPlanQuota(
   userId: string,
@@ -103,236 +117,41 @@ export async function checkMealPlanQuota(
 ): Promise<QuotaCheckResult> {
   const supabase = await createClient()
 
-  // Get or create quota record
-  let { data: quota } = await supabase
-    .from('meal_plan_generation_quota')
-    .select('*')
-    .eq('user_id', userId)
-    .single()
-
-  if (!quota) {
-    // Create quota record for new user
-    const { data, error } = await supabase
-      .from('meal_plan_generation_quota')
-      .insert({ user_id: userId })
-      .select()
-      .single()
-
-    if (error) {
-      console.error('[Quota] Error creating quota record:', error)
-      throw new Error('Failed to check quota')
-    }
-
-    quota = data
-  }
-
-  if (tier === 'free') {
-    // Free tier: max 3 plans
-    const remaining = Math.max(0, 3 - quota.free_tier_generated)
-    const allowed = remaining > 0
-
-    return {
-      allowed,
-      remaining,
-      total: 3,
-      reason: allowed
-        ? undefined
-        : 'Free tier limit reached. Upgrade to generate unlimited meal plans.',
-    }
-  } else {
-    // Paid tier: max 100 per month
-    const remaining = Math.max(0, 100 - quota.current_period_generated)
-    const allowed = remaining > 0
-
-    return {
-      allowed,
-      remaining,
-      total: 100,
-      reason: allowed
-        ? undefined
-        : 'Monthly generation limit reached. Please contact support if you need more.',
-    }
-  }
-}
-
-// ============================================================================
-// Increment Quota Counter
-// ============================================================================
-
-/**
- * Increments the meal plan generation counter after successful generation
- */
-export async function incrementMealPlanQuota(
-  userId: string,
-  tier: SubscriptionTier
-): Promise<void> {
-  const supabase = await createClient()
-
-  // Build update object (increments are applied by the RPC, not PostgREST)
-  const updates: Record<string, { increment: number } | string> = {
-    total_generated: { increment: 1 },
-    current_period_generated: { increment: 1 },
-    last_generation_at: new Date().toISOString(),
-  }
-
-  if (tier === 'free') {
-    updates.free_tier_generated = { increment: 1 }
-  }
-
-  // Note: Supabase doesn't support increment syntax directly in TypeScript
-  // We need to use raw SQL update
-  const { error } = await supabase.rpc('increment_meal_plan_quota', {
-    p_user_id: userId,
-    p_is_free_tier: tier === 'free',
-  })
-
-  if (error) {
-    console.error('[Quota] Error incrementing quota:', error)
-  }
-}
-
-// ============================================================================
-// Reset Monthly Quota (Called by Stripe webhook)
-// ============================================================================
-
-/**
- * Resets current_period_generated counter for a user
- * Called by Stripe webhook on invoice.paid event
- */
-export async function resetMonthlyQuota(
-  userId: string,
-  subscriptionId: string,
-  periodStart: Date,
-  periodEnd: Date
-): Promise<void> {
-  const supabase = await createClient()
-
-  const { error } = await supabase
-    .from('meal_plan_generation_quota')
-    .update({
-      current_period_generated: 0,
-      stripe_subscription_id: subscriptionId,
-      period_start_date: periodStart.toISOString(),
-      period_end_date: periodEnd.toISOString(),
-      updated_at: new Date().toISOString(),
-    })
+  let query = supabase
+    .from('batch_prep_plans')
+    .select('id', { count: 'exact', head: true })
     .eq('user_id', userId)
 
-  if (error) {
-    console.error('[Quota] Error resetting monthly quota:', error)
-    throw error
-  }
-}
-
-// ============================================================================
-// Check Meal Swap Quota
-// ============================================================================
-
-export interface SwapQuotaResult {
-  allowed: boolean
-  remaining: number
-  total: number
-  reason?: string
-}
-
-/**
- * Checks if user can perform another meal swap based on quota
- * Free tier: 3 swaps lifetime
- * Paid tier: Unlimited swaps
- */
-export async function checkSwapQuota(
-  userId: string,
-  tier: SubscriptionTier
-): Promise<SwapQuotaResult> {
-  // Paid users have unlimited swaps
   if (tier === 'paid') {
-    return {
-      allowed: true,
-      remaining: Infinity,
-      total: Infinity,
-    }
+    // Paid quota is per calendar month
+    const monthStart = new Date()
+    monthStart.setUTCDate(1)
+    monthStart.setUTCHours(0, 0, 0, 0)
+    query = query.gte('created_at', monthStart.toISOString())
   }
 
-  const supabase = await createClient()
-
-  // Get or create quota record
-  let { data: quota } = await supabase
-    .from('meal_plan_generation_quota')
-    .select('free_tier_swaps')
-    .eq('user_id', userId)
-    .single()
-
-  if (!quota) {
-    // Create quota record for new user
-    const { data, error } = await supabase
-      .from('meal_plan_generation_quota')
-      .insert({ user_id: userId })
-      .select('free_tier_swaps')
-      .single()
-
-    if (error) {
-      console.error('[SwapQuota] Error creating quota record:', error)
-      throw new Error('Failed to check swap quota')
-    }
-
-    quota = data
+  const { count, error } = await query
+  if (error) {
+    console.error('[Quota] Error counting plans:', error)
+    throw new Error('Failed to check quota')
   }
 
-  const FREE_SWAPS_LIMIT = 3
-  const swapsUsed = quota?.free_tier_swaps ?? 0
-  const remaining = Math.max(0, FREE_SWAPS_LIMIT - swapsUsed)
+  const used = count ?? 0
+  const total = tier === 'free' ? 3 : 100
+  const remaining = Math.max(0, total - used)
   const allowed = remaining > 0
 
   return {
     allowed,
+    used,
     remaining,
-    total: FREE_SWAPS_LIMIT,
+    total,
     reason: allowed
       ? undefined
-      : 'Free tier swap limit reached. Upgrade to Premium for unlimited swaps.',
+      : tier === 'free'
+        ? 'Free tier limit reached. Upgrade to generate unlimited meal plans.'
+        : 'Monthly generation limit reached. Please contact support if you need more.',
   }
 }
 
-// ============================================================================
-// Increment Swap Quota
-// ============================================================================
 
-/**
- * Increments the meal swap counter after successful swap
- * Only tracks for free tier users (paid users have unlimited)
- */
-export async function incrementSwapQuota(
-  userId: string,
-  tier: SubscriptionTier
-): Promise<void> {
-  // Paid users don't need tracking
-  if (tier === 'paid') {
-    return
-  }
-
-  const supabase = await createClient()
-
-  const { error } = await supabase.rpc('increment_swap_quota', {
-    p_user_id: userId,
-  })
-
-  if (error) {
-    // Fallback to direct update if RPC doesn't exist
-    const { data: quota } = await supabase
-      .from('meal_plan_generation_quota')
-      .select('free_tier_swaps')
-      .eq('user_id', userId)
-      .single()
-
-    if (quota) {
-      await supabase
-        .from('meal_plan_generation_quota')
-        .update({
-          free_tier_swaps: (quota.free_tier_swaps ?? 0) + 1,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('user_id', userId)
-    }
-  }
-
-}
