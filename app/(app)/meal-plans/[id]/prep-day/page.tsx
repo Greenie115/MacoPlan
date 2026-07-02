@@ -38,6 +38,7 @@ export default async function PrepDayPage({
       <PrepTimeline
         planId={plan.id}
         steps={plan.prep_timeline as PrepStep[]}
+        totalContainers={plan.total_containers}
       />
     </main>
   )

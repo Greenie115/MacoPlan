@@ -23,15 +23,20 @@ const MEAL_SLOTS = [
   { key: 'dinner', label: 'Dinner' },
 ] as const
 
-const PROGRESS_MESSAGES = [
-  'Designing your batch recipes…',
-  'Balancing training and rest day macros…',
-  'Picking ingredients that overlap across meals…',
-  'Sequencing the prep timeline…',
-  'Writing cooking instructions…',
-  'Building your shopping list…',
-  'Almost there — final checks…',
-]
+// Personalized with the user's own numbers — 30s of visible proof the plan
+// is being built for them, not fetched from a template
+function buildProgressMessages(p: TrainingProfile): string[] {
+  const { protein_g, calories } = p.training_day_macros
+  return [
+    `Packing ${protein_g}g of daily protein into ${p.containers_per_week} containers…`,
+    `Splitting ${calories} kcal across training and rest days…`,
+    'Picking ingredients that overlap across meals…',
+    `Sequencing your prep to fit ${p.max_prep_time_mins} minutes…`,
+    'Writing cooking instructions…',
+    'Building your shopping list…',
+    'Almost there — final checks…',
+  ]
+}
 
 interface Props {
   defaults: TrainingProfile
@@ -54,16 +59,20 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
       return
     }
     const interval = setInterval(() => {
-      setProgressIndex((i) => Math.min(i + 1, PROGRESS_MESSAGES.length - 1))
+      // 7 messages, same length as buildProgressMessages output
+      setProgressIndex((i) => Math.min(i + 1, 6))
     }, 5000)
     return () => clearInterval(interval)
   }, [isPending])
 
-  const { register, handleSubmit, setValue, formState: { errors } } =
+  const { register, handleSubmit, setValue, getValues, formState: { errors } } =
     useForm<TrainingProfile>({
       resolver: zodResolver(TrainingProfileSchema),
       defaultValues: defaults,
     })
+
+  // Rebuilt each render; values are frozen while the request is pending
+  const progressMessages = buildProgressMessages({ ...defaults, ...getValues() })
 
   const onSubmit = (data: TrainingProfile) => {
     setServerError(null)
@@ -234,7 +243,7 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
         {isPending ? (
           <span className="inline-flex items-center gap-2">
             <Loader2 className="size-4 animate-spin" />
-            {PROGRESS_MESSAGES[progressIndex]}
+            {progressMessages[progressIndex]}
           </span>
         ) : (
           'Generate my prep plan \u2192'

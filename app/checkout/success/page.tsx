@@ -31,11 +31,11 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
           </div>
 
           <h1 className="text-3xl font-bold text-foreground mb-3">
-            Payment Successful!
+            That&apos;s the last time you&apos;ll wonder what to eat this week.
           </h1>
 
           <p className="text-muted-foreground text-lg">
-            Your MacroPlan Premium subscription is now active. Get ready to enjoy unlimited meal plans!
+            Premium is live — 100 plans a month, PDF export, your prep on autopilot.
           </p>
         </div>
 
@@ -44,8 +44,8 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
           <h2 className="font-bold text-lg mb-4">What&apos;s unlocked:</h2>
           <ul className="space-y-3">
             {[
-              'Unlimited meal plan generations',
-              'Unlimited meal swaps',
+              '100 meal plans a month',
+              'Training & rest day splits',
               'Export plans as PDF',
               'Priority customer support',
             ].map((feature) => (
@@ -59,11 +59,18 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
 
         {/* CTA */}
         <Link
-          href="/dashboard"
+          href="/meal-plans/generate"
           className="inline-flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-primary/20"
         >
-          Go to Dashboard
+          Generate this week&apos;s plan
           <ArrowRight className="size-5" />
+        </Link>
+
+        <Link
+          href="/dashboard"
+          className="inline-block mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Go to dashboard instead
         </Link>
 
         {/* Debug info - hidden in production */}

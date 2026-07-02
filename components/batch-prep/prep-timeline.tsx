@@ -8,9 +8,10 @@ import type { PrepStep } from '@/lib/types/batch-prep'
 interface Props {
   planId: string
   steps: PrepStep[]
+  totalContainers?: number
 }
 
-export function PrepTimeline({ planId, steps }: Props) {
+export function PrepTimeline({ planId, steps, totalContainers }: Props) {
   const storageKey = `prep-timeline:${planId}`
   const [checked, setChecked] = useState<Record<number, boolean>>({})
 
@@ -43,7 +44,21 @@ export function PrepTimeline({ planId, steps }: Props) {
     none: 'Prep',
   }
 
+  const allDone = steps.length > 0 && steps.every((s) => checked[s.step])
+
   return (
+    <>
+    {allDone && (
+      <div className="rounded-2xl border-2 border-primary bg-primary/10 p-6 text-center animate-in zoom-in-95 fade-in duration-500">
+        <p className="text-3xl mb-2">🏁</p>
+        <p className="text-xl font-bold text-foreground">
+          Prep done{totalContainers ? ` — ${totalContainers} containers ready` : ''}.
+        </p>
+        <p className="text-muted-foreground mt-1">
+          The hard part of your week is already over. Everything else is just opening a lid.
+        </p>
+      </div>
+    )}
     <ol className="space-y-3">
       {steps.map((step) => {
         const isChecked = !!checked[step.step]
@@ -72,5 +87,6 @@ export function PrepTimeline({ planId, steps }: Props) {
         )
       })}
     </ol>
+    </>
   )
 }

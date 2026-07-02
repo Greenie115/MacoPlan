@@ -92,7 +92,12 @@ export default function DashboardPage() {
       <main className="max-w-7xl mx-auto px-4 py-6 pb-24 lg:pb-8">
         {/* Header with Greeting */}
         <div className="mb-2">
-          <GreetingHeader userName={userName} />
+          <GreetingHeader
+            userName={userName}
+            proteinTarget={isInitialized ? macros.proteinGrams : undefined}
+            proteinEaten={dailyTotals.protein}
+            mealsLogged={dailyTotals.mealsLogged}
+          />
         </div>
 
         {/* Dashboard Grid - Side by side on larger screens */}
