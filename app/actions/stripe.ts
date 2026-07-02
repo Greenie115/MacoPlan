@@ -81,35 +81,18 @@ export async function createCheckoutSession(plan: PlanType): Promise<CheckoutRes
       .eq('user_id', user.id)
       .single()
 
-    let customerId = profile?.stripe_customer_id
-
-    if (!customerId) {
-      // Create new Stripe customer
-      const customer = await stripe.customers.create({
-        email: user.email || undefined,
-        metadata: {
-          supabase_user_id: user.id,
-        },
-      })
-
-      customerId = customer.id
-
-      // Save customer ID to database
-      const { error: updateError } = await supabase
-        .from('user_profiles')
-        .update({ stripe_customer_id: customerId })
-        .eq('user_id', user.id)
-
-      if (updateError) {
-        // Continue anyway - we can handle this via webhook
-      }
-    }
-
+    const customerId = profile?.stripe_customer_id
     const baseUrl = getBaseUrl()
 
-    // Create checkout session
+    // Create checkout session. Returning customer -> reuse their Stripe id;
+    // first-time upgrade -> let Checkout create the customer from their email.
+    // The webhook (checkout.session.completed) writes the new
+    // stripe_customer_id back, so we skip a synchronous customers.create + DB
+    // write here — two fewer round-trips before the redirect.
     const session = await stripe.checkout.sessions.create({
-      customer: customerId,
+      ...(customerId
+        ? { customer: customerId }
+        : { customer_email: user.email || undefined }),
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [

@@ -8,7 +8,7 @@
  */
 
 import { revalidatePath } from 'next/cache'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getAuthUser } from '@/lib/supabase/server'
 import {
   getUserSubscriptionTier,
 } from '@/lib/utils/subscription'
@@ -40,9 +40,7 @@ export async function getMealPlans(filters?: {
 }> {
   try {
     const supabase = await createClient()
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    const user = await getAuthUser()
 
     if (!user) {
       return { success: false, error: 'Not authenticated' }
@@ -365,9 +363,7 @@ export async function getMealPlanQuotaInfo(): Promise<{
 }> {
   try {
     const supabase = await createClient()
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    const user = await getAuthUser()
 
     if (!user) {
       return { success: false, error: 'Not authenticated' }
