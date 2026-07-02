@@ -22,6 +22,84 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-snacks-under-200-calories',
+    title: '11 High-Protein Snacks Under 200 Calories (For Between Meals)',
+    excerpt: 'Eleven snacks that deliver serious protein for well under 200 calories each, with macros listed so hitting your target between meals stops being a guess.',
+    content: `
+      <p>Most people hit their protein target at meals and then quietly lose the whole day between them. A snack that's just carbs or fat doesn't move the number that actually matters for a lifter, and by dinner you're staring down 60g still to eat with one meal left to eat it in. The fix isn't eating more often, it's picking snacks built around protein instead of whatever's closest to hand. Here are eleven that clear at least 14g of protein for under 200 calories, with the macros included so you can slot them straight into your day.</p>
+
+      <h2>Why the Snack Matters as Much as the Meal</h2>
+      <p>Protein spread across the day works better than protein crammed into two big meals. Muscle protein synthesis responds to regular doses of amino acids, roughly every three to four hours, so a snack that skips protein entirely is a wasted window rather than a neutral one. It's also the easiest place a day quietly goes sideways: a bag of chips or a candy bar between lunch and dinner adds 200-plus calories and does nothing for the number you're actually trying to hit.</p>
+      <p>The other reason snacks matter is timing. Most people aren't hungry enough at 3 p.m. to eat a full meal, but they are hungry enough to eat badly if nothing better is within reach. A protein-forward snack fills that gap without derailing the rest of the day's macros, which is exactly the problem it needs to solve.</p>
+
+      <h2>What Makes a Snack Actually Work</h2>
+      <p>A good snack does three things: it delivers a meaningful dose of protein (aim for 15g or more), it doesn't quietly cost you 400 calories, and it's fast enough that you'll actually make it instead of grabbing whatever's in the vending machine. A few habits make that easier:</p>
+      <ul>
+        <li><strong>Keep protein sources visible.</strong> String cheese and yogurt cups at eye level in the fridge get eaten; ones buried behind leftovers don't.</li>
+        <li><strong>Portion in advance.</strong> Pre-bagged nuts or pre-cut cheese sticks remove the decision that turns "a handful" into half the bag.</li>
+        <li><strong>Pair, don't stack.</strong> One protein source plus one piece of fruit or a few crackers beats grazing on three different things until you've lost count.</li>
+      </ul>
+
+      <h2>1. Cottage Cheese with Cinnamon and Berries</h2>
+      <p>150g of low-fat cottage cheese with a shake of cinnamon and 80g of berries turns a fridge staple into something you'd actually choose over a granola bar. Cottage cheese is mostly casein, a slow-digesting protein that keeps you full for longer than a whey shake of the same size. <strong>~180 cal, 21g protein.</strong></p>
+
+      <h2>2. Two Eggs and a Rice Cake</h2>
+      <p>Hard-boil a batch on Sunday and this becomes a 30-second snack all week. Two eggs plus a lightly salted rice cake gives you protein, a bit of crunch, and almost no cleanup. <strong>~170 cal, 15g protein.</strong></p>
+
+      <h2>3. Greek Yogurt with a Scoop of Whey</h2>
+      <p>150g of 0% Greek yogurt mixed with half a scoop of whey turns an already decent snack into one of the highest protein-per-calorie options on this list. Stir it in dry or with a splash of water, it dissolves fine without a shaker. <strong>~150 cal, 27g protein.</strong></p>
+
+      <h2>4. Turkey and Light Cheese Roll-Ups</h2>
+      <p>Wrap three slices of deli turkey around a stick of light mozzarella or cheddar. No prep beyond opening two packages, and it travels well in a lunch bag without needing to be kept perfectly cold for long. <strong>~150 cal, 22g protein.</strong></p>
+
+      <h2>5. Edamame in the Pod</h2>
+      <p>A steamed 155g serving of edamame, still in the pod, is one of the few plant-based snacks that gets close to 20g of protein on its own. The pod also slows you down, which is a quiet advantage when the goal is a snack, not a second lunch. <strong>~190 cal, 17g protein.</strong></p>
+
+      <h2>6. Tuna Packet and Whole-Grain Crackers</h2>
+      <p>A single 85g pouch of tuna in water, eaten straight or with six whole-grain crackers, is one of the most portable options here. It needs no refrigeration until opened, which makes it the desk-drawer or gym-bag backup for the day you didn't plan ahead. <strong>~170 cal, 24g protein.</strong></p>
+
+      <h2>7. A Straight Whey Shake</h2>
+      <p>One scoop of whey in water or unsweetened almond milk over ice is the fastest item on this list, and often the cheapest per gram of protein. It won't fill you up the way a solid food does, so it works best right before or after training rather than as your only afternoon snack. <strong>~120 cal, 24g protein.</strong></p>
+
+      <h2>8. Beef Jerky</h2>
+      <p>A single 28g bag of beef jerky is dense, portable, and needs zero prep, which makes it the obvious car or travel option. It runs high in sodium, so it's a better fit on a training day than stacked with an already salty dinner. <strong>~90 cal, 14g protein.</strong></p>
+
+      <h2>9. Skyr with Honey</h2>
+      <p>Skyr is an Icelandic dairy product that's strained even further than Greek yogurt, so it packs more protein per calorie. A 170g cup with a small drizzle of honey reads like dessert while doing the job of a serious snack. <strong>~130 cal, 19g protein.</strong></p>
+
+      <h2>10. Smoked Salmon on a Rice Cake</h2>
+      <p>50g of smoked salmon over two lightly salted rice cakes is the snack that doesn't feel like a diet food. It's higher effort than most of this list, but it's ready in under two minutes and brings omega-3s that the rest of these options don't. <strong>~150 cal, 14g protein.</strong></p>
+
+      <h2>11. String Cheese and Turkey Pepperoni</h2>
+      <p>Two string cheese sticks and a small handful of turkey pepperoni slices is the snack-drawer answer to a charcuterie board, no cutting board required. It's shelf-stable enough for a desk drawer and filling enough to actually hold you to dinner. <strong>~190 cal, 20g protein.</strong></p>
+
+      <h2>Building These Into Your Week</h2>
+      <p>None of these need a recipe, which is the point, a snack that requires cooking usually doesn't get made. The bigger lever is having two or three of these already in the fridge or pantry before 3 p.m. hits, the same logic behind <a href="/blog/meal-prepping-for-weight-loss">prepping your main meals on Sunday</a>. If protein has been the macro you consistently fall short on, our guide to <a href="/blog/how-much-protein-to-build-muscle">how much protein you actually need</a> covers the daily target these snacks are meant to help you close.</p>
+      <p>Research on satiety backs up why protein-forward snacks work better than reaching for whatever's nearest: in <a href="https://pubmed.ncbi.nlm.nih.gov/7498104/" target="_blank" rel="noopener noreferrer">Holt et al.'s classic satiety index study</a>, high-protein foods consistently outperformed carbohydrate- and fat-heavy options for keeping people full per calorie. That's a big part of why a 150-calorie cottage cheese snack holds hunger off longer than a 150-calorie handful of crackers.</p>
+
+      <h2>FAQ</h2>
+      <h3>How many snacks should I eat in a day?</h3>
+      <p>Most lifters do fine with one or two, placed wherever the gap between meals is longest. There's no magic number, the goal is closing your daily protein target without adding calories you didn't plan for.</p>
+      <h3>Are protein bars a good snack?</h3>
+      <p>Some are, but check the label rather than the marketing. Many "protein" bars are closer to a candy bar with 10g of protein bolted on. Anything on this list gets you more protein per calorie than most packaged bars, and usually costs less.</p>
+      <h3>Can I hit my protein target with snacks alone, without tracking every meal?</h3>
+      <p>Yes, if the snacks are consistent. Once you know a Greek yogurt and whey combo is always 27g, eating it stops being something you need to log, the same logic behind <a href="/blog/stop-tracking-macros-burnout">structuring your diet instead of tracking every gram</a>.</p>
+      <h3>What's the best snack before a workout?</h3>
+      <p>Something protein-forward and easy to digest: a whey shake, Greek yogurt, or two eggs and a rice cake all work well 30 to 60 minutes out. Save the higher-fiber options like edamame for after training instead.</p>
+
+      <p>MacroPlan builds your snacks in around your daily targets, not just your three main meals. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 2, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1477506350614-fcdc29a3b157?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxoaWdoJTIwcHJvdGVpbiUyMHNuYWNrc3xlbnwxfDB8fHwxNzgyOTkzOTE5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Rachael Gorjestani on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@rachaelgorjestani?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Recipes'
+  },
+  {
     slug: 'glp-1-muscle-loss-protein-resistance-training',
     title: 'GLP-1 Weight Loss Is Costing You Muscle: What the 2025-2026 Research Says to Do',
     excerpt: 'New research shows GLP-1 medications like Ozempic and Zepbound can strip 10-15% of lean mass during a big weight loss. Here is what the studies say actually prevents it.',
