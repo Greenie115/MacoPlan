@@ -10,13 +10,26 @@ import { stripe } from '@/lib/stripe'
 
 export type SubscriptionTier = 'free' | 'paid'
 
+/**
+ * Accounts permitted to simulate subscription tiers (internal testing only).
+ * Gated on the authenticated email — which comes from the signed JWT and can't
+ * be self-edited — NOT the user-writable is_test_user column.
+ */
+export function canSimulateTier(email: string | null | undefined): boolean {
+  if (!email) return false
+  const allow = ['dggreen545@gmail.com', process.env.TEST_USER_EMAIL]
+    .filter((e): e is string => Boolean(e))
+    .map((e) => e.toLowerCase())
+  return allow.includes(email.toLowerCase())
+}
+
 // ============================================================================
 // Get User's Subscription Tier
 // ============================================================================
 
 /**
  * Determines if user is on free or paid tier
- * - Checks test_user flag first (bypass for testing)
+ * - Honors a simulated tier only for allowlisted internal accounts
  * - Then checks Stripe subscription status
  */
 export async function getUserSubscriptionTier(
@@ -24,10 +37,10 @@ export async function getUserSubscriptionTier(
 ): Promise<SubscriptionTier> {
   const supabase = await createClient()
 
-  // Fetch user profile with test user flag, simulated tier, and Stripe customer ID
+  // Fetch simulated tier and Stripe customer ID
   const { data: profile } = await supabase
     .from('user_profiles')
-    .select('is_test_user, simulated_tier, stripe_customer_id')
+    .select('simulated_tier, stripe_customer_id')
     .eq('user_id', userId)
     .single()
 
@@ -35,12 +48,15 @@ export async function getUserSubscriptionTier(
     return 'free'
   }
 
-  // Check if test user has a simulated tier set
-  if (profile.is_test_user && profile.simulated_tier !== null) {
-    return profile.simulated_tier as SubscriptionTier
+  // Honor a simulated tier only for the allowlisted account it belongs to.
+  if (profile.simulated_tier !== null) {
+    const { data } = await supabase.auth.getUser()
+    if (data?.user?.id === userId && canSimulateTier(data.user.email)) {
+      return profile.simulated_tier as SubscriptionTier
+    }
   }
 
-  // Test users without simulated_tier fall through to normal Stripe check
+  // Otherwise fall through to the normal Stripe check
 
   // Check Stripe subscription if customer ID exists
   if (profile.stripe_customer_id && stripe) {
