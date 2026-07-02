@@ -138,6 +138,7 @@ export async function createCheckoutSession(plan: PlanType): Promise<CheckoutRes
     return { success: true, url: session.url }
 
   } catch (error) {
+    console.error('[stripe] createCheckoutSession failed:', error)
     return { success: false, error: 'Failed to initiate checkout' }
   }
 }
@@ -188,6 +189,7 @@ export async function createPortalSession(): Promise<PortalResult> {
     return { success: true, url: session.url }
 
   } catch (error) {
+    console.error('[stripe] createPortalSession failed:', error)
     return { success: false, error: 'Failed to access subscription management' }
   }
 }
