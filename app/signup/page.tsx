@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Mail, AlertCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
@@ -17,6 +17,10 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [confirmSent, setConfirmSent] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [canResend, setCanResend] = useState(true)
+  const [resendNote, setResendNote] = useState<string | null>(null)
   const router = useRouter()
 
   // Guests who finished onboarding have a macro plan waiting in localStorage;
@@ -60,12 +64,14 @@ export default function SignupPage() {
     try {
       const supabase = createClient()
       
-      // 1. Sign up the user
+      // 1. Sign up the user. Carry postAuthPath through the confirmation link so
+      // that after the user confirms their email, /auth/callback forwards them
+      // to migrate their pending plan instead of dropping them at onboarding.
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(postAuthPath)}`,
           data: {
             full_name: fullName,
           }
@@ -76,17 +82,114 @@ export default function SignupPage() {
         throw authError
       }
 
-      if (authData.user) {
-        // 2. Profile is created automatically by database trigger
-
-        // 3. Migrate a pending guest plan, or start onboarding fresh
-        router.push(postAuthPath)
+      // 2. Profile is created automatically by database trigger.
+      // If email confirmation is on, signUp returns no session — the user must
+      // confirm before they're authenticated. Show a "check your email" state;
+      // their plan stays safe in localStorage and migrates via the callback.
+      if (!authData.session) {
+        setConfirmSent(true)
+        return
       }
+
+      // 3. Session established immediately (confirmation off): migrate now.
+      router.push(postAuthPath)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to sign up')
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleResend = async () => {
+    setResending(true)
+    setResendNote(null)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(postAuthPath)}`,
+        },
+      })
+      if (error) throw error
+      setResendNote('Sent again — check your inbox.')
+      setCanResend(false)
+      setTimeout(() => setCanResend(true), 45000)
+    } catch (err) {
+      setResendNote(err instanceof Error ? err.message : 'Could not resend. Try again in a moment.')
+    } finally {
+      setResending(false)
+    }
+  }
+
+  const handleUseDifferentEmail = () => {
+    setConfirmSent(false)
+    setEmail('')
+    setResendNote(null)
+    setError(null)
+  }
+
+  if (confirmSent) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md px-4">
+          <div className="bg-card py-10 px-6 shadow-sm sm:rounded-2xl border border-border-strong text-center space-y-4">
+            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/10">
+              <Mail className="size-7 text-primary" />
+            </div>
+            <h2 className="text-2xl font-extrabold text-foreground">Check your inbox</h2>
+            {hasPendingPlan && (
+              <p className="text-sm font-medium text-foreground">
+                Your macro plan is saved. Confirm your email to unlock it.
+              </p>
+            )}
+            <p className="text-sm text-muted-foreground">
+              We sent a confirmation link to{' '}
+              <span className="font-semibold text-foreground break-words">{email}</span>. Click it
+              to activate your account. Check spam if it hasn&apos;t arrived in a minute.
+            </p>
+            <div className="flex items-start gap-2 rounded-xl bg-muted p-3 text-left">
+              <AlertCircle className="size-4 flex-shrink-0 mt-0.5 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">
+                Open the link on this device — that&apos;s where your plan is saved.
+              </p>
+            </div>
+
+            <div className="pt-2 space-y-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleResend}
+                disabled={resending || !canResend}
+                className="w-full"
+              >
+                {resending ? (
+                  <>
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                    Resending...
+                  </>
+                ) : canResend ? (
+                  'Resend email'
+                ) : (
+                  'Email sent'
+                )}
+              </Button>
+              {resendNote && (
+                <p className="text-xs text-muted-foreground">{resendNote}</p>
+              )}
+              <button
+                type="button"
+                onClick={handleUseDifferentEmail}
+                className="text-sm font-semibold text-primary hover:text-primary/90"
+              >
+                Use a different email
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (

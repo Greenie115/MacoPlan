@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 
 export default function OnboardingCompletePage() {
   const [error, setError] = useState<string | null>(null)
+  const [noPlan, setNoPlan] = useState(false)
   const [migrating, setMigrating] = useState(true)
   const router = useRouter()
 
@@ -23,13 +24,36 @@ export default function OnboardingCompletePage() {
         router.push('/dashboard')
       } catch (err) {
         console.error('Migration error:', err)
-        setError(err instanceof Error ? err.message : 'Migration failed')
+        // No pending plan in this browser — usually means they confirmed the
+        // email on a different device. Explain it instead of showing an error.
+        if (err instanceof Error && err.message.includes('Incomplete onboarding data')) {
+          setNoPlan(true)
+        } else {
+          setError(err instanceof Error ? err.message : 'Migration failed')
+        }
         setMigrating(false)
       }
     }
 
     handleMigration()
   }, [router])
+
+  if (noPlan) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-4">
+        <div className="text-center space-y-4 max-w-md">
+          <h1 className="text-2xl font-bold">Let&apos;s rebuild your plan</h1>
+          <p className="text-muted-foreground">
+            Looks like you opened this on a new device, so your answers aren&apos;t here. It only
+            takes a minute to redo — your account is all set.
+          </p>
+          <Button onClick={() => router.push('/onboarding/1')}>
+            Start onboarding
+          </Button>
+        </div>
+      </div>
+    )
+  }
 
   if (error) {
     return (
