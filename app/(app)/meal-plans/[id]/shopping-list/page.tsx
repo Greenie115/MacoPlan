@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { redirect, notFound } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+import { getAuthUser } from '@/lib/supabase/server'
 import { getShoppingList } from '@/app/actions/shopping-lists'
 import ShoppingListView from '@/components/meal-plans/shopping-list-view'
 
@@ -14,10 +14,7 @@ export default async function ShoppingListPage({
 }: {
   params: Promise<{ id: string }>
 }) {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (!user) {
     redirect('/login')
