@@ -304,9 +304,33 @@ export async function getCachedRecipes(
 }
 
 /**
+ * Curated recipe "type" filters. Each maps to a single PostgREST or-filter
+ * condition on the recipes row, so filtering and counting need no joins.
+ * Ordered by usefulness for lifters (macros/prep first, then diets, then
+ * cuisines). Cuisine is deliberately NOT a catch-all list: ~64% of the library
+ * is "american", which is what made the old cuisine-only dropdown useless.
+ */
+const RECIPE_TYPE_FILTERS: ReadonlyArray<{ value: string; label: string; condition: string }> = [
+  { value: 'high-protein', label: 'High Protein', condition: 'protein_grams.gte.30' },
+  { value: 'low-carb', label: 'Low Carb', condition: 'carb_grams.lte.20' },
+  { value: 'meal-prep', label: 'Meal-Prep Friendly', condition: 'batch_prep_score.gte.4' },
+  { value: 'vegetarian', label: 'Vegetarian', condition: 'dietary_flags.cs.{vegetarian}' },
+  { value: 'vegan', label: 'Vegan', condition: 'dietary_flags.cs.{vegan}' },
+  { value: 'keto', label: 'Keto', condition: 'dietary_flags.cs.{keto}' },
+  { value: 'paleo', label: 'Paleo', condition: 'dietary_flags.cs.{paleo}' },
+  { value: 'gluten-free', label: 'Gluten-Free', condition: 'dietary_flags.cs.{gluten-free}' },
+  { value: 'dairy-free', label: 'Dairy-Free', condition: 'dietary_flags.cs.{dairy-free}' },
+  { value: 'italian', label: 'Italian', condition: 'cuisine.eq.italian' },
+  { value: 'mexican', label: 'Mexican', condition: 'cuisine.eq.mexican' },
+  { value: 'asian', label: 'Asian', condition: 'cuisine.eq.asian' },
+  { value: 'mediterranean', label: 'Mediterranean', condition: 'cuisine.eq.mediterranean' },
+  { value: 'indian', label: 'Indian', condition: 'cuisine.eq.indian' },
+]
+
+/**
  * Search and filter the self-hosted recipe library. Replaces the Recipe-API.com
- * search path: text match on name, macro/calorie ranges, cuisine ("category"),
- * and sort all run as SQL against the recipes table.
+ * search path: text match on name, macro/calorie ranges, recipe "type"
+ * ("category"), and sort all run as SQL against the recipes table.
  */
 export async function searchLibraryRecipes(
   filters: ValidatedFilters,
@@ -324,8 +348,16 @@ export async function searchLibraryRecipes(
     let query = supabase.from('recipes').select(LIBRARY_COLUMNS, { count: 'exact' })
 
     if (filters.q) query = query.ilike('name', `%${filters.q}%`)
-    // "category" maps to cuisine (filter options are sourced from cuisines).
-    if (filters.category) query = query.in('cuisine', filters.category.split(','))
+    // "category" holds selected recipe-type values; each maps to a row-level
+    // condition. Multiple selections are OR'd (union), matching how a user
+    // expects "show me High Protein OR Vegan" to behave.
+    if (filters.category) {
+      const conditions = filters.category
+        .split(',')
+        .map((v) => RECIPE_TYPE_FILTERS.find((f) => f.value === v)?.condition)
+        .filter((c): c is string => Boolean(c))
+      if (conditions.length) query = query.or(conditions.join(','))
+    }
     if (filters.min_calories !== undefined) query = query.gte('calories', filters.min_calories)
     if (filters.max_calories !== undefined) query = query.lte('calories', filters.max_calories)
     if (filters.min_protein !== undefined) query = query.gte('protein_grams', filters.min_protein)
@@ -471,9 +503,9 @@ export const getMostFavoritedRecipes = unstable_cache(
 )
 
 /**
- * Recipe "type" filter options, sourced from the distinct cuisines present in
- * the library (replaces the Recipe-API.com categories endpoint). Cached for an
- * hour since the library's cuisine set rarely changes.
+ * Recipe "type" filter options: the curated RECIPE_TYPE_FILTERS with a live
+ * count per type (so users see how much is behind each). Types with zero
+ * matches are dropped. Cached for an hour since the library changes slowly.
  */
 export const getRecipeTypeFilters = unstable_cache(
   async (): Promise<{
@@ -484,35 +516,25 @@ export const getRecipeTypeFilters = unstable_cache(
     try {
       const supabase = createCacheClient()
 
-      // Paginate past Supabase's 1000-row default so every cuisine is counted.
-      const counts = new Map<string, number>()
-      const pageSize = 1000
-      for (let from = 0; ; from += pageSize) {
-        const { data, error } = await supabase
-          .from('recipes')
-          .select('cuisine')
-          .range(from, from + pageSize - 1)
-        if (error) return { success: false, error: 'Failed to fetch cuisines' }
-        if (!data || data.length === 0) break
-        for (const row of data as Array<{ cuisine: string | null }>) {
-          const cuisine = row.cuisine?.trim()
-          if (cuisine) counts.set(cuisine, (counts.get(cuisine) || 0) + 1)
-        }
-        if (data.length < pageSize) break
-      }
+      const counts = await Promise.all(
+        RECIPE_TYPE_FILTERS.map(async (f) => {
+          const { count } = await supabase
+            .from('recipes')
+            .select('id', { count: 'exact', head: true })
+            .or(f.condition)
+          return count ?? 0
+        })
+      )
 
-      const options = [...counts.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .map(([cuisine, count]) => ({
-          value: cuisine,
-          label: `${cuisine.charAt(0).toUpperCase()}${cuisine.slice(1)} (${count})`,
-        }))
+      const data = RECIPE_TYPE_FILTERS.map((f, i) => ({ ...f, count: counts[i] }))
+        .filter((f) => f.count > 0)
+        .map((f) => ({ value: f.value, label: `${f.label} (${f.count})` }))
 
-      return { success: true, data: options }
+      return { success: true, data }
     } catch {
-      return { success: false, error: 'Failed to fetch cuisines' }
+      return { success: false, error: 'Failed to fetch recipe types' }
     }
   },
-  ['library-cuisine-filters'],
+  ['library-type-filters'],
   { revalidate: 3600 } // 1 hour
 )
