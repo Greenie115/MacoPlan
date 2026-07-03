@@ -429,7 +429,7 @@ export function RecipeFiltersAdvanced() {
                     {isLoadingTypes
                       ? 'Loading...'
                       : pendingRecipeTypes.length === 0
-                        ? 'All Recipe Types'
+                        ? 'All Types'
                         : `${pendingRecipeTypes.length} type${pendingRecipeTypes.length > 1 ? 's' : ''} selected`}
                   </span>
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />
@@ -584,7 +584,7 @@ export function RecipeFiltersAdvanced() {
                 disabled={isPending}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary bg-primary/10 rounded-full hover:bg-primary/20 transition-colors disabled:opacity-50"
               >
-                {type}
+                {type.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
                 <X className="h-3 w-3" />
               </button>
             ))}
