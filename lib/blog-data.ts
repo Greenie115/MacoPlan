@@ -22,6 +22,100 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'macro-friendly-fast-food-guide',
+    title: 'The Macro-Friendly Fast Food Guide: What to Order at 13 Chains',
+    excerpt: 'A definitive, chain-by-chain reference for eating fast food without wrecking your macros, with approximate protein and calories for the order that actually works.',
+    content: `
+      <p>Meal prep breaks down on a normal week more often than anyone admits. A late meeting eats your lunch, a road trip strands you at a rest stop, or the container you packed gets left in the office fridge on a Friday. None of that has to blow a cut or a bulk. Fast food menus have quietly gotten more protein-friendly over the last few years, and once you know which order to give at the register, a drive-thru stop can look almost identical on paper to a home-cooked meal. This is the reference to keep bookmarked for exactly that day.</p>
+
+      <h2>Why Fast Food Doesn't Have to Wreck Your Macros</h2>
+      <p>The problem was never the restaurant, it was the default order. A combo meal is built to sell you a bun, a large fry, and a 20-ounce soda, three items that add hundreds of calories and almost no protein. Swap those defaults and the same kitchen can put out a meal that looks a lot like something you'd portion into a container yourself: a lean protein, a controlled carb, and minimal added fat from sauces and frying oil.</p>
+      <p>The other piece is math you can do standing at the counter. Grilled beats fried almost every time, because breading and the fryer add fat calories without adding protein. Skipping or downsizing the bun trims 150 to 250 calories while leaving the protein untouched. And sauces are where a lot of the damage hides, a single packet of mayo-based sauce can run 100 to 200 calories for basically zero nutritional return, so asking for it on the side and using half is worth more than most people expect.</p>
+
+      <h2>The Four Rules That Cover Almost Every Menu</h2>
+      <p>You don't need to memorize thirteen separate strategies. Almost every macro-friendly order on this list comes from applying the same four moves:</p>
+      <ul>
+        <li><strong>Pick grilled, roasted, or plain over fried or crispy.</strong> Same protein source, far less added fat.</li>
+        <li><strong>Drop or halve the bun, tortilla, or bread.</strong> The protein and toppings stay, the empty carbs go.</li>
+        <li><strong>Ask for sauce on the side, then use less than you think you need.</strong> Most sauces are fat-based and calorie-dense relative to their portion size.</li>
+        <li><strong>Swap fries for a side salad, fruit cup, or nothing.</strong> This is usually the single biggest calorie swing on the whole ticket.</li>
+      </ul>
+      <p>Apply those four moves and you can walk into almost any chain in this guide and leave with something that fits a real macro target, no nutrition app required at the counter.</p>
+
+      <h2>Chain by Chain: What to Order</h2>
+      <p>These figures are rounded estimates based on typical published nutrition information and vary by region, recipe updates, and how the location actually portions things. Chains update menus and formulas often, so treat this as a starting point and check the chain's own nutrition calculator if you're dialing in something precise, the same way you'd double-check a recipe before trusting it in a <a href="/blog/decoding-macros">macro calculation</a>.</p>
+
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">Chain</th>
+            <th style="text-align:left; padding: 8px;">Order</th>
+            <th style="text-align:left; padding: 8px;">~Calories</th>
+            <th style="text-align:left; padding: 8px;">~Protein</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Chipotle</td><td style="padding: 8px;">Chicken or steak burrito bowl, double protein, no rice, extra fajita veg</td><td style="padding: 8px;">520</td><td style="padding: 8px;">60g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Chick-fil-A</td><td style="padding: 8px;">Grilled chicken sandwich, no bun, side salad</td><td style="padding: 8px;">280</td><td style="padding: 8px;">35g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">McDonald's</td><td style="padding: 8px;">Quarter Pounder, no bun, sauce on the side</td><td style="padding: 8px;">340</td><td style="padding: 8px;">28g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Wendy's</td><td style="padding: 8px;">Grilled chicken sandwich, no bun, plain baked potato</td><td style="padding: 8px;">430</td><td style="padding: 8px;">38g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Taco Bell</td><td style="padding: 8px;">Power Menu Bowl, chicken, no cheese/sour cream</td><td style="padding: 8px;">400</td><td style="padding: 8px;">28g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Subway</td><td style="padding: 8px;">Rotisserie chicken or turkey, 6-inch, no cheese, double meat</td><td style="padding: 8px;">380</td><td style="padding: 8px;">36g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Five Guys</td><td style="padding: 8px;">Bacon burger, lettuce wrap (no bun)</td><td style="padding: 8px;">520</td><td style="padding: 8px;">33g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">In-N-Out</td><td style="padding: 8px;">Double-Double, "protein style" (lettuce wrap)</td><td style="padding: 8px;">490</td><td style="padding: 8px;">27g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Panera</td><td style="padding: 8px;">Green Goddess Cobb salad with chicken, half portion of dressing</td><td style="padding: 8px;">380</td><td style="padding: 8px;">32g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Panda Express</td><td style="padding: 8px;">String bean chicken breast, double, no rice</td><td style="padding: 8px;">340</td><td style="padding: 8px;">36g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Jimmy John's</td><td style="padding: 8px;">Turkey Tom, unwich (lettuce wrap instead of bread)</td><td style="padding: 8px;">240</td><td style="padding: 8px;">25g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Starbucks</td><td style="padding: 8px;">Egg white and roasted red pepper egg bites, plus a protein box</td><td style="padding: 8px;">470</td><td style="padding: 8px;">33g</td></tr>
+          <tr><td style="padding: 8px;">Popeyes</td><td style="padding: 8px;">Blackened chicken tenders (not fried), red beans and rice on the side</td><td style="padding: 8px;">420</td><td style="padding: 8px;">34g</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Chipotle</h3>
+      <p>Chipotle is close to a cheat code for this list because it's built like a build-your-own container. Ask for a burrito bowl with double chicken or steak, skip the rice or ask for half, and load up on the fajita vegetables and salsa, which cost almost nothing in calories. Guacamole is the one add-on worth budgeting for separately, it's healthy fat but it's dense, so decide in advance whether it fits your remaining fat for the day rather than defaulting to it.</p>
+
+      <h3>Chick-fil-A</h3>
+      <p>The grilled chicken sandwich, ordered without the bun, is one of the cleanest fast food orders that exists. Ask for it as a "grilled chicken, no bun" and it comes out closer to a chicken breast on a plate than a sandwich. Pair it with the side salad instead of waffle fries and you've got a meal a nutrition coach wouldn't blink at.</p>
+
+      <h3>McDonald's</h3>
+      <p>The Quarter Pounder without the bun keeps the beef patty, cheese, and toppings while cutting the two halves of a white bun that add carbs without much else. It won't be the most exciting order on this list, but it's fast, it's everywhere, and the protein number holds up. Ask for extra pickles or onion if you want more volume without more calories.</p>
+
+      <h3>Taco Bell</h3>
+      <p>The Power Menu Bowl with chicken is Taco Bell's own attempt at a macro-friendly build, and it mostly works once you drop the cheese and sour cream, which is where most of the fat hides. What's left is seasoned chicken, beans, rice, and lettuce, a reasonable protein-and-carb base for a training day.</p>
+
+      <h3>Subway</h3>
+      <p>Subway rewards the double-meat option more than almost any other chain on this list, because the bread is the only real problem with a Subway sandwich and doubling the protein shifts the ratio in your favor without changing the order at all. Rotisserie-style chicken or turkey breast on a 6-inch with no cheese and double meat gets you a genuinely solid protein-to-calorie ratio for a sandwich chain.</p>
+
+      <h3>Wendy's</h3>
+      <p>The grilled chicken sandwich without the bun is Wendy's version of the Chick-fil-A play, and it holds up just as well. The plain baked potato is the underrated side here, it's a whole food, high in potassium, and far more filling per calorie than fries, the same logic behind favoring potatoes in a <a href="/blog/meal-prep-on-a-cut">high-volume, low-calorie meal prep</a>.</p>
+
+      <h2>When the Menu Hack Isn't Enough</h2>
+      <p>None of this replaces a real meal prep habit, and it isn't supposed to. A modified fast food order is a stopgap for the day the plan falls apart, not a long-term substitute for cooking your own food. The sodium on most of these orders runs high even after the swaps, the vegetables are minimal, and doing this three or four times a week instead of once will cost you more than the calorie count on the receipt shows. Treat this guide as insurance, not a rotation.</p>
+      <p>If you find yourself reaching for this list more than once or twice a week, that's usually a sign the actual problem is upstream, not enough prepped food in the fridge on the days that matter. Building a target you can hit consistently, the way we cover in <a href="/blog/how-much-protein-to-build-muscle">how much protein you actually need</a>, still does more for you long term than any drive-thru order ever will.</p>
+
+      <h2>FAQ</h2>
+      <h3>Is fast food really compatible with cutting?</h3>
+      <p>Yes, in moderation. A modified order like the ones above can fit inside a calorie deficit the same way any other meal can, the deficit comes from your total daily intake, not from where the food was cooked. The bigger risk on a cut is the sodium and the ease of over-ordering sides, not the protein source itself.</p>
+      <h3>Are these calorie and protein numbers exact?</h3>
+      <p>No, treat them as reasonable estimates. Chains change suppliers, recipes, and portion sizes, and a location can prepare the same menu item slightly differently. For a number you're going to rely on precisely, check the chain's official nutrition calculator before you order.</p>
+      <h3>What's the single biggest mistake people make ordering "healthy" fast food?</h3>
+      <p>Keeping the sauce. A grilled chicken sandwich with the bun removed can still carry 200-plus calories of mayo-based sauce that adds nothing but fat. Asking for it on the side and using a fraction of the packet fixes more of the order than the bun swap does.</p>
+      <h3>Is it better to skip fast food entirely on a diet?</h3>
+      <p>Not necessarily. A diet that can't survive contact with real life, meetings, travel, a bad week, tends to fail faster than one with a built-in plan for those moments. Individual situations vary, and if fast food is a daily habit rather than an occasional stopgap, that's worth a closer look with a professional.</p>
+
+      <p>The real fix for the day meal prep falls apart is having a plan that's easier to stick to in the first place. MacroPlan builds your week around your actual protein and calorie targets so the fridge, not the drive-thru, is the easy option. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 3, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1512152272829-e3139592d56f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxmYXN0JTIwZm9vZCUyMGJ1cmdlciUyMGhlYWx0aHl8ZW58MXwwfHx8MTc4MzA2NzkwOXww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Haseeb Jamil on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@haseebjkhan?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'high-protein-snacks-under-200-calories',
     title: '11 High-Protein Snacks Under 200 Calories (For Between Meals)',
     excerpt: 'Eleven snacks that deliver serious protein for well under 200 calories each, with macros listed so hitting your target between meals stops being a guess.',
