@@ -22,6 +22,104 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'protein-per-calorie-food-ranking',
+    title: 'Protein Per Calorie: The Definitive Food Ranking Chart',
+    excerpt: 'Total protein grams only tell half the story. This chart ranks over 30 common foods by protein delivered per 100 calories, so you can see which ones actually earn their spot in a deficit.',
+    content: `
+      <p>Two foods can carry the same protein number on a label and still cost you completely different amounts of your day. A 200-calorie serving of shrimp and a 200-calorie serving of salmon both look like solid choices next to each other on a menu, but one delivers close to twice the protein of the other for the same calorie hit. Once you're managing a real calorie budget, whether that's a cut, a tight maintenance target, or just trying to stay full on fewer calories, protein per calorie matters more than protein per serving. This chart ranks the foods lifters actually eat by exactly that ratio.</p>
+
+      <h2>Why Protein Per Calorie Is the Number That Actually Matters</h2>
+      <p>Most nutrition labels and recipe sites lead with grams of protein per serving, which is useful but incomplete. A 100g salmon fillet carries about 20g of protein, and a 100g chicken breast carries about 31g, so on a gram-for-gram basis chicken wins outright. But salmon also carries roughly 208 calories in that serving against chicken's 165, so the real comparison isn't the protein number alone, it's how much of your daily calorie budget you're spending to get it.</p>
+      <p>That's the whole idea behind ranking foods by protein per 100 calories instead of protein per 100 grams. It answers the question that actually decides your day: if you have 300 calories left and need 35g more protein, which food gets you there? Shrimp or egg whites will close that gap almost completely. A bagel with cream cheese won't get you a fifth of the way, no matter how good it tastes.</p>
+      <p>This isn't an argument that fattier proteins like salmon or whole eggs are bad choices, they carry things a chart like this doesn't capture: omega-3s, choline, and satiety from the fat itself. It's simply a tool for the specific moment when calories are the constraint and you need to know which foods stretch furthest against it.</p>
+
+      <h2>How This Chart Was Built</h2>
+      <p>Every figure below is a rounded, approximate value for a cooked or ready-to-eat serving, sourced from typical values published in the <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener noreferrer">USDA FoodData Central</a> database. Real-world numbers shift with cut, cooking method, and brand, a chicken thigh with skin left on carries meaningfully more fat and calories than one trimmed of it, and a lean 95% beef mince behaves very differently from an 80/20 blend. Treat the ranking as a reliable guide to which food groups win, not a substitute for checking a specific product's label when the number needs to be exact.</p>
+      <p>The "protein per 100 calories" column is what the food is ranked by, higher is more protein-efficient. A food scoring 20 delivers 20g of protein for every 100 calories eaten; a food scoring 8 needs two and a half times the calorie budget to deliver the same protein.</p>
+
+      <h2>The Full Chart</h2>
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">Food (cooked, 100g unless noted)</th>
+            <th style="text-align:left; padding: 8px;">~Calories</th>
+            <th style="text-align:left; padding: 8px;">~Protein</th>
+            <th style="text-align:left; padding: 8px;">Protein / 100 cal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Shrimp</td><td style="padding: 8px;">99</td><td style="padding: 8px;">24g</td><td style="padding: 8px;">24.2g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Egg white protein powder (per 100g powder)</td><td style="padding: 8px;">375</td><td style="padding: 8px;">84g</td><td style="padding: 8px;">22.4g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Tuna, canned in water</td><td style="padding: 8px;">116</td><td style="padding: 8px;">26g</td><td style="padding: 8px;">22.4g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Turkey breast, skinless</td><td style="padding: 8px;">135</td><td style="padding: 8px;">30g</td><td style="padding: 8px;">22.2g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Whey protein powder (per 100g powder)</td><td style="padding: 8px;">370</td><td style="padding: 8px;">80g</td><td style="padding: 8px;">21.6g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Egg whites</td><td style="padding: 8px;">52</td><td style="padding: 8px;">11g</td><td style="padding: 8px;">21.2g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Halibut</td><td style="padding: 8px;">111</td><td style="padding: 8px;">23g</td><td style="padding: 8px;">20.7g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Crab meat</td><td style="padding: 8px;">97</td><td style="padding: 8px;">20g</td><td style="padding: 8px;">20.6g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Tilapia</td><td style="padding: 8px;">128</td><td style="padding: 8px;">26g</td><td style="padding: 8px;">20.3g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Rabbit</td><td style="padding: 8px;">173</td><td style="padding: 8px;">33g</td><td style="padding: 8px;">19.1g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Venison</td><td style="padding: 8px;">158</td><td style="padding: 8px;">30g</td><td style="padding: 8px;">19.0g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Chicken breast, skinless</td><td style="padding: 8px;">165</td><td style="padding: 8px;">31g</td><td style="padding: 8px;">18.8g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Bison</td><td style="padding: 8px;">152</td><td style="padding: 8px;">28g</td><td style="padding: 8px;">18.4g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Pork tenderloin</td><td style="padding: 8px;">143</td><td style="padding: 8px;">26g</td><td style="padding: 8px;">18.2g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Scallops</td><td style="padding: 8px;">111</td><td style="padding: 8px;">20g</td><td style="padding: 8px;">18.0g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Clams</td><td style="padding: 8px;">148</td><td style="padding: 8px;">26g</td><td style="padding: 8px;">17.6g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Seitan</td><td style="padding: 8px;">120</td><td style="padding: 8px;">21g</td><td style="padding: 8px;">17.5g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Skyr</td><td style="padding: 8px;">63</td><td style="padding: 8px;">11g</td><td style="padding: 8px;">17.5g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Greek yogurt, 0%</td><td style="padding: 8px;">59</td><td style="padding: 8px;">10g</td><td style="padding: 8px;">17.0g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Cottage cheese, fat-free</td><td style="padding: 8px;">72</td><td style="padding: 8px;">12g</td><td style="padding: 8px;">16.7g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Beef, eye of round</td><td style="padding: 8px;">183</td><td style="padding: 8px;">29g</td><td style="padding: 8px;">15.8g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Beef mince, 95% lean</td><td style="padding: 8px;">172</td><td style="padding: 8px;">26g</td><td style="padding: 8px;">15.1g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Pork loin chop</td><td style="padding: 8px;">197</td><td style="padding: 8px;">27g</td><td style="padding: 8px;">13.7g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Chicken thigh, skinless</td><td style="padding: 8px;">209</td><td style="padding: 8px;">26g</td><td style="padding: 8px;">12.4g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Cottage cheese, 2%</td><td style="padding: 8px;">90</td><td style="padding: 8px;">11g</td><td style="padding: 8px;">12.2g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Tempeh</td><td style="padding: 8px;">192</td><td style="padding: 8px;">20g</td><td style="padding: 8px;">10.4g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Tofu, extra-firm</td><td style="padding: 8px;">144</td><td style="padding: 8px;">15g</td><td style="padding: 8px;">10.4g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Edamame</td><td style="padding: 8px;">121</td><td style="padding: 8px;">12g</td><td style="padding: 8px;">9.9g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Salmon</td><td style="padding: 8px;">208</td><td style="padding: 8px;">20g</td><td style="padding: 8px;">9.6g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Eggs, whole</td><td style="padding: 8px;">155</td><td style="padding: 8px;">13g</td><td style="padding: 8px;">8.4g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Lentils</td><td style="padding: 8px;">116</td><td style="padding: 8px;">9g</td><td style="padding: 8px;">7.8g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Split peas</td><td style="padding: 8px;">118</td><td style="padding: 8px;">8.3g</td><td style="padding: 8px;">7.0g</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Black beans</td><td style="padding: 8px;">132</td><td style="padding: 8px;">8.9g</td><td style="padding: 8px;">6.7g</td></tr>
+          <tr><td style="padding: 8px;">Chickpeas</td><td style="padding: 8px;">164</td><td style="padding: 8px;">8.9g</td><td style="padding: 8px;">5.4g</td></tr>
+        </tbody>
+      </table>
+
+      <h2>What Actually Stands Out in the Data</h2>
+      <p>Seafood dominates the top of this list for a simple reason: shrimp, crab, cod, halibut, and tilapia are all naturally very low in fat, so almost every calorie in the serving is coming from protein rather than being padded out by fat's 9 calories per gram. Shrimp in particular is one of the most protein-dense foods available at any price point, and it cooks in under five minutes, which makes it worth keeping in the freezer specifically for the days your calories are tight and your protein target isn't met yet.</p>
+      <p>Poultry breast and lean cuts of red meat sit in a strong second tier, and this is where a detail worth remembering shows up clearly: skin and fat trimming move a food a long way up or down this chart without changing the protein number at all. A skinless chicken breast scores 18.8g of protein per 100 calories; the same bird with the skin left on and a thigh cut instead of breast drops into the 12s. If you're deciding between chicken breast and chicken thigh for a specific meal, the deciding factor isn't which one is "healthier," it's whether that meal needs to be calorie-efficient or whether you have room to spend on a fattier cut for the flavor and moisture it brings. Our <a href="/blog/best-protein-for-meal-prep">chicken vs. beef vs. salmon comparison</a> goes deeper on that trade-off for a full week of prep.</p>
+      <p>Dairy tells a similarly clean story. Fat-free cottage cheese, 0% Greek yogurt, and skyr all cluster in the high teens, while whole-fat versions of the same foods drop noticeably once the fat is added back in. None of this makes full-fat dairy the wrong choice, fat has its own role in a diet, it just means the protein-per-calorie chart is specifically answering "which version stretches my calories furthest," not "which version is better for me."</p>
+      <p>Plant-based proteins land in the middle of the pack rather than the bottom, which surprises people who assume animal protein always wins this comparison. Seitan is the standout, scoring competitively with lean meat because it's essentially concentrated wheat gluten with very little fat or carbohydrate diluting the calorie count. Tofu, tempeh, and edamame sit lower, not because they're poor protein sources, but because legume-based foods carry meaningful carbohydrate and fat alongside their protein, which is a feature for a balanced diet, not a flaw. Lentils, beans, and chickpeas rank lowest on this specific ranking while still being genuinely useful protein sources once you account for the fiber and micronutrients they bring that nothing at the top of this list does.</p>
+      <p>Whole eggs and salmon are worth calling out because their position here can be misleading if you read the chart as a verdict rather than a tool. Both score in the middle to low range purely because of their fat content, but that fat is doing real work: choline and cholesterol-related nutrients in the yolk, and omega-3s in the salmon, neither of which shows up in a protein-per-calorie number. Egg whites and salmon aren't competitors, they're different tools, use egg whites when calories are the constraint and whole eggs when they aren't.</p>
+
+      <h2>Putting the Chart to Work</h2>
+      <p>The chart is most useful in one specific moment: you're partway through a day, you know roughly how many calories and how much protein you have left, and you need to pick the food that closes the gap without blowing the budget. On a tight cut, that usually means reaching for something from the top third of this list, shrimp, white fish, egg whites, or a lean poultry cut, especially late in the day when the calorie room left is smaller than the protein room left. Our <a href="/blog/meal-prep-on-a-cut">guide to staying full while cutting</a> covers the same principle applied to a full week of meals rather than a single food choice.</p>
+      <p>On a maintenance or lean bulk, the calculation flips, calories aren't the constraint, so foods lower on this list, salmon, whole eggs, beef mince with more fat left in, become perfectly reasonable choices again, and often the more satisfying and nutritionally rounded ones. The chart isn't telling you to eat shrimp and egg whites forever, it's telling you which lever to pull on the specific days when calories are genuinely tight. If you haven't set the protein target this chart is meant to help you hit, our <a href="/blog/how-much-protein-to-build-muscle">guide to how much protein you actually need</a> covers the number itself, and <a href="/blog/decoding-macros">calculating your full macro split</a> covers where that protein target fits alongside carbs and fat.</p>
+      <p>If you'd rather not do this math meal by meal, <a href="https://macroplan.app">MacroPlan</a> builds your week of batch-prepped food around your exact protein and calorie targets, choosing the protein sources that fit the budget automatically instead of leaving it to a chart at 8 p.m.</p>
+
+      <h2>FAQ</h2>
+      <h3>Is a higher protein-per-calorie score always better?</h3>
+      <p>Not universally, it depends on your situation. It's the right lens when calories are genuinely limited, cutting, a tight maintenance target, or closing a protein gap late in the day. When calories aren't the constraint, a food's fat content, micronutrients, and how filling or enjoyable it is matter more than this one ratio.</p>
+      <h3>Why does salmon rank lower than chicken breast if both are considered lean proteins?</h3>
+      <p>Salmon isn't actually lean in the way chicken breast is, it carries roughly 13g of fat per 100g against chicken breast's 3.6g. That fat brings real benefits, mainly omega-3s, but it also means more of salmon's calories come from fat rather than protein, which is exactly what this ranking measures.</p>
+      <h3>Are plant-based proteins worse for a calorie-limited diet?</h3>
+      <p>Not worse, just positioned differently. Seitan competes directly with lean meat on this metric, while legumes rank lower mainly because they carry useful carbohydrate and fiber alongside their protein. If you're building a plant-based diet around a tight calorie budget, seitan, tofu, and tempeh combined with a protein powder for gaps is a workable strategy.</p>
+      <h3>Should I only eat foods from the top of this chart?</h3>
+      <p>No. A diet built entirely from the top of this list would be low in fat-soluble nutrients and would get monotonous fast. Use the top of the chart to solve a specific problem, protein you still need with calories running low, not as a template for every meal of the week.</p>
+
+      <p>Save the math and let MacroPlan pick the right proteins for your targets automatically. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 4, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1618666185561-baed3459ff18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxsZWFuJTIwcHJvdGVpbiUyMGNoaWNrZW4lMjBlZ2dzJTIwZmlzaCUyMHBsYXRlfGVufDF8MHx8fDE3ODMxNTEzNzF8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Nick Kimel on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@nickkimel?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'macro-friendly-fast-food-guide',
     title: 'The Macro-Friendly Fast Food Guide: What to Order at 13 Chains',
     excerpt: 'A definitive, chain-by-chain reference for eating fast food without wrecking your macros, with approximate protein and calories for the order that actually works.',
