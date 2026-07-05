@@ -22,6 +22,57 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'weight-loss-plateau-hitting-macros',
+    title: "Hitting Your Macros but the Scale Won't Move? Here's What Actually Stalled",
+    excerpt: "If your tracking app says you're in a deficit but your weight hasn't moved in weeks, the problem usually isn't willpower. It's one of four specific, fixable things.",
+    content: `
+      <p>You're logging every gram. The app says you're 500 calories under maintenance. And the scale has read within a pound of the same number for three weeks straight. This is one of the most demoralizing places to land on a cut, because it looks like the math is broken when the math is actually fine, something else has moved underneath it. Four things cause this, almost always in combination, and all four are fixable without throwing out your macros and starting over.</p>
+
+      <h2>Your Deficit Probably Isn't as Big as It Was on Day One</h2>
+      <p>The deficit you calculated in week one doesn't stay a deficit forever, even if you change nothing. As you lose weight, your maintenance calories drop with you, a lighter body burns fewer calories doing the same walk, the same workout, the same day of sitting at a desk. On top of that, dieting suppresses <strong>NEAT</strong> (non-exercise activity thermogenesis) in ways you don't consciously notice: you fidget less, you take the elevator instead of the stairs without deciding to, you sit slightly stiller in meetings. Research on adaptive thermogenesis, most famously the tracking of contestants from <em>The Biggest Loser</em> published in <a href="https://pubmed.ncbi.nlm.nih.gov/27136388/" target="_blank" rel="noopener noreferrer">Obesity (2016)</a>, found metabolic rates dropping well beyond what body composition changes alone would predict. You don't need to have lost 100 pounds for a smaller version of this to apply to you after eight or ten weeks of cutting.</p>
+      <p>The number you set at the start of your cut was correct for the body you had at the start of your cut. It's not correct anymore, and that's not a flaw in the plan, it's just what a deficit does over time. This is exactly why a straight, unchanging calorie target eventually stalls even when you follow it perfectly.</p>
+
+      <h2>Check Your Tracking Before You Touch Your Macros</h2>
+      <p>Before you change a single number, rule out the boring explanation: the deficit on paper might not be the deficit you're actually eating. Tracking accuracy drifts quietly over months, and it drifts in one direction, down. A handful of small habits are almost always the culprit:</p>
+      <ul>
+        <li><strong>Portion creep.</strong> The 150g chicken breast you weighed carefully in week one becomes an eyeballed "about 150g" by week six, and eyeballed servings run high more often than they run low.</li>
+        <li><strong>Uncounted extras.</strong> The splash of oil in the pan, the bites while cooking, the coffee creamer, none of it feels worth logging in the moment, all of it adds up over a week.</li>
+        <li><strong>Database entries that don't match your actual food.</strong> A generic "chicken breast, cooked" entry can be off by 20 to 30 calories per 100g from what you're really eating, and that gap compounds daily.</li>
+      </ul>
+      <p>None of this is a character flaw, it's just what happens when a precise task gets repeated hundreds of times. If the idea of re-weighing everything for a week sounds exhausting, that's worth noticing too, our <a href="/blog/stop-tracking-macros-burnout">piece on tracking burnout</a> covers how to catch drift without going back to logging forever. The fix here isn't more willpower, it's a short, honest re-calibration: weigh and log strictly for five to seven days and compare the total to what you'd been estimating. Most stalls shrink noticeably just from this step alone, before you touch a single macro target.</p>
+
+      <h2>The Scale Is Measuring Water Too, Not Just Fat</h2>
+      <p>Body weight on any single morning is fat mass, water, glycogen, and whatever's currently in your gut, all mixed into one number. Sodium intake, a hard training session, a high-carb meal the night before, travel, and even the menstrual cycle can shift water retention by two to four pounds in either direction. That's frequently the entire size of the "stall" someone's worried about. Fat loss can genuinely be happening while the scale hides it under a few pounds of water, and it can look like it's happening when it's actually just a low-water morning after a rough night's sleep and a long run.</p>
+      <blockquote>A single weigh-in is a data point. A weekly average is data. Judge a plateau against the trend line, not the number from this morning.</blockquote>
+      <p>The practical fix is to stop reacting to any one day and instead track a rolling seven-day average of your morning weight. Three to four weeks of a flat average, not a flat single reading, is a real stall worth acting on. Two flat weeks is usually still noise.</p>
+
+      <h2>How to Actually Recalibrate Once You've Confirmed It's Real</h2>
+      <p>If you've tightened your tracking, watched the weekly average for three or four weeks, and it's genuinely flat, the deficit needs adjusting. The smallest change that works is usually best: drop calories by roughly 5 to 10 percent, which for most people is 100 to 200 calories, rather than making a large cut that tanks energy and training performance. Keep protein where it is, most of the reduction should come from carbs and fat, since protein is protecting the muscle you're trying to keep through the cut. If you haven't built training day and rest day variation into your plan yet, that's often a cheaper lever than a flat cut across every day, see our <a href="/blog/calorie-cycling-training-rest-days">guide to calorie cycling</a> for how that works in practice. And if you're several months into a cut without a break, a one to two week maintenance phase, often called a diet break, can help restore some of the NEAT and hormonal changes described above before you keep cutting. Our <a href="/blog/ultimate-guide-to-flexible-dieting">flexible dieting guide</a> covers how to schedule that without losing the progress you've already made.</p>
+      <p>Recalculating targets by hand every few weeks is exactly the kind of math <a href="https://macroplan.app">MacroPlan</a> exists to skip, tell it your updated stats and it adjusts your training day and rest day macros without you re-deriving the deficit from scratch.</p>
+
+      <h2>FAQ</h2>
+      <h3>How long should I wait before assuming I've actually plateaued?</h3>
+      <p>Look at three to four weeks of weekly average weight, not daily readings. A single flat week, or even two, is well within normal water and glycogen fluctuation and isn't yet evidence of a real stall.</p>
+      <h3>Should I cut calories or add cardio when I stall?</h3>
+      <p>Cutting calories slightly is usually the better first move, since adding cardio increases hunger and recovery demands without necessarily creating a bigger net deficit once appetite adjusts. A small calorie reduction of 100 to 200 calories is easier to sustain and doesn't add fatigue on top of an already tiring cut.</p>
+      <h3>Is a diet break going to undo my progress?</h3>
+      <p>A one to two week maintenance phase at your new, lower maintenance calories doesn't erase fat loss. Some scale weight typically returns from restored glycogen and water, which can feel discouraging, but it isn't fat regain and it usually clears within a few days of resuming the cut.</p>
+      <h3>Could this be metabolic damage?</h3>
+      <p>Persistent, severe metabolic suppression outside of prolonged, aggressive dieting is uncommon, and the pattern described here, a gradually shrinking deficit from a lighter body and lower NEAT, explains most stalls without needing that explanation. If your weight, energy, or mood are behaving in ways that feel far outside normal cutting fatigue, that's worth a conversation with a doctor or registered dietitian rather than another spreadsheet.</p>
+
+      <p>Stop re-doing the math by hand every time your weight changes. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 5, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1522844990619-4951c40f7eda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHx3ZWlnaHQlMjBzY2FsZSUyMGZydXN0cmF0ZWQlMjBkaWV0fGVufDF8MHx8fDE3ODMyNTIyMTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by i yunmai on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@yunmai?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'protein-per-calorie-food-ranking',
     title: 'Protein Per Calorie: The Definitive Food Ranking Chart',
     excerpt: 'Total protein grams only tell half the story. This chart ranks over 30 common foods by protein delivered per 100 calories, so you can see which ones actually earn their spot in a deficit.',
