@@ -22,6 +22,76 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'bulking-vs-cutting-vs-recomp',
+    title: 'Bulking, Cutting, or Recomp? How to Pick the Right One',
+    excerpt: 'Bulking, cutting, and body recomposition all build or preserve muscle differently. Here is the decision framework for picking the one that actually fits your body fat, training age, and goals.',
+    content: `
+      <p>Every lifter eventually asks the same question: should I bulk, cut, or just try to recomp? The honest answer depends less on which approach sounds best and more on three things you can actually measure: your current body fat, how long you've been training, and what you're optimizing for over the next several months. This guide breaks down what bulking, cutting, and body recomposition each actually do, who they fit, and how to choose without guessing.</p>
+
+      <h2>What Bulking, Cutting, and Recomp Actually Mean</h2>
+      <p>A <strong>bulk</strong> is a deliberate calorie surplus aimed at maximizing muscle growth, usually 150-300 calories above maintenance, accepting that some fat gain comes along with it. A <strong>cut</strong> is the reverse: a calorie deficit, typically 300-500 calories below maintenance, aimed at losing fat while holding onto as much muscle as training and protein allow. <strong>Body recomposition</strong> ("recomp") sits in between, eating close to maintenance while trying to lose fat and build muscle at the same time, usually through a small deficit or by cycling calories around training days.</p>
+      <p>None of these three is objectively "better." They're tools for different starting points, and using the wrong one for your situation is the most common reason lifters feel like they're spinning their wheels for months without visible change.</p>
+
+      <h2>Bulking: When It's the Right Call</h2>
+      <p>Bulking makes the most sense when you're already lean (roughly under 15% body fat for men, under 25% for women) and your main goal is adding muscle and strength as fast as your training allows. A surplus gives your body the calorie headroom to build tissue without also forcing it to break down fat stores for energy, which is why lean bulks tend to produce faster strength gains and better training recovery than a cut or a maintenance-calorie recomp.</p>
+      <p>The trade-off is fat gain. Even a conservative surplus adds some, and the leaner you start, the more of that early weight gain is genuinely muscle and glycogen rather than fat. Protein still matters enormously in a surplus, aim for 1.6-2.2 g per kg of bodyweight (0.7-1 g per lb), the same range that applies in a deficit, our <a href="/blog/how-much-protein-to-build-muscle">guide to protein needs for building muscle</a> covers exactly where in that range to sit. A bulk usually runs for a training block of three to six months before you shift into a cut to bring body fat back down, a cycle most competitive lifters repeat for years.</p>
+
+      <h2>Cutting: When It's the Right Call</h2>
+      <p>Cutting is the right move when body fat has climbed high enough that it's affecting how you look, feel, or perform, typically above 20% for men or 30% for women, though the number that matters most is how you personally feel about where you are. A deficit forces the body to pull energy from stored fat, and if protein and resistance training are both in place, the muscle you've already built gets preserved through the process rather than lost alongside the fat.</p>
+      <p>The mechanics are the same regardless of how you got to needing a cut: a moderate deficit of 300-500 calories below maintenance, protein pushed toward the top of the 1.6-2.2 g/kg range to protect muscle under a calorie restriction, and training that keeps enough volume and intensity to signal the body that the muscle is still needed. The hardest part isn't the math, it's staying full and consistent for the weeks a cut takes, which is exactly the problem our <a href="/blog/meal-prep-on-a-cut">guide to staying full on a cut</a> is built to solve. A typical cut runs eight to sixteen weeks depending on how much fat needs to come off; sustainable rates land around 0.5-1% of bodyweight lost per week.</p>
+
+      <h2>Body Recomposition: The Middle Path (and Its Limits)</h2>
+      <p>Recomp is the option everyone wants and the one that actually works for the fewest people. Building muscle while losing fat at the same time is metabolically harder than doing either one alone, because muscle growth generally favors a surplus and fat loss favors a deficit. But it isn't a myth. A well-known 2016 study in the <a href="https://pubmed.ncbi.nlm.nih.gov/26817506/" target="_blank" rel="noopener noreferrer">American Journal of Clinical Nutrition</a> found that trained young men in a calorie deficit who ate a high protein intake (about 2.4 g/kg) and kept training hard gained lean mass while losing fat, something the lower-protein group in the same deficit didn't manage.</p>
+      <p>Recomp works best for three groups: newer lifters still in their first one to two years of consistent training, anyone returning to training after a layoff (muscle memory makes regaining lost tissue easier than building it fresh), and lifters carrying enough body fat that a small deficit still leaves plenty of stored energy to draw on for recovery. If you're already lean and years into training, recomp slows to a crawl, both processes compete for the same limited resources, and a dedicated bulk or cut will get you there faster.</p>
+
+      <h2>Bulking vs. Cutting vs. Recomp at a Glance</h2>
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">Approach</th>
+            <th style="text-align:left; padding: 8px;">Calories</th>
+            <th style="text-align:left; padding: 8px;">Best for</th>
+            <th style="text-align:left; padding: 8px;">Typical length</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Bulk</td><td style="padding: 8px;">+150 to +300</td><td style="padding: 8px;">Lean, experienced lifters prioritizing muscle and strength</td><td style="padding: 8px;">3-6 months</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Cut</td><td style="padding: 8px;">-300 to -500</td><td style="padding: 8px;">Anyone whose body fat has climbed above their comfort point</td><td style="padding: 8px;">8-16 weeks</td></tr>
+          <tr><td style="padding: 8px;">Recomp</td><td style="padding: 8px;">~Maintenance or a small deficit</td><td style="padding: 8px;">Newer lifters, returning lifters, higher body fat</td><td style="padding: 8px;">6-12+ months</td></tr>
+        </tbody>
+      </table>
+
+      <h2>How to Decide Which One You Need</h2>
+      <p>Four questions settle it for most people. How long have you been training with a real program, under two years generally means recomp is realistic; over that, muscle gain slows enough that a dedicated bulk works better. What's your current body fat, leaner favors a bulk, higher favors a cut, and anywhere in the comfortable middle leaves room for recomp. What matters more to you over the next six months, looking leaner or getting stronger, since a cut and a bulk pull in opposite directions on both fronts. And finally, have you been consistent with training and protein already, because recomp only works if both are already dialed in; if they're not, fix that first regardless of which calorie target you pick.</p>
+      <p>None of these answers are permanent. Most lifters cycle through all three approaches over a training career, a beginner recomp phase, a few years of bulk-and-cut cycles, and periods of recomp again after a layoff or a plateau. Setting your macros correctly for whichever phase you're in is the part that actually matters; our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a> walks through the exact numbers for a surplus, deficit, or maintenance target.</p>
+
+      <h2>Switching Between Phases Without Losing Progress</h2>
+      <p>The transition points are where most people lose the plot. Coming out of a cut, jump straight to a surplus and the first few pounds back are mostly water and glycogen refilling, not fat, so don't panic and cut again immediately. Coming out of a bulk, drop calories gradually rather than slashing them, a sudden 800-calorie cut costs you strength and energy in the gym right when you need training intensity to hold onto the muscle you just built. Keeping protein constant across every transition is the one variable that shouldn't move regardless of which phase you're entering or leaving.</p>
+      <p>Whichever phase you're in, the logistics are the same: hit your number, eat enough protein, and don't rely on willpower at 8 p.m. to make it happen. <a href="https://macroplan.app">MacroPlan</a> calculates the right calorie and protein targets for a bulk, cut, or recomp and builds the week of batch-prepped food to match, so the phase you're in becomes something you eat, not something you track by hand.</p>
+
+      <h2>FAQ</h2>
+      <h3>Can beginners really build muscle and lose fat at the same time?</h3>
+      <p>Yes, this is the single group recomp works best for. New training stimulus plus a body that hasn't adapted yet lets beginners gain muscle even in a slight deficit, provided protein intake and training consistency are both in place.</p>
+      <h3>How do I know if I should bulk or cut first?</h3>
+      <p>Body fat is the main signal. If you're already lean and want more size and strength, bulk first. If body fat has climbed enough to bother you or affect performance, cut first, then bulk from a leaner starting point afterward.</p>
+      <h3>Is recomp slower than bulking or cutting?</h3>
+      <p>Usually, yes, for both goals individually. A dedicated bulk builds muscle faster than a recomp does, and a dedicated cut loses fat faster. Recomp trades speed for doing both at once, which is why it suits patient, longer timelines rather than short ones.</p>
+      <h3>How often should I switch between bulking and cutting?</h3>
+      <p>There's no fixed schedule, most lifters run bulks of three to six months and cuts of eight to sixteen weeks, adjusting based on how body fat and strength are actually trending rather than a calendar. Individual recovery and life circumstances vary, so treat these as starting points, not rules.</p>
+
+      <p>Whatever phase you're in, MacroPlan sets the calorie and protein target for it and builds your week of food around that number. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 6, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHx3ZWlnaHRsaWZ0aW5nJTIwc2NhbGUlMjBmaXRuZXNzfGVufDF8MHx8fDE3ODMzMjQxNjF8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Victor Freitas on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@victorfreitas?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'protein-per-calorie-food-ranking',
     title: 'Protein Per Calorie: The Definitive Food Ranking Chart',
     excerpt: 'Total protein grams only tell half the story. This chart ranks over 30 common foods by protein delivered per 100 calories, so you can see which ones actually earn their spot in a deficit.',
