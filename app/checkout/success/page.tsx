@@ -20,8 +20,8 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
       <div className="max-w-md w-full text-center">
         {/* Success Animation */}
         <div className="mb-8">
-          <div className="size-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6 animate-in zoom-in duration-500">
-            <CheckCircle className="size-12 text-green-600" />
+          <div className="size-20 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6 animate-in zoom-in duration-500">
+            <CheckCircle className="size-12 text-success" />
           </div>
 
           <div className="flex items-center justify-center gap-2 mb-4">
@@ -50,7 +50,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
               'Priority customer support',
             ].map((feature) => (
               <li key={feature} className="flex items-center gap-3 text-sm">
-                <CheckCircle className="size-5 text-green-500 shrink-0" />
+                <CheckCircle className="size-5 text-success shrink-0" />
                 <span>{feature}</span>
               </li>
             ))}

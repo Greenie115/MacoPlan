@@ -38,7 +38,7 @@ export async function generateBatchPrepPlanAction(
   if (!gate.allowed) {
     return {
       success: false,
-      error: 'Free tier limit reached. Upgrade to Premium for unlimited batch prep plans.',
+      error: 'Free tier limit reached. Upgrade to Premium for 100 plans a month.',
       code: 'free_tier_limit',
     }
   }

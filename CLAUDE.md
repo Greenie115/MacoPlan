@@ -2,6 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Required skills
+
+- **All coding and writing work** must run through the `ponytail` skill at **full** intensity (invoke it via the Skill tool before starting; laziest-that-works, simplest, shortest solution).
+- **All UI work** (building, changing, or reviewing anything user-facing) must additionally run through the `impeccable` skill.
+
+Invoke these automatically at the start of a task — don't wait to be asked.
+
 ## Commands
 
 ### Development
@@ -112,7 +119,7 @@ useEffect dependency array like `[supabase.auth]`).
 `getCachedImages()` and warm misses with `next/server` `after()`.
 
 **Batch Prep Generator** (`lib/services/batch-prep-*.ts`):
-- Claude (`claude-sonnet-4-6`) generates batch-cookable meal plans as structured JSON
+- GLM 4.7 via OpenRouter (`lib/services/openrouter.ts`) generates batch-cookable meal plans as structured JSON — env `OPENROUTER_API_KEY`, model override `BATCH_PREP_MODEL` (default `z-ai/glm-4.7`)
 - `batch-prep-generator.ts` orchestrates: prompt → Zod parse → macro accuracy check → one retry with correction hint → best-of-two (never hard-fails on macro misses)
 - Persisted to `batch_prep_plans` (+ `user_training_profile` snapshot); listed via `listBatchPrepPlans()`; token usage logged to `anthropic_usage_log`
 - The old Recipe-API.com `meal-plan-generator.ts` was deleted in the 2026-04 batch-prep pivot; Recipe-API.com is only used for `/recipes` browse
@@ -204,7 +211,7 @@ Required for recipes/meal plans:
 ```
 RECIPE_API_KEY=your-recipe-api-key          # From recipe-api.com (still used for /recipes browse)
 UNSPLASH_ACCESS_KEY=your-unsplash-key       # From unsplash.com/developers
-ANTHROPIC_API_KEY=sk-ant-...                # From console.anthropic.com (batch prep generation)
+OPENROUTER_API_KEY=sk-or-...                # From openrouter.ai (batch prep generation, GLM 4.7)
 ```
 
 Optional:
@@ -240,7 +247,7 @@ STRIPE_SECRET_KEY=sk_test_...
 - `supabase/migrations/`: NOTE — only post-2026-03 migrations exist in the repo; founding tables (`user_profiles`, `recipes`, `meal_plans`, `logged_meals`, ...) live only in production Supabase
 - `lib/services/recipe-api.ts`: Recipe-API.com service with caching
 - `lib/services/unsplash.ts`: Unsplash image service (negative caching + rate-limit breaker)
-- `lib/services/batch-prep-generator.ts`: Claude-powered batch prep generation engine
+- `lib/services/batch-prep-generator.ts`: GLM-powered (via OpenRouter) batch prep generation engine
 - `lib/services/batch-prep-persistence.ts`: batch_prep_plans CRUD + listBatchPrepPlans
 - `app/actions/recipe-search.ts`: Recipe search server actions
 - `lib/types/recipe.ts`: Provider-agnostic recipe types (`NormalizedRecipe`)

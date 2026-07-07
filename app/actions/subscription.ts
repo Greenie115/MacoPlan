@@ -57,8 +57,6 @@ export async function checkFavoritesQuota(
  */
 export async function getSubscriptionStatus(): Promise<SubscriptionStatus | null> {
   try {
-    const supabase = await createClient()
-
     const user = await getAuthUser()
 
     if (!user) {
@@ -104,8 +102,6 @@ export async function canGenerateBatchPrepPlan(
 
 export async function isPremiumUser(): Promise<boolean> {
   try {
-    const supabase = await createClient()
-
     const user = await getAuthUser()
 
     if (!user) {

@@ -11,7 +11,7 @@ import {
   Sparkles,
   Loader2,
 } from 'lucide-react'
-import { LogoMark } from '@/components/brand/logo'
+import { MarketingHeader } from '@/components/landing/marketing-header'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createCheckoutSession } from '@/app/actions/stripe'
@@ -29,7 +29,7 @@ const freeTierFeatures = [
 ]
 
 const premiumFeatures = [
-  { feature: 'Batch prep plans', value: 'Unlimited', included: true },
+  { feature: 'Batch prep plans', value: '100 / month', included: true },
   { feature: 'Shopping list', value: true, included: true },
   { feature: 'Recipe browsing', value: 'Unlimited', included: true },
   { feature: 'Macro calculations', value: true, included: true },
@@ -58,33 +58,7 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 py-4 bg-background/95 backdrop-blur-md border-b border-border-strong">
-        <div className="container mx-auto px-6">
-          <nav className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-              <LogoMark size={32} />
-              <span>MacroPlan</span>
-            </Link>
-
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/#features" className="text-muted-foreground hover:text-primary transition-colors">Features</Link>
-              <Link href="/#testimonials" className="text-muted-foreground hover:text-primary transition-colors">Testimonials</Link>
-              <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</Link>
-              <Link href="/pricing" className="text-primary font-medium">Pricing</Link>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <Link href="/login" className="hidden md:block text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                Login
-              </Link>
-              <Link href="/signup" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-primary/20 hover:shadow-primary/30">
-                Sign Up Now
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <MarketingHeader />
 
       <main id="main-content" className="pt-32 pb-20">
         {/* Hero Section */}
@@ -164,7 +138,7 @@ export default function PricingPage() {
                 <ul className="space-y-4 mb-8 flex-grow">
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> batch prep plans</span>
+                    <span><strong>100</strong> batch prep plans a month</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
@@ -235,7 +209,7 @@ export default function PricingPage() {
                 <ul className="space-y-4 mb-8 flex-grow">
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>Unlimited</strong> batch prep plans</span>
+                    <span><strong>100</strong> batch prep plans a month</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-success shrink-0" />
@@ -330,7 +304,7 @@ export default function PricingPage() {
                   <tr className="border-b border-border-strong/50">
                     <td className="p-6">Batch prep plans</td>
                     <td className="text-center p-6 text-subtle-foreground">3 lifetime</td>
-                    <td className="text-center p-6 font-semibold bg-primary/5">Unlimited</td>
+                    <td className="text-center p-6 font-semibold bg-primary/5">100 / month</td>
                   </tr>
                   <tr className="border-b border-border-strong/50">
                     <td className="p-6">Training / rest day split</td>

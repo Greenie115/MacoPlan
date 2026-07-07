@@ -89,6 +89,10 @@ export default function LoginPage() {
         userId: result.userId,
         email,
       }))
+      // ponytail: password briefly held in sessionStorage to complete post-2FA re-auth;
+      // app-level 2FA is also bypassable via Supabase's public password grant — upgrade
+      // path is Supabase native MFA (AAL2) enforced in proxy.ts
+      sessionStorage.setItem('pendingPassword', password)
       router.push('/login/verify-2fa')
     } else if (result.success) {
       // Migrate a pending guest plan, otherwise the middleware routes

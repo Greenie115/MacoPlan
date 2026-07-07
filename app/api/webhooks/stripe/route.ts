@@ -82,10 +82,6 @@ export async function POST(request: NextRequest) {
         await handleSubscriptionDeleted(event.data.object as Stripe.Subscription)
         break
 
-      case 'invoice.paid':
-        await handleInvoicePaid(event.data.object as Stripe.Invoice)
-        break
-
       case 'invoice.payment_failed':
         await handleInvoicePaymentFailed(event.data.object as Stripe.Invoice)
         break
@@ -145,9 +141,6 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     console.error('[Webhook] Error updating user profile:', error)
     throw error
   }
-
-  // Reset quota for new subscription
-  await resetQuotaForUser(userId, subscriptionId, subscription)
 }
 
 async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
@@ -240,37 +233,6 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 
 }
 
-async function handleInvoicePaid(invoice: Stripe.Invoice) {
-  const inv = invoice as InvoiceWithSubscription
-  const subscriptionId = inv.subscription
-  if (!subscriptionId) {
-    return
-  }
-
-  // Get subscription details
-  const subscription = await stripe!.subscriptions.retrieve(subscriptionId)
-
-  const userId = subscription.metadata?.supabase_user_id
-  if (!userId) {
-    const supabase = createServiceRoleClient()
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('user_id')
-      .eq('stripe_subscription_id', subscriptionId)
-      .single()
-
-    if (!profile) {
-      console.error('[Webhook] Could not find user for invoice')
-      return
-    }
-
-    await resetQuotaForUser(profile.user_id, subscriptionId, subscription)
-    return
-  }
-
-  await resetQuotaForUser(userId, subscriptionId, subscription)
-}
-
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   const inv = invoice as InvoiceWithSubscription
   const subscriptionId = inv.subscription
@@ -330,26 +292,4 @@ async function updateSubscriptionInDb(userId: string, subscription: Stripe.Subsc
     throw error
   }
 
-}
-
-async function resetQuotaForUser(userId: string, subscriptionId: string, subscription: Stripe.Subscription) {
-  const supabase = createServiceRoleClient()
-  const period = getSubscriptionPeriod(subscription)
-
-  // Reset quota for new billing period
-  const { error } = await supabase
-    .from('meal_plan_generation_quota')
-    .update({
-      current_period_generated: 0,
-      stripe_subscription_id: subscriptionId,
-      period_start_date: period.start ? new Date(period.start * 1000).toISOString() : null,
-      period_end_date: period.end ? new Date(period.end * 1000).toISOString() : null,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('user_id', userId)
-
-  if (error) {
-    console.error('[Webhook] Error resetting quota:', error)
-    // Don't throw - quota reset failure shouldn't fail the webhook
-  }
 }

@@ -22,6 +22,8 @@ export default function Verify2FAPage() {
   const [userId, setUserId] = useState<string | null>(null)
   const [email, setEmail] = useState<string | null>(null)
   const [codeSent, setCodeSent] = useState(false)
+  const [useBackupCode, setUseBackupCode] = useState(false)
+  const [backupCode, setBackupCode] = useState('')
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const router = useRouter()
 
@@ -270,24 +272,38 @@ export default function Verify2FAPage() {
           {/* Code Input */}
           {(method === 'totp' || codeSent) && (
             <>
-              <div className="flex justify-center gap-2 mb-6" onPaste={handlePaste}>
-                {code.map((digit, index) => (
+              {useBackupCode ? (
+                <div className="mb-6">
                   <input
-                    key={index}
-                    ref={(el) => {
-                      inputRefs.current[index] = el
-                    }}
                     type="text"
-                    inputMode="numeric"
-                    maxLength={1}
-                    value={digit}
-                    onChange={(e) => handleCodeChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(index, e)}
+                    autoFocus
+                    value={backupCode}
+                    onChange={(e) => setBackupCode(e.target.value)}
                     disabled={loading}
-                    className="w-12 h-14 text-center text-2xl font-mono border-2 border-border-strong rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary disabled:opacity-50 text-foreground"
+                    placeholder="Enter backup code"
+                    className="w-full px-4 py-3 text-center text-lg font-mono border-2 border-border-strong rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary disabled:opacity-50 text-foreground"
                   />
-                ))}
-              </div>
+                </div>
+              ) : (
+                <div className="flex justify-center gap-2 mb-6" onPaste={handlePaste}>
+                  {code.map((digit, index) => (
+                    <input
+                      key={index}
+                      ref={(el) => {
+                        inputRefs.current[index] = el
+                      }}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleCodeChange(index, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(index, e)}
+                      disabled={loading}
+                      className="w-12 h-14 text-center text-2xl font-mono border-2 border-border-strong rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary disabled:opacity-50 text-foreground"
+                    />
+                  ))}
+                </div>
+              )}
 
               {error && (
                 <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-xl mb-4 text-center">
@@ -296,8 +312,8 @@ export default function Verify2FAPage() {
               )}
 
               <button
-                onClick={() => handleVerify()}
-                disabled={loading || code.some((c) => c === '')}
+                onClick={() => handleVerify(useBackupCode ? backupCode : undefined)}
+                disabled={loading || (useBackupCode ? backupCode.trim() === '' : code.some((c) => c === ''))}
                 className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {loading ? 'Verifying...' : 'Verify'}
@@ -308,9 +324,20 @@ export default function Verify2FAPage() {
           {/* Backup code option for TOTP */}
           {method === 'totp' && (
             <div className="mt-4 text-center">
-              <p className="text-xs text-muted-foreground">
-                Lost your device? Enter a backup code instead.
-              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setUseBackupCode(!useBackupCode)
+                  setError(null)
+                  setCode(['', '', '', '', '', ''])
+                  setBackupCode('')
+                }}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors underline"
+              >
+                {useBackupCode
+                  ? 'Use authenticator code instead'
+                  : 'Lost your device? Use a backup code instead.'}
+              </button>
             </div>
           )}
 
