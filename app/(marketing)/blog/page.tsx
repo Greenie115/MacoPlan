@@ -1,10 +1,17 @@
-import Link from 'next/link'
 import type { Metadata } from 'next'
+import { Bricolage_Grotesque } from 'next/font/google'
 import { blogPosts } from '@/lib/blog-data'
-import { BlogHeader } from '@/components/blog/BlogHeader'
+import { MarketingHeader } from '@/components/landing/marketing-header'
+import { Footer } from '@/components/landing/footer'
 import { FeaturedPost } from '@/components/blog/FeaturedPost'
 import { BlogGrid } from '@/components/blog/BlogGrid'
 import { EmailCapture } from '@/components/blog/EmailCapture'
+
+const display = Bricolage_Grotesque({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-display',
+})
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -22,13 +29,22 @@ export default function BlogIndexPage() {
   const featuredPost = blogPosts[0]
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
-      <BlogHeader />
+    <div className={`${display.variable} min-h-screen bg-background text-foreground font-sans`}>
+      <MarketingHeader />
 
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          {/* Hero Section - Featured Post */}
-          <div className="mb-20">
+          <div className="mx-auto mb-14 max-w-2xl text-center">
+            <h1 className="text-display-lg font-extrabold tracking-tight text-foreground [font-family:var(--font-display)] [text-wrap:balance]">
+              The MacroPlan Blog
+            </h1>
+            <p className="mt-4 text-lg text-subtle-foreground">
+              Practical, evidence-informed guides for lifters who track macros and meal-prep their week.
+            </p>
+          </div>
+
+          {/* Featured Post */}
+          <div className="mb-16">
             <FeaturedPost post={featuredPost} />
           </div>
 
@@ -37,65 +53,8 @@ export default function BlogIndexPage() {
         </div>
       </main>
 
-      {/* Email Capture Section */}
       <EmailCapture />
-
-      {/* Footer */}
-      <footer className="py-12 bg-muted border-t border-border-strong">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8">
-            <div>
-              <h3 className="font-bold text-lg mb-4">MacroPlan</h3>
-              <p className="text-subtle-foreground text-sm">
-                Personalized meal plans that fit your macros and your lifestyle.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-subtle-foreground">
-                <li>
-                  <Link href="/#features" className="hover:text-primary transition-colors">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="hover:text-primary transition-colors">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/#faq" className="hover:text-primary transition-colors">
-                    FAQ
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-subtle-foreground">
-                <li>
-                  <Link href="/privacy" className="hover:text-primary transition-colors">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="hover:text-primary transition-colors">
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/help" className="hover:text-primary transition-colors">
-                    Help Centre
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="text-center text-muted-foreground text-sm border-t border-border-strong pt-8">
-            <p>© 2026 MacroPlan. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

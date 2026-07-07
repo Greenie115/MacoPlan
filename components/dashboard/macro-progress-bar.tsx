@@ -11,22 +11,22 @@ interface MacroProgressBarProps {
 
 const macroConfig = {
   protein: {
-    emoji: '🥩',
     label: 'Protein',
     barColor: 'bg-protein',
     textColor: 'text-protein',
+    dotColor: 'bg-protein',
   },
   carbs: {
-    emoji: '🍚',
     label: 'Carbs',
     barColor: 'bg-carb',
     textColor: 'text-carb',
+    dotColor: 'bg-carb',
   },
   fat: {
-    emoji: '🥑',
     label: 'Fat',
     barColor: 'bg-fat',
     textColor: 'text-fat',
+    dotColor: 'bg-fat',
   },
 } as const
 
@@ -46,17 +46,15 @@ export function MacroProgressBar({
 
   return (
     <div className="flex items-center gap-3">
-      {/* Emoji */}
-      <div className="w-8 h-8 rounded-full bg-background flex items-center justify-center flex-shrink-0">
-        <span className="text-base">{config.emoji}</span>
-      </div>
+      {/* Macro color indicator */}
+      <div className={cn('size-2.5 rounded-full flex-shrink-0', config.dotColor)} aria-hidden="true" />
 
       {/* Progress Section */}
       <div className="flex-1 min-w-0">
         {/* Label Row */}
         <div className="flex items-baseline justify-between mb-1">
           <span className="text-sm font-medium text-foreground">{config.label}</span>
-          <div className="flex items-baseline gap-1.5">
+          <div className="flex items-baseline gap-1.5 font-mono tabular-nums">
             <span className={cn('text-sm font-bold', config.textColor)}>
               {Math.round(eaten)}g
             </span>
@@ -73,7 +71,7 @@ export function MacroProgressBar({
         <div className="w-full bg-background rounded-full h-2 overflow-hidden">
           <div
             className={cn(
-              'h-2 rounded-full transition-all duration-500 ease-out',
+              'h-2 rounded-full transition-[width] duration-500 ease-out-quint',
               isOver ? 'bg-warning' : config.barColor
             )}
             style={{ width: `${Math.min(percentage, 100)}%` }}
@@ -82,9 +80,9 @@ export function MacroProgressBar({
 
         {/* Percentage / Over indicator */}
         <div className="flex justify-between items-center mt-1">
-          <span className="text-xs text-muted-foreground">{percentage}%</span>
+          <span className="text-xs text-muted-foreground tabular-nums">{percentage}%</span>
           {isOver && (
-            <span className="text-xs font-medium text-warning">
+            <span className="text-xs font-medium text-warning tabular-nums">
               +{Math.round(eaten - target)}g over
             </span>
           )}

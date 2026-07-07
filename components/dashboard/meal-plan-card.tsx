@@ -47,10 +47,10 @@ export function MealPlanCard({
   return (
     <Card
       className={cn(
-        'p-4 cursor-pointer transition-all relative flex flex-col h-full',
+        'p-4 cursor-pointer transition-colors duration-150 relative flex flex-col h-full',
         isActive
           ? 'border-primary border-2 bg-card'
-          : 'border-border-strong hover:border-primary/50 bg-card',
+          : 'border-border-strong hover:border-coral-200 bg-card',
         className
       )}
       onClick={onClick}
@@ -97,7 +97,7 @@ export function MealPlanCard({
 
         <p className="text-sm text-muted-foreground mb-1">{dateRange}</p>
 
-        <p className="text-primary text-sm font-medium mt-auto">
+        <p className="text-primary text-sm font-medium mt-auto tabular-nums">
           {caloriesPerDay.toLocaleString()} cal/day
         </p>
       </div>

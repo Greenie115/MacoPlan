@@ -86,6 +86,54 @@
 
   /* Strong Border (for card borders) */
   --color-border-strong: #DDE0DD;
+
+  /* ============================================
+     PREMIUM ELEVATION LAYER (additive)
+     Coral Pulse, refined — Stripe/Linear/Vercel tier.
+     ============================================ */
+
+  /* Coral ramp — real states, not just one coral.
+     coral-700 is the contrast-safe coral for TEXT on light (≥4.5:1). */
+  --color-coral-50: #FFF1EF;
+  --color-coral-100: #FFE1DC;
+  --color-coral-200: #FFC7BF;
+  --color-coral-300: #FFA79B;
+  --color-coral-400: #FF8676;
+  --color-coral-500: #FF6B5C;
+  --color-coral-600: #F04E3D;
+  --color-coral-700: #C93A2B;
+  --color-coral-800: #A32E23;
+  --color-coral-900: #7D251C;
+  --color-coral-950: #4A140F;
+
+  /* Layered, charcoal-tinted elevation. Overrides the flat Tailwind defaults
+     so every existing shadow-sm/md/lg/xl lifts to premium in place. */
+  --shadow-xs: 0 1px 2px 0 rgb(11 15 16 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(11 15 16 / 0.06), 0 1px 2px -1px rgb(11 15 16 / 0.05);
+  --shadow-md: 0 4px 12px -2px rgb(11 15 16 / 0.08), 0 2px 6px -2px rgb(11 15 16 / 0.05);
+  --shadow-lg: 0 12px 28px -6px rgb(11 15 16 / 0.12), 0 6px 12px -6px rgb(11 15 16 / 0.07);
+  --shadow-xl: 0 24px 48px -12px rgb(11 15 16 / 0.18), 0 12px 24px -12px rgb(11 15 16 / 0.10);
+  --shadow-2xl: 0 40px 80px -20px rgb(11 15 16 / 0.28), 0 20px 40px -20px rgb(11 15 16 / 0.14);
+  /* Coral glow — reserved for primary CTAs */
+  --shadow-coral: 0 8px 24px -6px rgb(255 107 92 / 0.35), 0 2px 8px -2px rgb(255 107 92 / 0.30);
+
+  /* Tokenized motion — exponential ease-out only, no bounce. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Fluid display scale — marketing headlines only (max ≈4.5rem). */
+  --text-display-2xl: clamp(2.75rem, 1.6rem + 5.2vw, 4.5rem);
+  --text-display-xl: clamp(2.25rem, 1.4rem + 3.8vw, 3.5rem);
+  --text-display-lg: clamp(1.875rem, 1.3rem + 2.6vw, 2.75rem);
+  --text-display-md: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+}
+
+/* Non-theme motion durations (referenced in custom CSS/animations). */
+:root {
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 400ms;
 }
 
 html {
@@ -144,6 +192,87 @@ body {
   --color-macro-protein: #FF7C6E;
   --color-macro-carbs: #4FC3F7;
   --color-macro-fat: #FFCB47;
+
+  /* Deeper elevation on dark — shadows read against near-black, so lean on
+     depth + a faint coral-tinted ambient rather than black-on-black. */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.30);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.40), 0 1px 2px -1px rgb(0 0 0 / 0.30);
+  --shadow-md: 0 4px 14px -2px rgb(0 0 0 / 0.50), 0 2px 6px -2px rgb(0 0 0 / 0.40);
+  --shadow-lg: 0 16px 36px -8px rgb(0 0 0 / 0.60), 0 6px 14px -6px rgb(0 0 0 / 0.45);
+  --shadow-xl: 0 28px 56px -12px rgb(0 0 0 / 0.70), 0 12px 24px -12px rgb(0 0 0 / 0.55);
+  --shadow-2xl: 0 48px 90px -20px rgb(0 0 0 / 0.80);
+}
+
+/* ============================================
+   PREMIUM SURFACE UTILITIES
+   ============================================ */
+
+/* Faint grain for dark heroes — kills gradient banding, adds tactility.
+   Decorative only: aria-hidden + pointer-events-none at the usage site. */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
+}
+
+/* Layered coral glow for dark sections — the consistent replacement for
+   hand-rolled inline radial gradients. Pair with position:relative parent. */
+.premium-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 60% at 75% 12%, rgb(255 107 92 / 0.16), transparent 62%),
+    radial-gradient(ellipse 45% 55% at 12% 90%, rgb(255 107 92 / 0.08), transparent 60%);
+}
+
+/* Faint precision grid for dark surfaces. */
+.premium-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image:
+    linear-gradient(to right, white 1px, transparent 1px),
+    linear-gradient(to bottom, white 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black, transparent 75%);
+}
+
+/* Skeleton shimmer — loading affordance for the app (never a centered spinner). */
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton {
+    background: linear-gradient(
+      100deg,
+      var(--color-muted) 40%,
+      color-mix(in oklab, var(--color-muted), var(--color-foreground) 8%) 50%,
+      var(--color-muted) 60%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes skeleton-shimmer {
+    to { background-position: -200% 0; }
+  }
+}
+.skeleton {
+  border-radius: 0.5rem;
+  background-color: var(--color-muted);
+}
+
+/* Refined focus ring — visible, coral, offset. Never removed. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-default);
+}
+
+/* Refined selection */
+::selection {
+  background: rgb(255 107 92 / 0.24);
 }
 
 /* Hide scrollbar but keep functionality */

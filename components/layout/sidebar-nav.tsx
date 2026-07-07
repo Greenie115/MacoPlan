@@ -32,7 +32,7 @@ export function SidebarNav() {
       {/* Sidebar - always visible on desktop, hidden on mobile */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-40 h-full bg-card border-r border-border-strong transition-all duration-300 ease-in-out',
+          'fixed top-0 left-0 z-40 h-full bg-muted border-r border-border-strong transition-[width] duration-200 ease-out-quint',
           isCollapsed ? 'w-20' : 'w-64',
           // Hide on mobile, always show on desktop
           'hidden lg:block'
@@ -43,7 +43,7 @@ export function SidebarNav() {
           {/* Toggle Button */}
           <button
             onClick={toggle}
-            className="absolute -right-3 top-9 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-border-strong bg-card shadow-md hover:bg-accent transition-colors"
+            className="absolute -right-3 top-9 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-border-strong bg-card shadow-sm hover:shadow-md hover:bg-accent transition-all duration-150"
             aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {isCollapsed ? (
@@ -54,8 +54,8 @@ export function SidebarNav() {
           </button>
 
           {/* Navigation items */}
-          <nav className="flex-1 p-4 pt-20">
-            <ul className="space-y-2">
+          <nav className="flex-1 p-3 pt-20">
+            <ul className="space-y-1">
               {tabs.map((tab) => {
                 const Icon = tab.icon
                 const isActive = currentTab === tab.id
@@ -65,21 +65,20 @@ export function SidebarNav() {
                     <Link
                       href={tab.path}
                       className={cn(
-                        'flex items-center gap-3 px-4 py-3 rounded-xl',
-                        'transition-colors duration-200',
-                        'hover:bg-accent',
+                        'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm',
+                        'transition-colors duration-150',
                         isActive
-                          ? 'bg-primary text-primary-foreground font-semibold'
-                          : 'text-icon hover:text-foreground',
+                          ? 'bg-coral-50 text-coral-700 font-semibold'
+                          : 'text-muted-foreground font-medium hover:bg-accent hover:text-foreground',
                         isCollapsed ? 'justify-center px-2' : 'w-full'
                       )}
                       aria-label={`Navigate to ${tab.label}`}
                       aria-current={isActive ? 'page' : undefined}
                       title={isCollapsed ? tab.label : undefined}
                     >
-                      <Icon className="size-5 shrink-0" />
+                      <Icon className="size-5 shrink-0" strokeWidth={isActive ? 2.25 : 2} />
                       {!isCollapsed && (
-                        <span className="whitespace-nowrap overflow-hidden transition-all duration-300">
+                        <span className="whitespace-nowrap overflow-hidden">
                           {tab.label}
                         </span>
                       )}

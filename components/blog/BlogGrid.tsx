@@ -38,15 +38,18 @@ export function BlogGrid({ posts, featuredSlug }: BlogGridProps) {
       </div>
 
       {/* Post Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div
+        className="grid gap-8"
+        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}
+      >
         {filteredPosts.map((post) => (
           <BlogCard key={post.slug} post={post} />
         ))}
       </div>
 
       {filteredPosts.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-subtle-foreground text-lg">
+        <div className="py-12 text-center">
+          <p className="text-lg text-subtle-foreground">
             No posts found in this category.
           </p>
         </div>

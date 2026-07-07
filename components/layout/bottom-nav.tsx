@@ -31,7 +31,7 @@ export function BottomNav({ activeTab = 'home' }: BottomNavProps) {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 h-16 bg-card border-t border-border-strong lg:hidden safe-area-bottom">
-      <div className="grid grid-cols-4 h-full max-w-lg mx-auto font-medium">
+      <div className="grid grid-cols-4 h-full max-w-lg mx-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = currentTab === tab.id
@@ -41,19 +41,16 @@ export function BottomNav({ activeTab = 'home' }: BottomNavProps) {
               key={tab.id}
               href={tab.path}
               className={cn(
-                'inline-flex flex-col items-center justify-center px-5 transition-colors',
-                isActive ? 'text-primary' : 'text-icon hover:text-foreground'
+                'inline-flex min-h-11 flex-col items-center justify-center gap-0.5 transition-colors duration-150',
+                isActive ? 'text-coral-600' : 'text-icon hover:text-foreground'
               )}
               aria-label={`Navigate to ${tab.label}`}
               aria-current={isActive ? 'page' : undefined}
             >
-              <Icon
-                className={cn('size-6', isActive && 'stroke-[2.5px]')}
-                fill={isActive ? 'currentColor' : 'none'}
-              />
+              <Icon className="size-6" strokeWidth={isActive ? 2.5 : 2} />
               <span
                 className={cn(
-                  'text-xs mt-0.5',
+                  'text-xs',
                   isActive ? 'font-semibold' : 'font-medium'
                 )}
               >

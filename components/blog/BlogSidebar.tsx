@@ -18,26 +18,29 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
   }
 
   return (
-    <aside className="space-y-6 sticky top-24">
+    <aside className="sticky top-24 space-y-6">
       {/* Lead Magnet Box */}
-      <div className="bg-primary/5 border-2 border-primary/20 rounded-2xl p-6">
-        <div className="text-3xl mb-3">📧</div>
-        <h3 className="text-xl font-bold mb-2">Get the Guide</h3>
-        <p className="text-sm text-subtle-foreground mb-4">
+      <div className="rounded-2xl border border-coral-200 bg-coral-50 p-6 shadow-sm">
+        <h3 className="text-xl font-bold text-foreground [font-family:var(--font-display)]">Get the Guide</h3>
+        <p className="mb-4 mt-2 text-sm text-subtle-foreground">
           Free Macro Calculator PDF
         </p>
         <form onSubmit={handleSubmit} className="space-y-3">
+          <label htmlFor="sidebar-email" className="sr-only">
+            Email address
+          </label>
           <input
+            id="sidebar-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email"
             required
-            className="w-full px-4 py-2.5 rounded-lg border border-border-strong bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+            className="w-full rounded-lg border border-border-strong bg-background px-4 py-2.5 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <button
             type="submit"
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 rounded-lg transition-colors"
+            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Download
           </button>
@@ -46,19 +49,19 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <div className="bg-card border border-border-strong rounded-2xl p-6">
-          <h3 className="text-lg font-bold mb-4">Related Posts</h3>
+        <div className="rounded-2xl border border-border-strong bg-card p-6 shadow-sm">
+          <h3 className="mb-4 text-lg font-bold text-foreground [font-family:var(--font-display)]">Related Posts</h3>
           <div className="space-y-4">
             {relatedPosts.map((post) => (
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="block group"
+                className="group block"
               >
-                <div className="text-xs font-semibold text-primary mb-1 uppercase tracking-wider">
+                <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-coral-700">
                   {post.category}
                 </div>
-                <h4 className="font-semibold text-sm group-hover:text-primary transition-colors line-clamp-2">
+                <h4 className="line-clamp-2 text-sm font-semibold transition-colors group-hover:text-coral-700">
                   {post.title}
                 </h4>
               </Link>
@@ -69,19 +72,19 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
 
       {/* Popular Posts */}
       {popularPosts.length > 0 && (
-        <div className="bg-card border border-border-strong rounded-2xl p-6">
-          <h3 className="text-lg font-bold mb-4">Popular Posts</h3>
+        <div className="rounded-2xl border border-border-strong bg-card p-6 shadow-sm">
+          <h3 className="mb-4 text-lg font-bold text-foreground [font-family:var(--font-display)]">Popular Posts</h3>
           <div className="space-y-4">
             {popularPosts.map((post) => (
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="block group"
+                className="group block"
               >
-                <div className="text-xs font-semibold text-primary mb-1 uppercase tracking-wider">
+                <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-coral-700">
                   {post.category}
                 </div>
-                <h4 className="font-semibold text-sm group-hover:text-primary transition-colors line-clamp-2">
+                <h4 className="line-clamp-2 text-sm font-semibold transition-colors group-hover:text-coral-700">
                   {post.title}
                 </h4>
               </Link>

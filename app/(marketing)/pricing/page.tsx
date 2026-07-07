@@ -10,33 +10,69 @@ import {
   ShieldCheck,
   Sparkles,
   Loader2,
+  Lock,
 } from 'lucide-react'
 import { MarketingHeader } from '@/components/landing/marketing-header'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Footer } from '@/components/landing/footer'
 import { createCheckoutSession } from '@/app/actions/stripe'
 import { toast } from 'sonner'
 
-const freeTierFeatures = [
-  { feature: 'Batch prep plans', value: '3 lifetime', included: true },
-  { feature: 'Shopping list', value: true, included: true },
-  { feature: 'Recipe browsing', value: 'Unlimited', included: true },
-  { feature: 'Macro calculations', value: true, included: true },
-  { feature: 'Training / rest day split', value: false, included: false },
-  { feature: 'Cooking timeline', value: false, included: false },
-  { feature: 'PDF export', value: false, included: false },
-  { feature: 'Priority support', value: false, included: false },
+const freeFeatures = [
+  '3 batch prep plans, free forever',
+  'Shopping list included',
+  'Unlimited recipe browsing',
+  'Macro calculations',
 ]
 
 const premiumFeatures = [
-  { feature: 'Batch prep plans', value: '100 / month', included: true },
-  { feature: 'Shopping list', value: true, included: true },
-  { feature: 'Recipe browsing', value: 'Unlimited', included: true },
-  { feature: 'Macro calculations', value: true, included: true },
-  { feature: 'Training / rest day split', value: true, included: true },
-  { feature: 'Cooking timeline', value: true, included: true },
-  { feature: 'PDF export', value: true, included: true },
-  { feature: 'Priority support', value: true, included: true },
+  '100 batch prep plans a month',
+  'Training / rest day split',
+  'Cooking timeline',
+  'PDF export',
+  'Priority support',
+]
+
+const comparisonRows: Array<{
+  feature: string
+  free: string | boolean
+  premium: string | boolean
+}> = [
+  { feature: 'Batch prep plans', free: '3 lifetime', premium: '100 / month' },
+  { feature: 'Shopping list', free: true, premium: true },
+  { feature: 'Recipe browsing', free: 'Unlimited', premium: 'Unlimited' },
+  { feature: 'Macro calculations', free: true, premium: true },
+  { feature: 'Training / rest day split', free: false, premium: true },
+  { feature: 'Cooking timeline', free: false, premium: true },
+  { feature: 'PDF export', free: false, premium: true },
+  { feature: 'Priority support', free: false, premium: true },
+]
+
+const faqs = [
+  {
+    question: 'Can I try MacroPlan for free?',
+    answer:
+      "Yes. The Free plan includes 3 batch prep plans with shopping lists, no card required. It's enough to see whether the plans actually fit how you eat before you pay for anything.",
+  },
+  {
+    question: 'What happens after I use my free batch prep plans?',
+    answer:
+      'You keep everything you already generated: recipes, shopping lists, and your saved plans. Generating new prep plans requires Premium.',
+  },
+  {
+    question: 'Can I cancel anytime?',
+    answer:
+      "Yes, from your account settings, no email or call required. You keep Premium access until the end of the billing period you already paid for.",
+  },
+  {
+    question: 'Is there a money-back guarantee?',
+    answer:
+      "Yes. If Premium isn't working for you in the first 7 days, contact us and we'll refund it in full.",
+  },
+  {
+    question: 'Monthly or annual — can I switch?',
+    answer:
+      'Switch to annual anytime and the 33% discount applies immediately. Switching back to monthly takes effect at the end of your current annual term.',
+  },
 ]
 
 export default function PricingPage() {
@@ -60,413 +96,263 @@ export default function PricingPage() {
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20">
       <MarketingHeader />
 
-      <main id="main-content" className="pt-32 pb-20">
-        {/* Hero Section */}
-        <section className="container mx-auto px-6 text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6 tracking-tight [text-wrap:balance]">
-            Simple, transparent <span className="text-primary">pricing</span>
+      <main id="main-content" className="pt-40 pb-24">
+        {/* Hero */}
+        <section className="container mx-auto px-6 text-center mb-20">
+          <h1 className="text-display-lg md:text-display-xl font-bold leading-[1.05] tracking-tight mb-6 [text-wrap:balance]">
+            Simple, transparent pricing
           </h1>
-          <p className="text-lg text-subtle-foreground max-w-2xl mx-auto">
-            Start for free and upgrade when you're ready. No hidden fees, cancel anytime.
+          <p className="text-lg text-subtle-foreground max-w-xl mx-auto [text-wrap:pretty]">
+            Start free. Upgrade when you're ready to prep every week. No hidden fees, cancel anytime.
           </p>
         </section>
 
-        {/* Pricing Cards */}
-        <section className="container mx-auto px-6 mb-24">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Free Tier */}
-            <Card className="relative flex flex-col">
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl">Free</CardTitle>
-                <p className="text-subtle-foreground mt-2">Perfect for getting started</p>
-              </CardHeader>
-              <CardContent className="flex flex-col flex-grow">
-                <div className="text-center mb-8">
-                  <span className="text-5xl font-bold">$0</span>
-                  <span className="text-subtle-foreground">/forever</span>
-                </div>
+        {/* Pricing cards */}
+        <section className="container mx-auto px-6 mb-16">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto items-start">
+            {/* Free */}
+            <div className="flex flex-col h-full rounded-2xl border border-border-strong bg-card p-8 shadow-sm">
+              <h2 className="text-xl font-bold mb-1">Free</h2>
+              <p className="text-sm text-subtle-foreground mb-6">Perfect for getting started</p>
 
-                <ul className="space-y-4 mb-8 flex-grow">
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>3 batch prep plans</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Shopping list</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Unlimited recipe browsing</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Macro calculations</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-subtle-foreground">
-                    <X className="w-5 h-5 shrink-0" />
-                    <span>Training / rest day split</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-subtle-foreground">
-                    <X className="w-5 h-5 shrink-0" />
-                    <span>Cooking timeline</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-subtle-foreground">
-                    <X className="w-5 h-5 shrink-0" />
-                    <span>PDF export</span>
-                  </li>
-                </ul>
-
-                <Button variant="outline" size="lg" className="w-full" asChild>
-                  <Link href="/onboarding/1">Get Started Free</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Premium Monthly */}
-            <Card className="relative flex flex-col">
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl">Premium Monthly</CardTitle>
-                <p className="text-subtle-foreground mt-2">Flexible, cancel anytime</p>
-              </CardHeader>
-              <CardContent className="flex flex-col flex-grow">
-                <div className="text-center mb-8">
-                  <span className="text-5xl font-bold">$9.99</span>
-                  <span className="text-subtle-foreground">/month</span>
-                </div>
-
-                <ul className="space-y-4 mb-8 flex-grow">
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>100</strong> batch prep plans a month</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Training / rest day split</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Cooking timeline</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Shopping list</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>PDF export</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Unlimited recipe browsing</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Priority support</span>
-                  </li>
-                </ul>
-
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => handleSubscribe('monthly')}
-                  disabled={isPending}
-                >
-                  {loadingPlan === 'monthly' ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    'Start Monthly'
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Premium Annual - Best Value */}
-            <Card className="relative flex flex-col border-2 border-primary md:col-span-2 lg:col-span-1 shadow-xl shadow-primary/10 ring-1 ring-primary/20">
-              {/* Best Value Badge */}
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-sm font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg shadow-primary/25">
-                <ShieldCheck className="w-4 h-4" />
-                Best value
+              <div className="mb-8">
+                <span className="text-5xl font-bold tabular-nums">$0</span>
+                <span className="text-subtle-foreground"> forever</span>
               </div>
 
-              <CardHeader className="text-center pb-4 pt-8">
-                <CardTitle className="text-2xl">Premium Annual</CardTitle>
-                <p className="text-subtle-foreground mt-2">Save 33% with annual billing</p>
-              </CardHeader>
-              <CardContent className="flex flex-col flex-grow">
-                <div className="text-center mb-2">
-                  <span className="text-5xl font-bold">$79.99</span>
-                  <span className="text-subtle-foreground">/year</span>
-                </div>
-                <p className="text-center text-sm text-primary font-medium mb-8">
-                  Just $6.67/month — save $40/year
-                </p>
+              <ul className="space-y-3.5 mb-8 flex-grow">
+                {freeFeatures.map((f) => (
+                  <li key={f} className="flex items-start gap-3 text-sm">
+                    <Check className="w-4.5 h-4.5 text-success shrink-0 mt-0.5" aria-hidden="true" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+                <li className="flex items-start gap-3 text-sm text-subtle-foreground">
+                  <X className="w-4.5 h-4.5 shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>Training / rest day split</span>
+                </li>
+              </ul>
 
-                <ul className="space-y-4 mb-8 flex-grow">
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span><strong>100</strong> batch prep plans a month</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Training / rest day split</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Cooking timeline</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Shopping list</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>PDF export</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Unlimited recipe browsing</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-success shrink-0" />
-                    <span>Priority support</span>
-                  </li>
-                </ul>
+              <Link
+                href="/onboarding/1"
+                className="inline-flex items-center justify-center rounded-xl border border-border-strong bg-transparent py-3 px-6 text-sm font-semibold hover:bg-muted transition-colors"
+              >
+                Get started free
+              </Link>
+            </div>
 
-                <Button
-                  size="lg"
-                  className="w-full shadow-lg shadow-primary/25"
-                  onClick={() => handleSubscribe('annual')}
-                  disabled={isPending}
-                >
-                  {loadingPlan === 'annual' ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      Get Premium Annual
-                      <ArrowRight className="w-5 h-5 ml-1" />
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Premium Monthly */}
+            <div className="flex flex-col h-full rounded-2xl border border-border-strong bg-card p-8 shadow-sm">
+              <h2 className="text-xl font-bold mb-1">Premium Monthly</h2>
+              <p className="text-sm text-subtle-foreground mb-6">Flexible, cancel anytime</p>
+
+              <div className="mb-8">
+                <span className="text-5xl font-bold tabular-nums">$9.99</span>
+                <span className="text-subtle-foreground">/month</span>
+              </div>
+
+              <ul className="space-y-3.5 mb-8 flex-grow">
+                {premiumFeatures.map((f) => (
+                  <li key={f} className="flex items-start gap-3 text-sm">
+                    <Check className="w-4.5 h-4.5 text-success shrink-0 mt-0.5" aria-hidden="true" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={() => handleSubscribe('monthly')}
+                disabled={isPending}
+                className="inline-flex items-center justify-center rounded-xl border border-border-strong bg-transparent py-3 px-6 text-sm font-semibold hover:bg-muted transition-colors disabled:opacity-50 disabled:pointer-events-none"
+              >
+                {loadingPlan === 'monthly' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" aria-hidden="true" />
+                    Processing...
+                  </>
+                ) : (
+                  'Start monthly'
+                )}
+              </button>
+            </div>
+
+            {/* Premium Annual — recommended, visually anchored */}
+            <div className="relative flex flex-col h-full rounded-2xl border-2 border-coral-500 bg-card p-8 shadow-lg md:-translate-y-2">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-coral-600 text-white text-xs font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-coral">
+                <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
+                Most popular
+              </div>
+
+              <h2 className="text-xl font-bold mb-1 pt-2">Premium Annual</h2>
+              <p className="text-sm text-coral-700 font-medium mb-6">Save 33% with annual billing</p>
+
+              <div className="mb-1">
+                <span className="text-5xl font-bold tabular-nums">$79.99</span>
+                <span className="text-subtle-foreground">/year</span>
+              </div>
+              <p className="text-sm text-subtle-foreground mb-8 tabular-nums">
+                Just $6.67/month — save $40/year
+              </p>
+
+              <ul className="space-y-3.5 mb-8 flex-grow">
+                {premiumFeatures.map((f) => (
+                  <li key={f} className="flex items-start gap-3 text-sm">
+                    <Check className="w-4.5 h-4.5 text-success shrink-0 mt-0.5" aria-hidden="true" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={() => handleSubscribe('annual')}
+                disabled={isPending}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-coral-600 text-white py-3 px-6 text-sm font-semibold hover:bg-coral-700 hover:shadow-coral active:scale-[0.97] transition-all disabled:opacity-50 disabled:pointer-events-none"
+              >
+                {loadingPlan === 'annual' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    Get Premium Annual
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
-          {/* Trust Signals */}
-          <div className="flex flex-wrap items-center justify-center gap-6 mt-12 text-subtle-foreground">
+          {/* Trust row */}
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mt-14 text-sm text-subtle-foreground">
             <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-success" />
+              <Check className="w-4 h-4 text-success" aria-hidden="true" />
               <span>Cancel anytime</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-success" />
+              <Check className="w-4 h-4 text-success" aria-hidden="true" />
               <span>7-day money-back guarantee</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-success" />
-              <span>Secure payment via Stripe</span>
+              <Lock className="w-4 h-4 text-success" aria-hidden="true" />
+              <span>Secure checkout via Stripe</span>
             </div>
           </div>
         </section>
 
-        {/* Feature Comparison Table */}
-        <section className="py-24 bg-muted/50">
+        {/* Comparison table */}
+        <section className="py-20 bg-muted/50">
           <div className="container mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Compare plans</h2>
-              <p className="text-lg text-subtle-foreground">
-                See exactly what you get with each plan
-              </p>
+            <div className="text-center max-w-2xl mx-auto mb-14">
+              <h2 className="text-display-md font-bold tracking-tight [text-wrap:balance]">Compare plans</h2>
             </div>
 
-            <div className="max-w-4xl mx-auto overflow-x-auto">
-              <table className="w-full bg-card rounded-2xl border border-border-strong overflow-hidden">
+            <div className="max-w-3xl mx-auto overflow-x-auto rounded-2xl border border-border-strong shadow-sm">
+              <table className="w-full bg-card">
                 <thead>
                   <tr className="border-b border-border-strong">
-                    <th className="text-left p-6 font-semibold">Feature</th>
-                    <th className="text-center p-6 font-semibold">Free</th>
-                    <th className="text-center p-6 font-semibold bg-primary/5">
-                      <span className="flex items-center justify-center gap-2">
-                        <Sparkles className="w-5 h-5 text-primary" />
+                    <th className="text-left p-5 font-semibold text-sm">Feature</th>
+                    <th className="text-center p-5 font-semibold text-sm">Free</th>
+                    <th className="text-center p-5 font-semibold text-sm bg-coral-50">
+                      <span className="inline-flex items-center justify-center gap-1.5 text-coral-700">
+                        <Sparkles className="w-4 h-4" aria-hidden="true" />
                         Premium
                       </span>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Batch prep plans</td>
-                    <td className="text-center p-6 text-subtle-foreground">3 lifetime</td>
-                    <td className="text-center p-6 font-semibold bg-primary/5">100 / month</td>
-                  </tr>
-                  <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Training / rest day split</td>
-                    <td className="text-center p-6">
-                      <X className="w-5 h-5 text-subtle-foreground mx-auto" />
-                    </td>
-                    <td className="text-center p-6 bg-primary/5">
-                      <Check className="w-5 h-5 text-success mx-auto" />
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Cooking timeline</td>
-                    <td className="text-center p-6">
-                      <X className="w-5 h-5 text-subtle-foreground mx-auto" />
-                    </td>
-                    <td className="text-center p-6 bg-primary/5">
-                      <Check className="w-5 h-5 text-success mx-auto" />
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border-strong/50">
-                    <td className="p-6">Shopping list</td>
-                    <td className="text-center p-6">
-                      <Check className="w-5 h-5 text-success mx-auto" />
-                    </td>
-                    <td className="text-center p-6 bg-primary/5">
-                      <Check className="w-5 h-5 text-success mx-auto" />
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border-strong/50">
-                    <td className="p-6">PDF export</td>
-                    <td className="text-center p-6">
-                      <Check className="w-5 h-5 text-success mx-auto" />
-                    </td>
-                    <td className="text-center p-6 bg-primary/5">
-                      <Check className="w-5 h-5 text-success mx-auto" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="p-6">Priority support</td>
-                    <td className="text-center p-6">
-                      <X className="w-5 h-5 text-subtle-foreground mx-auto" />
-                    </td>
-                    <td className="text-center p-6 bg-primary/5">
-                      <Check className="w-5 h-5 text-success mx-auto" />
-                    </td>
-                  </tr>
+                  {comparisonRows.map((row, i) => (
+                    <tr
+                      key={row.feature}
+                      className={i < comparisonRows.length - 1 ? 'border-b border-border-strong/50' : ''}
+                    >
+                      <td className="p-5 text-sm">{row.feature}</td>
+                      <td className="text-center p-5 text-sm">
+                        {typeof row.free === 'boolean' ? (
+                          row.free ? (
+                            <Check className="w-4.5 h-4.5 text-success mx-auto" aria-label="Included" />
+                          ) : (
+                            <X className="w-4.5 h-4.5 text-subtle-foreground mx-auto" aria-label="Not included" />
+                          )
+                        ) : (
+                          <span className="text-subtle-foreground">{row.free}</span>
+                        )}
+                      </td>
+                      <td className="text-center p-5 text-sm bg-coral-50/60 font-medium">
+                        {typeof row.premium === 'boolean' ? (
+                          row.premium ? (
+                            <Check className="w-4.5 h-4.5 text-success mx-auto" aria-label="Included" />
+                          ) : (
+                            <X className="w-4.5 h-4.5 text-subtle-foreground mx-auto" aria-label="Not included" />
+                          )
+                        ) : (
+                          row.premium
+                        )}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="py-24">
-          <div className="container mx-auto px-6 max-w-4xl">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Pricing FAQ</h2>
+        {/* FAQ */}
+        <section className="py-20">
+          <div className="container mx-auto px-6 max-w-3xl">
+            <div className="text-center mb-14">
+              <h2 className="text-display-md font-bold tracking-tight [text-wrap:balance]">Pricing FAQ</h2>
             </div>
 
-            <div className="space-y-4">
-              <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  Can I try MacroPlan for free?
-                  <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  Yes! Our Free plan lets you generate up to 3 batch prep plans with shopping lists included. It&apos;s a great way to experience MacroPlan before deciding to upgrade.
-                </p>
-              </details>
-
-              <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  What happens after I use my free batch prep plans?
-                  <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  Once you&apos;ve used your 3 free batch prep plans, you can still browse recipes, view your existing plans, and use all the basic features. To generate new prep plans, you&apos;ll need to upgrade to Premium.
-                </p>
-              </details>
-
-              <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  Can I cancel my subscription anytime?
-                  <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  Absolutely. You can cancel your Premium subscription at any time from your account settings. You'll continue to have access to Premium features until the end of your current billing period.
-                </p>
-              </details>
-
-              <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  Is there a money-back guarantee?
-                  <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  Yes! We offer a 7-day money-back guarantee. If you're not satisfied with Premium for any reason within the first 7 days, contact us and we'll issue a full refund.
-                </p>
-              </details>
-
-              <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  What payment methods do you accept?
-                  <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  We accept all major credit cards (Visa, MasterCard, American Express) through our secure payment processor, Stripe. We also support Apple Pay and Google Pay.
-                </p>
-              </details>
-
-              <details className="group bg-card p-6 rounded-xl border border-border-strong [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
-                  Can I switch between monthly and annual plans?
-                  <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180" />
-                </summary>
-                <p className="text-subtle-foreground mt-4 leading-relaxed">
-                  Yes! You can switch from monthly to annual billing at any time to save 33%. If you switch from annual to monthly, the change will take effect at the end of your current annual period.
-                </p>
-              </details>
+            <div className="space-y-3">
+              {faqs.map((faq) => (
+                <details
+                  key={faq.question}
+                  className="group bg-card p-6 rounded-xl border border-border-strong hover:shadow-md transition-shadow [&_summary::-webkit-details-marker]:hidden"
+                >
+                  <summary className="flex justify-between items-center gap-4 cursor-pointer font-semibold list-none">
+                    {faq.question}
+                    <ChevronDown
+                      className="w-5 h-5 text-icon transition-transform group-open:rotate-180 shrink-0"
+                      aria-hidden="true"
+                    />
+                  </summary>
+                  <p className="text-subtle-foreground mt-4 leading-relaxed [text-wrap:pretty]">{faq.answer}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* Dark statement / CTA band */}
         <section className="py-20">
           <div className="container mx-auto px-6">
-            <div className="bg-primary text-primary-foreground rounded-3xl p-10 md:p-20 text-center shadow-2xl shadow-primary/20 relative overflow-hidden">
-              {/* Subtle grid overlay */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none"
-              />
-              {/* Radial glow at bottom */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_110%,rgba(255,255,255,0.15),transparent_70%)] pointer-events-none"
-              />
+            <div className="relative overflow-hidden rounded-3xl bg-charcoal text-white p-10 md:p-20 text-center shadow-2xl">
+              <div className="grain-overlay" aria-hidden="true" />
+              <div className="premium-mesh" aria-hidden="true" />
 
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 relative z-10 [text-wrap:balance]">Ready to hit your macros?</h2>
-              <p className="text-lg md:text-xl text-primary-foreground/90 mb-10 max-w-2xl mx-auto relative z-10">
-                Cook once, eat all week. AI-generated batch prep plans that hit your exact macros.
-              </p>
-              <Link href="/onboarding/1" className="inline-block bg-white text-primary font-bold py-4 px-10 rounded-xl hover:bg-white/90 transition-colors shadow-lg relative z-10">
-                Start Free Today
-              </Link>
+              <div className="relative z-10">
+                <h2 className="text-display-lg font-bold tracking-tight mb-6 [text-wrap:balance]">
+                  Ready to hit your macros?
+                </h2>
+                <p className="text-lg text-white/70 mb-10 max-w-xl mx-auto [text-wrap:pretty]">
+                  Cook once, eat all week. Batch prep plans built around your exact macros.
+                </p>
+                <Link
+                  href="/onboarding/1"
+                  className="inline-flex items-center justify-center gap-2 bg-coral-600 text-white font-semibold py-4 px-10 rounded-xl hover:bg-coral-700 hover:shadow-coral active:scale-[0.97] transition-all"
+                >
+                  Start free today
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="py-12 bg-muted border-t border-border-strong">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground">© 2026 MacroPlan. All rights reserved.</p>
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
-              <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
-              <Link href="/help" className="hover:text-primary transition-colors">Help</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

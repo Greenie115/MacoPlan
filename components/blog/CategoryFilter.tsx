@@ -13,10 +13,11 @@ export function CategoryFilter({ categories, selectedCategory, onCategoryChange 
         <button
           key={category}
           onClick={() => onCategoryChange(category)}
-          className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all ${
+          aria-pressed={selectedCategory === category}
+          className={`rounded-full px-5 py-2 text-sm font-semibold transition-all duration-base ease-out-quint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
             selectedCategory === category
-              ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-              : 'bg-card text-foreground border border-border-strong hover:border-primary hover:text-primary'
+              ? 'bg-coral-600 text-white shadow-coral'
+              : 'border border-border-strong bg-coral-50 text-coral-700 hover:border-coral-200 hover:bg-coral-100'
           }`}
         >
           {category}

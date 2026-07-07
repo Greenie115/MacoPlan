@@ -6,15 +6,15 @@ interface AuthorBioProps {
 
 export function AuthorBio({ post }: AuthorBioProps) {
   return (
-    <div className="bg-muted/50 rounded-2xl border border-border-strong p-8 flex gap-6 items-start">
+    <div className="flex items-start gap-6 rounded-2xl border border-border-strong bg-muted/50 p-8">
       <img
         src={post.authorImage}
-        alt={post.author}
-        className="w-20 h-20 rounded-full flex-shrink-0"
+        alt=""
+        className="h-20 w-20 flex-shrink-0 rounded-full"
       />
       <div>
-        <h3 className="text-xl font-bold mb-1">{post.author}</h3>
-        <p className="text-subtle-foreground leading-relaxed">
+        <h3 className="mb-1 text-xl font-bold text-foreground [font-family:var(--font-display)]">{post.author}</h3>
+        <p className="leading-relaxed text-subtle-foreground">
           {post.authorBio}
         </p>
       </div>

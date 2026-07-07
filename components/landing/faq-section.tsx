@@ -30,18 +30,18 @@ export function FAQSection() {
     <section className="py-24 bg-background" id="faq">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Questions? We&apos;ve got answers.</h2>
+          <h2 className="text-display-lg font-extrabold tracking-tight [font-family:var(--font-display)] [text-wrap:balance]">Questions? We&apos;ve got answers.</h2>
         </div>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <details
               key={index}
-              className="group bg-card p-6 rounded-xl border border-border-strong hover:shadow-lg transition-shadow [&_summary::-webkit-details-marker]:hidden"
+              className="group bg-card p-6 rounded-xl border border-border-strong shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:shadow-lg hover:border-coral-200 [&_summary::-webkit-details-marker]:hidden"
             >
               <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
                 {faq.question}
-                <ChevronDown className="w-5 h-5 text-icon transition-transform group-open:rotate-180 flex-shrink-0 ml-4" />
+                <ChevronDown className="w-5 h-5 text-icon transition-transform duration-[var(--duration-base)] ease-out-quint group-open:rotate-180 flex-shrink-0 ml-4" />
               </summary>
               <p className="text-muted-foreground mt-4 leading-relaxed">
                 {faq.answer}
