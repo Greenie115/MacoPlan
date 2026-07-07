@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useSidebarStore } from '@/stores/sidebar-store'
 import { SidebarNav } from './sidebar-nav'
 import { BottomNav } from './bottom-nav'
 import { TopAppBar } from './top-app-bar'
 import { cn } from '@/lib/utils'
-import { createClient } from '@/lib/supabase/client'
 
 interface AppShellProps {
   children: React.ReactNode
+  userName: string
+  avatarUrl: string | null
 }
 
 /**
@@ -18,39 +18,14 @@ interface AppShellProps {
  *
  * Route protection lives in middleware — by the time this renders,
  * the user is authenticated and has completed onboarding.
+ *
+ * userName/avatarUrl come from the server layout (single fetch) instead of
+ * a mount-time client fetch.
+ * ponytail: no onAuthStateChange listener — profile edits already call
+ * revalidatePath, and a hard nav refreshes the server layout anyway.
  */
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children, userName, avatarUrl }: AppShellProps) {
   const { isCollapsed } = useSidebarStore()
-  const [userName, setUserName] = useState('User')
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
-
-  useEffect(() => {
-    const supabase = createClient()
-
-    async function loadProfile() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
-
-      const { data } = await supabase
-        .from('user_profiles')
-        .select('full_name, avatar_url')
-        .eq('user_id', user.id)
-        .single()
-
-      setUserName(data?.full_name || user.email?.split('@')[0] || 'User')
-      setAvatarUrl(data?.avatar_url ?? null)
-    }
-
-    loadProfile()
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
-        loadProfile()
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
 
   return (
     <div className="flex h-screen overflow-hidden">

@@ -77,6 +77,7 @@ export async function chatCompletion(
       'X-Title': 'MacroPlan Recipe Library',
     },
     body: JSON.stringify(body),
+    signal: AbortSignal.timeout(120_000),
   })
 
   if (!res.ok) {

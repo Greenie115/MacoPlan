@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { FAQSection } from '@/components/landing/faq-section'
 import { Footer } from '@/components/landing/footer'
-import { Logo } from '@/components/brand/logo'
+import { MarketingHeader } from '@/components/landing/marketing-header'
 import { SuccessStories } from '@/components/landing/success-stories'
 import { Reveal } from '@/components/landing/reveal'
 import { HeroPrepCard } from '@/components/landing/hero-prep-card'
@@ -145,36 +145,7 @@ export default function LandingPage() {
         dangerouslySetInnerHTML={{ __html: jsonLdScript }}
       />
       <div className={`${display.variable} min-h-screen bg-background text-foreground font-sans selection:bg-primary/30`}>
-        {/* ==================== HEADER ==================== */}
-        <header
-          className="fixed top-0 left-0 right-0 z-50 bg-charcoal/90 backdrop-blur-xl border-b border-white/10"
-          role="banner"
-        >
-          <div className="container mx-auto px-6">
-            <nav className="flex h-16 items-center justify-between" aria-label="Main navigation">
-              <Logo href="/" markSize={30} textClassName="text-xl font-bold tracking-tight text-white" />
-
-              <div className="hidden md:flex items-center gap-8 text-sm font-medium" role="navigation" aria-label="Page sections">
-                <Link href="/#how-it-works" className="text-white/60 hover:text-white transition-colors">How it works</Link>
-                <Link href="/pricing" className="text-white/60 hover:text-white transition-colors">Pricing</Link>
-                <Link href="/blog" className="text-white/60 hover:text-white transition-colors">Blog</Link>
-                <Link href="/#faq" className="text-white/60 hover:text-white transition-colors">FAQ</Link>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Link href="/login" className="hidden md:block text-sm font-medium text-white/60 hover:text-white transition-colors px-3 py-2">
-                  Log in
-                </Link>
-                <Link
-                  href="/signup"
-                  className="bg-primary hover:bg-primary/90 active:scale-[0.97] text-primary-foreground text-sm font-bold py-2.5 px-5 rounded-full transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-px"
-                >
-                  Start free
-                </Link>
-              </div>
-            </nav>
-          </div>
-        </header>
+        <MarketingHeader />
 
         <main role="main" id="main-content">
           {/* ==================== HERO (dark) ==================== */}

@@ -165,11 +165,12 @@ export class RecipeApiService {
       .single()
 
     if (cached) {
-      // Increment hit count
-      await supabase
+      // Increment hit count — fire-and-forget, don't block the hot read path
+      void supabase
         .from('recipe_api_search_cache')
         .update({ hit_count: cached.hit_count + 1 })
         .eq('id', cached.id)
+        .then(() => {}, () => {})
 
       // Fetch cached recipes
       const { data: recipes } = await supabase
@@ -272,13 +273,15 @@ export class RecipeApiService {
       cached?.cache_expires_at &&
       new Date(cached.cache_expires_at) > new Date()
     ) {
-      await supabase
+      // Fire-and-forget, don't block the hot read path
+      void supabase
         .from('recipe_api_cache')
         .update({
           fetch_count: cached.fetch_count + 1,
           last_accessed_at: new Date().toISOString(),
         })
         .eq('id', cached.id)
+        .then(() => {}, () => {})
 
       return this.convertCachedRecipe(cached)
     }

@@ -93,7 +93,6 @@ export async function createCheckoutSession(plan: PlanType): Promise<CheckoutRes
         ? { customer: customerId }
         : { customer_email: user.email || undefined }),
       mode: 'subscription',
-      payment_method_types: ['card'],
       line_items: [
         {
           price: priceId,

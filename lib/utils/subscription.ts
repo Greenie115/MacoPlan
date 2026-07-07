@@ -149,7 +149,7 @@ export async function checkMealPlanQuota(
     reason: allowed
       ? undefined
       : tier === 'free'
-        ? 'Free tier limit reached. Upgrade to generate unlimited meal plans.'
+        ? 'Free tier limit reached. Upgrade to generate 100 plans a month.'
         : 'Monthly generation limit reached. Please contact support if you need more.',
   }
 }

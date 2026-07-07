@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useDashboardStore } from '@/stores/dashboard-store'
 import { useDashboardData } from '@/lib/hooks/use-dashboard-data'
 import { useUserProfile } from '@/lib/hooks/use-user-profile'
@@ -16,7 +15,6 @@ import { toast } from 'sonner'
 import { localToday, type LoggedMeal, type DailyTotals } from '@/lib/types/meal-log'
 
 export default function DashboardPage() {
-  const router = useRouter()
   const dashboardStore = useDashboardStore()
   const { profile, loading: profileLoading, userName } = useUserProfile()
   const { macros, recentPlans } = useDashboardData({ profile })
@@ -60,12 +58,9 @@ export default function DashboardPage() {
     if (profileLoading || isInitialized) return
 
     async function initializeDashboard() {
-      // Gate on onboarding using the profile useUserProfile already fetched
-      // (no duplicate getUser()/user_profiles round-trip)
-      if (!profile || !profile.onboarding_completed) {
-        router.replace('/onboarding/1')
-        return
-      }
+      // ponytail: no client-side onboarding redirect — proxy.ts already
+      // enforces this server-side for all protected routes.
+      if (!profile) return
 
       // Fire independent reads in parallel instead of one-after-another
       const [plansResult] = await Promise.all([
