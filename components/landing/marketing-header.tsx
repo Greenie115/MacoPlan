@@ -17,19 +17,19 @@ export function MarketingHeader() {
           <Logo href="/" markSize={30} textClassName="text-xl font-bold tracking-tight text-white" />
 
           <div className="hidden md:flex items-center gap-8 text-sm font-medium" role="navigation" aria-label="Page sections">
-            <Link href="/#how-it-works" className="text-white/60 hover:text-white transition-colors">How it works</Link>
-            <Link href="/pricing" className="text-white/60 hover:text-white transition-colors">Pricing</Link>
-            <Link href="/blog" className="text-white/60 hover:text-white transition-colors">Blog</Link>
-            <Link href="/#faq" className="text-white/60 hover:text-white transition-colors">FAQ</Link>
+            <Link href="/#how-it-works" className="text-white/60 hover:text-white transition-colors duration-[var(--duration-base)] ease-out-quint">How it works</Link>
+            <Link href="/pricing" className="text-white/60 hover:text-white transition-colors duration-[var(--duration-base)] ease-out-quint">Pricing</Link>
+            <Link href="/blog" className="text-white/60 hover:text-white transition-colors duration-[var(--duration-base)] ease-out-quint">Blog</Link>
+            <Link href="/#faq" className="text-white/60 hover:text-white transition-colors duration-[var(--duration-base)] ease-out-quint">FAQ</Link>
           </div>
 
           <div className="flex items-center gap-3">
-            <Link href="/login" className="hidden md:block text-sm font-medium text-white/60 hover:text-white transition-colors px-3 py-2">
+            <Link href="/login" className="hidden md:block text-sm font-medium text-white/60 hover:text-white transition-colors duration-[var(--duration-base)] ease-out-quint px-3 py-2">
               Log in
             </Link>
             <Link
               href="/signup"
-              className="bg-primary hover:bg-primary/90 active:scale-[0.97] text-primary-foreground text-sm font-bold py-2.5 px-5 rounded-full transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-px"
+              className="bg-coral-600 hover:bg-coral-700 active:scale-[0.97] text-primary-foreground text-sm font-bold py-2.5 px-5 rounded-full transition-all duration-[var(--duration-base)] ease-out-quint shadow-md hover:shadow-coral hover:-translate-y-px"
             >
               Start free
             </Link>

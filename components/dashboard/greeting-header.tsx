@@ -26,13 +26,11 @@ export function GreetingHeader({
 
   return (
     <div className="pb-2">
-      <h1 className="text-2xl md:text-3xl font-bold leading-tight tracking-[-0.015em] text-foreground">
-        {greeting} 👋
+      <h1 className="text-2xl font-bold leading-tight tracking-[-0.015em] text-foreground">
+        {greeting}
       </h1>
       {subline && (
-        <p className="mt-1 text-sm text-muted-foreground animate-in fade-in duration-500">
-          {subline}
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{subline}</p>
       )}
     </div>
   )

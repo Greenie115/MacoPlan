@@ -153,15 +153,10 @@ export default function LandingPage() {
             className="relative overflow-hidden bg-charcoal text-white pt-28 pb-20 md:pt-36 md:pb-24"
             aria-labelledby="hero-heading"
           >
-            {/* Atmosphere: coral glow + faint grid */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_75%_15%,rgba(255,107,92,0.16),transparent_65%)]"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:56px_56px]"
-            />
+            {/* Atmosphere: tokenized mesh glow + grid + grain */}
+            <div aria-hidden="true" className="premium-mesh" />
+            <div aria-hidden="true" className="premium-grid" />
+            <div aria-hidden="true" className="grain-overlay" />
 
             <div className="container mx-auto px-6 relative">
               <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-16 lg:gap-12 items-center">
@@ -177,7 +172,7 @@ export default function LandingPage() {
 
                   <h1
                     id="hero-heading"
-                    className="landing-rise mt-6 text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[0.98] tracking-tight [font-family:var(--font-display)] [text-wrap:balance]"
+                    className="landing-rise mt-6 text-display-2xl font-extrabold leading-[0.98] tracking-tight [font-family:var(--font-display)] [text-wrap:balance]"
                     style={{ animationDelay: '0.15s' }}
                   >
                     Cook once.
@@ -199,14 +194,14 @@ export default function LandingPage() {
                   >
                     <Link
                       href="/onboarding/1"
-                      className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 active:scale-[0.97] text-primary-foreground font-bold py-4 px-8 rounded-full transition-all shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 text-base"
+                      className="inline-flex items-center gap-2 bg-coral-600 hover:bg-coral-700 active:scale-[0.97] text-primary-foreground font-bold py-4 px-8 rounded-full transition-all duration-[var(--duration-base)] ease-out-quint shadow-xl shadow-charcoal/40 hover:shadow-coral hover:-translate-y-0.5 text-base"
                     >
                       <span>Generate my prep plan — free</span>
                       <ArrowRight className="w-5 h-5" aria-hidden="true" />
                     </Link>
                     <Link
                       href="/#how-it-works"
-                      className="inline-flex items-center gap-2 text-white/70 hover:text-white font-semibold py-4 px-4 transition-colors"
+                      className="inline-flex items-center gap-2 text-white/70 hover:text-white font-semibold py-4 px-4 transition-colors duration-[var(--duration-base)] ease-out-quint"
                     >
                       <span>See how it works</span>
                       <ArrowDown className="w-4 h-4" aria-hidden="true" />
@@ -250,8 +245,7 @@ export default function LandingPage() {
           <section className="py-24 md:py-32" id="how-it-works" aria-labelledby="how-heading">
             <div className="container mx-auto px-6 max-w-6xl">
               <Reveal className="max-w-2xl mb-16">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-3">How it works</p>
-                <h2 id="how-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight [font-family:var(--font-display)] [text-wrap:balance]">
+                <h2 id="how-heading" className="text-display-xl font-extrabold tracking-tight [font-family:var(--font-display)] [text-wrap:balance]">
                   Three steps to a stocked fridge.
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
@@ -272,7 +266,7 @@ export default function LandingPage() {
                           {step.number}
                         </div>
                         {/* Content */}
-                        <div className="flex-1 bg-card border border-border-strong rounded-2xl p-6 transition-all hover:shadow-lg hover:shadow-primary/8 hover:border-primary/20">
+                        <div className="flex-1 bg-card border border-border-strong rounded-2xl p-6 shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:shadow-lg hover:-translate-y-0.5 hover:border-coral-200">
                           <div className="flex items-center gap-3 mb-2">
                             <step.icon className="w-5 h-5 text-primary" aria-hidden="true" />
                             <h3 className="text-lg font-bold [font-family:var(--font-display)]">{step.title}</h3>
@@ -292,13 +286,11 @@ export default function LandingPage() {
             <div className="container mx-auto px-6 max-w-6xl">
               {/* Statement card */}
               <Reveal>
-                <div className="relative overflow-hidden bg-charcoal text-white rounded-3xl px-8 py-14 md:px-16 md:py-20 text-center">
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_50%_120%,rgba(255,107,92,0.22),transparent_70%)]"
-                  />
+                <div className="relative overflow-hidden bg-charcoal text-white rounded-3xl px-8 py-14 md:px-16 md:py-20 text-center shadow-xl">
+                  <div aria-hidden="true" className="premium-mesh" />
+                  <div aria-hidden="true" className="grain-overlay" />
                   <div className="relative max-w-3xl mx-auto">
-                    <h2 id="diff-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.08] [font-family:var(--font-display)] [text-wrap:balance]">
+                    <h2 id="diff-heading" className="text-display-lg font-extrabold tracking-tight leading-[1.08] [font-family:var(--font-display)] [text-wrap:balance]">
                       Other apps plan 28 different meals.{' '}
                       <span className="text-primary">You&apos;re cooking on Sunday.</span>
                     </h2>
@@ -310,16 +302,32 @@ export default function LandingPage() {
                 </div>
               </Reveal>
 
-              {/* Feature grid — 2×2 with breathing room */}
+              {/* Feature grid — lead card wider (the core differentiator), rest fall in behind it */}
               <div className="grid sm:grid-cols-2 gap-5 mt-6">
                 {FEATURES.map((feature, i) => (
-                  <Reveal key={feature.title} delay={i * 0.08}>
-                    <div className="h-full bg-card border border-border-strong rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/8 hover:border-primary/25 group">
-                      <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mb-4 transition-colors group-hover:bg-primary/15">
-                        <feature.icon className="w-5 h-5 text-primary" aria-hidden="true" />
+                  <Reveal
+                    key={feature.title}
+                    delay={i * 0.08}
+                    className={i === 0 ? 'sm:col-span-2' : undefined}
+                  >
+                    <div
+                      className={`h-full bg-card border border-border-strong rounded-2xl shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:-translate-y-0.5 hover:shadow-lg hover:border-coral-200 group ${
+                        i === 0 ? 'p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5' : 'p-6'
+                      }`}
+                    >
+                      <div
+                        className={`shrink-0 bg-primary/10 rounded-xl flex items-center justify-center transition-colors group-hover:bg-primary/15 ${
+                          i === 0 ? 'w-14 h-14' : 'w-11 h-11 mb-4'
+                        }`}
+                      >
+                        <feature.icon className={i === 0 ? 'w-7 h-7 text-primary' : 'w-5 h-5 text-primary'} aria-hidden="true" />
                       </div>
-                      <h3 className="text-base font-bold mb-2 [font-family:var(--font-display)]">{feature.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{feature.copy}</p>
+                      <div>
+                        <h3 className={`font-bold mb-2 [font-family:var(--font-display)] ${i === 0 ? 'text-lg' : 'text-base'}`}>
+                          {feature.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{feature.copy}</p>
+                      </div>
                     </div>
                   </Reveal>
                 ))}
@@ -334,13 +342,13 @@ export default function LandingPage() {
           <section className="py-24 md:py-28" aria-labelledby="cta-heading">
             <div className="container mx-auto px-6 max-w-6xl">
               <Reveal>
-                <div className="relative overflow-hidden bg-primary text-primary-foreground rounded-3xl px-8 py-16 md:px-16 md:py-20 text-center">
+                <div className="relative overflow-hidden bg-primary text-primary-foreground rounded-3xl px-8 py-16 md:px-16 md:py-20 text-center shadow-xl">
                   <div
                     aria-hidden="true"
                     className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:48px_48px]"
                   />
                   <div className="relative max-w-2xl mx-auto">
-                    <h2 id="cta-heading" className="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.05] [font-family:var(--font-display)] [text-wrap:balance]">
+                    <h2 id="cta-heading" className="text-display-lg font-extrabold tracking-tight leading-[1.05] [font-family:var(--font-display)] [text-wrap:balance]">
                       Your next prep day is already planned.
                     </h2>
                     <p className="mt-5 text-lg text-white/85">
@@ -349,7 +357,7 @@ export default function LandingPage() {
                     </p>
                     <Link
                       href="/signup"
-                      className="mt-9 inline-flex items-center gap-2 bg-charcoal text-white hover:bg-charcoal/90 active:scale-[0.97] font-bold py-4 px-9 rounded-full transition-all shadow-xl shadow-charcoal/30 hover:-translate-y-0.5"
+                      className="mt-9 inline-flex items-center gap-2 bg-charcoal text-white hover:bg-charcoal/90 active:scale-[0.97] font-bold py-4 px-9 rounded-full transition-all duration-[var(--duration-base)] ease-out-quint shadow-xl shadow-charcoal/30 hover:-translate-y-0.5"
                     >
                       <span>Start for free</span>
                       <ArrowRight className="w-5 h-5" aria-hidden="true" />

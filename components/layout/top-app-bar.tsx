@@ -18,14 +18,17 @@ export function TopAppBar({ userName, avatarUrl }: TopAppBarProps) {
         </h2>
       </div>
 
-      <div className="flex flex-1 items-center justify-end gap-3">
-        <button className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-icon hover:bg-accent transition-colors">
+      <div className="flex flex-1 items-center justify-end gap-2">
+        <button
+          className="flex h-10 w-10 items-center justify-center rounded-full text-icon transition-colors duration-150 hover:bg-accent hover:text-foreground"
+          aria-label="Notifications"
+        >
           <Bell className="size-5" />
         </button>
         {/* User Avatar - Link to Profile */}
         <Link
           href="/profile"
-          className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 relative overflow-hidden border-2 border-border-strong"
+          className="relative aspect-square size-9 shrink-0 overflow-hidden rounded-full border-2 border-border-strong transition-colors duration-150 hover:border-coral-300"
           aria-label="Go to profile"
         >
           {avatarUrl ? (

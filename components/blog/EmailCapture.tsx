@@ -11,32 +11,36 @@ export function EmailCapture() {
   }
 
   return (
-    <section className="py-16 bg-muted/50">
-      <div className="container mx-auto px-6 max-w-3xl">
-        <div className="bg-card rounded-2xl border border-border-strong shadow-lg p-8 md:p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Get weekly macro tips & recipes
+    <section className="bg-muted/50 py-16">
+      <div className="container mx-auto max-w-3xl px-6">
+        <div className="rounded-2xl border border-border-strong bg-card p-8 text-center shadow-md md:p-12">
+          <h2 className="text-2xl font-bold text-foreground [font-family:var(--font-display)] md:text-3xl">
+            Get weekly macro tips &amp; recipes
           </h2>
-          <p className="text-subtle-foreground text-lg mb-8">
+          <p className="mb-8 mt-4 text-lg text-subtle-foreground">
             Join thousands of subscribers getting expert nutrition advice delivered to their inbox.
           </p>
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+          <form onSubmit={handleSubmit} className="mx-auto flex max-w-lg flex-col gap-4 sm:flex-row">
+            <label htmlFor="capture-email" className="sr-only">
+              Email address
+            </label>
             <input
+              id="capture-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="flex-grow px-5 py-3.5 rounded-xl border border-border-strong bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="flex-grow rounded-xl border border-border-strong bg-background px-5 py-3.5 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <button
               type="submit"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-3.5 rounded-xl transition-colors shadow-lg shadow-primary/25 hover:shadow-primary/40"
+              className="rounded-xl bg-primary px-8 py-3.5 font-semibold text-primary-foreground shadow-coral transition-all duration-base ease-out-quint hover:-translate-y-0.5 active:scale-[0.97]"
             >
               Subscribe
             </button>
           </form>
-          <p className="text-xs text-muted-foreground mt-4">
+          <p className="mt-4 text-xs text-muted-foreground">
             No spam. Unsubscribe anytime.
           </p>
         </div>

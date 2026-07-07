@@ -10,31 +10,39 @@ export function FeaturedPost({ post }: FeaturedPostProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group grid md:grid-cols-2 gap-8 bg-card rounded-2xl border border-border-strong shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+      className="group grid overflow-hidden rounded-2xl border border-border-strong bg-card shadow-md transition-all duration-base ease-out-quint hover:-translate-y-0.5 hover:shadow-xl focus-visible:-translate-y-0.5 focus-visible:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:grid-cols-2"
     >
-      <div className="relative aspect-video overflow-hidden">
+      <div className="relative aspect-video overflow-hidden bg-muted md:aspect-auto">
         <img
           src={post.image}
           alt={post.title}
-          loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="eager"
+          className="h-full w-full object-cover transition-transform duration-slow ease-out-quint group-hover:scale-105"
         />
       </div>
-      <div className="p-8 md:p-12 flex flex-col justify-center">
-        <div className="inline-block w-fit text-xs font-bold text-primary-foreground bg-primary px-3 py-1.5 rounded-full mb-4 uppercase tracking-wider">
-          Featured
+      <div className="flex flex-col justify-center p-8 md:p-12">
+        <div className="flex items-center gap-3">
+          <span className="w-fit rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground">
+            Featured
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-coral-700">
+            {post.category}
+          </span>
         </div>
-        <div className="text-xs font-semibold text-primary mb-3 uppercase tracking-wider">
-          {post.category}
-        </div>
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-primary transition-colors">
+        <h2 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight text-foreground [font-family:var(--font-display)] [text-wrap:balance] md:text-3xl lg:text-display-md">
           {post.title}
         </h2>
-        <p className="text-subtle-foreground text-lg mb-6 line-clamp-3">
+        <p className="mt-4 text-base leading-relaxed text-subtle-foreground line-clamp-3 md:text-lg">
           {post.excerpt}
         </p>
-        <div className="flex items-center gap-2 font-semibold text-primary">
-          Read more <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+        <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
+          <span>{post.date}</span>
+          <span aria-hidden="true">&middot;</span>
+          <span>{post.readTime}</span>
+        </div>
+        <div className="mt-6 flex items-center gap-2 font-semibold text-coral-700">
+          Read the story
+          <ArrowRight className="h-5 w-5 transition-transform duration-base ease-out-quint group-hover:translate-x-1" aria-hidden="true" />
         </div>
       </div>
     </Link>

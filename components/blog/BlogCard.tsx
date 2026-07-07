@@ -10,28 +10,32 @@ export function BlogCard({ post }: BlogCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group bg-card text-card-foreground rounded-2xl shadow-lg border border-border-strong overflow-hidden flex flex-col hover:shadow-xl transition-shadow"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-border-strong bg-card shadow-sm transition-all duration-base ease-out-quint hover:-translate-y-0.5 hover:border-coral-200 hover:shadow-lg focus-visible:-translate-y-0.5 focus-visible:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
-      <div className="relative aspect-video w-full overflow-hidden">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
         <img
           src={post.image}
           alt={post.title}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-slow ease-out-quint group-hover:scale-105"
         />
       </div>
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="text-xs font-semibold text-primary mb-2 uppercase tracking-wider">
+      <div className="flex flex-grow flex-col p-6">
+        <span className="w-fit rounded-full bg-coral-50 px-3 py-1 text-xs font-semibold text-coral-700">
           {post.category}
-        </div>
-        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+        </span>
+        <h3 className="mt-3 text-lg font-bold leading-snug tracking-tight text-foreground [font-family:var(--font-display)] group-hover:text-coral-700">
           {post.title}
         </h3>
-        <p className="text-subtle-foreground flex-grow line-clamp-3">
+        <p className="mt-2 flex-grow text-sm leading-relaxed text-subtle-foreground line-clamp-3">
           {post.excerpt}
         </p>
-        <div className="mt-4 font-semibold text-primary flex items-center gap-1">
-          Read more <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        <div className="mt-5 flex items-center justify-between border-t border-border-strong pt-4 text-xs text-muted-foreground">
+          <span>{post.date}</span>
+          <span className="flex items-center gap-1 font-semibold text-coral-700">
+            {post.readTime}
+            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-base ease-out-quint group-hover:translate-x-0.5" aria-hidden="true" />
+          </span>
         </div>
       </div>
     </Link>

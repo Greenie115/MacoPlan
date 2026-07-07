@@ -35,7 +35,7 @@ export function AppShell({ children, userName, avatarUrl }: AppShellProps) {
       <main
         id="main-content"
         className={cn(
-          'flex-1 overflow-auto transition-all duration-300 ease-in-out',
+          'flex-1 overflow-auto bg-background transition-[padding] duration-200 ease-out-quint',
           // Bottom padding on mobile for the bottom nav
           'pb-16 lg:pb-0',
           isCollapsed ? 'lg:pl-20' : 'lg:pl-64'
