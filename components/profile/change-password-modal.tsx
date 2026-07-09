@@ -89,7 +89,7 @@ export function ChangePasswordModal({ open, onOpenChange }: ChangePasswordModalP
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           {error && (
-            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-lg">{error}</div>
+            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-xl">{error}</div>
           )}
 
           <div className="space-y-2">
@@ -108,7 +108,7 @@ export function ChangePasswordModal({ open, onOpenChange }: ChangePasswordModalP
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors duration-150"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
@@ -130,7 +130,7 @@ export function ChangePasswordModal({ open, onOpenChange }: ChangePasswordModalP
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors duration-150"
               >
                 {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>

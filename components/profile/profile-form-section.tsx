@@ -13,7 +13,7 @@ export function ProfileFormSection({ title, description, children, className }: 
       <div className="px-4">
         <h3 className="text-lg font-bold text-foreground mb-1">{title}</h3>
         {description && <p className="text-sm text-muted-foreground mb-3">{description}</p>}
-        <div className="bg-card p-4 rounded-2xl shadow-sm border border-border-strong">
+        <div className="bg-card p-5 md:p-6 rounded-2xl shadow-sm border border-border-strong">
           {children}
         </div>
       </div>

@@ -39,9 +39,9 @@ export function MacroWarningModal({ open, onOpenChange, onRecalculate }: MacroWa
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <div className="flex items-center gap-2">
-            <div className="rounded-full bg-amber-100 p-2 dark:bg-amber-900/20">
-              <Calculator className="h-5 w-5 text-amber-600 dark:text-amber-500" />
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-warning-50 p-2 dark:bg-warning-500/15">
+              <Calculator className="h-5 w-5 text-warning-500" />
             </div>
             <AlertDialogTitle>Recalculate Your Macros?</AlertDialogTitle>
           </div>
@@ -54,7 +54,7 @@ export function MacroWarningModal({ open, onOpenChange, onRecalculate }: MacroWa
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={recalculating}>Later</AlertDialogCancel>
-          <AlertDialogAction onClick={handleRecalculate} disabled={recalculating} className="bg-primary">
+          <AlertDialogAction onClick={handleRecalculate} disabled={recalculating}>
             {recalculating ? 'Recalculating...' : 'Recalculate Now'}
           </AlertDialogAction>
         </AlertDialogFooter>

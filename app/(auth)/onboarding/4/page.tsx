@@ -5,12 +5,21 @@ import { useRouter } from 'next/navigation'
 import { useOnboardingStore, type DietaryStyle, type Allergy } from '@/stores/onboarding-store'
 import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
-import { Card } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+/** Shared chip classes for the dietary-style and allergy toggle groups. */
+function chipClass(isSelected: boolean) {
+  return cn(
+    'inline-flex h-11 items-center gap-1.5 rounded-full border-2 px-4 text-sm font-medium transition-all duration-[var(--duration-fast)] ease-out-quint',
+    isSelected
+      ? 'border-primary bg-primary/10 text-foreground'
+      : 'border-border-strong text-foreground hover:border-primary/40'
+  )
+}
 
 const DIETARY_STYLES = [
   { id: 'none' as DietaryStyle, emoji: '🍽️', label: 'None / Flexible' },
@@ -136,65 +145,45 @@ export default function DietaryPreferencesPage() {
         {/* Dietary Style */}
         <div className="space-y-3">
           <Label className="text-base font-semibold">Dietary Style</Label>
-          <div className="flex flex-col gap-3">
-            {DIETARY_STYLES.map((style) => (
-              <Card
-                key={style.id}
-                className={cn(
-                  'flex items-center gap-4 p-4 cursor-pointer transition-all',
-                  'border-2',
-                  localDietaryStyle === style.id
-                    ? 'border-primary bg-primary text-white'
-                    : 'border-border hover:border-primary/50'
-                )}
-                onClick={() => setLocalDietaryStyle(style.id)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    setLocalDietaryStyle(style.id)
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-pressed={localDietaryStyle === style.id}
-                aria-label={style.label}
-              >
-                <span className="text-2xl">{style.emoji}</span>
-                <p className={cn(
-                  "flex-1 text-base font-medium",
-                  localDietaryStyle === style.id ? "text-white" : "text-foreground"
-                )}>
+          <div className="flex flex-wrap gap-2">
+            {DIETARY_STYLES.map((style) => {
+              const isSelected = localDietaryStyle === style.id
+              return (
+                <button
+                  key={style.id}
+                  type="button"
+                  onClick={() => setLocalDietaryStyle(style.id)}
+                  aria-pressed={isSelected}
+                  className={chipClass(isSelected)}
+                >
+                  <span aria-hidden="true">{style.emoji}</span>
                   {style.label}
-                </p>
-                {localDietaryStyle === style.id && (
-                  <div className="flex items-center justify-center size-6 rounded-full bg-white text-primary">
-                    <Check className="size-4" />
-                  </div>
-                )}
-              </Card>
-            ))}
+                  {isSelected && <Check className="size-3.5 text-primary" aria-hidden="true" />}
+                </button>
+              )
+            })}
           </div>
         </div>
 
         {/* Common Allergies */}
         <div className="space-y-3">
           <Label className="text-base font-semibold">Common Allergies</Label>
-          <div className="flex flex-col gap-2">
-            {ALLERGIES.map((allergy) => (
-              <div key={allergy.id} className="flex items-center gap-3 p-2">
-                <Checkbox
-                  id={allergy.id}
-                  checked={localAllergies.includes(allergy.id)}
-                  onCheckedChange={() => toggleAllergy(allergy.id)}
-                />
-                <label
-                  htmlFor={allergy.id}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer flex-1"
+          <div className="flex flex-wrap gap-2">
+            {ALLERGIES.map((allergy) => {
+              const isSelected = localAllergies.includes(allergy.id)
+              return (
+                <button
+                  key={allergy.id}
+                  type="button"
+                  onClick={() => toggleAllergy(allergy.id)}
+                  aria-pressed={isSelected}
+                  className={chipClass(isSelected)}
                 >
+                  {isSelected && <Check className="size-3.5 text-primary" aria-hidden="true" />}
                   {allergy.label}
-                </label>
-              </div>
-            ))}
+                </button>
+              )
+            })}
           </div>
         </div>
 

@@ -141,14 +141,6 @@ export function RecipeInfiniteScroll({
     return () => observer.disconnect()
   }, [loadMore, hasMore])
 
-  if (recipes.length === 0) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-12 text-center">
-        <p className="text-muted-foreground">No recipes found.</p>
-      </div>
-    )
-  }
-
   return (
     <div>
       <RecipeGrid recipes={recipes} favoriteIds={favoriteIds} />
@@ -162,8 +154,8 @@ export function RecipeInfiniteScroll({
       {/* Sentinel — sits below the grid, triggers next page */}
       {hasMore && !loading && <div ref={sentinelRef} className="h-2" />}
 
-      {!hasMore && (
-        <p className="text-center text-muted-foreground py-8 text-sm">
+      {!hasMore && recipes.length > 0 && (
+        <p className="text-center text-muted-foreground py-8 text-sm tabular-nums">
           All {recipes.length} recipes loaded
         </p>
       )}

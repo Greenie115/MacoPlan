@@ -12,6 +12,7 @@ import {
   regenerateBackupCodes,
 } from '@/app/actions/two-factor'
 import { toast } from 'sonner'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface TwoFactorSetupProps {
   className?: string
@@ -38,6 +39,7 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
   const [error, setError] = useState<string | null>(null)
   const [actionLoading, setActionLoading] = useState(false)
   const [copiedSecret, setCopiedSecret] = useState(false)
+  const [copiedBackupCodes, setCopiedBackupCodes] = useState(false)
 
   // Fetch current 2FA status
   useEffect(() => {
@@ -169,15 +171,23 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
 
   const copyBackupCodes = async () => {
     await navigator.clipboard.writeText(backupCodes.join('\n'))
+    setCopiedBackupCodes(true)
+    toast.success('Backup codes copied')
+    setTimeout(() => setCopiedBackupCodes(false), 2000)
   }
 
   if (loading) {
     return (
-      <div className={`bg-card rounded-2xl border border-border-strong p-6 ${className}`}>
-        <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-muted rounded w-1/3"></div>
-          <div className="h-4 bg-muted rounded w-2/3"></div>
+      <div className={`bg-card rounded-2xl border border-border-strong p-6 space-y-4 ${className}`}>
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-10 w-10 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-48" />
+            <Skeleton className="h-4 w-64" />
+          </div>
         </div>
+        <Skeleton className="h-20 w-full rounded-xl" />
+        <Skeleton className="h-20 w-full rounded-xl" />
       </div>
     )
   }
@@ -204,12 +214,12 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
 
       {/* Backup Codes Modal */}
       {showBackupCodes && backupCodes.length > 0 && (
-        <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+        <div className="mb-6 p-4 bg-warning-50 dark:bg-warning-500/10 border border-warning-500/30 rounded-xl">
           <div className="flex items-start gap-2 mb-3">
-            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+            <AlertTriangle className="w-5 h-5 text-warning-500 flex-shrink-0" />
             <div>
-              <p className="font-medium text-amber-800 dark:text-amber-200">Save Your Backup Codes</p>
-              <p className="text-sm text-amber-700 dark:text-amber-300">
+              <p className="font-medium text-warning-700 dark:text-warning-500">Save Your Backup Codes</p>
+              <p className="text-sm text-warning-700/80 dark:text-muted-foreground">
                 Store these codes in a safe place. You can use them to sign in if you lose access to your authenticator app.
               </p>
             </div>
@@ -218,7 +228,7 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
             {backupCodes.map((code, index) => (
               <code
                 key={index}
-                className="text-sm font-mono bg-white dark:bg-gray-800 px-3 py-2 rounded border border-amber-200 dark:border-amber-800"
+                className="text-sm font-mono tabular-nums bg-card px-3 py-2 rounded-lg border border-warning-500/30"
               >
                 {code}
               </code>
@@ -227,13 +237,14 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
           <div className="flex gap-2">
             <button
               onClick={copyBackupCodes}
-              className="flex-1 py-2 px-4 text-sm font-medium bg-amber-100 dark:bg-amber-800 text-amber-800 dark:text-amber-100 rounded-xl hover:bg-amber-200 dark:hover:bg-amber-700 transition-colors"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-4 text-sm font-medium bg-card text-warning-700 dark:text-warning-500 border border-warning-500/30 rounded-xl hover:bg-warning-500/10 transition-colors duration-150"
             >
-              Copy All Codes
+              {copiedBackupCodes ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copiedBackupCodes ? 'Copied' : 'Copy All Codes'}
             </button>
             <button
               onClick={() => setShowBackupCodes(false)}
-              className="flex-1 py-2 px-4 text-sm font-medium bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors"
+              className="flex-1 py-2 px-4 text-sm font-semibold bg-coral-600 text-primary-foreground rounded-xl hover:bg-coral-700 hover:shadow-coral transition-all duration-150"
             >
               I&apos;ve Saved Them
             </button>
@@ -249,7 +260,7 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
               Scan this QR code with your authenticator app
             </p>
             {qrCode && (
-              <div className="inline-block p-4 bg-white rounded-xl">
+              <div className="inline-block p-4 bg-white rounded-xl border border-border-strong shadow-sm">
                 <img src={qrCode} alt="QR Code" className="w-48 h-48" />
               </div>
             )}
@@ -264,10 +275,11 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
                 <code className="flex-1 text-sm font-mono break-all">{secret}</code>
                 <button
                   onClick={copySecret}
-                  className="p-2 hover:bg-accent rounded-lg transition-colors"
+                  className="p-2 hover:bg-accent rounded-lg transition-colors duration-150"
+                  aria-label="Copy secret key"
                 >
                   {copiedSecret ? (
-                    <Check className="w-4 h-4 text-green-500" />
+                    <Check className="w-4 h-4 text-success" />
                   ) : (
                     <Copy className="w-4 h-4 text-muted-foreground" />
                   )}
@@ -287,7 +299,7 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
               value={verificationCode}
               onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
               placeholder="000000"
-              className="w-full px-4 py-3 text-center text-2xl font-mono tracking-widest border-2 border-border-strong rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-foreground"
+              className="w-full px-4 py-3 text-center text-2xl font-mono tabular-nums tracking-widest border-2 border-border-strong rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-foreground transition-colors duration-150"
             />
           </div>
 
@@ -299,14 +311,14 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
                 setSecret(null)
                 setVerificationCode('')
               }}
-              className="flex-1 py-3 px-4 text-sm font-medium border border-border-strong rounded-xl hover:bg-accent transition-colors"
+              className="flex-1 py-3 px-4 text-sm font-medium border border-border-strong rounded-xl hover:bg-accent transition-colors duration-150"
             >
               Cancel
             </button>
             <button
               onClick={handleVerifyTOTP}
               disabled={actionLoading || verificationCode.length !== 6}
-              className="flex-1 py-3 px-4 text-sm font-semibold text-white bg-primary rounded-xl hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              className="flex-1 py-3 px-4 text-sm font-semibold text-primary-foreground bg-coral-600 rounded-xl hover:bg-coral-700 hover:shadow-coral disabled:opacity-50 disabled:hover:shadow-none transition-all duration-150"
             >
               {actionLoading ? 'Verifying...' : 'Verify & Enable'}
             </button>
@@ -333,7 +345,7 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
                 <button
                   onClick={() => handleDisable2FA('totp')}
                   disabled={actionLoading}
-                  className="px-4 py-2 text-sm font-medium text-destructive border border-destructive/30 rounded-xl hover:bg-destructive/10 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-destructive border border-destructive/30 rounded-xl hover:bg-destructive/10 transition-colors duration-150 disabled:opacity-50"
                 >
                   Disable
                 </button>
@@ -341,7 +353,7 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
                 <button
                   onClick={handleStartTOTPSetup}
                   disabled={actionLoading}
-                  className="px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-xl hover:bg-primary/10 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-xl hover:bg-primary/10 transition-colors duration-150 disabled:opacity-50"
                 >
                   Enable
                 </button>
@@ -349,13 +361,13 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
             </div>
             {status.methods.totp && status.backupCodesRemaining !== undefined && (
               <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground tabular-nums">
                   {status.backupCodesRemaining} backup codes remaining
                 </span>
                 <button
                   onClick={handleRegenerateBackupCodes}
                   disabled={actionLoading}
-                  className="flex items-center gap-1 text-sm text-primary hover:text-primary/90"
+                  className="flex items-center gap-1 text-sm text-primary hover:text-primary/90 transition-colors duration-150 disabled:opacity-50"
                 >
                   <RefreshCw className="w-3 h-3" />
                   Regenerate
@@ -388,7 +400,7 @@ export function TwoFactorSetup({ className }: TwoFactorSetupProps) {
                 <button
                   onClick={handleEnableEmail2FA}
                   disabled={actionLoading}
-                  className="px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-xl hover:bg-primary/10 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-xl hover:bg-primary/10 transition-colors duration-150 disabled:opacity-50"
                 >
                   Enable
                 </button>

@@ -17,6 +17,7 @@ import { updateProfileField, updateEmail, recalculateMacros } from '@/app/action
 import { toast } from 'sonner'
 import { ArrowLeft, Check, Loader2, Mail, Calculator } from 'lucide-react'
 import { debounce } from '@/lib/utils/debounce'
+import { Skeleton } from '@/components/ui/skeleton'
 
 // Spacing between labels and inputs - adjust this value to change all label margins
 const LABEL_SPACING = 'mb-3'
@@ -199,9 +200,26 @@ export default function EditProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background pb-24">
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
+        <main className="max-w-3xl mx-auto">
+          <div className="px-4 pt-6 pb-4 space-y-3">
+            <Skeleton className="h-5 w-32" />
+            <Skeleton className="h-9 w-56" />
+            <Skeleton className="h-5 w-72" />
+          </div>
+          <div className="px-4 pb-2">
+            <Skeleton className="h-12 w-full rounded-xl" />
+          </div>
+          <div className="px-4 pt-2"><div className="h-px bg-border-strong w-full"></div></div>
+          <div className="space-y-6 pb-6 pt-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="px-4 space-y-2">
+                <Skeleton className="h-5 w-40" />
+                <Skeleton className="h-4 w-56" />
+                <Skeleton className="h-24 w-full rounded-2xl" />
+              </div>
+            ))}
+          </div>
+        </main>
       </div>
     )
   }
@@ -687,21 +705,21 @@ export default function EditProfilePage() {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm text-muted-foreground">Daily Target</p>
-                <p className="text-xl font-bold text-foreground">{profile.target_calories?.toLocaleString() || '-'} cal</p>
+                <p className="text-xl font-bold text-foreground tabular-nums">{profile.target_calories?.toLocaleString() || '-'} cal</p>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-2 text-center text-sm">
               <div className="bg-protein/10 p-3 rounded-xl">
-                <p className="font-bold text-protein">{profile.protein_grams || '-'}g</p>
+                <p className="font-bold text-protein tabular-nums">{profile.protein_grams || '-'}g</p>
                 <p className="text-xs text-muted-foreground">Protein</p>
               </div>
               <div className="bg-carb/10 p-3 rounded-xl">
-                <p className="font-bold text-carb">{profile.carb_grams || '-'}g</p>
+                <p className="font-bold text-carb tabular-nums">{profile.carb_grams || '-'}g</p>
                 <p className="text-xs text-muted-foreground">Carbs</p>
               </div>
               <div className="bg-fat/10 p-3 rounded-xl">
-                <p className="font-bold text-fat">{profile.fat_grams || '-'}g</p>
+                <p className="font-bold text-fat tabular-nums">{profile.fat_grams || '-'}g</p>
                 <p className="text-xs text-muted-foreground">Fat</p>
               </div>
             </div>
@@ -709,11 +727,11 @@ export default function EditProfilePage() {
             <div className="grid grid-cols-2 gap-3">
               <div className="p-3 bg-secondary rounded-xl">
                 <p className="text-xs text-muted-foreground">BMR</p>
-                <p className="text-lg font-bold text-foreground">{profile.bmr?.toLocaleString() || '-'}</p>
+                <p className="text-lg font-bold text-foreground tabular-nums">{profile.bmr?.toLocaleString() || '-'}</p>
               </div>
               <div className="p-3 bg-secondary rounded-xl">
                 <p className="text-xs text-muted-foreground">TDEE</p>
-                <p className="text-lg font-bold text-foreground">{profile.tdee?.toLocaleString() || '-'}</p>
+                <p className="text-lg font-bold text-foreground tabular-nums">{profile.tdee?.toLocaleString() || '-'}</p>
               </div>
             </div>
             <p className="text-xs text-muted-foreground pt-2">

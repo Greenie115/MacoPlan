@@ -34,13 +34,13 @@ export function StepContainer({
       {/* Max-width wrapper for larger screens */}
       <div className="w-full max-w-[560px] mx-auto">
         {/* Top Navigation */}
-        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 pt-4">
           <button
             onClick={onBack}
-            className="flex items-center justify-center size-10 rounded-full hover:bg-accent transition-colors"
+            className="flex items-center justify-center size-11 -ml-1.5 rounded-full text-icon transition-colors duration-[var(--duration-fast)] hover:bg-accent hover:text-foreground active:scale-95"
             aria-label="Go back to previous step"
           >
-            <ArrowLeft className="size-6 text-icon" />
+            <ArrowLeft className="size-5" />
           </button>
         </div>
 
@@ -52,14 +52,20 @@ export function StepContainer({
         />
 
         {/* Content */}
-        <div className="flex-1 px-4 sm:px-6 lg:px-8 overflow-y-auto pb-24">
-          <div className="mt-8">
-            <h1 className="text-[32px] font-bold leading-tight text-foreground">
-              {emoji && <span className="mr-2">{emoji}</span>}
+        <div className="flex-1 px-4 sm:px-6 lg:px-8 overflow-y-auto pb-28">
+          <div className="mt-6">
+            <h1 className="text-2xl sm:text-[1.75rem] font-semibold leading-tight tracking-tight text-foreground text-balance">
+              {emoji && (
+                <span className="mr-2" aria-hidden="true">
+                  {emoji}
+                </span>
+              )}
               {title}
             </h1>
             {subtitle && (
-              <p className="mt-2 text-base text-muted-foreground">{subtitle}</p>
+              <p className="mt-2 text-base leading-relaxed text-muted-foreground text-pretty">
+                {subtitle}
+              </p>
             )}
           </div>
 
@@ -67,11 +73,11 @@ export function StepContainer({
         </div>
 
         {/* Bottom CTA - constrained within max-width */}
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[560px] px-4 sm:px-6 lg:px-8 py-4 bg-background border-t border-border-strong">
+        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[560px] px-4 sm:px-6 lg:px-8 py-4 bg-background/95 backdrop-blur-sm border-t border-border-strong">
           <Button
             onClick={onContinue}
             disabled={continueDisabled}
-            className="w-full h-12 text-base font-semibold rounded-xl"
+            className="w-full h-12 text-base"
             size="lg"
             aria-label="Continue to next step"
           >

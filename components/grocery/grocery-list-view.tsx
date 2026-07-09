@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { Check, Plus, Trash2, Share2, ArrowLeft } from 'lucide-react'
+import { Check, Plus, Trash2, Share2, ArrowLeft, Beef, Carrot, Milk, Wheat, Package, ShoppingBag } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import {
   toggleGroceryItem,
   addCustomGroceryItem,
@@ -14,6 +15,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { generatePlainText } from '@/lib/export/plain-text'
 import { useShare } from '@/hooks/use-share'
+import { cn } from '@/lib/utils'
 
 interface GroceryListItem {
   id: string
@@ -38,12 +40,20 @@ interface GroceryListViewProps {
 
 const CATEGORY_ORDER = ['protein', 'produce', 'dairy', 'grains', 'pantry', 'other']
 const CATEGORY_LABELS: Record<string, string> = {
-  protein: '🥩 Protein',
-  produce: '🥬 Produce',
-  dairy: '🥛 Dairy',
-  grains: '🌾 Grains',
-  pantry: '🏪 Pantry',
-  other: '📦 Other',
+  protein: 'Protein',
+  produce: 'Produce',
+  dairy: 'Dairy',
+  grains: 'Grains',
+  pantry: 'Pantry',
+  other: 'Other',
+}
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  protein: Beef,
+  produce: Carrot,
+  dairy: Milk,
+  grains: Wheat,
+  pantry: Package,
+  other: ShoppingBag,
 }
 
 export function GroceryListView({ list }: GroceryListViewProps) {
@@ -157,19 +167,19 @@ export function GroceryListView({ list }: GroceryListViewProps) {
   }
 
   return (
-    <div className="min-h-screen bg-muted">
+    <div className="min-h-screen bg-background">
       <div className="max-w-2xl mx-auto p-4 md:p-6 pb-20">
         {/* Header */}
-        <div className="bg-card rounded-lg shadow-sm p-4 md:p-6 mb-4">
+        <div className="bg-card rounded-2xl shadow-sm border border-border-strong p-4 md:p-6 mb-4">
           <div className="flex items-center gap-3 mb-4">
             <button
               onClick={handleBack}
-              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              className="p-2 -ml-2 hover:bg-accent rounded-lg transition-colors duration-150"
               aria-label="Go back"
             >
               <ArrowLeft className="h-5 w-5 text-muted-foreground" />
             </button>
-            <h1 className="text-xl md:text-2xl font-bold flex-1">{list.name}</h1>
+            <h1 className="text-xl md:text-2xl font-bold flex-1 truncate">{list.name}</h1>
             <Button
               variant="ghost"
               size="sm"
@@ -186,6 +196,7 @@ export function GroceryListView({ list }: GroceryListViewProps) {
               onClick={handleShare}
               disabled={isSharing}
               className="md:hidden"
+              aria-label="Share list"
             >
               <Share2 className="h-4 w-4" />
             </Button>
@@ -193,15 +204,15 @@ export function GroceryListView({ list }: GroceryListViewProps) {
 
           {/* Progress Bar */}
           <div className="space-y-2">
-            <div className="flex justify-between text-sm text-muted-foreground">
+            <div className="flex justify-between text-sm text-muted-foreground tabular-nums">
               <span>
                 {checkedItems} of {totalItems} items
               </span>
               <span>{Math.round(progress)}%</span>
             </div>
-            <div className="h-2 bg-secondary rounded-full overflow-hidden">
+            <div className="h-2.5 bg-secondary rounded-full overflow-hidden">
               <div
-                className="h-full bg-primary transition-all duration-300"
+                className="h-full bg-primary transition-[width] duration-300 ease-out-quint"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -209,7 +220,7 @@ export function GroceryListView({ list }: GroceryListViewProps) {
         </div>
 
         {/* Add Custom Item */}
-        <div className="bg-card rounded-lg shadow-sm p-4 md:p-6 mb-4">
+        <div className="bg-card rounded-2xl shadow-sm border border-border-strong p-4 md:p-6 mb-4">
           <h2 className="text-sm font-semibold text-muted-foreground mb-3">Add Custom Item</h2>
           <div className="space-y-3">
             <div>
@@ -267,10 +278,14 @@ export function GroceryListView({ list }: GroceryListViewProps) {
         {CATEGORY_ORDER.map((category) => {
           const categoryItems = categorizedItems[category] || []
           if (categoryItems.length === 0) return null
+          const CategoryIcon = CATEGORY_ICONS[category]
 
           return (
-            <div key={category} className="bg-card rounded-lg shadow-sm p-4 md:p-6 mb-4">
-              <h2 className="font-bold text-lg mb-3">
+            <div key={category} className="bg-card rounded-2xl shadow-sm border border-border-strong p-4 md:p-6 mb-4">
+              <h2 className="flex items-center gap-2 font-bold text-lg mb-3">
+                <span className="flex size-7 items-center justify-center rounded-full bg-muted text-foreground">
+                  <CategoryIcon className="size-4" />
+                </span>
                 {CATEGORY_LABELS[category as keyof typeof CATEGORY_LABELS]}
               </h2>
 
@@ -278,44 +293,54 @@ export function GroceryListView({ list }: GroceryListViewProps) {
                 {categoryItems.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center gap-3 p-2 md:p-3 hover:bg-muted rounded-lg group transition-colors"
+                    className={cn(
+                      'flex items-center gap-3 rounded-xl transition-colors duration-150',
+                      item.checked ? 'bg-primary/5' : 'hover:bg-accent'
+                    )}
                   >
                     <button
                       onClick={() => handleToggle(item.id)}
                       disabled={isPending}
-                      className={`flex-shrink-0 w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${
-                        item.checked
-                          ? 'bg-primary border-primary text-white'
-                          : 'border-border hover:border-primary'
-                      } ${isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
-                      aria-label={item.checked ? 'Uncheck item' : 'Check item'}
+                      className="flex flex-1 items-center gap-3 min-w-0 py-3 px-2 md:px-3 text-left disabled:cursor-not-allowed disabled:opacity-50"
+                      aria-pressed={item.checked}
+                      aria-label={item.checked ? `Uncheck ${item.ingredient}` : `Check ${item.ingredient}`}
                     >
-                      {item.checked && <Check className="h-4 w-4" />}
-                    </button>
-
-                    <div className="flex-1 min-w-0">
-                      <p
-                        className={`text-sm md:text-base ${
-                          item.checked ? 'line-through text-muted-foreground' : 'text-foreground'
-                        }`}
+                      <span
+                        className={cn(
+                          'flex-shrink-0 size-7 rounded-lg border-2 flex items-center justify-center transition-colors duration-150',
+                          item.checked
+                            ? 'bg-primary border-primary text-white'
+                            : 'border-border-strong'
+                        )}
                       >
-                        {item.ingredient}
-                      </p>
-                      {(item.amount || item.unit) && (
-                        <p className="text-xs text-muted-foreground">
-                          {item.amount} {item.unit}
-                        </p>
-                      )}
-                    </div>
+                        {item.checked && <Check className="h-4 w-4" />}
+                      </span>
+
+                      <span className="flex-1 min-w-0">
+                        <span
+                          className={cn(
+                            'block text-sm md:text-base',
+                            item.checked ? 'line-through text-muted-foreground' : 'text-foreground'
+                          )}
+                        >
+                          {item.ingredient}
+                        </span>
+                        {(item.amount || item.unit) && (
+                          <span className="block text-xs text-muted-foreground tabular-nums">
+                            {item.amount} {item.unit}
+                          </span>
+                        )}
+                      </span>
+                    </button>
 
                     {item.is_custom && (
                       <button
                         onClick={() => handleDelete(item.id)}
                         disabled={isPending}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-red-50 rounded"
-                        aria-label="Delete item"
+                        className="flex-shrink-0 p-3 mr-1 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors duration-150 disabled:opacity-50"
+                        aria-label={`Delete ${item.ingredient}`}
                       >
-                        <Trash2 className="h-4 w-4 text-muted-foreground hover:text-red-500" />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     )}
                   </div>
@@ -327,7 +352,7 @@ export function GroceryListView({ list }: GroceryListViewProps) {
 
         {/* Empty State */}
         {totalItems === 0 && (
-          <div className="bg-card rounded-lg shadow-sm p-8 text-center">
+          <div className="bg-card rounded-2xl shadow-sm border border-border-strong p-8 text-center">
             <p className="text-muted-foreground">No items in this grocery list yet.</p>
             <p className="text-sm text-muted-foreground mt-2">Add custom items above to get started!</p>
           </div>

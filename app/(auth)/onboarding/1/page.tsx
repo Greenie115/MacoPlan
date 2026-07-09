@@ -43,42 +43,41 @@ export default function GoalSelectionPage() {
         completedSteps={completedSteps}
       >
         <div className="flex flex-col gap-3">
-          {GOALS.map((goalOption) => (
-            <Card
-              key={goalOption.id}
-              className={cn(
-                'flex items-center gap-4 p-4 cursor-pointer transition-all',
-                'border-2',
-                goal === goalOption.id
-                  ? 'border-primary bg-primary/5'
-                  : 'border-border-strong hover:border-primary/50'
-              )}
-              onClick={() => setGoal(goalOption.id)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  setGoal(goalOption.id)
-                }
-              }}
-              tabIndex={0}
-              role="button"
-              aria-pressed={goal === goalOption.id}
-              aria-label={goalOption.label}
-            >
-              <span className="text-2xl">{goalOption.emoji}</span>
-              <p className={cn(
-                "flex-1 text-base font-medium",
-                goal === goalOption.id ? "text-foreground" : "text-foreground"
-              )}>
-                {goalOption.label}
-              </p>
-              {goal === goalOption.id && (
-                <div className="flex items-center justify-center size-6 rounded-full bg-primary text-white">
-                  <Check className="size-4" />
-                </div>
-              )}
-            </Card>
-          ))}
+          {GOALS.map((goalOption) => {
+            const isSelected = goal === goalOption.id
+            return (
+              <Card
+                key={goalOption.id}
+                className={cn(
+                  'flex items-center gap-4 p-4 cursor-pointer border-2 transition-all duration-[var(--duration-fast)] ease-out-quint',
+                  isSelected
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border-strong hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5'
+                )}
+                onClick={() => setGoal(goalOption.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setGoal(goalOption.id)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed={isSelected}
+                aria-label={goalOption.label}
+              >
+                <span className="text-2xl" aria-hidden="true">{goalOption.emoji}</span>
+                <p className="flex-1 text-base font-medium text-foreground">
+                  {goalOption.label}
+                </p>
+                {isSelected && (
+                  <div className="flex items-center justify-center size-6 rounded-full bg-primary text-primary-foreground shrink-0">
+                    <Check className="size-4" />
+                  </div>
+                )}
+              </Card>
+            )
+          })}
         </div>
       </StepContainer>
     </PageTransition>
