@@ -37,31 +37,31 @@ export function MacroSummary({
   const carbsPct = Math.round((carbsCal / totalCal) * 100)
   const fatPct = Math.round((fatCal / totalCal) * 100)
 
-  // Macro data for rendering
+  // Macro data for rendering — tokenized macro colors, never color alone (name is always printed)
   const macros = [
     {
       name: 'Protein',
       grams: protein,
       calories: proteinCal,
       percentage: proteinPct,
-      color: 'bg-emerald-500',
-      lightColor: 'bg-emerald-100',
+      textClass: 'text-protein',
+      barClass: 'bg-protein',
     },
     {
       name: 'Carbs',
       grams: carbs,
       calories: carbsCal,
       percentage: carbsPct,
-      color: 'bg-blue-500',
-      lightColor: 'bg-blue-100',
+      textClass: 'text-carb',
+      barClass: 'bg-carb',
     },
     {
       name: 'Fat',
       grams: fat,
       calories: fatCal,
       percentage: fatPct,
-      color: 'bg-amber-500',
-      lightColor: 'bg-amber-100',
+      textClass: 'text-fat',
+      barClass: 'bg-fat',
     },
   ]
 
@@ -73,7 +73,7 @@ export function MacroSummary({
             Your MacroPlan
           </h3>
           {isCustom && (
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="mt-1 text-xs font-semibold text-coral-700 dark:text-primary">
               Custom macros
             </p>
           )}
@@ -91,9 +91,9 @@ export function MacroSummary({
         )}
       </div>
 
-      <div className="space-y-1 text-center pb-2 border-b">
+      <div className="space-y-1 border-b border-border pb-4 text-center">
         <p className="text-sm text-muted-foreground">Daily Calorie Target</p>
-        <p className="text-3xl font-bold text-foreground">
+        <p className="font-mono text-3xl font-bold tabular-nums text-foreground">
           {targetCalories.toLocaleString()}
         </p>
         <p className="text-xs text-muted-foreground">
@@ -105,8 +105,8 @@ export function MacroSummary({
         {macros.map((macro) => (
           <div key={macro.name} className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="font-medium text-foreground">{macro.name}</span>
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <span className={`font-semibold ${macro.textClass}`}>{macro.name}</span>
+              <div className="flex items-center gap-3 font-mono tabular-nums text-muted-foreground">
                 <span>{macro.grams}g</span>
                 <span>·</span>
                 <span>{macro.calories} cal</span>
@@ -114,9 +114,9 @@ export function MacroSummary({
                 <span>{macro.percentage}%</span>
               </div>
             </div>
-            <div className="relative h-3 w-full bg-muted rounded-full overflow-hidden">
+            <div className="relative h-3 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className={`absolute inset-y-0 left-0 ${macro.color} rounded-full transition-all duration-300`}
+                className={`absolute inset-y-0 left-0 rounded-full transition-[width] duration-[var(--duration-slow)] ease-out-quint ${macro.barClass}`}
                 style={{ width: `${macro.percentage}%` }}
               />
             </div>
@@ -125,7 +125,7 @@ export function MacroSummary({
       </div>
 
       {!isCustom && (
-        <p className="text-xs text-muted-foreground text-center pt-2">
+        <p className="pt-2 text-center text-xs text-muted-foreground">
           Based on ISSN evidence-based recommendations
         </p>
       )}

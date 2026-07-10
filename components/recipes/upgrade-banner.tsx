@@ -51,8 +51,8 @@ export function UpgradeBanner({
             </div>
             <p className="text-xs text-muted-foreground mb-3 sm:mb-2">
               {favoritesNearLimit || mealPlansNearLimit
-                ? 'Running low on your free tier limits! Upgrade for unlimited favorites and meal plans.'
-                : 'Upgrade to Premium for unlimited saved recipes, meal plans, and priority support.'}
+                ? 'Running low on your free tier limits! Upgrade for unlimited favorites and 100 meal plans a month.'
+                : 'Upgrade to Premium for unlimited saved recipes, 100 meal plans a month, and priority support.'}
             </p>
             <a
               className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors group"

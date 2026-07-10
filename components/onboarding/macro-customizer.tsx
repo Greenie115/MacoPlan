@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { MacroInput, type MacroMode } from './macro-input'
-import { AlertCircle, CheckCircle2 } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 
 interface MacroCustomizerProps {
   targetCalories: number
@@ -214,33 +214,39 @@ export function MacroCustomizer({
   const totalPct = proteinPct + carbsPct + fatPct
 
   return (
-    <Card className="p-6 space-y-6">
+    <Card className="p-6 space-y-6 shadow-md">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-foreground">
             Customize Your Macros
           </h3>
-          <p className="text-sm text-muted-foreground mt-1">
-            Target: {targetCalories.toLocaleString()} calories
+          <p className="mt-1 text-sm text-muted-foreground">
+            Target:{' '}
+            <span className="font-mono tabular-nums">
+              {targetCalories.toLocaleString()}
+            </span>{' '}
+            calories
           </p>
         </div>
       </div>
 
       {/* Mode Toggle */}
-      <div className="flex gap-2">
+      <div className="flex gap-1 rounded-xl bg-muted p-1">
         <Button
-          variant={mode === 'grams' ? 'default' : 'outline'}
+          variant={mode === 'grams' ? 'default' : 'ghost'}
           size="sm"
           onClick={() => handleModeSwitch('grams')}
-          className="flex-1"
+          className="flex-1 rounded-lg"
+          aria-pressed={mode === 'grams'}
         >
           Grams
         </Button>
         <Button
-          variant={mode === 'percentage' ? 'default' : 'outline'}
+          variant={mode === 'percentage' ? 'default' : 'ghost'}
           size="sm"
           onClick={() => handleModeSwitch('percentage')}
-          className="flex-1"
+          className="flex-1 rounded-lg"
+          aria-pressed={mode === 'percentage'}
         >
           Percentage
         </Button>
@@ -311,15 +317,15 @@ export function MacroCustomizer({
       </div>
 
       {/* Total Display */}
-      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+      <div className="flex items-center justify-between rounded-xl bg-muted p-4">
         <span className="font-medium text-foreground">Total</span>
         <div className="flex items-center gap-2">
           {mode === 'grams' ? (
-            <span className="text-lg font-semibold">
+            <span className="font-mono text-lg font-semibold tabular-nums">
               {totalCal.toLocaleString()} cal
             </span>
           ) : (
-            <span className="text-lg font-semibold">
+            <span className="font-mono text-lg font-semibold tabular-nums">
               {totalPct}%
             </span>
           )}
@@ -328,18 +334,18 @@ export function MacroCustomizer({
 
       {/* Total Info Message */}
       {validation.info.totalCalories && mode === 'grams' && (
-        <div className="flex items-start gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-blue-700">
+        <div className="flex items-start gap-2 rounded-lg border border-info-500/20 bg-info-50 p-3 dark:bg-info-500/10">
+          <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-info-500" />
+          <p className="font-mono text-sm tabular-nums text-info-700 dark:text-info-500">
             {validation.info.totalCalories}
           </p>
         </div>
       )}
 
       {validation.info.totalPercentage && mode === 'percentage' && (
-        <div className="flex items-start gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-blue-700">
+        <div className="flex items-start gap-2 rounded-lg border border-info-500/20 bg-info-50 p-3 dark:bg-info-500/10">
+          <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-info-500" />
+          <p className="font-mono text-sm tabular-nums text-info-700 dark:text-info-500">
             {validation.info.totalPercentage}
           </p>
         </div>
