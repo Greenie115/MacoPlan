@@ -22,6 +22,69 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'macroplan-vs-myfitnesspal',
+    title: 'MacroPlan vs MyFitnessPal: Which One Actually Fits a Lifter’s Macros?',
+    excerpt: 'One app is built to log what you already ate. The other is built to plan what you cook before the week starts. Here is an honest side-by-side for lifters deciding between them.',
+    content: `
+      <p>MyFitnessPal and MacroPlan get compared a lot, but they're not really solving the same problem. MyFitnessPal is a food diary: you log what you eat, meal by meal, and it tells you where your macros landed. MacroPlan is a meal-prep planner: you set your macro targets once, and it hands you a batch-cooking plan and shopping list built to hit them, before you've cooked anything. Full disclosure, we're the MacroPlan team, but this comparison is meant to be genuinely useful, not a sales pitch, so we're naming where each app wins.</p>
+
+      <p><strong>The short version:</strong> MyFitnessPal is best if you want to log everything you eat, including restaurant meals and random snacks, against a calorie or macro target. MacroPlan is best if you want the decision made for you ahead of time, a week of batch-cooked meals that already hit your numbers, so there's nothing left to log.</p>
+
+      <h2>Side by Side</h2>
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">&nbsp;</th>
+            <th style="text-align:left; padding: 8px;">MyFitnessPal</th>
+            <th style="text-align:left; padding: 8px;">MacroPlan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Core mechanic</td><td style="padding: 8px;">Log food you've already eaten</td><td style="padding: 8px;">Generate a batch-cook plan before you eat</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Pricing (as of writing)</td><td style="padding: 8px;">Free tier; Premium around $20/mo or $80/yr; Premium+ (adds meal planning) around $25/mo or $100/yr</td><td style="padding: 8px;">Free first plan, no card required; paid Pro tier for unlimited plans</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Food database</td><td style="padding: 8px;">Enormous, barcode scanner, restaurant items, user-submitted entries</td><td style="padding: 8px;">500+ curated recipes built for bulk cooking, not a general logging database</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Macro targeting</td><td style="padding: 8px;">You set the target; you track adherence after the fact</td><td style="padding: 8px;">You set the target; the plan is built to hit it before you cook</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Training day vs. rest day macros</td><td style="padding: 8px;">Not built in; you'd manually set separate goals</td><td style="padding: 8px;">Calculated automatically from your training frequency</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Shopping list</td><td style="padding: 8px;">Not part of the core app</td><td style="padding: 8px;">One consolidated list per prep session</td></tr>
+          <tr><td style="padding: 8px;">Best for</td><td style="padding: 8px;">Anyone eating variable meals who wants a running log</td><td style="padding: 8px;">Lifters who cook once and eat from containers all week</td></tr>
+        </tbody>
+      </table>
+
+      <h2>MyFitnessPal: What It's Actually Good At</h2>
+      <p>MyFitnessPal's strength is coverage. Its food database is the largest of any tracking app, built up over more than a decade of user submissions, and the barcode scanner makes logging packaged food fast. If your week involves eating out, grabbing whatever's in the office kitchen, or generally not knowing what tomorrow's meals look like until tomorrow, a logging app is the right category of tool, because it adapts to whatever you actually ate rather than requiring you to have planned it.</p>
+      <p>The honest limitation is that MyFitnessPal tells you where you landed after the fact. It doesn't decide what to cook or generate a shopping list from your targets, and its meal-planning features (bundled into the higher Premium+ tier) are aimed at a general audience rather than a lifter who wants training day and rest day macros calculated separately. It also asks for a fair amount of daily discipline, every meal has to be logged for the number to mean anything, and that logging habit is exactly what a lot of lifters eventually burn out on. Our <a href="/blog/stop-tracking-macros-burnout">guide to macro tracking burnout</a> covers that problem in more depth if it sounds familiar.</p>
+
+      <h2>MacroPlan: What It's Actually Good At</h2>
+      <p>MacroPlan skips the daily logging step entirely. You enter your stats, goal, training frequency, and how many containers you want to fill, and it generates a batch-cooking plan built around 3-4 recipes designed to hit your macros across the week, plus a single shopping list and a cooking order so nothing overcooks while something else waits. The macro math, including separate training day and rest day targets, is calculated automatically rather than something you configure by hand.</p>
+      <p>The honest limitation is the flip side of the same design choice: MacroPlan isn't a food diary. If you eat outside the plan, a restaurant meal, a friend's barbecue, a bag of chips at 11 p.m., there's no logging feature to record it against your daily total. It's built for the specific pattern of cooking once and eating from containers all week, not for tracking a day that's genuinely unpredictable meal to meal. If your week is more improvised than planned, that's a real point in MyFitnessPal's favor.</p>
+
+      <h2>Which One Should You Pick</h2>
+      <p><strong>Pick MyFitnessPal if</strong> your meals vary day to day, you eat out often, or you specifically want a running log of everything you've eaten rather than a pre-built plan. <strong>Pick MacroPlan if</strong> you already cook in batches, or want to start, and would rather set your macros once and get a week of food that hits them than log every meal individually. <strong>Pick neither, at least not yet,</strong> if you haven't calculated your macro targets in the first place, our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a> is the actual starting point either app assumes you've already done.</p>
+      <p>Plenty of lifters end up using something like MyFitnessPal for the odd unplanned meal and MacroPlan for the bulk of their week, they're not mutually exclusive, they just solve different halves of the same problem. If you're coming from years of IIFYM-style flexible dieting and logging fatigue is part of why you're looking at alternatives, our <a href="/blog/ultimate-guide-to-flexible-dieting">flexible dieting guide</a> covers where a planned approach fits into that framework.</p>
+
+      <h2>FAQ</h2>
+      <h3>Can I use MacroPlan without giving up MyFitnessPal entirely?</h3>
+      <p>Yes. Plenty of people use MacroPlan for their planned, batch-cooked meals and still log the occasional restaurant meal or weekend exception in a diary app. They're not competing for the same slot in your day.</p>
+      <h3>Does MacroPlan have a food diary or logging feature?</h3>
+      <p>No, that's not what it's built for. MacroPlan generates the plan before you eat; it doesn't track what you actually ate afterward. If daily logging of unplanned meals matters to you, that's a genuine reason to keep a logging app alongside it.</p>
+      <h3>Is MyFitnessPal's free tier enough for a lifter tracking macros?</h3>
+      <p>For basic logging, yes, the free tier lets you set custom macro goals and log food. What it lacks compared to Premium is faster logging tools like barcode and meal scan, and it has no meal-planning layer at any price point that's built specifically around training day and rest day macros.</p>
+      <h3>Which app is cheaper?</h3>
+      <p>MacroPlan's first plan is free with no card required. MyFitnessPal's core logging features are also free, but the tools most lifters actually want (faster logging, custom macros without ads, meal planning) sit behind Premium or Premium+, roughly $80 to $100 a year as of this writing. Check each app's current pricing page before deciding, subscription pricing shifts more often than the feature list does.</p>
+
+      <p>If cooking once and eating from containers all week sounds closer to how you actually want to eat, <a href="https://macroplan.app/signup">generate your first MacroPlan meal plan free</a> and see the difference against a logging app for yourself.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 10, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1737999183056-20bf6b8952e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw0fHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBjaGlja2VuJTIwcmljZXxlbnwxfDB8fHwxNzgzNjY0OTU5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Abdul Raheem Kannath on Unsplash",
+    imageCreditUrl: "https://unsplash.com/photos/four-containers-of-food-on-an-orange-surface-YlwEPbEZfoI?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'protein-per-calorie-food-ranking',
     title: 'Protein Per Calorie: The Definitive Food Ranking Chart',
     excerpt: 'Total protein grams only tell half the story. This chart ranks over 30 common foods by protein delivered per 100 calories, so you can see which ones actually earn their spot in a deficit.',
