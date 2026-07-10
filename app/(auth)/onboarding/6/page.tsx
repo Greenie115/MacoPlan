@@ -11,6 +11,15 @@ import { MacroCustomizer } from '@/components/onboarding/macro-customizer'
 import { createUserProfile } from '@/app/actions/profile'
 import { createClient } from '@/lib/supabase/client'
 import { toast } from 'sonner'
+import { AlertTriangle } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+/** Macro reveal cards — one shared vocabulary for icon, color token, and label. */
+const MACRO_CARDS = [
+  { key: 'protein' as const, emoji: '🥩', label: 'Protein', textClass: 'text-protein', bgClass: 'bg-protein/10', borderClass: 'border-protein/20' },
+  { key: 'carbs' as const, emoji: '🍞', label: 'Carbs', textClass: 'text-carb', bgClass: 'bg-carb/10', borderClass: 'border-carb/20' },
+  { key: 'fat' as const, emoji: '🥑', label: 'Fat', textClass: 'text-fat', bgClass: 'bg-fat/10', borderClass: 'border-fat/20' },
+]
 
 /** Counts up to `target` over ~600ms — makes the reveal read as "computed for you" */
 function useCountUp(target: number, ms = 600): number {
@@ -216,11 +225,12 @@ export default function MacroResultsPage() {
           completedSteps={store.completedSteps}
         >
         <div className="space-y-4">
-          <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-            <p className="text-destructive font-medium">
+          <Card className="flex items-start gap-3 border-destructive/20 bg-destructive/10 p-4">
+            <AlertTriangle className="mt-0.5 size-5 shrink-0 text-destructive" aria-hidden="true" />
+            <p className="font-medium text-destructive">
               {store.calculationError}
             </p>
-          </div>
+          </Card>
           <p className="text-sm text-muted-foreground">
             Please go back and verify all your information is correct.
           </p>
@@ -241,8 +251,14 @@ export default function MacroResultsPage() {
           continueDisabled={true}
           completedSteps={store.completedSteps}
         >
-        <div className="flex items-center justify-center p-8">
-          <p className="text-muted-foreground">Calculating your personalized macros...</p>
+        <div className="space-y-4" role="status" aria-live="polite">
+          <span className="sr-only">Calculating your personalized macros…</span>
+          <div className="skeleton h-32 w-full rounded-2xl" aria-hidden="true" />
+          <div className="grid grid-cols-3 gap-3" aria-hidden="true">
+            <div className="skeleton h-28 w-full rounded-2xl" />
+            <div className="skeleton h-28 w-full rounded-2xl" />
+            <div className="skeleton h-28 w-full rounded-2xl" />
+          </div>
         </div>
       </StepContainer>
       </PageTransition>
@@ -264,74 +280,67 @@ export default function MacroResultsPage() {
       <div className="space-y-4">
         {!isCustomizing ? (
           <>
-            {/* Daily Calorie Target */}
-            <Card className="p-6 bg-primary/5 border-primary">
-              <div className="text-center">
-                <p className="text-sm font-medium text-muted-foreground mb-2">
+            {/* Daily Calorie Target — the reveal moment */}
+            <Card className="landing-rise p-8 text-center shadow-md border-primary/30 bg-primary/5">
+              <div className="mb-2 flex items-center justify-center gap-2">
+                <p className="text-sm font-semibold text-muted-foreground">
                   Daily Calorie Target
-                  {store.isCustomMacros && (
-                    <span className="ml-2 text-xs text-primary font-semibold">Custom</span>
-                  )}
                 </p>
-                <p className="text-4xl font-bold text-primary">{animCalories}</p>
-                <p className="text-sm text-muted-foreground mt-1">calories per day</p>
-                {store.isCustomMacros && store.targetCalories !== Math.round(displayCalories) && (
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Original target: {store.targetCalories} cal
-                  </p>
+                {store.isCustomMacros && (
+                  <span className="rounded-full bg-coral-50 px-2 py-0.5 text-[11px] font-semibold text-coral-700 dark:bg-primary/10 dark:text-primary">
+                    Custom
+                  </span>
                 )}
               </div>
+              <p className="font-mono text-5xl sm:text-6xl font-bold tabular-nums tracking-tight text-coral-700 dark:text-primary">
+                {animCalories.toLocaleString()}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">calories per day</p>
+              {store.isCustomMacros && store.targetCalories !== Math.round(displayCalories) && (
+                <p className="mt-3 font-mono text-xs tabular-nums text-muted-foreground">
+                  Original target: {store.targetCalories.toLocaleString()} cal
+                </p>
+              )}
             </Card>
 
-            {/* Macro Breakdown */}
+            {/* Macro Breakdown — color always paired with an icon + label, never alone */}
             <div className="grid grid-cols-3 gap-3">
-              {/* Protein */}
-              <Card className="p-4 text-center border-2 border-protein/20">
-                <div className="size-12 mx-auto mb-2 rounded-full bg-protein/10 flex items-center justify-center">
-                  <span className="text-xl">🥩</span>
-                </div>
-                <p className="text-2xl font-bold text-protein">{animProtein}g</p>
-                <p className="text-xs text-muted-foreground mt-1">Protein</p>
-                {store.isCustomMacros && (
-                  <p className="text-xs text-primary mt-1 font-medium">Custom</p>
-                )}
-              </Card>
-
-              {/* Carbs */}
-              <Card className="p-4 text-center border-2 border-carb/20">
-                <div className="size-12 mx-auto mb-2 rounded-full bg-carb/10 flex items-center justify-center">
-                  <span className="text-xl">🍞</span>
-                </div>
-                <p className="text-2xl font-bold text-carb">{animCarbs}g</p>
-                <p className="text-xs text-muted-foreground mt-1">Carbs</p>
-                {store.isCustomMacros && (
-                  <p className="text-xs text-primary mt-1 font-medium">Custom</p>
-                )}
-              </Card>
-
-              {/* Fat */}
-              <Card className="p-4 text-center border-2 border-fat/20">
-                <div className="size-12 mx-auto mb-2 rounded-full bg-fat/10 flex items-center justify-center">
-                  <span className="text-xl">🥑</span>
-                </div>
-                <p className="text-2xl font-bold text-fat">{animFat}g</p>
-                <p className="text-xs text-muted-foreground mt-1">Fat</p>
-                {store.isCustomMacros && (
-                  <p className="text-xs text-primary mt-1 font-medium">Custom</p>
-                )}
-              </Card>
+              {MACRO_CARDS.map((macro, i) => {
+                const grams = { protein: animProtein, carbs: animCarbs, fat: animFat }[macro.key]
+                return (
+                  <Card
+                    key={macro.key}
+                    className={cn('landing-rise p-4 text-center border-2', macro.borderClass)}
+                    style={{ animationDelay: `${80 * (i + 1)}ms` }}
+                  >
+                    <div className={cn('mx-auto mb-2 flex size-12 items-center justify-center rounded-full', macro.bgClass)}>
+                      <span className="text-xl" aria-hidden="true">{macro.emoji}</span>
+                    </div>
+                    <p className={cn('font-mono text-2xl font-bold tabular-nums', macro.textClass)}>
+                      {grams}g
+                    </p>
+                    <p className="mt-1 text-xs font-medium text-muted-foreground">{macro.label}</p>
+                    {store.isCustomMacros && (
+                      <p className="mt-1 text-[11px] font-semibold text-coral-700 dark:text-primary">Custom</p>
+                    )}
+                  </Card>
+                )
+              })}
             </div>
 
             {/* Additional Info */}
-            <Card className="p-4 bg-muted/50">
+            <Card
+              className="landing-rise p-4 bg-muted/50"
+              style={{ animationDelay: '320ms' }}
+            >
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">BMR (Basal Metabolic Rate)</span>
-                  <span className="font-medium">{store.bmr} cal/day</span>
+                  <span className="font-mono font-medium tabular-nums">{store.bmr} cal/day</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">TDEE (Total Daily Energy)</span>
-                  <span className="font-medium">{store.tdee} cal/day</span>
+                  <span className="font-mono font-medium tabular-nums">{store.tdee} cal/day</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Goal</span>
@@ -341,7 +350,7 @@ export default function MacroResultsPage() {
             </Card>
 
             <div className="pt-4 space-y-3">
-              <p className="text-sm text-center text-muted-foreground">
+              <p className="text-sm text-center text-muted-foreground text-pretty">
                 These targets are personalized based on your profile and will help you achieve your {store.goal} goals.
               </p>
 

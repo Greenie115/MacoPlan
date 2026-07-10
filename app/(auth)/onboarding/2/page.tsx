@@ -118,7 +118,7 @@ export default function PersonalStatsPage() {
         onContinue={handleContinue}
         completedSteps={store.completedSteps}
       >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-5">
         {/* Age Input */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="age">Age</Label>
@@ -134,7 +134,7 @@ export default function PersonalStatsPage() {
             </span>
           </div>
           {form.formState.errors.age && (
-            <p className="text-sm text-red-600">{form.formState.errors.age.message}</p>
+            <p className="text-sm text-destructive">{form.formState.errors.age.message}</p>
           )}
         </div>
 
@@ -162,7 +162,7 @@ export default function PersonalStatsPage() {
             </Select>
           </div>
           {form.formState.errors.weight && (
-            <p className="text-sm text-red-600">{form.formState.errors.weight.message}</p>
+            <p className="text-sm text-destructive">{form.formState.errors.weight.message}</p>
           )}
         </div>
 
@@ -192,7 +192,7 @@ export default function PersonalStatsPage() {
             </div>
           </div>
           {(form.formState.errors.heightFeet || form.formState.errors.heightInches) && (
-            <p className="text-sm text-red-600">
+            <p className="text-sm text-destructive">
               {form.formState.errors.heightFeet?.message || form.formState.errors.heightInches?.message}
             </p>
           )}

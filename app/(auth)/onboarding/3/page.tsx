@@ -6,6 +6,7 @@ import { useOnboardingStore, type ActivityLevel } from '@/stores/onboarding-stor
 import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
 import { Card } from '@/components/ui/card'
+import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const ACTIVITY_LEVELS = [
@@ -87,46 +88,42 @@ export default function ActivityLevelPage() {
         completedSteps={completedSteps}
       >
         <div className="flex flex-col gap-3">
-          {ACTIVITY_LEVELS.map((level) => (
-            <Card
-              key={level.id}
-              className={cn(
-                'flex items-center gap-4 p-4 cursor-pointer transition-all',
-                'border-2',
-                activityLevel === level.id
-                  ? 'border-primary bg-primary text-white'
-                  : 'border-border hover:border-primary/50'
-              )}
-              onClick={() => setActivityLevel(level.id)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  setActivityLevel(level.id)
-                }
-              }}
-              tabIndex={0}
-              role="button"
-              aria-pressed={activityLevel === level.id}
-              aria-label={`${level.label}: ${level.description}`}
-            >
-              <span className="text-3xl">{level.emoji}</span>
-              <div className="flex-1">
-                <p className={cn(
-                  "text-base font-medium",
-                  activityLevel === level.id ? "text-white" : "text-foreground"
-                )}>{level.label}</p>
-                <p className={cn(
-                  "text-sm",
-                  activityLevel === level.id ? "text-white/90" : "text-muted-foreground"
-                )}>{level.description}</p>
-              </div>
-              {activityLevel === level.id && (
-                <div className="flex items-center justify-center size-5 rounded-full border-2 border-white bg-white">
-                  <div className="size-2 rounded-full bg-primary" />
+          {ACTIVITY_LEVELS.map((level) => {
+            const isSelected = activityLevel === level.id
+            return (
+              <Card
+                key={level.id}
+                className={cn(
+                  'flex items-center gap-4 p-4 cursor-pointer border-2 transition-all duration-[var(--duration-fast)] ease-out-quint',
+                  isSelected
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border-strong hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5'
+                )}
+                onClick={() => setActivityLevel(level.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setActivityLevel(level.id)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed={isSelected}
+                aria-label={`${level.label}: ${level.description}`}
+              >
+                <span className="text-3xl" aria-hidden="true">{level.emoji}</span>
+                <div className="flex-1">
+                  <p className="text-base font-medium text-foreground">{level.label}</p>
+                  <p className="text-sm text-muted-foreground">{level.description}</p>
                 </div>
-              )}
-            </Card>
-          ))}
+                {isSelected && (
+                  <div className="flex items-center justify-center size-6 rounded-full bg-primary text-primary-foreground shrink-0">
+                    <Check className="size-4" />
+                  </div>
+                )}
+              </Card>
+            )
+          })}
         </div>
       </StepContainer>
     </PageTransition>

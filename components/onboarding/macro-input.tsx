@@ -3,6 +3,7 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { AlertCircle, AlertTriangle } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export type MacroMode = 'grams' | 'percentage'
 
@@ -74,12 +75,12 @@ export function MacroInput({
           {label} ({unit})
         </Label>
         {mode === 'grams' && calories > 0 && (
-          <span className="text-xs text-muted-foreground">
+          <span className="font-mono text-xs tabular-nums text-muted-foreground">
             {calories} cal
           </span>
         )}
         {mode === 'percentage' && gramsFromPercentage > 0 && (
-          <span className="text-xs text-muted-foreground">
+          <span className="font-mono text-xs tabular-nums text-muted-foreground">
             → {gramsFromPercentage}g
           </span>
         )}
@@ -93,10 +94,11 @@ export function MacroInput({
         min={min}
         max={inputMax}
         step={1}
-        className={`
-          ${error ? 'border-destructive focus-visible:ring-destructive' : ''}
-          ${warning && !error ? 'border-yellow-500 focus-visible:ring-yellow-500' : ''}
-        `}
+        className={cn(
+          'font-mono tabular-nums transition-colors duration-[var(--duration-fast)] ease-out-quint',
+          error && 'border-destructive focus-visible:ring-destructive',
+          warning && !error && 'border-warning-500 focus-visible:ring-warning-500'
+        )}
       />
 
       {helpText && !error && !warning && (
@@ -113,7 +115,7 @@ export function MacroInput({
       )}
 
       {warning && !error && (
-        <div className="flex items-start gap-2 text-sm text-yellow-600">
+        <div className="flex items-start gap-2 text-sm text-warning-700 dark:text-warning-500">
           <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
           <span>{warning}</span>
         </div>

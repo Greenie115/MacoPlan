@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Minus, Plus } from 'lucide-react'
-import { macroColors } from '@/lib/design-tokens'
 
 interface RecipeMacrosCardProps {
   initialMacros: {
@@ -45,7 +44,7 @@ export function RecipeMacrosCard({
       </h2>
 
       <div className="text-center">
-        <span className="text-5xl font-bold text-foreground">
+        <span className="text-5xl font-bold text-foreground font-mono tabular-nums">
           {macros.calories}
         </span>
         <span className="text-lg text-muted-foreground ml-1 font-medium">cal</span>
@@ -53,71 +52,59 @@ export function RecipeMacrosCard({
 
       <div className="flex flex-col gap-4">
         {/* Protein */}
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">{macroColors.protein.emoji}</span>
-          <div className="flex-grow">
-            <div className="flex justify-between items-baseline mb-1">
-              <span className="text-sm font-semibold text-foreground">
-                Protein
-              </span>
-              <span className="text-sm font-bold text-protein">
-                {macros.protein}g
-              </span>
-            </div>
-            <div className="w-full bg-muted rounded-full h-2">
-              <div
-                className="h-2 rounded-full transition-all duration-300 bg-protein"
-                style={{
-                  width: `${proteinPct}%`,
-                }}
-              />
-            </div>
+        <div className="flex-grow">
+          <div className="flex justify-between items-baseline mb-1">
+            <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <span className="size-2.5 rounded-full bg-protein shrink-0" aria-hidden="true" />
+              Protein
+            </span>
+            <span className="text-sm font-bold text-protein font-mono tabular-nums">
+              {macros.protein}g
+            </span>
+          </div>
+          <div className="w-full bg-muted rounded-full h-2">
+            <div
+              className="h-2 rounded-full transition-[width] duration-slow ease-out-quint bg-protein"
+              style={{ width: `${proteinPct}%` }}
+            />
           </div>
         </div>
 
         {/* Carbs */}
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">{macroColors.carbs.emoji}</span>
-          <div className="flex-grow">
-            <div className="flex justify-between items-baseline mb-1">
-              <span className="text-sm font-semibold text-foreground">
-                Carbs
-              </span>
-              <span className="text-sm font-bold text-carb">
-                {macros.carbs}g
-              </span>
-            </div>
-            <div className="w-full bg-muted rounded-full h-2">
-              <div
-                className="h-2 rounded-full transition-all duration-300 bg-carb"
-                style={{
-                  width: `${carbsPct}%`,
-                }}
-              />
-            </div>
+        <div className="flex-grow">
+          <div className="flex justify-between items-baseline mb-1">
+            <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <span className="size-2.5 rounded-full bg-carb shrink-0" aria-hidden="true" />
+              Carbs
+            </span>
+            <span className="text-sm font-bold text-carb font-mono tabular-nums">
+              {macros.carbs}g
+            </span>
+          </div>
+          <div className="w-full bg-muted rounded-full h-2">
+            <div
+              className="h-2 rounded-full transition-[width] duration-slow ease-out-quint bg-carb"
+              style={{ width: `${carbsPct}%` }}
+            />
           </div>
         </div>
 
         {/* Fat */}
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">{macroColors.fat.emoji}</span>
-          <div className="flex-grow">
-            <div className="flex justify-between items-baseline mb-1">
-              <span className="text-sm font-semibold text-foreground">
-                Fat
-              </span>
-              <span className="text-sm font-bold text-fat">
-                {macros.fat}g
-              </span>
-            </div>
-            <div className="w-full bg-muted rounded-full h-2">
-              <div
-                className="h-2 rounded-full transition-all duration-300 bg-fat"
-                style={{
-                  width: `${fatPct}%`,
-                }}
-              />
-            </div>
+        <div className="flex-grow">
+          <div className="flex justify-between items-baseline mb-1">
+            <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <span className="size-2.5 rounded-full bg-fat shrink-0" aria-hidden="true" />
+              Fat
+            </span>
+            <span className="text-sm font-bold text-fat font-mono tabular-nums">
+              {macros.fat}g
+            </span>
+          </div>
+          <div className="w-full bg-muted rounded-full h-2">
+            <div
+              className="h-2 rounded-full transition-[width] duration-slow ease-out-quint bg-fat"
+              style={{ width: `${fatPct}%` }}
+            />
           </div>
         </div>
       </div>
@@ -131,17 +118,17 @@ export function RecipeMacrosCard({
         <div className="flex items-center gap-4">
           <button
             onClick={handleDecrement}
-            className="flex items-center justify-center size-8 rounded-full bg-muted text-icon hover:bg-border transition-colors"
+            className="flex items-center justify-center size-8 rounded-full bg-muted text-icon hover:bg-border transition-colors duration-fast"
             aria-label="Decrease servings"
           >
             <Minus className="size-4" />
           </button>
-          <span className="text-lg font-bold w-4 text-center text-foreground">
+          <span className="text-lg font-bold w-4 text-center text-foreground font-mono tabular-nums">
             {servings}
           </span>
           <button
             onClick={handleIncrement}
-            className="flex items-center justify-center size-8 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+            className="flex items-center justify-center size-8 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors duration-fast"
             aria-label="Increase servings"
           >
             <Plus className="size-4" />

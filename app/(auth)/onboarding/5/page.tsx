@@ -12,7 +12,18 @@ import { StepContainer } from '@/components/onboarding/step-container'
 import { PageTransition } from '@/components/onboarding/page-transition'
 import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
+import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+/** Shared selection-card classes so all three groups on this step read as one control vocabulary. */
+function optionCardClass(isSelected: boolean) {
+  return cn(
+    'p-4 cursor-pointer border-2 transition-all duration-[var(--duration-fast)] ease-out-quint',
+    isSelected
+      ? 'border-primary bg-primary/5'
+      : 'border-border-strong hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5'
+  )
+}
 
 const FITNESS_LEVELS = [
   {
@@ -160,43 +171,39 @@ export default function ExperienceLevelPage() {
         <div className="space-y-3">
           <Label className="text-base font-semibold">Fitness Experience</Label>
           <div className="flex flex-col gap-3">
-            {FITNESS_LEVELS.map((level) => (
-              <Card
-                key={level.id}
-                className={cn(
-                  'p-4 cursor-pointer transition-all',
-                  'border-2',
-                  localFitnessExperience === level.id
-                    ? 'border-primary bg-primary text-white'
-                    : 'border-border hover:border-primary/50'
-                )}
-                onClick={() => setLocalFitnessExperience(level.id)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    setLocalFitnessExperience(level.id)
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-pressed={localFitnessExperience === level.id}
-                aria-label={`${level.label}: ${level.description}`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{level.emoji}</span>
-                  <div className="flex-1">
-                    <p className={cn(
-                      "font-semibold",
-                      localFitnessExperience === level.id ? "text-white" : "text-foreground"
-                    )}>{level.label}</p>
-                    <p className={cn(
-                      "text-sm",
-                      localFitnessExperience === level.id ? "text-white/90" : "text-muted-foreground"
-                    )}>{level.description}</p>
+            {FITNESS_LEVELS.map((level) => {
+              const isSelected = localFitnessExperience === level.id
+              return (
+                <Card
+                  key={level.id}
+                  className={optionCardClass(isSelected)}
+                  onClick={() => setLocalFitnessExperience(level.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setLocalFitnessExperience(level.id)
+                    }
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-pressed={isSelected}
+                  aria-label={`${level.label}: ${level.description}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl" aria-hidden="true">{level.emoji}</span>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground">{level.label}</p>
+                      <p className="text-sm text-muted-foreground">{level.description}</p>
+                    </div>
+                    {isSelected && (
+                      <div className="flex items-center justify-center size-6 rounded-full bg-primary text-primary-foreground shrink-0">
+                        <Check className="size-4" />
+                      </div>
+                    )}
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              )
+            })}
           </div>
         </div>
 
@@ -204,43 +211,39 @@ export default function ExperienceLevelPage() {
         <div className="space-y-3">
           <Label className="text-base font-semibold">Macro Tracking Experience</Label>
           <div className="flex flex-col gap-3">
-            {TRACKING_LEVELS.map((level) => (
-              <Card
-                key={level.id}
-                className={cn(
-                  'p-4 cursor-pointer transition-all',
-                  'border-2',
-                  localTrackingExperience === level.id
-                    ? 'border-primary bg-primary text-white'
-                    : 'border-border hover:border-primary/50'
-                )}
-                onClick={() => setLocalTrackingExperience(level.id)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    setLocalTrackingExperience(level.id)
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-pressed={localTrackingExperience === level.id}
-                aria-label={`${level.label}: ${level.description}`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{level.emoji}</span>
-                  <div className="flex-1">
-                    <p className={cn(
-                      "font-semibold",
-                      localTrackingExperience === level.id ? "text-white" : "text-foreground"
-                    )}>{level.label}</p>
-                    <p className={cn(
-                      "text-sm",
-                      localTrackingExperience === level.id ? "text-white/90" : "text-muted-foreground"
-                    )}>{level.description}</p>
+            {TRACKING_LEVELS.map((level) => {
+              const isSelected = localTrackingExperience === level.id
+              return (
+                <Card
+                  key={level.id}
+                  className={optionCardClass(isSelected)}
+                  onClick={() => setLocalTrackingExperience(level.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setLocalTrackingExperience(level.id)
+                    }
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-pressed={isSelected}
+                  aria-label={`${level.label}: ${level.description}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl" aria-hidden="true">{level.emoji}</span>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground">{level.label}</p>
+                      <p className="text-sm text-muted-foreground">{level.description}</p>
+                    </div>
+                    {isSelected && (
+                      <div className="flex items-center justify-center size-6 rounded-full bg-primary text-primary-foreground shrink-0">
+                        <Check className="size-4" />
+                      </div>
+                    )}
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              )
+            })}
           </div>
         </div>
 
@@ -248,43 +251,39 @@ export default function ExperienceLevelPage() {
         <div className="space-y-3">
           <Label className="text-base font-semibold">Meal Prep Skills</Label>
           <div className="flex flex-col gap-3">
-            {MEAL_PREP_LEVELS.map((level) => (
-              <Card
-                key={level.id}
-                className={cn(
-                  'p-4 cursor-pointer transition-all',
-                  'border-2',
-                  localMealPrepSkills === level.id
-                    ? 'border-primary bg-primary text-white'
-                    : 'border-border hover:border-primary/50'
-                )}
-                onClick={() => setLocalMealPrepSkills(level.id)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    setLocalMealPrepSkills(level.id)
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-pressed={localMealPrepSkills === level.id}
-                aria-label={`${level.label}: ${level.description}`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{level.emoji}</span>
-                  <div className="flex-1">
-                    <p className={cn(
-                      "font-semibold",
-                      localMealPrepSkills === level.id ? "text-white" : "text-foreground"
-                    )}>{level.label}</p>
-                    <p className={cn(
-                      "text-sm",
-                      localMealPrepSkills === level.id ? "text-white/90" : "text-muted-foreground"
-                    )}>{level.description}</p>
+            {MEAL_PREP_LEVELS.map((level) => {
+              const isSelected = localMealPrepSkills === level.id
+              return (
+                <Card
+                  key={level.id}
+                  className={optionCardClass(isSelected)}
+                  onClick={() => setLocalMealPrepSkills(level.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setLocalMealPrepSkills(level.id)
+                    }
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-pressed={isSelected}
+                  aria-label={`${level.label}: ${level.description}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl" aria-hidden="true">{level.emoji}</span>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground">{level.label}</p>
+                      <p className="text-sm text-muted-foreground">{level.description}</p>
+                    </div>
+                    {isSelected && (
+                      <div className="flex items-center justify-center size-6 rounded-full bg-primary text-primary-foreground shrink-0">
+                        <Check className="size-4" />
+                      </div>
+                    )}
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              )
+            })}
           </div>
         </div>
       </div>

@@ -16,6 +16,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight, MoreHorizontal, Plus, ChefHat, Heart, Archive, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { macroColors } from '@/lib/design-tokens'
+import { Button } from '@/components/ui/button'
 import { MealPlaceholder } from '@/components/meal-plans/meal-placeholder'
 import { PaywallModal, type PaywallTrigger } from '@/components/monetization/paywall-modal'
 import {
@@ -162,7 +164,7 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
               <button
                 onClick={handleGenerateNew}
                 aria-label="Generate new plan"
-                className="flex h-10 w-10 items-center justify-center text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                className="flex h-10 w-10 items-center justify-center text-coral-700 hover:bg-primary/10 rounded-lg transition-colors duration-[var(--duration-fast)] ease-out-quint dark:text-primary"
               >
                 <Plus className="size-5" />
               </button>
@@ -177,9 +179,9 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
                   className={cn(
-                    'flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors md:flex-none md:px-6',
+                    'flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors duration-[var(--duration-fast)] ease-out-quint md:flex-none md:px-6',
                     activeTab === tab.key
-                      ? 'border-primary text-primary'
+                      ? 'border-primary text-coral-700 dark:text-primary'
                       : 'border-transparent text-muted-foreground hover:text-foreground'
                   )}
                 >
@@ -233,15 +235,18 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
 
       {/* Quota Footer (Free tier only) */}
       {quotaInfo && quotaInfo.tier === 'free' && (
-        <div className="fixed bottom-0 left-0 right-0 z-10 bg-card/95 backdrop-blur-sm p-4 border-t border-border">
+        <div className="fixed bottom-0 left-0 right-0 z-10 bg-card/95 backdrop-blur-sm p-4 border-t border-border-strong shadow-lg">
           <div className="text-center text-sm text-muted-foreground">
-            <p>Free: {quotaInfo.used} of {quotaInfo.total} plans generated</p>
+            <p>
+              Free: <span className="font-mono tabular-nums">{quotaInfo.used}</span> of{' '}
+              <span className="font-mono tabular-nums">{quotaInfo.total}</span> plans generated
+            </p>
             <button
               onClick={() => {
                 setPaywallTrigger('meal_plan_limit')
                 setShowPaywall(true)
               }}
-              className="font-semibold text-primary hover:underline"
+              className="font-semibold text-coral-700 transition-colors duration-[var(--duration-fast)] ease-out-quint hover:underline dark:text-primary"
             >
               Upgrade for unlimited plans
             </button>
@@ -310,19 +315,16 @@ function EmptyState({
 
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">
-      <div className="size-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
-        <ChefHat className="size-10 text-primary" />
+      <div className="size-20 rounded-full bg-coral-50 dark:bg-primary/10 flex items-center justify-center mb-6">
+        <ChefHat className="size-10 text-coral-700 dark:text-primary" />
       </div>
       <h2 className="text-xl font-semibold text-foreground mb-2 text-center">{title}</h2>
       <p className="text-muted-foreground text-center mb-8 max-w-xs">{subtitle}</p>
       {activeTab !== 'favorites' && (
-        <button
-          onClick={onGenerate}
-          className="flex items-center gap-2 h-12 px-6 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
-        >
+        <Button onClick={onGenerate} size="lg" className="rounded-xl">
           <Plus className="size-5" />
           Generate Meal Plan
-        </button>
+        </Button>
       )}
     </div>
   )
@@ -370,8 +372,8 @@ function MealPlanCard({
   })
 
   return (
-    <Link href={`/meal-plans/${plan.id}`}>
-      <div className="relative flex h-full flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 hover:shadow-md transition-shadow">
+    <Link href={`/meal-plans/${plan.id}`} className="group block h-full">
+      <div className="relative flex h-full flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 transition-all duration-[var(--duration-base)] ease-out-quint group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:border-coral-200">
         {/* More Options Button */}
         <div className="absolute top-2 right-2 z-10">
           <DropdownMenu>
@@ -465,32 +467,32 @@ function MealPlanCard({
               {formatDateRange(plan.start_date, plan.end_date)}
             </p>
             <p className="text-sm font-normal leading-normal text-muted-foreground">
-              {plan.target_calories.toLocaleString()} cal/day avg
+              <span className="font-mono tabular-nums">{plan.target_calories.toLocaleString()}</span> cal/day avg
             </p>
           </div>
 
           {/* Macro Display */}
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1">
-              <span className="text-protein">🥩</span>
-              {plan.protein_grams}g
+            <span className="flex items-center gap-1 font-medium text-protein">
+              <span>{macroColors.protein.emoji}</span>
+              <span className="font-mono tabular-nums">{plan.protein_grams}g</span>
             </span>
-            <span className="flex items-center gap-1">
-              <span className="text-carb">🍚</span>
-              {plan.carb_grams}g
+            <span className="flex items-center gap-1 font-medium text-carb">
+              <span>{macroColors.carbs.emoji}</span>
+              <span className="font-mono tabular-nums">{plan.carb_grams}g</span>
             </span>
-            <span className="flex items-center gap-1">
-              <span className="text-fat">🥑</span>
-              {plan.fat_grams}g
+            <span className="flex items-center gap-1 font-medium text-fat">
+              <span>{macroColors.fat.emoji}</span>
+              <span className="font-mono tabular-nums">{plan.fat_grams}g</span>
             </span>
           </div>
 
           {/* View Plan Button - pushed to bottom */}
           <div className="mt-auto pt-2">
-            <button className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-card text-sm font-semibold leading-normal text-primary hover:bg-primary/10 transition-colors">
+            <div className="flex h-10 w-full items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-card text-sm font-semibold leading-normal text-coral-700 transition-colors duration-[var(--duration-fast)] ease-out-quint group-hover:bg-primary/10 dark:text-primary">
               <span className="truncate">View Plan</span>
-              <ArrowRight className="size-4" />
-            </button>
+              <ArrowRight className="size-4 transition-transform duration-[var(--duration-fast)] ease-out-quint group-hover:translate-x-0.5" />
+            </div>
           </div>
         </div>
       </div>
@@ -532,14 +534,14 @@ function BatchPrepCard({ plan }: { plan: BatchPrepPlanSummary }) {
   return (
     <Link
       href={`/meal-plans/${plan.id}`}
-      className="group flex flex-col gap-3 rounded-2xl border border-border-strong bg-card p-4 shadow-sm transition-shadow hover:shadow-md"
+      className="group flex flex-col gap-3 rounded-2xl border border-border-strong bg-card p-4 shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:-translate-y-0.5 hover:shadow-md hover:border-coral-200"
       aria-label={`View batch prep plan for week of ${weekLabel}`}
     >
       <div className="flex items-start justify-between">
-        <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <div className="flex size-10 items-center justify-center rounded-xl bg-coral-50 text-coral-700 dark:bg-primary/10 dark:text-primary">
           <ChefHat className="size-5" />
         </div>
-        <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+        <ArrowRight className="size-4 text-muted-foreground transition-transform duration-[var(--duration-fast)] ease-out-quint group-hover:translate-x-0.5" />
       </div>
 
       <div>
@@ -548,13 +550,13 @@ function BatchPrepCard({ plan }: { plan: BatchPrepPlanSummary }) {
       </div>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-        <span>{plan.total_containers} containers</span>
+        <span className="font-mono tabular-nums">{plan.total_containers} containers</span>
         <span aria-hidden="true">·</span>
-        <span>{plan.estimated_prep_time_mins} min prep</span>
+        <span className="font-mono tabular-nums">{plan.estimated_prep_time_mins} min prep</span>
         {plan.calories !== null && (
           <>
             <span aria-hidden="true">·</span>
-            <span className="font-medium text-primary">{plan.calories.toLocaleString()} cal/day</span>
+            <span className="font-mono tabular-nums font-medium text-coral-700 dark:text-primary">{plan.calories.toLocaleString()} cal/day</span>
           </>
         )}
       </div>

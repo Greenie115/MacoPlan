@@ -26,6 +26,8 @@ import { createPortalSession, createCheckoutSession } from '@/app/actions/stripe
 import { updateSimulatedTier, canSimulateTierAction } from '@/app/actions/profile'
 import type { SubscriptionStatus } from '@/lib/constants/subscription'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Switch } from '@/components/ui/switch'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useTheme } from 'next-themes'
 import { ChangePasswordModal } from '@/components/profile/change-password-modal'
 import { TwoFactorSetup } from '@/components/profile/two-factor-setup'
@@ -185,9 +187,29 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background pb-24">
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <p className="text-muted-foreground">Loading profile...</p>
-        </div>
+        <main className="max-w-3xl mx-auto p-4 space-y-4">
+          <div className="flex flex-col items-center gap-4 bg-card p-6 rounded-2xl shadow-sm border border-border-strong">
+            <Skeleton className="h-20 w-20 rounded-full" />
+            <div className="flex flex-col items-center gap-2">
+              <Skeleton className="h-5 w-32" />
+              <Skeleton className="h-4 w-44" />
+            </div>
+            <Skeleton className="h-10 w-full max-w-xs rounded-xl" />
+          </div>
+          <div className="bg-card p-4 rounded-2xl shadow-sm border border-border-strong space-y-3">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-2 w-full rounded-full" />
+          </div>
+          <div className="bg-card p-4 rounded-2xl shadow-sm border border-border-strong space-y-3">
+            <Skeleton className="h-4 w-28" />
+            <div className="grid grid-cols-3 gap-2">
+              <Skeleton className="h-16 rounded-xl" />
+              <Skeleton className="h-16 rounded-xl" />
+              <Skeleton className="h-16 rounded-xl" />
+            </div>
+          </div>
+        </main>
       </div>
     )
   }
@@ -271,18 +293,18 @@ export default function ProfilePage() {
               {subscriptionStatus?.isPremium ? (
                 <div className="space-y-3">
                   <div>
-                    <p className="text-lg font-bold text-foreground">
+                    <p className="text-lg font-bold text-foreground tabular-nums">
                       {subscriptionStatus.quota.total - subscriptionStatus.quota.remaining} of {subscriptionStatus.quota.total} meal plans this month
                     </p>
                     <div className="w-full bg-secondary rounded-full h-2 mt-2">
                       <div
-                        className="bg-primary h-2 rounded-full"
+                        className="bg-primary h-2 rounded-full transition-[width] duration-300 ease-out-quint"
                         style={{
                           width: `${((subscriptionStatus.quota.total - subscriptionStatus.quota.remaining) / subscriptionStatus.quota.total) * 100}%`
                         }}
                       ></div>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">
+                    <p className="text-xs text-muted-foreground mt-2 tabular-nums">
                       {subscriptionStatus.quota.remaining} meal plans remaining this month
                     </p>
                   </div>
@@ -304,14 +326,14 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div>
-                  <p className="text-lg font-bold text-foreground">
+                  <p className="text-lg font-bold text-foreground tabular-nums">
                     {subscriptionStatus
                       ? `${subscriptionStatus.quota.total - subscriptionStatus.quota.remaining} of ${subscriptionStatus.quota.total} meal plans generated`
                       : 'Loading...'}
                   </p>
                   <div className="w-full bg-secondary rounded-full h-2 mt-2">
                     <div
-                      className="bg-primary h-2 rounded-full"
+                      className="bg-primary h-2 rounded-full transition-[width] duration-300 ease-out-quint"
                       style={{
                         width: subscriptionStatus
                           ? `${((subscriptionStatus.quota.total - subscriptionStatus.quota.remaining) / subscriptionStatus.quota.total) * 100}%`
@@ -362,7 +384,7 @@ export default function ProfilePage() {
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-sm text-muted-foreground">Daily Target</p>
-                  <p className="text-xl font-bold text-foreground">
+                  <p className="text-xl font-bold text-foreground tabular-nums">
                     {profile?.target_calories?.toLocaleString() || '-'} cal
                   </p>
                 </div>
@@ -376,15 +398,15 @@ export default function ProfilePage() {
 
               <div className="grid grid-cols-3 gap-2 text-center text-sm">
                 <div className="bg-protein/10 p-3 rounded-xl">
-                  <p className="font-bold text-protein">{profile?.protein_grams || '-'}g</p>
+                  <p className="font-bold text-protein tabular-nums">{profile?.protein_grams || '-'}g</p>
                   <p className="text-xs text-muted-foreground">Protein</p>
                 </div>
                 <div className="bg-carb/10 p-3 rounded-xl">
-                  <p className="font-bold text-carb">{profile?.carb_grams || '-'}g</p>
+                  <p className="font-bold text-carb tabular-nums">{profile?.carb_grams || '-'}g</p>
                   <p className="text-xs text-muted-foreground">Carbs</p>
                 </div>
                 <div className="bg-fat/10 p-3 rounded-xl">
-                  <p className="font-bold text-fat">{profile?.fat_grams || '-'}g</p>
+                  <p className="font-bold text-fat tabular-nums">{profile?.fat_grams || '-'}g</p>
                   <p className="text-xs text-muted-foreground">Fat</p>
                 </div>
               </div>
@@ -439,18 +461,13 @@ export default function ProfilePage() {
                 <ChevronRight className="size-5 text-icon" />
               </div>
             )}
-            <div
-              className="flex items-center justify-between p-4 bg-card cursor-pointer hover:bg-accent transition-colors"
-              onClick={toggleDarkMode}
-            >
+            <label className="flex items-center justify-between p-4 bg-card hover:bg-accent transition-colors duration-150 cursor-pointer">
               <div className="flex items-center gap-3">
                 <Moon className="size-5 text-icon" />
                 <span className="text-foreground font-medium">Dark Mode</span>
               </div>
-              <div className={`w-11 h-6 rounded-full relative transition-colors ${isDarkMode ? 'bg-primary' : 'bg-secondary'}`}>
-                <div className={`absolute top-1 size-4 bg-white rounded-full shadow-sm transition-all ${isDarkMode ? 'left-6' : 'left-1'}`}></div>
-              </div>
-            </div>
+              <Switch checked={isDarkMode} onCheckedChange={toggleDarkMode} aria-label="Toggle dark mode" />
+            </label>
             {/* Tier Toggle - only visible for allowlisted internal accounts */}
             {canSimulate && (
               <div className="flex flex-col gap-2 p-4 bg-card">

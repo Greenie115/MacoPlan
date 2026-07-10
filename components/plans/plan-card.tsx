@@ -25,7 +25,7 @@ export function PlanCard({ plan }: PlanCardProps) {
   const gridImages = plan.images.slice(0, 4)
 
   return (
-    <div className="relative flex flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 space-y-4">
+    <div className="relative flex flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 space-y-4 transition-shadow duration-[var(--duration-base)] ease-out-quint hover:shadow-md">
       {/* Context Menu */}
       <div className="absolute top-2 right-2 z-10">
         <DropdownMenu>
@@ -37,7 +37,7 @@ export function PlanCard({ plan }: PlanCardProps) {
           <DropdownMenuContent align="end">
             <DropdownMenuItem>Edit Plan</DropdownMenuItem>
             <DropdownMenuItem>Duplicate</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive focus:text-destructive">Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -76,7 +76,7 @@ export function PlanCard({ plan }: PlanCardProps) {
           </h2>
           <p className="text-sm font-medium text-muted-foreground">{plan.dateRange}</p>
           <p className="text-sm font-medium text-muted-foreground">
-            {plan.calories.toLocaleString()} cal/day avg
+            <span className="font-mono tabular-nums">{plan.calories.toLocaleString()}</span> cal/day avg
           </p>
         </div>
 
@@ -84,25 +84,25 @@ export function PlanCard({ plan }: PlanCardProps) {
         <div className="flex items-center gap-4 text-sm text-muted-foreground pt-1">
           <span className="flex items-center gap-1.5 font-medium text-protein">
             <span className="text-lg">{macroColors.protein.emoji}</span>
-            {plan.macros.protein}g
+            <span className="font-mono tabular-nums">{plan.macros.protein}g</span>
           </span>
           <span className="flex items-center gap-1.5 font-medium text-carb">
             <span className="text-lg">{macroColors.carbs.emoji}</span>
-            {plan.macros.carbs}g
+            <span className="font-mono tabular-nums">{plan.macros.carbs}g</span>
           </span>
           <span className="flex items-center gap-1.5 font-medium text-fat">
             <span className="text-lg">{macroColors.fat.emoji}</span>
-            {plan.macros.fat}g
+            <span className="font-mono tabular-nums">{plan.macros.fat}g</span>
           </span>
         </div>
 
         {/* Action Button */}
         <Link
           href={`/meal-plans/${plan.id}`}
-          className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-primary/5 text-sm font-bold text-primary hover:bg-primary/10 transition-colors"
+          className="group flex h-10 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-primary/5 text-sm font-bold text-coral-700 transition-colors duration-[var(--duration-fast)] ease-out-quint hover:bg-primary/10 dark:text-primary"
         >
           <span className="truncate">View Plan</span>
-          <ArrowRight className="size-4" />
+          <ArrowRight className="size-4 transition-transform duration-[var(--duration-fast)] ease-out-quint group-hover:translate-x-0.5" />
         </Link>
       </div>
     </div>
