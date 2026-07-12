@@ -22,6 +22,93 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-diet-on-a-budget',
+    title: 'High-Protein on a Budget: What Actually Costs the Least',
+    excerpt: 'Chicken breast has crept past $6 a pound and protein bars now cost more per gram than steak. Here is which foods actually deliver protein cheaply, ranked by real cost, not marketing.',
+    content: `
+      <p>You set a protein target, checked the price of chicken breast at the store, and did the math twice because it couldn't be right. It was right. Boneless, skinless chicken breast has quietly crept past $5, sometimes $6, a pound at a lot of grocery stores, and it isn't the only thing that moved. Eggs spiked hard after avian flu outbreaks hit laying flocks, whey protein prices track dairy commodity costs that have climbed for years, and the "high protein" snack aisle has turned into one of the most marked-up sections in the whole store. Hitting 150g or 180g of protein a day was never free, but for a lot of lifters it's started to feel like the most expensive part of the whole macro split.</p>
+      <p>The good news is that protein got expensive unevenly. Some sources barely moved. A few actually got cheaper relative to everything else. The problem is that the foods getting the most shelf space and the most marketing, the bars, the pre-cooked protein cups, the boutique jerky, are almost never the ones that deliver protein cheaply. This is a look at what protein actually costs once you measure it the right way, and which foods are quietly carrying your macros for a fraction of what the "protein" label on the front of the package implies.</p>
+
+      <h2>Why Protein Got So Expensive</h2>
+      <p>Whole muscle cuts cost more than mixed or processed cuts because they cost the processor more to produce, a chicken only has two breasts and two thighs, and demand for lean, easy-to-cook cuts has outpaced supply for years. That gap gets passed straight to the price tag. Eggs are a supply story more than a demand story, avian flu has repeatedly forced mass culls of laying hens over the past few years, and every time a flock goes down, egg prices spike for months before supply catches back up.</p>
+      <p>Whey protein is tied to the dairy market in a way most people don't realize, it's a byproduct of cheesemaking, so whey prices move with cheese demand and milk commodity prices rather than with protein demand on its own. And packaged "high protein" snacks carry a markup that has nothing to do with the ingredients inside them. A protein bar with 20g of protein and a candy bar's worth of sugar alcohol is priced like a supplement, not like the $0.40 of actual protein it contains. That gap between what a food costs to make and what it's priced at because of a marketing claim is the single biggest reason a protein-heavy grocery bill feels disproportionate to what's actually in the cart.</p>
+
+      <h2>The Real Cost, Not the Marketing Cost</h2>
+      <p>The only number that matters here is cost per gram of protein delivered, not cost per package or cost per serving. Below is a rough breakdown using typical U.S. grocery prices, priced out as cost per 25g of protein, about what a solid protein-forward meal component should carry. Your store, region, and whatever's on sale that week will move these numbers around, but the ranking holds up remarkably well across most grocery budgets.</p>
+
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">Food</th>
+            <th style="text-align:left; padding: 8px;">Typical price</th>
+            <th style="text-align:left; padding: 8px;">Cost per 25g protein</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Dry lentils</td><td style="padding: 8px;">~$1.50 / lb</td><td style="padding: 8px;">~$0.37</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Dry black beans</td><td style="padding: 8px;">~$1.20 / lb</td><td style="padding: 8px;">~$0.34</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Milk, 2%</td><td style="padding: 8px;">~$4.00 / gallon</td><td style="padding: 8px;">~$0.77</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Chicken thighs, boneless</td><td style="padding: 8px;">~$2.99 / lb</td><td style="padding: 8px;">~$0.82</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Peanut butter</td><td style="padding: 8px;">~$4.00 / 16oz jar</td><td style="padding: 8px;">~$0.88</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Whey protein powder</td><td style="padding: 8px;">~$30 / 2lb tub</td><td style="padding: 8px;">~$1.04</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Chicken breast</td><td style="padding: 8px;">~$4.50 / lb</td><td style="padding: 8px;">~$1.07</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Eggs, large</td><td style="padding: 8px;">~$3.50 / dozen</td><td style="padding: 8px;">~$1.22</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Canned chickpeas</td><td style="padding: 8px;">~$1.00 / can</td><td style="padding: 8px;">~$1.20</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Greek yogurt, 0%</td><td style="padding: 8px;">~$5.00 / 32oz tub</td><td style="padding: 8px;">~$1.38</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Canned tuna</td><td style="padding: 8px;">~$1.75 / can</td><td style="padding: 8px;">~$1.38</td></tr>
+          <tr><td style="padding: 8px;">Cottage cheese, 2%</td><td style="padding: 8px;">~$4.00 / 16oz tub</td><td style="padding: 8px;">~$2.00</td></tr>
+        </tbody>
+      </table>
+
+      <p>Dry lentils and beans sit at the bottom of the cost scale by a wide margin, and they're not close. A pound of dry lentils costs about what a single protein bar does and delivers roughly four times the protein. Chicken thighs beat chicken breast on cost per gram every time, because the cut itself is cheaper before you even factor in that thighs hold up better through a week of reheats. Whey protein, despite feeling like a premium product, actually lands mid-table, cheaper per gram than eggs or Greek yogurt, which is worth knowing if you've been avoiding it on the assumption that a shaker cup is the expensive way to hit your number.</p>
+
+      <h2>What Actually Belongs in the Cart</h2>
+      <p>Dry lentils and beans are the biggest lever most lifters aren't pulling. A pound of either cooks up into several days of a genuinely filling base, and the fact that they're not a "bodybuilding" food shouldn't count against them, seitan aside, legumes are among the most calorie-efficient plant proteins that exist, and paired with a smaller portion of animal protein they close out a meal's amino acid profile without pushing the grocery bill up. Our <a href="/blog/best-foods-for-batch-cooking">guide to what holds up over a week of batch cooking</a> covers how to cook a big pot of either without it turning to mush by day four.</p>
+      <p>Chicken thighs deserve a second look too, especially if you've been buying breast out of habit rather than preference. The cost gap between the two cuts has only widened as demand for lean cuts has pushed breast prices up, and thighs bring a real cooking advantage on top of the savings: more fat means more forgiveness, a thigh doesn't turn to cardboard the way an overcooked breast does after four days in the fridge. If the calorie and macro math of choosing between cuts matters for your specific goal, <a href="/blog/best-protein-for-meal-prep">our comparison of chicken, beef, and salmon for meal prep</a> breaks that trade-off down further.</p>
+      <p>Eggs and milk are worth defending even at today's higher prices, because they're still cheaper per gram of protein than most packaged alternatives, and a dozen eggs or a gallon of milk doesn't carry the processing markup that a protein shake-in-a-bottle or a pre-portioned egg cup does. Buying the plain, least-processed version of a food almost always beats the convenience version on cost, the difference is rarely the protein itself, it's the packaging and labor built into the price.</p>
+      <p>Whey protein powder is the one item on this list that gets unfairly written off as expensive. Priced per gram of protein delivered, a basic tub of whey undercuts eggs, yogurt, and canned tuna, and it stores for months without spoiling, which is its own kind of savings against food that goes bad in the fridge before you finish it. If your target requires a protein boost between meals rather than a full meal, a scoop of whey is one of the cheapest ways to close that gap, not one of the priciest.</p>
+
+      <h2>Where the Money Actually Leaks</h2>
+      <p>The waste isn't usually in the protein itself, it's in the form the protein comes in. A pre-made protein shake in a bottle costs three to four times what the same scoop of powder and a splash of milk costs at home, for the convenience of not owning a shaker cup. Individually wrapped jerky sticks and protein chips run a similar markup over buying the same category of food in bulk. Canned goods cost more per gram than the dry version of the same food, canned chickpeas run roughly a third more per gram of protein than dry chickpeas cooked from scratch, because you're paying for the water, the can, and the labor of not having to soak anything overnight.</p>
+      <p>None of that makes convenience foods a mistake. A protein bar in a gym bag for the day meal prep fell apart is worth the markup that day. The problem is when the convenience version becomes the default rather than the backup, because that's where a protein target that should cost $8 to $10 a day quietly turns into $15 or more without anything on the plate actually changing.</p>
+
+      <h2>A Cheap Protein Day, Roughly Priced</h2>
+      <p>Stacked together, a day hitting somewhere around 160g of protein without leaning on a single expensive item might look like this:</p>
+      <ul>
+        <li>3 whole eggs at breakfast (~19g protein, ~$0.90)</li>
+        <li>A cup of cooked lentils with a scoop of whey stirred through a yogurt (~35g protein, ~$1.10)</li>
+        <li>200g of chicken thighs over rice and beans (~55g protein, ~$1.65)</li>
+        <li>A can of tuna with crackers as a snack (~24g protein, ~$1.75)</li>
+        <li>A protein shake before bed (~25g protein, ~$1.05)</li>
+      </ul>
+      <p>That's roughly 158g of protein for about $6.45, well under what a single day of pre-packaged "high protein" snack foods usually costs to hit the same number. None of it requires a specialty ingredient or a trip to more than one store, it's the same grocery list most lifters are already buying, just weighted toward the cheaper end of it more often than the expensive end.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan doesn't shop for you or track grocery prices, that's not what it's built to do. What it does is take the protein, carb, and fat targets you've set and build a batch-cook plan around them, which naturally leans on foods like eggs, chicken, rice, and beans rather than single-serving packaged items, because that's how a real week of prep gets built. If the gap in your day is knowing what to actually cook to hit a number, rather than knowing which food is cheapest, that's the part <a href="https://macroplan.app">MacroPlan</a> handles automatically.</p>
+
+      <h2>FAQ</h2>
+      <h3>Is whey protein actually cheaper than whole food protein sources?</h3>
+      <p>Often, yes, on a cost-per-gram basis. A basic tub of whey typically lands cheaper per gram of protein than eggs, Greek yogurt, or canned tuna, and it doesn't spoil the way fresh food does, so there's less waste built into the cost.</p>
+      <h3>Are canned beans a bad value compared to dry beans?</h3>
+      <p>Canned beans cost more per gram of protein than dry beans cooked from scratch, roughly a third more in most cases, because you're paying for the can and the water along with the food. They're still one of the cheaper proteins available, just not as cheap as the dry version if you have the time to soak and cook them.</p>
+      <h3>Should I stop buying chicken breast because of the price?</h3>
+      <p>Not necessarily, chicken breast is still a reasonable value overall, it's simply not the cheapest cut available anymore. Chicken thighs deliver a similar or better protein-to-cost ratio and hold up better over a week of reheats, which makes them worth rotating in rather than treating breast as the only option.</p>
+      <h3>Is it worth buying protein bars or protein snacks at all?</h3>
+      <p>They're most useful as a backup for the day a real meal isn't available, not as a daily habit. Priced per gram of protein, most packaged protein snacks cost several times what the same protein looks like in whole food form, and that gap adds up fast if convenience foods become the default rather than the exception.</p>
+
+      <p>Stop guessing which groceries actually hit your protein target. MacroPlan builds a batch-cook plan around your real macros, no marketing markup included. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 12, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1564894809611-1742fc40ed80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfGFsbHx8fHx8fHx8fDE3ODM4NTM3ODh8&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Shelley Pauls on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@shelleypauls?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-vs-potatoes-vs-pasta-meal-prep',
     title: 'Rice vs. Potatoes vs. Pasta: The Best Carb Source for Meal Prep',
     excerpt: 'Rice, potatoes, and pasta all fill a container, but they behave very differently on macros, cost, and day-five texture. Here is which one to reach for and when.',
