@@ -22,6 +22,79 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prep-containers-guide',
+    title: 'Meal Prep Containers: Sizes, Materials, and How Many to Buy',
+    excerpt: 'Buying the wrong meal prep containers wastes money and ruins food by day three. Here is how to pick the right size, material, and count for how you actually train and eat.',
+    content: `
+      <p>Most people buy meal prep containers the same way: they grab whatever multi-pack is cheapest at the store, get them home, and discover half are too small for a real meal and the other half don't survive the microwave. Then they buy a second set. The container itself feels like the least important decision in meal prep, right up until the lid cracks in week two or every lunch looks like it's swimming in a tub built for someone eating 1,600 calories a day while you're eating 2,800.</p>
+      <p>Getting containers right is a one-time decision that saves money and aggravation for years. This is how to think about size, material, and count so you buy once and stop thinking about it.</p>
+
+      <h2>How Much Volume Actually Fits Your Macros</h2>
+      <p>Container sizes are sold in ounces, and that number tells you almost nothing about calories until you connect it to what's actually going in. As a rough rule, a meal built around lean protein, a starchy carb, and vegetables packs somewhere between 18 and 22 calories per ounce of finished, cooked food. A 500-calorie meal of chicken, rice, and vegetables usually fits a 24 to 28 ounce container, and a 700 to 800-calorie meal, the kind a lot of lifters in a bulk are eating three or four times a day, needs closer to 34 to 38 ounces.</p>
+      <p>That's why the single-size 21-ounce container sold in most grocery store multi-packs is built for someone eating small, calorie-controlled meals, not a 200-pound lifter hitting 3,200 calories across four meals. If you've ever packed a container and had rice spilling over the lid, that's not a packing problem, it's a sizing problem. Buy based on your actual meal size, not the size that happened to be on sale.</p>
+
+      <h2>Plastic vs. Glass vs. Stainless Steel</h2>
+      <p>The material question comes down to three things: how it handles a microwave, how long it lasts, and what it costs. Polypropylene plastic (labeled #5, sometimes stamped with a microwave-safe icon) is what most container sets use, and food-grade polypropylene doesn't contain BPA. The FDA has reviewed the safety of BPA-containing plastics in food contact applications extensively; polypropylene simply isn't one of them, since it's a different polymer entirely. The real weakness of plastic isn't chemical, it's physical: lids warp under repeated microwave use, and the container itself stains orange from tomato sauce within a month.</p>
+      <p>Glass solves both of those problems and is genuinely microwave and dishwasher safe, but it's heavier to carry, breaks if dropped on tile, and costs two to three times more per container. Stainless steel splits the difference on durability, it won't crack or stain, but it can't go in a microwave at all, which rules it out for anyone reheating lunch at a desk rather than eating it cold or reheating on a stovetop.</p>
+
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">Material</th>
+            <th style="text-align:left; padding: 8px;">Microwave safe</th>
+            <th style="text-align:left; padding: 8px;">Typical lifespan</th>
+            <th style="text-align:left; padding: 8px;">Cost per container</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Polypropylene plastic</td><td style="padding: 8px;">Yes</td><td style="padding: 8px;">6-12 months heavy use</td><td style="padding: 8px;">~$1.50-3</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Borosilicate glass</td><td style="padding: 8px;">Yes</td><td style="padding: 8px;">Years, if not dropped</td><td style="padding: 8px;">~$5-8</td></tr>
+          <tr><td style="padding: 8px;">Stainless steel</td><td style="padding: 8px;">No</td><td style="padding: 8px;">Years</td><td style="padding: 8px;">~$8-12</td></tr>
+        </tbody>
+      </table>
+
+      <p>For most lifters, the answer is plastic for the containers that travel (gym bag, car, desk drawer) and glass for the ones that live in the fridge and go straight into a microwave at home. Buying one expensive "forever" set in a single material is usually the wrong call. A mixed set matched to how each container actually gets used costs less and lasts longer than an all-glass or all-steel setup bought on principle.</p>
+
+      <h2>How Many Containers You Actually Need for a Week</h2>
+      <p>This is container math, and it's simpler than it looks: meals per day, times days between shopping trips, minus the meals you'll eat fresh or skip prepping. A lifter eating 4 meals a day who preps for 5 days and eats out or cooks fresh twice a week needs 4 x 5 = 20 containers, not 28. Someone prepping strictly Sunday to Friday with no fresh nights needs the full count for every meal that's coming out of a container.</p>
+      <p>The mistake most people make is buying exactly enough for one week with zero buffer. That works until laundry day for containers doesn't happen before the next prep session, and suddenly Tuesday's lunch is going in a mixing bowl covered in foil. Buying 20 to 25% more than the bare math suggests, so roughly 5 extra for that 20-container week, covers the container that's still in the dishwasher and the one a roommate borrowed and never returned. For the full workflow of getting a week of food into containers in one sitting, see our <a href="/blog/meal-prepping-for-weight-loss">guide to meal prepping for weight loss</a>.</p>
+
+      <blockquote>Buy for your actual meal count plus a 20% buffer, not for the multi-pack size that happened to be on sale. Undersized or under-counted containers are the single most common reason people quit meal prep in the first two weeks.</blockquote>
+
+      <h2>One Compartment or Three?</h2>
+      <p>Divided containers keep a sauce or dressing from turning rice to mush by day three, which matters for anything with a wet component, curries, stir-fries with sauce, taco filling. For dry combinations, roasted protein, plain rice, roasted vegetables, a single compartment is genuinely fine and easier to portion since you're not trying to make three unevenly-sized sections all hit the same volume. If you're building meals around <a href="/blog/best-foods-for-batch-cooking">foods that hold up well over a week of batch cooking</a>, most of what ends up in the container is dry enough that compartments are a nice-to-have rather than a requirement. Buy 2-3 compartment containers only for the specific meals in rotation that genuinely need the separation, not as a blanket default for every container in the cabinet.</p>
+
+      <h2>Where People Waste Money on Containers</h2>
+      <p>The branded "meal prep system" sold with a matching bag, ice pack, and app is almost always the same polypropylene container available in a plain multi-pack for a third of the price, with a logo stamped into the lid. Snap-lock lids with four latches feel premium in the store but are the first thing to crack after a few months of hand-washing, a plain screw-on or simple two-tab lid usually outlasts them. And buying a single 12-pack of one size locks in a mistake if that size turns out wrong for your macros, buying a smaller number in two sizes, one for lighter meals and one for bigger ones, costs about the same and actually fits how differently sized your meals really are.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>Container count isn't a footnote for MacroPlan, it's one of the first things the app asks. Tell it how many containers you're filling and it builds the batch-cook plan and portions around that number, rather than generating a recipe list and leaving you to guess how it divides up. If you already know your container count from working through the math above, <a href="https://macroplan.app">MacroPlan</a> turns that number straight into a cooking plan and shopping list.</p>
+
+      <h2>FAQ</h2>
+      <h3>What size meal prep container should I buy for a 2,000-2,500 calorie diet?</h3>
+      <p>Most meals in that range land between 500 and 650 calories, which fits comfortably in a 28 to 32 ounce container. If your meals run smaller and more frequent, a 21 to 24 ounce size is usually enough.</p>
+      <h3>Are glass meal prep containers actually worth the extra cost?</h3>
+      <p>For containers that stay at home and go in the microwave regularly, yes, they resist staining and warping far longer than plastic and pay for themselves within a year of heavy use. For containers that travel to the gym or get thrown in a bag, the extra weight and breakage risk make plastic the more practical choice.</p>
+      <h3>Is BPA-free plastic actually safe for meal prep?</h3>
+      <p>Food-grade polypropylene, the plastic used in most BPA-free meal prep containers, is a different polymer than the ones the BPA concern applies to. The <a href="https://www.fda.gov/food/food-packaging-other-substances-come-contact-food-information-consumers/bisphenol-bpa-use-food-contact-application" target="_blank" rel="nofollow noopener">FDA's review of BPA in food contact applications</a> covers polycarbonate and can linings specifically, not polypropylene containers.</p>
+      <h3>How many meal prep containers do I need if I eat 4 meals a day?</h3>
+      <p>For a 5-day prep with 4 meals a day, that's 20 containers at minimum. Add a 20% buffer, about 5 more, to cover wash cycles and the odd container that goes missing, landing around 24 to 25 total.</p>
+      <h3>Should I buy compartment containers or single-compartment ones?</h3>
+      <p>Buy compartments only for meals with a wet sauce or dressing that would otherwise soak into the rest of the food. Dry combinations like roasted protein, rice, and roasted vegetables store fine in a single compartment and are easier to portion evenly.</p>
+
+      <p>Once you know your container count, the hard part is what actually goes in them. <a href="https://macroplan.app/signup">Generate your first plan free →</a> and MacroPlan builds the recipes and shopping list around the exact number you tell it.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 13, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1569420077790-afb136b3bb8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnN8ZW58MXwwfHx8MTc4MzkyNjU4Nnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by S'well on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@swell?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
     slug: 'high-protein-diet-on-a-budget',
     title: 'High-Protein on a Budget: What Actually Costs the Least',
     excerpt: 'Chicken breast has crept past $6 a pound and protein bars now cost more per gram than steak. Here is which foods actually deliver protein cheaply, ranked by real cost, not marketing.',
