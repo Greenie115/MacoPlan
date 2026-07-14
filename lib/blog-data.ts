@@ -22,6 +22,49 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'protein-per-meal-ceiling',
+    title: 'The Protein Ceiling: Does Spreading Meals Actually Matter?',
+    excerpt: 'Gym lore says your body can only use 25 to 40 grams of protein at a time and the rest goes to waste. Here is what the actual muscle protein synthesis research shows, and whether meal timing is worth the effort.',
+    content: `
+      <p>Somewhere along the way, "your body can only absorb 30 grams of protein per meal" turned into gym gospel. It gets repeated in locker rooms and comment sections with the same confidence as the two hour fasted cardio myth, usually as a warning: eat more than that in one sitting and the extra just gets wasted, so you'd better spread your protein across six tiny meals or you're leaving gains on the table. Like most gym lore, there's a real finding buried underneath it. The problem is what happened to that finding on the way to becoming a rule.</p>
+
+      <h2>Where the Ceiling Number Actually Comes From</h2>
+      <p>The research behind this claim looks at muscle protein synthesis, the process by which your body builds new muscle tissue in response to eating and training. Studies that feed people isolated doses of protein and measure the synthesis response find that it rises with the dose up to a point, then flattens out. In young, healthy adults, that point sits around 20 to 25 grams of high quality protein, closer to 0.25 grams per kilogram of bodyweight. For adults over roughly 40, the threshold shifts higher, closer to 30 to 40 grams per meal, because aging tissue responds more sluggishly to a given protein dose, a pattern researchers call anabolic resistance.</p>
+      <p>That's a real, measurable ceiling on the acute synthesis response to a single meal. What it is not is a statement about waste. Eating past that threshold doesn't mean the extra protein gets flushed or ignored. Muscle protein synthesis is only one of several things your body does with amino acids: it also uses them for other tissue repair, immune function, enzyme production, and if the total genuinely exceeds what any of that needs, energy. None of those are "wasted" in any meaningful sense, they're just not building muscle at that exact moment. The ceiling caps how much of a single meal goes toward muscle building, not how much protein your body can process.</p>
+
+      <h2>What the Distribution Studies Actually Show</h2>
+      <p>Where this gets more interesting is what happens when researchers compare spreading protein evenly across the day against front-loading or back-loading the same total. One frequently cited trial split resistance-trained men into three feeding patterns, all matched for total daily protein: four meals of 20 grams each, eight meals of 10 grams each, and two meals of 40 grams each. The evenly spaced four-meal pattern produced meaningfully higher myofibrillar protein synthesis over 24 hours than either the too-frequent or too-concentrated version, on the order of 30 to 48 percent more. A separate trial in young men found that distributing protein evenly across three meals a day produced greater resistance training hypertrophy over several weeks than skewing the same total toward dinner, as reported in a study published through the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7330467/">National Library of Medicine</a>.</p>
+      <p>So the acute picture is fairly consistent: three to four meals in the 20 to 40 gram range beats two giant meals or eight tiny ones for maximizing synthesis across a day. Where the evidence gets murkier is long-term body composition. A 2020 review pooling chronic trials, ones that tracked actual muscle mass over months rather than a single day's synthesis response, found the picture far less clean. Several of those longer trials found no measurable difference in lean mass gained between an evenly distributed group and a skewed one, as long as total daily protein and training were matched. The acute synthesis advantage is real and repeatable in a lab. Whether it reliably turns into extra muscle on a scale over 12 weeks is a much shakier claim, and the honest answer right now is that it probably helps a little, for some people, some of the time, and total daily protein is doing almost all of the heavy lifting regardless.</p>
+
+      <h2>What This Means for a Real Day of Eating</h2>
+      <p>If you already eat three or four meals a day and hit your protein target, you're very likely already in the range these studies favor without ever thinking about it. Most lifters eating breakfast, lunch, dinner, and maybe a snack land naturally somewhere around 25 to 50 grams per sitting, which is squarely inside the window where synthesis is close to maximized. There's no reason to fracture that into six meals of 15 grams to chase a marginal effect that the long-term data doesn't clearly support, and there's equally no reason to panic if one meal is light and another is heavy. Our <a href="/blog/how-much-protein-to-build-muscle">guide to setting your total daily protein number</a> covers why the day's total matters more than any single meal, and that hierarchy doesn't change here.</p>
+      <p>Where this research is genuinely useful is at the extremes. If your current pattern is one enormous dinner carrying 60 percent of your daily protein and everything before 4pm is an afterthought, shifting some of that weight earlier in the day is a change with real evidence behind it, not just a habit worth breaking for its own sake. A protein-forward breakfast is the easiest lever to pull, since it's usually the meal getting skipped or underfed, and our <a href="/blog/high-protein-breakfasts">high-protein breakfast list</a> has options that hit 30 grams or more without much effort. On the other end, if you're intermittent fasting and genuinely eating two meals a day, don't force a third meal just to chase this ceiling. The chronic trials suggest total protein and consistent training still explain most of the outcome, and a well-built two-meal day with 50 to 70 grams each is not leaving obvious gains behind.</p>
+      <p>The practical takeaway fits in a sentence: three to four protein-forward meals a day covers the acute research advantage almost by accident, and beyond that, the marginal gains from optimizing meal-by-meal timing are small enough that they shouldn't cost you sleep, sanity, or a schedule that doesn't fit your life. Our <a href="/blog/high-protein-meal-prep-muscle">meal prep playbook for muscle gain</a> builds around that same three to four meal structure, because it's the pattern that's both evidence-backed and actually sustainable to prep for a week at a time.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan sets your total daily protein target from your bodyweight, goal, and training, then builds a batch prep plan around meals that naturally land in that 25 to 50 gram range without you having to count grams per sitting. You get the distribution research applied automatically, without turning your day into a math problem. <a href="https://macroplan.app">See how MacroPlan structures a week of meals →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Is it true that eating more than 30 grams of protein in one sitting is wasted?</h3>
+      <p>No. Protein above the roughly 20 to 40 gram range that maximizes muscle protein synthesis for a single meal isn't discarded, it's used for other tissue repair and metabolic processes, or stored and used later. The ceiling limits how much of one meal goes toward building muscle in that moment, not how much protein your body can use overall.</p>
+      <h3>How many meals a day should I eat to build muscle?</h3>
+      <p>Three to four meals, each delivering roughly 25 to 40 grams of protein, lines up with what the research on muscle protein synthesis favors. That said, total daily protein intake and consistent resistance training explain far more of your results than the exact number of meals, so this is a detail worth getting right, not a requirement worth stressing over.</p>
+      <h3>Does protein distribution matter more for older lifters?</h3>
+      <p>Somewhat. Anabolic resistance, the reduced response to a given protein dose that comes with age, means older adults typically need closer to 30 to 40 grams per meal rather than 20 to 25 to get the same synthesis response, and even distribution across the day may carry more weight for preserving muscle mass in that group than it does for someone in their twenties.</p>
+
+      <p>Stop doing per-meal protein math. MacroPlan builds your week around meals that already land in the range that matters. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 14, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfGFsbHx8fHx8fHx8fDE3ODQwMjA1NjZ8&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Mark DeYoung on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@tempestdesigner?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'high-protein-diet-on-a-budget',
     title: 'High-Protein on a Budget: What Actually Costs the Least',
     excerpt: 'Chicken breast has crept past $6 a pound and protein bars now cost more per gram than steak. Here is which foods actually deliver protein cheaply, ranked by real cost, not marketing.',
