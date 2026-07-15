@@ -22,6 +22,51 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prep-delivery-vs-diy-for-lifters',
+    title: 'Meal Prep Delivery vs. DIY: Which Actually Fits a Lifter’s Macros',
+    excerpt: 'Fitness meal delivery services promise to solve prep for you. Here is what they actually get you compared to cooking your own, once you account for macro precision, cost per gram of protein, and portion control.',
+    content: `
+      <p>Somewhere between "I hate meal prepping" and "I'll just order it," a whole industry sprang up to sell lifters on the idea that they can skip Sunday cooking entirely. Factor, Trifecta, Icon Meals, and a dozen smaller operators now ship pre-portioned, macro-labeled meals straight to your door. The pitch is obvious: no shopping, no chopping, no dishes, just grab a container and eat. For anyone who has stood in a kitchen at 9pm on a Sunday wondering why they signed up for this, that pitch is genuinely tempting.</p>
+      <p>The question worth answering before you hand over a card number is whether delivery actually gets you closer to your macros, or just closer to convenience. Those aren't the same thing, and for a lifter tracking protein, carbs, and fat with any precision, the gap between them matters.</p>
+
+      <h2>What You're Actually Paying For</h2>
+      <p>Fitness meal delivery services charge somewhere between $9 and $14 per meal once shipping is factored in, and that number barely moves whether you're ordering chicken and rice or something more elaborate. Cooking the same meal yourself, using the ingredients covered in our <a href="/blog/high-protein-diet-on-a-budget">guide to high-protein foods on a budget</a>, typically lands between $2.50 and $4.50 depending on the protein source. Over a standard week of 14 to 21 meals, that's the difference between roughly $180 and $60. The gap isn't marketing, it's the cost of someone else doing the shopping, cooking, and portioning for you, and whether that's worth three to four times the price depends entirely on what your time is worth and how much you dread a kitchen.</p>
+      <p>Where delivery services genuinely earn their price is consistency of labor, not consistency of macros. You're not paying for better food, you're paying to never touch a stove. That's a real value proposition for someone working 60-hour weeks or traveling constantly, and dismissing it as wasteful ignores that the alternative for a lot of people isn't home cooking, it's fast food or skipped meals entirely.</p>
+
+      <h2>Macro Precision: Closer Than You'd Expect, But Not Exact</h2>
+      <p>The bigger surprise is how loose the macro labeling on delivery meals can be. Several independent lab tests of popular fitness meal services have found protein content running 5 to 15 percent below the label, largely because commercial kitchens portion by weight before cooking, and cooking loss varies by cut and method in ways that are hard to standardize across thousands of meals a week. That's not a scandal, it's just the reality of mass production, but it means the "42g protein" on the label is a target, not a guarantee, the same way a restaurant nutrition estimate is a target rather than a lab result.</p>
+      <p>Cooking your own food doesn't automatically fix this. Anyone eyeballing a chicken breast instead of weighing it is making the same error, just without a label telling them so. The actual advantage of DIY prep isn't inherent accuracy, it's that you control the scale. Weigh your protein raw, cook it the same way each time, and your numbers get tight in a way that's genuinely hard for a service shipping thousands of identical containers to match. If macro precision is the whole point of tracking for you, that control is worth more than it sounds like on paper.</p>
+
+      <h2>Where DIY Prep Actually Falls Down</h2>
+      <p>The honest case against home cooking isn't taste or cost, it's adherence. A perfectly calculated meal plan that gets abandoned by Wednesday because Sunday's two-hour cooking session didn't happen is worth less than an imprecise delivery meal that actually gets eaten. This is the same failure mode covered in our piece on <a href="/blog/best-foods-for-batch-cooking">choosing foods that survive the fridge</a>: the plan that looks best on a spreadsheet isn't the plan that wins if it never gets executed. Delivery services solve for exactly this failure point by removing the step where most people quit, which is why they retain subscribers who have tried and abandoned DIY prep multiple times before.</p>
+      <p>The other place DIY struggles is variety without extra work. Cooking three different proteins and five different vegetables in one Sunday session takes real planning, and most people default to the same chicken-rice-broccoli rotation out of fatigue rather than preference. Delivery menus rotate dozens of options weekly with zero extra effort on your part, which is a legitimate quality-of-life win if food boredom is what's been killing your consistency.</p>
+
+      <h2>The Hybrid Approach Most Serious Lifters Land On</h2>
+      <p>Few people who've been tracking macros for more than a year run a pure version of either strategy. The common pattern is DIY prep as the default, with delivery meals kept in the freezer as a backup for the weeks that go sideways: a work trip, a brutal deadline stretch, a stretch of a <a href="/blog/meal-prep-on-a-cut">cut</a> where motivation to cook is running low. Delivery becomes insurance against the plan collapsing entirely rather than the whole strategy, and DIY stays the primary method because it's cheaper and more precise when you actually have the two hours on a Sunday.</p>
+      <p>If cost is the deciding factor, that math points hard toward cooking your own. If time and decision fatigue are what's actually breaking your consistency, paying the premium for a few weeks of delivery while you rebuild the habit isn't a failure, it's a reasonable trade. Neither approach is morally superior, they're just solving for different constraints, and the honest answer is to figure out which constraint is actually limiting you before picking a side.</p>
+      <p>MacroPlan is built for the DIY side of that equation: tell it your macros, your prep day, and how many containers you're filling, and it hands you a batch-cook plan and shopping list in about three seconds, so the planning overhead that usually eats a Sunday afternoon disappears. <a href="https://macroplan.app">See how it builds a week of meals →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Are fitness meal delivery services actually macro-accurate?</h3>
+      <p>Mostly close, not exact. Independent testing has found protein content running 5 to 15 percent below the label on some popular services, a byproduct of portioning raw ingredients before cooking loss is accounted for. Treat the label as a solid estimate rather than a lab result, the same way you'd treat a restaurant's nutrition information.</p>
+      <h3>Is meal prep delivery worth it for someone on a tight budget?</h3>
+      <p>Usually not on cost alone. Delivery meals run roughly three to four times the per-meal cost of cooking the same food yourself. It's worth the premium when time or consistency, not money, is the limiting factor.</p>
+      <h3>Can I mix delivery and DIY meal prep?</h3>
+      <p>Yes, and it's what most experienced trackers actually do. Cooking your own food as the default and keeping a few delivery meals in the freezer for chaotic weeks gets you the cost and precision advantages of DIY without the plan collapsing the first time life gets busy.</p>
+
+      <p>Stop losing your Sunday to planning. MacroPlan builds the batch-cook plan and shopping list for you. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 15, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1589010588553-46e8e7c21788?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxtZWFsJTIwZGVsaXZlcnklMjBib3glMjBmaXRuZXNzfGVufDF8MHx8fDE3ODQwOTkxNzV8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Cristiano Pinto on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@crispinto?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
     slug: 'protein-per-meal-ceiling',
     title: 'The Protein Ceiling: Does Spreading Meals Actually Matter?',
     excerpt: 'Gym lore says your body can only use 25 to 40 grams of protein at a time and the rest goes to waste. Here is what the actual muscle protein synthesis research shows, and whether meal timing is worth the effort.',
