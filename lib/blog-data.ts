@@ -22,6 +22,54 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prep-for-shift-workers',
+    title: 'Meal Prep for Shift Workers: Hitting Your Macros on a Rotating Schedule',
+    excerpt: 'Most meal prep advice assumes a normal 9-to-5 and three predictable meals a day. Here is how to actually hit your protein target when your "morning" starts at 7pm and your schedule flips every other week.',
+    content: `
+      <p>Every meal prep guide on the internet quietly assumes the same thing: you wake up around 7am, eat breakfast, train after work, and eat dinner at a normal hour. If you work nights, rotate between day and night shifts, or spend twelve hours on your feet in a hospital, warehouse, or kitchen, that advice doesn't just miss the mark, it can actively work against you. "Eat breakfast within an hour of waking" means something completely different when you're waking up at 6pm, and "meal prep on Sunday" assumes you're not scheduled to work every Sunday this month.</p>
+      <p>Shift work isn't a smaller version of the same problem everyone else has. It changes when your body wants to eat, when you actually have time to cook, and how consistent your week even is from one rotation to the next. None of that makes hitting your macros impossible, it just means the standard advice needs to get thrown out and rebuilt around a schedule that doesn't look like anyone else's.</p>
+
+      <h2>Why Standard Meal Timing Advice Falls Apart</h2>
+      <p>Most nutrition content is built around a day that has one clear structure: wake, eat, work, train, eat, sleep, repeat. Shift workers, especially anyone on rotating shifts that flip between days and nights every week or two, don't get that structure. Your "breakfast" might happen at 8pm before a night shift starts, your "dinner" might be at 6am after twelve hours on your feet, and the meal you'd normally eat around a workout has to slot in wherever your actual free hour lands, not wherever a guide assumes it should.</p>
+      <p>The bigger issue is that a rotating schedule doesn't give you one pattern to build around, it gives you two or three. Someone working a fixed night shift can eventually settle into a rhythm, even if it's an unusual one. Someone rotating through days, evenings, and nights on a two-week cycle is re-solving the timing problem every time the schedule flips, which is exhausting in a way that has nothing to do with willpower and everything to do with never having a stable baseline to prep against.</p>
+
+      <h2>The Rule That Actually Matters: Total Protein, Not Meal Timing</h2>
+      <p>Here's the good news buried in all of that: total daily protein and total daily calories are still what drive your results, and neither of those cares what time it is. The research on meal timing and protein distribution, covered in more depth in our <a href="/blog/protein-per-meal-ceiling">piece on the protein ceiling myth</a>, is fairly clear that hitting your number across the day matters far more than hitting it at any particular hour. A shift worker eating four solid protein-forward meals spread across a 16-hour waking window, whatever hours that window happens to fall in, is doing just as well as someone eating the same four meals on a conventional schedule.</p>
+      <p>That reframes the actual problem. You're not failing at meal prep because your hours are unusual, you're failing because the plan you're trying to follow was written for someone else's clock. Once total protein and total calories become the target, and clock time becomes irrelevant, the rest of the problem is just logistics: having the right food ready when your actual window to eat opens up, not when a guide says it should.</p>
+
+      <h2>Prep for the Shift You're About to Work, Not the Day of the Week</h2>
+      <p>The single biggest fix for shift workers is prepping in shift-blocks instead of calendar days. If you're working four consecutive night shifts, you need four sets of meals ready to go before the first one starts, not a Sunday-to-Saturday plan that assumes a fresh cook session every few days. Batch cooking before a stretch of shifts, then having zero cooking to do during it, matches how your week actually runs far better than trying to cook daily around hours that are already unpredictable and exhausting.</p>
+      <p>This is where the food choices matter more than usual. Reheated food needs to survive a microwave in a break room that may or may not have decent equipment, and it needs to still be appetizing at 3am, which is a genuinely harder bar to clear than at a normal dinner hour. Our <a href="/blog/best-foods-for-batch-cooking">guide to foods that hold up over a week of prep</a> is worth leaning on here: braised or slow-cooked proteins, grain bowls, and anything that reheats evenly beat delicate proteins that dry out or textures that turn unpleasant after a second reheat. Chicken thighs, ground meat, and beans travel better through a week of night-shift reheats than a pan-seared chicken breast ever will.</p>
+      <p>Portable, no-reheat options matter just as much, since not every break room has a working microwave and not every ten-minute break is long enough to use one. Overnight oats, protein-forward wraps, cottage cheese with fruit, and pre-portioned nuts or jerky as backup all cover the stretches where reheating isn't realistic. Keeping two or three of these in rotation means a bad night at work, one where you barely get a break at all, doesn't turn into a night where you eat nothing and blow the whole plan.</p>
+
+      <h2>Sleep Is Part of the Nutrition Problem Here</h2>
+      <p>It's worth saying plainly: poor sleep from rotating shifts makes hunger regulation harder, full stop. Sleep-deprived days come with a measurable increase in appetite and a stronger pull toward high-calorie, low-effort food, which is exactly the trap night-shift and rotating workers fall into most often, not from a lack of discipline but from a body that's chemically pushing toward vending machine food at 4am. Having your own protein-forward option already prepped and sitting in the break room fridge removes the decision entirely at the exact moment your willpower is at its lowest, which matters more here than in almost any other meal prep scenario.</p>
+      <p>This is also where being realistic about a rotating schedule pays off more than trying to force consistency that isn't achievable. A fixed meal plan that assumes the same wake time every day will break the first week your shifts rotate, and a broken plan tends to get abandoned entirely rather than adjusted. Building around total daily protein and a shift-block prep cycle, rather than a fixed clock, is what actually survives contact with a schedule that changes every two weeks.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your batch prep plan around your total macro targets and how many days you're prepping for at once, not around a fixed wake-and-sleep clock. Tell it you're prepping four days of meals ahead of a run of night shifts and it hands you a shopping list and cook plan sized to that stretch, so the food is ready before the schedule flips again. <a href="https://macroplan.app">See how MacroPlan builds a prep plan around your week →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Does it matter if I eat "breakfast" at 7pm instead of 7am?</h3>
+      <p>No. Your body doesn't track calories or protein against a clock, it tracks them against your waking window. A protein-forward meal at the start of your day works the same whether that day starts at 7am or 7pm, and total daily protein intake is what actually drives results, not the label on the meal.</p>
+      <h3>How many days ahead should shift workers meal prep?</h3>
+      <p>Prep for the length of your shift block, not the calendar week. If you work four shifts in a row, cook four days of meals before the first one starts, then reset when the block ends. This matches how a rotating schedule actually runs far better than a fixed Sunday prep session does.</p>
+      <h3>What foods hold up best for night-shift break room reheats?</h3>
+      <p>Braised or slow-cooked proteins, ground meat, beans, and grain bowls reheat far more evenly than delicate cuts like pan-seared chicken breast, which tend to dry out by the second or third reheat. Keeping a few no-reheat backups, like overnight oats or cottage cheese, covers the breaks too short or too busy for a microwave.</p>
+
+      <p>Stop trying to fit a rotating schedule into someone else's meal plan. MacroPlan builds yours around the shifts you're actually working. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 16, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1737999183056-20bf6b8952e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw0fHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBjaGlja2VuJTIwcmljZXxlbnwxfDB8fHwxNzg0MTg1NTE4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Abdul Raheem Kannath on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@raheemblacksnows?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
     slug: 'meal-prep-delivery-vs-diy-for-lifters',
     title: 'Meal Prep Delivery vs. DIY: Which Actually Fits a Lifter’s Macros',
     excerpt: 'Fitness meal delivery services promise to solve prep for you. Here is what they actually get you compared to cooking your own, once you account for macro precision, cost per gram of protein, and portion control.',
