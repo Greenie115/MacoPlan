@@ -22,6 +22,61 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prep-without-a-kitchen-scale',
+    title: 'How to Meal Prep Without a Kitchen Scale (And Still Hit Your Macros)',
+    excerpt: 'A food scale isn’t always available, at a friend’s house, in a shared kitchen, mid-move. Here is how to portion by eye and by tool so your week still lands close to your targets.',
+    content: `
+      <p>You get used to the scale fast. Grams stop feeling like an estimate and start feeling like a fact, and then one week the scale is packed in a box, or you're cooking in someone else's kitchen, or the battery's dead and the nearest replacement is a weekend away. Suddenly a chicken breast is just a chicken breast again, and you're portioning by memory instead of by number.</p>
+      <p>The good news is that a scale is a precision tool, not a requirement. Lifters were hitting macros before food scales were a $12 Amazon impulse buy, using hands, cups, and consistent cooking habits that get you close enough to matter. Close enough doesn't mean sloppy. It means building a few reliable reference points so your week still lands where you need it, even without the number on the display.</p>
+
+      <h2>Why This Actually Happens More Than You'd Think</h2>
+      <p>Anyone who's tracked macros for more than a year eventually hits a scale-less week. Travel is the obvious one, hotel kitchens and Airbnbs rarely stock one. Moving is another, the scale ends up in a box labeled "kitchen misc" for two weeks longer than planned. And plenty of people cook in a kitchen they don't own, a partner's place, a family member's house, a dorm with one shared stove, where bringing your own scale feels like more commitment than the situation calls for.</p>
+      <p>The instinct in that moment is to either give up on tracking entirely for the week or to obsess over getting it exactly right without the tool that made exactly right possible. Neither is necessary. The scale was never the thing hitting your macros, it was just the measuring stick. You can build a rougher measuring stick out of your hands and a few reference objects, and it'll get you within a margin that barely moves the needle over a week of eating.</p>
+
+      <h2>The Hand Method: Good Enough for Most Meals</h2>
+      <p>Your hand scales with your body, which is convenient, because bigger people generally need more food. A palm-sized, palm-thick portion of a lean protein like chicken breast, white fish, or lean beef lands close to 25 to 30g of protein for most adults. A closed fist of cooked rice, potato, or pasta runs somewhere around 35 to 45g of carbs. A thumb-length portion of oil or nut butter is roughly 12 to 14g of fat, and a cupped handful covers a serving of nuts or cheese.</p>
+      <p>None of these numbers are exact, and they shouldn't be treated as exact. They're a starting point that gets refined the first time you're back near a scale. Weigh a palm-sized chicken breast once, note how it looks relative to your own hand, and that mental image becomes far more reliable the next time you're guessing. The method works because you're not re-learning portion sizes from scratch, you're calibrating a tool you already carry with you everywhere.</p>
+      <p>Where the hand method breaks down is calorie-dense, low-volume foods, things like oils, nut butters, cheese, and dried fruit, where a small visual difference in portion size represents a meaningful calorie swing. Be more conservative with those, a little under your instinct is safer than a little over, since it's much easier to add a bit more fat to a meal than to walk back overeating it.</p>
+
+      <h2>Cups, Spoons, and Everyday Objects</h2>
+      <p>If a kitchen has measuring cups and spoons, which most do even when they don't have a scale, volume measurements get you closer than eyeballing alone. A level cup of cooked rice or pasta, a tablespoon of oil, a scoop of protein powder using the scoop that came in the tub, these are all decent stand-ins once you know the rough conversion for the specific food. Cooked rice runs close to 200g per cup; olive oil is about 14g per tablespoon. A quick search the first time you need a conversion, then it's memorized.</p>
+      <p>When there's no measuring gear at all, everyday objects work as rough anchors. A deck of cards is close to a palm-sized portion of meat. A tennis ball is roughly a cup of rice or potato. A golf ball is close to two tablespoons of nut butter or oil. These comparisons get mocked for being imprecise, and they are, but imprecise and calibrated to a real reference point beats a pure guess by a wide margin, and a wide margin is all you actually need for most weeks.</p>
+
+      <h2>Cook the Same Way Every Time</h2>
+      <p>The single biggest lever for staying accurate without a scale isn't better guessing, it's reducing the number of variables you're guessing about. If you cook chicken breast the same way, same cut, same trim, same cooking method, every time, your eyeballed portions get more consistent because the food itself is more consistent. A boneless, skinless chicken breast baked at the same temperature for the same time loses roughly the same percentage of its raw weight to cooking every time you make it, so once you've calibrated what a good portion looks like post-cook, that reference holds.</p>
+      <p>This is also where sticking to a short rotation of foods, the same handful of proteins, carbs, and vegetables covered in our <a href="/blog/best-foods-for-batch-cooking">guide to foods that hold up for batch cooking</a>, pays off doubly. You're not just picking foods that survive five days in the fridge, you're picking foods you've portioned by eye often enough to trust your own judgment on them. Novel foods and new recipes are where eyeballing gets shakiest, because you don't have a calibrated mental picture to work from yet.</p>
+
+      <h2>Where to Spend Your Precision</h2>
+      <p>Not every food deserves the same level of care when you're working without a scale. Protein and calorie-dense fats are worth being more careful about, since they carry more weight per gram in your daily targets and errors compound faster. Vegetables and other high-fiber, low-calorie foods can be eyeballed loosely without much consequence, a slightly larger or smaller portion of broccoli barely registers against a day's total. If you're deciding where to put your limited attention in a scale-less kitchen, protein sources are the highest-leverage place to get it close to right, a principle covered in more depth in our <a href="/blog/protein-per-calorie-food-ranking">protein per calorie ranking</a>.</p>
+      <p>It's also worth remembering that a single scale-less week doesn't undo months of consistent tracking. If your portions run 10 to 15 percent off for five or six days, that's a rounding error against a much longer trend, not a reason to panic or overcorrect once the scale is back. The goal during that stretch isn't precision, it's staying roughly on target so you're not starting from zero when you get your tools back.</p>
+
+      <h2>Getting Back to a Scale</h2>
+      <p>Once you're back with a scale, don't skip the recalibration step. Weigh a few of the same portions you were eyeballing for the past week or two and compare them to what you thought you were eating. This closes the loop, either your hand-portion instincts were solid and you can trust them more next time, or you'll spot a specific food where your eye was consistently off, usually something calorie-dense like oil or cheese, and you know to weigh that one specifically going forward. Getting your <a href="/blog/decoding-macros">macro targets</a> dialed in matters less if the portioning underneath them drifts every time the scale isn't around, so this recalibration habit is worth keeping even after the trip or the move is long over.</p>
+      <p>If you'd rather not rebuild your portion instincts from scratch every time your setup changes, <a href="https://macroplan.app">MacroPlan</a> builds your weekly batch-cook plan around exact gram portions from the start, so the reference points you're calibrating against are already dialed in before you pick up a knife.</p>
+
+      <h2>FAQ</h2>
+      <h3>How accurate is the hand-portion method compared to weighing food?</h3>
+      <p>Expect to land within roughly 10 to 20 percent of your actual intake on most meals, tighter once you've calibrated your hand against a scale a few times. That's not lab-grade precision, but it's close enough that a scale-less week won't meaningfully derail a cut or a bulk that's otherwise on track.</p>
+      <h3>What should I prioritize getting right without a scale?</h3>
+      <p>Protein and calorie-dense fats, oils, nut butters, cheese, since small visual errors on those foods carry the biggest swing in total calories and protein. Vegetables and other low-calorie, high-fiber foods can be portioned loosely without much impact.</p>
+      <h3>Should I buy a travel scale instead of learning to eyeball portions?</h3>
+      <p>A small travel scale is a reasonable investment if you're frequently in scale-less kitchens, but it's still worth building hand-portion instincts as a backup. Batteries die, scales get left behind, and the skill travels with you even when the tool doesn't.</p>
+      <h3>Will one week of eyeballing portions ruin my progress?</h3>
+      <p>No. A short stretch of slightly imprecise tracking is a rounding error against weeks or months of consistent eating. Stay roughly on target, then recalibrate against a scale once you have one again rather than trying to perfectly reconstruct what you ate.</p>
+
+      <p>Skip the guesswork on prep day. MacroPlan portions your whole week to the gram automatically. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 20, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1767464950782-1654dc8665aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxraXRjaGVuJTIwZm9vZCUyMHNjYWxlJTIwbWVhbCUyMHByZXB8ZW58MXwwfHx8MTc4NDUzOTA0OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Tanya Barrow on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@tanyabarrow?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
     slug: 'meal-prep-delivery-vs-diy-for-lifters',
     title: 'Meal Prep Delivery vs. DIY: Which Actually Fits a Lifter’s Macros',
     excerpt: 'Fitness meal delivery services promise to solve prep for you. Here is what they actually get you compared to cooking your own, once you account for macro precision, cost per gram of protein, and portion control.',
