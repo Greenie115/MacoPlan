@@ -22,6 +22,49 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-vegetarian-meal-prep-for-lifters',
+    title: 'High-Protein Vegetarian Meal Prep: Hitting 180g a Day Without Meat',
+    excerpt: 'No chicken breast, no problem. Here is how vegetarian lifters actually hit big protein numbers with real food, plus a batch-cooking approach that keeps the macros honest.',
+    content: `
+      <p>Most high-protein meal prep advice assumes you're building every meal around a slab of chicken breast, and if you don't eat meat, that advice is mostly useless to you. Vegetarian lifters get told to "just eat more beans" or handed a list of protein powders and called done, which skips over the actual problem: hitting 150 to 200 grams of protein a day from plants and dairy takes more volume, more planning, and a different mental model than swapping one protein source for another. It's completely doable. It just isn't the same math.</p>
+
+      <h2>Why Vegetarian Protein Targets Feel Harder Than They Are</h2>
+      <p>A skinless chicken breast packs roughly 31 grams of protein into 165 calories, which is close to the best ratio available from whole food. Most vegetarian protein sources don't come close to that density. A cup of cooked lentils has about 18 grams of protein for 230 calories, and a block of firm tofu runs around 10 grams per 100 grams. That gap is the entire reason vegetarian meal prep feels harder: you're not eating less protein-dense food because you're doing something wrong, you're eating food that genuinely requires more volume to hit the same number. Once that's the baseline expectation instead of a surprise, the planning gets a lot less frustrating.</p>
+      <p>The upside is that vegetarian protein sources aren't limited to tofu and beans the way gym folklore suggests. Eggs, Greek yogurt, cottage cheese, and whey or casein powder are all vegetarian (though not vegan) and sit much closer to chicken's protein density than most plant foods do. A realistic high-protein vegetarian day usually leans on two or three of those dairy and egg sources to close most of the gap, then fills the rest with legumes, tofu, tempeh, and seitan for volume and variety. Our <a href="/blog/protein-per-calorie-food-ranking">protein-per-calorie ranking</a> is worth a look here, since it makes the density gap between food groups obvious at a glance rather than something you have to guess at.</p>
+
+      <h2>The Foods That Actually Move the Needle</h2>
+      <p>Seitan is the one plant-based option that genuinely rivals meat on density, at roughly 25 grams of protein per 100 grams, because it's made from wheat gluten rather than a whole legume. It has a chewy, meaty texture that holds up well in stir-fries and grain bowls, and it's the closest thing to a one-for-one chicken swap in a vegetarian kitchen. Tempeh is close behind at around 19 grams per 100 grams and, unlike tofu, ferments the whole soybean rather than just the extracted curd, which gives it a firmer bite and a stronger flavor that takes marinades well. Edamame, cooked lentils, and black beans round out the legume tier, each landing in the 8 to 18 gram range depending on how much water they hold, and they're the ingredients that add bulk and fiber to a bowl without blowing the calorie budget.</p>
+      <p>Cottage cheese deserves more credit than it gets. A cup holds around 25 grams of protein for roughly 220 calories, most of it slow-digesting casein, and it needs zero cooking, which makes it one of the easiest wins in a vegetarian week. Greek yogurt sits in similar territory and works as a breakfast base or a sauce thickener. Eggs remain the cheapest complete protein on the shelf, and a batch of hard-boiled eggs takes fifteen minutes to prep for the whole week. None of these require a recipe so much as a habit of keeping them stocked, which is really what vegetarian meal prep comes down to: fewer showpiece dishes, more reliable staples in rotation.</p>
+
+      <h2>Building a Week Around Combined Sources</h2>
+      <p>The other piece gym lore gets wrong is protein "completeness." Older nutrition advice insisted vegetarians had to pair specific foods, like rice with beans, at the same meal to get all nine essential amino acids. Later research on amino acid pools showed the body doesn't actually require that precise timing. What still matters is variety across the day: a diet built entirely around one plant protein source risks running low on a specific amino acid like lysine or methionine, while a mix of legumes, grains, dairy, and eggs across a week covers the gaps without anyone doing the math by hand. A <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4991518/">review published through the National Library of Medicine</a> on plant protein quality backs this up: combining different plant sources across the day reliably closes the amino acid gaps that any single source leaves open.</p>
+      <p>In practice, that means a vegetarian batch prep week works best with two or three protein sources in rotation rather than one giant pot of the same lentil curry eaten five days straight. A useful split looks like eggs or cottage cheese for breakfast, a legume-and-grain bowl with tofu or tempeh for lunch, and a seitan or edamame-based dinner, with Greek yogurt or a protein shake filling gaps if the day's total is coming up short. That structure also happens to batch-cook well: lentils, chickpeas, and grains all hold their texture in the fridge for four to five days, which lines up with our <a href="/blog/best-foods-for-batch-cooking">guide to foods that actually survive batch cooking</a>.</p>
+      <p>Where vegetarian prep genuinely gets easier than a meat-based week is fiber and micronutrients; legumes and whole grains bring both along for free, whereas a chicken-and-rice routine usually needs vegetables added on purpose. Where it gets harder is calorie management, since plant proteins carry more carbs and fat per gram of protein than lean meat does, so a vegetarian lifter chasing 180 grams of protein a day will naturally land at a higher calorie total than a meat-eater hitting the same number, unless dairy and eggs are doing a lot of the heavy lifting. That's not a flaw in the approach, it's just a real tradeoff worth planning around rather than being surprised by mid-week.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds batch prep plans from your actual macro targets, and if you mark yourself vegetarian it swaps in tofu, tempeh, seitan, legumes, eggs, and dairy instead of defaulting to chicken and beef, without you having to hand-build the substitutions yourself. You still get a week of meals hitting your protein number, just built from food you'll actually eat. <a href="https://macroplan.app">See how MacroPlan handles vegetarian macros →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can you actually hit 150 to 200 grams of protein a day as a vegetarian?</h3>
+      <p>Yes, but it takes more food volume and more planning than a meat-based diet, since most vegetarian protein sources are less calorie-dense per gram of protein than lean meat. Leaning on eggs, Greek yogurt, cottage cheese, and seitan alongside legumes and tofu is what makes the number realistic without eating an enormous volume of food.</p>
+      <h3>Do I need to combine specific plant proteins at every meal to get complete protein?</h3>
+      <p>No. That rule was based on outdated science. Your body maintains a pool of amino acids and doesn't require perfectly matched sources in the same meal, it just needs variety across the day so no single essential amino acid stays consistently low.</p>
+      <h3>What's the single easiest high-protein vegetarian food to keep stocked?</h3>
+      <p>Cottage cheese and hard-boiled eggs, in that order. Both require no cooking beyond a batch of boiled eggs once a week, both deliver 20-plus grams of protein per serving, and neither needs a recipe to fit into a meal.</p>
+
+      <p>Set your macros, mark yourself vegetarian, and let MacroPlan build the week around food that actually hits the number. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 21, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1623194913613-947703662196?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHx0b2Z1JTIwbGVudGlscyUyMG1lYWwlMjBwcmVwfGVufDF8MHx8fDE3ODQ2MjIyOTl8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Gilberto Olimpio on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@golimpio?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'meal-prep-delivery-vs-diy-for-lifters',
     title: 'Meal Prep Delivery vs. DIY: Which Actually Fits a Lifter’s Macros',
     excerpt: 'Fitness meal delivery services promise to solve prep for you. Here is what they actually get you compared to cooking your own, once you account for macro precision, cost per gram of protein, and portion control.',
