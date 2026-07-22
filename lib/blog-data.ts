@@ -22,6 +22,48 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
+    title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
+    excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
+    content: `
+      <p>A new trial out of the University of Illinois is making the rounds this week, and the headline version is exactly the kind of thing that gets forwarded around a gym group chat: rice and beans lost to pork. Researchers had people do a leg-press and leg-extension workout, then eat one of three post-workout meals, each built to deliver 20 grams of protein: a whole-food plate of rice and black beans, a nutrient-matched shake made from free amino acids, or 20 grams of lean pork. The plant-based whole-food meal and the shake produced almost identical, and notably lower, muscle protein synthesis than the pork. Published in the American Journal of Clinical Nutrition, it's the kind of result that's tailor-made to get twisted into "plants don't build muscle," so it's worth actually reading past the headline before you change anything about how you eat.</p>
+
+      <h2>What the Study Actually Did</h2>
+      <p>Eleven healthy adults in their twenties each went through the protocol twice, once with the rice-and-beans meal and once with the amino acid shake, always after the same leg workout. The two plant-based meals were deliberately built to match each other on calories, protein, fat, fiber, and carbohydrate, so the only real variable being tested was whole food versus isolated amino acids. Both of those were then compared against data from lean pork, eaten under the same post-workout conditions. The point of that design wasn't to prove beans are useless, it was to isolate whether "whole food" carries some magic that a shake doesn't. It doesn't. The rice-and-beans plate and the shake performed the same as each other, and both landed below the pork.</p>
+      <p>It's also worth naming who paid for it. The senior author's research is funded in part by the National Pork Board's Pork Checkoff program, an industry group with an obvious interest in a headline that reads "pork beats beans." That doesn't mean the data is wrong, the methodology looks sound and the result has been reported consistently across outlets covering the release. But it's a reason to read the actual mechanism the researchers propose rather than stopping at the headline, because the mechanism is the part that's actually useful to you.</p>
+
+      <h2>The Real Culprit Was the Carbs, Not the Beans</h2>
+      <p>Here's the detail that got buried under the plants-versus-meat framing: both plant-based meals carried roughly 114 grams of carbohydrate alongside their 20 grams of protein, because that's what a real-world plate of rice and beans looks like at that protein target. The researchers' own explanation is that a carbohydrate load that large slows gastric emptying and delays how quickly the amino acids from that meal actually show up in your bloodstream, which blunts the muscle-building response in the hours right after training. It's a timing and absorption problem tied to a specific meal's composition, not a verdict on beans, rice, or plants as a food category.</p>
+      <p>That distinction matters because it changes what you'd actually do differently. If the takeaway were "eat animal protein instead of plant protein," a vegetarian lifter would be stuck. If the takeaway is "a 20-gram serving of protein buried under 114 grams of carbs digests more slowly than a smaller, faster-absorbing dose," the fix is obvious: separate the giant plate of rice from your protein dose, or lean on a faster-digesting plant source, like a protein shake or a smaller, less carb-heavy portion, in the window right after training, and eat the big carb-and-legume bowl as a separate meal an hour or two later. Nothing about your total daily protein or your food preferences has to change, just the shape of the one meal sitting closest to your workout.</p>
+
+      <h2>Why One Post-Workout Meal Was Never Going to Decide Anything</h2>
+      <p>This result also lines up with something we've written about before: the acute muscle protein synthesis response to a single meal is a real, measurable thing in a lab, but it's one input among several, and total daily protein consistently matters more than the size or timing of a single feeding. Our <a href="/blog/protein-per-meal-ceiling">breakdown of the so-called protein ceiling</a> covers why chasing perfect optimization around one specific meal has a much shakier connection to actual muscle gained over months than hitting your daily number reliably does. An eleven-person, single-session lab study measuring synthesis for a few hours after one workout is genuinely useful for understanding mechanism. It is not strong enough evidence to restructure how a vegetarian lifter eats.</p>
+      <p>If you're vegetarian or vegan and already hitting a real daily protein target the way we laid out in <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">our guide to hitting 180g a day without meat</a>, this study isn't a reason to panic or add a rotisserie chicken to your cart. It's a reason to think about what's actually in your immediate post-training meal specifically. A protein shake, a scoop of cottage cheese, or a smaller, lower-carb plant plate right after lifting, with the bigger rice-and-bean bowl saved for later in the day, captures whatever benefit this study is actually pointing at, without requiring you to change your protein sources at all.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your week around your total daily protein target first, because that's the number the evidence consistently backs as the thing that actually drives results, whether your plan is vegetarian, vegan, or built around meat. If you want to apply this study's actual lesson rather than its headline, that just means keeping your first post-workout bite smaller and faster-digesting, and saving the bigger grain-and-legume bowl for later. <a href="https://macroplan.app">See how MacroPlan builds meals around your real macro targets →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Does this study mean plant protein doesn't build muscle?</h3>
+      <p>No. It means one specific whole-food plant meal, eaten immediately after training and paired with a large carbohydrate load, produced a slower amino acid response than a meal of lean pork in that same narrow window. It says nothing about plant protein's effectiveness across a full day, and it doesn't override the much larger body of evidence showing vegetarians and vegans can build muscle just as effectively when total daily protein and training are matched.</p>
+      <h3>Should I stop eating rice and beans after a workout?</h3>
+      <p>Not necessarily, but you can get more out of that meal by separating it in time. Put a smaller, faster-digesting protein source right after training, a shake, cottage cheese, or a lean protein without a huge carb load, and eat the bigger rice-and-bean plate as its own meal an hour or two later rather than stacking all of it into the same sitting.</p>
+      <h3>Who funded this research, and does that matter?</h3>
+      <p>Part of the funding came from the National Pork Board's Pork Checkoff program, an industry group with a direct interest in results favoring pork. That's worth knowing when you see the headline, though it doesn't automatically invalidate the methodology. It's a good reason to read what the researchers actually measured, the carbohydrate-driven digestion delay, rather than stopping at the plants-versus-meat framing the coverage ran with.</p>
+
+      <p>Set your real macro targets and let MacroPlan build the week around them, plant-based or not. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 22, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1615865417491-9941019fbc00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxyaWNlJTIwYmVhbnMlMjBwcm90ZWluJTIwYm93bHxlbnwxfDB8fHwxNzg0NzA0MDAxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Shashi Chaturvedula on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@thephotographermom?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'high-protein-vegetarian-meal-prep-for-lifters',
     title: 'High-Protein Vegetarian Meal Prep: Hitting 180g a Day Without Meat',
     excerpt: 'No chicken breast, no problem. Here is how vegetarian lifters actually hit big protein numbers with real food, plus a batch-cooking approach that keeps the macros honest.',
