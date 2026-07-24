@@ -22,6 +22,58 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'weight-loss-plateau-fix-macros',
+    title: 'Weight Loss Plateau: Why Your Deficit Stopped Working',
+    excerpt: 'The scale hasn\'t moved in three weeks and you haven\'t changed a thing. Here\'s why that happens on a calorie deficit, and the order of fixes that actually work.',
+    content: `
+      <p>You set your calories, you hit them most days, and for a month the scale moved the way it was supposed to. Then it stopped. Same intake, same training, same routine, and the number on the scale just sits there, sometimes for two or three weeks straight. It's one of the most common reasons people quit a cut, and it's rarely a sign that dieting has stopped working. In almost every case it's your body adjusting to a lower weight, and the fix is a specific, ordered set of changes rather than a fresh start.</p>
+
+      <h2>Your Deficit Shrinks as You Lose Weight</h2>
+      <p>A calorie deficit isn't fixed. It's calculated from your maintenance calories, and maintenance calories drop as you get lighter, because a smaller body burns less energy just existing. Lose fifteen pounds and your maintenance might fall by 150 to 250 calories, so the exact intake that created a real deficit in week one is now much closer to your new maintenance by week eight. Nothing you did was wrong. The target underneath you moved while your number stayed still.</p>
+      <p>This is the single most common cause of a stall, and it's also the most fixable. If you calculated your macros once at the start of a cut and never touched them again, a recalculation against your current weight is usually the first thing to check, not the last.</p>
+
+      <h2>Water and Sodium Can Hide Real Progress</h2>
+      <p>Scale weight is body weight, not fat mass, and body weight includes water. Sodium, carbohydrate intake, sleep quality, stress, and even your training split can shift water retention by two or three pounds in either direction, easily enough to bury a real half-pound of fat loss underneath noise for a week or two. A hard leg day, a salty restaurant meal, or a rough night's sleep can all make the scale sit flat or even climb slightly while fat loss is still happening underneath.</p>
+      <p>This is why a single weigh-in tells you very little and a trend across two to three weeks tells you almost everything. If your weekly average is still ticking down even slowly, the deficit is working and the plateau is mostly an illusion created by day-to-day water swings. If the weekly average itself has been flat for three straight weeks, that's the point where an adjustment is actually justified.</p>
+
+      <h2>Adherence Drifts Without You Noticing</h2>
+      <p>The least dramatic explanation is usually the right one: intake has crept up. Portions get slightly larger as a diet drags on, a handful of nuts here, an extra splash of oil there, a bigger scoop at dinner because you were hungrier than usual. None of it feels like cheating and none of it gets logged, but 100 to 150 quietly untracked calories a day is enough to erase an entire deficit. This is exactly the failure mode we covered in <a href="/blog/stop-tracking-macros-burnout">our piece on macro tracking burnout</a>: the less structured your food is, the easier it is for a real deficit to become an accidental maintenance diet without anyone deciding that on purpose.</p>
+      <p>Pre-portioned, pre-weighed meals close this gap almost entirely, because the calories are locked in before you're hungry and making judgment calls. It's a big part of why batch prep outperforms freestyle eating for anyone stuck on a plateau, not because the macros are different in theory, but because they're actually eaten as planned in practice.</p>
+
+      <h2>The Order to Actually Fix It In</h2>
+      <p>When the weekly average has genuinely stalled for two to three weeks, work through the causes in this order rather than changing everything at once, since stacking multiple changes together makes it impossible to know what worked.</p>
+      <ul>
+        <li><strong>Recalculate your targets against your current weight.</strong> If you've lost more than about 10 pounds since your last calculation, your macros are almost certainly stale.</li>
+        <li><strong>Audit adherence honestly for a few days.</strong> Weigh food again for a short stretch even if you've stopped, since drift is invisible until you measure it.</li>
+        <li><strong>Only then consider a deeper cut or added cardio.</strong> This should be the last lever, not the first, because it has the smallest room for error and the highest cost to your energy and training performance.</li>
+      </ul>
+      <p>Most plateaus resolve at step one or step two. Very few genuinely require step three, and jumping straight to "eat even less" without checking the first two is how people end up dieting far harder than their actual situation requires.</p>
+
+      <h2>Why Recalculating Manually Is Easy to Skip</h2>
+      <p>The honest reason most people don't recalculate their macros every few weeks isn't that they don't know they should. It's that the math is one more chore layered on top of an already effortful diet, so it gets put off until the plateau has dragged on for a month. This is the exact gap MacroPlan is built to close: your targets update as your weight and goal change, and your batch prep plan updates with them, so the fix in step one happens automatically instead of depending on you remembering to do it. If you've been eating the same macros since week one of a cut that started months ago, <a href="https://macroplan.app">check what your current numbers actually look like</a>.</p>
+      <p>If you're also loosely tracking rather than logging every gram, our <a href="/blog/ultimate-guide-to-flexible-dieting">guide to flexible dieting</a> covers how to keep enough structure that drift like this gets caught early, without going back to weighing every ingredient forever.</p>
+
+      <h2>FAQ</h2>
+      <h3>How long should the scale be flat before I call it a real plateau?</h3>
+      <p>Look at your weekly average, not single weigh-ins. If that average has been flat for two to three consecutive weeks despite consistent adherence, it's a real plateau worth addressing. A single stagnant week is almost always water and noise.</p>
+      <h3>Should I just cut calories further as soon as the scale stalls?</h3>
+      <p>No, that should be the last step, not the first. Recalculate your targets against your current weight and check adherence for drift before cutting calories again. Most plateaus resolve without needing a deeper deficit at all.</p>
+      <h3>Does adding cardio fix a plateau faster than adjusting food?</h3>
+      <p>It can help, but it's a smaller lever than most people expect and it adds recovery cost. Fixing a stale calorie target or closing an adherence gap usually resolves a plateau on its own, before cardio needs to be part of the conversation.</p>
+
+      <p>Let MacroPlan recalculate your targets as your weight changes and keep your batch prep plan matched to them automatically. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 24, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1522844990619-4951c40f7eda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHx3ZWlnaHQlMjBzY2FsZSUyMGZpdG5lc3MlMjBmb29kfGVufDF8MHx8fDE3ODQ4NzY3MzN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by i yunmai on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@yunmai?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
