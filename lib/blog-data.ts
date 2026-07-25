@@ -22,6 +22,49 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'myfitnesspal-vs-cronometer-for-lifters',
+    title: 'MyFitnessPal vs. Cronometer for Lifters: Which Tracker Actually Holds Up',
+    excerpt: 'Both apps will let you log a chicken breast. Neither one will tell you what to cook. Here is how the two biggest food trackers actually compare for someone training and cutting on a macro target, and where they both fall short.',
+    content: `
+      <p>If you've searched for a macro tracking app, you've landed on the same two names over and over: MyFitnessPal and Cronometer. Both have been around for over a decade, both have loyal followings in the lifting community, and both get recommended constantly without much explanation of what actually separates them. The honest answer is that they solve the same core problem in different ways, and the differences matter more than most reviews let on once you're trying to hit a specific protein number every day, not just "eat healthier."</p>
+
+      <h2>What MyFitnessPal Gets Right, and Where It Breaks Down</h2>
+      <p>MyFitnessPal's biggest asset is scale. Its food database is enormous, built over years by millions of users scanning barcodes and logging restaurant meals, which means you'll almost always find an entry for whatever you're eating, even if it's a regional grocery chain's private-label yogurt or a dish from a small local restaurant. For someone eating out often or relying on packaged food, that coverage is genuinely useful. The interface is also the most polished of the two, quick to log a meal, quick to see your daily totals against your targets.</p>
+      <p>The problem is that the same crowdsourcing that built the database also poisoned parts of it. Anyone can submit an entry, and plenty of those entries are wrong, sometimes by a small margin, sometimes by a lot. A user who typos a serving size or misreads a nutrition label creates an entry that then gets reused by everyone else who searches the same food. You can work around this by sticking to verified entries and USDA-sourced results, but that takes discipline most people don't maintain three months into a diet. And MyFitnessPal's macro-setting tools were built for calorie counting first, macros second: getting a genuinely custom protein, carb, and fat split configured the way a lifter wants it takes more menu-digging than it should.</p>
+
+      <h2>Where Cronometer Pulls Ahead</h2>
+      <p>Cronometer takes the opposite approach. Its database is smaller but far more tightly curated, leaning heavily on <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener noreferrer">USDA FoodData Central</a> entries and verified branded products rather than open user submissions, so the numbers you see are more likely to be accurate. It also tracks micronutrients by default in a way MyFitnessPal buries behind a premium tier, showing you vitamin and mineral totals alongside your macros without extra setup. For a lifter running a long cut who's worried about more than just protein and calories, that's a real advantage; it's much easier to notice you're consistently low on fiber, potassium, or a specific vitamin when the app is already tracking it.</p>
+      <p>The tradeoff is coverage. Cronometer's restaurant and packaged-food database is thinner, so eating out means more manual entries or accepting a less precise match. Its free tier is also more limited than MyFitnessPal's, with several features, including full macro customization, sitting behind a paid plan. If most of your food comes from your own kitchen and you want accuracy over convenience, that tradeoff usually favors Cronometer. If you eat out three or four times a week, it starts to feel like extra friction for marginal gains in precision.</p>
+
+      <h2>The Question Neither App Actually Answers</h2>
+      <p>Here's what gets lost in the "which app is better" debate: both of these tools are logs. They tell you what you already ate, after you've already eaten it. Neither one tells you what to cook on Sunday to hit your numbers for the week, and neither one turns your protein, carb, and fat targets into an actual grocery list or a batch-cook plan. You still have to do the planning yourself, then use the app to check your work.</p>
+      <p>That gap is exactly why so many lifters who track diligently for months eventually burn out. We've written before about how <a href="/blog/stop-tracking-macros-burnout">tracking burnout happens</a> when logging every gram becomes its own second job, and it's worth noticing that both MyFitnessPal and Cronometer are built to keep you logging forever, because that's the product. Neither one has an incentive to hand you a plan that makes logging unnecessary. If you already understand <a href="/blog/decoding-macros">how your macro targets are calculated</a>, the app itself becomes almost a formality, a way to confirm numbers you already roughly know from having built the meal.</p>
+
+      <h2>What Actually Closes the Gap</h2>
+      <p>The lifters who stick with a macro-based diet longest tend to be the ones who spend less time typing into a search bar and more time eating meals that were built to hit the target in the first place. That's the difference between a tracker and a planner. A tracker answers "what did I eat." A planner answers "what do I eat," and if the plan is built correctly, the tracking becomes redundant because the containers already match the numbers. Reading the <a href="/blog/ultimate-guide-to-flexible-dieting">full breakdown of flexible dieting</a> makes this clearer: the macro target itself is simple math, the actual difficulty is turning that number into food, week after week, without it becoming a chore.</p>
+      <p>MacroPlan was built to sit on that side of the problem instead of the logging side. You set your goal and your macro targets once, and it generates a full week of batch-cook meals, with the portions already built to land on your numbers, plus the shopping list to make it happen. There's nothing to search for and nothing to weigh against a database entry that might be wrong, because the meal was built around your target from the start. <a href="https://macroplan.app">See how MacroPlan builds your week around your macros →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Which app has more accurate data, MyFitnessPal or Cronometer?</h3>
+      <p>Cronometer generally comes out ahead on accuracy because its database leans on verified sources like USDA FoodData Central rather than open crowdsourced entries. MyFitnessPal's database is larger and covers more restaurant and packaged foods, but its user-submitted entries are inconsistent in quality, so you have to actively look for verified results to get the same reliability.</p>
+      <h3>Do I need the paid version of either app to hit my macros?</h3>
+      <p>You can set basic macro targets on the free tier of both apps, but full customization of your protein, carb, and fat split, along with features like micronutrient tracking on Cronometer, is usually locked behind a subscription. Whether that's worth paying for depends on how much you value precision over convenience.</p>
+      <h3>Do I still need a tracking app if I'm following a meal plan?</h3>
+      <p>If the plan was actually built to hit your macro targets, and you're eating the portions as written, a tracking app becomes mostly a spot-check tool rather than a daily requirement. Most of the value of logging comes from the uncertainty of not knowing what's in your food; a pre-built, pre-measured plan removes that uncertainty before you ever pick up your phone.</p>
+
+      <p>Stop reverse-engineering meals from a food log. Set your macros and let MacroPlan build the week for you. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 25, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1543353071-c953d88f7033?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGZvb2QlMjBzY2FsZSUyMG1hY3Jvc3xlbnwxfDB8fHwxNzg0OTY4MDk4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
