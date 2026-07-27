@@ -22,6 +22,52 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'reverse-dieting-after-a-cut',
+    title: 'Reverse Dieting After a Cut: How to Raise Calories Without Getting Fat Back',
+    excerpt: 'Jumping straight from a deficit to maintenance calories is how most of a cut gets undone in a month. Here is how to raise food back up in a way that actually sticks.',
+    content: `
+      <p>The end of a cut is where a lot of good work quietly falls apart. You hit your target, you're proud of the number on the scale, and then you do the thing that feels obvious: you go back to eating "normally." Within a few weeks the scale is climbing faster than it has any right to, the mirror looks softer, and it feels like your metabolism betrayed you. It didn't. What actually happened is that a body running on a deficit for two or three months adapts to being underfed, and jumping straight back to a higher calorie number all at once outruns how fast that adaptation can reverse. Reverse dieting is the fix: a structured, gradual climb back to maintenance that gives your metabolism time to catch up before your intake does.</p>
+
+      <h2>Why Your Body Fights Back After a Cut</h2>
+      <p>A sustained calorie deficit doesn't just burn fat, it also nudges down your resting energy expenditure. Non-exercise movement drops without you noticing, hunger hormones shift to make food more rewarding, and your body gets a little more efficient at running on less. Researchers call this adaptive thermogenesis, and it's a well-documented response to prolonged dieting, not a sign anything went wrong with your plan. The problem is that this adaptation doesn't switch off the moment your deficit ends. Your maintenance calories are lower right after a cut than they were before you started, and they climb back up over time as your body readjusts to being fed enough again.</p>
+      <p>That gap is exactly where the "I ate one normal week and gained five pounds" story comes from. If you jump straight from a deficit to what used to be your maintenance number, you're eating well above what your currently-adapted body can handle, and the surplus gets stored fast. It's not that willpower failed. It's that the number itself was wrong for where your metabolism actually was that week.</p>
+
+      <h2>The Actual Protocol: Small, Regular Increases</h2>
+      <p>Reverse dieting is simple in structure even if it takes patience to execute. Instead of jumping back to a guessed maintenance number, you raise calories in small steps, typically 50 to 150 calories every one to two weeks, and let your weight trend tell you whether you can keep going. If your weight stays flat or drifts down slightly over that stretch, you add again. If it jumps more than what water and food volume would explain, you hold that calorie level for an extra week or two before the next bump. The carbohydrate is usually the easiest place to add those calories back, since it was likely the macro cut hardest during the deficit, though a modest bump in fat works too depending on how your appetite and training are responding.</p>
+      <p>This is slower than most people want it to be, and that's the point. A six to ten week reverse diet is common after a serious cut, and the payoff is that you land on a real, livable maintenance number instead of a guess, with your metabolism largely caught back up rather than still lagging behind what you're eating. It also means the food freedom that comes with a bigger calorie budget doesn't arrive with a side of unexpected fat gain, which is usually the actual goal people have when they say they're "done cutting."</p>
+
+      <h2>What to Watch Instead of the Scale Alone</h2>
+      <p>Bodyweight is the main signal, but it's a noisy one on its own, especially in the first couple of weeks back at higher calories when water retention and fuller glycogen stores can add a pound or two that has nothing to do with fat. Track a weekly average rather than reacting to single days, and pair it with how your training is going. Strength coming back on lifts that had stalled during the cut, better recovery between sessions, and hunger settling into something manageable rather than constant are all signs the reverse diet is doing its job, even in a week where the scale barely moves. If you're tracking protein through this phase, keeping it high, in the range we cover in <a href="/blog/how-much-protein-to-build-muscle">how much protein you actually need to build muscle</a>, protects the muscle you kept through the cut while the rest of your calories climb back up.</p>
+      <p>Training days and rest days don't have to eat identically through this either. If you've read our piece on <a href="/blog/calorie-cycling-training-rest-days">calorie cycling between training and rest days</a>, the same logic applies well during a reverse diet: weighting more of the new calories toward training days can make the increase feel more useful and less like undirected extra food.</p>
+
+      <h2>Where People Get This Wrong</h2>
+      <p>The most common mistake is impatience. Two flat weeks at a new calorie level feels like proof the increase isn't working, so people add too much too fast, and that's when the scale genuinely does start moving up for real reasons. The second most common mistake is treating the reverse diet as a chore to survive rather than the actual reason to have cut in the first place. Nobody diets down just to stay at deficit-level calories forever. The reverse diet is what lets you keep the results and eat like a person again, and rushing it is how people end up back in a deficit within a few months because the number crept too high too fast.</p>
+      <p>Logging every gram through a reverse diet also tends to be the point where a lot of people burn out, since it's the third or fourth month of paying close attention to food. If tracking is wearing thin, our guide on <a href="/blog/stop-tracking-macros-burnout">keeping results without logging everything</a> covers how to shift from constant tracking to pre-portioned structure without losing the accuracy that makes a reverse diet work.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>Reverse dieting only works if the small weekly increases actually show up in what you're eating, not just in a spreadsheet. MacroPlan lets you update your calorie and macro targets as you climb and rebuilds your batch-cook plan and portions around the new numbers, so a 100-calorie bump means an actual change to your containers instead of a mental note you forget by Wednesday. <a href="https://macroplan.app">See how MacroPlan adjusts your meal plan as your targets change →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How long should a reverse diet take?</h3>
+      <p>Most reverse diets run six to ten weeks after a moderate cut, longer after an aggressive or extended one. The timeline depends more on how your weight and hunger respond at each step than on a fixed calendar, which is why small, regular check-ins matter more than picking an exact end date in advance.</p>
+      <h3>Do I have to reverse diet, or can I just go back to eating normally?</h3>
+      <p>You can go straight back to your old maintenance number, but expect faster weight regain while your metabolism catches up to the new intake. A reverse diet isn't required, it's a way to raise calories with less fat regain and less panic when the scale moves, which is why most people who've been burned by a fast jump back choose to do it the slower way the next time.</p>
+      <h3>What if my weight goes up during a reverse diet?</h3>
+      <p>Some increase is expected and often reflects water and fuller glycogen stores rather than fat, especially in the first two weeks. Judge it on a weekly average, not a single morning. If the upward trend continues for two to three weeks in a row at the same calorie level, hold there for an extra week or two before adding again rather than cutting calories back down.</p>
+
+      <p>Set your targets and let MacroPlan rebuild your week every time your numbers change. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 27, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxoZWFsdGh5JTIwbWVhbCUyMHBvcnRpb25zJTIwcGxhdGV8ZW58MXwwfHx8MTc4NTEzNTk0N3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
