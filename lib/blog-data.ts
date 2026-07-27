@@ -22,6 +22,50 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-timing-for-muscle-growth',
+    title: 'Meal Timing for Muscle Growth: Does When You Eat Actually Matter?',
+    excerpt: 'The "anabolic window" got oversold for years, then the backlash oversold the opposite. Here is what meal timing actually does for a lifter, and where it stops mattering.',
+    content: `
+      <p>Somewhere around 2010, every serious lifter believed there was a 30-minute window after training where you had to get protein and carbs in or the workout was basically wasted. Then the research caught up, the window turned out to be much wider than anyone thought, and the pendulum swung hard the other way: timing doesn't matter at all, just hit your daily numbers and stop overthinking it. Neither version is quite right. Meal timing has a real, if modest, effect on muscle growth and recovery, and understanding where that effect actually lives will save you from both the old anxiety and the new complacency.</p>
+
+      <h2>The Anabolic Window Was Never a Cliff Edge</h2>
+      <p>The original "window" idea came from studies showing that muscle protein synthesis rises sharply for a few hours after resistance training, and that eating protein during that period amplifies the response compared to eating nothing. That part held up. What didn't hold up was the 30-minute deadline. A well-cited 2013 meta-analysis by Brad Schoenfeld and colleagues in the <em>Journal of the International Society of Sports Nutrition</em> found that once you control for total daily protein intake, the timing of any single post-workout meal has a small effect on hypertrophy, not the make-or-break effect the supplement industry sold for a decade. Your muscles stay primed to use incoming amino acids for roughly 24 to 48 hours after a hard session, not 30 minutes. If you train fasted at 6 a.m. and eat your first real meal at 8, you have not blown anything.</p>
+      <p>That said, "the window is wide" is not the same as "the window doesn't exist." A lifter who trains, then genuinely doesn't eat again for six or seven hours, is leaving a measurable amount of muscle protein synthesis on the table compared to someone who eats within a couple of hours. The effect is real, it is just far smaller than the old marketing implied, and it is almost entirely swamped by whether you hit your total protein for the day. If you're still working out what that daily number should be, our <a href="/blog/how-much-protein-to-build-muscle">guide to protein needs for muscle growth</a> walks through the actual math.</p>
+
+      <h2>Where Timing Still Earns Its Keep</h2>
+      <p>Total daily protein is the biggest lever by a wide margin, but three timing-related factors have decent evidence behind them and are worth building habits around, mostly because they're easy once you've done them a few times.</p>
+      <p>Protein distribution across the day matters more than the post-workout window itself. A 2018 review in the same ISSN journal found that spreading protein into three to four servings of roughly 0.4 grams per kilogram of bodyweight each, spaced every three to four hours, produced a better muscle protein synthesis response over a full day than getting the same total protein in one or two huge meals. This is less about a magic number of meals and more about not going eight hours between servings, which is exactly what happens to a lot of people who skip breakfast and then eat two enormous meals in the evening. If you're mapping out how many meals actually make sense for your schedule, our <a href="/blog/ultimate-guide-to-flexible-dieting">guide to flexible dieting and macro tracking</a> covers how to build a split that fits real life instead of a lab protocol.</p>
+      <p>Pre-sleep protein is the other piece with reasonably solid backing. A slow-digesting protein source, commonly casein, taken 30 to 60 minutes before bed has been shown in controlled trials to raise overnight muscle protein synthesis rates without meaningfully affecting fat gain or sleep quality, as long as it fits inside your daily calorie target. Cottage cheese, a casein shake, or even a Greek yogurt with a scoop of whey stirred in all do the job. This isn't a requirement, but if you're already close to your protein target and looking for somewhere to put the last 20 to 30 grams, before bed is a genuinely useful slot.</p>
+      <p>Carbohydrate timing around training also has a role, though it's more about performance and recovery than a hard hypertrophy effect. Eating carbs in the hours before a session tops off glycogen so you can actually train hard, and eating them after helps you refill glycogen faster for your next session, which matters more the more frequently you train. If you're lifting five or six days a week, under-fueling around training will eventually show up as flat, low-energy sessions even if your total daily calories look fine on paper. This ties directly into why <a href="/blog/calorie-cycling-training-rest-days">training days and rest days shouldn't use identical macros</a>: a lifter training hard four or five times a week benefits from routing more carbs toward the days the muscle actually needs them.</p>
+
+      <h2>What This Looks Like in Practice</h2>
+      <p>None of this requires a stopwatch. A lifter training in the late afternoon might eat a moderate meal two or three hours beforehand, train, then eat a full meal within an hour or two afterward, and close the day with a protein-forward snack before bed. A lifter training first thing in the morning, fasted, can eat a solid protein-and-carb breakfast right after and be functionally in the same position. What actually breaks the system is the version where someone trains at 6 p.m. and doesn't eat again until the next morning, because that's a real gap with real evidence attached to it, not a theoretical one.</p>
+      <p>The practical takeaway is to build a meal rhythm that keeps you from going long stretches without protein, front-load carbs around your hardest sessions, and treat the specific minute-by-minute post-workout window as flexible rather than sacred. If you'd rather not map that rhythm out by hand every week, <a href="https://macroplan.app">MacroPlan</a> splits your macros into training-day and rest-day targets automatically and builds the prep plan around them, so the distribution happens without you doing the spreadsheet math yourself.</p>
+      <p>Consistency across weeks and months is still what actually builds muscle. Meal timing is a five to ten percent lever on top of that foundation, worth using once the bigger pieces (total protein, total calories, training volume, sleep) are already in place. It's not worth the anxiety it used to cause, and it's not worth ignoring completely either.</p>
+
+      <h2>FAQ</h2>
+      <h3>Do I really need to eat right after my workout?</h3>
+      <p>No. The old 30-minute rule doesn't hold up. You have roughly a day or two of elevated sensitivity to protein after training, so eating within a couple of hours is a reasonable habit, but there's no cliff where the workout stops "counting" if you wait longer.</p>
+      <h3>Is casein before bed actually necessary?</h3>
+      <p>It's not necessary, but it's a solid, low-effort spot to place protein if you're falling short on your daily total. Any slow-digesting protein source works; it doesn't have to be a specific supplement.</p>
+      <h3>Does intermittent fasting ruin muscle growth because of the eating window?</h3>
+      <p>Not inherently. What matters is total daily protein and not going so long without eating that you consistently miss your target. A compressed eating window works fine for muscle growth as long as protein and calories land where they need to.</p>
+      <h3>How many meals per day is ideal for building muscle?</h3>
+      <p>Research points to three to four protein-containing meals spaced every three to four hours as a sweet spot for maximizing muscle protein synthesis across the day, but two well-planned meals with adequate protein each will still build muscle. It's a small optimization, not a requirement.</p>
+
+      <p>Ready to stop guessing at meal timing and let the macros sort themselves out? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 27, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1767972159709-52936afffdbf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGVhdGluZyUyMHNjaGVkdWxlJTIwY2xvY2t8ZW58MXwwfHx8MTc4NTEzMjM2OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Sasun Bughdaryan on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/photos/alarm-clock-on-a-plate-with-cutlery-a1hU8-woqFA?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition',
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
