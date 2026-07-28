@@ -22,6 +22,54 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'weight-loss-plateau-how-to-break-it',
+    title: 'Weight Loss Plateau: Why It Happens and How to Actually Break It',
+    excerpt: 'The scale stopped moving even though nothing about your plan changed. Here is what is actually happening metabolically, and the specific adjustments that get you moving again without crashing your calories.',
+    content: `
+      <p>Four weeks ago the scale was moving every week. Now it hasn't budged in ten days, you're still logging every meal, you're still training, and nothing about your plan has changed on paper. This is the point where most people either panic and slash their calories by another few hundred, or throw the whole thing out and decide tracking doesn't work for them. Neither reaction is warranted, because a stall like this is one of the most predictable parts of a cut, not a sign that something has gone wrong.</p>
+
+      <h2>Why the Scale Stops Moving Even When You Haven't Changed Anything</h2>
+      <p>The core reason a plateau happens is that your maintenance calories are not a fixed number. As you lose weight, your body simply needs less energy to run itself: a lighter body burns fewer calories walking around, less tissue means a lower resting metabolic rate, and your total daily energy expenditure quietly drifts downward the whole time you're dieting. A deficit that was 500 calories in week one can shrink to 200 or less by week eight without you doing anything differently, because the maintenance number it was measured against has moved. Eat the same calories your app told you six weeks ago and you're no longer in the deficit you think you're in.</p>
+      <p>Water retention adds another layer of noise on top of that real physiological shift. Higher sodium one weekend, a harder training block, more stress, or even where you are in a menstrual cycle can hold two or three pounds of water for days at a time, and that's more than enough to hide several weeks of genuine fat loss underneath a flat or even rising scale number. This is exactly why a single weigh-in tells you almost nothing useful, and why a stall that looks alarming day to day often resolves itself once you zoom out to a weekly average instead of chasing daily numbers.</p>
+      <p>There's also a behavioral drift that's easy to miss because it doesn't feel like cheating. Six weeks into a diet, portions creep slightly larger without a conscious decision to eat more, a "quick taste" while cooking stops getting logged, and NEAT, the calories burned from fidgeting, walking, and general daily movement, tends to drop as dieting fatigue sets in and you unconsciously move less. None of that is a failure of willpower. It's just what happens to most people on a long diet, and it's worth naming honestly before assuming the plateau is purely metabolic.</p>
+
+      <h2>Rule Out the Fake Plateau First</h2>
+      <p>Before changing a single number in your plan, check whether this is actually a plateau or just noise. Pull up your last two to three weeks of weigh-ins and look at the weekly average rather than any single day. A genuine stall means that average has been flat, not down even slightly, for at least two to three consecutive weeks. If the average is still trending down, even by a quarter pound a week, you're not stalled, you're just in a slow patch, and the fix is patience rather than a calorie cut.</p>
+      <p>It's also worth checking whether logging accuracy has quietly slipped. This is less about being dishonest and more about the fatigue that sets in around week six or eight of any diet, when the app entries start getting rounder and less precise than they were in week one. If you've been eyeballing portions instead of weighing them, or skipping the log on busy days and mentally estimating later, tightening that back up for a week is often enough to reveal that the "plateau" was actually a slow calorie creep the whole time.</p>
+
+      <h2>The Adjustments That Actually Work</h2>
+      <p>If the weekly average genuinely has been flat for two to three weeks and your logging has been tight, the standard fix is a small further reduction, not a dramatic one. Cutting another 10 to 15 percent off your current calorie target is usually enough to restore a real deficit against your new, lower maintenance number, and a 10 to 15 percent cut is small enough to sustain without wrecking training performance or triggering the kind of hunger that leads to a binge. Going much larger than that tends to backfire: it makes the diet harder to stick to and doesn't meaningfully speed up the actual rate of fat loss, since fat loss is capped by how much body fat you realistically have available to lose per week regardless of how aggressive the deficit gets.</p>
+      <p>A diet break is the other legitimate tool here, and it's underused because it feels counterintuitive to eat more when the goal is to lose weight. Spending one to two weeks eating at maintenance, calculated from your current bodyweight rather than where you started, gives your metabolism room to partially recover from the adaptive slowdown that comes with an extended deficit, refills muscle glycogen so training feels less flat, and resets the psychological fatigue that builds up over months of restriction. This isn't the same as calorie cycling week to week, which our <a href="/blog/calorie-cycling-training-rest-days">guide to training-day and rest-day cycling</a> covers for people still actively losing. A diet break is a deliberate full pause, and most people come out of it able to resume a deficit with better adherence and less mental fatigue than if they'd just pushed calories lower and kept grinding.</p>
+      <p>Before reaching for either of those levers, it's worth ruling out the boring explanation one more time. A meaningful share of plateaus that people bring to a coach or a forum turn out to be a measurement problem rather than a metabolic one: a kitchen scale that's never been zeroed, a habit of rounding restaurant meals down, or oil and sauces that never make it into the log because they don't feel like "real" food. If you haven't already, spend a week weighing everything to the gram and logging genuinely everything, including the bite while cooking and the coffee creamer, before concluding your body has actually adapted. Burnout around this level of precision is real too, and if constant logging is what's breaking down, our piece on <a href="/blog/stop-tracking-macros-burnout">cutting tracking fatigue without losing results</a> covers how to stay accurate without logging every gram forever.</p>
+
+      <h2>What Not to Do</h2>
+      <p>The instinct to add more cardio on top of an already-tight deficit is understandable but usually counterproductive past a certain point. Extra cardio increases hunger, adds to the fatigue that's already suppressing your NEAT, and eats into recovery from the resistance training that's actually preserving the muscle you want to keep while losing fat. A little more daily walking is a reasonable, low-cost lever. Adding forty-five minutes of running on top of lifting sessions you're already recovering from poorly is a good way to stall harder, not break the stall.</p>
+      <p>Slashing calories dramatically, dropping 500 or more in one move because the small cut feels too slow, tends to produce the opposite of what people expect. A deficit that's too aggressive makes a diet miserable enough that adherence collapses within a couple of weeks, and inconsistent eating from a burnt-out dieter loses less fat over a month than a moderate, sustainable deficit followed consistently. The plateau isn't solved by a heroic single week, it's solved by whichever adjustment you can actually hold for the next month.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan recalculates your targets from your current weight rather than leaving you stuck on the number it gave you at the start of your cut, so as your maintenance drifts down over a plateau, your plan can drift with it instead of quietly falling out of sync. If you're several weeks into a cut and the scale has stopped moving, updating your stats and letting it rebuild your macros is the fastest way to find out whether you actually need the adjustment or just needed a more accurate number. <a href="https://macroplan.app">See how MacroPlan recalculates your targets →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How long should the scale be flat before I call it a real plateau?</h3>
+      <p>Look at the weekly average, not individual days, and give it two to three consecutive weeks of a flat or rising average before treating it as a genuine stall. Shorter flat stretches are almost always water retention or normal week-to-week noise, and reacting to them with a bigger calorie cut usually does more harm than good.</p>
+      <h3>Should I cut calories or add more cardio to break a plateau?</h3>
+      <p>A small further calorie cut, roughly 10 to 15 percent below your current target, is the more reliable fix. Adding cardio on top of an already-tight deficit tends to raise hunger and eat into recovery without producing a meaningfully faster result, and it's harder to sustain than a modest calorie adjustment.</p>
+      <h3>Is a diet break going to undo my progress?</h3>
+      <p>No, not if it's one to two weeks at maintenance calculated from your current weight. A short break doesn't erase the fat you've already lost, and for a lot of people it restores enough training performance and mental energy that the next stretch of dieting goes better than if they'd pushed through without one.</p>
+
+      <p>Stuck on the same number for weeks? Update your stats in MacroPlan and get a macro target built for where you are now, not where you started. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 28, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1522844990619-4951c40f7eda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxzY2FsZSUyMHdlaWdodCUyMGxvc3MlMjBwcm9ncmVzc3xlbnwxfDB8fHwxNzg1MjI0NTA5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by i yunmai on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@yunmai?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
