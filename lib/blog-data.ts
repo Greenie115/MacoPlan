@@ -22,6 +22,61 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'lean-bulk-guide-gain-muscle-without-fat',
+    title: 'Lean Bulking: How to Gain Muscle Without Gaining a Ton of Fat',
+    excerpt: 'Most bulks fail for the same reason: the surplus is too big, too fast, and nobody’s tracking what actually happens on the scale. Here is how to run a lean bulk that adds muscle without undoing months of dieting.',
+    content: `
+      <p>Ask most lifters how their last bulk went and you'll get some version of the same story: they started eating more, the scale went up fast, and six months later they had to spend just as long cutting the fat back off as they spent gaining it. That's not a bulk, that's a slow-motion cut waiting to happen. A lean bulk is built around a different idea: gain weight slowly enough that most of it is muscle, track closely enough to catch it if that stops being true, and stop before the surplus starts working against you.</p>
+
+      <h2>What "Lean" Actually Means in a Bulk</h2>
+      <p>Every bulk adds some fat. That's not a failure state, it's how a calorie surplus works: your body can only build a limited amount of new muscle tissue per week, and any energy beyond that gets stored. The goal of a lean bulk isn't zero fat gain, it's keeping the ratio favorable, aiming for something like three to four pounds of muscle for every pound of fat, rather than the other way around. A lifter who gains 10 pounds over three months and ends up with visibly softer abs and a waistband that's tighter everywhere probably ran too large a surplus for too long. A lifter who gains the same 10 pounds and looks and feels basically the same, just heavier and stronger, got the ratio right.</p>
+      <p>The size of the surplus is the single biggest lever here, more than food quality, meal timing, or any supplement. A surplus of 200 to 300 calories a day, roughly 10 percent above maintenance, is enough to support real muscle growth in most lifters without opening the door to fast fat gain. Go much higher than that and you're not speeding up muscle growth, since that process is capped by training stimulus and recovery, you're just adding fat faster. This is the part of bulking culture that gets the most pushback, because eating a lot feels productive and a small surplus feels timid, but the muscle-building side of the equation doesn't actually respond to more food once you're past what your training can use.</p>
+
+      <h2>How Much Weight You Should Actually Be Gaining</h2>
+      <p>For most natural lifters, a realistic gain rate lands around 0.25 to 0.5 percent of bodyweight per week for someone with a few years of training experience, and closer to 0.5 to 1 percent for a newer lifter still in their first year or two, when the body's capacity to build muscle quickly is higher. For a 180 lb lifter, that works out to roughly 0.5 to 1.5 lbs a month for an experienced trainee, or up to 3 to 4 lbs a month for a beginner. Anything faster than that isn't extra muscle, it's extra fat, because muscle protein synthesis simply can't keep pace with a bigger surplus no matter how much food you're eating.</p>
+      <p>This is also where weekly weigh-ins earn their keep. A single morning weight bounces around with water, sodium, and how much food is still sitting in your gut, so one high or low reading means nothing. What matters is the weekly average, tracked over four to six weeks, compared against the rate above. If the trend line is climbing faster than that, the surplus is too big and it's time to trim calories back down, not wait it out and hope the extra weight turns out to be muscle after the fact. Our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a> covers how to set the starting numbers before you begin adjusting.</p>
+
+      <h2>Setting the Macro Split for a Bulk</h2>
+      <p>Protein needs don't change much between a cut and a bulk, somewhere around 0.7 to 1 gram per pound of bodyweight (roughly 1.6 to 2.2 g per kg) covers what most lifters need to support muscle growth, and eating well past that number doesn't add extra benefit, it just displaces carbs and fat that could otherwise be fueling training. Our <a href="/blog/how-much-protein-to-build-muscle">breakdown of protein needs for muscle gain</a> goes into the research behind that range if you want the full case for it.</p>
+      <p>Where a bulk actually differs from a cut is in how the rest of the calories get split. Carbohydrates deserve the bigger share of the added surplus, since they directly fuel the training volume that's driving the muscle growth in the first place, glycogen-depleted lifters simply can't push the same load or reps that a well-fueled lifter can. Fat should sit at a level that supports hormone production, generally 20 to 30 percent of total calories, without eating so much of it that carbs get squeezed out. A simple starting split for a bulk looks like 30 percent protein, 45 percent carbs, and 25 percent fat, then gets adjusted based on how training and recovery actually feel over the following weeks.</p>
+
+      <h2>Training Has to Scale With the Surplus, Not Just Sit There</h2>
+      <p>A surplus without added training stimulus is just weight gain. The entire premise of a lean bulk is that the extra calories are there to support more or harder training than you could sustain on maintenance calories, which means the training itself needs to progress alongside the diet. That usually means one or more of the following shifting over the course of the bulk:</p>
+      <ul>
+        <li>Total weekly sets per muscle group increasing gradually as recovery capacity improves</li>
+        <li>Working weights climbing on your main lifts, not staying flat month over month</li>
+        <li>Session-to-session performance actually trending upward, not just repeating the same numbers</li>
+      </ul>
+      <p>If none of that is happening and the scale is still climbing, the surplus is doing the opposite of its job. This is the piece that gets skipped most often, because tracking food is more visible than tracking training progression, but a bulk with flat lifting numbers and a rising scale is fat gain with extra steps, regardless of how clean the food choices were.</p>
+
+      <h2>How Long a Bulk Should Actually Run</h2>
+      <p>Most lean bulks run somewhere between three and six months before diminishing returns and rising fat levels make it worth pulling back. Beyond that window, the ratio of muscle to fat gained tends to worsen even if the surplus size hasn't changed, partly because the body's insulin sensitivity and partitioning ability shift as body fat rises. A useful checkpoint is body fat percentage rather than the calendar: many lifters find their training and recovery quality starts to decline once they cross somewhere around 15 to 18 percent body fat (men) or 24 to 27 percent (women), at which point a planned pause, either a maintenance phase or a short cut, resets the environment for more efficient muscle gain later. This dovetails with the calorie cycling approach we cover in <a href="/blog/calorie-cycling-training-rest-days">why your training and rest day calories shouldn't match</a>, where the surplus itself gets weighted toward the days doing the most work rather than spread flat across the week.</p>
+      <p>A useful pattern many experienced lifters land on is alternating: a lean bulk phase of three to five months, followed by a shorter cut of six to ten weeks to bring body fat back down, then repeating. This keeps any individual phase from running long enough to lose control of the fat gain, and it means you never end up carrying the amount of extra fat that turns a cut into a six-month slog. Trying to bulk indefinitely without a planned endpoint is the single most common reason lifters end up further from their physique goals a year later than when they started, not closer.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan calculates a bulking surplus from your actual bodyweight, activity level, and goal rather than a flat "eat more" instruction, and it builds the batch prep plan around that number so hitting a 300-calorie surplus with the right protein and carbs doesn't require doing math every night. If you're running a lean bulk and want the meals to actually match the plan instead of guessing your way through a grocery run, <a href="https://macroplan.app">MacroPlan builds the week around your real numbers</a>.</p>
+
+      <h2>FAQ</h2>
+      <h3>How many calories over maintenance should a lean bulk surplus be?</h3>
+      <p>Around 200 to 300 calories a day, roughly 10 percent above maintenance, is enough to support meaningful muscle growth for most lifters without opening the door to fast fat gain. Bigger surpluses don't build muscle faster since that process is capped by training and recovery, they just add fat at a higher rate.</p>
+      <h3>How much weight should I be gaining per week on a lean bulk?</h3>
+      <p>Roughly 0.25 to 0.5 percent of bodyweight per week for lifters with a few years of training experience, and up to about 0.5 to 1 percent for someone newer to lifting. Anything meaningfully faster than that, tracked as a weekly average rather than a single day's weigh-in, usually means the surplus needs to come down.</p>
+      <h3>How long should a bulk last before I switch to a cut?</h3>
+      <p>Most lean bulks run three to six months before the muscle-to-fat ratio being gained starts to worsen. Watching body fat percentage rather than the calendar is the more reliable signal, many lifters see training quality and partitioning start to decline somewhere around 15 to 18 percent body fat for men or 24 to 27 percent for women.</p>
+
+      <p>Stop guessing at your bulking surplus. MacroPlan sets your macros and builds the meal plan around them. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 29, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1737999183056-20bf6b8952e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfGFsbHx8fHx8fHx8fDE3ODUzMTQyMTl8&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Abdul Raheem Kannath on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@raheemblacksnows?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
