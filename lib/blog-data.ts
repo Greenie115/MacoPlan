@@ -22,6 +22,72 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'fiber-on-a-high-protein-diet',
+    title: 'High-Protein, Low-Fiber? 11 Foods That Fix the Gut Problem No One Warns You About',
+    excerpt: 'Chicken, eggs, and whey get you to your protein number and nowhere near your fiber number. Here is why that combination backs lifters up, and eleven foods that close the gap without touching your macros.',
+    content: `
+      <p>Somewhere around week three of tracking macros seriously, a lot of lifters hit the same unglamorous wall: they're eating more food than ever, hitting every number on the app, and somehow more constipated than they've been in years. It's rarely the protein itself causing the problem. It's what got pushed off the plate to make room for it. Chicken breast, egg whites, and a scoop of whey are protein-dense and almost entirely fiber-free, and when they start crowding out the volume of vegetables, whole grains, and legumes a normal diet used to include almost by accident, the gut backs up. Fiber intake in the general population already sits well below the recommended 25 to 38 grams a day, and a high-protein cut or bulk built around lean meat and shakes tends to make that gap worse, not better.</p>
+      <p>This isn't an argument against eating a lot of protein. It's a case for treating fiber as its own target instead of an afterthought, especially once your protein number climbs past 150 or 160 grams a day and starts squeezing everything else off the plate. The fix is almost always additive rather than a trade-off: you don't need to eat less chicken to fit more fiber in, you need to stop treating carbs and vegetables as the flexible, cuttable part of the day.</p>
+
+      <h2>Why a High-Protein Diet Tends to Run Low on Fiber</h2>
+      <p>The math is straightforward once you look at where most tracked protein actually comes from. Chicken breast, egg whites, whey powder, white fish, and lean beef are staples of almost every high-protein plan, and every one of them carries zero grams of fiber. That's not a flaw in those foods, it's just what animal protein is. The problem shows up when a day's meals are built protein-first and everything else gets sized down to hit a calorie target, because the food most often shrunk to make room is the rice, the bread, the fruit, or the vegetable side, which is exactly where the fiber was living.</p>
+      <p>Add in that a lot of higher-protein eating patterns lean on very lean cuts and powders precisely because they're calorie-efficient, and you end up with meals that are protein-dense, calorie-controlled, and structurally low in the one nutrient that keeps digestion moving. It's a predictable outcome of the way most people build a cut, not a mysterious side effect of protein itself. The fix isn't cutting protein, it's making sure the rest of the plate isn't getting hollowed out to compensate for it.</p>
+
+      <h2>What Actually Happens When Fiber Drops Too Low</h2>
+      <p>Fiber does two jobs that matter here: it adds bulk and water retention to stool, which is what keeps things moving through the gut at a normal pace, and it feeds the bacteria that make up a healthy gut microbiome, which affects everything from regularity to how bloated you feel after a normal-sized meal. Cut fiber intake in half while protein and calories stay high, and the most common result is exactly what a lot of lifters quietly deal with mid-cut: harder, less frequent bowel movements, more gas, and a stomach that feels distended even when nothing on the scale has changed. None of that is a sign anything is wrong metabolically. It's a sign the ratio of protein to fiber has drifted further than it should have.</p>
+      <p>This tends to compound with a cut specifically, because lower overall calories often mean smaller portions of everything, including the vegetables and whole grains that were doing the fiber work in a maintenance-calorie day. The result is a diet that gets more protein-dense and less fiber-dense at the exact same time, which is the worst combination for gut comfort even though both changes look reasonable individually.</p>
+
+      <h2>Eleven Foods That Close the Gap Without Touching Your Macros</h2>
+      <p>The goal isn't finding fiber sources with zero calories, it's finding ones that slot into a protein-focused day without requiring you to rebuild your whole meal plan. A few of these do double duty as a carb source you were already going to eat anyway, which is the easiest kind of swap to actually stick with.</p>
+      <ul>
+        <li>Raspberries: about 8g of fiber per cup, and low enough in sugar to fit almost any carb budget as a snack or yogurt topper</li>
+        <li>Chia seeds: roughly 10g of fiber per ounce, stirred into oats, yogurt, or a shake without changing the flavor much</li>
+        <li>Lentils: about 8g of fiber per half cup cooked, and already a staple if you batch cook rice and legumes together</li>
+        <li>Black beans: around 7.5g of fiber per half cup, plus a meaningful amount of protein on top of the fiber</li>
+        <li>Avocado: about 10g of fiber per whole fruit, useful for lifters who need the calories from healthy fat anyway</li>
+        <li>Oats: roughly 4g of fiber per half cup dry, and an easy carb source to keep as-is rather than swapping for something more processed</li>
+        <li>Broccoli: about 5g of fiber per cooked cup, at almost no calorie cost, which makes it one of the easiest additions on a cut</li>
+        <li>Pears: about 5.5g of fiber per medium fruit, most of it in the skin, so it's worth not peeling it</li>
+        <li>Popcorn: around 3.5g of fiber per 3 cups popped, and a genuinely satisfying high-volume snack on a calorie deficit</li>
+        <li>Sweet potato: about 4g of fiber per medium potato, skin on, functioning as a straightforward swap for white rice</li>
+        <li>Chickpeas: roughly 6g of fiber per half cup, and dense enough in protein to nudge two macros at once</li>
+      </ul>
+      <p>None of that list requires abandoning chicken breast or whey. It requires making sure at least a few of those foods show up somewhere in the day rather than getting displaced by another scoop of protein powder or another few ounces of meat. Swapping white rice for a sweet potato, or tossing a half cup of black beans into a bowl that already has chicken and rice in it, barely moves your protein or calorie numbers and can add 10 grams of fiber or more in a single meal.</p>
+
+      <h2>How Much Fiber You're Actually Aiming For</h2>
+      <p>The commonly cited target is 25 to 38 grams a day, generally the lower end for women and the higher end for men, though bigger lifters eating more total food can reasonably land higher than that just from volume alone. The more useful number to track in practice is grams of fiber per 1,000 calories eaten, somewhere around 14 grams per 1,000 calories is a reasonable target regardless of your total intake, since it scales with how much food you're actually eating rather than being a flat number that gets harder to hit the leaner your diet gets.</p>
+      <p>One caution worth naming: fiber intake should move up gradually, not overnight. Jumping from 15 grams a day to 40 grams in a single week is a common way to trade constipation for bloating and gas of a different kind, because the gut bacteria that ferment fiber need time to adjust to a higher load. Adding two or three grams a day over a couple of weeks, alongside enough water to actually let that fiber do its job, gets you to the target without the stomach revolt.</p>
+
+      <h2>Where This Fits Into a Real Week of Meal Prep</h2>
+      <p>The easiest place to build fiber back in is at the carb source, since that's usually the part of the plate with the most room to move without disturbing your protein number. If you're already batch cooking rice or pasta as your base starch, swapping a portion of it for lentils, black beans, or a sweet potato most days of the week does the job quietly. Our <a href="/blog/best-foods-for-batch-cooking">guide to what actually holds up over a week of batch cooking</a> covers which of these keep their texture through several days of reheats, which matters more for beans and sweet potatoes than it does for rice.</p>
+      <p>If you're already leaning on legumes as a protein source, you're closer to solving this than most lifters realize. The same approach we laid out in <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">our guide to hitting 180g of protein a day without meat</a> happens to be fiber-rich almost by accident, since beans and lentils carry both nutrients at once. Lifters eating mostly animal protein don't get that overlap for free, which is exactly why this tends to hit harder on a meat-and-shake-heavy cut than it does on a more plant-forward plan.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your week around protein, carbs, and fat, but the carb source it picks matters here too. A plan that leans on rice, beans, oats, and sweet potato as its carb rotation is quietly doing fiber work in the background, not just filling a calorie number. If your current plan feels protein-heavy and gut-unfriendly at the same time, that's usually a sign the carb side needs more variety, not less food overall. <a href="https://macroplan.app">See how MacroPlan builds a week around your real macros →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can eating too much protein cause constipation directly?</h3>
+      <p>Protein itself isn't the direct cause. The issue is almost always what a high-protein diet displaces, since foods like chicken breast, egg whites, and whey carry no fiber, and a day built around them tends to crowd out the vegetables, whole grains, and legumes that would normally supply it. Adding fiber back in usually resolves it without needing to eat less protein.</p>
+      <h3>How much fiber should a lifter eating 180g of protein a day be getting?</h3>
+      <p>The general target of 25 to 38 grams a day still applies, but a useful way to scale it is roughly 14 grams of fiber per 1,000 calories eaten, since a lifter eating more total food should reasonably be eating more fiber too. Someone eating 3,000 calories a day should be closer to 40 grams than 25.</p>
+      <h3>Will adding fiber suddenly cause bloating instead of fixing it?</h3>
+      <p>It can, if it's added too fast. Jumping from a low-fiber intake to the full recommended amount in a few days tends to cause gas and bloating while gut bacteria adjust to the new load. Increasing intake gradually over a couple of weeks, with enough water alongside it, avoids that overcorrection.</p>
+      <h3>Do fiber supplements work as well as fiber from food?</h3>
+      <p>They can help close a gap in a pinch, but whole foods bring fiber alongside other nutrients, and several of the foods on this list, like lentils, chickpeas, and sweet potato, are already doing double duty as a carb or protein source. It's usually easier to hit the number through the meals you're already eating than to add a separate supplement on top.</p>
+
+      <p>Build a week of meals around your real macros, protein included, without losing the foods that keep your digestion working. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 30, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1579705745811-a32bef7856a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxmaWJlciUyMHZlZ2V0YWJsZXMlMjBiZWFucyUyMGZvb2R8ZW58MXwwfHx8MTc4NTM5Nzg4M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Tijana Drndarski on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@izgubljenausvemiru?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
