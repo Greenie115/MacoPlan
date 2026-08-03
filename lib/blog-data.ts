@@ -22,6 +22,50 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'lean-bulk-meal-prep-without-dirty-bulk',
+    title: 'Lean Bulk Meal Prep: How to Gain Muscle Without It Turning Into a Dirty Bulk',
+    excerpt: 'Every lean bulk starts with good intentions and a modest surplus. Eight weeks later the scale is up 10 pounds and half of it is fat. Here is why that happens and the meal prep habits that keep a bulk lean on purpose.',
+    content: `
+      <p>You started this bulk with a plan: a small surplus, steady weight gain, most of it muscle. Two months in, the scale says plus 10 pounds, your lifts have gone up a little, and your waistband has gone up a lot. Somewhere between week one and week eight, "lean bulk" quietly turned into a bulk with no adjective in front of it. This happens to almost everyone who bulks without a system, and it is rarely a willpower problem. It is a portioning and tracking problem, and it is fixable with the same discipline you'd apply to a cut.</p>
+
+      <h2>Why a Lean Bulk Turns Dirty</h2>
+      <p>The surplus you plan on paper and the surplus you actually eat are two different numbers, and the gap between them grows fast when nothing is weighed or containered. A "small" 250-calorie surplus becomes 600 once you count the extra oil in the pan, the bigger-than-planned rice scoop, and the handful of nuts eaten straight from the bag while cooking. None of that feels like overeating in the moment. It adds up anyway, and a surplus is exactly the condition under which your body will happily store the extra as fat rather than push it toward muscle.</p>
+      <p>There's a mechanistic reason this matters more on a bulk than a cut: muscle can only be built so fast. A trained lifter adds maybe 0.25 to 0.5 kg of lean mass a month under good conditions, so any surplus beyond what that growth actually requires isn't building more muscle, it's just getting stored. A 2013 study from the Norwegian School of Sport Sciences found that elite athletes given a bigger, unmonitored calorie surplus over 8 to 12 weeks gained more total weight than athletes eating a controlled surplus, but nearly all of the extra gain was fat, not lean mass. More food didn't build more muscle. It just built more fat, because muscle growth has a ceiling and fat storage doesn't.</p>
+      <p>The other quiet driver is that appetite goes up with training volume, and a lifter who's hungry after a hard session will naturally eat more than their tracked plan calls for, especially if that meal isn't already portioned and sitting in the fridge. That's not a discipline failure either. It's what happens when the easiest available food is unmeasured.</p>
+
+      <h2>Set a Surplus You Can Actually Hold To</h2>
+      <p>Most of the fix happens before you ever pick up a spatula. Calculate your maintenance calories, then add a genuinely modest surplus of 250 to 350 calories a day, roughly 0.25 to 0.5% of your bodyweight in weekly gain. That's slow enough to keep the fat gain minimal and fast enough to notice real progress over a few months. If you haven't worked out your macro split yet, our <a href="/blog/decoding-macros">guide to decoding macros</a> covers how to set protein, carbs, and fat once you know your target calories. Keep protein high through the bulk, around 1.6 to 2.2 g per kg of bodyweight (0.7 to 1 g per lb), since adequate protein is what actually determines how much of that surplus goes toward muscle instead of fat.</p>
+      <p>Concentrating that surplus around training also helps. Instead of adding the same 300 calories every single day, put more of the extra food on training days when your body can actually use it for fuel and recovery, and hold rest days closer to maintenance. Our piece on <a href="/blog/calorie-cycling-training-rest-days">calorie cycling between training and rest days</a> walks through the math, and it applies just as well to a bulk as it does to a cut.</p>
+
+      <h2>Batch Prep Is What Actually Enforces the Surplus</h2>
+      <p>A surplus target only means something if your meals match it, and that's where most lean bulks fall apart. Cooking a big batch of protein, carbs, and vegetables on a single prep day and portioning it into containers before you're hungry removes the exact moment where the surplus creeps: the extra spoonful of rice, the second handful of trail mix, the "I'll just add a bit more oil" decision made at 7pm on a Tuesday. When Meal #3 is already weighed out at 650 calories in a labeled container, there's no negotiation left to have.</p>
+      <p>This is the same logic that makes prep work on a cut, just pointed in the other direction. On a <a href="/blog/meal-prep-on-a-cut">cut, portioning stops you from eating too little food and going hungry</a>; on a bulk, it stops you from eating past the point your body can use. Either way, the container is doing the discipline for you so you don't have to white-knuckle every meal.</p>
+      <p>Weigh your raw ingredients the same way during a bulk as you would during a cut. It's tempting to get loose with tracking once the goal switches from "lose fat" to "gain muscle," but that looseness is precisely how a controlled surplus turns into an uncontrolled one. Check your bodyweight trend weekly, not daily, since day-to-day fluctuation from water and food volume will make a single reading meaningless. If the weekly average is climbing faster than about 0.5% of your bodyweight, pull 100 to 150 calories back out and hold there for a couple of weeks before deciding whether to adjust again.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds a batch-cook plan around whatever surplus you set, with training-day and rest-day macros calculated separately so the extra calories land where your body can actually use them. Every container comes pre-portioned to your targets, which is the part that turns a lean bulk from a plan on paper into food you actually eat. <a href="https://macroplan.app">See how it builds a bulking week →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How big should a lean bulk surplus actually be?</h3>
+      <p>Around 250 to 350 calories above maintenance for most lifters, targeting roughly 0.25 to 0.5% of bodyweight gained per week. Bigger surpluses don't build muscle faster once you're past the beginner stage, they just add fat faster, since the rate your muscle can actually grow at is capped regardless of how much extra food you eat.</p>
+      <h3>How do I know if my bulk has turned dirty?</h3>
+      <p>Track your weekly average bodyweight and a simple progress photo or waist measurement alongside it. If the scale is climbing faster than about 0.5% of bodyweight a week and your waist is moving with it, more of that gain is fat than muscle, and it's time to pull calories back.</p>
+      <h3>Do I still need to weigh my food during a bulk?</h3>
+      <p>Yes. Tracking tends to get looser once the goal shifts from losing fat to gaining muscle, but an uncontrolled surplus behaves the same as an uncontrolled deficit: it moves you off your target without you noticing until the scale or the mirror makes it obvious.</p>
+
+      <p>Stop guessing at your surplus. Set your bulk macros and let MacroPlan build the week around them. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 3, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1543353071-c953d88f7033?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGNoaWNrZW4lMjByaWNlJTIwY29udGFpbmVyc3xlbnwxfDB8fHwxNzg1NzM2NzA3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
