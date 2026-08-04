@@ -22,6 +22,58 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'one-pan-meal-prep-small-kitchen',
+    title: 'How to Meal Prep for Muscle With Just One Pan',
+    excerpt: 'No oven, no rice cooker, no second burner. Here is how to hit your protein target and still batch-cook a full week from a single skillet and a stovetop.',
+    content: `
+      <p>You don't need a six-piece cookware set and a walk-in pantry to hit 180 grams of protein a day. A lot of lifters put off meal prep entirely because they're working from a studio apartment kitchen with one burner, one pan, and maybe a microwave, and every meal prep guide they find assumes a full range, a sheet pan, and an oven with two racks. That gap between the advice and the actual kitchen is why so many people default to protein bars and rotisserie chicken from the grocery store instead of cooking. It's not that one-pan cooking can't hit your macros. It's that almost nobody explains how to do it at scale.</p>
+
+      <h2>Why a Single Pan Feels Like a Wall</h2>
+      <p>Most batch-cooking advice is built around parallel cooking: protein in the oven, a starch in the rice cooker, vegetables on the stovetop, all finishing around the same time. That workflow assumes appliances most small kitchens don't have. Take away the oven and the second burner, and you're left doing everything in sequence in one vessel, which feels slower and messier than it needs to be. The real problem isn't the pan. It's that people try to cook the way a bigger kitchen would, just with fewer tools, instead of building a method designed around one pan from the start.</p>
+      <p>The fix is to stop treating protein, starch, and vegetables as three separate cooking projects and start treating them as one layered dish. A stir-fry, a skillet hash, or a one-pot grain bowl already does this: everything hits the same pan, just at different times, and the pan does the work of an oven, a steamer, and a saute station combined. Once you build a week of meals around that model instead of fighting it, one pan stops being a limitation and starts being the fastest way to prep you've used.</p>
+
+      <h2>The Layering Method</h2>
+      <p>The order matters more than the ingredients. Cook things that take longest first, then layer in what cooks fast, and finish with anything that just needs to warm through or wilt. A typical sequence looks like this in a single 12-inch skillet with a lid: sear your protein first and set it aside, then use the same pan and its rendered fat to soften onions, garlic, and any dense vegetables like carrots or bell peppers, then add a pre-cooked or quick-cooking starch like rice, quinoa, or canned beans to pick up flavor, then return the protein to the pan along with anything that only needs a minute or two, like spinach or a splash of sauce.</p>
+      <p>That sequence gets you a full protein-carb-fat meal out of one pan in roughly 25 to 35 minutes, and it scales. Doubling or tripling the batch just means a bigger pan or two back-to-back rounds, not a more complicated process. The method also forgives substitutions easily: swap chicken thighs for ground turkey, swap rice for potatoes, swap broccoli for green beans, and the same five-step order still works because you're following a technique, not a recipe.</p>
+
+      <h2>What to Actually Buy and Cook</h2>
+      <p>A few ingredient choices make one-pan prep noticeably easier. Chicken thighs and ground meat cook faster and stay moister in a skillet than a chicken breast, which dries out easily without an oven's more even heat. Pre-cooked rice pouches or leftover rice from a rice cooker (if you have even a cheap one) cut real time off the process, since dry rice needs its own pot and timing that a single pan can't easily run alongside a protein. Frozen vegetable blends work just as well as fresh here and save you the prep knife work on a weeknight. None of this is about cutting corners on macros, it's about cutting the steps that don't actually change the nutrition.</p>
+      <p>Two or three ingredient combinations, rotated across the week, keep this from feeling repetitive:</p>
+      <ul>
+        <li><strong>Ground turkey, jasmine rice, bell peppers, and a soy-ginger sauce</strong>, built as a stir-fry-style skillet bowl.</li>
+        <li><strong>Chicken thighs, potatoes, and green beans</strong>, cooked as a stovetop hash with the chicken seared first, then the potatoes finished in the same fat.</li>
+        <li><strong>Ground beef, black beans, and frozen corn</strong>, seasoned taco-style and eaten over rice or in a tortilla.</li>
+      </ul>
+      <p>Cooking two or three of those in the same week, at double or triple portions, fills a set of containers without repeating the exact same plate five days straight, and every one of them is built from foods that hold up well in the fridge. If you're not sure which proteins and starches survive four to five days without going mushy or dry, our <a href="/blog/best-foods-for-batch-cooking">guide to foods that actually survive batch cooking</a> covers that in more detail, and it applies just as much to a one-pan kitchen as a full one.</p>
+
+      <h2>Hitting Your Numbers Without a Scale of Ingredients</h2>
+      <p>The macro math doesn't change just because your equipment is limited. Pick a protein source and know its grams per 100 grams: chicken thigh runs about 24 grams of protein per 100 grams cooked, ground turkey (93/7) sits around 21 grams, and lean ground beef lands near 26 grams. Weigh your raw protein before it goes in the pan, divide the batch evenly across your containers, and you'll hit a consistent number meal to meal, whether you're using a $15 skillet or a full range. Our <a href="/blog/best-protein-for-meal-prep">rundown of the best proteins for batch cooking</a> has the density numbers for a wider list of options if chicken and beef aren't your regular rotation.</p>
+      <p>Portioning is actually easier with one pan, not harder, because everything ends up mixed together in a single vessel instead of three separate pots you have to divide in parallel. Once the pan is done, you're just scooping equal portions into containers, not juggling a protein tray, a rice pot, and a vegetable pan all needing to be portioned at the same time. If you're prepping on a calorie deficit and watching portions closely, that single-vessel workflow makes it easier to eyeball consistency across the week, something we get into further in <a href="/blog/meal-prep-on-a-cut">our guide to meal prepping on a cut</a>.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds a full week of batch-cook meals around your actual protein, carb, and fat targets, and it doesn't assume you own a full kitchen to do it. Tell it your containers and your macros, and it hands you a shopping list and a cooking order that works whether you're cooking on six burners or one. <a href="https://macroplan.app">See how MacroPlan builds a prep plan around your kitchen →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can I really hit high protein targets cooking everything in one pan?</h3>
+      <p>Yes. The pan doesn't limit how much protein you can cook, only how much fits at once. Cook in batches within the same pan if a single load doesn't fit, searing and setting aside protein before moving to the next step, and a 12-inch skillet can comfortably produce four to six servings per session.</p>
+      <h3>Do I need a lid for this to work?</h3>
+      <p>A lid helps but isn't required. It speeds up cooking vegetables and reheating pre-cooked starches by trapping steam, which cuts a few minutes off the process. Without one, just add a splash of water or broth and cover loosely with a plate for the same effect.</p>
+      <h3>What if I don't have a rice cooker either?</h3>
+      <p>Pre-cooked rice pouches or canned beans skip the second-pot problem entirely, and both hold up fine reheated in the same skillet as your protein. If you do want to cook dry rice, it just needs to happen before or after your skillet session rather than alongside it, since you're working with one burner.</p>
+
+      <p>Ready to stop guessing what fits in your kitchen? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 4, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1547333440-51f85a3220bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxza2lsbGV0JTIwY2hpY2tlbiUyMHJpY2UlMjB2ZWdldGFibGVzfGVufDF8MHx8fDE3ODU4MjQ1Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by James Kern on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@jamesrkern?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
