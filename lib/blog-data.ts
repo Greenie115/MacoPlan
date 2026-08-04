@@ -22,6 +22,78 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prep-container-math-portion-sizes',
+    title: 'Meal Prep Container Math: How Many Grams of Chicken, Rice, and Veggies Actually Fit',
+    excerpt: 'Stop eyeballing portions. Here is the actual gram weight of chicken, rice, and vegetables per cup, mapped against the meal prep container sizes lifters actually use, so you can hit your macros without a food scale at the table.',
+    content: `
+      <p>Most lifters own a food scale and stop using it within a month. Not because tracking stops mattering, but because weighing rice at 9 p.m. on a Sunday gets old fast. What replaces the scale for people who keep their macros on point for years, not weeks, is container math: knowing roughly how many grams of chicken, rice, or broccoli a given container size holds, so the container becomes the measuring device. This is the cheat sheet for that, built from standard cooked-food densities and the container sizes lifters actually buy.</p>
+
+      <h2>Why Container Math Works</h2>
+      <p>A kitchen scale measures one ingredient at a time, in isolation, on a counter you won't be standing at come Wednesday's lunch. A container measures a whole meal, once, on the one day you're already cooking in bulk. Once you know that a cup of diced cooked chicken breast weighs about 140g and a cup of cooked white rice weighs about 180g, you can fill a container to a macro target by sight instead of by scale, and that number stays true every week you cook the same way.</p>
+      <p>The catch is that food density varies a lot by type. A cup of rice and a cup of broccoli weigh wildly different amounts because one is starch packed tight and the other is mostly water and air. That is the actual reason "just fill the container" advice fails people: it treats every food as if it takes up the same space per gram, and it doesn't. The fix isn't precision, it's a reference chart you build once and reuse forever.</p>
+
+      <h2>Grams Per Cup, Cooked: The Reference Chart</h2>
+      <p>These are cooked, packed-but-not-crushed measurements, the way food actually sits in a container rather than a loosely piled scoop. Treat them as a starting point accurate to within about 10%, which is close enough for a meal prep that gets re-cooked every single week.</p>
+      <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; margin:1.5rem 0;">
+        <thead>
+          <tr style="border-bottom:2px solid #e5e7eb; text-align:left;">
+            <th style="padding:8px;">Food (cooked)</th>
+            <th style="padding:8px;">Grams per cup</th>
+            <th style="padding:8px;">Protein</th>
+            <th style="padding:8px;">Carbs</th>
+            <th style="padding:8px;">Calories</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Chicken breast, diced</td><td style="padding:8px;">~140g</td><td style="padding:8px;">~43g</td><td style="padding:8px;">0g</td><td style="padding:8px;">~230 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">93% lean ground beef</td><td style="padding:8px;">~140g</td><td style="padding:8px;">~34g</td><td style="padding:8px;">0g</td><td style="padding:8px;">~260 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">White rice</td><td style="padding:8px;">~180g</td><td style="padding:8px;">~5g</td><td style="padding:8px;">~50g</td><td style="padding:8px;">~235 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Roasted potato, diced</td><td style="padding:8px;">~150g</td><td style="padding:8px;">~3g</td><td style="padding:8px;">~30g</td><td style="padding:8px;">~135 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Black beans</td><td style="padding:8px;">~170g</td><td style="padding:8px;">~13g</td><td style="padding:8px;">~34g</td><td style="padding:8px;">~200 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Broccoli, roasted or steamed</td><td style="padding:8px;">~90g</td><td style="padding:8px;">~2.5g</td><td style="padding:8px;">~6g</td><td style="padding:8px;">~30 cal</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The reason to memorize even three or four of these is that once you know a cup of rice is roughly 50g of carbs, you stop needing to calculate anything at the counter. You're just filling a cup you already recognize, and the macros are riding along automatically. For a deeper look at how these numbers roll up into your daily targets, our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a> covers the math behind the chart.</p>
+
+      <h2>Matching the Chart to a Real Container</h2>
+      <p>Meal prep containers are usually sold by ounce capacity, and that number describes total volume, not food weight, which is where a lot of confusion starts. A 21oz single-compartment container holds a little over 2.5 cups. A 28oz container, the most common size for a full lifter's meal, holds about 3.5 cups. A 32 to 35oz three-compartment container, the one built for bulking portions, holds roughly 4 to 4.5 cups split across its sections.</p>
+      <p>Put the reference chart against a 28oz container split as one cup protein, one and a half cups rice, and one cup broccoli, and you land on roughly 43g protein, 81g carbs, 5g fat, and about 600 calories, without a scale touching the counter. Swap the rice for potatoes in the same container and the calorie count drops by close to 150 while the portion looks just as full, which is the exact swap our <a href="/blog/rice-vs-potatoes-vs-pasta-meal-prep">rice vs. potatoes vs. pasta comparison</a> recommends for a cut. Want more calories instead, for a bulk? Add a second half-cup of rice or swap the veg cup for a second cup of beans, and you're well past 700 calories in the same container.</p>
+
+      <blockquote>Container math is macro math wearing a costume. Learn the grams-per-cup for four or five staples, and every container you fill afterward is already counted.</blockquote>
+
+      <h2>Where This Breaks Down</h2>
+      <p>Sauces, oils, and cheese are the parts of a meal that container math handles worst, because they're added by pour or spoon rather than by cup, and a heavy hand with olive oil can add 200 calories to a container that looked identical to last week's. The fix is to measure the additions, not the base ingredients: a tablespoon of oil is a known, small, easy number to track, while a cup of rice is a known, large, easy number to eyeball. Mixed dishes like stir-fries or curries are also harder to eyeball, since the ingredients blend together and a cup no longer maps cleanly to one food. For those, weigh the total dish once when you build the recipe, note the macros per container, and you only need to do that math a single time before it becomes a repeatable prep.</p>
+      <p>Individual container brands also vary by a few ounces even within the same labeled size, so the first time you use a new container, it's worth doing one real weigh-in to confirm your split lines up with the chart before you commit to eyeballing it for the next twelve weeks.</p>
+
+      <h2>Why This Matters More Than It Sounds</h2>
+      <p>The lifters who keep hitting their macros a year in aren't the ones with the most accurate scale, they're the ones who've made hitting their numbers require the least ongoing decision-making. Container math is a one-time investment: learn the grams-per-cup for your usual five or six staples, and every prep after that is pattern matching instead of arithmetic. That's also the exact problem our <a href="/blog/best-foods-for-batch-cooking">guide to batch-cooking foods that hold up</a> is solving from the other direction, foods chosen so the fridge doesn't undo the work you did on portioning.</p>
+      <p>If you'd rather skip building the chart yourself, <a href="https://macroplan.app">MacroPlan</a> already knows the grams-per-cup math for every recipe it generates and portions each container to your exact protein, carb, and fat targets automatically.</p>
+
+      <h2>FAQ</h2>
+      <h3>Do I need a food scale at all if I use container math?</h3>
+      <p>Not for your everyday prep once you know your staples. A scale is still worth pulling out the first time you cook a new recipe or size a new container, so your eyeballed portions actually line up with the chart before you rely on them for weeks at a time.</p>
+      <h3>Why does a cup of rice weigh so much more than a cup of broccoli?</h3>
+      <p>Density. Rice is starch packed tightly with very little air or water once cooked, while broccoli is mostly water and holds a lot of air between florets. Same volume, very different mass, which is exactly why "just fill the container evenly" gives you the wrong macros if you don't know each food's density first.</p>
+      <h3>What size container should I actually buy?</h3>
+      <p>A 28oz container fits most maintenance and lean-bulk meals comfortably. If you're on an aggressive cut and leaning on high-volume, low-calorie foods like potatoes and vegetables, size up to 32 to 35oz so the portion still looks and feels like a full meal.</p>
+      <h3>Does this chart work for meal prep delivery services too?</h3>
+      <p>The grams-per-cup numbers are useful for estimating any portioned meal, but delivery containers vary by brand and aren't standardized the way a container you fill yourself is. Our <a href="/blog/meal-prep-delivery-vs-diy-for-lifters">delivery vs. DIY comparison</a> covers that tradeoff in more depth.</p>
+
+      <p>Skip the chart-memorizing entirely and let MacroPlan portion every container to your exact numbers. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 4, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1569420077790-afb136b3bb8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBwb3J0aW9uZWQlMjBmb29kfGVufDF8MHx8fDE3ODU4MjcxNjN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by S'well on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@swell?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
