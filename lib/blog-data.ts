@@ -22,6 +22,55 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'whey-vs-casein-vs-plant-protein-powder-comparison',
+    title: 'Whey vs. Casein vs. Plant Protein: Which One Actually Fits Your Macros',
+    excerpt: 'Three tubs, three price points, three digestion speeds. Here is how whey, casein, and plant protein powder actually compare once you look past the label and into what each one does for your macros.',
+    content: `
+      <p>Walk into any supplement aisle and you'll find the same three categories fighting for shelf space: whey, casein, and some version of a plant blend, usually pea and rice combined to fake a complete amino acid profile. Every tub claims to be the best option for building muscle, and every forum thread on the topic eventually turns into a brand war that has nothing to do with what actually separates them. The real differences are narrower and more useful than the marketing suggests, and once you know what each one is actually good at, picking between them stops being a personality choice and starts being a macro decision.</p>
+
+      <h2>Whey: Fast, Cheap, and the Default for a Reason</h2>
+      <p>Whey is the liquid left over after milk is turned into cheese, and it happens to be one of the most protein-dense, fastest-digesting foods available in powder form. A standard scoop delivers 24 to 27 grams of protein for around 120 calories, with amino acids showing up in your bloodstream within 30 to 60 minutes of drinking it. That speed is the whole reason whey became the default post-workout choice: it's the fastest way to get a meaningful protein dose into circulation when you don't want to sit down and eat a full meal right after training.</p>
+      <p>Whey comes in two common forms, concentrate and isolate, and the difference matters more for your macros than most buyers realize. Concentrate runs 70 to 80 percent protein by weight, with the rest made up of lactose and a small amount of fat, which is why it's cheaper and why it can upset people with lactose sensitivity. Isolate is filtered further, landing closer to 90 percent protein with the lactose and fat mostly stripped out, so it costs more per tub but delivers a cleaner macro number and sits easier on a sensitive stomach. If you're already hitting your carb and fat targets tightly elsewhere in the day, isolate's near-zero carb and fat count makes it easier to slot into a plan without nudging those numbers around. If cost matters more than precision, concentrate does the same protein job for less money.</p>
+
+      <h2>Casein: The Same Milk, a Completely Different Speed</h2>
+      <p>Casein comes from the same glass of milk as whey, but it clots in the stomach on contact with acid, which slows its release into the bloodstream to a trickle over five to seven hours instead of whey's one-hour spike. A classic study on protein absorption rates, published through the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC22902/">National Academy of Sciences</a>, first demonstrated this fast-versus-slow distinction by tracking amino acid levels after each type of protein, and it's the reason casein earned its reputation as the "bedtime protein." A slow, steady trickle of amino acids overnight is a reasonable use case, since you're going seven or eight hours without eating and muscle protein synthesis doesn't just switch off while you sleep.</p>
+      <p>Where casein loses ground is versatility. It's thicker, doesn't mix as easily, and at roughly 25 grams of protein per 120 to 130 calories, it isn't meaningfully more calorie-efficient than whey. It's also usually priced a few dollars higher per tub for a product you'd realistically only use once a day. If your goal is simply hitting a daily protein number, whey does that just as well at a lower cost and with far less hassle in a shaker bottle. Casein earns its spot specifically for the pre-bed slot, not as an everyday replacement for whey.</p>
+
+      <h2>Plant Protein: Closing the Gap, But Not Quite There</h2>
+      <p>Plant protein powders have improved substantially over the past several years, mostly by blending sources instead of relying on one. A single plant protein, pea on its own or rice on its own, runs low on at least one essential amino acid, which is why nearly every serious plant blend on the market today combines pea and rice or pea and hemp, the same way our <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">guide to vegetarian macros</a> recommends mixing whole-food sources across a day rather than leaning on just one. Blended correctly, a plant powder gets close enough to whey's amino acid profile that the practical difference for muscle building is small.</p>
+      <p>The macro tradeoff is real, though. A typical plant protein scoop delivers 20 to 24 grams of protein for 130 to 150 calories, a modestly worse ratio than whey, and it usually costs more per gram of protein too, since pea and rice protein isolate is a pricier ingredient to produce than dried whey. It also tends to have a grittier texture that some people never get used to. None of that makes it a bad choice, it's a genuinely solid protein source, but if your only reason for choosing it is taste preference or texture, know that you're paying a small calorie and cost premium to get there. If the reason is dietary, vegan, lactose intolerant, or avoiding dairy on principle, that premium is simply the cost of the constraint, not a sign you're doing anything wrong.</p>
+
+      <h2>Putting the Numbers Side by Side</h2>
+      <p>Stacked against each other, the pattern holds up cleanly across almost every brand on the market. Whey isolate gives you the best protein-to-calorie ratio and the fastest digestion, at a mid-range price. Whey concentrate matches that speed at a lower cost, with a small lactose and fat tradeoff. Casein trades speed for a slow release that's genuinely useful once a day, at roughly the same macros as whey but a higher price for that single use case. Plant blends close most of the amino acid gap that used to separate them from whey, but still land behind on calories per gram of protein and on shelf price, a fair trade if dairy isn't an option for you, an unnecessary one if it's just preference.</p>
+      <p>None of that means one is objectively "best." A lifter chasing the tightest macro numbers on a budget is usually best served by whey concentrate. Someone managing a strict daily calorie ceiling who wants every gram of protein to cost as little as possible leans toward whey isolate. A vegan or dairy-free lifter isn't choosing plant protein as a compromise, it's simply the only column that fits, and a well-blended pea-rice powder gets the job done without leaving anything meaningful on the table. And anyone eating a long stretch without food, an overnight fast being the most common one, has a legitimate reason to keep a tub of casein around for exactly that window.</p>
+
+      <h2>Where Powder Fits Into a Real Day</h2>
+      <p>It's worth zooming out here too: protein powder is a convenience tool, not a requirement. Our <a href="/blog/protein-per-calorie-food-ranking">protein-per-calorie ranking</a> shows that whole foods like eggs, chicken, and cottage cheese sit in the same efficiency range as most powders, and a lot of lifters could hit their number without ever opening a shaker bottle. Where powder earns its place is filling gaps a whole meal can't easily fill, a fast 25 grams between meetings, a bedtime dose that doesn't require cooking, or a cheap way to round out a day that's running short, a use case our <a href="/blog/high-protein-diet-on-a-budget">breakdown of high-protein foods on a budget</a> covers in more detail. Treated as a gap-filler rather than the backbone of your protein plan, the type you choose matters far less than simply having one on hand for the days real food isn't practical.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your week around whole-food protein first, chicken, eggs, dairy, legumes, or tofu depending on your preferences, and treats powder the way most experienced lifters actually use it: as a flexible top-up for whatever your batch-cooked meals don't cover, not the main event. <a href="https://macroplan.app">See how MacroPlan builds your week around real macro targets →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Is casein actually better for muscle growth than whey?</h3>
+      <p>Not meaningfully, for most of the day. The slow-release digestion makes casein a reasonable choice before a long gap without food, typically overnight, but across a full day of training and eating, total protein intake matters far more than which type delivered any single dose.</p>
+      <h3>Can plant protein powder build muscle as effectively as whey?</h3>
+      <p>Yes, provided it's a blended source like pea and rice rather than a single plant protein on its own. A well-blended plant powder gets close enough to whey's amino acid profile that the practical difference is small, though it typically costs more and carries slightly more calories per gram of protein.</p>
+      <h3>Should I buy whey concentrate or whey isolate?</h3>
+      <p>Isolate if you want the cleanest macros, lower carbs and fat, and can pay a bit more for it, or if lactose bothers you. Concentrate if you want the same protein dose for less money and don't have a sensitivity to the small amount of lactose and fat it still carries.</p>
+
+      <p>Set your real macro targets and let MacroPlan build a week of meals around them, powder optional. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 6, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1693996046865-19217d179161?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxwcm90ZWluJTIwcG93ZGVyJTIwc2hha2V8ZW58MXwwfHx8MTc4NTk5OTk2NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Alex Saks on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@alexsaks?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
