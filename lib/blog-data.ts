@@ -22,6 +22,397 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-smoothie-recipes-for-lifters',
+    title: '6 High-Protein Smoothie Recipes That Actually Hit 40g (Ready in 5 Minutes)',
+    excerpt: 'Most "protein smoothie" recipes online top out at 15 or 20 grams once you actually weigh the ingredients. These six are built backward from a real macro target, so the number on the blender matches the number in your app.',
+    content: `
+      <p>Search "high protein smoothie recipe" and you'll get a hundred results built around a scoop of powder, a banana, and a splash of milk, which sounds right until you actually run the numbers and find it's sitting at 22 grams of protein for 380 calories. That's not a bad snack, but it's not what most lifters mean when they say high protein, and it's rarely built with a specific macro target in mind. The six recipes below start from the other direction: pick a protein number, then build the smoothie to hit it without the carb and fat totals sliding somewhere you didn't plan for.</p>
+
+      <h2>Why Most Smoothie Recipes Undercount Protein</h2>
+      <p>The gap almost always comes from one ingredient doing all the work. A single scoop of whey, usually 25 to 30 grams of protein, gets treated as the entire protein source, and everything else in the blender, the fruit, the milk, the nut butter, is there for flavor and texture. That's fine if 25 to 30 grams is actually your target, but if you're trying to land a smoothie in the 40 gram range the way a real meal would, one scoop isn't going to get you there no matter how much spinach you add.</p>
+      <p>The fix is treating the smoothie like any other meal you'd build in MacroPlan: pick two protein sources instead of one, usually a powder plus a dairy or legume-based ingredient, and let the fruit and fat sit in supporting roles. Greek yogurt, cottage cheese, and silken tofu all blend smooth and each carry 10 to 25 grams of protein on their own, which is the difference between a smoothie that hits 22 grams and one that hits 42 without doubling the scoop count and wrecking the taste.</p>
+
+      <h2>1. Peanut Butter Banana, Built for a Bulk</h2>
+      <p>One scoop of whey, one frozen banana, a tablespoon of peanut butter, a cup of whole milk, and a handful of oats blended in dry. The oats add carbs and thicken the texture without tasting like oatmeal, and the peanut butter and whole milk push the calorie total up without needing a second scoop of powder. This lands around 42 grams of protein and roughly 550 calories, which makes it a legitimate stand-in for a bulking breakfast rather than a between-meal snack.</p>
+
+      <h2>2. Greek Yogurt and Berry, Built for a Cut</h2>
+      <p>A cup of nonfat Greek yogurt, a half scoop of whey, a cup of frozen mixed berries, and unsweetened almond milk to thin it out. The yogurt alone carries close to 23 grams of protein for under 130 calories, so the half scoop of powder is enough to close the gap to 40 grams without the calorie total climbing the way a full second scoop would. This is the version worth reaching for on a cut, where the goal is protein density with as little fat and sugar riding along as possible.</p>
+
+      <h2>3. Cottage Cheese and Mango, No Powder Needed</h2>
+      <p>Cottage cheese blends completely smooth if you run it long enough, and it's worth getting past the texture assumption because a cup of it carries roughly 25 grams of protein on its own. Blend that with a cup of frozen mango, a splash of orange juice, and a pinch of vanilla, and you land at 38 to 40 grams of protein with no powder at all, which is useful for anyone who's tired of the chalky aftertaste that comes with a second scoop.</p>
+
+      <h2>4. Chocolate Tofu, the Vegan Option</h2>
+      <p>Silken tofu is the one plant-based ingredient that actually pulls its weight here. Half a block blended with a scoop of plant-based chocolate protein, a frozen banana, a tablespoon of cocoa powder, and oat milk produces something closer to a milkshake than a green smoothie, and it clears 40 grams of protein without any dairy or animal product. If you're following the substitution approach in our <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">guide to vegetarian meal prep</a>, this is the smoothie version of the same logic: pair a dense plant protein with a smaller dose of powder instead of relying on powder alone.</p>
+
+      <h2>5. Overnight Oats Smoothie, for the Slow Digesters</h2>
+      <p>Blend a half cup of rolled oats, a cup of cottage cheese or Greek yogurt, a scoop of casein instead of whey, a tablespoon of honey, and cinnamon, then let it sit in the fridge for a few hours before drinking. Casein digests slower than whey, and the oats add enough fiber that this holds you longer than the others on the list, which makes it a reasonable stand-in on a morning when you know lunch is going to be late. It sits around 44 grams of protein and roughly 480 calories.</p>
+
+      <h2>6. Green Machine, for Anyone Avoiding a Sugar Spike</h2>
+      <p>A cup of spinach, a scoop of whey, a half cup of Greek yogurt, a quarter of an avocado for fat and texture, unsweetened almond milk, and a few ice cubes. Skipping the banana keeps the sugar content low without sacrificing protein, since the yogurt and powder are doing the heavy lifting rather than the fruit. This version lands around 38 grams of protein for about 340 calories, which makes it the lightest option on the list if you're trying to keep a snack under 400 calories, similar to the targets in our <a href="/blog/high-protein-snacks-under-200-calories">roundup of high-protein snacks under 200 calories</a> for the smaller-portion version.</p>
+
+      <h2>Adjusting These to Your Own Numbers</h2>
+      <p>None of these six are fixed recipes so much as templates. If your daily target sits closer to 150 grams of protein than 220, halving the powder in most of these and leaning more on the yogurt or cottage cheese will bring the calorie total down without gutting the protein number. The core principle carries across all of them: pick a whole-food protein source to do a third to half of the work, and let the powder close the remaining gap, rather than asking one scoop to carry the entire smoothie. That's the same logic behind hitting a real number at any single meal, which our <a href="/blog/protein-per-meal-ceiling">breakdown of the protein-per-meal ceiling</a> covers if you want the research behind why 25 to 40 grams per sitting is the range worth aiming for in the first place.</p>
+      <p>If you're building a whole week of meals rather than one smoothie, MacroPlan sets your protein target from your actual stats and goal, then builds the rest of your day, breakfast, lunch, dinner, and snacks, around hitting it without you doing this math by hand every morning. <a href="https://macroplan.app">See how MacroPlan builds a full day of meals around your macros →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can I hit 40 grams of protein in a smoothie without protein powder?</h3>
+      <p>Yes. Cottage cheese, Greek yogurt, and silken tofu all carry 10 to 25 grams of protein per serving and blend smooth, so a combination of two of them can reach 40 grams without any powder at all, as the cottage cheese and mango recipe above shows.</p>
+      <h3>Is casein or whey better for a smoothie?</h3>
+      <p>Whey mixes and dissolves more easily and works better in a fast, thin smoothie you're drinking right away. Casein is thicker and digests more slowly, which makes it a better fit for an overnight or slow-sip version meant to hold off hunger for a few hours rather than something you're drinking on the way out the door.</p>
+      <h3>Will adding a second protein source make the smoothie taste worse?</h3>
+      <p>Not if you pick one that blends smooth. Greek yogurt, cottage cheese, and silken tofu are close to flavorless once blended with fruit or cocoa, and they add creaminess rather than a competing taste, which is why they're the go-to second source instead of a second scoop of powder.</p>
+
+      <p>Stop eyeballing your protein numbers. MacroPlan builds your macros and your meals around them. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 7, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1759428981568-9748d27b85c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw0fHxiZXJyeSUyMHNtb290aGllJTIwZ2xhc3N8ZW58MXwwfHx8MTc4NjA4Njc5M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by abdelkader1001 on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@abdelkader1001?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
+    slug: 'whey-vs-casein-vs-plant-protein-powder-comparison',
+    title: 'Whey vs. Casein vs. Plant Protein: Which One Actually Fits Your Macros',
+    excerpt: 'Three tubs, three price points, three digestion speeds. Here is how whey, casein, and plant protein powder actually compare once you look past the label and into what each one does for your macros.',
+    content: `
+      <p>Walk into any supplement aisle and you'll find the same three categories fighting for shelf space: whey, casein, and some version of a plant blend, usually pea and rice combined to fake a complete amino acid profile. Every tub claims to be the best option for building muscle, and every forum thread on the topic eventually turns into a brand war that has nothing to do with what actually separates them. The real differences are narrower and more useful than the marketing suggests, and once you know what each one is actually good at, picking between them stops being a personality choice and starts being a macro decision.</p>
+
+      <h2>Whey: Fast, Cheap, and the Default for a Reason</h2>
+      <p>Whey is the liquid left over after milk is turned into cheese, and it happens to be one of the most protein-dense, fastest-digesting foods available in powder form. A standard scoop delivers 24 to 27 grams of protein for around 120 calories, with amino acids showing up in your bloodstream within 30 to 60 minutes of drinking it. That speed is the whole reason whey became the default post-workout choice: it's the fastest way to get a meaningful protein dose into circulation when you don't want to sit down and eat a full meal right after training.</p>
+      <p>Whey comes in two common forms, concentrate and isolate, and the difference matters more for your macros than most buyers realize. Concentrate runs 70 to 80 percent protein by weight, with the rest made up of lactose and a small amount of fat, which is why it's cheaper and why it can upset people with lactose sensitivity. Isolate is filtered further, landing closer to 90 percent protein with the lactose and fat mostly stripped out, so it costs more per tub but delivers a cleaner macro number and sits easier on a sensitive stomach. If you're already hitting your carb and fat targets tightly elsewhere in the day, isolate's near-zero carb and fat count makes it easier to slot into a plan without nudging those numbers around. If cost matters more than precision, concentrate does the same protein job for less money.</p>
+
+      <h2>Casein: The Same Milk, a Completely Different Speed</h2>
+      <p>Casein comes from the same glass of milk as whey, but it clots in the stomach on contact with acid, which slows its release into the bloodstream to a trickle over five to seven hours instead of whey's one-hour spike. A classic study on protein absorption rates, published through the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC22902/">National Academy of Sciences</a>, first demonstrated this fast-versus-slow distinction by tracking amino acid levels after each type of protein, and it's the reason casein earned its reputation as the "bedtime protein." A slow, steady trickle of amino acids overnight is a reasonable use case, since you're going seven or eight hours without eating and muscle protein synthesis doesn't just switch off while you sleep.</p>
+      <p>Where casein loses ground is versatility. It's thicker, doesn't mix as easily, and at roughly 25 grams of protein per 120 to 130 calories, it isn't meaningfully more calorie-efficient than whey. It's also usually priced a few dollars higher per tub for a product you'd realistically only use once a day. If your goal is simply hitting a daily protein number, whey does that just as well at a lower cost and with far less hassle in a shaker bottle. Casein earns its spot specifically for the pre-bed slot, not as an everyday replacement for whey.</p>
+
+      <h2>Plant Protein: Closing the Gap, But Not Quite There</h2>
+      <p>Plant protein powders have improved substantially over the past several years, mostly by blending sources instead of relying on one. A single plant protein, pea on its own or rice on its own, runs low on at least one essential amino acid, which is why nearly every serious plant blend on the market today combines pea and rice or pea and hemp, the same way our <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">guide to vegetarian macros</a> recommends mixing whole-food sources across a day rather than leaning on just one. Blended correctly, a plant powder gets close enough to whey's amino acid profile that the practical difference for muscle building is small.</p>
+      <p>The macro tradeoff is real, though. A typical plant protein scoop delivers 20 to 24 grams of protein for 130 to 150 calories, a modestly worse ratio than whey, and it usually costs more per gram of protein too, since pea and rice protein isolate is a pricier ingredient to produce than dried whey. It also tends to have a grittier texture that some people never get used to. None of that makes it a bad choice, it's a genuinely solid protein source, but if your only reason for choosing it is taste preference or texture, know that you're paying a small calorie and cost premium to get there. If the reason is dietary, vegan, lactose intolerant, or avoiding dairy on principle, that premium is simply the cost of the constraint, not a sign you're doing anything wrong.</p>
+
+      <h2>Putting the Numbers Side by Side</h2>
+      <p>Stacked against each other, the pattern holds up cleanly across almost every brand on the market. Whey isolate gives you the best protein-to-calorie ratio and the fastest digestion, at a mid-range price. Whey concentrate matches that speed at a lower cost, with a small lactose and fat tradeoff. Casein trades speed for a slow release that's genuinely useful once a day, at roughly the same macros as whey but a higher price for that single use case. Plant blends close most of the amino acid gap that used to separate them from whey, but still land behind on calories per gram of protein and on shelf price, a fair trade if dairy isn't an option for you, an unnecessary one if it's just preference.</p>
+      <p>None of that means one is objectively "best." A lifter chasing the tightest macro numbers on a budget is usually best served by whey concentrate. Someone managing a strict daily calorie ceiling who wants every gram of protein to cost as little as possible leans toward whey isolate. A vegan or dairy-free lifter isn't choosing plant protein as a compromise, it's simply the only column that fits, and a well-blended pea-rice powder gets the job done without leaving anything meaningful on the table. And anyone eating a long stretch without food, an overnight fast being the most common one, has a legitimate reason to keep a tub of casein around for exactly that window.</p>
+
+      <h2>Where Powder Fits Into a Real Day</h2>
+      <p>It's worth zooming out here too: protein powder is a convenience tool, not a requirement. Our <a href="/blog/protein-per-calorie-food-ranking">protein-per-calorie ranking</a> shows that whole foods like eggs, chicken, and cottage cheese sit in the same efficiency range as most powders, and a lot of lifters could hit their number without ever opening a shaker bottle. Where powder earns its place is filling gaps a whole meal can't easily fill, a fast 25 grams between meetings, a bedtime dose that doesn't require cooking, or a cheap way to round out a day that's running short, a use case our <a href="/blog/high-protein-diet-on-a-budget">breakdown of high-protein foods on a budget</a> covers in more detail. Treated as a gap-filler rather than the backbone of your protein plan, the type you choose matters far less than simply having one on hand for the days real food isn't practical.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your week around whole-food protein first, chicken, eggs, dairy, legumes, or tofu depending on your preferences, and treats powder the way most experienced lifters actually use it: as a flexible top-up for whatever your batch-cooked meals don't cover, not the main event. <a href="https://macroplan.app">See how MacroPlan builds your week around real macro targets →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Is casein actually better for muscle growth than whey?</h3>
+      <p>Not meaningfully, for most of the day. The slow-release digestion makes casein a reasonable choice before a long gap without food, typically overnight, but across a full day of training and eating, total protein intake matters far more than which type delivered any single dose.</p>
+      <h3>Can plant protein powder build muscle as effectively as whey?</h3>
+      <p>Yes, provided it's a blended source like pea and rice rather than a single plant protein on its own. A well-blended plant powder gets close enough to whey's amino acid profile that the practical difference is small, though it typically costs more and carries slightly more calories per gram of protein.</p>
+      <h3>Should I buy whey concentrate or whey isolate?</h3>
+      <p>Isolate if you want the cleanest macros, lower carbs and fat, and can pay a bit more for it, or if lactose bothers you. Concentrate if you want the same protein dose for less money and don't have a sensitivity to the small amount of lactose and fat it still carries.</p>
+
+      <p>Set your real macro targets and let MacroPlan build a week of meals around them, powder optional. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 6, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1693996046865-19217d179161?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxwcm90ZWluJTIwcG93ZGVyJTIwc2hha2V8ZW58MXwwfHx8MTc4NTk5OTk2NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Alex Saks on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@alexsaks?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
+    slug: 'meal-prep-container-math-portion-sizes',
+    title: 'Meal Prep Container Math: How Many Grams of Chicken, Rice, and Veggies Actually Fit',
+    excerpt: 'Stop eyeballing portions. Here is the actual gram weight of chicken, rice, and vegetables per cup, mapped against the meal prep container sizes lifters actually use, so you can hit your macros without a food scale at the table.',
+    content: `
+      <p>Most lifters own a food scale and stop using it within a month. Not because tracking stops mattering, but because weighing rice at 9 p.m. on a Sunday gets old fast. What replaces the scale for people who keep their macros on point for years, not weeks, is container math: knowing roughly how many grams of chicken, rice, or broccoli a given container size holds, so the container becomes the measuring device. This is the cheat sheet for that, built from standard cooked-food densities and the container sizes lifters actually buy.</p>
+
+      <h2>Why Container Math Works</h2>
+      <p>A kitchen scale measures one ingredient at a time, in isolation, on a counter you won't be standing at come Wednesday's lunch. A container measures a whole meal, once, on the one day you're already cooking in bulk. Once you know that a cup of diced cooked chicken breast weighs about 140g and a cup of cooked white rice weighs about 180g, you can fill a container to a macro target by sight instead of by scale, and that number stays true every week you cook the same way.</p>
+      <p>The catch is that food density varies a lot by type. A cup of rice and a cup of broccoli weigh wildly different amounts because one is starch packed tight and the other is mostly water and air. That is the actual reason "just fill the container" advice fails people: it treats every food as if it takes up the same space per gram, and it doesn't. The fix isn't precision, it's a reference chart you build once and reuse forever.</p>
+
+      <h2>Grams Per Cup, Cooked: The Reference Chart</h2>
+      <p>These are cooked, packed-but-not-crushed measurements, the way food actually sits in a container rather than a loosely piled scoop. Treat them as a starting point accurate to within about 10%, which is close enough for a meal prep that gets re-cooked every single week.</p>
+      <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; margin:1.5rem 0;">
+        <thead>
+          <tr style="border-bottom:2px solid #e5e7eb; text-align:left;">
+            <th style="padding:8px;">Food (cooked)</th>
+            <th style="padding:8px;">Grams per cup</th>
+            <th style="padding:8px;">Protein</th>
+            <th style="padding:8px;">Carbs</th>
+            <th style="padding:8px;">Calories</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Chicken breast, diced</td><td style="padding:8px;">~140g</td><td style="padding:8px;">~43g</td><td style="padding:8px;">0g</td><td style="padding:8px;">~230 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">93% lean ground beef</td><td style="padding:8px;">~140g</td><td style="padding:8px;">~34g</td><td style="padding:8px;">0g</td><td style="padding:8px;">~260 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">White rice</td><td style="padding:8px;">~180g</td><td style="padding:8px;">~5g</td><td style="padding:8px;">~50g</td><td style="padding:8px;">~235 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Roasted potato, diced</td><td style="padding:8px;">~150g</td><td style="padding:8px;">~3g</td><td style="padding:8px;">~30g</td><td style="padding:8px;">~135 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Black beans</td><td style="padding:8px;">~170g</td><td style="padding:8px;">~13g</td><td style="padding:8px;">~34g</td><td style="padding:8px;">~200 cal</td></tr>
+          <tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px;">Broccoli, roasted or steamed</td><td style="padding:8px;">~90g</td><td style="padding:8px;">~2.5g</td><td style="padding:8px;">~6g</td><td style="padding:8px;">~30 cal</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The reason to memorize even three or four of these is that once you know a cup of rice is roughly 50g of carbs, you stop needing to calculate anything at the counter. You're just filling a cup you already recognize, and the macros are riding along automatically. For a deeper look at how these numbers roll up into your daily targets, our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a> covers the math behind the chart.</p>
+
+      <h2>Matching the Chart to a Real Container</h2>
+      <p>Meal prep containers are usually sold by ounce capacity, and that number describes total volume, not food weight, which is where a lot of confusion starts. A 21oz single-compartment container holds a little over 2.5 cups. A 28oz container, the most common size for a full lifter's meal, holds about 3.5 cups. A 32 to 35oz three-compartment container, the one built for bulking portions, holds roughly 4 to 4.5 cups split across its sections.</p>
+      <p>Put the reference chart against a 28oz container split as one cup protein, one and a half cups rice, and one cup broccoli, and you land on roughly 43g protein, 81g carbs, 5g fat, and about 600 calories, without a scale touching the counter. Swap the rice for potatoes in the same container and the calorie count drops by close to 150 while the portion looks just as full, which is the exact swap our <a href="/blog/rice-vs-potatoes-vs-pasta-meal-prep">rice vs. potatoes vs. pasta comparison</a> recommends for a cut. Want more calories instead, for a bulk? Add a second half-cup of rice or swap the veg cup for a second cup of beans, and you're well past 700 calories in the same container.</p>
+
+      <blockquote>Container math is macro math wearing a costume. Learn the grams-per-cup for four or five staples, and every container you fill afterward is already counted.</blockquote>
+
+      <h2>Where This Breaks Down</h2>
+      <p>Sauces, oils, and cheese are the parts of a meal that container math handles worst, because they're added by pour or spoon rather than by cup, and a heavy hand with olive oil can add 200 calories to a container that looked identical to last week's. The fix is to measure the additions, not the base ingredients: a tablespoon of oil is a known, small, easy number to track, while a cup of rice is a known, large, easy number to eyeball. Mixed dishes like stir-fries or curries are also harder to eyeball, since the ingredients blend together and a cup no longer maps cleanly to one food. For those, weigh the total dish once when you build the recipe, note the macros per container, and you only need to do that math a single time before it becomes a repeatable prep.</p>
+      <p>Individual container brands also vary by a few ounces even within the same labeled size, so the first time you use a new container, it's worth doing one real weigh-in to confirm your split lines up with the chart before you commit to eyeballing it for the next twelve weeks.</p>
+
+      <h2>Why This Matters More Than It Sounds</h2>
+      <p>The lifters who keep hitting their macros a year in aren't the ones with the most accurate scale, they're the ones who've made hitting their numbers require the least ongoing decision-making. Container math is a one-time investment: learn the grams-per-cup for your usual five or six staples, and every prep after that is pattern matching instead of arithmetic. That's also the exact problem our <a href="/blog/best-foods-for-batch-cooking">guide to batch-cooking foods that hold up</a> is solving from the other direction, foods chosen so the fridge doesn't undo the work you did on portioning.</p>
+      <p>If you'd rather skip building the chart yourself, <a href="https://macroplan.app">MacroPlan</a> already knows the grams-per-cup math for every recipe it generates and portions each container to your exact protein, carb, and fat targets automatically.</p>
+
+      <h2>FAQ</h2>
+      <h3>Do I need a food scale at all if I use container math?</h3>
+      <p>Not for your everyday prep once you know your staples. A scale is still worth pulling out the first time you cook a new recipe or size a new container, so your eyeballed portions actually line up with the chart before you rely on them for weeks at a time.</p>
+      <h3>Why does a cup of rice weigh so much more than a cup of broccoli?</h3>
+      <p>Density. Rice is starch packed tightly with very little air or water once cooked, while broccoli is mostly water and holds a lot of air between florets. Same volume, very different mass, which is exactly why "just fill the container evenly" gives you the wrong macros if you don't know each food's density first.</p>
+      <h3>What size container should I actually buy?</h3>
+      <p>A 28oz container fits most maintenance and lean-bulk meals comfortably. If you're on an aggressive cut and leaning on high-volume, low-calorie foods like potatoes and vegetables, size up to 32 to 35oz so the portion still looks and feels like a full meal.</p>
+      <h3>Does this chart work for meal prep delivery services too?</h3>
+      <p>The grams-per-cup numbers are useful for estimating any portioned meal, but delivery containers vary by brand and aren't standardized the way a container you fill yourself is. Our <a href="/blog/meal-prep-delivery-vs-diy-for-lifters">delivery vs. DIY comparison</a> covers that tradeoff in more depth.</p>
+
+      <p>Skip the chart-memorizing entirely and let MacroPlan portion every container to your exact numbers. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 4, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1569420077790-afb136b3bb8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBwb3J0aW9uZWQlMjBmb29kfGVufDF8MHx8fDE3ODU4MjcxNjN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by S'well on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@swell?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
+    slug: 'one-pan-meal-prep-small-kitchen',
+    title: 'How to Meal Prep for Muscle With Just One Pan',
+    excerpt: 'No oven, no rice cooker, no second burner. Here is how to hit your protein target and still batch-cook a full week from a single skillet and a stovetop.',
+    content: `
+      <p>You don't need a six-piece cookware set and a walk-in pantry to hit 180 grams of protein a day. A lot of lifters put off meal prep entirely because they're working from a studio apartment kitchen with one burner, one pan, and maybe a microwave, and every meal prep guide they find assumes a full range, a sheet pan, and an oven with two racks. That gap between the advice and the actual kitchen is why so many people default to protein bars and rotisserie chicken from the grocery store instead of cooking. It's not that one-pan cooking can't hit your macros. It's that almost nobody explains how to do it at scale.</p>
+
+      <h2>Why a Single Pan Feels Like a Wall</h2>
+      <p>Most batch-cooking advice is built around parallel cooking: protein in the oven, a starch in the rice cooker, vegetables on the stovetop, all finishing around the same time. That workflow assumes appliances most small kitchens don't have. Take away the oven and the second burner, and you're left doing everything in sequence in one vessel, which feels slower and messier than it needs to be. The real problem isn't the pan. It's that people try to cook the way a bigger kitchen would, just with fewer tools, instead of building a method designed around one pan from the start.</p>
+      <p>The fix is to stop treating protein, starch, and vegetables as three separate cooking projects and start treating them as one layered dish. A stir-fry, a skillet hash, or a one-pot grain bowl already does this: everything hits the same pan, just at different times, and the pan does the work of an oven, a steamer, and a saute station combined. Once you build a week of meals around that model instead of fighting it, one pan stops being a limitation and starts being the fastest way to prep you've used.</p>
+
+      <h2>The Layering Method</h2>
+      <p>The order matters more than the ingredients. Cook things that take longest first, then layer in what cooks fast, and finish with anything that just needs to warm through or wilt. A typical sequence looks like this in a single 12-inch skillet with a lid: sear your protein first and set it aside, then use the same pan and its rendered fat to soften onions, garlic, and any dense vegetables like carrots or bell peppers, then add a pre-cooked or quick-cooking starch like rice, quinoa, or canned beans to pick up flavor, then return the protein to the pan along with anything that only needs a minute or two, like spinach or a splash of sauce.</p>
+      <p>That sequence gets you a full protein-carb-fat meal out of one pan in roughly 25 to 35 minutes, and it scales. Doubling or tripling the batch just means a bigger pan or two back-to-back rounds, not a more complicated process. The method also forgives substitutions easily: swap chicken thighs for ground turkey, swap rice for potatoes, swap broccoli for green beans, and the same five-step order still works because you're following a technique, not a recipe.</p>
+
+      <h2>What to Actually Buy and Cook</h2>
+      <p>A few ingredient choices make one-pan prep noticeably easier. Chicken thighs and ground meat cook faster and stay moister in a skillet than a chicken breast, which dries out easily without an oven's more even heat. Pre-cooked rice pouches or leftover rice from a rice cooker (if you have even a cheap one) cut real time off the process, since dry rice needs its own pot and timing that a single pan can't easily run alongside a protein. Frozen vegetable blends work just as well as fresh here and save you the prep knife work on a weeknight. None of this is about cutting corners on macros, it's about cutting the steps that don't actually change the nutrition.</p>
+      <p>Two or three ingredient combinations, rotated across the week, keep this from feeling repetitive:</p>
+      <ul>
+        <li><strong>Ground turkey, jasmine rice, bell peppers, and a soy-ginger sauce</strong>, built as a stir-fry-style skillet bowl.</li>
+        <li><strong>Chicken thighs, potatoes, and green beans</strong>, cooked as a stovetop hash with the chicken seared first, then the potatoes finished in the same fat.</li>
+        <li><strong>Ground beef, black beans, and frozen corn</strong>, seasoned taco-style and eaten over rice or in a tortilla.</li>
+      </ul>
+      <p>Cooking two or three of those in the same week, at double or triple portions, fills a set of containers without repeating the exact same plate five days straight, and every one of them is built from foods that hold up well in the fridge. If you're not sure which proteins and starches survive four to five days without going mushy or dry, our <a href="/blog/best-foods-for-batch-cooking">guide to foods that actually survive batch cooking</a> covers that in more detail, and it applies just as much to a one-pan kitchen as a full one.</p>
+
+      <h2>Hitting Your Numbers Without a Scale of Ingredients</h2>
+      <p>The macro math doesn't change just because your equipment is limited. Pick a protein source and know its grams per 100 grams: chicken thigh runs about 24 grams of protein per 100 grams cooked, ground turkey (93/7) sits around 21 grams, and lean ground beef lands near 26 grams. Weigh your raw protein before it goes in the pan, divide the batch evenly across your containers, and you'll hit a consistent number meal to meal, whether you're using a $15 skillet or a full range. Our <a href="/blog/best-protein-for-meal-prep">rundown of the best proteins for batch cooking</a> has the density numbers for a wider list of options if chicken and beef aren't your regular rotation.</p>
+      <p>Portioning is actually easier with one pan, not harder, because everything ends up mixed together in a single vessel instead of three separate pots you have to divide in parallel. Once the pan is done, you're just scooping equal portions into containers, not juggling a protein tray, a rice pot, and a vegetable pan all needing to be portioned at the same time. If you're prepping on a calorie deficit and watching portions closely, that single-vessel workflow makes it easier to eyeball consistency across the week, something we get into further in <a href="/blog/meal-prep-on-a-cut">our guide to meal prepping on a cut</a>.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds a full week of batch-cook meals around your actual protein, carb, and fat targets, and it doesn't assume you own a full kitchen to do it. Tell it your containers and your macros, and it hands you a shopping list and a cooking order that works whether you're cooking on six burners or one. <a href="https://macroplan.app">See how MacroPlan builds a prep plan around your kitchen →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can I really hit high protein targets cooking everything in one pan?</h3>
+      <p>Yes. The pan doesn't limit how much protein you can cook, only how much fits at once. Cook in batches within the same pan if a single load doesn't fit, searing and setting aside protein before moving to the next step, and a 12-inch skillet can comfortably produce four to six servings per session.</p>
+      <h3>Do I need a lid for this to work?</h3>
+      <p>A lid helps but isn't required. It speeds up cooking vegetables and reheating pre-cooked starches by trapping steam, which cuts a few minutes off the process. Without one, just add a splash of water or broth and cover loosely with a plate for the same effect.</p>
+      <h3>What if I don't have a rice cooker either?</h3>
+      <p>Pre-cooked rice pouches or canned beans skip the second-pot problem entirely, and both hold up fine reheated in the same skillet as your protein. If you do want to cook dry rice, it just needs to happen before or after your skillet session rather than alongside it, since you're working with one burner.</p>
+
+      <p>Ready to stop guessing what fits in your kitchen? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 4, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1547333440-51f85a3220bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxza2lsbGV0JTIwY2hpY2tlbiUyMHJpY2UlMjB2ZWdldGFibGVzfGVufDF8MHx8fDE3ODU4MjQ1Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by James Kern on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@jamesrkern?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
+    slug: 'lean-bulk-meal-prep-without-dirty-bulk',
+    title: 'Lean Bulk Meal Prep: How to Gain Muscle Without It Turning Into a Dirty Bulk',
+    excerpt: 'Every lean bulk starts with good intentions and a modest surplus. Eight weeks later the scale is up 10 pounds and half of it is fat. Here is why that happens and the meal prep habits that keep a bulk lean on purpose.',
+    content: `
+      <p>You started this bulk with a plan: a small surplus, steady weight gain, most of it muscle. Two months in, the scale says plus 10 pounds, your lifts have gone up a little, and your waistband has gone up a lot. Somewhere between week one and week eight, "lean bulk" quietly turned into a bulk with no adjective in front of it. This happens to almost everyone who bulks without a system, and it is rarely a willpower problem. It is a portioning and tracking problem, and it is fixable with the same discipline you'd apply to a cut.</p>
+
+      <h2>Why a Lean Bulk Turns Dirty</h2>
+      <p>The surplus you plan on paper and the surplus you actually eat are two different numbers, and the gap between them grows fast when nothing is weighed or containered. A "small" 250-calorie surplus becomes 600 once you count the extra oil in the pan, the bigger-than-planned rice scoop, and the handful of nuts eaten straight from the bag while cooking. None of that feels like overeating in the moment. It adds up anyway, and a surplus is exactly the condition under which your body will happily store the extra as fat rather than push it toward muscle.</p>
+      <p>There's a mechanistic reason this matters more on a bulk than a cut: muscle can only be built so fast. A trained lifter adds maybe 0.25 to 0.5 kg of lean mass a month under good conditions, so any surplus beyond what that growth actually requires isn't building more muscle, it's just getting stored. A 2013 study from the Norwegian School of Sport Sciences found that elite athletes given a bigger, unmonitored calorie surplus over 8 to 12 weeks gained more total weight than athletes eating a controlled surplus, but nearly all of the extra gain was fat, not lean mass. More food didn't build more muscle. It just built more fat, because muscle growth has a ceiling and fat storage doesn't.</p>
+      <p>The other quiet driver is that appetite goes up with training volume, and a lifter who's hungry after a hard session will naturally eat more than their tracked plan calls for, especially if that meal isn't already portioned and sitting in the fridge. That's not a discipline failure either. It's what happens when the easiest available food is unmeasured.</p>
+
+      <h2>Set a Surplus You Can Actually Hold To</h2>
+      <p>Most of the fix happens before you ever pick up a spatula. Calculate your maintenance calories, then add a genuinely modest surplus of 250 to 350 calories a day, roughly 0.25 to 0.5% of your bodyweight in weekly gain. That's slow enough to keep the fat gain minimal and fast enough to notice real progress over a few months. If you haven't worked out your macro split yet, our <a href="/blog/decoding-macros">guide to decoding macros</a> covers how to set protein, carbs, and fat once you know your target calories. Keep protein high through the bulk, around 1.6 to 2.2 g per kg of bodyweight (0.7 to 1 g per lb), since adequate protein is what actually determines how much of that surplus goes toward muscle instead of fat.</p>
+      <p>Concentrating that surplus around training also helps. Instead of adding the same 300 calories every single day, put more of the extra food on training days when your body can actually use it for fuel and recovery, and hold rest days closer to maintenance. Our piece on <a href="/blog/calorie-cycling-training-rest-days">calorie cycling between training and rest days</a> walks through the math, and it applies just as well to a bulk as it does to a cut.</p>
+
+      <h2>Batch Prep Is What Actually Enforces the Surplus</h2>
+      <p>A surplus target only means something if your meals match it, and that's where most lean bulks fall apart. Cooking a big batch of protein, carbs, and vegetables on a single prep day and portioning it into containers before you're hungry removes the exact moment where the surplus creeps: the extra spoonful of rice, the second handful of trail mix, the "I'll just add a bit more oil" decision made at 7pm on a Tuesday. When Meal #3 is already weighed out at 650 calories in a labeled container, there's no negotiation left to have.</p>
+      <p>This is the same logic that makes prep work on a cut, just pointed in the other direction. On a <a href="/blog/meal-prep-on-a-cut">cut, portioning stops you from eating too little food and going hungry</a>; on a bulk, it stops you from eating past the point your body can use. Either way, the container is doing the discipline for you so you don't have to white-knuckle every meal.</p>
+      <p>Weigh your raw ingredients the same way during a bulk as you would during a cut. It's tempting to get loose with tracking once the goal switches from "lose fat" to "gain muscle," but that looseness is precisely how a controlled surplus turns into an uncontrolled one. Check your bodyweight trend weekly, not daily, since day-to-day fluctuation from water and food volume will make a single reading meaningless. If the weekly average is climbing faster than about 0.5% of your bodyweight, pull 100 to 150 calories back out and hold there for a couple of weeks before deciding whether to adjust again.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds a batch-cook plan around whatever surplus you set, with training-day and rest-day macros calculated separately so the extra calories land where your body can actually use them. Every container comes pre-portioned to your targets, which is the part that turns a lean bulk from a plan on paper into food you actually eat. <a href="https://macroplan.app">See how it builds a bulking week →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How big should a lean bulk surplus actually be?</h3>
+      <p>Around 250 to 350 calories above maintenance for most lifters, targeting roughly 0.25 to 0.5% of bodyweight gained per week. Bigger surpluses don't build muscle faster once you're past the beginner stage, they just add fat faster, since the rate your muscle can actually grow at is capped regardless of how much extra food you eat.</p>
+      <h3>How do I know if my bulk has turned dirty?</h3>
+      <p>Track your weekly average bodyweight and a simple progress photo or waist measurement alongside it. If the scale is climbing faster than about 0.5% of bodyweight a week and your waist is moving with it, more of that gain is fat than muscle, and it's time to pull calories back.</p>
+      <h3>Do I still need to weigh my food during a bulk?</h3>
+      <p>Yes. Tracking tends to get looser once the goal shifts from losing fat to gaining muscle, but an uncontrolled surplus behaves the same as an uncontrolled deficit: it moves you off your target without you noticing until the scale or the mirror makes it obvious.</p>
+
+      <p>Stop guessing at your surplus. Set your bulk macros and let MacroPlan build the week around them. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 3, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1543353071-c953d88f7033?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGNoaWNrZW4lMjByaWNlJTIwY29udGFpbmVyc3xlbnwxfDB8fHwxNzg1NzM2NzA3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
+    slug: 'fiber-on-a-high-protein-diet',
+    title: 'High-Protein, Low-Fiber? 11 Foods That Fix the Gut Problem No One Warns You About',
+    excerpt: 'Chicken, eggs, and whey get you to your protein number and nowhere near your fiber number. Here is why that combination backs lifters up, and eleven foods that close the gap without touching your macros.',
+    content: `
+      <p>Somewhere around week three of tracking macros seriously, a lot of lifters hit the same unglamorous wall: they're eating more food than ever, hitting every number on the app, and somehow more constipated than they've been in years. It's rarely the protein itself causing the problem. It's what got pushed off the plate to make room for it. Chicken breast, egg whites, and a scoop of whey are protein-dense and almost entirely fiber-free, and when they start crowding out the volume of vegetables, whole grains, and legumes a normal diet used to include almost by accident, the gut backs up. Fiber intake in the general population already sits well below the recommended 25 to 38 grams a day, and a high-protein cut or bulk built around lean meat and shakes tends to make that gap worse, not better.</p>
+      <p>This isn't an argument against eating a lot of protein. It's a case for treating fiber as its own target instead of an afterthought, especially once your protein number climbs past 150 or 160 grams a day and starts squeezing everything else off the plate. The fix is almost always additive rather than a trade-off: you don't need to eat less chicken to fit more fiber in, you need to stop treating carbs and vegetables as the flexible, cuttable part of the day.</p>
+
+      <h2>Why a High-Protein Diet Tends to Run Low on Fiber</h2>
+      <p>The math is straightforward once you look at where most tracked protein actually comes from. Chicken breast, egg whites, whey powder, white fish, and lean beef are staples of almost every high-protein plan, and every one of them carries zero grams of fiber. That's not a flaw in those foods, it's just what animal protein is. The problem shows up when a day's meals are built protein-first and everything else gets sized down to hit a calorie target, because the food most often shrunk to make room is the rice, the bread, the fruit, or the vegetable side, which is exactly where the fiber was living.</p>
+      <p>Add in that a lot of higher-protein eating patterns lean on very lean cuts and powders precisely because they're calorie-efficient, and you end up with meals that are protein-dense, calorie-controlled, and structurally low in the one nutrient that keeps digestion moving. It's a predictable outcome of the way most people build a cut, not a mysterious side effect of protein itself. The fix isn't cutting protein, it's making sure the rest of the plate isn't getting hollowed out to compensate for it.</p>
+
+      <h2>What Actually Happens When Fiber Drops Too Low</h2>
+      <p>Fiber does two jobs that matter here: it adds bulk and water retention to stool, which is what keeps things moving through the gut at a normal pace, and it feeds the bacteria that make up a healthy gut microbiome, which affects everything from regularity to how bloated you feel after a normal-sized meal. Cut fiber intake in half while protein and calories stay high, and the most common result is exactly what a lot of lifters quietly deal with mid-cut: harder, less frequent bowel movements, more gas, and a stomach that feels distended even when nothing on the scale has changed. None of that is a sign anything is wrong metabolically. It's a sign the ratio of protein to fiber has drifted further than it should have.</p>
+      <p>This tends to compound with a cut specifically, because lower overall calories often mean smaller portions of everything, including the vegetables and whole grains that were doing the fiber work in a maintenance-calorie day. The result is a diet that gets more protein-dense and less fiber-dense at the exact same time, which is the worst combination for gut comfort even though both changes look reasonable individually.</p>
+
+      <h2>Eleven Foods That Close the Gap Without Touching Your Macros</h2>
+      <p>The goal isn't finding fiber sources with zero calories, it's finding ones that slot into a protein-focused day without requiring you to rebuild your whole meal plan. A few of these do double duty as a carb source you were already going to eat anyway, which is the easiest kind of swap to actually stick with.</p>
+      <ul>
+        <li>Raspberries: about 8g of fiber per cup, and low enough in sugar to fit almost any carb budget as a snack or yogurt topper</li>
+        <li>Chia seeds: roughly 10g of fiber per ounce, stirred into oats, yogurt, or a shake without changing the flavor much</li>
+        <li>Lentils: about 8g of fiber per half cup cooked, and already a staple if you batch cook rice and legumes together</li>
+        <li>Black beans: around 7.5g of fiber per half cup, plus a meaningful amount of protein on top of the fiber</li>
+        <li>Avocado: about 10g of fiber per whole fruit, useful for lifters who need the calories from healthy fat anyway</li>
+        <li>Oats: roughly 4g of fiber per half cup dry, and an easy carb source to keep as-is rather than swapping for something more processed</li>
+        <li>Broccoli: about 5g of fiber per cooked cup, at almost no calorie cost, which makes it one of the easiest additions on a cut</li>
+        <li>Pears: about 5.5g of fiber per medium fruit, most of it in the skin, so it's worth not peeling it</li>
+        <li>Popcorn: around 3.5g of fiber per 3 cups popped, and a genuinely satisfying high-volume snack on a calorie deficit</li>
+        <li>Sweet potato: about 4g of fiber per medium potato, skin on, functioning as a straightforward swap for white rice</li>
+        <li>Chickpeas: roughly 6g of fiber per half cup, and dense enough in protein to nudge two macros at once</li>
+      </ul>
+      <p>None of that list requires abandoning chicken breast or whey. It requires making sure at least a few of those foods show up somewhere in the day rather than getting displaced by another scoop of protein powder or another few ounces of meat. Swapping white rice for a sweet potato, or tossing a half cup of black beans into a bowl that already has chicken and rice in it, barely moves your protein or calorie numbers and can add 10 grams of fiber or more in a single meal.</p>
+
+      <h2>How Much Fiber You're Actually Aiming For</h2>
+      <p>The commonly cited target is 25 to 38 grams a day, generally the lower end for women and the higher end for men, though bigger lifters eating more total food can reasonably land higher than that just from volume alone. The more useful number to track in practice is grams of fiber per 1,000 calories eaten, somewhere around 14 grams per 1,000 calories is a reasonable target regardless of your total intake, since it scales with how much food you're actually eating rather than being a flat number that gets harder to hit the leaner your diet gets.</p>
+      <p>One caution worth naming: fiber intake should move up gradually, not overnight. Jumping from 15 grams a day to 40 grams in a single week is a common way to trade constipation for bloating and gas of a different kind, because the gut bacteria that ferment fiber need time to adjust to a higher load. Adding two or three grams a day over a couple of weeks, alongside enough water to actually let that fiber do its job, gets you to the target without the stomach revolt.</p>
+
+      <h2>Where This Fits Into a Real Week of Meal Prep</h2>
+      <p>The easiest place to build fiber back in is at the carb source, since that's usually the part of the plate with the most room to move without disturbing your protein number. If you're already batch cooking rice or pasta as your base starch, swapping a portion of it for lentils, black beans, or a sweet potato most days of the week does the job quietly. Our <a href="/blog/best-foods-for-batch-cooking">guide to what actually holds up over a week of batch cooking</a> covers which of these keep their texture through several days of reheats, which matters more for beans and sweet potatoes than it does for rice.</p>
+      <p>If you're already leaning on legumes as a protein source, you're closer to solving this than most lifters realize. The same approach we laid out in <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">our guide to hitting 180g of protein a day without meat</a> happens to be fiber-rich almost by accident, since beans and lentils carry both nutrients at once. Lifters eating mostly animal protein don't get that overlap for free, which is exactly why this tends to hit harder on a meat-and-shake-heavy cut than it does on a more plant-forward plan.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your week around protein, carbs, and fat, but the carb source it picks matters here too. A plan that leans on rice, beans, oats, and sweet potato as its carb rotation is quietly doing fiber work in the background, not just filling a calorie number. If your current plan feels protein-heavy and gut-unfriendly at the same time, that's usually a sign the carb side needs more variety, not less food overall. <a href="https://macroplan.app">See how MacroPlan builds a week around your real macros →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can eating too much protein cause constipation directly?</h3>
+      <p>Protein itself isn't the direct cause. The issue is almost always what a high-protein diet displaces, since foods like chicken breast, egg whites, and whey carry no fiber, and a day built around them tends to crowd out the vegetables, whole grains, and legumes that would normally supply it. Adding fiber back in usually resolves it without needing to eat less protein.</p>
+      <h3>How much fiber should a lifter eating 180g of protein a day be getting?</h3>
+      <p>The general target of 25 to 38 grams a day still applies, but a useful way to scale it is roughly 14 grams of fiber per 1,000 calories eaten, since a lifter eating more total food should reasonably be eating more fiber too. Someone eating 3,000 calories a day should be closer to 40 grams than 25.</p>
+      <h3>Will adding fiber suddenly cause bloating instead of fixing it?</h3>
+      <p>It can, if it's added too fast. Jumping from a low-fiber intake to the full recommended amount in a few days tends to cause gas and bloating while gut bacteria adjust to the new load. Increasing intake gradually over a couple of weeks, with enough water alongside it, avoids that overcorrection.</p>
+      <h3>Do fiber supplements work as well as fiber from food?</h3>
+      <p>They can help close a gap in a pinch, but whole foods bring fiber alongside other nutrients, and several of the foods on this list, like lentils, chickpeas, and sweet potato, are already doing double duty as a carb or protein source. It's usually easier to hit the number through the meals you're already eating than to add a separate supplement on top.</p>
+
+      <p>Build a week of meals around your real macros, protein included, without losing the foods that keep your digestion working. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 30, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1579705745811-a32bef7856a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxmaWJlciUyMHZlZ2V0YWJsZXMlMjBiZWFucyUyMGZvb2R8ZW58MXwwfHx8MTc4NTM5Nzg4M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Tijana Drndarski on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@izgubljenausvemiru?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
+    slug: 'lean-bulk-guide-gain-muscle-without-fat',
+    title: 'Lean Bulking: How to Gain Muscle Without Gaining a Ton of Fat',
+    excerpt: 'Most bulks fail for the same reason: the surplus is too big, too fast, and nobody’s tracking what actually happens on the scale. Here is how to run a lean bulk that adds muscle without undoing months of dieting.',
+    content: `
+      <p>Ask most lifters how their last bulk went and you'll get some version of the same story: they started eating more, the scale went up fast, and six months later they had to spend just as long cutting the fat back off as they spent gaining it. That's not a bulk, that's a slow-motion cut waiting to happen. A lean bulk is built around a different idea: gain weight slowly enough that most of it is muscle, track closely enough to catch it if that stops being true, and stop before the surplus starts working against you.</p>
+
+      <h2>What "Lean" Actually Means in a Bulk</h2>
+      <p>Every bulk adds some fat. That's not a failure state, it's how a calorie surplus works: your body can only build a limited amount of new muscle tissue per week, and any energy beyond that gets stored. The goal of a lean bulk isn't zero fat gain, it's keeping the ratio favorable, aiming for something like three to four pounds of muscle for every pound of fat, rather than the other way around. A lifter who gains 10 pounds over three months and ends up with visibly softer abs and a waistband that's tighter everywhere probably ran too large a surplus for too long. A lifter who gains the same 10 pounds and looks and feels basically the same, just heavier and stronger, got the ratio right.</p>
+      <p>The size of the surplus is the single biggest lever here, more than food quality, meal timing, or any supplement. A surplus of 200 to 300 calories a day, roughly 10 percent above maintenance, is enough to support real muscle growth in most lifters without opening the door to fast fat gain. Go much higher than that and you're not speeding up muscle growth, since that process is capped by training stimulus and recovery, you're just adding fat faster. This is the part of bulking culture that gets the most pushback, because eating a lot feels productive and a small surplus feels timid, but the muscle-building side of the equation doesn't actually respond to more food once you're past what your training can use.</p>
+
+      <h2>How Much Weight You Should Actually Be Gaining</h2>
+      <p>For most natural lifters, a realistic gain rate lands around 0.25 to 0.5 percent of bodyweight per week for someone with a few years of training experience, and closer to 0.5 to 1 percent for a newer lifter still in their first year or two, when the body's capacity to build muscle quickly is higher. For a 180 lb lifter, that works out to roughly 0.5 to 1.5 lbs a month for an experienced trainee, or up to 3 to 4 lbs a month for a beginner. Anything faster than that isn't extra muscle, it's extra fat, because muscle protein synthesis simply can't keep pace with a bigger surplus no matter how much food you're eating.</p>
+      <p>This is also where weekly weigh-ins earn their keep. A single morning weight bounces around with water, sodium, and how much food is still sitting in your gut, so one high or low reading means nothing. What matters is the weekly average, tracked over four to six weeks, compared against the rate above. If the trend line is climbing faster than that, the surplus is too big and it's time to trim calories back down, not wait it out and hope the extra weight turns out to be muscle after the fact. Our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a> covers how to set the starting numbers before you begin adjusting.</p>
+
+      <h2>Setting the Macro Split for a Bulk</h2>
+      <p>Protein needs don't change much between a cut and a bulk, somewhere around 0.7 to 1 gram per pound of bodyweight (roughly 1.6 to 2.2 g per kg) covers what most lifters need to support muscle growth, and eating well past that number doesn't add extra benefit, it just displaces carbs and fat that could otherwise be fueling training. Our <a href="/blog/how-much-protein-to-build-muscle">breakdown of protein needs for muscle gain</a> goes into the research behind that range if you want the full case for it.</p>
+      <p>Where a bulk actually differs from a cut is in how the rest of the calories get split. Carbohydrates deserve the bigger share of the added surplus, since they directly fuel the training volume that's driving the muscle growth in the first place, glycogen-depleted lifters simply can't push the same load or reps that a well-fueled lifter can. Fat should sit at a level that supports hormone production, generally 20 to 30 percent of total calories, without eating so much of it that carbs get squeezed out. A simple starting split for a bulk looks like 30 percent protein, 45 percent carbs, and 25 percent fat, then gets adjusted based on how training and recovery actually feel over the following weeks.</p>
+
+      <h2>Training Has to Scale With the Surplus, Not Just Sit There</h2>
+      <p>A surplus without added training stimulus is just weight gain. The entire premise of a lean bulk is that the extra calories are there to support more or harder training than you could sustain on maintenance calories, which means the training itself needs to progress alongside the diet. That usually means one or more of the following shifting over the course of the bulk:</p>
+      <ul>
+        <li>Total weekly sets per muscle group increasing gradually as recovery capacity improves</li>
+        <li>Working weights climbing on your main lifts, not staying flat month over month</li>
+        <li>Session-to-session performance actually trending upward, not just repeating the same numbers</li>
+      </ul>
+      <p>If none of that is happening and the scale is still climbing, the surplus is doing the opposite of its job. This is the piece that gets skipped most often, because tracking food is more visible than tracking training progression, but a bulk with flat lifting numbers and a rising scale is fat gain with extra steps, regardless of how clean the food choices were.</p>
+
+      <h2>How Long a Bulk Should Actually Run</h2>
+      <p>Most lean bulks run somewhere between three and six months before diminishing returns and rising fat levels make it worth pulling back. Beyond that window, the ratio of muscle to fat gained tends to worsen even if the surplus size hasn't changed, partly because the body's insulin sensitivity and partitioning ability shift as body fat rises. A useful checkpoint is body fat percentage rather than the calendar: many lifters find their training and recovery quality starts to decline once they cross somewhere around 15 to 18 percent body fat (men) or 24 to 27 percent (women), at which point a planned pause, either a maintenance phase or a short cut, resets the environment for more efficient muscle gain later. This dovetails with the calorie cycling approach we cover in <a href="/blog/calorie-cycling-training-rest-days">why your training and rest day calories shouldn't match</a>, where the surplus itself gets weighted toward the days doing the most work rather than spread flat across the week.</p>
+      <p>A useful pattern many experienced lifters land on is alternating: a lean bulk phase of three to five months, followed by a shorter cut of six to ten weeks to bring body fat back down, then repeating. This keeps any individual phase from running long enough to lose control of the fat gain, and it means you never end up carrying the amount of extra fat that turns a cut into a six-month slog. Trying to bulk indefinitely without a planned endpoint is the single most common reason lifters end up further from their physique goals a year later than when they started, not closer.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan calculates a bulking surplus from your actual bodyweight, activity level, and goal rather than a flat "eat more" instruction, and it builds the batch prep plan around that number so hitting a 300-calorie surplus with the right protein and carbs doesn't require doing math every night. If you're running a lean bulk and want the meals to actually match the plan instead of guessing your way through a grocery run, <a href="https://macroplan.app">MacroPlan builds the week around your real numbers</a>.</p>
+
+      <h2>FAQ</h2>
+      <h3>How many calories over maintenance should a lean bulk surplus be?</h3>
+      <p>Around 200 to 300 calories a day, roughly 10 percent above maintenance, is enough to support meaningful muscle growth for most lifters without opening the door to fast fat gain. Bigger surpluses don't build muscle faster since that process is capped by training and recovery, they just add fat at a higher rate.</p>
+      <h3>How much weight should I be gaining per week on a lean bulk?</h3>
+      <p>Roughly 0.25 to 0.5 percent of bodyweight per week for lifters with a few years of training experience, and up to about 0.5 to 1 percent for someone newer to lifting. Anything meaningfully faster than that, tracked as a weekly average rather than a single day's weigh-in, usually means the surplus needs to come down.</p>
+      <h3>How long should a bulk last before I switch to a cut?</h3>
+      <p>Most lean bulks run three to six months before the muscle-to-fat ratio being gained starts to worsen. Watching body fat percentage rather than the calendar is the more reliable signal, many lifters see training quality and partitioning start to decline somewhere around 15 to 18 percent body fat for men or 24 to 27 percent for women.</p>
+
+      <p>Stop guessing at your bulking surplus. MacroPlan sets your macros and builds the meal plan around them. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 29, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1737999183056-20bf6b8952e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfGFsbHx8fHx8fHx8fDE3ODUzMTQyMTl8&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Abdul Raheem Kannath on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@raheemblacksnows?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'weight-loss-plateau-how-to-break-it',
     title: 'Weight Loss Plateau: Why It Happens and How to Actually Break It',
     excerpt: 'The scale stopped moving even though nothing about your plan changed. Here is what is actually happening metabolically, and the specific adjustments that get you moving again without crashing your calories.',
