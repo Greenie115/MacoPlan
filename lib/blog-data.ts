@@ -22,6 +22,245 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prep-without-a-kitchen-scale',
+    title: 'How to Meal Prep Without a Kitchen Scale (And Still Hit Your Macros)',
+    excerpt: 'A food scale isn’t always available, at a friend’s house, in a shared kitchen, mid-move. Here is how to portion by eye and by tool so your week still lands close to your targets.',
+    content: `
+      <p>You get used to the scale fast. Grams stop feeling like an estimate and start feeling like a fact, and then one week the scale is packed in a box, or you're cooking in someone else's kitchen, or the battery's dead and the nearest replacement is a weekend away. Suddenly a chicken breast is just a chicken breast again, and you're portioning by memory instead of by number.</p>
+      <p>The good news is that a scale is a precision tool, not a requirement. Lifters were hitting macros before food scales were a $12 Amazon impulse buy, using hands, cups, and consistent cooking habits that get you close enough to matter. Close enough doesn't mean sloppy. It means building a few reliable reference points so your week still lands where you need it, even without the number on the display.</p>
+
+      <h2>Why This Actually Happens More Than You'd Think</h2>
+      <p>Anyone who's tracked macros for more than a year eventually hits a scale-less week. Travel is the obvious one, hotel kitchens and Airbnbs rarely stock one. Moving is another, the scale ends up in a box labeled "kitchen misc" for two weeks longer than planned. And plenty of people cook in a kitchen they don't own, a partner's place, a family member's house, a dorm with one shared stove, where bringing your own scale feels like more commitment than the situation calls for.</p>
+      <p>The instinct in that moment is to either give up on tracking entirely for the week or to obsess over getting it exactly right without the tool that made exactly right possible. Neither is necessary. The scale was never the thing hitting your macros, it was just the measuring stick. You can build a rougher measuring stick out of your hands and a few reference objects, and it'll get you within a margin that barely moves the needle over a week of eating.</p>
+
+      <h2>The Hand Method: Good Enough for Most Meals</h2>
+      <p>Your hand scales with your body, which is convenient, because bigger people generally need more food. A palm-sized, palm-thick portion of a lean protein like chicken breast, white fish, or lean beef lands close to 25 to 30g of protein for most adults. A closed fist of cooked rice, potato, or pasta runs somewhere around 35 to 45g of carbs. A thumb-length portion of oil or nut butter is roughly 12 to 14g of fat, and a cupped handful covers a serving of nuts or cheese.</p>
+      <p>None of these numbers are exact, and they shouldn't be treated as exact. They're a starting point that gets refined the first time you're back near a scale. Weigh a palm-sized chicken breast once, note how it looks relative to your own hand, and that mental image becomes far more reliable the next time you're guessing. The method works because you're not re-learning portion sizes from scratch, you're calibrating a tool you already carry with you everywhere.</p>
+      <p>Where the hand method breaks down is calorie-dense, low-volume foods, things like oils, nut butters, cheese, and dried fruit, where a small visual difference in portion size represents a meaningful calorie swing. Be more conservative with those, a little under your instinct is safer than a little over, since it's much easier to add a bit more fat to a meal than to walk back overeating it.</p>
+
+      <h2>Cups, Spoons, and Everyday Objects</h2>
+      <p>If a kitchen has measuring cups and spoons, which most do even when they don't have a scale, volume measurements get you closer than eyeballing alone. A level cup of cooked rice or pasta, a tablespoon of oil, a scoop of protein powder using the scoop that came in the tub, these are all decent stand-ins once you know the rough conversion for the specific food. Cooked rice runs close to 200g per cup; olive oil is about 14g per tablespoon. A quick search the first time you need a conversion, then it's memorized.</p>
+      <p>When there's no measuring gear at all, everyday objects work as rough anchors. A deck of cards is close to a palm-sized portion of meat. A tennis ball is roughly a cup of rice or potato. A golf ball is close to two tablespoons of nut butter or oil. These comparisons get mocked for being imprecise, and they are, but imprecise and calibrated to a real reference point beats a pure guess by a wide margin, and a wide margin is all you actually need for most weeks.</p>
+
+      <h2>Cook the Same Way Every Time</h2>
+      <p>The single biggest lever for staying accurate without a scale isn't better guessing, it's reducing the number of variables you're guessing about. If you cook chicken breast the same way, same cut, same trim, same cooking method, every time, your eyeballed portions get more consistent because the food itself is more consistent. A boneless, skinless chicken breast baked at the same temperature for the same time loses roughly the same percentage of its raw weight to cooking every time you make it, so once you've calibrated what a good portion looks like post-cook, that reference holds.</p>
+      <p>This is also where sticking to a short rotation of foods, the same handful of proteins, carbs, and vegetables covered in our <a href="/blog/best-foods-for-batch-cooking">guide to foods that hold up for batch cooking</a>, pays off doubly. You're not just picking foods that survive five days in the fridge, you're picking foods you've portioned by eye often enough to trust your own judgment on them. Novel foods and new recipes are where eyeballing gets shakiest, because you don't have a calibrated mental picture to work from yet.</p>
+
+      <h2>Where to Spend Your Precision</h2>
+      <p>Not every food deserves the same level of care when you're working without a scale. Protein and calorie-dense fats are worth being more careful about, since they carry more weight per gram in your daily targets and errors compound faster. Vegetables and other high-fiber, low-calorie foods can be eyeballed loosely without much consequence, a slightly larger or smaller portion of broccoli barely registers against a day's total. If you're deciding where to put your limited attention in a scale-less kitchen, protein sources are the highest-leverage place to get it close to right, a principle covered in more depth in our <a href="/blog/protein-per-calorie-food-ranking">protein per calorie ranking</a>.</p>
+      <p>It's also worth remembering that a single scale-less week doesn't undo months of consistent tracking. If your portions run 10 to 15 percent off for five or six days, that's a rounding error against a much longer trend, not a reason to panic or overcorrect once the scale is back. The goal during that stretch isn't precision, it's staying roughly on target so you're not starting from zero when you get your tools back.</p>
+
+      <h2>Getting Back to a Scale</h2>
+      <p>Once you're back with a scale, don't skip the recalibration step. Weigh a few of the same portions you were eyeballing for the past week or two and compare them to what you thought you were eating. This closes the loop, either your hand-portion instincts were solid and you can trust them more next time, or you'll spot a specific food where your eye was consistently off, usually something calorie-dense like oil or cheese, and you know to weigh that one specifically going forward. Getting your <a href="/blog/decoding-macros">macro targets</a> dialed in matters less if the portioning underneath them drifts every time the scale isn't around, so this recalibration habit is worth keeping even after the trip or the move is long over.</p>
+      <p>If you'd rather not rebuild your portion instincts from scratch every time your setup changes, <a href="https://macroplan.app">MacroPlan</a> builds your weekly batch-cook plan around exact gram portions from the start, so the reference points you're calibrating against are already dialed in before you pick up a knife.</p>
+
+      <h2>FAQ</h2>
+      <h3>How accurate is the hand-portion method compared to weighing food?</h3>
+      <p>Expect to land within roughly 10 to 20 percent of your actual intake on most meals, tighter once you've calibrated your hand against a scale a few times. That's not lab-grade precision, but it's close enough that a scale-less week won't meaningfully derail a cut or a bulk that's otherwise on track.</p>
+      <h3>What should I prioritize getting right without a scale?</h3>
+      <p>Protein and calorie-dense fats, oils, nut butters, cheese, since small visual errors on those foods carry the biggest swing in total calories and protein. Vegetables and other low-calorie, high-fiber foods can be portioned loosely without much impact.</p>
+      <h3>Should I buy a travel scale instead of learning to eyeball portions?</h3>
+      <p>A small travel scale is a reasonable investment if you're frequently in scale-less kitchens, but it's still worth building hand-portion instincts as a backup. Batteries die, scales get left behind, and the skill travels with you even when the tool doesn't.</p>
+      <h3>Will one week of eyeballing portions ruin my progress?</h3>
+      <p>No. A short stretch of slightly imprecise tracking is a rounding error against weeks or months of consistent eating. Stay roughly on target, then recalibrate against a scale once you have one again rather than trying to perfectly reconstruct what you ate.</p>
+
+      <p>Skip the guesswork on prep day. MacroPlan portions your whole week to the gram automatically. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 20, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1767464950782-1654dc8665aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxraXRjaGVuJTIwZm9vZCUyMHNjYWxlJTIwbWVhbCUyMHByZXB8ZW58MXwwfHx8MTc4NDUzOTA0OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Tanya Barrow on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@tanyabarrow?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
+    slug: 'meal-prep-for-shift-workers',
+    title: 'Meal Prep for Shift Workers: Hitting Your Macros on a Rotating Schedule',
+    excerpt: 'Most meal prep advice assumes a normal 9-to-5 and three predictable meals a day. Here is how to actually hit your protein target when your "morning" starts at 7pm and your schedule flips every other week.',
+    content: `
+      <p>Every meal prep guide on the internet quietly assumes the same thing: you wake up around 7am, eat breakfast, train after work, and eat dinner at a normal hour. If you work nights, rotate between day and night shifts, or spend twelve hours on your feet in a hospital, warehouse, or kitchen, that advice doesn't just miss the mark, it can actively work against you. "Eat breakfast within an hour of waking" means something completely different when you're waking up at 6pm, and "meal prep on Sunday" assumes you're not scheduled to work every Sunday this month.</p>
+      <p>Shift work isn't a smaller version of the same problem everyone else has. It changes when your body wants to eat, when you actually have time to cook, and how consistent your week even is from one rotation to the next. None of that makes hitting your macros impossible, it just means the standard advice needs to get thrown out and rebuilt around a schedule that doesn't look like anyone else's.</p>
+
+      <h2>Why Standard Meal Timing Advice Falls Apart</h2>
+      <p>Most nutrition content is built around a day that has one clear structure: wake, eat, work, train, eat, sleep, repeat. Shift workers, especially anyone on rotating shifts that flip between days and nights every week or two, don't get that structure. Your "breakfast" might happen at 8pm before a night shift starts, your "dinner" might be at 6am after twelve hours on your feet, and the meal you'd normally eat around a workout has to slot in wherever your actual free hour lands, not wherever a guide assumes it should.</p>
+      <p>The bigger issue is that a rotating schedule doesn't give you one pattern to build around, it gives you two or three. Someone working a fixed night shift can eventually settle into a rhythm, even if it's an unusual one. Someone rotating through days, evenings, and nights on a two-week cycle is re-solving the timing problem every time the schedule flips, which is exhausting in a way that has nothing to do with willpower and everything to do with never having a stable baseline to prep against.</p>
+
+      <h2>The Rule That Actually Matters: Total Protein, Not Meal Timing</h2>
+      <p>Here's the good news buried in all of that: total daily protein and total daily calories are still what drive your results, and neither of those cares what time it is. The research on meal timing and protein distribution, covered in more depth in our <a href="/blog/protein-per-meal-ceiling">piece on the protein ceiling myth</a>, is fairly clear that hitting your number across the day matters far more than hitting it at any particular hour. A shift worker eating four solid protein-forward meals spread across a 16-hour waking window, whatever hours that window happens to fall in, is doing just as well as someone eating the same four meals on a conventional schedule.</p>
+      <p>That reframes the actual problem. You're not failing at meal prep because your hours are unusual, you're failing because the plan you're trying to follow was written for someone else's clock. Once total protein and total calories become the target, and clock time becomes irrelevant, the rest of the problem is just logistics: having the right food ready when your actual window to eat opens up, not when a guide says it should.</p>
+
+      <h2>Prep for the Shift You're About to Work, Not the Day of the Week</h2>
+      <p>The single biggest fix for shift workers is prepping in shift-blocks instead of calendar days. If you're working four consecutive night shifts, you need four sets of meals ready to go before the first one starts, not a Sunday-to-Saturday plan that assumes a fresh cook session every few days. Batch cooking before a stretch of shifts, then having zero cooking to do during it, matches how your week actually runs far better than trying to cook daily around hours that are already unpredictable and exhausting.</p>
+      <p>This is where the food choices matter more than usual. Reheated food needs to survive a microwave in a break room that may or may not have decent equipment, and it needs to still be appetizing at 3am, which is a genuinely harder bar to clear than at a normal dinner hour. Our <a href="/blog/best-foods-for-batch-cooking">guide to foods that hold up over a week of prep</a> is worth leaning on here: braised or slow-cooked proteins, grain bowls, and anything that reheats evenly beat delicate proteins that dry out or textures that turn unpleasant after a second reheat. Chicken thighs, ground meat, and beans travel better through a week of night-shift reheats than a pan-seared chicken breast ever will.</p>
+      <p>Portable, no-reheat options matter just as much, since not every break room has a working microwave and not every ten-minute break is long enough to use one. Overnight oats, protein-forward wraps, cottage cheese with fruit, and pre-portioned nuts or jerky as backup all cover the stretches where reheating isn't realistic. Keeping two or three of these in rotation means a bad night at work, one where you barely get a break at all, doesn't turn into a night where you eat nothing and blow the whole plan.</p>
+
+      <h2>Sleep Is Part of the Nutrition Problem Here</h2>
+      <p>It's worth saying plainly: poor sleep from rotating shifts makes hunger regulation harder, full stop. Sleep-deprived days come with a measurable increase in appetite and a stronger pull toward high-calorie, low-effort food, which is exactly the trap night-shift and rotating workers fall into most often, not from a lack of discipline but from a body that's chemically pushing toward vending machine food at 4am. Having your own protein-forward option already prepped and sitting in the break room fridge removes the decision entirely at the exact moment your willpower is at its lowest, which matters more here than in almost any other meal prep scenario.</p>
+      <p>This is also where being realistic about a rotating schedule pays off more than trying to force consistency that isn't achievable. A fixed meal plan that assumes the same wake time every day will break the first week your shifts rotate, and a broken plan tends to get abandoned entirely rather than adjusted. Building around total daily protein and a shift-block prep cycle, rather than a fixed clock, is what actually survives contact with a schedule that changes every two weeks.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your batch prep plan around your total macro targets and how many days you're prepping for at once, not around a fixed wake-and-sleep clock. Tell it you're prepping four days of meals ahead of a run of night shifts and it hands you a shopping list and cook plan sized to that stretch, so the food is ready before the schedule flips again. <a href="https://macroplan.app">See how MacroPlan builds a prep plan around your week →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Does it matter if I eat "breakfast" at 7pm instead of 7am?</h3>
+      <p>No. Your body doesn't track calories or protein against a clock, it tracks them against your waking window. A protein-forward meal at the start of your day works the same whether that day starts at 7am or 7pm, and total daily protein intake is what actually drives results, not the label on the meal.</p>
+      <h3>How many days ahead should shift workers meal prep?</h3>
+      <p>Prep for the length of your shift block, not the calendar week. If you work four shifts in a row, cook four days of meals before the first one starts, then reset when the block ends. This matches how a rotating schedule actually runs far better than a fixed Sunday prep session does.</p>
+      <h3>What foods hold up best for night-shift break room reheats?</h3>
+      <p>Braised or slow-cooked proteins, ground meat, beans, and grain bowls reheat far more evenly than delicate cuts like pan-seared chicken breast, which tend to dry out by the second or third reheat. Keeping a few no-reheat backups, like overnight oats or cottage cheese, covers the breaks too short or too busy for a microwave.</p>
+
+      <p>Stop trying to fit a rotating schedule into someone else's meal plan. MacroPlan builds yours around the shifts you're actually working. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 16, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1737999183056-20bf6b8952e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw0fHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBjaGlja2VuJTIwcmljZXxlbnwxfDB8fHwxNzg0MTg1NTE4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Abdul Raheem Kannath on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@raheemblacksnows?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
+    slug: 'meal-prep-containers-guide',
+    title: 'Meal Prep Containers: Sizes, Materials, and How Many to Buy',
+    excerpt: 'Buying the wrong meal prep containers wastes money and ruins food by day three. Here is how to pick the right size, material, and count for how you actually train and eat.',
+    content: `
+      <p>Most people buy meal prep containers the same way: they grab whatever multi-pack is cheapest at the store, get them home, and discover half are too small for a real meal and the other half don't survive the microwave. Then they buy a second set. The container itself feels like the least important decision in meal prep, right up until the lid cracks in week two or every lunch looks like it's swimming in a tub built for someone eating 1,600 calories a day while you're eating 2,800.</p>
+      <p>Getting containers right is a one-time decision that saves money and aggravation for years. This is how to think about size, material, and count so you buy once and stop thinking about it.</p>
+
+      <h2>How Much Volume Actually Fits Your Macros</h2>
+      <p>Container sizes are sold in ounces, and that number tells you almost nothing about calories until you connect it to what's actually going in. As a rough rule, a meal built around lean protein, a starchy carb, and vegetables packs somewhere between 18 and 22 calories per ounce of finished, cooked food. A 500-calorie meal of chicken, rice, and vegetables usually fits a 24 to 28 ounce container, and a 700 to 800-calorie meal, the kind a lot of lifters in a bulk are eating three or four times a day, needs closer to 34 to 38 ounces.</p>
+      <p>That's why the single-size 21-ounce container sold in most grocery store multi-packs is built for someone eating small, calorie-controlled meals, not a 200-pound lifter hitting 3,200 calories across four meals. If you've ever packed a container and had rice spilling over the lid, that's not a packing problem, it's a sizing problem. Buy based on your actual meal size, not the size that happened to be on sale.</p>
+
+      <h2>Plastic vs. Glass vs. Stainless Steel</h2>
+      <p>The material question comes down to three things: how it handles a microwave, how long it lasts, and what it costs. Polypropylene plastic (labeled #5, sometimes stamped with a microwave-safe icon) is what most container sets use, and food-grade polypropylene doesn't contain BPA. The FDA has reviewed the safety of BPA-containing plastics in food contact applications extensively; polypropylene simply isn't one of them, since it's a different polymer entirely. The real weakness of plastic isn't chemical, it's physical: lids warp under repeated microwave use, and the container itself stains orange from tomato sauce within a month.</p>
+      <p>Glass solves both of those problems and is genuinely microwave and dishwasher safe, but it's heavier to carry, breaks if dropped on tile, and costs two to three times more per container. Stainless steel splits the difference on durability, it won't crack or stain, but it can't go in a microwave at all, which rules it out for anyone reheating lunch at a desk rather than eating it cold or reheating on a stovetop.</p>
+
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">Material</th>
+            <th style="text-align:left; padding: 8px;">Microwave safe</th>
+            <th style="text-align:left; padding: 8px;">Typical lifespan</th>
+            <th style="text-align:left; padding: 8px;">Cost per container</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Polypropylene plastic</td><td style="padding: 8px;">Yes</td><td style="padding: 8px;">6-12 months heavy use</td><td style="padding: 8px;">~$1.50-3</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Borosilicate glass</td><td style="padding: 8px;">Yes</td><td style="padding: 8px;">Years, if not dropped</td><td style="padding: 8px;">~$5-8</td></tr>
+          <tr><td style="padding: 8px;">Stainless steel</td><td style="padding: 8px;">No</td><td style="padding: 8px;">Years</td><td style="padding: 8px;">~$8-12</td></tr>
+        </tbody>
+      </table>
+
+      <p>For most lifters, the answer is plastic for the containers that travel (gym bag, car, desk drawer) and glass for the ones that live in the fridge and go straight into a microwave at home. Buying one expensive "forever" set in a single material is usually the wrong call. A mixed set matched to how each container actually gets used costs less and lasts longer than an all-glass or all-steel setup bought on principle.</p>
+
+      <h2>How Many Containers You Actually Need for a Week</h2>
+      <p>This is container math, and it's simpler than it looks: meals per day, times days between shopping trips, minus the meals you'll eat fresh or skip prepping. A lifter eating 4 meals a day who preps for 5 days and eats out or cooks fresh twice a week needs 4 x 5 = 20 containers, not 28. Someone prepping strictly Sunday to Friday with no fresh nights needs the full count for every meal that's coming out of a container.</p>
+      <p>The mistake most people make is buying exactly enough for one week with zero buffer. That works until laundry day for containers doesn't happen before the next prep session, and suddenly Tuesday's lunch is going in a mixing bowl covered in foil. Buying 20 to 25% more than the bare math suggests, so roughly 5 extra for that 20-container week, covers the container that's still in the dishwasher and the one a roommate borrowed and never returned. For the full workflow of getting a week of food into containers in one sitting, see our <a href="/blog/meal-prepping-for-weight-loss">guide to meal prepping for weight loss</a>.</p>
+
+      <blockquote>Buy for your actual meal count plus a 20% buffer, not for the multi-pack size that happened to be on sale. Undersized or under-counted containers are the single most common reason people quit meal prep in the first two weeks.</blockquote>
+
+      <h2>One Compartment or Three?</h2>
+      <p>Divided containers keep a sauce or dressing from turning rice to mush by day three, which matters for anything with a wet component, curries, stir-fries with sauce, taco filling. For dry combinations, roasted protein, plain rice, roasted vegetables, a single compartment is genuinely fine and easier to portion since you're not trying to make three unevenly-sized sections all hit the same volume. If you're building meals around <a href="/blog/best-foods-for-batch-cooking">foods that hold up well over a week of batch cooking</a>, most of what ends up in the container is dry enough that compartments are a nice-to-have rather than a requirement. Buy 2-3 compartment containers only for the specific meals in rotation that genuinely need the separation, not as a blanket default for every container in the cabinet.</p>
+
+      <h2>Where People Waste Money on Containers</h2>
+      <p>The branded "meal prep system" sold with a matching bag, ice pack, and app is almost always the same polypropylene container available in a plain multi-pack for a third of the price, with a logo stamped into the lid. Snap-lock lids with four latches feel premium in the store but are the first thing to crack after a few months of hand-washing, a plain screw-on or simple two-tab lid usually outlasts them. And buying a single 12-pack of one size locks in a mistake if that size turns out wrong for your macros, buying a smaller number in two sizes, one for lighter meals and one for bigger ones, costs about the same and actually fits how differently sized your meals really are.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>Container count isn't a footnote for MacroPlan, it's one of the first things the app asks. Tell it how many containers you're filling and it builds the batch-cook plan and portions around that number, rather than generating a recipe list and leaving you to guess how it divides up. If you already know your container count from working through the math above, <a href="https://macroplan.app">MacroPlan</a> turns that number straight into a cooking plan and shopping list.</p>
+
+      <h2>FAQ</h2>
+      <h3>What size meal prep container should I buy for a 2,000-2,500 calorie diet?</h3>
+      <p>Most meals in that range land between 500 and 650 calories, which fits comfortably in a 28 to 32 ounce container. If your meals run smaller and more frequent, a 21 to 24 ounce size is usually enough.</p>
+      <h3>Are glass meal prep containers actually worth the extra cost?</h3>
+      <p>For containers that stay at home and go in the microwave regularly, yes, they resist staining and warping far longer than plastic and pay for themselves within a year of heavy use. For containers that travel to the gym or get thrown in a bag, the extra weight and breakage risk make plastic the more practical choice.</p>
+      <h3>Is BPA-free plastic actually safe for meal prep?</h3>
+      <p>Food-grade polypropylene, the plastic used in most BPA-free meal prep containers, is a different polymer than the ones the BPA concern applies to. The <a href="https://www.fda.gov/food/food-packaging-other-substances-come-contact-food-information-consumers/bisphenol-bpa-use-food-contact-application" target="_blank" rel="nofollow noopener">FDA's review of BPA in food contact applications</a> covers polycarbonate and can linings specifically, not polypropylene containers.</p>
+      <h3>How many meal prep containers do I need if I eat 4 meals a day?</h3>
+      <p>For a 5-day prep with 4 meals a day, that's 20 containers at minimum. Add a 20% buffer, about 5 more, to cover wash cycles and the odd container that goes missing, landing around 24 to 25 total.</p>
+      <h3>Should I buy compartment containers or single-compartment ones?</h3>
+      <p>Buy compartments only for meals with a wet sauce or dressing that would otherwise soak into the rest of the food. Dry combinations like roasted protein, rice, and roasted vegetables store fine in a single compartment and are easier to portion evenly.</p>
+
+      <p>Once you know your container count, the hard part is what actually goes in them. <a href="https://macroplan.app/signup">Generate your first plan free →</a> and MacroPlan builds the recipes and shopping list around the exact number you tell it.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 13, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1569420077790-afb136b3bb8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnN8ZW58MXwwfHx8MTc4MzkyNjU4Nnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by S'well on Unsplash",
+    imageCreditUrl: "https://unsplash.com/@swell?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Meal Prep'
+  },
+  {
+    slug: 'macroplan-vs-myfitnesspal',
+    title: 'MacroPlan vs MyFitnessPal: Which One Actually Fits a Lifter’s Macros?',
+    excerpt: 'One app is built to log what you already ate. The other is built to plan what you cook before the week starts. Here is an honest side-by-side for lifters deciding between them.',
+    content: `
+      <p>MyFitnessPal and MacroPlan get compared a lot, but they're not really solving the same problem. MyFitnessPal is a food diary: you log what you eat, meal by meal, and it tells you where your macros landed. MacroPlan is a meal-prep planner: you set your macro targets once, and it hands you a batch-cooking plan and shopping list built to hit them, before you've cooked anything. Full disclosure, we're the MacroPlan team, but this comparison is meant to be genuinely useful, not a sales pitch, so we're naming where each app wins.</p>
+
+      <p><strong>The short version:</strong> MyFitnessPal is best if you want to log everything you eat, including restaurant meals and random snacks, against a calorie or macro target. MacroPlan is best if you want the decision made for you ahead of time, a week of batch-cooked meals that already hit your numbers, so there's nothing left to log.</p>
+
+      <h2>Side by Side</h2>
+      <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="border-bottom: 2px solid #ddd;">
+            <th style="text-align:left; padding: 8px;">&nbsp;</th>
+            <th style="text-align:left; padding: 8px;">MyFitnessPal</th>
+            <th style="text-align:left; padding: 8px;">MacroPlan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Core mechanic</td><td style="padding: 8px;">Log food you've already eaten</td><td style="padding: 8px;">Generate a batch-cook plan before you eat</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Pricing (as of writing)</td><td style="padding: 8px;">Free tier; Premium around $20/mo or $80/yr; Premium+ (adds meal planning) around $25/mo or $100/yr</td><td style="padding: 8px;">Free first plan, no card required; paid Pro tier for unlimited plans</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Food database</td><td style="padding: 8px;">Enormous, barcode scanner, restaurant items, user-submitted entries</td><td style="padding: 8px;">500+ curated recipes built for bulk cooking, not a general logging database</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Macro targeting</td><td style="padding: 8px;">You set the target; you track adherence after the fact</td><td style="padding: 8px;">You set the target; the plan is built to hit it before you cook</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Training day vs. rest day macros</td><td style="padding: 8px;">Not built in; you'd manually set separate goals</td><td style="padding: 8px;">Calculated automatically from your training frequency</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Shopping list</td><td style="padding: 8px;">Not part of the core app</td><td style="padding: 8px;">One consolidated list per prep session</td></tr>
+          <tr><td style="padding: 8px;">Best for</td><td style="padding: 8px;">Anyone eating variable meals who wants a running log</td><td style="padding: 8px;">Lifters who cook once and eat from containers all week</td></tr>
+        </tbody>
+      </table>
+
+      <h2>MyFitnessPal: What It's Actually Good At</h2>
+      <p>MyFitnessPal's strength is coverage. Its food database is the largest of any tracking app, built up over more than a decade of user submissions, and the barcode scanner makes logging packaged food fast. If your week involves eating out, grabbing whatever's in the office kitchen, or generally not knowing what tomorrow's meals look like until tomorrow, a logging app is the right category of tool, because it adapts to whatever you actually ate rather than requiring you to have planned it.</p>
+      <p>The honest limitation is that MyFitnessPal tells you where you landed after the fact. It doesn't decide what to cook or generate a shopping list from your targets, and its meal-planning features (bundled into the higher Premium+ tier) are aimed at a general audience rather than a lifter who wants training day and rest day macros calculated separately. It also asks for a fair amount of daily discipline, every meal has to be logged for the number to mean anything, and that logging habit is exactly what a lot of lifters eventually burn out on. Our <a href="/blog/stop-tracking-macros-burnout">guide to macro tracking burnout</a> covers that problem in more depth if it sounds familiar.</p>
+
+      <h2>MacroPlan: What It's Actually Good At</h2>
+      <p>MacroPlan skips the daily logging step entirely. You enter your stats, goal, training frequency, and how many containers you want to fill, and it generates a batch-cooking plan built around 3-4 recipes designed to hit your macros across the week, plus a single shopping list and a cooking order so nothing overcooks while something else waits. The macro math, including separate training day and rest day targets, is calculated automatically rather than something you configure by hand.</p>
+      <p>The honest limitation is the flip side of the same design choice: MacroPlan isn't a food diary. If you eat outside the plan, a restaurant meal, a friend's barbecue, a bag of chips at 11 p.m., there's no logging feature to record it against your daily total. It's built for the specific pattern of cooking once and eating from containers all week, not for tracking a day that's genuinely unpredictable meal to meal. If your week is more improvised than planned, that's a real point in MyFitnessPal's favor.</p>
+
+      <h2>Which One Should You Pick</h2>
+      <p><strong>Pick MyFitnessPal if</strong> your meals vary day to day, you eat out often, or you specifically want a running log of everything you've eaten rather than a pre-built plan. <strong>Pick MacroPlan if</strong> you already cook in batches, or want to start, and would rather set your macros once and get a week of food that hits them than log every meal individually. <strong>Pick neither, at least not yet,</strong> if you haven't calculated your macro targets in the first place, our <a href="/blog/decoding-macros">guide to calculating your macro ratio</a> is the actual starting point either app assumes you've already done.</p>
+      <p>Plenty of lifters end up using something like MyFitnessPal for the odd unplanned meal and MacroPlan for the bulk of their week, they're not mutually exclusive, they just solve different halves of the same problem. If you're coming from years of IIFYM-style flexible dieting and logging fatigue is part of why you're looking at alternatives, our <a href="/blog/ultimate-guide-to-flexible-dieting">flexible dieting guide</a> covers where a planned approach fits into that framework.</p>
+
+      <h2>FAQ</h2>
+      <h3>Can I use MacroPlan without giving up MyFitnessPal entirely?</h3>
+      <p>Yes. Plenty of people use MacroPlan for their planned, batch-cooked meals and still log the occasional restaurant meal or weekend exception in a diary app. They're not competing for the same slot in your day.</p>
+      <h3>Does MacroPlan have a food diary or logging feature?</h3>
+      <p>No, that's not what it's built for. MacroPlan generates the plan before you eat; it doesn't track what you actually ate afterward. If daily logging of unplanned meals matters to you, that's a genuine reason to keep a logging app alongside it.</p>
+      <h3>Is MyFitnessPal's free tier enough for a lifter tracking macros?</h3>
+      <p>For basic logging, yes, the free tier lets you set custom macro goals and log food. What it lacks compared to Premium is faster logging tools like barcode and meal scan, and it has no meal-planning layer at any price point that's built specifically around training day and rest day macros.</p>
+      <h3>Which app is cheaper?</h3>
+      <p>MacroPlan's first plan is free with no card required. MyFitnessPal's core logging features are also free, but the tools most lifters actually want (faster logging, custom macros without ads, meal planning) sit behind Premium or Premium+, roughly $80 to $100 a year as of this writing. Check each app's current pricing page before deciding, subscription pricing shifts more often than the feature list does.</p>
+
+      <p>If cooking once and eating from containers all week sounds closer to how you actually want to eat, <a href="https://macroplan.app/signup">generate your first MacroPlan meal plan free</a> and see the difference against a logging app for yourself.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 10, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1737999183056-20bf6b8952e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw0fHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBjaGlja2VuJTIwcmljZXxlbnwxfDB8fHwxNzgzNjY0OTU5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: "Photo by Abdul Raheem Kannath on Unsplash",
+    imageCreditUrl: "https://unsplash.com/photos/four-containers-of-food-on-an-orange-surface-YlwEPbEZfoI?utm_source=MacroPlan&utm_medium=referral",
+    category: 'Nutrition'
+  },
+  {
     slug: 'bulking-vs-cutting-vs-recomp',
     title: 'Bulking, Cutting, or Recomp? How to Pick the Right One',
     excerpt: 'Bulking, cutting, and body recomposition all build or preserve muscle differently. Here is the decision framework for picking the one that actually fits your body fat, training age, and goals.',
