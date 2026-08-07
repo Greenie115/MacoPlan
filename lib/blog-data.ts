@@ -22,6 +22,59 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-smoothie-recipes-for-lifters',
+    title: '6 High-Protein Smoothie Recipes That Actually Hit 40g (Ready in 5 Minutes)',
+    excerpt: 'Most "protein smoothie" recipes online top out at 15 or 20 grams once you actually weigh the ingredients. These six are built backward from a real macro target, so the number on the blender matches the number in your app.',
+    content: `
+      <p>Search "high protein smoothie recipe" and you'll get a hundred results built around a scoop of powder, a banana, and a splash of milk, which sounds right until you actually run the numbers and find it's sitting at 22 grams of protein for 380 calories. That's not a bad snack, but it's not what most lifters mean when they say high protein, and it's rarely built with a specific macro target in mind. The six recipes below start from the other direction: pick a protein number, then build the smoothie to hit it without the carb and fat totals sliding somewhere you didn't plan for.</p>
+
+      <h2>Why Most Smoothie Recipes Undercount Protein</h2>
+      <p>The gap almost always comes from one ingredient doing all the work. A single scoop of whey, usually 25 to 30 grams of protein, gets treated as the entire protein source, and everything else in the blender, the fruit, the milk, the nut butter, is there for flavor and texture. That's fine if 25 to 30 grams is actually your target, but if you're trying to land a smoothie in the 40 gram range the way a real meal would, one scoop isn't going to get you there no matter how much spinach you add.</p>
+      <p>The fix is treating the smoothie like any other meal you'd build in MacroPlan: pick two protein sources instead of one, usually a powder plus a dairy or legume-based ingredient, and let the fruit and fat sit in supporting roles. Greek yogurt, cottage cheese, and silken tofu all blend smooth and each carry 10 to 25 grams of protein on their own, which is the difference between a smoothie that hits 22 grams and one that hits 42 without doubling the scoop count and wrecking the taste.</p>
+
+      <h2>1. Peanut Butter Banana, Built for a Bulk</h2>
+      <p>One scoop of whey, one frozen banana, a tablespoon of peanut butter, a cup of whole milk, and a handful of oats blended in dry. The oats add carbs and thicken the texture without tasting like oatmeal, and the peanut butter and whole milk push the calorie total up without needing a second scoop of powder. This lands around 42 grams of protein and roughly 550 calories, which makes it a legitimate stand-in for a bulking breakfast rather than a between-meal snack.</p>
+
+      <h2>2. Greek Yogurt and Berry, Built for a Cut</h2>
+      <p>A cup of nonfat Greek yogurt, a half scoop of whey, a cup of frozen mixed berries, and unsweetened almond milk to thin it out. The yogurt alone carries close to 23 grams of protein for under 130 calories, so the half scoop of powder is enough to close the gap to 40 grams without the calorie total climbing the way a full second scoop would. This is the version worth reaching for on a cut, where the goal is protein density with as little fat and sugar riding along as possible.</p>
+
+      <h2>3. Cottage Cheese and Mango, No Powder Needed</h2>
+      <p>Cottage cheese blends completely smooth if you run it long enough, and it's worth getting past the texture assumption because a cup of it carries roughly 25 grams of protein on its own. Blend that with a cup of frozen mango, a splash of orange juice, and a pinch of vanilla, and you land at 38 to 40 grams of protein with no powder at all, which is useful for anyone who's tired of the chalky aftertaste that comes with a second scoop.</p>
+
+      <h2>4. Chocolate Tofu, the Vegan Option</h2>
+      <p>Silken tofu is the one plant-based ingredient that actually pulls its weight here. Half a block blended with a scoop of plant-based chocolate protein, a frozen banana, a tablespoon of cocoa powder, and oat milk produces something closer to a milkshake than a green smoothie, and it clears 40 grams of protein without any dairy or animal product. If you're following the substitution approach in our <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">guide to vegetarian meal prep</a>, this is the smoothie version of the same logic: pair a dense plant protein with a smaller dose of powder instead of relying on powder alone.</p>
+
+      <h2>5. Overnight Oats Smoothie, for the Slow Digesters</h2>
+      <p>Blend a half cup of rolled oats, a cup of cottage cheese or Greek yogurt, a scoop of casein instead of whey, a tablespoon of honey, and cinnamon, then let it sit in the fridge for a few hours before drinking. Casein digests slower than whey, and the oats add enough fiber that this holds you longer than the others on the list, which makes it a reasonable stand-in on a morning when you know lunch is going to be late. It sits around 44 grams of protein and roughly 480 calories.</p>
+
+      <h2>6. Green Machine, for Anyone Avoiding a Sugar Spike</h2>
+      <p>A cup of spinach, a scoop of whey, a half cup of Greek yogurt, a quarter of an avocado for fat and texture, unsweetened almond milk, and a few ice cubes. Skipping the banana keeps the sugar content low without sacrificing protein, since the yogurt and powder are doing the heavy lifting rather than the fruit. This version lands around 38 grams of protein for about 340 calories, which makes it the lightest option on the list if you're trying to keep a snack under 400 calories, similar to the targets in our <a href="/blog/high-protein-snacks-under-200-calories">roundup of high-protein snacks under 200 calories</a> for the smaller-portion version.</p>
+
+      <h2>Adjusting These to Your Own Numbers</h2>
+      <p>None of these six are fixed recipes so much as templates. If your daily target sits closer to 150 grams of protein than 220, halving the powder in most of these and leaning more on the yogurt or cottage cheese will bring the calorie total down without gutting the protein number. The core principle carries across all of them: pick a whole-food protein source to do a third to half of the work, and let the powder close the remaining gap, rather than asking one scoop to carry the entire smoothie. That's the same logic behind hitting a real number at any single meal, which our <a href="/blog/protein-per-meal-ceiling">breakdown of the protein-per-meal ceiling</a> covers if you want the research behind why 25 to 40 grams per sitting is the range worth aiming for in the first place.</p>
+      <p>If you're building a whole week of meals rather than one smoothie, MacroPlan sets your protein target from your actual stats and goal, then builds the rest of your day, breakfast, lunch, dinner, and snacks, around hitting it without you doing this math by hand every morning. <a href="https://macroplan.app">See how MacroPlan builds a full day of meals around your macros →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can I hit 40 grams of protein in a smoothie without protein powder?</h3>
+      <p>Yes. Cottage cheese, Greek yogurt, and silken tofu all carry 10 to 25 grams of protein per serving and blend smooth, so a combination of two of them can reach 40 grams without any powder at all, as the cottage cheese and mango recipe above shows.</p>
+      <h3>Is casein or whey better for a smoothie?</h3>
+      <p>Whey mixes and dissolves more easily and works better in a fast, thin smoothie you're drinking right away. Casein is thicker and digests more slowly, which makes it a better fit for an overnight or slow-sip version meant to hold off hunger for a few hours rather than something you're drinking on the way out the door.</p>
+      <h3>Will adding a second protein source make the smoothie taste worse?</h3>
+      <p>Not if you pick one that blends smooth. Greek yogurt, cottage cheese, and silken tofu are close to flavorless once blended with fruit or cocoa, and they add creaminess rather than a competing taste, which is why they're the go-to second source instead of a second scoop of powder.</p>
+
+      <p>Stop eyeballing your protein numbers. MacroPlan builds your macros and your meals around them. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 7, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1759428981568-9748d27b85c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw0fHxiZXJyeSUyMHNtb290aGllJTIwZ2xhc3N8ZW58MXwwfHx8MTc4NjA4Njc5M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by abdelkader1001 on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@abdelkader1001?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'weight-loss-plateau-hitting-macros',
     title: "Hitting Your Macros but the Scale Won't Move? Here's What Actually Stalled",
     excerpt: "If your tracking app says you're in a deficit but your weight hasn't moved in weeks, the problem usually isn't willpower. It's one of four specific, fixable things.",
