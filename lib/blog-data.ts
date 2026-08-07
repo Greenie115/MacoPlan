@@ -22,6 +22,239 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'weight-loss-plateau-how-to-break-it',
+    title: 'Weight Loss Plateau: Why It Happens and How to Actually Break It',
+    excerpt: 'The scale stopped moving even though nothing about your plan changed. Here is what is actually happening metabolically, and the specific adjustments that get you moving again without crashing your calories.',
+    content: `
+      <p>Four weeks ago the scale was moving every week. Now it hasn't budged in ten days, you're still logging every meal, you're still training, and nothing about your plan has changed on paper. This is the point where most people either panic and slash their calories by another few hundred, or throw the whole thing out and decide tracking doesn't work for them. Neither reaction is warranted, because a stall like this is one of the most predictable parts of a cut, not a sign that something has gone wrong.</p>
+
+      <h2>Why the Scale Stops Moving Even When You Haven't Changed Anything</h2>
+      <p>The core reason a plateau happens is that your maintenance calories are not a fixed number. As you lose weight, your body simply needs less energy to run itself: a lighter body burns fewer calories walking around, less tissue means a lower resting metabolic rate, and your total daily energy expenditure quietly drifts downward the whole time you're dieting. A deficit that was 500 calories in week one can shrink to 200 or less by week eight without you doing anything differently, because the maintenance number it was measured against has moved. Eat the same calories your app told you six weeks ago and you're no longer in the deficit you think you're in.</p>
+      <p>Water retention adds another layer of noise on top of that real physiological shift. Higher sodium one weekend, a harder training block, more stress, or even where you are in a menstrual cycle can hold two or three pounds of water for days at a time, and that's more than enough to hide several weeks of genuine fat loss underneath a flat or even rising scale number. This is exactly why a single weigh-in tells you almost nothing useful, and why a stall that looks alarming day to day often resolves itself once you zoom out to a weekly average instead of chasing daily numbers.</p>
+      <p>There's also a behavioral drift that's easy to miss because it doesn't feel like cheating. Six weeks into a diet, portions creep slightly larger without a conscious decision to eat more, a "quick taste" while cooking stops getting logged, and NEAT, the calories burned from fidgeting, walking, and general daily movement, tends to drop as dieting fatigue sets in and you unconsciously move less. None of that is a failure of willpower. It's just what happens to most people on a long diet, and it's worth naming honestly before assuming the plateau is purely metabolic.</p>
+
+      <h2>Rule Out the Fake Plateau First</h2>
+      <p>Before changing a single number in your plan, check whether this is actually a plateau or just noise. Pull up your last two to three weeks of weigh-ins and look at the weekly average rather than any single day. A genuine stall means that average has been flat, not down even slightly, for at least two to three consecutive weeks. If the average is still trending down, even by a quarter pound a week, you're not stalled, you're just in a slow patch, and the fix is patience rather than a calorie cut.</p>
+      <p>It's also worth checking whether logging accuracy has quietly slipped. This is less about being dishonest and more about the fatigue that sets in around week six or eight of any diet, when the app entries start getting rounder and less precise than they were in week one. If you've been eyeballing portions instead of weighing them, or skipping the log on busy days and mentally estimating later, tightening that back up for a week is often enough to reveal that the "plateau" was actually a slow calorie creep the whole time.</p>
+
+      <h2>The Adjustments That Actually Work</h2>
+      <p>If the weekly average genuinely has been flat for two to three weeks and your logging has been tight, the standard fix is a small further reduction, not a dramatic one. Cutting another 10 to 15 percent off your current calorie target is usually enough to restore a real deficit against your new, lower maintenance number, and a 10 to 15 percent cut is small enough to sustain without wrecking training performance or triggering the kind of hunger that leads to a binge. Going much larger than that tends to backfire: it makes the diet harder to stick to and doesn't meaningfully speed up the actual rate of fat loss, since fat loss is capped by how much body fat you realistically have available to lose per week regardless of how aggressive the deficit gets.</p>
+      <p>A diet break is the other legitimate tool here, and it's underused because it feels counterintuitive to eat more when the goal is to lose weight. Spending one to two weeks eating at maintenance, calculated from your current bodyweight rather than where you started, gives your metabolism room to partially recover from the adaptive slowdown that comes with an extended deficit, refills muscle glycogen so training feels less flat, and resets the psychological fatigue that builds up over months of restriction. This isn't the same as calorie cycling week to week, which our <a href="/blog/calorie-cycling-training-rest-days">guide to training-day and rest-day cycling</a> covers for people still actively losing. A diet break is a deliberate full pause, and most people come out of it able to resume a deficit with better adherence and less mental fatigue than if they'd just pushed calories lower and kept grinding.</p>
+      <p>Before reaching for either of those levers, it's worth ruling out the boring explanation one more time. A meaningful share of plateaus that people bring to a coach or a forum turn out to be a measurement problem rather than a metabolic one: a kitchen scale that's never been zeroed, a habit of rounding restaurant meals down, or oil and sauces that never make it into the log because they don't feel like "real" food. If you haven't already, spend a week weighing everything to the gram and logging genuinely everything, including the bite while cooking and the coffee creamer, before concluding your body has actually adapted. Burnout around this level of precision is real too, and if constant logging is what's breaking down, our piece on <a href="/blog/stop-tracking-macros-burnout">cutting tracking fatigue without losing results</a> covers how to stay accurate without logging every gram forever.</p>
+
+      <h2>What Not to Do</h2>
+      <p>The instinct to add more cardio on top of an already-tight deficit is understandable but usually counterproductive past a certain point. Extra cardio increases hunger, adds to the fatigue that's already suppressing your NEAT, and eats into recovery from the resistance training that's actually preserving the muscle you want to keep while losing fat. A little more daily walking is a reasonable, low-cost lever. Adding forty-five minutes of running on top of lifting sessions you're already recovering from poorly is a good way to stall harder, not break the stall.</p>
+      <p>Slashing calories dramatically, dropping 500 or more in one move because the small cut feels too slow, tends to produce the opposite of what people expect. A deficit that's too aggressive makes a diet miserable enough that adherence collapses within a couple of weeks, and inconsistent eating from a burnt-out dieter loses less fat over a month than a moderate, sustainable deficit followed consistently. The plateau isn't solved by a heroic single week, it's solved by whichever adjustment you can actually hold for the next month.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan recalculates your targets from your current weight rather than leaving you stuck on the number it gave you at the start of your cut, so as your maintenance drifts down over a plateau, your plan can drift with it instead of quietly falling out of sync. If you're several weeks into a cut and the scale has stopped moving, updating your stats and letting it rebuild your macros is the fastest way to find out whether you actually need the adjustment or just needed a more accurate number. <a href="https://macroplan.app">See how MacroPlan recalculates your targets →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How long should the scale be flat before I call it a real plateau?</h3>
+      <p>Look at the weekly average, not individual days, and give it two to three consecutive weeks of a flat or rising average before treating it as a genuine stall. Shorter flat stretches are almost always water retention or normal week-to-week noise, and reacting to them with a bigger calorie cut usually does more harm than good.</p>
+      <h3>Should I cut calories or add more cardio to break a plateau?</h3>
+      <p>A small further calorie cut, roughly 10 to 15 percent below your current target, is the more reliable fix. Adding cardio on top of an already-tight deficit tends to raise hunger and eat into recovery without producing a meaningfully faster result, and it's harder to sustain than a modest calorie adjustment.</p>
+      <h3>Is a diet break going to undo my progress?</h3>
+      <p>No, not if it's one to two weeks at maintenance calculated from your current weight. A short break doesn't erase the fat you've already lost, and for a lot of people it restores enough training performance and mental energy that the next stretch of dieting goes better than if they'd pushed through without one.</p>
+
+      <p>Stuck on the same number for weeks? Update your stats in MacroPlan and get a macro target built for where you are now, not where you started. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 28, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1522844990619-4951c40f7eda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxzY2FsZSUyMHdlaWdodCUyMGxvc3MlMjBwcm9ncmVzc3xlbnwxfDB8fHwxNzg1MjI0NTA5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by i yunmai on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@yunmai?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
+    slug: 'reverse-dieting-after-a-cut',
+    title: 'Reverse Dieting After a Cut: How to Raise Calories Without Getting Fat Back',
+    excerpt: 'Jumping straight from a deficit to maintenance calories is how most of a cut gets undone in a month. Here is how to raise food back up in a way that actually sticks.',
+    content: `
+      <p>The end of a cut is where a lot of good work quietly falls apart. You hit your target, you're proud of the number on the scale, and then you do the thing that feels obvious: you go back to eating "normally." Within a few weeks the scale is climbing faster than it has any right to, the mirror looks softer, and it feels like your metabolism betrayed you. It didn't. What actually happened is that a body running on a deficit for two or three months adapts to being underfed, and jumping straight back to a higher calorie number all at once outruns how fast that adaptation can reverse. Reverse dieting is the fix: a structured, gradual climb back to maintenance that gives your metabolism time to catch up before your intake does.</p>
+
+      <h2>Why Your Body Fights Back After a Cut</h2>
+      <p>A sustained calorie deficit doesn't just burn fat, it also nudges down your resting energy expenditure. Non-exercise movement drops without you noticing, hunger hormones shift to make food more rewarding, and your body gets a little more efficient at running on less. Researchers call this adaptive thermogenesis, and it's a well-documented response to prolonged dieting, not a sign anything went wrong with your plan. The problem is that this adaptation doesn't switch off the moment your deficit ends. Your maintenance calories are lower right after a cut than they were before you started, and they climb back up over time as your body readjusts to being fed enough again.</p>
+      <p>That gap is exactly where the "I ate one normal week and gained five pounds" story comes from. If you jump straight from a deficit to what used to be your maintenance number, you're eating well above what your currently-adapted body can handle, and the surplus gets stored fast. It's not that willpower failed. It's that the number itself was wrong for where your metabolism actually was that week.</p>
+
+      <h2>The Actual Protocol: Small, Regular Increases</h2>
+      <p>Reverse dieting is simple in structure even if it takes patience to execute. Instead of jumping back to a guessed maintenance number, you raise calories in small steps, typically 50 to 150 calories every one to two weeks, and let your weight trend tell you whether you can keep going. If your weight stays flat or drifts down slightly over that stretch, you add again. If it jumps more than what water and food volume would explain, you hold that calorie level for an extra week or two before the next bump. The carbohydrate is usually the easiest place to add those calories back, since it was likely the macro cut hardest during the deficit, though a modest bump in fat works too depending on how your appetite and training are responding.</p>
+      <p>This is slower than most people want it to be, and that's the point. A six to ten week reverse diet is common after a serious cut, and the payoff is that you land on a real, livable maintenance number instead of a guess, with your metabolism largely caught back up rather than still lagging behind what you're eating. It also means the food freedom that comes with a bigger calorie budget doesn't arrive with a side of unexpected fat gain, which is usually the actual goal people have when they say they're "done cutting."</p>
+
+      <h2>What to Watch Instead of the Scale Alone</h2>
+      <p>Bodyweight is the main signal, but it's a noisy one on its own, especially in the first couple of weeks back at higher calories when water retention and fuller glycogen stores can add a pound or two that has nothing to do with fat. Track a weekly average rather than reacting to single days, and pair it with how your training is going. Strength coming back on lifts that had stalled during the cut, better recovery between sessions, and hunger settling into something manageable rather than constant are all signs the reverse diet is doing its job, even in a week where the scale barely moves. If you're tracking protein through this phase, keeping it high, in the range we cover in <a href="/blog/how-much-protein-to-build-muscle">how much protein you actually need to build muscle</a>, protects the muscle you kept through the cut while the rest of your calories climb back up.</p>
+      <p>Training days and rest days don't have to eat identically through this either. If you've read our piece on <a href="/blog/calorie-cycling-training-rest-days">calorie cycling between training and rest days</a>, the same logic applies well during a reverse diet: weighting more of the new calories toward training days can make the increase feel more useful and less like undirected extra food.</p>
+
+      <h2>Where People Get This Wrong</h2>
+      <p>The most common mistake is impatience. Two flat weeks at a new calorie level feels like proof the increase isn't working, so people add too much too fast, and that's when the scale genuinely does start moving up for real reasons. The second most common mistake is treating the reverse diet as a chore to survive rather than the actual reason to have cut in the first place. Nobody diets down just to stay at deficit-level calories forever. The reverse diet is what lets you keep the results and eat like a person again, and rushing it is how people end up back in a deficit within a few months because the number crept too high too fast.</p>
+      <p>Logging every gram through a reverse diet also tends to be the point where a lot of people burn out, since it's the third or fourth month of paying close attention to food. If tracking is wearing thin, our guide on <a href="/blog/stop-tracking-macros-burnout">keeping results without logging everything</a> covers how to shift from constant tracking to pre-portioned structure without losing the accuracy that makes a reverse diet work.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>Reverse dieting only works if the small weekly increases actually show up in what you're eating, not just in a spreadsheet. MacroPlan lets you update your calorie and macro targets as you climb and rebuilds your batch-cook plan and portions around the new numbers, so a 100-calorie bump means an actual change to your containers instead of a mental note you forget by Wednesday. <a href="https://macroplan.app">See how MacroPlan adjusts your meal plan as your targets change →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How long should a reverse diet take?</h3>
+      <p>Most reverse diets run six to ten weeks after a moderate cut, longer after an aggressive or extended one. The timeline depends more on how your weight and hunger respond at each step than on a fixed calendar, which is why small, regular check-ins matter more than picking an exact end date in advance.</p>
+      <h3>Do I have to reverse diet, or can I just go back to eating normally?</h3>
+      <p>You can go straight back to your old maintenance number, but expect faster weight regain while your metabolism catches up to the new intake. A reverse diet isn't required, it's a way to raise calories with less fat regain and less panic when the scale moves, which is why most people who've been burned by a fast jump back choose to do it the slower way the next time.</p>
+      <h3>What if my weight goes up during a reverse diet?</h3>
+      <p>Some increase is expected and often reflects water and fuller glycogen stores rather than fat, especially in the first two weeks. Judge it on a weekly average, not a single morning. If the upward trend continues for two to three weeks in a row at the same calorie level, hold there for an extra week or two before adding again rather than cutting calories back down.</p>
+
+      <p>Set your targets and let MacroPlan rebuild your week every time your numbers change. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 27, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxoZWFsdGh5JTIwbWVhbCUyMHBvcnRpb25zJTIwcGxhdGV8ZW58MXwwfHx8MTc4NTEzNTk0N3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
+    slug: 'meal-timing-for-muscle-growth',
+    title: 'Meal Timing for Muscle Growth: Does When You Eat Actually Matter?',
+    excerpt: 'The "anabolic window" got oversold for years, then the backlash oversold the opposite. Here is what meal timing actually does for a lifter, and where it stops mattering.',
+    content: `
+      <p>Somewhere around 2010, every serious lifter believed there was a 30-minute window after training where you had to get protein and carbs in or the workout was basically wasted. Then the research caught up, the window turned out to be much wider than anyone thought, and the pendulum swung hard the other way: timing doesn't matter at all, just hit your daily numbers and stop overthinking it. Neither version is quite right. Meal timing has a real, if modest, effect on muscle growth and recovery, and understanding where that effect actually lives will save you from both the old anxiety and the new complacency.</p>
+
+      <h2>The Anabolic Window Was Never a Cliff Edge</h2>
+      <p>The original "window" idea came from studies showing that muscle protein synthesis rises sharply for a few hours after resistance training, and that eating protein during that period amplifies the response compared to eating nothing. That part held up. What didn't hold up was the 30-minute deadline. A well-cited 2013 meta-analysis by Brad Schoenfeld and colleagues in the <em>Journal of the International Society of Sports Nutrition</em> found that once you control for total daily protein intake, the timing of any single post-workout meal has a small effect on hypertrophy, not the make-or-break effect the supplement industry sold for a decade. Your muscles stay primed to use incoming amino acids for roughly 24 to 48 hours after a hard session, not 30 minutes. If you train fasted at 6 a.m. and eat your first real meal at 8, you have not blown anything.</p>
+      <p>That said, "the window is wide" is not the same as "the window doesn't exist." A lifter who trains, then genuinely doesn't eat again for six or seven hours, is leaving a measurable amount of muscle protein synthesis on the table compared to someone who eats within a couple of hours. The effect is real, it is just far smaller than the old marketing implied, and it is almost entirely swamped by whether you hit your total protein for the day. If you're still working out what that daily number should be, our <a href="/blog/how-much-protein-to-build-muscle">guide to protein needs for muscle growth</a> walks through the actual math.</p>
+
+      <h2>Where Timing Still Earns Its Keep</h2>
+      <p>Total daily protein is the biggest lever by a wide margin, but three timing-related factors have decent evidence behind them and are worth building habits around, mostly because they're easy once you've done them a few times.</p>
+      <p>Protein distribution across the day matters more than the post-workout window itself. A 2018 review in the same ISSN journal found that spreading protein into three to four servings of roughly 0.4 grams per kilogram of bodyweight each, spaced every three to four hours, produced a better muscle protein synthesis response over a full day than getting the same total protein in one or two huge meals. This is less about a magic number of meals and more about not going eight hours between servings, which is exactly what happens to a lot of people who skip breakfast and then eat two enormous meals in the evening. If you're mapping out how many meals actually make sense for your schedule, our <a href="/blog/ultimate-guide-to-flexible-dieting">guide to flexible dieting and macro tracking</a> covers how to build a split that fits real life instead of a lab protocol.</p>
+      <p>Pre-sleep protein is the other piece with reasonably solid backing. A slow-digesting protein source, commonly casein, taken 30 to 60 minutes before bed has been shown in controlled trials to raise overnight muscle protein synthesis rates without meaningfully affecting fat gain or sleep quality, as long as it fits inside your daily calorie target. Cottage cheese, a casein shake, or even a Greek yogurt with a scoop of whey stirred in all do the job. This isn't a requirement, but if you're already close to your protein target and looking for somewhere to put the last 20 to 30 grams, before bed is a genuinely useful slot.</p>
+      <p>Carbohydrate timing around training also has a role, though it's more about performance and recovery than a hard hypertrophy effect. Eating carbs in the hours before a session tops off glycogen so you can actually train hard, and eating them after helps you refill glycogen faster for your next session, which matters more the more frequently you train. If you're lifting five or six days a week, under-fueling around training will eventually show up as flat, low-energy sessions even if your total daily calories look fine on paper. This ties directly into why <a href="/blog/calorie-cycling-training-rest-days">training days and rest days shouldn't use identical macros</a>: a lifter training hard four or five times a week benefits from routing more carbs toward the days the muscle actually needs them.</p>
+
+      <h2>What This Looks Like in Practice</h2>
+      <p>None of this requires a stopwatch. A lifter training in the late afternoon might eat a moderate meal two or three hours beforehand, train, then eat a full meal within an hour or two afterward, and close the day with a protein-forward snack before bed. A lifter training first thing in the morning, fasted, can eat a solid protein-and-carb breakfast right after and be functionally in the same position. What actually breaks the system is the version where someone trains at 6 p.m. and doesn't eat again until the next morning, because that's a real gap with real evidence attached to it, not a theoretical one.</p>
+      <p>The practical takeaway is to build a meal rhythm that keeps you from going long stretches without protein, front-load carbs around your hardest sessions, and treat the specific minute-by-minute post-workout window as flexible rather than sacred. If you'd rather not map that rhythm out by hand every week, <a href="https://macroplan.app">MacroPlan</a> splits your macros into training-day and rest-day targets automatically and builds the prep plan around them, so the distribution happens without you doing the spreadsheet math yourself.</p>
+      <p>Consistency across weeks and months is still what actually builds muscle. Meal timing is a five to ten percent lever on top of that foundation, worth using once the bigger pieces (total protein, total calories, training volume, sleep) are already in place. It's not worth the anxiety it used to cause, and it's not worth ignoring completely either.</p>
+
+      <h2>FAQ</h2>
+      <h3>Do I really need to eat right after my workout?</h3>
+      <p>No. The old 30-minute rule doesn't hold up. You have roughly a day or two of elevated sensitivity to protein after training, so eating within a couple of hours is a reasonable habit, but there's no cliff where the workout stops "counting" if you wait longer.</p>
+      <h3>Is casein before bed actually necessary?</h3>
+      <p>It's not necessary, but it's a solid, low-effort spot to place protein if you're falling short on your daily total. Any slow-digesting protein source works; it doesn't have to be a specific supplement.</p>
+      <h3>Does intermittent fasting ruin muscle growth because of the eating window?</h3>
+      <p>Not inherently. What matters is total daily protein and not going so long without eating that you consistently miss your target. A compressed eating window works fine for muscle growth as long as protein and calories land where they need to.</p>
+      <h3>How many meals per day is ideal for building muscle?</h3>
+      <p>Research points to three to four protein-containing meals spaced every three to four hours as a sweet spot for maximizing muscle protein synthesis across the day, but two well-planned meals with adequate protein each will still build muscle. It's a small optimization, not a requirement.</p>
+
+      <p>Ready to stop guessing at meal timing and let the macros sort themselves out? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 27, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1767972159709-52936afffdbf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGVhdGluZyUyMHNjaGVkdWxlJTIwY2xvY2t8ZW58MXwwfHx8MTc4NTEzMjM2OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Sasun Bughdaryan on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/photos/alarm-clock-on-a-plate-with-cutlery-a1hU8-woqFA?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition',
+  },
+  {
+    slug: 'myfitnesspal-vs-cronometer-for-lifters',
+    title: 'MyFitnessPal vs. Cronometer for Lifters: Which Tracker Actually Holds Up',
+    excerpt: 'Both apps will let you log a chicken breast. Neither one will tell you what to cook. Here is how the two biggest food trackers actually compare for someone training and cutting on a macro target, and where they both fall short.',
+    content: `
+      <p>If you've searched for a macro tracking app, you've landed on the same two names over and over: MyFitnessPal and Cronometer. Both have been around for over a decade, both have loyal followings in the lifting community, and both get recommended constantly without much explanation of what actually separates them. The honest answer is that they solve the same core problem in different ways, and the differences matter more than most reviews let on once you're trying to hit a specific protein number every day, not just "eat healthier."</p>
+
+      <h2>What MyFitnessPal Gets Right, and Where It Breaks Down</h2>
+      <p>MyFitnessPal's biggest asset is scale. Its food database is enormous, built over years by millions of users scanning barcodes and logging restaurant meals, which means you'll almost always find an entry for whatever you're eating, even if it's a regional grocery chain's private-label yogurt or a dish from a small local restaurant. For someone eating out often or relying on packaged food, that coverage is genuinely useful. The interface is also the most polished of the two, quick to log a meal, quick to see your daily totals against your targets.</p>
+      <p>The problem is that the same crowdsourcing that built the database also poisoned parts of it. Anyone can submit an entry, and plenty of those entries are wrong, sometimes by a small margin, sometimes by a lot. A user who typos a serving size or misreads a nutrition label creates an entry that then gets reused by everyone else who searches the same food. You can work around this by sticking to verified entries and USDA-sourced results, but that takes discipline most people don't maintain three months into a diet. And MyFitnessPal's macro-setting tools were built for calorie counting first, macros second: getting a genuinely custom protein, carb, and fat split configured the way a lifter wants it takes more menu-digging than it should.</p>
+
+      <h2>Where Cronometer Pulls Ahead</h2>
+      <p>Cronometer takes the opposite approach. Its database is smaller but far more tightly curated, leaning heavily on <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener noreferrer">USDA FoodData Central</a> entries and verified branded products rather than open user submissions, so the numbers you see are more likely to be accurate. It also tracks micronutrients by default in a way MyFitnessPal buries behind a premium tier, showing you vitamin and mineral totals alongside your macros without extra setup. For a lifter running a long cut who's worried about more than just protein and calories, that's a real advantage; it's much easier to notice you're consistently low on fiber, potassium, or a specific vitamin when the app is already tracking it.</p>
+      <p>The tradeoff is coverage. Cronometer's restaurant and packaged-food database is thinner, so eating out means more manual entries or accepting a less precise match. Its free tier is also more limited than MyFitnessPal's, with several features, including full macro customization, sitting behind a paid plan. If most of your food comes from your own kitchen and you want accuracy over convenience, that tradeoff usually favors Cronometer. If you eat out three or four times a week, it starts to feel like extra friction for marginal gains in precision.</p>
+
+      <h2>The Question Neither App Actually Answers</h2>
+      <p>Here's what gets lost in the "which app is better" debate: both of these tools are logs. They tell you what you already ate, after you've already eaten it. Neither one tells you what to cook on Sunday to hit your numbers for the week, and neither one turns your protein, carb, and fat targets into an actual grocery list or a batch-cook plan. You still have to do the planning yourself, then use the app to check your work.</p>
+      <p>That gap is exactly why so many lifters who track diligently for months eventually burn out. We've written before about how <a href="/blog/stop-tracking-macros-burnout">tracking burnout happens</a> when logging every gram becomes its own second job, and it's worth noticing that both MyFitnessPal and Cronometer are built to keep you logging forever, because that's the product. Neither one has an incentive to hand you a plan that makes logging unnecessary. If you already understand <a href="/blog/decoding-macros">how your macro targets are calculated</a>, the app itself becomes almost a formality, a way to confirm numbers you already roughly know from having built the meal.</p>
+
+      <h2>What Actually Closes the Gap</h2>
+      <p>The lifters who stick with a macro-based diet longest tend to be the ones who spend less time typing into a search bar and more time eating meals that were built to hit the target in the first place. That's the difference between a tracker and a planner. A tracker answers "what did I eat." A planner answers "what do I eat," and if the plan is built correctly, the tracking becomes redundant because the containers already match the numbers. Reading the <a href="/blog/ultimate-guide-to-flexible-dieting">full breakdown of flexible dieting</a> makes this clearer: the macro target itself is simple math, the actual difficulty is turning that number into food, week after week, without it becoming a chore.</p>
+      <p>MacroPlan was built to sit on that side of the problem instead of the logging side. You set your goal and your macro targets once, and it generates a full week of batch-cook meals, with the portions already built to land on your numbers, plus the shopping list to make it happen. There's nothing to search for and nothing to weigh against a database entry that might be wrong, because the meal was built around your target from the start. <a href="https://macroplan.app">See how MacroPlan builds your week around your macros →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Which app has more accurate data, MyFitnessPal or Cronometer?</h3>
+      <p>Cronometer generally comes out ahead on accuracy because its database leans on verified sources like USDA FoodData Central rather than open crowdsourced entries. MyFitnessPal's database is larger and covers more restaurant and packaged foods, but its user-submitted entries are inconsistent in quality, so you have to actively look for verified results to get the same reliability.</p>
+      <h3>Do I need the paid version of either app to hit my macros?</h3>
+      <p>You can set basic macro targets on the free tier of both apps, but full customization of your protein, carb, and fat split, along with features like micronutrient tracking on Cronometer, is usually locked behind a subscription. Whether that's worth paying for depends on how much you value precision over convenience.</p>
+      <h3>Do I still need a tracking app if I'm following a meal plan?</h3>
+      <p>If the plan was actually built to hit your macro targets, and you're eating the portions as written, a tracking app becomes mostly a spot-check tool rather than a daily requirement. Most of the value of logging comes from the uncertainty of not knowing what's in your food; a pre-built, pre-measured plan removes that uncertainty before you ever pick up your phone.</p>
+
+      <p>Stop reverse-engineering meals from a food log. Set your macros and let MacroPlan build the week for you. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 25, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1543353071-c953d88f7033?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxtZWFsJTIwcHJlcCUyMGZvb2QlMjBzY2FsZSUyMG1hY3Jvc3xlbnwxfDB8fHwxNzg0OTY4MDk4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
+    slug: 'weight-loss-plateau-fix-macros',
+    title: 'Weight Loss Plateau: Why Your Deficit Stopped Working',
+    excerpt: 'The scale hasn\'t moved in three weeks and you haven\'t changed a thing. Here\'s why that happens on a calorie deficit, and the order of fixes that actually work.',
+    content: `
+      <p>You set your calories, you hit them most days, and for a month the scale moved the way it was supposed to. Then it stopped. Same intake, same training, same routine, and the number on the scale just sits there, sometimes for two or three weeks straight. It's one of the most common reasons people quit a cut, and it's rarely a sign that dieting has stopped working. In almost every case it's your body adjusting to a lower weight, and the fix is a specific, ordered set of changes rather than a fresh start.</p>
+
+      <h2>Your Deficit Shrinks as You Lose Weight</h2>
+      <p>A calorie deficit isn't fixed. It's calculated from your maintenance calories, and maintenance calories drop as you get lighter, because a smaller body burns less energy just existing. Lose fifteen pounds and your maintenance might fall by 150 to 250 calories, so the exact intake that created a real deficit in week one is now much closer to your new maintenance by week eight. Nothing you did was wrong. The target underneath you moved while your number stayed still.</p>
+      <p>This is the single most common cause of a stall, and it's also the most fixable. If you calculated your macros once at the start of a cut and never touched them again, a recalculation against your current weight is usually the first thing to check, not the last.</p>
+
+      <h2>Water and Sodium Can Hide Real Progress</h2>
+      <p>Scale weight is body weight, not fat mass, and body weight includes water. Sodium, carbohydrate intake, sleep quality, stress, and even your training split can shift water retention by two or three pounds in either direction, easily enough to bury a real half-pound of fat loss underneath noise for a week or two. A hard leg day, a salty restaurant meal, or a rough night's sleep can all make the scale sit flat or even climb slightly while fat loss is still happening underneath.</p>
+      <p>This is why a single weigh-in tells you very little and a trend across two to three weeks tells you almost everything. If your weekly average is still ticking down even slowly, the deficit is working and the plateau is mostly an illusion created by day-to-day water swings. If the weekly average itself has been flat for three straight weeks, that's the point where an adjustment is actually justified.</p>
+
+      <h2>Adherence Drifts Without You Noticing</h2>
+      <p>The least dramatic explanation is usually the right one: intake has crept up. Portions get slightly larger as a diet drags on, a handful of nuts here, an extra splash of oil there, a bigger scoop at dinner because you were hungrier than usual. None of it feels like cheating and none of it gets logged, but 100 to 150 quietly untracked calories a day is enough to erase an entire deficit. This is exactly the failure mode we covered in <a href="/blog/stop-tracking-macros-burnout">our piece on macro tracking burnout</a>: the less structured your food is, the easier it is for a real deficit to become an accidental maintenance diet without anyone deciding that on purpose.</p>
+      <p>Pre-portioned, pre-weighed meals close this gap almost entirely, because the calories are locked in before you're hungry and making judgment calls. It's a big part of why batch prep outperforms freestyle eating for anyone stuck on a plateau, not because the macros are different in theory, but because they're actually eaten as planned in practice.</p>
+
+      <h2>The Order to Actually Fix It In</h2>
+      <p>When the weekly average has genuinely stalled for two to three weeks, work through the causes in this order rather than changing everything at once, since stacking multiple changes together makes it impossible to know what worked.</p>
+      <ul>
+        <li><strong>Recalculate your targets against your current weight.</strong> If you've lost more than about 10 pounds since your last calculation, your macros are almost certainly stale.</li>
+        <li><strong>Audit adherence honestly for a few days.</strong> Weigh food again for a short stretch even if you've stopped, since drift is invisible until you measure it.</li>
+        <li><strong>Only then consider a deeper cut or added cardio.</strong> This should be the last lever, not the first, because it has the smallest room for error and the highest cost to your energy and training performance.</li>
+      </ul>
+      <p>Most plateaus resolve at step one or step two. Very few genuinely require step three, and jumping straight to "eat even less" without checking the first two is how people end up dieting far harder than their actual situation requires.</p>
+
+      <h2>Why Recalculating Manually Is Easy to Skip</h2>
+      <p>The honest reason most people don't recalculate their macros every few weeks isn't that they don't know they should. It's that the math is one more chore layered on top of an already effortful diet, so it gets put off until the plateau has dragged on for a month. This is the exact gap MacroPlan is built to close: your targets update as your weight and goal change, and your batch prep plan updates with them, so the fix in step one happens automatically instead of depending on you remembering to do it. If you've been eating the same macros since week one of a cut that started months ago, <a href="https://macroplan.app">check what your current numbers actually look like</a>.</p>
+      <p>If you're also loosely tracking rather than logging every gram, our <a href="/blog/ultimate-guide-to-flexible-dieting">guide to flexible dieting</a> covers how to keep enough structure that drift like this gets caught early, without going back to weighing every ingredient forever.</p>
+
+      <h2>FAQ</h2>
+      <h3>How long should the scale be flat before I call it a real plateau?</h3>
+      <p>Look at your weekly average, not single weigh-ins. If that average has been flat for two to three consecutive weeks despite consistent adherence, it's a real plateau worth addressing. A single stagnant week is almost always water and noise.</p>
+      <h3>Should I just cut calories further as soon as the scale stalls?</h3>
+      <p>No, that should be the last step, not the first. Recalculate your targets against your current weight and check adherence for drift before cutting calories again. Most plateaus resolve without needing a deeper deficit at all.</p>
+      <h3>Does adding cardio fix a plateau faster than adjusting food?</h3>
+      <p>It can help, but it's a smaller lever than most people expect and it adds recovery cost. Fixing a stale calorie target or closing an adherence gap usually resolves a plateau on its own, before cardio needs to be part of the conversation.</p>
+
+      <p>Let MacroPlan recalculate your targets as your weight changes and keep your batch prep plan matched to them automatically. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'July 24, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1522844990619-4951c40f7eda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHx3ZWlnaHQlMjBzY2FsZSUyMGZpdG5lc3MlMjBmb29kfGVufDF8MHx8fDE3ODQ4NzY3MzN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by i yunmai on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@yunmai?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'meal-prep-without-a-kitchen-scale',
     title: 'How to Meal Prep Without a Kitchen Scale (And Still Hit Your Macros)',
     excerpt: 'A food scale isn’t always available, at a friend’s house, in a shared kitchen, mid-move. Here is how to portion by eye and by tool so your week still lands close to your targets.',
