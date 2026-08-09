@@ -22,6 +22,62 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'alcohol-and-macros-how-to-drink-on-a-cut',
+    title: 'Alcohol and Macros: How to Drink Without Blowing Your Numbers',
+    excerpt: 'A night out does not have to undo a week of tracking. Here is how alcohol actually fits into your macros, what it does to fat loss beyond the calories, and how to plan a drink without guessing.',
+    content: `
+      <p>You logged a clean week. Protein on target every day, calories where they needed to be, and then Saturday arrives and you are standing at a bar trying to figure out whether a couple of drinks is going to undo six days of work. Most tracking advice skips this question entirely, as if lifters do not drink, which leaves you either skipping the app for the night or guessing and hoping the number is close enough.</p>
+
+      <p>Alcohol is not a forbidden category and it is not free either. It behaves differently from the three macros MacroPlan already tracks for you, and understanding that difference is what lets you plan a night out instead of writing it off as a cheat day.</p>
+
+      <h2>Where Alcohol Actually Sits in Your Macros</h2>
+      <p>Alcohol carries 7 calories per gram, which puts it between carbs and fat at 4 and 9. It is not protein, carbs, or fat, so most tracking apps either fold it into carbs, which understates the calories, or leave it out entirely, which is worse. MacroPlan counts it as its own calorie source, so a drink shows up as exactly the calories it is rather than getting rounded into whatever macro happens to be closest.</p>
+      <p>A 12-ounce beer runs about 150 calories, a standard glass of wine sits around 125, and a shot of 80-proof liquor is close to 100 on its own before you add a sugary mixer. None of that comes with protein, and almost none of it comes with the fiber or micronutrients that make up the rest of your day. The calories are real. They just do not do any of the work the rest of your food does.</p>
+
+      <h2>The Part That Is Not About Calories</h2>
+      <p>The macro math is the easy half of this. The part that actually matters for a lifter is what alcohol does to the rest of the night once it is in your system, and that is where most of the damage in a "one drink turned into a lost day" story actually happens.</p>
+      <p>Your liver treats alcohol as a priority fuel and burns through it before touching stored fat, which means fat oxidation drops for as long as there is alcohol left to clear, often four to six hours after a night of drinking. That is not the same as gaining fat from a single night out, but it does mean the deficit you built during the day gets partially offset by a body that has temporarily stopped burning fat to deal with the alcohol first.</p>
+      <p>Then there is the appetite problem, which is usually the bigger issue. Alcohol lowers inhibition around food choices at exactly the moment your blood sugar is dropping from the drinks themselves, which is why a night that started as "just a couple of beers" so often ends with a slice of pizza that never would have made it into a Tuesday plan. If you are trying to figure out why the scale did not move despite a week that looked clean on paper, a look back at our <a href="/blog/weight-loss-plateau-hitting-macros">breakdown of what actually stalls a plateau</a> covers a lot of the same territory: the food you did not plan for is usually the culprit, not the food you tracked.</p>
+
+      <h2>How to Actually Budget for a Night Out</h2>
+      <p>The most reliable approach is treating alcohol the way you would treat any other calorie-dense food you want to include without wrecking the day: decide on it ahead of time and build the rest of your meals around it, rather than eating a normal day and then adding drinks on top.</p>
+      <p>Say your daily target is 2,400 calories and you know you are having three drinks tonight at roughly 150 calories each, which is 450 calories total. Trim that from your carbs and fat across your other meals, not your protein, since protein is the one macro alcohol does not touch and the one most likely to slip on a night when you are eating less overall. A lighter lunch, a smaller portion of rice at dinner, or skipping the usual pre-drinks snack gets you there without having to under-eat protein to make room.</p>
+      <p>The other lever worth using is choosing lower-calorie drinks in the first place. A vodka soda with lime runs about 100 calories, while the same vodka mixed with a sugary soda or served in a sweet cocktail can run 250 to 400. Spirits mixed with a zero-calorie mixer, dry wine, and light beer are consistently the cheapest options if you are trying to fit more drinks into a fixed budget, while sweet cocktails and full-strength craft beer eat through that budget fast, sometimes matching an entire meal in a single glass.</p>
+
+      <h2>Protecting Your Protein on a Drinking Night</h2>
+      <p>The single best thing you can do before a night out is eat a real, protein-forward meal beforehand rather than saving all your calories for later. Going into drinks on an empty stomach means the alcohol hits faster, your blood sugar swings harder, and you are far more likely to end up eating whatever is available at 1 a.m. instead of what you planned. A meal with 40 or more grams of protein two to three hours before drinking slows alcohol absorption and gives you a real shot at hitting your protein target for the day before the night gets unpredictable.</p>
+      <p>If you know your evenings tend to run long, front-loading protein earlier in the day works the same way it does on a low-appetite rest day. Our <a href="/blog/protein-on-rest-days">guide to hitting protein when appetite drops</a> covers the same core idea: get the number secured while your hunger and your schedule are still cooperating, so a chaotic evening cannot take it away from you.</p>
+
+      <h2>What About the Morning After</h2>
+      <p>One night of drinking, even a fairly heavy one, is not going to show up as fat gain on the scale by itself. What you will usually see the next morning is water retention from the dehydration and the sodium in whatever you ate late, plus a bit of glycogen replenishment if the food was carb-heavy. That number on the scale is mostly water, not fat, and it typically clears within two to three days of normal eating and hydration.</p>
+      <p>The mistake is treating that bloated morning-after number as real progress lost and trying to compensate with a much bigger deficit the next day. That tends to backfire, since a large compensatory cut usually just sets up the next binge. The better move is to get back to your normal targets the next day, rehydrate, and let the number settle on its own over the following 48 to 72 hours.</p>
+
+      <blockquote>Alcohol is a calorie source with a side effect on fat burning, not a moral failure. Plan for it like any other calorie-dense choice and it stops derailing the rest of your week.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan lets you log alcohol as its own entry rather than forcing it into carbs or leaving it untracked, so a night out shows up accurately in your daily total instead of quietly disappearing from the math. If you know a drinking night is coming, you can see exactly how much room you have left before you decide what to order, instead of estimating after the fact and hoping it was close.</p>
+
+      <h2>FAQ</h2>
+      <h3>Does alcohol stop fat loss completely?</h3>
+      <p>No, but it does pause fat oxidation for as long as your liver is clearing it, usually several hours. One night of drinking within your calorie budget will not undo a deficit built over a full week; it is the extra food eaten alongside the drinks that usually does the actual damage.</p>
+      <h3>Is beer or wine better for someone tracking macros?</h3>
+      <p>Wine is generally lower calorie per serving than beer, and light beer is lower than a standard or craft beer. Spirits with a zero-calorie mixer are usually the cheapest option per drink if your priority is fitting the most drinks into a fixed calorie budget.</p>
+      <h3>Should I skip a workout the day after drinking?</h3>
+      <p>Not necessarily. Light to moderate drinking rarely requires a missed session, though sleep quality and hydration both take a hit, so expect the workout to feel harder than usual rather than needing to cancel it outright.</p>
+
+      <p>Stop guessing what a night out costs. MacroPlan tracks alcohol as its own category so your numbers stay accurate. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 9, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxjb2NrdGFpbCUyMGRyaW5rJTIwYmFyfGVufDF8MHx8fDE3ODYyODk5NjN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Louis Hansel on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@louishansel?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'high-protein-smoothie-recipes-for-lifters',
     title: '6 High-Protein Smoothie Recipes That Actually Hit 40g (Ready in 5 Minutes)',
     excerpt: 'Most "protein smoothie" recipes online top out at 15 or 20 grams once you actually weigh the ingredients. These six are built backward from a real macro target, so the number on the blender matches the number in your app.',
