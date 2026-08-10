@@ -22,6 +22,63 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'how-long-meal-prep-lasts-fridge-freezer-guide',
+    title: 'How Long Does Meal Prep Actually Last? A Fridge and Freezer Guide for Lifters',
+    excerpt: 'Four days in the fridge is a guideline, not a rule that applies to every protein the same way. Here is how long your batch-cooked chicken, rice, and sauces actually hold up, and when freezing on day one saves the week.',
+    content: `
+      <p>You cook eight portions on Sunday, and by Thursday you are standing over the container asking the same question every lifter eventually asks: does this still count as food. Most meal prep advice waves this off with a flat "three to four days in the fridge" rule and moves on, as if ground beef, rice, and a sauce with dairy in it all degrade at the same rate. They do not, and treating them like they do is how a week of good tracking ends with either a stomach ache or a bin full of chicken you cooked for nothing.</p>
+
+      <p>The actual shelf life of a batch-cooked meal depends on the food, how it was cooled, and what container it is sitting in, and none of that is complicated once you know the numbers. This is the guide for figuring out what is still good, what needs to move to the freezer today, and how to prep in a way that does not force you to gamble on day five.</p>
+
+      <h2>Why "Three to Four Days" Is Only Half the Answer</h2>
+      <p>The three to four day figure comes from USDA guidance on cooked leftovers in general, and it is a reasonable default, but it assumes the food was cooled and refrigerated properly within two hours of cooking. A tray of chicken left on the counter to cool completely before it goes in the fridge, which is a common move when you are portioning eight containers at once, can easily sit at room temperature long enough to start that clock early without you realizing it. The rule is not wrong. It just assumes a level of speed most Sunday prep sessions do not actually hit.</p>
+      <p>Bacteria that cause food poisoning grow fastest between 40 and 140 degrees Fahrenheit, and the longer a big batch of rice or chicken spends in that range while it cools on the counter, the less of its stated shelf life actually remains once it hits the fridge. Splitting a hot batch into smaller, shallower containers before refrigerating cuts cooling time dramatically compared to one deep pan, since heat escapes from the surface and a shallow layer has more surface area relative to its volume.</p>
+
+      <h2>How Long Each Food Actually Holds Up</h2>
+      <p>Cooked chicken, turkey, and lean ground beef are good for three to four days refrigerated, and that number holds up well as long as the meat was cooled quickly. Cooked white rice is the food most people overestimate: it is only good for three to four days as well, but it is also the item most associated with reheating-related food poisoning, because Bacillus cereus spores that survive cooking can multiply if the rice cools slowly, and reheating does not reliably kill the toxin they produce. If a batch of rice sat out for more than two hours after cooking, it is safer to treat that portion as compromised rather than reheat it and hope.</p>
+      <p>Roasted vegetables and beans hold up a little longer, closer to four to five days, since they carry less risk from the bacteria that make protein and rice dangerous. Sauces and dressings are the wildcard: anything dairy-based or with fresh herbs mixed in tends to separate or turn within three days, while an oil-and-vinegar-based sauce can go closer to a week. If you build your <a href="/blog/meal-prep-container-math-portion-sizes">containers by the grams-per-cup method</a>, portioning the sauce into a small separate compartment or side container instead of mixing it into the whole batch buys you extra days on everything else, since a spoiled sauce ruining an otherwise-fine container of chicken and rice is one of the most avoidable losses in a week of prep.</p>
+
+      <blockquote>The container that spoils first sets the deadline for the whole week's plan. Prep around your fastest-expiring ingredient, not your slowest.</blockquote>
+
+      <h2>When Freezing on Day One Is the Better Call</h2>
+      <p>If your schedule means a container is not getting eaten until day five or six, the safer move is freezing it the moment it is portioned rather than waiting to see how it looks on day four. Cooked chicken, ground beef, and most roasted vegetables freeze and reheat well for two to three months without a meaningful texture loss, and freezing stops the clock completely instead of just slowing it down. Rice freezes fine too, though it benefits from a splash of water when reheating since it dries out more than meat does.</p>
+      <p>The foods that do not freeze well are the ones with high water content that were meant to stay crisp or fresh: raw greens, cucumber, and most dairy-based sauces separate or turn watery after a freeze-thaw cycle. If your usual prep leans on one of our <a href="/blog/best-foods-for-batch-cooking">batch-cooking staples that hold up well</a>, splitting the week into a fridge half for days one through three and a freezer half for days four through seven is a small habit change that eliminates almost all of the day-five guessing game, since nothing you are eating that far out ever had a chance to degrade in the first place.</p>
+
+      <h3>A quick split-week routine</h3>
+      <ul>
+        <li>Cook the full batch on your normal prep day, then divide it immediately, before it goes into any container.</li>
+        <li>Fridge the containers you will eat within three days; freeze the rest the same day, not after they have already sat for two.</li>
+        <li>Move a frozen container to the fridge the night before you plan to eat it so it thaws safely instead of sitting out on the counter.</li>
+      </ul>
+
+      <h2>Signs a Container Has Actually Gone Bad</h2>
+      <p>Smell is the most reliable first check, since spoiled protein and rice both develop a sour or off smell well before mold becomes visible. A slimy texture on chicken, a change in color toward gray, or rice that has gone sticky and gummy in a way it was not on day one are all reasons to skip that container rather than reheat it hot enough to "be safe." Reheating does kill most bacteria, but it does not remove the toxins some bacteria produce while growing, which is exactly the risk with rice that cooled too slowly. When in doubt, the cost of one wasted container is nothing next to a day lost to food poisoning, so this is one place where being overly cautious costs you almost nothing.</p>
+      <p>None of this means meal prep is riskier than cooking fresh every night. It means the failure mode is different: fresh cooking fails at the stove, batch cooking fails in the cooling and storage step that happens after the stove, which is also the step most guides skip entirely.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>Every plan MacroPlan generates is sized to your actual prep day and eating window, so you are not stuck guessing whether a batch built for four days needs to stretch to seven. If your week runs long between prep days, <a href="https://macroplan.app">MacroPlan</a> can split a plan across a fridge portion and a freezer portion up front, instead of leaving that decision for day four when it is already too late to matter.</p>
+
+      <h2>FAQ</h2>
+      <h3>Is it safe to reheat rice that has been in the fridge for four days?</h3>
+      <p>If it was cooled within two hours of cooking and has stayed refrigerated the whole time, yes. If it sat out longer than that before going in the fridge, it is safer to skip it, since the toxin some bacteria produce in slow-cooling rice is not reliably destroyed by reheating.</p>
+      <h3>Does freezing meal prep ruin the texture?</h3>
+      <p>Cooked chicken, beef, rice, and roasted vegetables hold up well through a freeze-thaw cycle, with rice being the one that benefits most from a splash of water on reheat. Raw vegetables, fresh greens, and dairy-based sauces are the items that actually suffer.</p>
+      <h3>How many days ahead should I actually meal prep?</h3>
+      <p>Three to four days in the fridge is the safe window for most proteins and rice without needing to think about it further. Anything beyond that should go straight to the freezer the day it is cooked rather than riding out the extra days in the fridge.</p>
+
+      <p>Stop guessing which container is still good. MacroPlan builds your week around real storage windows from day one. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 10, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1785304968650-70951ecab87d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBmcmlkZ2V8ZW58MXwwfHx8MTc4NjM1MTM2NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Seb Reivers on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@sebreivers?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'alcohol-and-macros-how-to-drink-on-a-cut',
     title: 'Alcohol and Macros: How to Drink Without Blowing Your Numbers',
     excerpt: 'A night out does not have to undo a week of tracking. Here is how alcohol actually fits into your macros, what it does to fat loss beyond the calories, and how to plan a drink without guessing.',
