@@ -22,6 +22,64 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'creatine-for-lifters-dosing-timing-guide',
+    title: 'Creatine for Lifters: The Real Dosing, Timing, and Macro Guide',
+    excerpt: 'Creatine is the most researched supplement in sports nutrition, and also the most argued about. Here is what the dosing actually needs to be, when to take it, and how it fits into a day you are already tracking.',
+    content: `
+      <p>Everyone tells you to take creatine. Almost nobody agrees on how much, when, or whether the water weight it causes means anything. You end up with a tub in the cupboard, a vague memory of "five grams a day," and a nagging feeling that you might be doing it wrong, or that it might not even be doing anything since you cannot see a difference the way you can with a new lift PR.</p>
+
+      <p>The research on creatine monohydrate is deeper than almost any other supplement on the market, which is exactly why the confusion is frustrating: the answers exist, they are just buried under a decade of forum arguments about loading phases and timing windows that turned out not to matter much. Here is what actually holds up, and how to fit it into a day where you are already tracking protein, carbs, and fat down to the gram.</p>
+
+      <h2>What Creatine Actually Does</h2>
+      <p>Creatine is stored in muscle tissue as phosphocreatine, and your body uses it to rapidly regenerate ATP, the immediate energy source for short, hard efforts like a heavy set of squats or a sprint up stairs. Supplementing raises the amount of phosphocreatine your muscles can hold above what a typical diet provides, which gives you slightly more fuel for those short, explosive efforts and lets you squeeze out an extra rep or recover a few seconds faster between sets.</p>
+      <p>That small edge compounds over months of training. More reps at a given weight means more total volume, and more total volume is one of the more reliable drivers of muscle growth over a training block. Creatine is not building muscle directly the way protein does. It is letting you do slightly more work in the gym, and your body does the rest.</p>
+      <p>The other well-documented effect is water retention inside the muscle cell itself, not bloating under the skin. Creatine pulls water into muscle tissue, which is part of why people see a scale jump of two to four pounds in the first couple of weeks. That is not fat, and it is not a reason to stop. It is also part of the mechanism: a more hydrated muscle cell is associated with a more favorable environment for protein synthesis, so the water weight and the training benefit are connected rather than being two separate side effects.</p>
+
+      <h2>How Much You Actually Need</h2>
+      <p>Three to five grams a day, taken consistently, is the dose the research keeps landing on for a typical lifter's body weight. Some larger athletes push closer to ten grams, but for most people reading this, five grams covers it without any need to scale by body weight the way you would with protein.</p>
+      <p>The loading phase you have probably heard about, twenty grams a day split into four doses for a week, does get muscle creatine stores saturated faster. It is not required. Taking three to five grams daily gets you to the same saturation point in three to four weeks instead of one, and for anyone not chasing a competition date, the extra three weeks costs nothing. Skipping the loading phase also means you skip the mild stomach discomfort some people get from the larger doses, so unless you have a specific reason to load, daily maintenance dosing from day one is the simpler and equally effective path.</p>
+      <p>Cycling on and off creatine, another idea that circulated for years, is not necessary either. Muscle creatine stores stay elevated as long as you keep taking it and drop back to baseline over a few weeks once you stop, so there is no adaptation to avoid and no tolerance building up that would require a break.</p>
+
+      <h2>Timing Matters Less Than the Label Implies</h2>
+      <p>A lot of supplement marketing leans hard on "take it within thirty minutes post-workout for maximum absorption," and the actual evidence for a tight timing window is thin. What matters is that creatine is in your system consistently, day after day, since it is the saturation of your muscle stores over weeks that produces the benefit, not the timing of any single dose. A meta-analysis comparing pre- and post-workout timing found no meaningful difference between the two, and daily consistency mattered more than either.</p>
+      <p>The practical takeaway is to put it wherever it is easiest to remember. Mixed into a post-workout shake works fine. So does stirring it into your morning coffee or a glass of water with breakfast. If you already have a <a href="/blog/meal-timing-for-muscle-growth">rough sense of how much meal timing actually matters</a> for muscle growth, the same logic applies here: consistency across weeks beats precision within a single day.</p>
+
+      <h2>Where It Fits in Your Macros</h2>
+      <p>Creatine monohydrate carries essentially zero calories at a five-gram dose and does not count against any of your macros, so you do not need to budget for it the way you would a protein shake or a handful of nuts. The exception is flavored or "advanced" creatine blends that add sugar, artificial sweeteners, or other ingredients, which can quietly add ten to twenty calories you were not expecting. Plain creatine monohydrate powder, the cheapest and most studied form on the market, avoids that entirely.</p>
+      <p>If you are trying to keep your supplement stack lean while still hitting <a href="/blog/how-much-protein-to-build-muscle">the protein target that actually drives muscle growth</a>, creatine is one of the few additions worth the cupboard space. Unlike a lot of pre-workout blends or fat burners, it has decades of research behind it and a well-understood mechanism, rather than a proprietary blend and a marketing claim.</p>
+
+      <blockquote>Creatine is not a shortcut. It is a small, consistent edge that shows up in the gym over months, not a change you will see or feel the day you start.</blockquote>
+
+      <h2>Creatine Monohydrate vs. the Newer Forms</h2>
+      <p>Creatine HCL, buffered creatine, and other newer forms are marketed as gentler on the stomach or more easily absorbed, usually at a higher price per serving. The research comparing them to plain monohydrate has not shown a meaningful advantage in muscle uptake or performance. Monohydrate remains the form with by far the largest body of safety and efficacy data, and it is also consistently the cheapest option on a per-gram basis, which matters if you are already watching a <a href="/blog/high-protein-diet-on-a-budget">grocery and supplement budget</a> closely. Unless a specific stomach sensitivity pushes you toward one of the alternatives, there is little reason to pay more for a form with less evidence behind it.</p>
+
+      <h2>Who Should Be Careful</h2>
+      <p>Creatine is one of the most studied supplements for long-term safety, with trials running years rather than weeks, and it has not shown the kidney or liver harm that circulated in early, poorly sourced concerns. The exception is anyone with pre-existing kidney disease, who should talk to a doctor before adding any supplement that changes how much water and creatinine the kidneys are processing. For a healthy lifter with no existing kidney condition, the safety profile is about as clean as supplements get.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan tracks your food and macros, not your supplement stack, which is exactly the point: creatine does not need to eat into your carb or fat budget the way a protein bar or a shake does, so it is one less thing to plan around. <a href="https://macroplan.app">MacroPlan</a> keeps the rest of your day, the food that actually does need budgeting, dialed in so a five-gram scoop of creatine is the easiest decision you make all day.</p>
+
+      <h2>FAQ</h2>
+      <h3>Do I need to load creatine or can I just start with the daily dose?</h3>
+      <p>You can skip loading entirely. Three to five grams daily gets muscle stores saturated in three to four weeks, versus about a week with a loading phase, and skipping the load avoids the stomach discomfort some people get from the larger loading doses.</p>
+      <h3>Does creatine cause bloating or just water weight in the muscle?</h3>
+      <p>The water it pulls in goes into the muscle cell itself, not under the skin, so it is not the same as feeling bloated after a salty meal. The two to four pound scale jump some people see in the first couple of weeks is water retained in muscle tissue, not fat and not subcutaneous bloating.</p>
+      <h3>Is creatine safe to take every day long term?</h3>
+      <p>Yes, for a healthy adult without pre-existing kidney disease. It is one of the most studied supplements in sports nutrition, with long-term trials showing no meaningful kidney or liver harm in healthy users.</p>
+
+      <p>Get your protein, carbs, and fat dialed in first. MacroPlan builds the macro plan; creatine is the easy part. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 11, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1693996045435-af7c48b9cafb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxjcmVhdGluZSUyMHN1cHBsZW1lbnQlMjBzY29vcHxlbnwxfDB8fHwxNzg2NDMxOTYwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Alex Saks on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@alexsaks?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'how-long-meal-prep-lasts-fridge-freezer-guide',
     title: 'How Long Does Meal Prep Actually Last? A Fridge and Freezer Guide for Lifters',
     excerpt: 'Four days in the fridge is a guideline, not a rule that applies to every protein the same way. Here is how long your batch-cooked chicken, rice, and sauces actually hold up, and when freezing on day one saves the week.',
