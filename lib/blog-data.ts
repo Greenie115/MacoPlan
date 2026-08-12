@@ -22,6 +22,60 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'hydration-and-sodium-for-lifters-tracking-macros',
+    title: 'Hydration and Sodium for Lifters: What Water and Salt Actually Do to Your Macros',
+    excerpt: 'You track protein, carbs, and fat to the gram and still cramp mid-set or watch the scale swing five pounds overnight. Here is how much water and sodium a lifter actually needs, and why cutting salt is usually the wrong move.',
+    content: `
+      <p>You hit your macros almost every day. Protein is dialed in, carbs are timed around training, fat fills the rest of the budget. And you still cramp in the last set of leg press, wake up some mornings looking noticeably flatter than others, or watch the scale swing three or four pounds overnight for no reason you can point to. The macro tracking did its job. Something upstream of it did not.</p>
+
+      <p>Water and sodium do not show up in a macro app because they are not calories, so most trackers, and most lifters, treat them as an afterthought. That is a mistake, because both directly affect how much weight you can move in the gym, how reliable your scale weight is as a signal, and how good you feel on a cut. None of it is complicated once the actual numbers replace the vague advice to "drink more water" and "watch your sodium."</p>
+
+      <h2>Why Hydration Shows Up in Your Training Before It Shows Up on a Scale</h2>
+      <p>Muscle tissue is roughly 75 percent water, and even a small drop in hydration, on the order of two percent of body weight, has been shown to reduce strength output and endurance in trained lifters. That is a 3-pound shortfall for a 150-pound lifter, which is easy to run if you train fasted, skip water during a long session, or just do not drink much before a midday workout. The set that feels unusually hard, the pump that will not show up, the grip that gives out early: dehydration is a boring, unglamorous explanation for a lot of bad training days that get blamed on sleep or motivation instead.</p>
+      <p>The other place hydration matters is digestion and satiety, both of which affect how well you can actually hit the calorie target your <a href="/blog/decoding-macros">macro ratio</a> is built around. Being chronically under-hydrated slows gastric emptying and makes a high-protein, high-fiber diet feel heavier than it should, which is part of why some lifters who are eating enough on paper still feel constantly stuffed or sluggish.</p>
+
+      <h2>How Much Water You Actually Need</h2>
+      <p>The baseline most sports nutrition guidance lands on is roughly half an ounce to one ounce of water per pound of body weight per day, so a 180-pound lifter is looking at 90 to 180 ounces, call it 11 to 22 cups, before accounting for training. That range is wide on purpose: climate, sweat rate, and how much of your food is water-dense (fruit, oats made with milk, soup) all shift where you land in it.</p>
+      <p>Training adds to the baseline rather than replacing it. A general rule is another 12 to 16 ounces for every 30 minutes of moderate-to-hard training, more in a hot gym or during a cut when you are also eating less water-dense food overall. The simplest practical marker, more reliable than counting ounces, is urine color: pale yellow, close to lemonade, means you are in a reasonable range. Dark yellow consistently through the day is the signal to drink more before it becomes a training problem.</p>
+
+      <h2>Sodium Is Not the Enemy It Gets Treated As</h2>
+      <p>A lot of lifters carry over general public-health advice to cut sodium, which is aimed at a population with a very different activity and sweat profile than someone training hard four to six days a week. Sweat carries a meaningful amount of sodium out with it, roughly 500 to 1,000 milligrams per hour of hard training for an average sweater, more for a heavy sweater. Chronically under-replacing that is a direct contributor to the cramping, dizziness, and lightheadedness lifters sometimes chalk up to "just not being hydrated enough" when the actual gap is electrolytes, not plain water.</p>
+      <p>For most lifters who are not managing a specific medical condition like hypertension, 2,300 to 3,000 milligrams of sodium a day is a reasonable target rather than a ceiling to fear, and that number should trend toward the higher end on hard training days or in hot conditions. Salting food to taste, adding a pinch to a shaker of homemade electrolyte mix, or leaning on foods that carry sodium naturally is not sabotaging a cut. What actually causes problems is drinking a large volume of plain water without replacing any sodium at all, which dilutes blood sodium levels and can make you feel worse, not better, even though you did everything the "drink more water" advice told you to do.</p>
+
+      <blockquote>Plain water without sodium does not fix dehydration on a hard training day. It can make the symptoms worse by diluting what sodium you have left.</blockquote>
+
+      <h2>Where Electrolyte Drinks Actually Earn Their Cost</h2>
+      <p>For a normal one-hour lifting session, plain water is fine, and a sports drink or electrolyte tablet is mostly paying for flavor and marketing. The threshold where electrolytes start to matter is longer or hotter sessions, roughly 60 to 90 minutes of continuous sweat loss, or any day you are also running a large calorie deficit, since a cut already trims sodium intake by cutting overall food volume. On those days, a cheap electrolyte tablet or a pinch of salt and a squeeze of citrus in a water bottle covers the gap for a fraction of the price of a name-brand sports drink, and it does not carry the sugar load some of those drinks add on top.</p>
+      <p>If you are already tightening things up during a cut and tracking every gram the way our <a href="/blog/meal-prep-on-a-cut">guide to staying full on a cut</a> lays out, electrolytes are one of the few additions that cost almost nothing against your macros while directly fixing a training performance problem. A sodium-free electrolyte tablet is close to zero calories; even a full-sodium sports drink is usually 10 to 20 grams of carbs per serving, which is a rounding error against a daily carb target for anyone training hard enough to need it.</p>
+
+      <h2>The Scale Swings That Have Nothing to Do With Fat</h2>
+      <p>A three-to-five pound overnight swing on the scale is almost always water, not fat, and the usual causes are a high-sodium meal the night before, a hard training session that pulled water into the muscle, or simple dehydration inflating the number in the opposite direction. Fat loss or gain of that size in a single day is not physiologically possible at any realistic calorie surplus or deficit, so when the scale jumps, water and sodium are the first place to look before questioning whether the diet is working.</p>
+      <p>This is the same noise that shows up in <a href="/blog/weight-loss-plateau-fix-macros">stalled-looking weight loss that is actually still working underneath the water fluctuations</a>. Weighing daily and trusting the weekly average rather than any single reading is still the most reliable way to see through it, but knowing that a salty dinner or a brutal leg day is the likely cause takes the guesswork, and the anxiety, out of a bad number on the scale.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your protein, carb, and fat targets around your goal and training load, and while it does not track ounces of water or milligrams of sodium directly, getting the food side dialed in makes the hydration side easier to manage too, since a consistent, well-portioned diet naturally carries a more predictable sodium intake than a week of erratic eating. <a href="https://macroplan.app">MacroPlan</a> keeps the macro side locked down so hydration and electrolytes are the only variable left for you to manage on a hard training day.</p>
+
+      <h2>FAQ</h2>
+      <h3>How much water should a lifter drink on a training day?</h3>
+      <p>Start with half an ounce to one ounce per pound of body weight as a daily baseline, then add roughly 12 to 16 ounces for every 30 minutes of training. Urine that stays pale yellow through the day is a more useful daily check than counting exact ounces.</p>
+      <h3>Is a low-sodium diet actually better for a cut?</h3>
+      <p>Not for most lifters. Sweat losses during hard training remove real sodium that needs replacing, and going too low on sodium while cutting calories is a common, overlooked cause of cramping, dizziness, and feeling unusually flat or weak in the gym.</p>
+      <h3>Why does my weight jump several pounds overnight after one meal?</h3>
+      <p>That size of swing in a single day is water, not fat. A salty meal, a hard training session, or simple dehydration can all shift scale weight by three to five pounds without any change in body fat at all.</p>
+
+      <p>Get the protein, carbs, and fat locked in, then let hydration and sodium be the easy part of the plan. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 12, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1600679472233-eabc13b79f07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHx3YXRlciUyMGJvdHRsZSUyMGd5bSUyMGh5ZHJhdGlvbnxlbnwxfDB8fHwxNzg2NTIxNzczfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Nigel Msipa on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@nigelm23?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'creatine-for-lifters-dosing-timing-guide',
     title: 'Creatine for Lifters: The Real Dosing, Timing, and Macro Guide',
     excerpt: 'Creatine is the most researched supplement in sports nutrition, and also the most argued about. Here is what the dosing actually needs to be, when to take it, and how it fits into a day you are already tracking.',
