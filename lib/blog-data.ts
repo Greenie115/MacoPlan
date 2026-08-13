@@ -22,6 +22,63 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'sleep-recovery-and-macros-for-lifters',
+    title: 'Bad Sleep Is Wrecking Your Macros: The Recovery Connection Lifters Skip',
+    excerpt: 'You can hit protein, carbs, and fat perfectly and still stall out if you are sleeping five hours a night. Here is what short sleep actually does to hunger, recovery, and muscle growth, and what to do about it without touching your macros.',
+    content: `
+      <p>You have the tracking dialed in. Protein hits target most days, carbs are timed around training, calories land where the plan says they should. And you are still not recovering between sessions, still hungrier than the numbers should explain, still not seeing the changes the macros are supposed to produce. Before you touch the plan again, check the one variable most trackers never ask about: how much you actually slept last night.</p>
+
+      <p>Sleep is not a wellness add-on sitting next to your nutrition. It is part of the same system. Growth hormone release, muscle protein synthesis, appetite regulation, and even how accurately you can stick to a meal plan the next day all run through it. A lifter who eats a perfect diet on five hours of sleep is working against their own biology in a way no amount of macro precision fixes.</p>
+
+      <h2>What Short Sleep Does to Hunger and Cravings</h2>
+      <p>Sleep restriction shifts two hormones in a direction that makes dieting harder: ghrelin, which drives hunger, goes up, and leptin, which signals fullness, goes down. Research on sleep-restricted adults has repeatedly found this pairing shows up after as little as one night of cutting sleep to four or five hours, and it does not just make you hungrier in a general sense. It specifically raises cravings for high-calorie, high-carb food, which is exactly the kind of eating that blows a cutting phase off track.</p>
+      <p>This is part of why a cut can feel unmanageable some weeks and easy in others even when the calorie target has not changed. If you have hit a stretch where hunger feels disproportionate to your deficit, sleep debt is worth ruling out before assuming the diet itself needs adjusting the way our <a href="/blog/weight-loss-plateau-fix-macros">plateau troubleshooting guide</a> walks through.</p>
+
+      <h2>Recovery Happens Mostly While You Are Asleep</h2>
+      <p>The bulk of daily growth hormone release happens during deep, slow-wave sleep, and that hormone plays a direct role in tissue repair and muscle protein synthesis. Cut sleep short and you cut the window where a meaningful share of that repair work gets done, regardless of how much protein you ate that day. Studies on sleep-restricted trained lifters have found measurable drops in strength output and a blunted anabolic response even when total protein and calorie intake stayed identical to a well-rested baseline.</p>
+      <p>That matters most on the days your <a href="/blog/meal-timing-for-muscle-growth">meal timing around training</a> is already optimized. A well-placed post-workout meal cannot fully compensate for a recovery window that never opened. Rest days carry some of this same weight, which is one more reason <a href="/blog/protein-on-rest-days">protein on rest days</a> still matters even when you are not training: the body is doing its repair work on those days regardless of the gym schedule, and sleep is the setting that work happens in.</p>
+
+      <h2>Sleep Debt Also Wrecks Diet Adherence, Not Just Biology</h2>
+      <p>There is a behavioral cost that is easy to underrate. Sleep-deprived people make worse food decisions the next day, not because willpower is weaker in some abstract sense, but because the prefrontal cortex, the part of the brain responsible for weighing a decision against a longer-term goal, is measurably less active under sleep restriction while the reward centers driving impulsive choices stay just as responsive. Practically, that means the person who slept four hours is more likely to grab the drive-through order that blows the day's macros than the version of them that slept seven, even with identical willpower and identical goals.</p>
+      <p>A short list of what consistently short sleep does to a lifter's diet and training:</p>
+      <ul>
+        <li>Raises next-day cravings for high-carb, high-calorie food</li>
+        <li>Reduces strength output and training quality in the gym</li>
+        <li>Blunts the muscle-building response even when protein intake is unchanged</li>
+        <li>Makes it harder to stick to a meal plan you would otherwise follow easily</li>
+      </ul>
+      <p>None of this means one bad night ruins a training block. It means a pattern of short sleep is working against the same goals the macros are supposed to serve, quietly, in the background, in a way that never shows up as a line item in a tracking app.</p>
+
+      <blockquote>You cannot out-track a sleep debt. The hormones driving hunger and recovery do not care how precise your macro app is.</blockquote>
+
+      <h2>What Actually Helps, Without Touching Your Macros</h2>
+      <p>Seven to nine hours is the range most sports nutrition and sleep research converges on for adults doing regular resistance training, with harder training blocks pulling toward the higher end. Consistency in bedtime and wake time matters almost as much as total hours, since an irregular schedule disrupts the same hormonal rhythms that a short night does. Cutting caffeine within six hours of bedtime, keeping the room cool and dark, and getting morning light exposure are the three changes with the most evidence behind them and the least effort required to implement.</p>
+      <p>None of that requires touching your protein, carbs, or fat targets. It is a separate lever, and for a lot of lifters who feel stuck despite doing the nutrition side correctly, it is the lever that has been ignored the longest. If health conditions like insomnia or sleep apnea are part of the picture, that is worth raising with a doctor rather than trying to train through it, since those are not problems a meal plan can fix.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan handles the food side: protein, carbs, and fat built around your training load and goal, generated in seconds instead of guessed at. It will not fix your sleep schedule, but it does remove one more source of daily decision fatigue, which is one less thing competing for the mental bandwidth a tired brain is already short on. <a href="https://macroplan.app">MacroPlan</a> keeps the eating side simple so sleep can be the thing you actually have to fix by hand.</p>
+
+      <h2>FAQ</h2>
+      <h3>Can bad sleep really stall muscle growth even if I hit my macros?</h3>
+      <p>Yes. Growth hormone release and muscle protein synthesis both lean heavily on deep sleep, so cutting sleep short reduces the recovery response even when protein and calorie intake are unchanged.</p>
+      <h3>How much sleep does a lifter actually need?</h3>
+      <p>Most research points to seven to nine hours a night for adults doing regular resistance training, with harder training blocks pushing toward the higher end of that range.</p>
+      <h3>Why do I crave junk food more on days I sleep badly?</h3>
+      <p>Short sleep raises ghrelin, the hormone that drives hunger, and lowers leptin, the hormone that signals fullness, and it specifically increases cravings for high-carb, high-calorie food over one to two nights of restriction.</p>
+
+      <p>Get the food side handled so sleep is the only thing left to fix. <a href="https://macroplan.app/signup">Generate your first plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 13, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1774185644574-f58862023fca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxhbGFybSUyMGNsb2NrJTIwYmVkcm9vbSUyMG1vcm5pbmd8ZW58MXwwfHx8MTc4NjYwNDc2OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Suhas Hanjar on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/photos/an-alarm-clock-on-a-wooden-table-at-night-PgROW5b4Sw0?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'hydration-and-sodium-for-lifters-tracking-macros',
     title: 'Hydration and Sodium for Lifters: What Water and Salt Actually Do to Your Macros',
     excerpt: 'You track protein, carbs, and fat to the gram and still cramp mid-set or watch the scale swing five pounds overnight. Here is how much water and sodium a lifter actually needs, and why cutting salt is usually the wrong move.',
