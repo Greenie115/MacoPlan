@@ -22,6 +22,60 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'eating-out-on-a-cut-restaurant-guide-for-lifters',
+    title: 'Eating Out on a Cut: A No-Guesswork Restaurant Guide for Lifters',
+    excerpt: 'No nutrition label, no scale, no idea how much oil is in the pan. Here is how to walk into any sit-down restaurant on a cut and order something that fits your macros without wrecking the night.',
+    content: `
+      <p>You have been dialed in all week. Chicken and rice measured to the gram, containers stacked in the fridge, macros landing on target four days running. Then a friend picks a restaurant for Saturday night, the menu has zero nutrition info, and the choice is between guessing wildly or being the person who brings a food scale to dinner. Neither feels great. Here is how to order like someone who knows what they are doing, without turning a night out into a math problem at the table.</p>
+
+      <h2>Why Restaurant Meals Wreck Trackers Specifically</h2>
+      <p>A home-cooked chicken breast and a restaurant chicken breast are not the same food, even when they look identical on the plate. Restaurants cook for taste and speed, not calorie efficiency, which means butter, oil, and sauce get added in quantities no one at the table can see. A pan-seared piece of fish that reads as "healthy" on the menu can carry two or three tablespoons of butter, adding 200 to 300 calories that never show up in the description.</p>
+      <p>Portion size is the second problem. A restaurant "6 oz" steak is rarely weighed after cooking, and sides like rice or mashed potatoes are scooped, not measured, so the same dish can vary by 30 to 40% in actual serving size depending on who is plating it that night. Add a bread basket, a pre-meal appetizer, and a cocktail, and a single dinner can run 1,200 to 1,800 calories before dessert is even mentioned. That is not a failure of willpower. It is a food environment built without your macro targets in mind, and treating it that way changes how you plan for it.</p>
+
+      <h2>The Order That Actually Protects Your Macros</h2>
+      <p>Before you open the menu, decide roughly how many calories and how much protein you have left for the day, the same way you would check remaining macros before any other meal. Then order in this sequence, and the rest of the meal mostly takes care of itself.</p>
+      <ul>
+        <li><strong>Protein first, cooking method second.</strong> Pick the protein you want, then choose grilled, baked, or roasted over fried, pan-seared in "butter," or breaded. This single swap is usually worth 200 to 400 calories.</li>
+        <li><strong>Sauce and dressing on the side.</strong> A server pouring sauce in the kitchen has no idea what "light" means to you. On the side, you control the amount, which is often the difference between a controlled meal and a guess.</li>
+        <li><strong>Swap the starch for a vegetable or a smaller portion.</strong> Most restaurants will trade fries or mashed potatoes for a side salad or steamed vegetables at no extra cost. Ask; it is a normal request.</li>
+        <li><strong>Skip the bread basket, not the whole meal.</strong> Free bread before the food arrives is one of the highest-calorie, lowest-value parts of eating out. Passing on it protects room for the actual meal.</li>
+      </ul>
+      <p>This is the same logic behind our <a href="/blog/macro-friendly-fast-food-guide">fast food macro guide</a>, just applied to a menu with more variables and no calorie count printed next to the price.</p>
+
+      <h2>You Cannot Weigh It, So Estimate on Purpose</h2>
+      <p>Trying to hit an exact number at a restaurant is a losing game, and chasing precision here usually backfires by making the whole night feel stressful. The better approach is a deliberate estimate instead of a passive guess. A palm-sized portion of meat or fish is roughly 20 to 30g of protein. A cupped handful of rice or potatoes is about 30 to 40g of carbs. A thumb-sized portion of added fat, oil, or cheese runs 10 to 14g of fat. Stack those against your remaining daily target and you get a number that is close enough to plan around, which is the entire point.</p>
+      <p>If the meal comes in a little high, that is a single data point, not a diet failure. Adjusting the next day or two, the way our <a href="/blog/ultimate-guide-to-flexible-dieting">guide to flexible dieting</a> covers, brings the week back to target without any drama. A cut is judged over weeks, not over one Saturday dinner with friends.</p>
+
+      <blockquote>You do not need the exact number. You need a number close enough to keep moving toward your goal, and one restaurant meal has never once ruined a physique.</blockquote>
+
+      <h2>Cuisines That Make This Easier (and Ones That Don't)</h2>
+      <p>Some restaurant styles are naturally easier to estimate than others because the components are cooked and served separately instead of combined into a sauce-heavy dish. Steakhouses, grill-style restaurants, and Japanese or Korean spots with grilled proteins and rice tend to be the most straightforward, since you can see the protein portion and the starch as distinct items on the plate. Mexican grill concepts work the same way for the same reason: protein, rice, and toppings built to order rather than pre-mixed.</p>
+      <p>Italian, and any cuisine built around cream or butter-based sauces, is harder, since a dish like alfredo or a rich risotto can carry 30 to 50g of fat before you have eaten a single bite of protein. That does not mean skip Italian night. It means picking a tomato-based or grilled option over a cream sauce, and treating the meal as an estimate on the higher end rather than pretending it is lean.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan will not follow you into a restaurant, but it handles the six days you do have full control over. If you know Saturday dinner is going to land on the higher end, you can build the rest of the week's <a href="https://macroplan.app">batch-cooked meals</a> a little lighter to make room, instead of trying to hit a perfect number every single day. <a href="https://macroplan.app/signup">Generate a plan built around your actual week →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Should I skip eating out entirely while cutting?</h3>
+      <p>No. A cut that never allows for a normal social life rarely lasts. Planning one restaurant meal into the week's targets is more sustainable than avoiding restaurants and eventually abandoning the diet altogether.</p>
+      <h3>How much should I actually adjust my targets for a restaurant meal?</h3>
+      <p>Treat the estimate on the higher end, not the lower one. If you are unsure between two numbers, use the bigger one; overestimating restaurant food protects your week better than underestimating it does.</p>
+      <h3>Is it rude to ask for sauce on the side or a swapped side dish?</h3>
+      <p>No, these are standard requests most kitchens handle without issue. Servers hear them constantly from people managing all kinds of dietary goals, not just macro tracking.</p>
+
+      <p>Handle the six days you can control, so the one meal you can't measure stops feeling so high-stakes. <a href="https://macroplan.app/signup">Start your first prep, free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 14, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwZGlubmVyJTIwdGFibGUlMjBmb29kfGVufDF8MHx8fDE3ODY2OTExNzV8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Jay Wennington on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/photos/dish-on-white-ceramic-plate-N_Y88TWmGwA?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'sleep-recovery-and-macros-for-lifters',
     title: 'Bad Sleep Is Wrecking Your Macros: The Recovery Connection Lifters Skip',
     excerpt: 'You can hit protein, carbs, and fat perfectly and still stall out if you are sleeping five hours a night. Here is what short sleep actually does to hunger, recovery, and muscle growth, and what to do about it without touching your macros.',
