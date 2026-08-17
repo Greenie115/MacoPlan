@@ -22,6 +22,56 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'micronutrients-on-a-cut-what-lifters-run-low-on',
+    title: 'Micronutrients on a Cut: What High-Protein Dieters Actually Fall Short On',
+    excerpt: 'Your protein, carbs, and fat can all hit target while iron, magnesium, and vitamin D quietly run low. Here is why a lean, macro-perfect cut can still leave you short on the nutrients that keep you recovering.',
+    content: `
+      <p>You can hit every macro on your tracker for a month straight and still feel worse than you did at maintenance. Tired on training days, cramping in your calves at night, catching every cold that goes around the gym. The macros were never the problem. A cut built around chicken, rice, egg whites, and whey is extremely good at hitting protein, carbs, and fat targets, and mediocre at delivering the vitamins and minerals that used to come along for free when your diet had more food groups and more calories in it.</p>
+      <p>This isn't a knock on tracking macros. It's a gap that shows up specifically because macro-efficient foods and micronutrient-dense foods aren't always the same foods, and a calorie deficit gives you less room to fit both in. Knowing which nutrients tend to fall short, and why, makes it a five-minute fix instead of a mystery.</p>
+
+      <h2>Why Cutting Calories Cuts Nutrients Too</h2>
+      <p>A maintenance diet has slack built into it. Extra calories mean extra food, and extra food, even food chosen loosely, tends to sweep up a wider spread of vitamins and minerals along the way. A cut removes that slack on purpose. Fewer total calories means less total food volume, and the food that survives the cut is usually chosen for being protein-dense and calorie-efficient rather than for micronutrient variety. Chicken breast, egg whites, and whey protein are excellent at the first job and contribute almost nothing to the second.</p>
+      <p>The second problem is repetition. Trackers tend to lock onto four or five "macro-efficient" staples and rotate them for weeks, because it's easier to hit a number with foods you already know the values for. That's a reasonable strategy for macros and a bad one for micronutrients, since no single food covers the full spread of vitamins and minerals your body needs. Rice, chicken, and broccoli on repeat will get you to your protein and carb targets every day. It will not reliably get you to your iron, zinc, or vitamin D targets, because those aren't concentrated in the foods a macro-first diet naturally selects for.</p>
+
+      <h2>The Nutrients Most Likely to Run Short</h2>
+      <p><strong>Iron</strong> takes the hardest hit on a cut built around white-meat protein. Chicken breast and egg whites carry very little iron compared to red meat, and the plant sources of iron, like spinach and lentils, get displaced when a plate is built protein-first. Low iron shows up as fatigue that doesn't match your training load and recovery that feels slower than it should, which is easy to blame on the deficit itself instead of the actual cause.</p>
+      <p><strong>Magnesium</strong> and <strong>potassium</strong> drop together, and for a similar reason: both are concentrated in whole grains, legumes, leafy greens, and fruit, all foods that get sized down or cut entirely when someone leans on white rice and lean meat to keep numbers simple. Low magnesium is a common, underappreciated driver of the nighttime calf cramps a lot of lifters chalk up to dehydration, and low potassium compounds it. Our <a href="/blog/hydration-and-sodium-for-lifters-tracking-macros">guide to hydration and sodium on a cut</a> covers the water and salt side of cramping, but electrolytes are only half the story if magnesium and potassium are also running low from the food side.</p>
+      <p><strong>Vitamin D</strong> is less about diet composition and more about total food volume plus limited sun exposure, but a cut makes an already-common shortfall worse simply by leaving less room in the calorie budget for the few foods that carry meaningful amounts, like fatty fish and fortified dairy. <strong>Zinc</strong> follows a pattern close to iron: it's concentrated in red meat, shellfish, and legumes, and a chicken-and-rice-heavy cut tends to miss all three.</p>
+      <p>None of this means a cut is inherently unhealthy. It means the default food list most trackers land on wasn't built with these nutrients in mind, and a few deliberate swaps close most of the gap without spending extra calories you don't have.</p>
+
+      <h2>What It Actually Feels Like</h2>
+      <p>The symptoms of a micronutrient shortfall overlap heavily with the symptoms of just being in a calorie deficit, which is exactly why they get missed. Fatigue that doesn't improve with more sleep, recovery that feels slower between sessions, getting sick more often than usual, and cramping that shows up even when water and sodium intake look fine are all reasonable signs to check the micronutrient side rather than assuming it's the deficit working as intended. A deficit should make you a little more tired and a little less explosive. It shouldn't make you sick every few weeks or leave you cramping in bed at 2am.</p>
+      <blockquote>A cut that hits every macro and still leaves you exhausted, sick, and cramping isn't a diet working correctly. It's usually a food list too narrow to cover what your macros don't measure.</blockquote>
+
+      <h2>Fixing It Without Blowing the Calorie Budget</h2>
+      <p>The fix is almost never a supplement stack. It's widening the rotation of foods you already eat so the same protein and carb numbers come from a broader set of sources. Swapping chicken breast for lean beef, salmon, or shellfish a couple of times a week adds iron and zinc without changing your protein number much. Trading a portion of white rice for a sweet potato, or lentils, or beans brings back magnesium and potassium, and both double as a protein contributor if you're leaning on legumes. Fortified dairy or a couple of eggs with the yolk, not just the whites, does more for vitamin D than most people expect for the calorie cost.</p>
+      <p>The other lever is simple variety inside a food group rather than volume. Rotating between spinach, broccoli, bell peppers, and a citrus fruit through the week covers more micronutrient ground than eating a large amount of any single one of them, and it costs almost nothing in calories since vegetables and most fruit are cheap on a macro budget. Our <a href="/blog/fiber-on-a-high-protein-diet">guide to fixing fiber on a high-protein diet</a> runs through several of the same foods, which isn't a coincidence: the foods that fill the fiber gap on a cut are largely the same ones that fill the micronutrient gap, because both problems come from the same root cause of a narrow, protein-first food list.</p>
+      <p>If your food budget is already tight, this doesn't need to mean spending more. Our <a href="/blog/high-protein-diet-on-a-budget">guide to high-protein eating on a budget</a> covers which cheaper cuts and staples still carry real iron, zinc, and potassium, so widening the rotation doesn't have to widen the grocery bill.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your week around protein, carbs, and fat, but the specific foods it rotates through matter beyond the three numbers on the label. A plan that varies its protein and carb sources across the week, instead of repeating the same two or three all month, is doing quiet micronutrient work in the background. If your current plan feels like the same four meals on a loop, that's the first thing worth changing. <a href="https://macroplan.app">See how MacroPlan varies your week automatically →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Should I just take a multivitamin instead of changing my food?</h3>
+      <p>A multivitamin can help cover gaps, but it's not a full substitute for food variety, since whole foods bring minerals in forms the body absorbs more reliably, alongside fiber and other compounds a pill doesn't include. It's worth using as a backstop, not as the main fix.</p>
+      <h3>How would I know if this is actually a micronutrient issue and not just the deficit?</h3>
+      <p>Persistent fatigue that doesn't track with training load, frequent illness, and unexplained cramping despite good hydration are all worth investigating rather than assuming they're normal deficit fatigue. If symptoms are significant or ongoing, a blood panel through a doctor is the only way to know for certain, and that conversation is worth having rather than guessing.</p>
+      <h3>Does this apply on a lean bulk too, or only on a cut?</h3>
+      <p>It applies less, since a bulk has more calories and more food volume to work with, but the same narrow-rotation problem can still show up if the extra calories all come from the same handful of protein-efficient staples. Variety matters at any calorie level, it just matters more the less food you have to work with.</p>
+
+      <p>Widen the rotation, keep the macros, stop guessing why you're tired. <a href="https://macroplan.app/signup">Generate a plan built around real variety, free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 17, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxmcnVpdHMlMjB2ZWdldGFibGVzJTIwbnV0cml0aW9uJTIwY29sb3JmdWx8ZW58MXwwfHx8MTc4Njk2MTA1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Julia Zolotova on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@juliazolotova?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'eating-out-on-a-cut-restaurant-guide-for-lifters',
     title: 'Eating Out on a Cut: A No-Guesswork Restaurant Guide for Lifters',
     excerpt: 'No nutrition label, no scale, no idea how much oil is in the pan. Here is how to walk into any sit-down restaurant on a cut and order something that fits your macros without wrecking the night.',
