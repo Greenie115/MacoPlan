@@ -22,6 +22,59 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'pre-workout-vs-coffee-for-lifters',
+    title: 'Pre-Workout vs. Coffee for Lifters: Caffeine, Cost, and What Fits Your Macros',
+    excerpt: 'A tub of pre-workout and a cup of black coffee can deliver nearly the same caffeine hit for wildly different prices and calorie costs. Here is how the two actually compare once you look past the packaging.',
+    content: `
+      <p>Walk into any gym locker room and you will see both camps: the shaker bottle crowd swirling something neon, and the coffee cup crowd nursing a black brew on the way to the squat rack. Both are chasing the same thing, a jolt of alertness and a bit more output on the first working set, and both are willing to pay for it. The question that rarely gets a straight answer is whether the $40 tub is actually doing something the $8 bag of beans in your cupboard is not.</p>
+      <p>The honest comparison has to separate three things that get lumped together in most debates: what the caffeine itself does, what the extra ingredients in a pre-workout blend add on top of that, and what each option costs in dollars and calories once you are tracking macros closely.</p>
+
+      <h2>Caffeine Is Doing Most of the Work in Both</h2>
+      <p>A standard scoop of pre-workout typically carries somewhere between 150 and 300mg of caffeine, and a strong 12oz cup of brewed coffee lands in a similar range, usually 95 to 200mg depending on the roast and brew method. At matched doses, the research on caffeine and exercise performance does not distinguish between the source. Caffeine from coffee, a tablet, or a proprietary powder blend produces the same increase in alertness, the same modest bump in strength and endurance output, and the same reduction in perceived effort during a hard set. The molecule does not know which container it came from.</p>
+      <p>Where a fair comparison gets tricky is dosing precision. A pre-workout label states its caffeine content in milligrams, so you know exactly what you are getting scoop to scoop. Coffee varies more, a dark roast actually carries slightly less caffeine per bean than a light roast because longer roasting burns off some of it, and brew strength swings the number further. If you are the kind of lifter who wants a locked-in 200mg every single session, that consistency is the one real edge pre-workout has, not the caffeine itself but the label on it.</p>
+
+      <h2>What the Extra Ingredients Actually Add</h2>
+      <p>This is where most of the price difference comes from. Beyond caffeine, a typical pre-workout blend adds beta-alanine, citrulline malate, and sometimes creatine, betaine, or a small dose of taurine. Beta-alanine has decent evidence for improving output in sets lasting one to four minutes by buffering the muscle acidity that causes burning fatigue, and it is the ingredient responsible for the tingling skin sensation some people notice. Citrulline malate has more mixed but generally positive evidence for reducing soreness and modestly improving rep output through better blood flow.</p>
+      <p>Both of those effects are real, but neither one requires the rest of what is usually bundled into a proprietary blend, artificial sweeteners, food dyes, and a handful of ingredients dosed too low to matter, included mainly so the label looks fuller. If beta-alanine and citrulline are genuinely helping your training, you can buy both separately in plain powder form for a fraction of what a branded pre-workout tub costs, and pair either one with coffee for the caffeine. That combination gets you the ingredients with real evidence behind them without paying blend-markup pricing for the ones that do not.</p>
+      <p>Creatine sometimes shows up in pre-workout blends too, usually at a dose too small to matter, well under the <a href="/blog/creatine-for-lifters-dosing-timing-guide">three to five grams a day that actually saturates muscle stores</a>. If a label is counting on creatine as a selling point, check the actual gram amount before assuming it is doing anything.</p>
+
+      <h2>The Real Cost Difference</h2>
+      <p>A tub of pre-workout runs $25 to $50 for roughly 30 servings, which puts a single dose somewhere between $0.85 and $1.65. A cup of home-brewed coffee, even using a mid-range bag of beans, costs closer to $0.20 to $0.40 per cup. Over a year of five training days a week, that gap adds up to well over $150, sometimes closer to $300, for what is functionally the same caffeine dose plus a couple of ingredients you could buy separately for a few extra dollars a month.</p>
+      <blockquote>The caffeine is doing the heavy lifting in both. The rest is either a real, buyable-separately ingredient, or padding on the label.</blockquote>
+      <p>Calorie cost is close to a wash for the black-coffee comparison, both are effectively zero calories on their own. Where it stops being a wash is what people add to each. A splash of milk in coffee costs almost nothing against a macro budget, while some pre-workout formulas include maltodextrin or dextrose as a carrier for the other ingredients, adding 5 to 15g of carbs you were not planning for. It is a small number next to a full day of tracking, but it is not nothing if you are running <a href="/blog/how-much-protein-to-build-muscle">a tight macro target</a> and wondering where an extra 60 calories crept in.</p>
+
+      <h2>When Pre-Workout Is Still the Better Call</h2>
+      <p>None of this makes pre-workout a bad purchase. If you train early morning and cannot stomach coffee on an empty stomach, or if you specifically want beta-alanine and citrulline without measuring two separate powders, a well-formulated blend from a brand that publishes actual milligram amounts rather than hiding behind a proprietary blend label is a reasonable convenience purchase. The mistake is assuming the tub is doing something fundamentally different from coffee rather than doing the same core thing with a couple of extras and a much higher price tag.</p>
+      <p>The other case where pre-workout wins outright is portability. A single-serving packet travels better than brewing a pot, which matters if your training happens somewhere without a kitchen. Our <a href="/blog/eating-out-on-a-cut-restaurant-guide-for-lifters">guide to eating and training away from your usual setup</a> covers a lot of the same logic, the convenience premium is real, it just has a price attached, and it is worth being honest about which one you are actually paying for.</p>
+
+      <h2>Building Your Own Version for Less</h2>
+      <p>For anyone willing to do a small amount of assembly, a cup of strong coffee 30 to 45 minutes before training, plus a scoop of plain beta-alanine and citrulline malate powder bought separately, replicates almost everything a name-brand pre-workout does at roughly a third of the cost. It takes an extra thirty seconds of stirring and loses the flavor variety, but the training effect is not meaningfully different, since the ingredients producing that effect are the same either way. Timing matters more than the source: caffeine takes roughly 30 to 45 minutes to peak in the bloodstream, so drinking it at the door of the gym is late no matter which container it came from.</p>
+      <p>Caffeine tolerance is the other variable worth watching regardless of source. Daily use builds tolerance to the alertness effect over a few weeks, which is why some lifters cycle off for a week every couple of months rather than chasing a bigger dose to feel the same kick. That cycling logic applies equally whether the caffeine came from a $1.50 scoop or a $0.25 cup.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>Neither coffee nor pre-workout needs to complicate a macro plan, both are close enough to zero calories on their own that they are not worth tracking as a meal. What is worth watching is the carrier ingredients some pre-workout blends sneak in, and whether a $1,000-a-year habit is buying you something coffee and two cheap powders could not. <a href="https://macroplan.app">MacroPlan</a> tracks the food that actually moves your macros, so the few grams of carbs in a flavored pre-workout scoop show up instead of disappearing into a day you thought was accounted for.</p>
+
+      <h2>FAQ</h2>
+      <h3>Is pre-workout actually stronger than coffee?</h3>
+      <p>Not inherently. At matched caffeine doses, the performance effect is the same regardless of source. A pre-workout blend can feel stronger because it also contains beta-alanine and citrulline, which produce their own effects, including the tingling skin sensation people sometimes mistake for the caffeine kicking in harder.</p>
+      <h3>Can I just drink coffee and take creatine and call it pre-workout?</h3>
+      <p>Largely, yes. Coffee covers the caffeine, and a properly dosed creatine habit already covers the strength and volume benefit creatine is meant to provide. Adding separate beta-alanine and citrulline powder rounds out most of what a branded blend offers, at a lower cost per serving.</p>
+      <h3>Does the sugar or carbs in some pre-workout mixes matter for a cut?</h3>
+      <p>It is a small number, usually 5 to 15g of carbs from a maltodextrin or dextrose carrier, but it is worth checking the label if you are running a tight deficit. Black coffee has none of that, so it is the lower-carb option by default.</p>
+
+      <p>Track the food, not the fine print on a supplement label. <a href="https://macroplan.app/signup">Generate your first MacroPlan for free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 18, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1504630083234-14187a9df0f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxibGFjayUyMGNvZmZlZSUyMGN1cCUyMHRhYmxlfGVufDF8MHx8fDE3ODcwNDg3NjN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Emre on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@reo?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'micronutrients-on-a-cut-what-lifters-run-low-on',
     title: 'Micronutrients on a Cut: What High-Protein Dieters Actually Fall Short On',
     excerpt: 'Your protein, carbs, and fat can all hit target while iron, magnesium, and vitamin D quietly run low. Here is why a lean, macro-perfect cut can still leave you short on the nutrients that keep you recovering.',
