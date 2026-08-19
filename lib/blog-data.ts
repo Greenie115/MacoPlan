@@ -22,6 +22,63 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'air-fryer-meal-prep-for-lifters',
+    title: 'Air Fryer Meal Prep for Lifters: Cook Times, Batch Sizes, and Container Math',
+    excerpt: 'An air fryer cooks a week of chicken and vegetables in a fraction of the oven time, with less added oil to account for. Here is how to actually batch cook with one, including cook times and how to fill your containers.',
+    content: `
+      <p>An air fryer is a small convection oven, not a magic box, but that distinction is exactly why it works so well for meal prep. The fan-forced heat circulates around food in a tight basket instead of a large oven cavity, so a batch of chicken thighs or a tray of broccoli finishes in 12 to 18 minutes instead of 25 to 35. For a lifter who wants Sunday's prep session over in under an hour, that time savings is the entire pitch, and the macro side of it is a genuine bonus: less oil is needed to get a crisp result than roasting or pan-searing, so the calories you save aren't just theoretical.</p>
+      <p>The tradeoff is capacity. Most home air fryers hold one to two pounds of food per batch, well under what a sheet pan or stockpot can handle in a single pass. That means air fryer meal prep is a batching exercise as much as a cooking one, and getting it right means planning around three or four short back-to-back rounds rather than one long cook.</p>
+
+      <h2>Why the Air Fryer Actually Wins for Some Foods</h2>
+      <p>Chicken thighs and breasts are the clearest case. A basket of diced chicken breast tossed in a teaspoon of oil and seasoning comes out in about 12 minutes at 400°F (200°C), with the outside browned and the inside still juicy, because the smaller cooking chamber holds heat right against the food instead of losing it to a big empty oven. Compare that to the 20 to 25 minutes a full sheet pan needs at the same temperature, and the air fryer wins on both time and, since less oil is required for browning, on total fat per serving.</p>
+      <p>Vegetables benefit even more. Broccoli, Brussels sprouts, and green beans roasted in an oven often end up steamed rather than browned unless they're spread thin across two trays, which doubles your active prep time. In an air fryer basket, the same vegetables get real Maillard browning in 8 to 10 minutes because the hot air is moving directly across a smaller, denser surface. If you've read our <a href="/blog/best-foods-for-batch-cooking">guide to batch-cooking foods that hold up</a>, the air fryer is worth adding to that list specifically for anything you want crisp rather than soft after a week in the fridge, since food reheated from an air fryer tends to re-crisp on a second pass better than oven-roasted leftovers do.</p>
+      <p>Where it does not win is rice, beans, or anything that needs to simmer in liquid. Save the stovetop or rice cooker for those and use the air fryer for protein and vegetables running at the same time, which is how most lifters end up structuring the whole prep session anyway.</p>
+
+      <h2>Cook Times and Temperatures Worth Memorizing</h2>
+      <p>These hold across most basket-style air fryers, though wattage and basket size shift things by a minute or two, so treat the first run of any new recipe as a calibration round rather than a guarantee.</p>
+      <ul>
+        <li>Diced chicken breast, 1-inch pieces: 400°F (200°C), 10 to 12 minutes, shake the basket halfway through.</li>
+        <li>Chicken thighs, boneless: 380°F (195°C), 16 to 18 minutes.</li>
+        <li>93% lean ground beef or turkey, crumbled: 375°F (190°C), 8 to 10 minutes, breaking it up once partway through.</li>
+        <li>Broccoli or Brussels sprouts, halved: 400°F (200°C), 8 to 10 minutes.</li>
+        <li>Sweet potato, diced: 400°F (200°C), 15 to 18 minutes, shaking once.</li>
+      </ul>
+      <p>Season before cooking rather than after. The dry heat sets a light crust on any oil or spice you add going in, and a basket that's too full won't crisp evenly. Overloading is the single most common mistake: if you can't see basket space between pieces, drop to a smaller batch. A crowded basket steams instead of air-frying, and you lose most of the time advantage the appliance is supposed to give you.</p>
+
+      <h2>Building a Full Week in Three Rounds</h2>
+      <p>A typical Sunday session runs three back-to-back batches while the rice cooker or a pot handles carbs on the side. Round one is the protein, usually the longest cook, run while you're prepping vegetables for round two. Round two is the vegetables, timed to finish while the protein rests and the rice or potatoes wrap up on the stove. Round three is either a second protein batch, for lifters running higher volume, or a repeat of round one if your air fryer basket only fits half the week's chicken at once.</p>
+      <p>The total active time for three rounds plus a stovetop carb source usually lands under 50 minutes, most of it hands-off while food cooks. That's the real case for the appliance over a full oven roast: you're not saving on ingredients or nutrition, you're saving 30 to 40 minutes of a Sunday, and for anyone whose meal prep habit has died before from simply taking too long, that time savings is what keeps the habit alive past week three.</p>
+
+      <blockquote>The air fryer doesn't change what a macro looks like. It changes how long you're standing in the kitchen to get there, and less oil to hit the same crispy texture is a real, if small, calorie win.</blockquote>
+
+      <h2>Container Math for Air Fryer Batches</h2>
+      <p>Because an air fryer basket holds less per round than a sheet pan, it's easy to underestimate how much a full week actually requires. A pound of raw chicken breast yields roughly 12 to 13 ounces cooked, enough for about two 28oz containers at a standard 4 to 5 ounce protein portion. Plan backward from your container count rather than your batch count: if you're filling five containers for the week, that's two full rounds of chicken at minimum, sometimes three depending on your protein target per meal. Our <a href="/blog/meal-prep-container-math-portion-sizes">container math guide</a> breaks down the exact grams-per-cup for proteins, carbs, and vegetables if you want to map an air fryer batch to a specific container size before you start cooking.</p>
+      <p>Once the protein and vegetables are done, building the container is identical to any other meal prep, layer the carb source, then protein, then vegetables, and let each component cool slightly before sealing the lid so condensation doesn't turn day-three rice soggy.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>An air fryer changes how fast you cook, not what to cook or how much of it fits your macros for the week. <a href="https://macroplan.app">MacroPlan</a> generates the batch-cook plan and shopping list first, so you know exactly how many pounds of chicken and how many rounds through the basket a given week's macros actually require before you're standing at the counter guessing.</p>
+
+      <h2>FAQ</h2>
+      <h3>Is air fryer meal prep actually healthier than oven roasting?</h3>
+      <p>Not fundamentally, since the macros of the food itself don't change based on the appliance. The real difference is that an air fryer needs less added oil to crisp food, which can shave a small number of fat calories off each serving compared with a heavily oiled sheet pan.</p>
+      <h3>Can I cook a full week of meals in one air fryer session?</h3>
+      <p>Yes, but expect three or four short rounds rather than one long cook, since most home units only hold one to two pounds of food per batch. Running the rice or potatoes on the stove at the same time keeps the total session under an hour.</p>
+      <h3>Do I need to flip or shake the basket during cooking?</h3>
+      <p>For most proteins and vegetables, shaking the basket once halfway through gives more even browning. Skipping it usually still cooks the food through, it just crisps less evenly on the pieces that were sitting on the bottom.</p>
+
+      <p>Let MacroPlan handle the batch sizing and shopping list, and spend your Sunday actually cooking instead of doing the math. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 19, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1606858274001-dd10efc5ce7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxhaXIlMjBmcnllciUyMG1lYWwlMjBwcmVwfGVufDF8MHx8fDE3ODcxMjQ0MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ello on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@elloproducts?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'pre-workout-vs-coffee-for-lifters',
     title: 'Pre-Workout vs. Coffee for Lifters: Caffeine, Cost, and What Fits Your Macros',
     excerpt: 'A tub of pre-workout and a cup of black coffee can deliver nearly the same caffeine hit for wildly different prices and calorie costs. Here is how the two actually compare once you look past the packaging.',
