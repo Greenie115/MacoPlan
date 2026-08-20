@@ -22,6 +22,55 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'fitness-tracker-calorie-burn-accuracy',
+    title: 'Your Smartwatch Is Wrong About Calories Burned Lifting',
+    excerpt: 'Your Apple Watch or Fitbit is probably overcounting the calories you burn in a lifting session, sometimes by 40% or more. Here is why wrist-based trackers get resistance training wrong, and what to use instead when your macros depend on the number.',
+    content: `
+      <p>You finish a 50-minute lifting session, glance at your wrist, and see "612 calories burned." That number feels earned. It also might be off by a third or more, and if you are eating back what your watch says you burned, that gap is quietly working against your cut.</p>
+      <p>This is not a knock on any one brand. Apple Watch, Fitbit, Garmin, and Whoop all share the same basic problem: they were built to estimate energy expenditure from heart rate and motion, and resistance training is the one activity that breaks both of those signals at once.</p>
+
+      <h2>Why Wrist-Based Trackers Struggle With Lifting</h2>
+      <p>A wrist-worn tracker has two main inputs: an optical heart rate sensor and an accelerometer. For steady-state cardio, that combination works reasonably well, since heart rate climbs and holds roughly in line with effort, and the arm swings in a predictable rhythm the accelerometer can read. Lifting breaks both assumptions. During a heavy set, effort spikes for a few seconds while the wrist barely moves, then heart rate stays elevated during the rest period even though you are standing still. The device has no way to tell the difference between "still working hard" and "recovering from working hard," so it keeps counting calories at a cardio-like rate through your rest periods too.</p>
+      <p>A 2017 Stanford study that tested seven popular wrist devices, including an early Apple Watch and Fitbit Surge, against a lab-grade metabolic cart found that most of them measured heart rate accurately, within about 5% error, but every device missed on energy expenditure, with error rates ranging from 27% to 93% depending on the device and activity. That gap gets worse specifically for resistance training, where later research measuring wearables against the same lab standard has found overestimates averaging around 40% for strength sessions, well outside the 20 to 40% error range typical of cardio activities on the same devices.</p>
+      <p>The mechanical reason is straightforward once you see it. Optical heart rate sensors also lose accuracy during lifting because gripping a bar restricts blood flow at the wrist and can trigger motion artifacts the sensor reads as noise. So the input going into the calorie algorithm is already shaky before the algorithm even tries to guess at expenditure.</p>
+
+      <h2>What This Actually Costs You in Macros</h2>
+      <p>If you are on a fixed calorie target, an inflated "calories burned" number does nothing on its own, it just sits there looking impressive. The damage happens when you use that number to justify extra food, whether that is a bigger dinner, a second protein shake, or simply feeling less guilty about a snack because "I burned 600 calories today." A lifter who trains four times a week and consistently overcredits each session by 200 to 300 calories is eating back most or all of a deficit meant to drive fat loss, which is a common, invisible reason a cut stalls even though the person swears they are "eating clean and tracking everything." If that sounds familiar, it is worth reading our <a href="/blog/weight-loss-plateau-fix-macros">breakdown of why a deficit stops working</a>, since a wearable's inflated burn estimate is one of the more common culprits that never shows up in a food log.</p>
+      <p>The opposite mistake happens too, though less often. Someone bulking who trusts a low burn estimate from a tracker that undercounts their non-lifting movement can end up eating less than they think, which slows the muscle gain they are training for. Either direction, the core issue is the same: a device built to estimate, not measure, is being treated as ground truth for a number your macros actually depend on.</p>
+
+      <h2>What to Trust Instead</h2>
+      <p>The most reliable fix is to stop chasing a precise "calories burned" figure for training days altogether and instead set training day and rest day targets based on your actual results over two to three weeks, adjusting calories up or down depending on whether the scale and your measurements are moving the way you want. This is the same logic behind <a href="/blog/decoding-macros">calculating your macro ratio</a> from your goals and bodyweight rather than backfilling it from a device estimate. Your weight trend over time is a far more honest feedback loop than any single workout's calorie count, because it reflects everything, food, training, sleep, and recovery, averaged out instead of one shaky sensor reading.</p>
+      <p>If you still want to use a tracker for pacing effort or tracking heart rate trends over a training block, that is a reasonable use case, wrist-based heart rate is genuinely close to lab-accurate. Just stop plugging the "active calories" number into a food-logging app as if it were a lab measurement. Apps like MyFitnessPal and Cronometer both let you sync wearable data automatically, which is convenient but also how the inflated number quietly ends up padding your daily intake without you noticing; our <a href="/blog/myfitnesspal-vs-cronometer-for-lifters">comparison of the two trackers</a> covers how each handles that sync if you want to shut it off.</p>
+      <p>For lifting specifically, a rough manual estimate using MET values for resistance training, about 3 to 6 METs depending on intensity and rest length, will usually land closer to reality than a wearable's live estimate, though even that is a ballpark rather than a precise number. The honest answer is that no consumer method measures strength-training calorie burn with real precision yet. Treat any number from a session, watch or otherwise, as a rough guess and let your weekly trend do the actual work of confirming whether your calories are set correctly.</p>
+
+      <blockquote>Your wrist can tell you your heart rate. It cannot tell you your calories burned during a lifting session with any real precision, and treating it like it can is one of the quieter ways a cut or bulk goes off track.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan does not try to guess what you burned in the gym. It calculates your training day and rest day macros from your stats, activity level, and goal, and builds a batch-cook plan to hit those numbers, so your food targets stay consistent whether or not your watch had a good read on your last leg day. <a href="https://macroplan.app">MacroPlan</a> is built around the numbers you actually control, not the ones a wrist sensor is estimating.</p>
+
+      <h2>FAQ</h2>
+      <h3>Are any fitness trackers accurate for calories burned while lifting?</h3>
+      <p>None of the mainstream wrist-based options have been shown to be reliably accurate for resistance training specifically. Chest-strap heart rate monitors paired with a MET-based formula tend to do somewhat better than wrist optical sensors, but even that is an estimate, not a lab measurement.</p>
+      <h3>Should I just ignore the calorie number on my watch?</h3>
+      <p>For lifting sessions, treat it as a rough directional number at best, not something to eat back precisely. It is more useful for comparing one of your sessions to another than for informing your actual daily calorie target.</p>
+      <h3>Why is my tracker's heart rate accurate but the calorie number is not?</h3>
+      <p>Heart rate is a direct physical measurement the sensor reads fairly well. Calories burned is a downstream calculation built on assumptions about how heart rate maps to energy expenditure, and those assumptions are tuned for steady-state cardio, not the stop-start pattern of a lifting session.</p>
+      <h3>Does this apply to cardio too, or just lifting?</h3>
+      <p>Cardio estimates are meaningfully better, generally within 20 to 30% error, because heart rate and motion track effort more consistently during steady activities like running or cycling. Lifting is the activity type where wrist-based trackers perform worst.</p>
+
+      <p>Stop letting a wrist sensor set your food targets. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 20, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1434494745656-1aea7daa8f6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxzbWFydHdhdGNoJTIwZ3ltJTIwd29ya291dHxlbnwxfDB8fHwxNzg3MjEwNDI4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Luke Chesser on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@lukechesser?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'air-fryer-meal-prep-for-lifters',
     title: 'Air Fryer Meal Prep for Lifters: Cook Times, Batch Sizes, and Container Math',
     excerpt: 'An air fryer cooks a week of chicken and vegetables in a fraction of the oven time, with less added oil to account for. Here is how to actually batch cook with one, including cook times and how to fill your containers.',
