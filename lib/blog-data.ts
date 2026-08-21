@@ -22,6 +22,74 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-dinners-for-lifters',
+    title: '10 High-Protein Dinners for Lifters (35g+ Protein, Ready in 30 Minutes)',
+    excerpt: 'Ten dinners that clear 35g of protein without living on chicken and rice every night. Macros included, most scale straight into meal-prep containers.',
+    content: `
+      <p>Breakfast and lunch get the meal-prep spotlight, but dinner is where most lifters actually fall short. It is the meal eaten latest, cooked with the least energy left in the tank, and easiest to replace with whatever is fastest when the day has already run long. The problem is dinner usually carries the biggest protein number of the day, since it is the one meal most people still cook fresh. These ten dinners each clear 35g of protein, come together in 30 minutes or less, and none of them are plain chicken breast and white rice for the fourth night running.</p>
+
+      <h2>1. Sheet Pan Salmon with Roasted Broccoli</h2>
+      <p>Toss a 180g salmon fillet and a tray of broccoli with olive oil, salt, and lemon, then roast at 200°C (400°F) for 15 minutes. Serve over 150g of cooked rice. <strong>~560 cal, 39g protein.</strong> One pan, almost no cleanup, and salmon reheats better than most people expect if you keep the skin on during storage.</p>
+
+      <h2>2. Turkey and Black Bean Chili</h2>
+      <p>Brown 500g of ground turkey with onion and garlic, add two cans of black beans, a can of diced tomatoes, and chili spices, then simmer 20 minutes. Split into four bowls. <strong>~410 cal, 38g protein per bowl.</strong> Chili is one of the few dinners that tastes better on day three, which makes it a natural batch-cook candidate; our guide to <a href="/blog/best-foods-for-batch-cooking">foods that hold up over several days</a> covers why beans and ground meat age so well in the fridge.</p>
+
+      <h2>3. Steak Fajita Bowls</h2>
+      <p>Slice 200g of sirloin and sear it hot with peppers and onion, then serve over 150g of rice with black beans and a spoon of salsa. <strong>~590 cal, 42g protein.</strong> Skip the tortilla and the flour it carries, and the bowl format makes it a clean meal-prep container fill.</p>
+
+      <h2>4. Baked Cod with Sweet Potato Mash</h2>
+      <p>Bake a 220g cod fillet at 200°C (400°F) for 12 minutes while boiling and mashing a medium sweet potato. Cod is one of the leanest whitefish options available, so this plate stays light on fat while still landing a strong protein number. <strong>~430 cal, 41g protein.</strong> If white fish reheats rubbery for you, that is a texture issue with reheating fish generally rather than this recipe specifically, so eat it fresh where possible or flake it into a salad the next day instead of microwaving it whole.</p>
+
+      <h2>5. Shrimp and Egg Fried Rice</h2>
+      <p>Stir-fry 200g of shrimp with two scrambled eggs, frozen peas and carrots, and 150g of day-old rice in a hot pan with soy sauce. <strong>~480 cal, 40g protein.</strong> Shrimp cooks in under three minutes, which makes this one of the fastest dinners on the list once the rice is already made.</p>
+
+      <h2>6. Turkey Meatballs with Marinara and Zucchini Noodles</h2>
+      <p>Bake 500g of ground turkey meatballs at 200°C (400°F) for 18 minutes, simmer in marinara, and serve over spiralized zucchini or regular pasta depending on your carbs for the day. <strong>~440 cal, 37g protein per serving.</strong> This is the dinner to reach for on a lower-carb day, since swapping in zucchini noodles drops the plate by roughly 30g of carbs without touching the protein.</p>
+
+      <h2>7. Chicken Thigh Stir-Fry</h2>
+      <p>Dice 250g of boneless, skinless chicken thighs and stir-fry with broccoli, snap peas, and a garlic-ginger sauce over 150g of rice. Thighs run a bit higher in fat than breast but cook up noticeably juicier, which matters if you are eating chicken five nights a week and getting tired of it. <strong>~570 cal, 43g protein.</strong></p>
+
+      <h2>8. Tofu and Edamame Stir-Fry (Plant-Based)</h2>
+      <p>Press and cube 350g of extra-firm tofu, pan-fry until golden, then toss with edamame, bell pepper, and a sesame-soy sauce over rice. <strong>~460 cal, 36g protein.</strong> Tofu absorbs sauce flavor better than most plant proteins, and pairing it with edamame closes the gap to 35g without needing a protein powder assist.</p>
+
+      <h2>9. Bison or Beef Burger Bowls</h2>
+      <p>Cook 200g of lean ground bison or 90/10 beef into a patty, chop it over greens, roasted potatoes, and a spoon of Greek yogurt ranch. <strong>~520 cal, 40g protein.</strong> Same macros as a burger, no bun, and it plates like a real dinner instead of diet food.</p>
+
+      <h2>10. Lentil and Chicken Sausage Skillet</h2>
+      <p>Sauté sliced chicken sausage with 200g cooked lentils, spinach, and diced tomato in one pan for 10 minutes. <strong>~450 cal, 35g protein.</strong> Lentils add fiber most high-protein dinners skip entirely, which is worth paying attention to if <a href="/blog/fiber-on-a-high-protein-diet">a high-protein diet has been rough on your gut</a>.</p>
+
+      <h2>Why Dinner Protein Is the One People Miss</h2>
+      <p>Most tracking apps make breakfast and lunch look easy because they are built around repeatable, prepped meals: a yogurt bowl, a chicken and rice container. Dinner is where variety creeps back in, and variety is exactly what makes hitting a protein number harder, since a home-cooked meal built around "whatever sounds good" does not automatically land at 35 to 40g. The fix is not more discipline, it is picking a short rotation of dinners that are already calibrated to your target, the same way <a href="/blog/meal-prep-container-math-portion-sizes">container math</a> takes the guesswork out of lunch.</p>
+      <p>The other trap is protein source fatigue. Chicken breast is the default answer because it is cheap and lean, but eating it five nights a week is how people quietly start skipping dinner altogether or ordering out instead. Rotating between fish, red meat, shrimp, tofu, and legumes across the ten dinners above keeps the macros consistent while keeping the food interesting enough to actually keep cooking. If you are also trying to keep the protein-per-calorie ratio tight across all ten, the <a href="/blog/protein-per-calorie-food-ranking">protein per calorie food ranking</a> is a useful reference for which of these proteins does the most work for the fewest calories.</p>
+
+      <blockquote>You do not run out of protein at dinner because dinner is hard. You run out because dinner is the one meal nobody pre-calculated.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>These ten dinners work because each one is already built around a protein target, but figuring out your actual nightly number, and scaling a recipe up or down to hit it, is the part that eats the most time. <a href="https://macroplan.app">MacroPlan</a> calculates your daily macros from your stats and goal, then builds a batch-cook plan around them, so a dinner like the salmon and broccoli sheet pan above shows up already portioned to your numbers instead of a generic recipe you have to do the math on yourself.</p>
+
+      <h2>FAQ</h2>
+      <h3>What is the easiest high-protein dinner to meal prep?</h3>
+      <p>Turkey and black bean chili and the lentil and chicken sausage skillet both hold up best over multiple days since they are one-pot and improve with a day or two in the fridge. Baked cod and other white fish are the ones to eat fresh rather than store.</p>
+      <h3>How much protein should dinner actually have?</h3>
+      <p>Roughly 0.4g per kg of bodyweight per meal is a reasonable target for most lifters, which lands most people between 30 and 50g at dinner depending on bodyweight and how the rest of the day's meals are split.</p>
+      <h3>Can I hit 35g of protein at dinner without eating meat?</h3>
+      <p>Yes. The tofu and edamame stir-fry and lentil skillet above both clear 35g using plant sources alone, and combining a legume with a soy-based protein like tofu or edamame is generally the fastest way to hit a high protein number without meat.</p>
+      <h3>Is it better to eat more protein at dinner or spread it evenly across the day?</h3>
+      <p>Spreading protein across three to five meals is generally favored for muscle protein synthesis over stacking most of it into one large dinner, but a slightly bigger dinner is not a problem if breakfast and lunch already carry a reasonable share; see the full breakdown in our <a href="/blog/protein-per-meal-ceiling">protein per meal ceiling</a> guide.</p>
+
+      <p>Stop reinventing dinner every night. <a href="https://macroplan.app/signup">Get your free macro plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 21, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1539136788836-5699e78bfc75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxzYWxtb24lMjByaWNlJTIwZGlubmVyJTIwcGxhdGV8ZW58MXwwfHx8MTc4NzMwOTU1NXww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'fitness-tracker-calorie-burn-accuracy',
     title: 'Your Smartwatch Is Wrong About Calories Burned Lifting',
     excerpt: 'Your Apple Watch or Fitbit is probably overcounting the calories you burn in a lifting session, sometimes by 40% or more. Here is why wrist-based trackers get resistance training wrong, and what to use instead when your macros depend on the number.',
