@@ -22,6 +22,66 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'weekly-grocery-list-for-lifters-high-protein-template',
+    title: "The Lifter's Weekly Grocery List: A High-Protein Shopping Template",
+    excerpt: 'A repeatable weekly shopping list built around protein-dense staples, so your macros are decided at the store instead of guessed at the stove.',
+    content: `
+      <p>Most lifters do not blow their macros at dinner. They blow them at the grocery store, three days earlier, when the cart fills up with things that sounded fine in the aisle but do not add up to anything close to the protein target for the week. A shopping list that is built around macros instead of vague "eating healthy" intentions solves most of this before you ever pick up a pan. It is not a diet plan, it is closer to a default setting: the stuff that ends up in the cart most weeks, organized so the protein number takes care of itself.</p>
+
+      <p>The list below is built for a single adult lifter eating three to four times a day, training four to five days a week, and covers a full seven days without needing a mid-week top-up run for the essentials. Swap brands and specific cuts freely; the point is the category totals, not the exact SKU.</p>
+
+      <h2>The Protein Anchors</h2>
+      <p>Protein is the expensive, perishable part of the list, so it gets bought with the most intention. A week's protein anchor usually looks like 1.5kg of chicken breast or thigh, 500g of lean ground beef or turkey, a dozen eggs, 500g of a firm white fish or salmon, and a large tub of plain Greek yogurt or cottage cheese. That combination alone covers most of a 150 to 180g daily protein target across a week of meals without repeating the same protein two days running. If the budget is tight, canned tuna, a bag of frozen chicken breast, and dried lentils stretch the same protein total for less money; the full breakdown of what actually moves the needle per dollar is in our <a href="/blog/high-protein-diet-on-a-budget">high-protein diet on a budget</a> guide.</p>
+      <p>Whey or another protein powder belongs on this list too, not as a meal replacement but as the thing that closes the gap on a day where the fridge protein ran short. One scoop covers 20 to 25g, which is often the difference between hitting a number and quietly missing it by the amount nobody bothers to make up later in the day.</p>
+
+      <h2>Carbs and Fats That Actually Get Eaten</h2>
+      <p>The carb side of the list should lean toward things that reheat well, since most of it is getting cooked once and eaten across several days: a large bag of rice, a few pounds of potatoes, a loaf of whole grain bread, and rolled oats for breakfast. Rice, potatoes, and pasta all do this job slightly differently in terms of how much they weigh once cooked and how full they keep you, which matters more than people expect when portioning out a week's containers; our <a href="/blog/rice-vs-potatoes-vs-pasta-meal-prep">rice vs potatoes vs pasta comparison</a> covers which one to default to depending on the goal.</p>
+      <p>Fats are the easiest category to get wrong by either ignoring it entirely or by drowning otherwise lean meals in oil. A bottle of olive oil, a jar of peanut or almond butter, a bag of mixed nuts, and an avocado or two most weeks covers what is needed without needing to measure a tablespoon every time. These are also the calories that are easiest to under-report, since a heavy hand with the olive oil bottle adds up faster than most people track.</p>
+
+      <h2>Produce, Because the List Fails Without It</h2>
+      <p>A frozen vegetable mix, a bag of spinach, and whatever vegetable is cheapest that week (usually broccoli, peppers, or a bag of pre-cut stir-fry mix) round out the list. Frozen vegetables are not a downgrade here; they hold their nutrient content well, never go bad before you get to them, and cut prep time to almost nothing. A couple of pieces of fruit for snacking and a lemon or two for cooking finish the produce section. None of this moves the protein number, but it is the difference between a diet that is sustainable for months and one that quietly falls apart from boredom or, worse, from the kind of low-fiber gut discomfort that comes with an all-meat, no-plant approach; that tradeoff is covered in more depth in our piece on <a href="/blog/fiber-on-a-high-protein-diet">fiber on a high-protein diet</a>.</p>
+
+      <h2>Turning the List Into the Week's Macros</h2>
+      <p>The list above is a starting point, not a fixed prescription, because the right quantities depend on your bodyweight, training volume, and whether the week is a cut, a maintenance phase, or a lean bulk. A 70kg lifter cutting and a 95kg lifter bulking are not shopping for the same amount of rice, even if their protein lists look almost identical. Once you know your targets, the list scales by multiplying the protein anchors by however many servings the week needs and adjusting rice, potatoes, and oil up or down to hit the calorie side without touching protein.</p>
+      <p>This is also where a kitchen scale earns its keep, at least for the first few weeks of using a list like this. Eyeballing 150g of chicken against 220g of chicken is a bigger swing than it looks like on the plate, and that gap compounds across a week of meals into a real difference in outcome. If a scale is not an option right now, there are workable substitutes using hands and containers instead, covered in our guide to <a href="/blog/meal-prep-without-a-kitchen-scale">meal prepping without a kitchen scale</a>.</p>
+
+      <h2>A Sample Week at a Glance</h2>
+      <p>To make the categories concrete, here is roughly what fills the cart for a 90kg lifter eating around 2,600 calories and 180g of protein a day across the week:</p>
+      <ul>
+        <li>Protein: 1.5kg chicken thigh, 500g ground turkey, 500g salmon or white fish, 18 eggs, 1kg Greek yogurt, 2 scoops of protein powder held in reserve</li>
+        <li>Carbs and fats: 2kg rice, 1.5kg potatoes, 500g oats, a loaf of bread, olive oil, a jar of peanut butter, a bag of almonds</li>
+        <li>Produce: 2 bags frozen mixed vegetables, a bag of spinach, broccoli, bananas, and a couple of lemons</li>
+      </ul>
+      <p>That cart lands close to the target without a single meal needing to be planned in advance. The macros come from what is in the fridge, not from a recipe card, which is the entire point of shopping this way.</p>
+
+      <blockquote>A grocery list built around macros turns "what should I eat" into "what's already in the fridge," which is the actual difference between people who hit their numbers consistently and people who hit them on good weeks.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>Scaling a list like this to your exact numbers, and turning it into a week of specific meals instead of just ingredients, is the part that takes the most time by hand. <a href="https://macroplan.app">MacroPlan</a> calculates your daily targets from your stats and goal, then builds a batch-cook plan that tells you exactly how much of each item on this list to buy and cook, so the shopping trip and the macros are solved in the same step instead of two separate ones.</p>
+
+      <h2>FAQ</h2>
+      <h3>How much should a week of high-protein groceries cost?</h3>
+      <p>For one person hitting 150 to 180g of protein a day, budgeting $60 to $90 a week is realistic if the protein leans on chicken thighs, eggs, canned tuna, and Greek yogurt rather than exclusively fresh salmon and steak. See <a href="/blog/high-protein-diet-on-a-budget">high-protein diet on a budget</a> for a fuller cost breakdown by protein source.</p>
+      <h3>Should I buy protein fresh or frozen?</h3>
+      <p>Frozen chicken breast and fish hold their protein and quality well and are usually cheaper per gram than fresh. Buy fresh for anything you plan to cook within two days and frozen for anything further out in the week.</p>
+      <h3>How do I adjust this list for a cut versus a bulk?</h3>
+      <p>Keep the protein anchors roughly the same in both cases and adjust rice, potatoes, oats, and oil up for a bulk or down for a cut. Protein needs stay high in both phases; calories are what should move.</p>
+      <h3>What if I do not have time to shop every week?</h3>
+      <p>Most of this list freezes well, including chicken, ground meat, fish, and bread, so buying a double batch every other week and freezing half works without losing quality.</p>
+
+      <p>Stop guessing at the store. <a href="https://macroplan.app/signup">Get your free macro plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 30, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    imageCredit: 'Photo by nrd on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@nicotitto?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition',
+  },
+  {
     slug: 'high-protein-dinners-for-lifters',
     title: '10 High-Protein Dinners for Lifters (35g+ Protein, Ready in 30 Minutes)',
     excerpt: 'Ten dinners that clear 35g of protein without living on chicken and rice every night. Macros included, most scale straight into meal-prep containers.',
