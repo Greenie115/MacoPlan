@@ -22,6 +22,55 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'diet-breaks-and-refeeds-for-lifters',
+    title: 'Diet Breaks and Refeeds: When to Take One and How to Structure It',
+    excerpt: 'A planned break from your deficit is not the same as falling off the diet. Here is when a diet break actually helps, how a refeed differs from one, and how to run either without losing weeks of progress.',
+    content: `
+      <p>Somewhere around week six or seven of a cut, most lifters hit the same wall. The deficit that felt manageable in week one now feels like a low-grade fight against your own body all day, training numbers are drifting down instead of holding, and the thought of one more week of the same calories is exhausting before the week has even started. The instinct at that point is usually one of two extremes: grit it out no matter what, or quietly abandon the diet and call it a bad week. There is a third option that gets far less attention than it deserves, and it is the one most experienced dieters actually use: a planned, deliberate diet break.</p>
+
+      <h2>A Diet Break Is Not a Refeed, and the Difference Matters</h2>
+      <p>These two terms get used interchangeably online, but they solve different problems. A refeed is a single day, sometimes two, spent eating at or slightly above maintenance calories, usually with carbohydrate pushed up and fat pulled down to keep the day roughly calorie-neutral against a normal deficit day. It is a short psychological and physiological reset that does very little to your fat loss trajectory over a month, but can meaningfully improve training performance and mood for a few days afterward.</p>
+      <p>A diet break is a longer commitment: one to two full weeks at maintenance calories, not a deficit, done on purpose and then followed by a return to the same cut. This is where the actual metabolic benefit shows up. Research on extended deficits, including the well-known MATADOR study out of the University of Tasmania, found that dieters who took two-week maintenance breaks between blocks of deficit lost more total fat over the same overall timeframe than a group who dieted continuously, in part because their resting metabolic rate held up better and total adherence improved. A single day of extra food is a mood boost. Two weeks at maintenance is closer to a genuine reset of the adaptations that make a deficit progressively harder to sustain the longer it runs.</p>
+
+      <h2>The Signs a Break Is Actually Warranted</h2>
+      <p>Not every hard week justifies a break, and taking one too early just delays the diet without buying you anything in return. The signals worth paying attention to are less about willpower and more about measurable drift: your <a href="/blog/weight-loss-plateau-fix-macros">deficit has genuinely stalled</a> for two to three weeks despite honest adherence, sleep has gotten noticeably worse, training weights that were climbing for months have started sliding backward session over session, and hunger has shifted from "annoying" to the kind that makes food thoughts intrusive during the day. Any one of these on its own is normal cut fatigue. Three or four of them stacked together over several weeks is a body telling you the deficit has run longer than it can currently absorb without a cost somewhere.</p>
+      <p>The other honest trigger is duration rather than symptoms. A cut running past ten to twelve weeks without a break is pushing into territory where adaptive thermogenesis, the same slowdown in resting energy expenditure covered in our piece on <a href="/blog/reverse-dieting-after-a-cut">reverse dieting after a cut</a>, compounds regardless of how well you are handling it day to day. Building a break in at the eight to ten week mark of a longer cut, before things fall apart, tends to work better than waiting until they already have.</p>
+
+      <h2>Running the Break Without Losing the Cut's Progress</h2>
+      <p>The mechanics are simpler than the psychology. Raise calories to your current maintenance, recalculated against your present bodyweight rather than the number you started the cut at, and hold there for one to two weeks. Protein stays exactly where it was during the deficit, since this is a break from calorie restriction, not from the training and eating pattern that has been protecting your muscle the whole way through. The added calories come almost entirely from carbohydrate and, to a lesser degree, fat, which also happens to be what makes a break feel worthwhile: more food volume, better workouts, and a break from the mental load of constant restriction.</p>
+      <p>The part people get wrong is treating maintenance as a free-for-all rather than a specific number. A diet break at a genuine maintenance calorie level and a diet break at "whatever I feel like eating this week" produce very different outcomes on the scale when the cut resumes. The former holds body weight roughly flat and lets you return to the deficit from the same starting point. The latter often adds real fat back on top of water and glycogen, turning a two-week break into a setback that erases a month of progress. If tracking precisely for two weeks feels like more effort than the break is worth, pre-portioned meals at the new target remove the guesswork the same way they do during a cut, just at a higher calorie number.</p>
+      <p>Training and rest days do not need to look identical during a break either. Weighting more of the added food toward training days, the same logic covered in our guide to <a href="/blog/calorie-cycling-training-rest-days">calorie cycling between training and rest days</a>, tends to make the extra calories feel more purposeful and less like undirected extra food sitting around at 8 p.m.</p>
+
+      <h2>What to Expect When You Return to the Deficit</h2>
+      <p>The scale will likely tick up by a pound or two during the break itself, almost entirely water and fuller glycogen stores rather than fat, and it should come back down within the first week of resuming the cut. This is the point where a lot of people panic and assume the break was a mistake, when in reality a small, temporary bump is exactly what a maintenance week at higher carbohydrate intake is supposed to look like on a scale. Judge the break by how training feels and how sustainable the next block of dieting is, not by what the scale shows on day three back at deficit calories.</p>
+      <p>Most people who use breaks well plan one every six to ten weeks on a longer cut, treating them as a scheduled part of the diet rather than an emergency measure pulled out only once things have already gone sideways. That framing alone changes how the break gets used: a planned two weeks at maintenance is a tool, an unplanned collapse into a week of off-plan eating is just a plateau with extra guilt attached.</p>
+
+      <blockquote>A diet break done at a real, calculated maintenance number protects the progress you already made. Undirected "eating whatever" for the same two weeks usually erodes it instead, even though both feel identical from the couch.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>The hardest part of a diet break by hand is knowing what your actual maintenance number is right now, not what it was when the cut started, and then rebuilding a week of meals around that new target without reverting to guesswork. <a href="https://macroplan.app">MacroPlan</a> recalculates your calories against your current weight and rebuilds your batch prep plan around whatever target you are eating at, deficit or maintenance, so a scheduled break means an actual change to your containers for two weeks instead of a mental note that quietly turns into a free-for-all.</p>
+
+      <h2>FAQ</h2>
+      <h3>How is a diet break different from just cheating on the diet for a week?</h3>
+      <p>A diet break uses a calculated maintenance number and keeps protein and training the same, so bodyweight holds roughly flat and the cut resumes from the same starting point. Off-plan eating without a target usually runs well above maintenance and adds real fat back, which is what turns a planned break into an actual setback.</p>
+      <h3>Will I lose muscle or momentum during a diet break?</h3>
+      <p>Not if protein and training stay consistent through it. The added calories are carbohydrate and fat, not a pause on training or a protein cut, so strength typically holds or improves slightly during the break rather than sliding backward.</p>
+      <h3>How often should I schedule a diet break on a long cut?</h3>
+      <p>For cuts running longer than ten to twelve weeks, one to two weeks at maintenance every six to ten weeks is a reasonable default. Shorter cuts of six to eight weeks often do not need one at all, and a single day refeed can cover the same mental reset without a full break.</p>
+
+      <p>Let MacroPlan recalculate your targets for a cut, a break, or a bulk, and rebuild your meal plan around whichever one you are in. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'August 31, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1599118732532-f1cdb1ae7389?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    imageCredit: 'Photo by Michal Balog on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@michalbalog?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition',
+  },
+  {
     slug: 'weekly-grocery-list-for-lifters-high-protein-template',
     title: "The Lifter's Weekly Grocery List: A High-Protein Shopping Template",
     excerpt: 'A repeatable weekly shopping list built around protein-dense staples, so your macros are decided at the store instead of guessed at the stove.',
