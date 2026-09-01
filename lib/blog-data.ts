@@ -22,6 +22,63 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'hitting-your-macros-while-traveling',
+    title: 'Hitting Your Macros While Traveling: A No-Kitchen Survival Guide',
+    excerpt: 'No fridge, no scale, no batch-cooked containers waiting for you. Here is how to keep your protein and calories on track through flights, hotel rooms, and unfamiliar restaurants without white-knuckling every meal.',
+    content: `
+      <p>The first business trip or vacation after a few months of consistent tracking is usually the moment a lifter finds out how much of their progress was actually built on infrastructure rather than willpower. At home, hitting protein is mostly a logistics problem you already solved: a fridge full of pre-portioned containers, a scale on the counter, a routine that runs on autopilot. Take that infrastructure away for four or five days and the same person who hasn't missed a target in months suddenly can't figure out what to order at an airport Chili's. The good news is that traveling well on macros isn't about recreating your kitchen setup somewhere else. It's about picking a much smaller set of rules that still work when none of your usual tools are available.</p>
+
+      <h2>Stop Trying to Be Precise, Start Trying to Be Close</h2>
+      <p>The single biggest reason tracking falls apart on the road is that people try to hold themselves to the same standard they use at home, discover on day one that it's impossible without a scale, and then give up on tracking entirely for the rest of the trip. A hotel breakfast buffet or a restaurant plate was never going to hit your macros within five grams, and treating that as a failure is what turns one imprecise meal into five days of not bothering at all.</p>
+      <p>The fix is lowering the bar on purpose before the trip starts, not during it. Instead of exact numbers, travel days run on three loose targets: protein at every meal, a rough calorie ceiling for the day, and produce or fiber somewhere in the mix if it's available. Eyeballing a portion as "close to what I'd normally eat" and moving on beats spending ten minutes squinting at a menu trying to reverse-engineer grams from a description that only says "chicken breast." Precision is a home-kitchen luxury. On the road, consistency of habit matters more than accuracy of number.</p>
+
+      <h2>Build the Trip Around a Few Repeatable Anchors</h2>
+      <p>Novelty is the enemy of a good travel diet, not because new food is bad, but because a new decision at every single meal is exhausting and it's the exhaustion that leads to skipping the plan altogether. The lifters who travel well tend to pick two or three meals they can find in nearly any city and lean on them repeatedly instead of trying to solve breakfast, lunch, and dinner fresh every day.</p>
+      <p>A protein-forward breakfast is the easiest anchor to lock down, since most hotels and airports have some version of eggs, Greek yogurt, or a breakfast sandwich available, and eating the same thing most mornings removes an entire daily decision. Lunch usually resolves around a chain that exists almost everywhere: a chicken bowl, a sandwich shop with visible protein portions, or a grocery store run for a rotisserie chicken and pre-washed salad, which our <a href="/blog/macro-friendly-fast-food-guide">macro-friendly fast food guide</a> covers chain by chain if the trip runs through the US. Dinner is where the actual flexibility should go, since it's usually the meal tied to the trip's purpose, whether that's a client dinner or a night out with family. Front-loading protein and consistency into breakfast and lunch buys real slack for an unpredictable dinner without the whole day falling apart.</p>
+
+      <h2>What Actually Fits in a Suitcase</h2>
+      <p>A handful of shelf-stable items travel better than most people expect and remove the worst failure points of a trip: the 2 p.m. airport gate with nothing decent for sale, or a hotel room with no food at all after a late flight. This is the one place a short list earns its keep, since it's genuinely a list of discrete items rather than an idea that needs paragraphs to explain.</p>
+      <ul>
+        <li><strong>Individual protein powder packets or a travel shaker.</strong> Mixed with hotel-room tap water, one packet covers 20 to 30 grams of protein with zero refrigeration and zero prep, which makes it the single highest-leverage item in a travel bag.</li>
+        <li><strong>Jerky or protein bars.</strong> Pick options closer to 15 grams of protein and under 10 grams of sugar rather than the candy-bar-with-a-protein-claim end of the category; our <a href="/blog/high-protein-snacks-under-200-calories">high-protein snacks list</a> has specific brands worth packing.</li>
+        <li><strong>A few packets of instant oats or a small bag of nuts.</strong> Cheap insurance against a morning with nothing else available, and both survive a suitcase without needing a cooler.</li>
+      </ul>
+      <p>None of this replaces real food for the trip. It exists to cover the two or three moments a trip always produces where the only other option is vending-machine chips or nothing, and having something reasonable already in the bag turns those moments from a diet failure into a non-event.</p>
+
+      <h2>Restaurants Without a Scale</h2>
+      <p>Ordering on the road comes down to a handful of habits that don't require knowing exact numbers. Naming the protein source and cooking method out loud when ordering, grilled chicken instead of a stir-fry sauce that hides the oil, does more for the day's macros than any amount of app-searching for a restaurant that probably isn't in the database anyway. Asking for dressing and sauce on the side keeps a genuinely reasonable meal from turning into a 900-calorie one over something that adds little to how it tastes. And treating the bread basket or chips-and-salsa that show up before the meal as optional rather than automatic removes a few hundred calories that were never really part of anyone's order in the first place.</p>
+      <p>Our <a href="/blog/eating-out-on-a-cut-restaurant-guide-for-lifters">restaurant guide for cutting</a> goes deeper on reading a menu without a nutrition label, and most of it applies just as well to a trip as it does to a Tuesday night out at home. The short version: protein plus vegetables plus a starch you can see and estimate, ordered simply, gets you within range at almost any restaurant on earth.</p>
+
+      <h2>Hotel Rooms Are More Useful Than They Look</h2>
+      <p>A room with a mini fridge and a microwave, which describes most mid-range hotels now, is enough to run a scaled-down version of home meal prep for the length of a stay. A grocery run on arrival for eggs, Greek yogurt, pre-cooked chicken strips, and fruit turns breakfast and one other meal a day into something that doesn't require a restaurant decision at all. Even without a fridge, a room-temperature-stable version works: canned tuna or chicken pouches, microwavable rice cups, and a jar of salsa cover a full meal for under five dollars a day and travel in a suitcase without spoiling.</p>
+      <p>This matters most on longer trips, a week or more, where eating out for every single meal gets expensive and repetitive well before it becomes a macro problem. Two grocery-store meals a day with one restaurant meal built in is both cheaper and easier to stay consistent with than three restaurant decisions daily.</p>
+
+      <blockquote>The goal on a trip isn't to protect a perfect streak. It's to come home within a few pounds of where you left, having actually enjoyed the trip, and to pick the plan back up on day one home rather than day one of a two-week recovery from a diet that fell apart completely.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>You don't need a new plan for a trip, just a lower-effort version of the one you already have. <a href="https://macroplan.app">MacroPlan</a> keeps your targets visible on your phone the whole time, so even a rough restaurant estimate gets logged against a real number instead of guessed at from memory. When you're back home and back near a kitchen, the same batch prep plan is waiting exactly where you left it, no rebuilding required.</p>
+
+      <h2>FAQ</h2>
+      <h3>Should I just take a full diet break instead of trying to track while traveling?</h3>
+      <p>For trips under a week, staying roughly close to your normal calories with the habits above works better than a full break, since it avoids the water-weight bounce a maintenance week can bring right before you need to feel good in photos or clothes. For longer trips, two weeks or more, treating it as a genuine <a href="/blog/diet-breaks-and-refeeds-for-lifters">diet break</a> at a calculated maintenance number is often the more honest and sustainable framing.</p>
+      <h3>What if there's genuinely nowhere to get enough protein?</h3>
+      <p>This is rarer than it feels in the moment. Gas stations carry jerky and string cheese, grocery stores carry rotisserie chicken and Greek yogurt almost everywhere in the US and much of Europe, and a protein shaker covers a shortfall in under a minute. The packed snacks above exist specifically for the handful of times a day genuinely has nothing better available.</p>
+      <h3>How much weight gain from a trip is normal, and when should I worry?</h3>
+      <p>A pound or two after a week away, mostly water, sodium, and fuller glycogen from less structured eating, is normal and typically gone within a few days of resuming your regular routine. Anything beyond that usually points to calories running well above maintenance for most of the trip rather than anything metabolic, and it responds to the same tracking that got the weight off the first time.</p>
+
+      <p>Keep your targets with you wherever you go. <a href="https://macroplan.app/signup">Build your macro plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'September 1, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1569420077790-afb136b3bb8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    imageCredit: "Photo by S'well on Unsplash",
+    imageCreditUrl: 'https://unsplash.com/@swell?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep',
+  },
+  {
     slug: 'diet-breaks-and-refeeds-for-lifters',
     title: 'Diet Breaks and Refeeds: When to Take One and How to Structure It',
     excerpt: 'A planned break from your deficit is not the same as falling off the diet. Here is when a diet break actually helps, how a refeed differs from one, and how to run either without losing weeks of progress.',
