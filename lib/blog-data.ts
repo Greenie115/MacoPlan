@@ -22,6 +22,61 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'intermittent-fasting-for-lifters-hitting-macros-in-a-short-window',
+    title: 'Intermittent Fasting for Lifters: Can You Actually Hit Your Macros in 8 Hours?',
+    excerpt: 'Compressing every meal into a 6 to 8 hour window sounds simple until you try to fit 180g of protein and 2,800 calories into it. Here is what actually breaks, and how to structure an eating window that still gets you there.',
+    content: `
+      <p>The math on intermittent fasting always looks clean on paper. Skip breakfast, eat between noon and 8 p.m., and the same calories and macros you were already hitting just get compressed into a shorter window. In practice, a lot of lifters try 16:8 for the first time and discover on day two that fitting 180g of protein and 2,800 calories into 8 hours means eating like it's a competitive sport, not a normal Tuesday. The window isn't the hard part. Getting the volume in without feeling sick or running out of time is.</p>
+
+      <h2>What Intermittent Fasting Actually Changes</h2>
+      <p>Intermittent fasting, most commonly a 16:8 split (16 hours fasted, an 8 hour eating window) or an 18:6 version, doesn't change your macro targets. It changes how many meals you have to hit them in. If you're used to spreading 2,800 calories across four or five meals, moving to a 6 to 8 hour window usually collapses that down to two or three, and each one now has to carry more food than you're used to eating in one sitting.</p>
+      <p>That's the actual friction point, and it's rarely discussed honestly. The research on time-restricted eating for body composition is genuinely mixed. Some trials show a modest edge for fat loss, mostly explained by people eating less overall because a shorter window naturally caps opportunities to snack. Other trials, including ones specifically looking at lifters, find no meaningful advantage over a normal eating pattern once total calories and protein are matched. <a href="https://examine.com/topics/intermittent-fasting/" rel="noopener">Examine's review of the evidence</a> lands in roughly the same place: the fasting window itself isn't magic, it's a scheduling tool that works for people whose lives fit it and works against people whose training or job doesn't.</p>
+
+      <h2>The Protein Problem Nobody Warns You About</h2>
+      <p>Protein is where the compressed window actually bites. Getting 180g of protein into three meals means each one needs 55 to 65g on average, which is a large chicken breast plus a full scoop of whey, not a modest portion. Do that three times in six hours and it's genuinely uncomfortable for a lot of people, especially anyone who trains in the back half of the window and doesn't want a heavy meal sitting on top of a lifting session.</p>
+      <p>The good news is that the old advice about needing protein every three hours to avoid "muscle breakdown" was never well supported. Our <a href="/blog/protein-per-meal-ceiling">breakdown of the protein-per-meal ceiling</a> covers why two or three large protein doses a day build muscle just as well as six small ones, as long as the daily total lands where it needs to. Fasting windows work with that finding rather than against it. What actually matters is choosing protein sources that pack a lot of grams into a reasonable volume of food, since three plates each the size of a normal dinner is a very different ask than three plates the size of a normal lunch. Leaning on chicken breast, lean beef, cottage cheese, and whey, foods that are dense in protein relative to their volume, is what makes 60g in one sitting feel like a meal instead of a chore. Our <a href="/blog/protein-per-calorie-food-ranking">protein-per-calorie ranking</a> is a useful reference the first few weeks, before picking your go-to foods becomes automatic.</p>
+
+      <h2>Training Around the Window</h2>
+      <p>Where you put your lifting session relative to the eating window matters more than the window itself. Training fasted, first thing in the morning before the window opens, works for some lifters and leaves others flat by the second or third set, particularly on heavier compound lifts where glycogen availability actually shows up in performance. Training at the very end of a fast, right before the window opens, tends to solve that problem since the first meal doubles as a post-workout meal and there's no need to squeeze in an extra feeding.</p>
+      <p>The safest default is scheduling training for the last hour or two of the fast, so the biggest meal of the day lands immediately afterward when appetite is naturally highest anyway. That single scheduling choice does more for making a fasting protocol sustainable than any supplement or meal-timing trick. Our full guide to <a href="/blog/meal-timing-for-muscle-growth">meal timing for muscle growth</a> goes deeper into what the timing research actually supports once total daily intake is controlled for, and the short version is that a lot of the anxiety around timing doesn't hold up once someone is already fasting on purpose.</p>
+
+      <h2>Building a Window That Can Actually Hold Your Macros</h2>
+      <p>A handful of window structures cover most cases lifters run into, and picking the wrong one is usually what makes a first attempt at fasting fail.</p>
+      <ul>
+        <li><strong>16:8, noon to 8 p.m.</strong> The most forgiving option for anyone with a normal 9-to-5 and social dinners, since it still allows a lunch, a pre-workout snack, and a full dinner.</li>
+        <li><strong>16:8, 10 a.m. to 6 p.m.</strong> Better for early lifters who train in the morning, since it lets the first meal double as a post-workout meal without pushing dinner uncomfortably late.</li>
+        <li><strong>18:6.</strong> Higher calorie and macro targets, above roughly 2,600 to 2,800, get genuinely difficult to fit into six hours without two very large meals, so this window suits smaller eaters or anyone in a deeper cut with lower targets to begin with.</li>
+      </ul>
+      <p>Whichever window you pick, the same rule applies: if you can't comfortably eat two large meals in a day, an 8 hour window is a better starting point than 6, and it's worth testing for two weeks before deciding it doesn't work rather than quitting after one uncomfortable dinner.</p>
+
+      <blockquote>The fasting window is a scheduling choice, not a metabolic switch. If it makes hitting your macros harder rather than easier, it's working against the actual goal.</blockquote>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>The targets don't change when the window does, only the meal count does. <a href="https://macroplan.app">MacroPlan</a> builds your batch prep plan around however many meals actually fit your schedule, two large ones for an 18:6 window or three for 16:8, so the food waiting in your fridge already matches the eating pattern you're running instead of forcing you to redo the math yourself every week.</p>
+
+      <h2>FAQ</h2>
+      <h3>Will fasting cause muscle loss if I'm lifting?</h3>
+      <p>Not on its own. Muscle loss during a fast comes from an unintentional calorie deficit or insufficient daily protein, not from the fasted hours themselves. A lifter eating 180g of protein and maintenance calories in a 6 hour window builds and holds muscle the same as someone eating the identical numbers across five meals. The fast changes the schedule, not the biology of muscle protein synthesis over a full day.</p>
+      <h3>Can I drink coffee during the fasting hours?</h3>
+      <p>Yes, black coffee, plain tea, and water don't meaningfully break a fast since they carry no calories worth counting. Adding cream, sugar, or a splash of milk does start pulling calories into the fasted period, which is fine if that's a deliberate choice, but it stops being a true zero-calorie fast at that point.</p>
+      <h3>Is intermittent fasting better than a normal eating schedule for fat loss?</h3>
+      <p>Usually not, once calories and protein are matched. Most of the fat loss benefit people report comes from the window making it harder to snack mindlessly, which is a behavior change rather than a metabolic one. If you already hit your numbers reliably without fasting, switching to a compressed window is unlikely to add anything beyond a change of routine.</p>
+      <h3>What if I can't finish my calories in the window?</h3>
+      <p>Widen it. An 8 hour window that consistently leaves 300 to 400 calories or 20g of protein short by bedtime isn't a discipline problem, it's a sign the window is too tight for your targets. Moving from 16:8 to 14:10, or even 12:12, keeps most of the appetite benefits of a structured eating period while giving enough room to actually land the numbers.</p>
+
+      <p>Let MacroPlan build your meals around the window that actually fits your day. <a href="https://macroplan.app/signup">Build your macro plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'September 10, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1743235275341-e91bbf5c2de4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfGFsbHx8fHx8fHx8fDE3ODkwNDEwMDl8&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Declan Sun on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@declansun?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition',
+  },
+  {
     slug: 'hitting-your-macros-while-traveling',
     title: 'Hitting Your Macros While Traveling: A No-Kitchen Survival Guide',
     excerpt: 'No fridge, no scale, no batch-cooked containers waiting for you. Here is how to keep your protein and calories on track through flights, hotel rooms, and unfamiliar restaurants without white-knuckling every meal.',
