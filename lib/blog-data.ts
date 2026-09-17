@@ -22,6 +22,69 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-lunches-for-lifters',
+    title: '10 High-Protein Lunches for Lifters (35g+ Protein, Desk or Gym Bag Friendly)',
+    excerpt: 'Ten lunches with 35g+ protein each, built to survive a lunchbox or a desk drawer without going soggy. Macros included, so the midday meal stops being the weak link in your day.',
+    content: `
+      <p>Breakfast gets planned the night before and dinner gets cooked fresh, but lunch is where most macro tracking falls apart. It's the meal eaten at a desk, in a car, or standing at a counter between sets, and it's the one most likely to turn into whatever's closest. Here are ten lunches that hit at least 35g of protein, travel well in a container, and don't need a microwave to taste like an actual meal.</p>
+
+      <h2>1. Chicken and Rice Power Bowl</h2>
+      <p>150g of grilled chicken thigh over 200g of cooked rice with a quick soy-sesame drizzle and steamed broccoli. <strong>~560 cal, 42g protein.</strong> Batch the chicken and rice on prep day and this is a five-minute assembly every morning.</p>
+
+      <h2>2. Tuna and White Bean Salad</h2>
+      <p>One drained can of tuna mixed with 150g white beans, chopped celery, red onion, and a light olive oil dressing. <strong>~380 cal, 38g protein.</strong> No reheating required, which makes it the fastest option on this list for anyone without desk access to a microwave.</p>
+
+      <h2>3. Turkey and Hummus Wrap</h2>
+      <p>A large whole-wheat wrap with 150g sliced turkey breast, 40g hummus, spinach, and shredded carrot. <strong>~440 cal, 36g protein.</strong> Wraps well in foil the night before and holds up better than a sandwich by midday.</p>
+
+      <h2>4. Cottage Cheese and Chickpea Bowl</h2>
+      <p>200g cottage cheese with 150g roasted chickpeas, cucumber, cherry tomatoes, and a squeeze of lemon. <strong>~420 cal, 40g protein.</strong> The chickpeas add crunch and enough carbs to keep it filling without any cooking on the day.</p>
+
+      <h2>5. Beef and Sweet Potato Container</h2>
+      <p>150g lean ground beef with 200g roasted sweet potato and a side of green beans. <strong>~520 cal, 39g protein.</strong> Reheats in under two minutes and is dense enough that it doesn't need a second container to feel like lunch.</p>
+
+      <h2>6. Salmon and Quinoa Salad</h2>
+      <p>120g baked salmon flaked over 150g cooked quinoa with cucumber, feta, and a lemon-yogurt dressing. <strong>~480 cal, 35g protein.</strong> Tastes better cold than most fish does, which is what makes it a genuine lunchbox option rather than a dinner leftover.</p>
+
+      <h2>7. Egg and Black Bean Burrito Bowl</h2>
+      <p>Three scrambled eggs plus 150g black beans over rice with salsa and a sprinkle of cheese. <strong>~510 cal, 36g protein.</strong> A vegetarian option that still clears the protein target without relying on a protein powder.</p>
+
+      <h2>8. Shrimp and Soba Noodle Bowl</h2>
+      <p>150g cooked shrimp tossed with soba noodles, edamame, and a rice vinegar dressing. <strong>~440 cal, 37g protein.</strong> Shrimp cooks in three minutes on prep day, so this is one of the quickest proteins to batch for the week.</p>
+
+      <h2>9. Greek Chicken Pita Box</h2>
+      <p>150g diced grilled chicken with tzatziki, tomato, red onion, and a whole-wheat pita on the side. <strong>~490 cal, 40g protein.</strong> Pack the pita separately so it doesn't go soft, and assemble at the table.</p>
+
+      <h2>10. Lentil and Cottage Cheese Power Plate</h2>
+      <p>200g cooked lentils with 150g cottage cheese, roasted peppers, and a drizzle of hot sauce. <strong>~430 cal, 41g protein.</strong> The highest fiber option here, and a strong plant-forward pick for anyone tired of chicken by midweek.</p>
+
+      <h2>Why Lunch Is the Meal That Slips</h2>
+      <p>Breakfast happens at home and dinner gets cooked, but lunch is often eaten somewhere without a stove, a scale, or much time, which is exactly why it's the meal most likely to get outsourced to whatever's fastest. The fix isn't eating something different at lunch, it's building it the same way you'd build any other meal: a protein source that survives a few hours in a container, a carb that reheats or holds up cold, and a portion sized against your actual targets rather than guessed at. Our guide to <a href="/blog/meal-prep-container-math-portion-sizes">meal prep container math</a> covers how much chicken, rice, and veggies actually fit in a standard container if you're building these from scratch.</p>
+      <p>Most of these ten hold up for three to four days refrigerated, which means one prep session on Sunday covers lunch through Wednesday and a second short session covers the rest of the week. If you're prepping for a desk job specifically, packing the wrap or pita components separately from the wet ingredients keeps everything from going soggy by the time you actually eat it, a small detail that makes the difference between a lunch you look forward to and one you choke down at 2 p.m.</p>
+
+      <blockquote>Dinner gets the effort because it's cooked fresh. Lunch gets skipped or outsourced because nobody plans it the same way. Treat it like a real meal and it stops being the gap in your macros.</blockquote>
+
+      <h2>FAQ</h2>
+      <h3>How much protein should lunch have?</h3>
+      <p>Aim for roughly 0.4g per kg of bodyweight, which lands most lifters between 30 and 45g at lunch. Our <a href="/blog/how-much-protein-to-build-muscle">guide to daily protein needs</a> covers how that number scales with bodyweight and training goal.</p>
+      <h3>Can these lunches be frozen?</h3>
+      <p>The rice, beef, and burrito bowl versions freeze well for up to a month. Anything with fresh cucumber, tomato, or dressing, like the tuna salad or Greek pita box, is better assembled fresh or refrigerated no more than four days, since the produce turns watery after freezing.</p>
+      <h3>What if I don't have a microwave at work?</h3>
+      <p>Five of the ten above, the tuna salad, cottage cheese bowl, wrap, pita box, and lentil plate, are built to be eaten cold or at room temperature. Keep those in rotation on days you know reheating won't be an option.</p>
+
+      <p>MacroPlan builds lunch into the same batch prep plan as the rest of your week, portioned to your macros from the start. <a href="https://macroplan.app/signup">Build your macro plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'September 17, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1679279726946-a158b8bcaa23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxjaGlja2VuJTIwcmljZSUyMGx1bmNoJTIwYm93bHxlbnwxfDB8fHwxNzg5NjY4MjgzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Xavier Chng on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@cohesionsingapore?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'intermittent-fasting-for-lifters-hitting-macros-in-a-short-window',
     title: 'Intermittent Fasting for Lifters: Can You Actually Hit Your Macros in 8 Hours?',
     excerpt: 'Compressing every meal into a 6 to 8 hour window sounds simple until you try to fit 180g of protein and 2,800 calories into it. Here is what actually breaks, and how to structure an eating window that still gets you there.',
