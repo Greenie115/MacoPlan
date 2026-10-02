@@ -22,6 +22,54 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-diet-kidney-health-myth',
+    title: 'Is a High-Protein Diet Bad for Your Kidneys? What the Research Actually Shows',
+    excerpt: 'Every lifter eating 180g of protein a day has heard the warning at least once. Here is what the actual research says about protein intake and kidney function, and who the warning genuinely applies to.',
+    content: `
+      <p>At some point, usually from a relative, a doctor who hasn't looked at the sports nutrition literature in a decade, or a comment under a fitness post, every lifter eating a high-protein diet hears the same warning: all that protein is going to wreck your kidneys. It's one of the most durable myths in nutrition, repeated often enough that even people who track their macros carefully start to wonder if the number on their <a href="/blog/how-much-protein-to-build-muscle">protein target</a> is secretly doing damage they can't feel yet. The honest answer is more specific than either side of the internet argument wants it to be, and it depends almost entirely on one thing: whether your kidneys were healthy to begin with.</p>
+
+      <h2>Where the Warning Actually Comes From</h2>
+      <p>The kidney warning isn't invented out of nothing. It comes from real physiology: digesting and processing protein increases the kidneys' filtration workload, a response called hyperfiltration. Decades ago, that observation got applied to a completely different population, people with existing chronic kidney disease, where doctors found that reducing protein intake slowed the progression of kidney damage that was already underway. That finding is still valid and still guides medical advice for people with diagnosed kidney disease. The problem is that it quietly got generalized to everyone, including healthy lifters whose kidneys have never shown a sign of impairment, and the two situations are not the same thing at all.</p>
+      <p>A kidney adapting to a higher filtration demand is not the same as a kidney being damaged by one. Your kidneys scale their workload up and down constantly based on diet, hydration, and activity, the same way your heart rate scales up during a set of squats without that being evidence your heart is failing. Hyperfiltration in a healthy kidney is a normal, reversible adaptation, not a sign of injury. The research that actually tracks healthy adults eating high-protein diets over months and years, rather than inferring harm from a single physiology mechanism, consistently fails to find kidney damage in people who had no kidney disease to start with.</p>
+
+      <h2>What the Long-Term Studies on Healthy Lifters Actually Show</h2>
+      <p>The International Society of Sports Nutrition's position stand on protein intake, which reviews the available research on resistance-trained populations, concludes that there's no evidence higher protein intakes harm kidney function in healthy, exercising adults, even at intakes well above the standard recommended daily allowance. Studies following bodybuilders and strength athletes eating 2 to 3.3 grams of protein per kilogram of bodyweight for extended periods have not turned up the kidney markers you'd expect to see if the organ was under genuine strain: creatinine clearance and glomerular filtration rate stay within normal ranges, and markers of kidney stress don't climb the way they would in someone with an actual underlying problem.</p>
+      <p>That doesn't mean there's zero nuance. A short-term rise in GFR after a high-protein meal is a measurable, expected response, not a red flag, the same way blood pressure rises during a workout without that being hypertension. What the research hasn't found, across the populations actually eating these diets long-term, is a trend toward declining kidney function over years of elevated protein intake in people who started healthy. If you want the full picture on how much protein actually makes sense for your goals in the first place, rather than the question of whether it's safe, that's covered in our guide to <a href="/blog/how-much-protein-to-build-muscle">how much protein you actually need to build muscle</a>.</p>
+
+      <h2>Who the Warning Is Actually For</h2>
+      <p>The caution genuinely applies to a specific group: people with pre-existing chronic kidney disease, reduced kidney function from diabetes or hypertension, or a single kidney following donation or surgery. In those cases, a lower-protein diet is standard medical advice precisely because the kidneys have already lost filtration capacity and can't comfortably absorb the extra workload a high-protein diet creates. If you fall into any of those categories, or you have a family history of kidney disease and haven't had your kidney function checked, this is a conversation for a doctor, not a blog post, and it's worth having before you build a diet around a high protein target.</p>
+      <p>For everyone else, the practical takeaway isn't "unlimited protein is risk-free," it's that the evidence doesn't support the blanket warning as it's usually delivered. A few sensible habits are still worth keeping regardless: drink enough water, since protein metabolism does increase fluid needs somewhat, and get a basic metabolic panel during your regular checkups so you have a baseline if anything ever does change. Neither of those is a reason to cap your protein intake out of fear; they're just ordinary maintenance, the same category as checking blood pressure or getting bloodwork done once a year.</p>
+
+      <blockquote>Hyperfiltration in a healthy kidney is adaptation, not damage. The research that actually follows high-protein eaters over time, rather than extrapolating from a different patient population, keeps landing on the same conclusion: if your kidneys were healthy when you started, a high-protein diet hasn't been shown to change that.</blockquote>
+
+      <h2>Why the Myth Persists Anyway</h2>
+      <p>Part of the reason this warning keeps circulating is that it sounds intuitively plausible: more of something going through an organ seems like it should mean more wear on that organ. But kidneys aren't a filter that clogs with use, they're a dynamic system built to handle a wide range of filtration loads, and the data on healthy populations simply hasn't followed the intuition. The other reason is that "eat less protein" is advice that was correct for one group of patients and got repeated past the point where it stopped applying, the same way outdated advice about egg yolks and dietary cholesterol stuck around for years after the research had moved on. If you're trying to hit a high protein number affordably and without overthinking every meal, our guide to <a href="/blog/high-protein-diet-on-a-budget">eating high-protein on a budget</a> covers the food side of this without wading back into the kidney debate at every grocery trip.</p>
+      <p>None of this means protein needs are unlimited or that more is automatically better past a certain point; there's a ceiling where additional protein stops doing much for muscle and just displaces calories that could go toward carbs or fat. But that ceiling exists for diminishing returns on muscle growth, not because of kidney risk in someone with normal kidney function. The two questions, "how much protein is useful" and "how much protein is safe," get conflated constantly, and only one of them has a number worth worrying about for most lifters.</p>
+
+      <h2>Building a Diet You Don't Have to Second-Guess</h2>
+      <p><a href="https://macroplan.app">MacroPlan</a> calculates a protein target based on your actual goal and bodyweight, not a number pulled from a decades-old caution meant for a different population, and builds a week of batch-cooked meals around it so you're not re-litigating the same worry every time you sit down to eat. Knowing the target is grounded in current research, not an outdated rule of thumb, is half the battle of actually sticking to a high-protein diet long enough for it to do its job.</p>
+
+      <h2>FAQ</h2>
+      <h3>Does a high-protein diet cause kidney stones?</h3>
+      <p>High protein intake, particularly from animal sources, can increase urinary calcium and uric acid slightly, which in theory could raise stone risk in someone already prone to them. For people without a history of kidney stones, the evidence doesn't show a meaningful increase in risk, and adequate hydration further reduces whatever risk exists. Anyone with a personal history of kidney stones should discuss protein intake with a doctor specifically, since that's a different risk profile than general kidney function.</p>
+      <h3>How much protein is actually "too much" for healthy kidneys?</h3>
+      <p>There's no established upper limit shown to harm healthy kidneys in the research, including at intakes of 2 to 3.3 g per kilogram of bodyweight sustained over months in trained athletes. That's not an argument for eating as much as possible, since protein needs for muscle growth plateau well before that range, but it does mean the ceiling isn't set by kidney safety for someone with normal kidney function.</p>
+      <h3>Should I get my kidney function tested before starting a high-protein diet?</h3>
+      <p>It's not required for most healthy adults, but it's a reasonable thing to check if you have diabetes, high blood pressure, a family history of kidney disease, or simply haven't had bloodwork done in a few years. A basic metabolic panel from a routine checkup covers it and gives you a baseline, which costs nothing extra if you're already due for one.</p>
+
+      <p>Build your macro targets around what the research actually supports, not outdated caution. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 2, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1703219342277-1a78d6b4a27f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfGFsbHx8fHx8fHx8fDE3OTA5NDEzNTF8&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Hybrid Storytellers on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@hybridstorytellers?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'best-protein-bars-for-lifters',
     title: 'The Best Protein Bars for Lifters: 9 Worth Keeping in Your Gym Bag',
     excerpt: 'Most protein bars are a dessert with a marketing budget. Here are nine that actually earn a spot in your gym bag, ranked by what matters: protein per calorie, ingredient quality, and whether your stomach will forgive you.',
