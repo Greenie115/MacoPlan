@@ -22,6 +22,67 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-desserts-that-fit-your-macros',
+    title: '10 High-Protein Desserts That Actually Fit Your Macros',
+    excerpt: 'Dessert does not have to come out of nowhere in your day. These ten recipes deliver 20g of protein or more per serving while still tasting like something you would choose over cake.',
+    content: `
+      <p>Most people who track macros eventually hit the same wall at eight or nine at night: the day's protein target is covered, the carbs are mostly spent, and there is still an urge for something sweet before bed. The usual advice is to just white-knuckle through it, but that is a quick way to end up bingeing on whatever is in the cupboard once willpower runs out. A better fix is having a short list of desserts built the same way a <a href="/blog/high-protein-breakfasts">high-protein breakfast</a> is built, protein first, with the sweetness layered on top instead of the other way around. None of these need a food scale levered to the gram or a trip to a specialty store. They use the same cottage cheese, Greek yogurt, and whey that are probably already in the fridge from everything else you meal prep.</p>
+
+      <h2>1. Greek Yogurt Chocolate Mousse</h2>
+      <p>Whisk 200g of 0% Greek yogurt with a scoop of chocolate whey, a tablespoon of cocoa powder, and a teaspoon of honey until it goes thick and glossy. Chill it for twenty minutes and it sets up closer to mousse than yogurt. <strong>~230 cal, 32g protein.</strong> The cocoa powder does a lot of the work here, so do not skip it in favor of more whey, since too much powder on its own turns chalky fast.</p>
+
+      <h2>2. Baked Cottage Cheese Cheesecake Cups</h2>
+      <p>Blend 250g of cottage cheese until completely smooth, then mix in one egg, a tablespoon of sugar or a sugar substitute, and a splash of vanilla. Pour into two ramekins and bake at 160°C (325°F) for 25 minutes until just set. <strong>~210 cal, 28g protein per serving.</strong> They taste far closer to real cheesecake than the texture of cottage cheese would suggest, and they hold in the fridge for four days, so doubling the batch on a prep day is worth it.</p>
+
+      <h2>3. Peanut Butter Protein Fudge</h2>
+      <p>Mix 60g of peanut butter, a scoop of vanilla whey, a tablespoon of melted coconut oil, and enough water to bring it to a thick paste, then press it into a small container and freeze for an hour. Cut into four squares. <strong>~160 cal, 11g protein per square.</strong> This is the one dessert on the list worth portioning out in advance, since fudge this dense is easy to eat four squares of in one sitting without noticing.</p>
+
+      <h2>4. Skyr and Berry Parfait</h2>
+      <p>Layer 170g of skyr with 100g of mixed berries and a small handful of crushed graham cracker for crunch. <strong>~190 cal, 22g protein.</strong> Skyr is strained further than Greek yogurt, which is why it carries more protein per calorie and holds its thickness even after the berries release some juice, so it still looks and eats like a parfait an hour after you build it.</p>
+
+      <h2>5. Protein Brownie in a Mug</h2>
+      <p>Stir a scoop of chocolate whey, a tablespoon of cocoa powder, a mashed quarter banana, and a splash of milk into a mug, then microwave for 60 to 75 seconds until just set in the middle. <strong>~190 cal, 26g protein.</strong> The banana replaces the egg and oil a normal mug brownie needs and keeps it from drying out, which matters more here than in a full-size brownie since there is no frosting to mask an overcooked edge.</p>
+
+      <h2>6. No-Bake Protein Cookie Dough</h2>
+      <p>Mix 40g of oat flour, a scoop of vanilla whey, a tablespoon of peanut butter, a tablespoon of honey, and a splash of milk into a dough, then fold in a few dark chocolate chips. <strong>~280 cal, 24g protein for the whole batch.</strong> Since there is no egg or raw flour, this is genuinely safe to eat straight from the bowl, which is the entire appeal of cookie dough in the first place.</p>
+
+      <h2>7. Frozen Yogurt Bark</h2>
+      <p>Spread 300g of Greek yogurt sweetened with a tablespoon of honey across a parchment-lined tray, scatter chopped strawberries and a drizzle of melted dark chocolate over the top, and freeze for two hours before breaking it into shards. <strong>~90 cal, 10g protein per serving</strong>, with the full tray making about six servings. It is the lowest-effort recipe here and keeps in the freezer for weeks, so it is worth having a tray going at all times once you try it.</p>
+
+      <h2>8. Protein Rice Pudding</h2>
+      <p>Simmer 80g of cooked rice with 200ml of milk, a scoop of vanilla casein, a teaspoon of cinnamon, and a touch of sweetener on low heat for five minutes, stirring until it thickens. <strong>~320 cal, 30g protein.</strong> Casein thickens better than whey when heated, which is the difference between pudding and a grainy milkshake, so it is worth keeping a tub of casein around specifically for recipes like this one.</p>
+
+      <h2>9. Protein Hot Chocolate</h2>
+      <p>Whisk a scoop of chocolate whey or casein into 250ml of hot milk with a tablespoon of cocoa powder, keeping the heat low enough that the milk never boils. <strong>~220 cal, 27g protein.</strong> Whey can clump or turn gritty above a gentle simmer, so pulling it off the heat a little early and whisking it in off the stove keeps the texture smooth.</p>
+
+      <h2>10. Banana Nice Cream with Protein</h2>
+      <p>Blend two frozen bananas with a scoop of vanilla whey and a splash of milk until it turns soft-serve smooth, which takes a food processor more reliably than a blender. <strong>~260 cal, 25g protein.</strong> The bananas need to be fully frozen first, cutting them into coins before freezing makes them blend faster and more evenly than freezing whole bananas.</p>
+
+      <p>What ties all ten together is the same principle behind every meal in a <a href="/blog/meal-prepping-for-weight-loss">structured meal prep plan</a>: pick the protein source first and build the flavor around it, rather than starting with something sweet and trying to bolt protein on at the end. Cottage cheese, Greek yogurt, skyr, and a reasonable casein or whey cover almost every texture dessert actually needs, from mousse to fudge to ice cream, and none of them require specialty ingredients beyond what is already in a <a href="/blog/weekly-grocery-list-for-lifters-high-protein-template">typical high-protein grocery list</a>.</p>
+
+      <blockquote>Dessert does not have to be the thing that blows your macros. Built protein-first, it is just another meal that happens to taste like one.</blockquote>
+
+      <h2>FAQ</h2>
+      <h3>Can I use plant-based protein powder in these recipes?</h3>
+      <p>Yes, though pea and rice protein blends tend to be slightly grainier than whey and casein, which shows up most in the mousse and pudding recipes. A plant-based blend with added xanthan gum or a similar thickener smooths this out, and the mug brownie and cookie dough recipes hide the texture difference almost entirely since they are not relying on a smooth liquid base.</p>
+      <h3>Will these desserts actually curb a sweet craving, or are they a placebo?</h3>
+      <p>For most people they work because they deliver real sweetness and real volume, not because of the protein itself. A 200-calorie dessert with 25g of protein still satisfies the same taste and mouthfeel signals as a candy bar, while displacing less of the day's remaining macros, so it functions as an actual substitute rather than a smaller version of deprivation.</p>
+      <h3>How do I fit one of these into a cutting phase without going over on calories?</h3>
+      <p>Most of the recipes above land between 90 and 320 calories, which is low enough to swap in for an existing snack or a smaller dinner portion rather than stacking on top of a full day's meals. Picking one earlier in the week when you track where the calories came from, rather than guessing, is the difference between it fitting the plan and it quietly becoming an extra meal.</p>
+
+      <p>Build desserts like this into your actual macro targets instead of treating them as a separate category. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 5, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1550594645-25c5bd703258?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxwcm90ZWluJTIwZGVzc2VydCUyMHlvZ3VydHxlbnwxfDB8fHwxNzkxMTk1OTA4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by amirali mirhashemian on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@amir_v_ali?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'high-protein-diet-kidney-health-myth',
     title: 'Is a High-Protein Diet Bad for Your Kidneys? What the Research Actually Shows',
     excerpt: 'Every lifter eating 180g of protein a day has heard the warning at least once. Here is what the actual research says about protein intake and kidney function, and who the warning genuinely applies to.',
