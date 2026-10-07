@@ -22,6 +22,63 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'slow-cooker-meal-prep-for-lifters',
+    title: 'Slow Cooker Meal Prep for Lifters: The Big-Batch Playbook',
+    excerpt: 'A slow cooker or Instant Pot turns five pounds of chicken or beef into a week of protein with about ten minutes of hands-on work. Here is how to actually run one for macro-tracked meal prep, including timing, shrinkage, and what not to cook this way.',
+    content: `
+      <p>Most meal prep advice assumes you are standing at a stove or hovering over an oven timer. A slow cooker and a pressure cooker like an Instant Pot both solve a different problem: they let you walk away. Load the pot before work, or run it for 25 minutes under pressure while you handle everything else on a prep day, and a few pounds of chicken thighs or a cheap beef roast turn into shredded protein for the whole week without a single flip, baste, or basket shake. For a lifter who already has a prep day, a shopping list, and a stack of <a href="/blog/meal-prep-containers-guide">containers</a> to fill, the appliance mostly changes how much hands-on time that day actually costs.</p>
+      <p>The tradeoff is texture and speed in opposite directions. A slow cooker needs hours but almost zero attention. A pressure cooker needs attention at the start and end but gets there in a fraction of the time. Neither one browns food the way a sheet pan or <a href="/blog/air-fryer-meal-prep-for-lifters">air fryer</a> does, so this is a tool for shreddable, saucy, fall-apart protein, not for a seared chicken breast you want to eat sliced over a salad.</p>
+
+      <h2>Slow Cooker or Instant Pot: Which One Fits Your Prep Day</h2>
+      <p>A slow cooker is the better fit if you are out of the house for most of the day anyway. Set it on low before you leave for work or the gym and it is ready eight hours later, with no risk of overcooking the way a stovetop pot can scorch if you forget it. The downside is that eight-hour window is fixed. You cannot speed it up if your schedule changes, and a cut you planned to shred by dinner just is not done at hour four.</p>
+      <p>A pressure cooker earns its keep on an actual prep day, when you are home and want the whole session done in under ninety minutes. Chicken thighs that take six hours on low in a slow cooker come out just as tender in about 12 to 15 minutes under pressure, plus the time it takes the pot to build and release pressure, usually another 15 to 20 minutes combined. For a lifter cooking for one or two people on a Sunday, that speed advantage is often the deciding factor over the slow cooker's hands-off convenience.</p>
+      <p>Neither appliance is strictly better. A slow cooker suits a working schedule where the cooking happens in the background of a day you are not spending in the kitchen. A pressure cooker suits a dedicated prep block where speed matters more than hands-off convenience. Plenty of lifters eventually own both and pick based on whether they are prepping on a weekday or a weekend.</p>
+
+      <h2>The Cuts That Actually Work in a Slow Cooker</h2>
+      <p>Lean, quick-cooking cuts like chicken breast or sirloin are the wrong choice here. Low, slow, moist heat is built for tougher, fattier cuts that need time to break down connective tissue, and a lean cut left in a slow cooker for six hours usually turns dry and stringy well before the appliance is done. The cuts that actually improve with this method are the ones that are hard to cook well any other way without a lot of babysitting.</p>
+      <ul>
+        <li><strong>Chicken thighs, bone-in or boneless:</strong> 6 to 7 hours on low, or 3 to 4 on high. Shreds cleanly and stays moist because the fat content carries it through the long cook.</li>
+        <li><strong>Beef chuck roast:</strong> 8 hours on low. The cheapest cut that shreds like a much pricier one, and it holds up to reheating better than almost anything else on this list.</li>
+        <li><strong>Pork shoulder:</strong> 7 to 8 hours on low. High fat content means it is nearly impossible to dry out, which makes it the most forgiving cut for a first attempt.</li>
+        <li><strong>Turkey thighs:</strong> 6 hours on low. A leaner alternative to pork shoulder with a similar shred, useful if you are trying to keep the fat macro lower for the week.</li>
+        <li><strong>Dried beans and lentils:</strong> 6 to 8 hours on low, no soaking required for most lentils. Useful if a chunk of the week's carbs and protein are coming from a plant source instead of meat.</li>
+      </ul>
+      <p>Skip fish entirely. It cooks in minutes, not hours, and will be overdone long before a slow cooker's shortest setting finishes. Skip ground meat too, since it breaks apart into a texture that does not hold up through a week in the fridge the way a shredded cut does.</p>
+
+      <h2>What Shrinkage Actually Does to Your Macros</h2>
+      <p>Raw weight and cooked weight are not the same number, and the gap matters more here than with a quick-cooking method, because the long cook time renders out more fat and moisture. A raw chicken thigh loses roughly 25 to 30% of its weight by the time it is fully cooked and shredded, mostly as rendered fat and water. A beef chuck roast loses a similar amount, sometimes more if it is a fattier cut to start. That means five pounds of raw chicken thighs yields closer to three and a half pounds of shredded, cooked chicken, not five.</p>
+      <p>This is the single most common reason a batch of slow-cooked protein runs short by Thursday. If you are planning portions off the raw weight on the package label instead of the cooked yield, you will come up a meal or two short across the week. The fix is simple: weigh the shredded result after cooking, once it has drained for a few minutes, and divide that number across your containers rather than trusting the raw number on the package. Our <a href="/blog/meal-prep-container-math-portion-sizes">container math guide</a> has the grams-per-cup reference if you want to map the cooked yield straight into portions without pulling a scale out again mid-week.</p>
+
+      <blockquote>Plan your portions off the cooked weight, not the raw weight on the package. A slow cooker renders out real fat and water over those hours, and that loss is the whole reason the meat gets so tender.</blockquote>
+
+      <h2>Building a Week Around One Big Batch</h2>
+      <p>The appeal of this method is that one pot produces enough shredded protein to carry four or five meals without repeating the cooking step. A typical approach: run a 5-pound chuck roast or a similar batch of chicken thighs overnight or during a workday, shred it the next morning or when you get home, then split it across the week's containers with whatever carb and vegetable combination fits that day's macros. Because the protein itself is plain, unsauced if you season it simply with salt, pepper, and garlic, it works equally well in a bowl with rice and broccoli, folded into a wrap, or tossed over a salad, so the week does not feel like the same meal on repeat even though the cooking only happened once.</p>
+      <p>Sauce is the one place to be careful with macros. A barbecue or teriyaki sauce poured over the whole batch before the long cook adds sugar and sodium you cannot easily separate out later, since it is absorbed into the meat rather than sitting on top of it. Cooking the protein plain and adding sauce portion by portion at the container-filling stage keeps the base macros clean and lets you adjust sauce amount per meal instead of committing the whole batch to one flavor and one calorie count.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>A slow cooker or Instant Pot changes how much attention a big batch of protein needs, not how much of it your macros actually call for. <a href="https://macroplan.app">MacroPlan</a> works out the protein amount, container count, and the rest of the week's shopping list first, so you know exactly how many pounds of chuck roast or chicken thighs a given week's targets require before the pot goes on.</p>
+
+      <h2>FAQ</h2>
+      <h3>Can I put raw meat straight into the slow cooker, or does it need to be seared first?</h3>
+      <p>Searing first adds browning flavor but is not required. For shredded meal prep protein where the goal is moisture and tenderness rather than a crisped crust, going in raw works fine and saves the extra pan and step.</p>
+      <h3>Is a pressure cooker less healthy because it cooks under pressure?</h3>
+      <p>No. Pressure cooking is just fast, sealed moist heat, and the macros of the food itself do not change based on how quickly it got there. Some water-soluble vitamins hold up slightly better under a shorter cook time than a six-hour slow cook, if anything.</p>
+      <h3>How long does slow-cooked shredded protein actually last in the fridge?</h3>
+      <p>Four to five days in a sealed container, the same as any other cooked protein. If you are cooking a batch large enough to stretch past that, freeze the back half of it the day you shred it rather than letting it sit in the fridge until day six.</p>
+
+      <p>Let MacroPlan work out the protein amount and shopping list, and spend your prep day loading a pot instead of standing over a stove. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 7, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1675647699232-76b8f533b006?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxzaHJlZGRlZCUyMGNoaWNrZW4lMjBtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnN8ZW58MXwwfHx8MTc5MTM2NzAzM3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Richard R on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@sepro?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'high-protein-desserts-that-fit-your-macros',
     title: '10 High-Protein Desserts That Actually Fit Your Macros',
     excerpt: 'Dessert does not have to come out of nowhere in your day. These ten recipes deliver 20g of protein or more per serving while still tasting like something you would choose over cake.',
