@@ -22,6 +22,62 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prepping-for-two-different-macros',
+    title: 'Meal Prepping for Two People With Different Macros (Without Cooking Two Dinners)',
+    excerpt: 'One of you is cutting, the other is lean bulking, and nobody wants to cook two separate dinners every night. Here is how to batch cook once and portion two completely different macro targets out of the same pots.',
+    content: `
+      <p>You and your partner, roommate, or training buddy are both meal prepping, and your numbers do not match. Maybe one of you is cutting at 1,800 calories and the other is lean bulking at 2,900. Maybe you are the same weight but she trains six days a week and you train three, so her protein target is 40g higher than yours. Either way, the obvious fix, cooking two separate meals every night, is the one that gets abandoned by week two. Nobody has the energy to run two skillets after a full workday, and the person who ends up doing the extra cooking usually resents it within a month.</p>
+      <p>The good news is that different macro targets do not actually require different food. They require different amounts of the same food, and that is a portioning problem, not a cooking problem. Once you treat it that way, one prep day can feed two very different diets without anyone touching a second pan.</p>
+
+      <h2>Why This Feels Harder Than It Is</h2>
+      <p>The instinct is to think in terms of meals: "my dinner" and "their dinner," as if a 1,800-calorie eater and a 2,900-calorie eater need fundamentally different plates. In practice, the gap between most household macro targets is a difference in volume, not in ingredients. A lean bulker and a cutter can both eat chicken thighs, rice, and broccoli for dinner. The bulker just eats a bigger scoop of rice and gets a drizzle of oil the cutter skips.</p>
+      <p>Where people go wrong is building two separate recipes around two separate goals, which doubles the shopping list, the pots, and the cleanup. The better mental model is one base batch of protein, one base batch of carbs, and one base batch of vegetables, portioned differently per person at the container-filling stage rather than cooked differently from the start. If one of you is cutting and the other is actively trying to add size, our <a href="/blog/bulking-vs-cutting-vs-recomp">guide to bulking, cutting, and recomp</a> is useful for getting each target dialed in correctly before you start dividing anything.</p>
+
+      <h2>The Shared Base, Split Portions Method</h2>
+      <p>Cook as if you were feeding one person at the higher of the two targets, then divide at the end instead of before. Run a full batch of protein, a full batch of carbs, and a full batch of vegetables exactly as you would for your own prep day. The only change is that you weigh and split the cooked batch across both sets of containers using each person's actual numbers, instead of eyeballing one identical portion for both of you.</p>
+      <p>This works because protein, carbs, and fat scale linearly. A chicken thigh does not know who is eating it. If your partner needs 170g of protein a day and you need 130g, you are not cooking different chicken, you are cooking the same chicken and giving them more of it. The only extra step beyond a normal solo prep is doing the math twice at the scale instead of once, which takes maybe five extra minutes across the whole session.</p>
+      <p>Where the two targets diverge most is usually fat and carbs, since those are the easiest macros to adjust per container without changing the dish. A cutter's bowl gets a smaller scoop of rice and no oil drizzle. A bulker's bowl gets a bigger scoop and a spoon of olive oil or an extra handful of nuts on the side. The protein base stays identical for both, which is also the part of the meal that takes the most cooking effort, so you are only duplicating the five-second step of pouring oil, not the twenty-minute step of cooking the chicken.</p>
+
+      <h2>Handling a Real Gap in Food Preference, Not Just Calories</h2>
+      <p>Sometimes the mismatch is not really about calories, it is about one person wanting rice and the other wanting potatoes, or one eating dairy and the other avoiding it. For that, cook two base carbs instead of two full meals: one pot of rice, one tray of roasted potatoes, both running at the same time, and let each person pull from whichever base fits their preference and their macros. The protein and vegetables stay shared regardless, since those are usually the parts of the meal people disagree about least.</p>
+      <p>A short list of what is worth duplicating versus what is not, once you have cooked a few of these shared preps:</p>
+      <ul>
+        <li><strong>Worth duplicating:</strong> the carb base, if one person is on a different diet style (keto, lower-carb, high-carb bulk) or just genuinely dislikes what the other eats.</li>
+        <li><strong>Not worth duplicating:</strong> the protein, unless one person has a real dietary restriction (vegetarian, allergy). Cooking the same chicken or beef twice at two different seasoning levels wastes the entire point of batch cooking.</li>
+        <li><strong>Not worth duplicating:</strong> the vegetables. Volume differences here are small enough in calories that splitting one batch by weight is simpler than running two trays.</li>
+      </ul>
+      <p>Containers need to be labeled clearly once two people are pulling from the same fridge shelf, since a 600-calorie container and a 900-calorie container can look identical from across the kitchen. Our <a href="/blog/meal-prep-containers-guide">meal prep containers guide</a> covers sizing if you want to use container volume itself as a visual cue, a 28oz container for the smaller target and a 35oz three-compartment for the larger one, so nobody has to check a label to know which meal is theirs.</p>
+
+      <blockquote>Cook once at the larger target, then split by weight at the container stage. The chicken does not need to know whose macros it is going into.</blockquote>
+
+      <h2>Doing the Math Without Slowing Down Your Prep Day</h2>
+      <p>The one real friction point in this method is that you now need two sets of portion numbers instead of one, and figuring those out by hand for two different calorie and macro targets takes real time if you are doing it from scratch every week. This is the exact point where our <a href="/blog/meal-prep-container-math-portion-sizes">container math guide</a> pays off, since once you know the grams-per-cup for your usual staples, converting "she needs 170g of protein" into "that is about 1.2 cups of diced chicken" takes seconds instead of a spreadsheet.</p>
+      <p>If you would rather not calculate either target by hand, <a href="https://macroplan.app">MacroPlan</a> can generate a separate plan for each person's macros from the same shopping list, so you can see both portion breakdowns side by side before you ever start cooking, and know exactly how much of the shared batch goes into each set of containers.</p>
+
+      <h2>Why This Is Worth the Extra Five Minutes</h2>
+      <p>Households where one person cuts and the other bulks are common, not rare, and the version of meal prep that survives long term is the one that does not punish the person doing the cooking. Splitting one batch by weight instead of running two kitchens keeps the actual cooking time identical to solo prep, and the only cost is a slightly longer portioning step at the end, which is a trade most couples and roommates are happy to make once they have tried the two-separate-dinners version for a month and burned out on it.</p>
+
+      <h2>FAQ</h2>
+      <h3>What if our macros are close but not identical?</h3>
+      <p>Round to the nearest reasonable container size rather than chasing an exact gram match every day. A 10 to 15g difference in protein or a 50 calorie gap rarely matters week to week, and the effort of hitting it exactly is rarely worth it if the targets are already close.</p>
+      <h3>Does this work if one person eats more meals per day than the other?</h3>
+      <p>Yes. Split the shared batch into whatever number of containers each person needs for their own meal count, not into a matched number of containers for both. One person's five smaller meals and the other's three larger ones can both come from the same cooked batch.</p>
+      <h3>What is the easiest meal to start with for this method?</h3>
+      <p>A simple protein, carb, and vegetable tray, like chicken thighs, rice, and broccoli, is the easiest place to start. It is forgiving to portion by weight and does not involve a sauce that is hard to split evenly, which is a good first test before trying this with a more complicated dish.</p>
+
+      <p>Let MacroPlan build both of your plans from one shopping list, so you know exactly how to split the batch before the chicken even goes in the oven. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 8, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1758523417766-0077aeb30bbf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxjb3VwbGUlMjBwcmVwYXJpbmclMjBmb29kJTIwa2l0Y2hlbnxlbnwxfDB8fHwxNzkxNDQ2MzI2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Vitaly Gariev on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@silverkblack?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'slow-cooker-meal-prep-for-lifters',
     title: 'Slow Cooker Meal Prep for Lifters: The Big-Batch Playbook',
     excerpt: 'A slow cooker or Instant Pot turns five pounds of chicken or beef into a week of protein with about ten minutes of hands-on work. Here is how to actually run one for macro-tracked meal prep, including timing, shrinkage, and what not to cook this way.',
