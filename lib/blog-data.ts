@@ -22,6 +22,69 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-soups-stews-winter-meal-prep',
+    title: '9 High-Protein Soups and Stews for Winter Meal Prep (30g+ Protein, Freezer-Friendly)',
+    excerpt: 'Soup season and meal prep season overlap almost exactly, but most soup recipes are built around flavor, not protein. These nine hit 30g or more per serving and freeze well enough to carry you through a cold month.',
+    content: `
+      <p>Once the weather turns, the usual meal prep rotation of chicken and rice starts to feel like a chore rather than a plan. Soup and stew solve that problem better than almost any other format, because they are built in one pot, they improve after a day or two in the fridge instead of degrading, and they freeze in a way that a dry chicken breast never quite does. The catch is that most soup recipes are written for comfort first, which usually means a broth-heavy base with a small amount of meat floating in it, nowhere near enough protein to count as a real meal for someone tracking macros.</p>
+      <p>The nine recipes below flip that ratio. Protein comes first, the broth and vegetables are built around it, and every one of them clears 30g of protein in a single bowl. None of them need a specialty ingredient beyond what is already on a <a href="/blog/weekly-grocery-list-for-lifters-high-protein-template">typical high-protein grocery list</a>, and all of them hold up in the freezer better than most meal prep staples, which matters more in winter when a second batch sitting in the freezer is the difference between cooking on a Tuesday night and not.</p>
+
+      <h2>1. White Bean and Chicken Chili</h2>
+      <p>Simmer 500g of diced chicken thigh with a can of white beans, a can of diced tomatoes, a chopped onion, and a generous spoon of cumin and chili powder for 25 minutes, then shred the chicken back into the pot. <strong>~380 cal, 42g protein per serving</strong>, with the batch making four servings. The beans add real carbs and fiber on top of the protein, so this one doubles as a full meal rather than something you need to pair with a side.</p>
+
+      <h2>2. Beef and Barley Stew</h2>
+      <p>Brown 600g of diced beef chuck, then add barley, carrots, celery, and beef stock and simmer for an hour and a half until the beef shreds with a fork. <strong>~410 cal, 38g protein per serving</strong> across five servings. Barley holds its texture through freezing and reheating far better than rice does in a brothy stew, which is the main reason this version survives a freezer better than a rice-based alternative.</p>
+
+      <h2>3. Turkey and Lentil Soup</h2>
+      <p>Cook 450g of ground turkey breast with diced carrots and celery, then add red lentils and chicken stock and simmer for 20 minutes until the lentils break down and thicken the broth on their own. <strong>~340 cal, 36g protein per serving</strong>, making five servings. Lentils cook fast enough that this is one of the quicker recipes on the list, and they thicken the soup without needing a flour or cornstarch slurry.</p>
+
+      <h2>4. Chicken Tortilla Soup</h2>
+      <p>Simmer 500g of chicken breast whole in chicken stock with a can of fire-roasted tomatoes, corn, and a chopped jalapeno for 20 minutes, then shred the chicken and return it to the pot. <strong>~310 cal, 40g protein per serving</strong> across four servings. Shredding whole-cooked breast instead of starting with diced chicken keeps it moister through the simmer, since diced pieces that size tend to dry out before the broth is fully flavored.</p>
+
+      <h2>5. Split Pea and Ham Soup</h2>
+      <p>Simmer 300g of diced lean ham with split peas, a diced onion, and stock for an hour, stirring occasionally so the peas do not stick to the bottom of the pot. <strong>~330 cal, 28g protein per serving</strong>, making four servings. This is the one recipe here that leans on a cured meat rather than a lean cut, so it runs a bit higher in sodium than the others, worth checking against the rest of the day if sodium is something you track closely.</p>
+
+      <h2>6. Beef and Black Bean Chili</h2>
+      <p>Brown 550g of 93% lean ground beef with a chopped onion and garlic, then add black beans, crushed tomatoes, and chili powder and simmer for 30 minutes. <strong>~400 cal, 39g protein per serving</strong> across four servings. This is the easiest recipe on the list to double, since chili holds its texture through reheating better than almost any other soup, which makes it a good one to start with for your first attempt at this method.</p>
+
+      <h2>7. Chicken and Wild Rice Soup</h2>
+      <p>Simmer 450g of diced chicken thigh with wild rice, carrots, celery, and chicken stock for 35 minutes until the rice is tender. <strong>~350 cal, 35g protein per serving</strong>, making four servings. Wild rice has a firmer bite than white rice and holds up through a freeze and reheat cycle noticeably better, which is worth the slightly longer cook time if you are planning to freeze part of the batch.</p>
+
+      <h2>8. Minestrone with White Fish</h2>
+      <p>Simmer a diced zucchini, carrot, and can of diced tomatoes in vegetable stock for 15 minutes, then add 500g of cubed cod or tilapia and cook gently for another five minutes until just opaque. <strong>~290 cal, 37g protein per serving</strong> across four servings. Fish needs far less cook time than the other proteins on this list, so add it last and keep the heat low, since overcooked white fish turns rubbery fast in a simmering broth.</p>
+
+      <h2>9. Vegetarian Lentil and Cottage Cheese Stew</h2>
+      <p>Simmer green lentils with diced tomatoes, cumin, and vegetable stock for 30 minutes until soft, then stir in 250g of cottage cheese off the heat just before serving. <strong>~320 cal, 31g protein per serving</strong>, making three servings. Stirring the cottage cheese in after the pot comes off the heat keeps it from curdling the way it would if boiled, and it melts into the stew enough to thicken it without turning grainy.</p>
+
+      <p>A few of these numbers will move depending on the exact cut of meat and brand of stock you use, so treat them as a starting point rather than a guarantee. If you want the macros locked in for your own bowl size, our <a href="/blog/meal-prep-container-math-portion-sizes">container math guide</a> covers how to convert a pot of soup into consistent portions once you know the total batch weight, and <a href="/blog/meal-prep-containers-guide">our containers guide</a> has sizing if you are deciding between a 16oz and 32oz container for a brothy meal versus a thicker stew.</p>
+
+      <blockquote>Most soup recipes are built around flavor and treat protein as whatever happens to be floating in the broth. Build the protein first and the flavor still comes together fine around it.</blockquote>
+
+      <h2>Why Soup Actually Freezes Better Than Most Meal Prep</h2>
+      <p>A dry protein like a baked chicken breast tends to toughen and lose moisture over a freeze and reheat cycle, since the ice crystals that form inside the meat pull moisture out as they melt. A soup or stew does not have that problem in the same way, because the protein is already suspended in liquid, so the reheated texture ends up close to the day it was cooked rather than noticeably worse. Our <a href="/blog/how-long-meal-prep-lasts-fridge-freezer-guide">fridge and freezer guide</a> covers freezer timelines in more detail, but as a rule, these nine all hold for three to four months frozen without a meaningful drop in quality, longer than most of the proteins on our <a href="/blog/best-foods-for-batch-cooking">best foods for batch cooking list</a>.</p>
+      <p>The other reason soup suits a winter rotation specifically is portion flexibility. A bowl that runs a little under or over your target calories by 50 is far less noticeable in a soup than in a plated meal, since the broth volume absorbs small measuring errors that would stand out more in a dry protein and rice bowl. That makes soup a forgiving format for anyone who finds strict gram-for-gram tracking exhausting by the third month of winter.</p>
+
+      <p>Let <a href="https://macroplan.app">MacroPlan</a> fit a batch of soup or stew into your actual week's targets, so you know how many servings to freeze and how many to eat fresh before the pot even finishes simmering. <a href="https://macroplan.app/signup">Generate my free plan →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can I make any of these in a slow cooker instead of on the stove?</h3>
+      <p>Yes, most of them adapt well. Brown the meat first on the stove if the recipe calls for it, then transfer everything to a slow cooker on low for six to seven hours. Add quick-cooking additions like the cottage cheese in the lentil stew or the fish in the minestrone near the end rather than at the start, the same way you would on the stove.</p>
+      <h3>Why does my soup taste thinner after it has been frozen and reheated?</h3>
+      <p>Starches like rice, barley, and lentils absorb more liquid as they sit, so a soup that tasted right the day it was made can taste slightly thinner after a freeze and thaw cycle once the starch has released some of that liquid back. A quick simmer for five minutes after reheating, uncovered, usually brings it back to the right consistency.</p>
+      <h3>Is it cheaper to batch cook soup than a standard protein and rice meal prep?</h3>
+      <p>Usually, yes. Stock is inexpensive, and ingredients like beans, lentils, and barley cost less per serving than a dedicated carb side would on its own, while also contributing some of the protein. A pot built around dried beans or lentils plus a modest amount of meat is one of the cheaper ways to hit a high protein target across a week.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 13, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1664741662725-bd131742b7b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxiZWVmJTIwc3RldyUyMHNvdXAlMjBib3dsfGVufDF8MHx8fDE3OTE4ODQ0MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Laura Ohlman on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ohlmanphotography?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'meal-prepping-for-two-different-macros',
     title: 'Meal Prepping for Two People With Different Macros (Without Cooking Two Dinners)',
     excerpt: 'One of you is cutting, the other is lean bulking, and nobody wants to cook two separate dinners every night. Here is how to batch cook once and portion two completely different macro targets out of the same pots.',
