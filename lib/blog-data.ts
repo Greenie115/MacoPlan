@@ -22,6 +22,51 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'macros-and-your-menstrual-cycle',
+    title: 'Macros and Your Menstrual Cycle: Why Some Weeks Feel Harder Than Others',
+    excerpt: 'The same calorie target can feel completely different depending on where you are in your cycle. Here is what actually shifts week to week, and how to adjust your macros instead of fighting your own biology.',
+    content: `
+      <p>You hit your numbers perfectly for two weeks straight, then one week everything feels off. Hunger shows up out of nowhere, the usual portion looks smaller than it should, and a plan that felt easy a few days earlier suddenly takes real willpower to stick to. The macro app has not changed and neither has the training schedule, so it is easy to read this as a discipline problem. For a lot of women, it is not. It is the menstrual cycle doing exactly what it does, shifting hunger hormones, water retention, and metabolic rate by a measurable amount across the month, and most macro plans are built as if that shift does not exist.</p>
+      <p>This is not a case for throwing out tracking or abandoning a calorie target the moment things feel harder. It is a case for understanding which parts of that harder feeling are biology and which parts are a plan that was never built to flex in the first place, and <a href="https://macroplan.app">MacroPlan</a> can help with that part once you know what to actually ask for.</p>
+
+      <h2>What Actually Changes Across the Cycle</h2>
+      <p>The two hormones doing most of the work here are estrogen and progesterone, and they do not move together. Estrogen rises through the first half of the cycle and tends to blunt appetite somewhat, which is part of why the follicular phase, roughly the week after a period ends through ovulation, is often when a deficit feels most manageable. Progesterone takes over after ovulation and rises through the luteal phase, the one to two weeks before a period starts, and it is the hormone most tied to the appetite increase, water retention, and slightly higher resting metabolic rate that shows up for a lot of people during that stretch.</p>
+      <p>That resting metabolic rate bump is real and worth naming plainly: research putting numbers on it generally finds somewhere in the range of 2 to 10 percent higher energy expenditure during the luteal phase compared to the follicular phase. That is not a huge swing on paper, but on a 2,000-calorie target it is the difference between roughly 40 and 200 extra calories being burned at rest before training even enters the picture, which lines up with why the same deficit that felt sustainable two weeks earlier can start to feel like a fight.</p>
+      <p>Water retention compounds the confusion, since it moves the scale independent of fat loss or gain. Progesterone and the drop in it right before a period both affect how much fluid the body holds onto, and a 1 to 3 pound swing on the scale purely from water during the luteal phase and first day or two of a period is common and has nothing to do with whether the diet is working. Checking a <a href="/blog/weight-loss-plateau-how-to-break-it">weight loss plateau</a> against a single week's scale reading without accounting for where that week falls in the cycle is one of the more common ways people talk themselves into a plateau that is not actually there.</p>
+
+      <h2>The Three Things Worth Actually Adjusting</h2>
+      <p>Appetite is the first and most practical thing to work with rather than against. If the luteal phase reliably brings on stronger hunger and specific cravings, usually leaning toward carbs and chocolate, fighting that with the exact same calorie target used during the follicular phase is a losing proposition for a lot of people. A small, deliberate increase of 100 to 150 calories during the week or so before a period, leaned toward carbs rather than fat, tends to cover the actual increase in hunger and expenditure without derailing a broader cut, and it is a far more sustainable fix than trying to white-knuckle through a hormonally driven appetite spike with the same numbers that worked two weeks earlier.</p>
+      <p>Sodium and water intake are the second lever, aimed specifically at the bloating and water retention rather than at calories. Reducing high-sodium processed food in the days leading into a period and keeping water intake consistent, counterintuitively, actually helps the body release retained water rather than hold onto more of it. Our <a href="/blog/hydration-and-sodium-for-lifters-tracking-macros">guide to hydration and sodium</a> covers the mechanics in more depth, but the short version for this specific window is that cutting water to try to beat the scale almost always backfires and makes the bloating feel worse, not better.</p>
+      <p>Training intensity is the third piece, and it interacts with all of the above. Energy and strength output commonly dip slightly in the days right before and during a period for a lot of lifters, which is not a sign to skip training but a reasonable cue to adjust expectations for that week rather than chase a personal record. Matching food intake to actual training output across the month, rather than forcing the same session every week regardless of how it feels, is the same logic behind <a href="/blog/calorie-cycling-training-rest-days">calorie cycling around training and rest days</a>, just applied to a longer rhythm than a single week.</p>
+
+      <blockquote>A 2 pound jump on the scale during the luteal phase is almost never two pounds of fat. It is usually water, and chasing it with a harder deficit solves a problem that does not exist.</blockquote>
+
+      <h2>What This Does Not Mean</h2>
+      <p>None of this is a license to abandon a calorie target the moment a hard week shows up, and it is not a reason to assume every bout of hunger is hormonal rather than just a genuinely tight deficit that needs revisiting. The pattern worth tracking is whether the harder week repeats at roughly the same point in the cycle, month after month. If increased hunger and a heavier feeling consistently show up five to seven days before a period and ease off once it starts, that is a cycle-driven pattern worth planning around. If it is scattered and unpredictable, the deficit itself, not the cycle, is more likely the actual issue, and it is worth revisiting total calories the way our <a href="/blog/weight-loss-plateau-fix-macros">guide to a stalled deficit</a> lays out.</p>
+      <p>It is also worth saying that this piece is describing a typical pattern, not a universal one. Cycle length, symptom severity, and how strongly appetite and water retention respond to hormonal shifts vary a lot between individuals, and conditions like PCOS change the picture further. Anyone dealing with severe symptoms, a missing cycle, or dietary changes that are not helping is better served talking to a doctor than adjusting macros around a blog post.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your plan around a single calorie and macro target by default, the same way most tracking tools do, since that is the right starting point for most weeks. When a cycle-driven week needs a deliberate bump in calories or a shift toward more carbs, you can adjust the target for that stretch and get a new shopping list and prep plan built around the adjusted numbers, rather than forcing the same rigid plan through a week your body is handling differently. <a href="https://macroplan.app/signup">Build a plan that flexes with your week →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How much should I actually increase calories during the luteal phase?</h3>
+      <p>Most of the research on luteal phase energy expenditure points to somewhere between 2 and 10 percent above the follicular phase, which on a typical cutting target works out to roughly 100 to 150 extra calories a day. Leaning that increase toward carbs rather than fat tends to match the appetite shift most people report more closely.</p>
+      <h3>Is the weight gain before my period actually fat?</h3>
+      <p>Almost never, if it shows up and disappears within a few days to a week. Water retention driven by progesterone and the hormonal drop right before a period accounts for most of the 1 to 3 pound swing people commonly see on the scale during this window, and it resolves on its own once the period starts and hormones reset.</p>
+      <h3>Should I train less hard during my period?</h3>
+      <p>Not necessarily, but it is reasonable to expect slightly lower energy and strength output for some people during this window and to adjust expectations rather than force a personal record every session. Matching effort and food intake to how the week is actually going tends to hold up better long-term than ignoring the pattern entirely.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 14, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBhdGhsZXRlJTIwZ3ltJTIwd29ya291dHxlbnwxfDB8fHwxNzkxOTg5NDM0fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by John Arano on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@johnarano?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'high-protein-soups-stews-winter-meal-prep',
     title: '9 High-Protein Soups and Stews for Winter Meal Prep (30g+ Protein, Freezer-Friendly)',
     excerpt: 'Soup season and meal prep season overlap almost exactly, but most soup recipes are built around flavor, not protein. These nine hit 30g or more per serving and freeze well enough to carry you through a cold month.',
