@@ -22,6 +22,53 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'neat-calories-burned-without-exercise',
+    title: 'NEAT: The Calories You Burn Without Trying, and Why They Shrink During a Cut',
+    excerpt: 'Walking to the kitchen, fidgeting at your desk, and standing instead of sitting all burn real calories your tracking app never sees. Here is why that hidden total quietly drops the longer you diet, and what to do about it.',
+    content: `
+      <p>Two people eat the exact same calories, train the exact same program, and lose fat at completely different rates. It is one of the more frustrating things about dieting, and it rarely comes down to willpower or tracking accuracy. More often it comes down to a number neither of them is logging: how much they move when they are not working out.</p>
+      <p>Exercise usually gets the credit for calories burned, but for most people it is a small slice of total daily energy expenditure. The bigger, quieter piece is non-exercise activity thermogenesis, or NEAT, which covers everything from walking around the house to standing at a counter to the restless leg bounce some people do without noticing. It adds up to real energy, and unlike your lifting session, it moves around without you deciding to change anything, which is exactly why it causes so much confusion on a cut.</p>
+
+      <h2>What NEAT Actually Covers</h2>
+      <p>NEAT is every calorie burned by movement that is not deliberate exercise and not the basic metabolic cost of being alive. Walking to the car, carrying groceries up a flight of stairs, typing, cooking, fidgeting in a meeting, pacing while on a phone call, even the postural muscles working to keep you upright instead of slouched all count. None of it shows up in a workout log, and almost none of it gets credited by a <a href="/blog/fitness-tracker-calorie-burn-accuracy">fitness tracker</a> the way a tagged exercise session does.</p>
+      <p>The range here is genuinely large. Research on NEAT variability, including the classic overfeeding studies run by James Levine at the Mayo Clinic, found that people fed the exact same calorie surplus burned off anywhere from under 100 to over 600 of those extra calories through spontaneous movement alone, with no change in formal exercise. That is roughly a 500-calorie spread between two people doing nothing differently on paper. Some of that difference is just how someone is built. A lot of it, though, is behavior that shifts without anyone noticing, which is the part worth paying attention to.</p>
+
+      <h2>Why NEAT Drops During a Cut Specifically</h2>
+      <p>This is the mechanism that actually matters for tracking macros. When calories come down, the body does not only slow its resting metabolic rate a little, it also tends to quietly reduce how much a person fidgets, paces, and chooses to walk versus sit. Someone who used to take the stairs starts taking the elevator without deciding to. Someone who used to pace during calls starts sitting through them. None of it feels like a decision, and that is the trap: it reads as low energy or low motivation, when it is closer to an automatic response to eating less.</p>
+      <p>Studies tracking this directly have found NEAT can fall by several hundred calories a day during a sustained deficit, independent of any drop in formal exercise output. That is a meaningful chunk of a typical 500-calorie deficit being quietly clawed back by the body moving less throughout the day, which is one of the better-documented, least-talked-about reasons a <a href="/blog/weight-loss-plateau-how-to-break-it">weight loss plateau</a> shows up even when the food log and the training log both look unchanged. The deficit on paper and the deficit the body is actually running can drift apart for weeks before anyone notices, because the thing that changed was never logged in the first place.</p>
+
+      <h2>What Actually Moves the Needle Here</h2>
+      <p>The fix is not a new app or a stricter log. It is paying attention to the parts of the day that were never being tracked and deciding, deliberately, to keep them from sliding. A daily step count target is the simplest version of this, since steps are an easy proxy for overall NEAT and most phones already count them for free. Picking a number that reflects a normal, non-dieting day, then holding that number steady as calories come down, is a more reliable way to protect total expenditure than trying to add extra cardio sessions on top of an already tiring training schedule.</p>
+      <p>Small standing and walking habits matter more than they sound like they should: taking calls on your feet, parking further away, walking to get water instead of refilling a bottle at the desk. None of these feel like exercise, which is exactly the point, they are cheap to repeat every single day without adding fatigue the way an extra gym session would. A person who holds their walking and standing habits steady through a cut tends to see a far more linear rate of loss than someone who lets those habits quietly erode while wondering why the same deficit stopped working.</p>
+      <p>Training day and rest day movement also do not need to look identical. Someone who trains hard four days a week and does almost nothing the other three is not actually running the deficit they think they are, since rest days with low NEAT and no training can end up burning far less than expected. The same logic behind <a href="/blog/calorie-cycling-training-rest-days">cycling calories around training and rest days</a> applies here in reverse: a rest day is also the day NEAT is easiest to let slip, so it is worth being more deliberate about a walk or errands on rest days, not less.</p>
+
+      <blockquote>Nobody decides to move less on a cut. It happens automatically, a few hundred calories at a time, which is exactly why it is so easy to blame the diet instead of the thing that actually changed.</blockquote>
+
+      <h2>What This Does Not Mean</h2>
+      <p>This is not a case for obsessively tracking every step or treating a low-NEAT day as a failure. Day to day variation is normal, and a single quiet Sunday is not what causes a plateau. The pattern worth watching is a sustained drop over weeks, where a step count or general activity level that used to be routine starts feeling noticeably harder to hit without exercise changing. That gradual shift is the one worth countering on purpose, since it is also the one easiest to miss because nothing about the food or the training looks different.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan sets your calorie and macro targets from your stats, activity level, and goal, but the activity level you select only reflects the picture at the moment you build the plan. If a few months into a cut your daily movement has quietly dropped off, that is worth revisiting the same way you would revisit your weight or your training volume, and rebuilding your targets around what your days actually look like now rather than what they looked like when you started. <a href="https://macroplan.app">MacroPlan</a> makes that a five-minute update instead of a guessing game. <a href="https://macroplan.app/signup">Build a plan around your real activity level →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How many calories does NEAT actually account for in a day?</h3>
+      <p>It varies enormously between individuals, roughly from a couple hundred calories a day for someone with a sedentary job and low spontaneous movement to over a thousand for someone who is naturally restless and on their feet most of the day. For most people it is a bigger share of total daily expenditure than their actual workout.</p>
+      <h3>Can I just add more cardio instead of worrying about NEAT?</h3>
+      <p>You can, but it is not a direct swap. Added cardio is additional fatigue on top of training, while NEAT is largely free in terms of recovery cost since it is low intensity and spread across the day. Protecting existing NEAT habits is usually more sustainable than trying to out-exercise a drop in daily movement.</p>
+      <h3>Is a step count a good enough proxy for NEAT?</h3>
+      <p>It is not perfect, since things like fidgeting and standing without walking do not register as steps, but it is the most practical proxy available without lab equipment. Holding a consistent daily step target through a cut captures most of the meaningful variation for most people.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 15, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1645877348263-2123c1c56793?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHx3YWxraW5nJTIwZG9nJTIwc3RhaXJzJTIwZGFpbHklMjBzdGVwc3xlbnwxfDB8fHwxNzkyMDc0OTE1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Arina Grechkosiy on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@marlboromidori?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'macros-and-your-menstrual-cycle',
     title: 'Macros and Your Menstrual Cycle: Why Some Weeks Feel Harder Than Others',
     excerpt: 'The same calorie target can feel completely different depending on where you are in your cycle. Here is what actually shifts week to week, and how to adjust your macros instead of fighting your own biology.',
