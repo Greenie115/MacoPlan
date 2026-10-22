@@ -22,6 +22,64 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'omega-3-fish-oil-for-lifters',
+    title: 'Omega-3s for Lifters: Do You Actually Need Fish Oil?',
+    excerpt: 'Your macros can be perfect and your omega-3 intake can still be a mess. Here is what omega-3s actually do for a lifter, how much food it takes to get there, and when a supplement is worth the money.',
+    content: `
+      <p>Protein gets tracked to the gram. Carbs and fat get split into neat percentages. Then somewhere off to the side sits a jar of fish oil capsules that someone bought eight months ago, half-used, with nobody quite sure if it is doing anything or if the two salmon dinners a month already cover it. Omega-3s are one of the few nutrition questions lifters ask about constantly and almost never resolve, mostly because the answer depends on numbers that never show up on a typical macro tracker.</p>
+      <p>None of this is about chasing a trend supplement. It is about a fat source that behaves differently from the saturated and monounsaturated fat already filling most of a lifter's fat target, and that difference is worth understanding before deciding whether a capsule earns a spot in the budget.</p>
+
+      <h2>What Omega-3s Actually Do Here</h2>
+      <p>Omega-3 fatty acids, specifically EPA and DHA, the two found in fatty fish and fish oil, sit at the center of how the body manages inflammation. Training itself is a controlled inflammatory event: a hard session damages muscle tissue on purpose, and the repair process that follows is what builds it back bigger and stronger. Omega-3s do not block that process, but they do influence how quickly the inflammatory response resolves once it has done its job, which is part of why joint comfort and next-day soreness are two of the more commonly reported benefits among lifters who supplement consistently.</p>
+      <p>There is also a less talked about angle specific to building muscle. A frequently cited study from Smith and colleagues, published in Clinical Science in 2011, found that omega-3 supplementation increased the muscle protein synthesis response to a protein and insulin stimulus in older adults, suggesting omega-3s may make the body slightly more sensitive to the anabolic signal a protein-rich meal sends. The effect size is modest and the research skews toward older populations rather than young lifters, so it is not a reason to expect dramatically faster gains. It is a reasonable tiebreaker in favor of getting enough, on top of the other benefits.</p>
+      <p>The Western diet problem that makes this relevant at all is a ratio issue, not just an absolute one. Most diets built around vegetable oils, grain-fed meat, and processed food are heavy on omega-6 fatty acids and light on omega-3s, and that imbalance is part of why so many people are quietly short on the fat type that matters most for recovery while eating plenty of fat overall. A lifter hitting their fat macro every day can still be running that same skewed ratio if none of the fat is coming from fish.</p>
+
+      <h2>How Much Food It Actually Takes</h2>
+      <p>The useful target most research lands on is somewhere between one and three grams of combined EPA and DHA per day, and fatty fish is the most efficient way to get there by a wide margin. A 100 gram portion of salmon carries roughly 2 grams of combined EPA and DHA, which means two or three fatty fish meals a week gets a lifter most of the way to a reasonable weekly average without any supplement at all. Mackerel, sardines, and anchovies are all in a similar range, and often cheaper per gram of omega-3 than salmon.</p>
+      <p>The problem is less about the math and more about habit. Chicken breast, the default protein for most cutting or maintenance plans, carries essentially none. A lifter who structures their whole week around chicken, rice, and whey can hit every macro target perfectly and still land close to zero on omega-3s, simply because the foods chosen for being protein-efficient and cheap are not the foods that carry meaningful fat quality. Our <a href="/blog/protein-per-calorie-food-ranking">protein-per-calorie food ranking</a> flags this exact tradeoff: salmon ranks lower than chicken or egg whites purely because of its fat content, but that fat is doing work a protein-efficiency chart does not measure.</p>
+      <p>A short list of what reliably moves the needle without a capsule:</p>
+      <ul>
+        <li>Salmon or trout, two to three servings a week</li>
+        <li>Canned sardines or mackerel, a cheap and shelf-stable backup on weeks fresh fish does not happen</li>
+        <li>Ground flaxseed or chia seeds, a smaller plant-based contribution worth stacking on top, not relying on alone</li>
+      </ul>
+      <p>That last point matters because plant sources carry ALA, a different omega-3 that the body converts to EPA and DHA at a low and inconsistent rate. Flax and chia are worth adding for the fiber and other benefits they bring, but they are not a reliable substitute for fatty fish if EPA and DHA are the actual target.</p>
+
+      <h2>Who Actually Needs to Supplement</h2>
+      <p>If two or three fatty fish meals a week already happen without much effort, a supplement is probably solving a problem that does not exist. The lifters who benefit most from fish oil are the ones who know, honestly, that fish rarely makes it onto their plate, whether that is a taste preference, a price concern, or just a rotation that never got built around it. In that case, a fish oil supplement delivering 1 to 2 grams of combined EPA and DHA a day is a cheap, low-effort way to close a gap that food habits are not going to close on their own anytime soon.</p>
+      <p>Dose and quality both matter more than brand marketing suggests. Many supermarket fish oil capsules carry far less EPA and DHA per capsule than the label's total omega-3 number implies, since that number often includes other fatty acids that do not do the same job. Checking the actual EPA plus DHA content per serving, not just the headline omega-3 figure, is the one label detail worth spending thirty seconds on before buying.</p>
+      <p>Anyone on blood thinners or with a bleeding disorder should talk to a doctor before adding a fish oil supplement, since omega-3s have a mild blood-thinning effect of their own at higher doses. That is a conversation worth having with a physician, not a blog post, and it is the one real caution worth flagging here.</p>
+
+      <blockquote>Hitting a fat macro and hitting an omega-3 target are not the same accomplishment. One is a number, the other is where that fat actually came from.</blockquote>
+
+      <h2>Where This Fits Into a Normal Week</h2>
+      <p>None of this needs to turn into a second thing to track. The simplest version is deciding, once, that two dinners a week default to salmon, trout, or canned sardines instead of whatever the rotation would otherwise repeat, the same way our <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">vegetarian meal prep guide</a> treats plant protein sources as a default swap rather than a special occasion. Fat macros barely need adjusting since fish slots into most fat budgets without much friction, and the omega-3 content comes along automatically once the fish shows up on the plate at all.</p>
+      <p>If that swap genuinely will not happen most weeks, a modest daily fish oil supplement is a reasonable substitute rather than a failure. The goal is getting EPA and DHA into the week consistently, not winning points for doing it through whole food specifically.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan rotates your protein sources through the week so the same two or three staples do not quietly take over every meal. If your current plan has not included a fatty fish meal in weeks, that is an easy swap to build in rather than a supplement to remember. <a href="https://macroplan.app">See how MacroPlan varies your protein sources automatically →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How much fish oil should I actually take if I supplement?</h3>
+      <p>Most research supporting recovery and general health benefits lands in the 1 to 2 gram range of combined EPA and DHA per day, checked against the supplement label rather than the total omega-3 figure. More is not clearly better past that range for a healthy lifter, and higher doses are where the blood-thinning effect becomes more relevant.</p>
+      <h3>Can I get enough omega-3s from flaxseed or walnuts alone?</h3>
+      <p>Not reliably. Plant sources carry ALA, which the body converts to EPA and DHA at a low rate that varies a lot between individuals. They are a reasonable addition but a poor substitute for fatty fish or a fish oil supplement if EPA and DHA specifically are the target.</p>
+      <h3>Will omega-3s actually help me build muscle faster?</h3>
+      <p>The evidence points to a modest sensitizing effect on muscle protein synthesis rather than a direct, large driver of growth on its own. It is a reasonable supporting factor alongside adequate protein and training, not a shortcut that replaces either.</p>
+
+      <p>Stop guessing whether your fat macro is doing the job it should. <a href="https://macroplan.app/signup">Build a plan that rotates in real fatty fish, free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 22, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxzYWxtb24lMjBmaXNoJTIwb21lZ2EzJTIwbWVhbHxlbnwxfDB8fHwxNzkyNjczMzgwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Caroline Attwood on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@_carolineattwood?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'neat-calories-burned-without-exercise',
     title: 'NEAT: The Calories You Burn Without Trying, and Why They Shrink During a Cut',
     excerpt: 'Walking to the kitchen, fidgeting at your desk, and standing instead of sitting all burn real calories your tracking app never sees. Here is why that hidden total quietly drops the longer you diet, and what to do about it.',
