@@ -22,6 +22,57 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'satiety-index-foods-that-keep-you-full-on-fewer-calories',
+    title: 'The Satiety Index: Why Some 500-Calorie Meals Keep You Full and Others Don\'t',
+    excerpt: 'Two meals with the same calories and macros can leave you starving an hour apart or full for four. Here is the research behind why, and which foods to build a cut around if staying full matters more than the number on the label.',
+    content: `
+      <p>Two lifters eat 500 calories at lunch. One of them is rooting around the pantry by 2pm. The other barely thinks about food again until dinner. Same calorie count, same rough macro split even, and a completely different afternoon. If you've tracked macros for more than a few weeks you've probably lived both versions of that lunch, and it's tempting to chalk the difference up to willpower or how much sleep you got the night before. Most of the time it's neither. It's the food itself, and specifically how much volume, water, protein, and fiber it packed into that calorie count.</p>
+      <p>This isn't a new idea so much as an old one that macro tracking tends to bury. A calorie target tells you how much energy you're allowed to eat. It says nothing about how full that energy will actually make you feel, and on a cut, that second number matters just as much as the first.</p>
+
+      <h2>What the Satiety Index Actually Measured</h2>
+      <p>The clearest research on this comes from a study run by Susanna Holt and colleagues at the University of Sydney in the mid-1990s, which took 38 common foods, served them to participants in 240-calorie portions, and then tracked how much food those same participants voluntarily ate at a meal two hours later. The result was a ranked list, the satiety index, with white bread set as the baseline at 100 and every other food scored relative to it. Boiled potatoes scored around 320, more than three times as filling as white bread calorie for calorie. Croissants scored 47, less than half as filling. Same 240 calories, wildly different afternoons for the people eating them.</p>
+      <p>What separated the high scorers from the low ones wasn't some mysterious property specific to potatoes. It was a combination of a few measurable things: how much water and fiber the food carried, how much protein it had relative to its calories, and how dense the calories were packed into the actual volume of food on the plate. Foods low in all of those, pastries, candy, most fried food, pack a lot of energy into very little chewing and very little stomach volume, which is exactly why they're easy to eat a lot of without feeling full until well after the damage is done.</p>
+
+      <h2>Why This Matters More Than Your Macro App Admits</h2>
+      <p>A macro tracker treats 500 calories of protein bar and 500 calories of chicken, rice, and broccoli as functionally identical line items. On paper they are. In your stomach two hours later they are not even close. The bar digests fast, carries little water or fiber, and leaves comparatively little physical volume behind to signal fullness to the stretch receptors in your stomach. The chicken, rice, and broccoli plate is heavier, takes longer to eat, holds more water weight, and fills more physical space, so the signal telling your brain you've eaten enough shows up sooner and lasts longer.</p>
+      <p>This is a big part of why the same calorie deficit can feel brutal on one meal plan and completely manageable on another, even when the macro split and calorie total look identical on paper. It's also a quieter contributor to a <a href="/blog/weight-loss-plateau-how-to-break-it">stalled weight loss plateau</a> than most people assume, since a diet that is technically on target but built from low-satiety foods tends to produce more off-plan snacking and more "I was starving so I just ate" moments that never make it into the log, which drags the real average calorie intake above what the plan says it should be.</p>
+      <p>Protein is the one macro that shows up in nearly every high-scoring food on Holt's list, which lines up with something lifters already lean on instinctively. A chicken breast and a croissant with matching calories are not an even fight for how full either one leaves you, and it's one more reason the research behind <a href="/blog/protein-per-calorie-food-ranking">ranking foods by protein per calorie</a> and ranking foods by satiety tend to land on a lot of the same winners, even though they're measuring different things.</p>
+
+      <h2>The Foods Worth Building a Cut Around</h2>
+      <p>Boiled potatoes sit at the top of Holt's original list for a reason worth understanding rather than just repeating. They're almost entirely water by weight, carry a meaningful dose of fiber with the skin on, and take up real physical space in the stomach for relatively few calories. Oats work on a similar principle once cooked, since they absorb water and nearly double in volume compared to their dry weight, which is part of why a bowl of oatmeal tends to hold hunger off longer than a calorie-matched pastry eaten at the same hour. Fish and lean meat round out the list for the opposite reason: not much water, but enough protein per calorie to trigger the same fullness signal through a different mechanism.</p>
+      <p>Vegetables with high water content, think broccoli, zucchini, and leafy greens, barely register on a calorie count but add real bulk to a plate, which is why a meal built with a large serving of vegetables alongside your protein and starch tends to feel more finished than the same calories eaten as a smaller, denser plate. None of this requires memorizing a scoring chart. The pattern that matters is simple enough to apply without one: foods with a lot of water or fiber per calorie fill you up further than their calorie count suggests, and foods that are calorie-dense with little water or fiber do the opposite, almost regardless of what macro they're built from.</p>
+      <p>Where this gets genuinely useful in practice is at the end of a long cut, when the calorie budget is at its tightest and every meal needs to pull more weight. Leaning the last couple hundred calories of a meal toward potatoes, oats, or a bigger vegetable portion instead of a smaller portion of something calorie-dense is a free lever that doesn't touch your macro targets at all, it just changes how those targets get spent.</p>
+
+      <blockquote>Two meals can hit the exact same protein, carbs, fat, and calories and leave you full for completely different lengths of time. The macro number was never the whole story.</blockquote>
+
+      <h2>Where This Breaks Down</h2>
+      <p>Satiety scores are a tool for structuring a meal, not a replacement for tracking. A diet built entirely around the highest-scoring foods on Holt's list would be repetitive, hard to sustain, and would still need to land on the right total calories to produce fat loss. The research also measured a specific, controlled scenario, isolated foods eaten in isolated portions, not the mixed meals most people actually eat, so treating any single number as gospel for a plate made of six different ingredients is reading more precision into the data than it has. The useful takeaway is directional: when a meal feels harder to stick to than the math says it should, look at what filled the plate, not just what the label says it weighed.</p>
+      <p>It's also worth separating satiety from willpower explicitly, since the two get confused constantly. Feeling hungry an hour after a tracked meal isn't a sign of weak discipline, it's often a predictable response to a low-volume, low-fiber meal doing exactly what that kind of meal does. The fix is swapping what's on the plate, not gritting through the hunger on the same plate week after week, the same logic behind getting <a href="/blog/meal-prep-container-math-portion-sizes">portion sizes and container math</a> right in the first place rather than guessing at how much volume a container actually holds.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan hits your calorie and macro targets, but it also builds plans around whole foods like potatoes, rice, vegetables, and lean protein rather than calorie-dense shortcuts, which means the plans it generates are already leaning toward the high-satiety end of the spectrum without you having to think about it. If a current plan technically hits your numbers but leaves you hungry by mid-afternoon, that's a sign to look at what's filling the plate, not a sign to cut calories further. <a href="https://macroplan.app">See how MacroPlan builds meals around real food, not just numbers →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>What is the satiety index, exactly?</h3>
+      <p>It's a ranking of common foods based on how full they left people two hours after eating a fixed 240-calorie portion, developed by researchers at the University of Sydney in the 1990s. Foods high in water, fiber, and protein relative to their calories tend to score highest, while calorie-dense foods low in all three tend to score lowest.</p>
+      <h3>Can I lose weight faster just by eating high-satiety foods?</h3>
+      <p>Not directly, since fat loss still comes down to total calories over time, not which foods you chose. What high-satiety foods do is make hitting a given calorie target feel easier and more sustainable, which matters a lot for sticking to a deficit for months rather than days.</p>
+      <h3>Why does a protein bar leave me hungrier than a meal with the same calories?</h3>
+      <p>Most bars are calorie-dense and low in water and physical volume compared to a plate of whole food, so they don't trigger the same stomach-stretch fullness signal even when the calorie and protein numbers look similar on paper. It's a real difference, not a willpower problem.</p>
+
+      <p>Stop guessing which meals will actually hold you over. <a href="https://macroplan.app/signup">Build a plan around real, filling food, free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 23, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1539735776517-befcae86494d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxmdWxsJTIwcGxhdGUlMjB2ZWdldGFibGVzJTIwaGlnaCUyMHZvbHVtZSUyMGZvb2R8ZW58MXwwfHx8MTc5MjczOTA0OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ella Olsson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@ellaolsson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'omega-3-fish-oil-for-lifters',
     title: 'Omega-3s for Lifters: Do You Actually Need Fish Oil?',
     excerpt: 'Your macros can be perfect and your omega-3 intake can still be a mess. Here is what omega-3s actually do for a lifter, how much food it takes to get there, and when a supplement is worth the money.',
