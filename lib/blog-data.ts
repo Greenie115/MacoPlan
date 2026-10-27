@@ -22,6 +22,60 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'late-night-eating-macros-does-it-make-you-fat',
+    title: 'Does Eating Late at Night Actually Make You Fat?',
+    excerpt: 'You trained at 7pm, got home at 9, and now you are staring at a plate of chicken and rice wondering if eating it will undo the day. Here is what the research actually says about calorie timing versus calorie totals.',
+    content: `
+      <p>It is 9:30pm, you just got back from a late session at the gym, and dinner is sitting in front of you. Somewhere in the back of your head is a voice insisting that calories eaten this close to bed get treated differently by your body than the same calories eaten at noon, that they just sit there and turn into fat while you sleep. It is one of the most persistent beliefs in nutrition, repeated often enough that most people never stop to ask where it actually came from or whether it holds up.</p>
+      <p>It mostly does not, at least not in the simple, mechanical way the myth gets told. But "mostly not true" is not the same as "completely irrelevant," and the honest answer has a few real wrinkles worth understanding rather than dismissing outright.</p>
+
+      <h2>Where the Myth Actually Comes From</h2>
+      <p>The claim that late eating causes fat gain treats your body like it runs on a kitchen timer: eat before some cutoff and the calories get used, eat after it and they get stored. That is not how energy balance works. Fat gain and fat loss are governed by total calories in versus total calories out over days and weeks, not by the clock on the wall at the moment food crosses your lips. A body does not have a biological curfew after which digestion switches into storage mode.</p>
+      <p>What actually drove this belief into common wisdom is a mix of correlation and convenience. Late-night eating correlates with fat gain in a lot of population studies, but it correlates because of what people tend to eat late at night and why, not because of the hour itself. Late eating tends to happen after a stressful day, often involves less deliberate, more impulsive food choices, and frequently adds calories on top of a day that already hit its target rather than replacing a meal that would have happened earlier anyway. Strip away those confounders and the timing itself has far less to say than the pattern around it.</p>
+
+      <h2>What Controlled Research Actually Shows</h2>
+      <p>When researchers control for total calories and macros and only vary the clock, the fat gain difference between early and late eating mostly disappears. Studies that match two groups on identical daily intake, one eating most of their calories earlier in the day and one eating more of them later, generally find comparable body composition outcomes over weeks, which is the cleanest evidence against the idea that a calorie eaten at 10pm behaves differently in storage terms than one eaten at 1pm. This lines up with the same logic covered in our piece on <a href="/blog/meal-timing-for-muscle-growth">meal timing for muscle growth</a>: the clock matters a lot less than people assume once total intake and protein are held constant.</p>
+      <p>Where the research gets more interesting, and more honest, is in the handful of areas where time of day does shift something real, just not the simple one the myth claims. Insulin sensitivity tends to run slightly lower in the evening than in the morning for most people, tied to the body's normal circadian rhythm, which means the same meal can produce a somewhat higher blood sugar response eaten late versus eaten earlier. That is a measurable, real effect. It is also a small one, and for a healthy lifter without insulin resistance, it is not large enough to meaningfully change fat storage on its own. It is relevant background information, not a reason to panic over a 9pm dinner.</p>
+
+      <h2>The Things That Actually Matter About Eating Late</h2>
+      <p>The real reasons late eating tends to go badly for people have almost nothing to do with the clock and almost everything to do with what happens around it. Late at night, decision fatigue is at its highest point of the day, and that is exactly when food choices get looser: a plate that would have been chicken, rice, and vegetables at 1pm turns into whatever is fastest and closest at 10pm, which is usually denser, less filling, and easier to overeat without noticing. The problem is the choice, not the hour it was made at.</p>
+      <p>Sleep is the other genuine link, and it runs the opposite direction from how most people assume. A very large or very heavy meal close to bedtime can disrupt sleep quality for some people through simple digestive discomfort, and poor sleep has a well-documented, real effect on next-day hunger, appetite hormones, and the kind of impulsive eating decisions covered in our guide on <a href="/blog/sleep-recovery-and-macros-for-lifters">sleep and recovery for lifters</a>. So late eating can hurt fat loss indirectly, through worse sleep leading to a worse eating day tomorrow, which is a completely different mechanism than the "calories turn into fat after 8pm" story most people have actually heard.</p>
+      <p>There is also a simple logging problem that looks identical to a metabolic one from the outside. A late dinner after a late training session is very often an add-on meal rather than a planned one, something eaten on top of a day that already hit its targets because the body is genuinely hungry after a hard session. That is not a timing effect either. It is a calorie total that quietly crept past the plan, and it would have had the same result at any hour of the day.</p>
+
+      <blockquote>Your body does not check the clock before deciding whether to store a calorie. It checks how many calories showed up that day compared to how many it needed.</blockquote>
+
+      <h2>When Late Eating Is a Genuinely Smart Move</h2>
+      <p>For anyone training in the evening, eating close to bed is not a compromise to apologize for, it is often the correct call. A post-workout meal eaten late is still doing the job of replenishing glycogen and supplying protein for repair, and skipping it or pushing it off because of a vague worry about timing just means arriving at the next day's training session undernourished and more fatigued than needed. If a late session is part of the weekly routine, the meal belongs right after it, not hours later out of a misplaced sense that eating earlier is somehow safer.</p>
+      <p>Casein or a slower-digesting protein source before bed is a reasonable choice for the same reason it gets recommended for overnight muscle repair, not because late protein behaves differently in fat terms, but because a slow-release source matches well with several hours of sleep ahead. None of this requires restructuring a whole day around when calories land. It just means treating a late meal the same way any other meal gets treated: planned, logged, and built from food that fits the rest of the day's targets rather than whatever is fastest to grab.</p>
+
+      <h2>Where This Breaks Down</h2>
+      <p>None of this is a free pass to eat however much, however late, without consequence. If late eating consistently means extra, unplanned calories layered on top of a day that was already on target, the fat gain that follows is real, it is just happening for the ordinary reason of eating more than needed, not because of a special metabolic penalty tied to the hour. And for anyone with existing insulin resistance or a diagnosed metabolic condition, the evening dip in insulin sensitivity is worth taking more seriously than it is for a healthy lifter, which is a conversation worth having with a doctor rather than settling with a blog post.</p>
+      <p>The useful takeaway is to stop treating the clock as the variable that matters and start treating it like any other meal: is it planned, does it fit inside the day's targets, and is it making the next day's training and eating easier or harder. A 9:30pm plate of chicken and rice after a hard session answers all three questions fine. A 9:30pm plate of whatever was easiest, eaten on top of a day that was already full, answers them the same way it would at noon.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan builds your targets around your total daily calories and macros, not around what hour you eat them, so a late training session and a later dinner slot into the plan the same way an earlier one would. If evening training is part of your week, the plan accounts for it instead of treating it as an exception to work around. <a href="https://macroplan.app">See how MacroPlan fits a plan around your actual schedule →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Does eating after a certain time really turn food into fat faster?</h3>
+      <p>No. Fat storage is driven by total calories over the day and week, not by the clock. Controlled studies matching total intake between early and late eaters generally find no meaningful difference in body composition from timing alone.</p>
+      <h3>So why do I gain weight when I eat late a lot?</h3>
+      <p>Usually because late eating tends to add extra, less-planned calories on top of a day that already hit its target, not because of the hour itself. The food choices made late at night, and the sleep disruption that can follow a very heavy meal, are the real drivers, not a special fat-storage window.</p>
+      <h3>Is it bad to eat a full meal right after an evening workout?</h3>
+      <p>No, it is usually the right call. A post-training meal eaten late is still replenishing glycogen and supplying protein for recovery, and skipping or delaying it over timing concerns just leaves you undernourished heading into the next day.</p>
+
+      <p>Stop worrying about the clock and start building a plan around your actual day. <a href="https://macroplan.app/signup">Get a macro plan that works with evening training, free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 27, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1768314669089-480e608a0143?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw1fHxjbG9jayUyMGtpdGNoZW4lMjBuaWdodCUyMG1lYWx8ZW58MXwwfHx8MTc5MzA5MTA4NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Jimmy Liu on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@jimmy__liu?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'satiety-index-foods-that-keep-you-full-on-fewer-calories',
     title: 'The Satiety Index: Why Some 500-Calorie Meals Keep You Full and Others Don\'t',
     excerpt: 'Two meals with the same calories and macros can leave you starving an hour apart or full for four. Here is the research behind why, and which foods to build a cut around if staying full matters more than the number on the label.',
