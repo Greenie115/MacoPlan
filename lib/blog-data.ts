@@ -22,6 +22,60 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'cottage-cheese-vs-greek-yogurt-protein',
+    title: 'Cottage Cheese vs. Greek Yogurt: Which One Actually Wins on Protein',
+    excerpt: 'Both show up in every "high protein" grocery haul video right now, and both belong in a lifter\'s fridge. Here is how they actually compare once you look past the label and into what each one does for your macros.',
+    content: `
+      <p>Scroll through enough fitness content and you will see the same two tubs on repeat: a container of cottage cheese next to a tub of Greek yogurt, both getting crowned the best high-protein snack on the internet within the same week. They end up compared constantly because they occupy almost the same shelf, the same price range, and the same role in a lot of meal plans, which makes the question of which one is actually better worth settling with numbers instead of whichever one trended last.</p>
+      <p>The short answer is that neither one wins outright. They solve slightly different problems, and once you know what separates them, picking between them on any given day becomes a quick macro decision rather than a brand loyalty test.</p>
+
+      <h2>The Protein Numbers, Side by Side</h2>
+      <p>Per 100 grams, plain low-fat cottage cheese runs about 11 to 12 grams of protein for roughly 90 to 100 calories. Plain nonfat Greek yogurt lands close behind at around 10 grams of protein for about 55 to 60 calories. On a pure protein-per-calorie basis, Greek yogurt actually has the edge, since its lower fat and carb content means less of the calorie total is spent on anything other than protein. Cottage cheese closes that gap somewhat because a standard serving size tends to be larger, a half-cup serving of cottage cheese (about 110g) delivers close to 12 to 14 grams of protein, while a typical individual yogurt cup (about 150g) lands around 15 grams, so the practical gap at serving size is smaller than the per-100g numbers suggest.</p>
+      <p>Where cottage cheese pulls ahead is in casein content. Nearly all of the protein in cottage cheese is casein, the same slow-digesting protein covered in our <a href="/blog/whey-vs-casein-vs-plant-protein-powder-comparison">whey vs. casein vs. plant protein comparison</a>, which clots in the stomach and releases amino acids over several hours instead of one quick spike. Greek yogurt is also primarily casein after the whey is strained out during production, which is the entire reason it is thicker and higher in protein than regular yogurt in the first place, but the straining process varies more by brand, so protein content swings further from one container to the next than it does with cottage cheese.</p>
+
+      <h2>Texture, Versatility, and the Reason People Actually Pick One</h2>
+      <p>Taste and texture end up deciding more real-world choices than the macro sheet does, and that is a legitimate factor, not a weakness. Cottage cheese has a lumpy, slightly wet curd structure that some people genuinely enjoy and others cannot get past no matter how the macros look. Greek yogurt is smooth and tangy, closer to a dessert texture, which is part of why it blends into smoothies and parfaits more easily and why it tolerates sweet mix-ins like berries or honey without feeling off.</p>
+      <p>Cottage cheese, on the other hand, leans savory more naturally. It works blended into a sauce, stirred into eggs, or eaten straight with black pepper and hot sauce, and it holds up surprisingly well in baking, which is where a lot of the recent "cottage cheese flatbread" and "cottage cheese pancake" trend actually comes from. Greek yogurt rarely gets baked into things the same way, since its texture breaks down differently under heat, but it is the easier of the two to use as a one-to-one swap for sour cream or mayo in a dip or dressing.</p>
+
+      <ul>
+        <li><strong>Cottage cheese:</strong> larger typical serving, slightly higher protein per serving, savory-leaning, bakes well.</li>
+        <li><strong>Greek yogurt:</strong> better protein-per-calorie ratio, smoother texture, blends into smoothies and sweet applications more easily.</li>
+      </ul>
+
+      <h2>Sodium and Digestion Are the Part Nobody Mentions</h2>
+      <p>The one place cottage cheese consistently loses is sodium. A standard half-cup serving can carry 300 to 400mg of sodium or more depending on the brand, which is a meaningful chunk of a daily target if you are also watching water retention before a shoot or a weigh-in, a concern we cover in more depth in our <a href="/blog/hydration-and-sodium-for-lifters-tracking-macros">guide to hydration and sodium for lifters</a>. Greek yogurt is naturally much lower in sodium, usually under 60mg per serving, which makes it the easier option if sodium is already running high elsewhere in your day.</p>
+      <p>Lactose content runs in the opposite direction. Greek yogurt's straining process and live cultures break down more of the lactose than cottage cheese production does, so a lot of people with mild lactose sensitivity tolerate yogurt better than they tolerate cottage cheese, even though both are dairy. Neither is a safe bet for a true lactose intolerance, but if cottage cheese tends to sit heavy, yogurt is worth testing as the gentler alternative before writing off dairy protein sources entirely.</p>
+
+      <blockquote>Neither one is the better food. They are the same macro tool in a different shape, and the right pick depends on whether you need the serving to be savory or sweet, low-sodium or high-protein-per-dollar.</blockquote>
+
+      <h2>Which One Actually Fits Your Day</h2>
+      <p>If you are chasing the tightest protein-to-calorie ratio and planning to eat it plain or with fruit, Greek yogurt is the better pick most days. If you want a larger, more filling serving that leans savory and you are not worried about the sodium, cottage cheese does the job just as well, and its slower digestion makes it a genuinely solid bedtime snack in the same way our <a href="/blog/protein-on-rest-days">protein on rest days</a> piece talks about spacing protein through hours with no training to drive it. Neither needs to be the only dairy protein in your week. A lot of lifters keep both in the fridge and reach for whichever fits the meal, cottage cheese stirred into eggs at breakfast, yogurt blended into a post-workout smoothie.</p>
+      <p>Price is close enough between the two that it rarely decides anything on its own, though store-brand cottage cheese tends to run slightly cheaper per gram of protein than name-brand Greek yogurt, which matters more on a tight grocery budget than the macro difference does.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan treats both as what they actually are, interchangeable, flexible protein sources, and builds them into your plan based on your targets and preferences rather than defaulting to whichever one is trending. <a href="https://macroplan.app">See how MacroPlan fits real food into your macro targets →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Is cottage cheese or Greek yogurt better for weight loss?</h3>
+      <p>Both work well on a cut since each delivers a large dose of filling protein for relatively few calories. Greek yogurt has a slightly better protein-to-calorie ratio, while cottage cheese tends to come in a larger, more filling serving size, so the better choice usually comes down to which keeps you fuller on your specific day.</p>
+      <h3>Can I substitute one for the other in recipes?</h3>
+      <p>Mostly, though not perfectly. Greek yogurt blends smoother and works better in dressings, dips, and smoothies, while cottage cheese holds its structure better under heat, which is why it shows up more often in baked recipes like protein pancakes or flatbread.</p>
+      <h3>Which one has less sodium?</h3>
+      <p>Greek yogurt, by a wide margin. Cottage cheese can carry 300 to 400mg of sodium per half-cup serving depending on the brand, while plain Greek yogurt usually stays under 60mg for a similar serving.</p>
+
+      <p>Build a week of meals around real macro numbers, cottage cheese and yogurt included. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 28, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1777301401075-739121f0315f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxjb3R0YWdlJTIwY2hlZXNlJTIwYm93bHxlbnwxfDB8fHwxNzkzMTgxMjk4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Gennady Zakharin on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@gennady107?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'late-night-eating-macros-does-it-make-you-fat',
     title: 'Does Eating Late at Night Actually Make You Fat?',
     excerpt: 'You trained at 7pm, got home at 9, and now you are staring at a plate of chicken and rice wondering if eating it will undo the day. Here is what the research actually says about calorie timing versus calorie totals.',
