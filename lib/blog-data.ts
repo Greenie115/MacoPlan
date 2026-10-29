@@ -22,6 +22,63 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-diet-bloating-why-and-how-to-fix-it',
+    title: 'Why a High-Protein Diet Gives You Bloating (and How to Fix It)',
+    excerpt: 'Hitting your protein number and feeling like a balloon by 3pm are not unrelated. Here is what actually causes the bloating on a high-protein diet, and how to keep your macros without the discomfort.',
+    content: `
+      <p>You finally got your protein dialed in, 170 or 180 grams a day, split across four or five meals, tracked down to the gram. And somewhere around week two you noticed your stomach looks and feels distended most afternoons, even on days you ate clean and trained hard. It is tempting to blame the protein target itself, maybe even to pull it back down. That is usually the wrong move, because protein in isolation rarely causes bloating. What causes it is almost always something riding along with how you are getting that protein, not the macro itself.</p>
+      <p>The good news is that once you know which of a handful of usual suspects is behind it, the fix is almost always a swap, not a cut. You can keep the protein number and lose the bloated feeling.</p>
+
+      <h2>Protein Itself Is Rarely the Problem</h2>
+      <p>Protein digestion does produce more gas than carb digestion in some people, since the bacterial fermentation of undigested amino acids in the colon releases sulfur compounds, but this effect is small at normal intakes and gets blamed for a lot more bloating than it actually causes. For most lifters eating 1.6 to 2.2 g per kg of bodyweight (0.7 to 1 g per lb), the protein load itself is not the thing pushing your stomach out by early afternoon. The real causes sit in four places: the dairy carrying the protein, the fiber gap that opened up to make room for it, the sugar alcohols in bars and low-carb products, and simply eating too fast to hit a meal count.</p>
+      <p>That distinction matters because it changes what you fix. Dropping your protein target to stop bloating gives up something that is working, muscle retention, satiety, recovery, to treat a symptom that almost always has a more specific cause sitting right next to it.</p>
+
+      <h2>Dairy and Lactose Are the Most Common Culprit</h2>
+      <p>Whey protein, milk, Greek yogurt, and cottage cheese are staples of almost every high-protein plan, and all of them carry lactose. Lactose intolerance ranges from mild to severe and often develops or worsens in adulthood, so someone who tolerated dairy fine for years can start reacting to the same foods once intake climbs from a glass of milk a day to three shakes and a tub of cottage cheese. The gas, cramping, and visible distension that show up thirty minutes to a couple of hours after a dairy-heavy meal are classic lactose signs, not a general protein reaction.</p>
+      <p>The fix is a swap, not a cut. Whey isolate carries less lactose than whey concentrate because more of it is filtered out during processing, so switching formulas alone solves it for a lot of people. Lactose-free milk, a plant-based protein powder, or simply eating less dairy and more chicken, eggs, or fish to hit the same protein number works for everyone else. If you are unsure whether dairy is the trigger, cutting it for a week and reintroducing one source at a time is the cleanest way to find out, cheaper and more informative than guessing.</p>
+
+      <h2>The Fiber You Displaced to Make Room for Protein</h2>
+      <p>Chicken breast, egg whites, and a scoop of whey are protein-dense and almost entirely fiber-free, and when they start crowding out rice, vegetables, and legumes to hit a calorie target, digestion slows down and gas production goes up. We cover this gap in detail in our <a href="/blog/fiber-on-a-high-protein-diet">guide to fixing low fiber on a high-protein diet</a>, but the short version here is that a stomach that feels tight and distended by the end of the day is often backed up, not actually full of excess food. Slower-moving digestion holds gas longer, and that is what you are feeling.</p>
+      <p>This one is sneaky because it builds gradually. A cut that trims rice and vegetables to make room for more chicken does not feel like a problem on day one, but by week three the fiber deficit compounds into exactly the bloated, sluggish feeling that gets blamed on protein itself. Adding fiber back in gradually, not all at once, tends to resolve this within a week or two without moving your protein number at all.</p>
+
+      <blockquote>Bloating from a high-protein diet is almost never the protein. It is the dairy carrying it, the fiber it displaced, or the sugar alcohols sitting next to it on the label.</blockquote>
+
+      <h2>Sugar Alcohols in Bars, Shakes, and "Low-Carb" Products</h2>
+      <p>Protein bars and ready-to-drink shakes often lean on sugar alcohols like erythritol, maltitol, and sorbitol to hit a low net-carb number while staying sweet. These are poorly absorbed in the small intestine, which means a meaningful share of what you eat travels straight to the colon, where gut bacteria ferment it into gas. Two bars in a day, which is an easy habit to fall into when protein bars are the most convenient way to hit a number on a busy day, can be enough sugar alcohol to produce real, visible bloating in people who would never connect it to the bar itself. Our <a href="/blog/best-protein-bars-for-lifters">rundown of protein bars worth keeping in your gym bag</a> flags which formulas lean heaviest on these sweeteners if you want to check a specific brand.</p>
+      <p>The fix here is usually the easiest on this list: check the label for erythritol, maltitol, xylitol, or sorbitol, and if a bar or shake you eat daily lists one near the top of the ingredient panel, that is worth testing as the trigger before blaming anything else. Swapping to a whole-food protein source or a bar sweetened differently for a few days is a fast, free experiment.</p>
+
+      <h2>Eating Fast to Hit a Meal Count</h2>
+      <p>Splitting protein across four or five meals a day to stay ahead of a target often means eating faster than normal, standing at a counter, inhaling a shake between meetings, or finishing a plate in under five minutes because the next block of the day is already starting. Eating quickly means swallowing more air along with the food, and that air has to go somewhere. It is a mechanical cause of bloating that has nothing to do with what is on the plate, and it is one of the most overlooked because it feels like a time-management problem rather than a nutrition one.</p>
+      <p>Carbonated drinks on top of a protein shake compound this the same way, adding dissolved gas directly into a stomach that is already working through a dense meal. Slowing down even slightly, and skipping the sparkling water or diet soda alongside a shake, removes a chunk of the problem without touching a single macro.</p>
+
+      <h2>Putting It Together Without Losing Your Protein Number</h2>
+      <p>Work through these in order of how common they are: check dairy first, since it explains the most cases, then look at whether your carb and vegetable intake dropped when your protein climbed, then check labels on any bar or shake for sugar alcohols, and finally look at how fast you are actually eating each meal. Most lifters find the answer in the first two. A single swap, lactose-free whey, a sweet potato back on the plate, usually resolves the bloating within a few days without requiring a rebuild of the whole week.</p>
+      <p>If you have tried all of this and the bloating is severe, persistent, or comes with pain, that is worth a conversation with a doctor rather than another round of food swaps, since a handful of digestive conditions can mimic diet-related bloating and deserve a proper look.</p>
+
+      <h2>Where MacroPlan Fits</h2>
+      <p>MacroPlan hits your protein target with a mix of real food, not just the densest, most convenient source available, which means your plan naturally spreads protein across dairy, meat, eggs, and plant sources instead of leaning on three shakes a day. <a href="https://macroplan.app">See how MacroPlan builds your protein target around real meals →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Does eating too much protein cause bloating by itself?</h3>
+      <p>Rarely at normal intakes. Protein digestion produces somewhat more gas than carb digestion, but the effect is small. Most bloating blamed on a high-protein diet actually traces back to the dairy carrying the protein, a fiber gap, or sugar alcohols in bars and shakes.</p>
+      <h3>How do I know if it's lactose and not something else?</h3>
+      <p>Timing is the biggest clue. Gas, cramping, or visible distension that shows up 30 minutes to two hours after a dairy-heavy meal points to lactose. Cutting dairy for a week and reintroducing one source at a time is the clearest way to confirm it without guessing.</p>
+      <h3>Will adding fiber back in make the bloating worse before it gets better?</h3>
+      <p>It can, if you add it too fast. Jumping straight to the full recommended fiber intake after weeks of running low tends to cause its own gas and bloating while gut bacteria adjust. Increasing fiber gradually over a couple of weeks, with enough water alongside it, avoids that overcorrection.</p>
+
+      <p>Get a macro plan built around real food that hits your protein number without the bloat. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'October 29, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1581269631444-9c6cc00df0b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxwcm90ZWluJTIwc2hha2UlMjBzbW9vdGhpZXxlbnwxfDB8fHwxNzkzMjk1NzkwfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Kelly Sikkema on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@kellysikkema?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'cottage-cheese-vs-greek-yogurt-protein',
     title: 'Cottage Cheese vs. Greek Yogurt: Which One Actually Wins on Protein',
     excerpt: 'Both show up in every "high protein" grocery haul video right now, and both belong in a lifter\'s fridge. Here is how they actually compare once you look past the label and into what each one does for your macros.',
