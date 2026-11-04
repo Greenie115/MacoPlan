@@ -22,6 +22,73 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-salads-for-lifters',
+    title: '10 High-Protein Salads That Actually Taste Good (30g+ Protein Each)',
+    excerpt: 'Salads get a bad reputation among lifters for being a side dish pretending to be a meal. These ten clear 30g of protein each and are built to fill you up, not just check a box.',
+    content: `
+      <p>Tell a lifter to eat a salad for lunch and the usual reaction is suspicion, mostly earned. A pile of lettuce with a few croutons and a grilled chicken strip on top is a side dish wearing a main course's name, and it leaves most people hungry by 3pm. That reputation is really a complaint about bad salads, not salads themselves. Build one around a real protein portion, a starch or legume, and a dressing that isn't an afterthought, and it holds up as a full meal that happens to be cold.</p>
+      <p>Here are ten that clear at least 30g of protein per serving, travel well in a container, and don't taste like something you're eating out of obligation.</p>
+
+      <h2>1. Greek Chicken and Chickpea Salad</h2>
+      <p>150g diced grilled chicken thigh over chopped romaine with 150g chickpeas, cucumber, cherry tomatoes, red onion, and crumbled feta, dressed with olive oil and lemon. <strong>~480 cal, 42g protein.</strong> The chickpeas do double duty here, adding both protein and enough carbs that this doesn't need a side to feel like lunch.</p>
+
+      <h2>2. Buffalo Chicken Chopped Salad</h2>
+      <p>150g shredded chicken breast tossed in buffalo sauce over chopped romaine, celery, and shredded carrot, topped with a light drizzle of ranch and crumbled blue cheese. <strong>~420 cal, 40g protein.</strong> Toss the chicken in sauce the night before and this is a five-minute assembly job on a busy morning.</p>
+
+      <h2>3. Steak and Blue Cheese Wedge Salad</h2>
+      <p>150g sliced sirloin over a wedge of iceberg with cherry tomatoes, red onion, and a small amount of blue cheese and dressing on the side. <strong>~460 cal, 38g protein.</strong> Slice the steak thin against the grain and it stays tender even eaten cold straight from the fridge.</p>
+
+      <h2>4. Shrimp, Black Bean, and Avocado Salad</h2>
+      <p>150g cooked shrimp over mixed greens with 150g black beans, half an avocado, corn, and a lime-cilantro dressing. <strong>~430 cal, 34g protein.</strong> Shrimp cooks in under three minutes on prep day, which makes this one of the fastest proteins on this list to batch for the week.</p>
+
+      <h2>5. Southwest Turkey Taco Salad</h2>
+      <p>150g seasoned ground turkey over romaine with black beans, corn, diced tomato, and a sprinkle of cheese, finished with salsa instead of a heavy dressing. <strong>~450 cal, 39g protein.</strong> Salsa carries the flavor without the calories a creamy dressing would add, which leaves more room in the day's fat target for somewhere else.</p>
+
+      <h2>6. Thai-Style Chicken and Peanut Salad</h2>
+      <p>150g shredded chicken over shredded cabbage and carrot with a peanut-lime dressing and chopped peanuts on top. <strong>~470 cal, 37g protein.</strong> The cabbage base holds up far better than lettuce does against a dressing this assertive, so it stays crunchy instead of wilting by the time you eat it.</p>
+
+      <h2>7. Cottage Cheese and Egg Protein Salad</h2>
+      <p>200g cottage cheese mixed with two chopped hard-boiled eggs, diced celery, and a spoon of mustard instead of mayo, served over greens. <strong>~400 cal, 41g protein.</strong> This is the one to reach for on a day you don't want to cook anything at all, since nothing in it needs heat.</p>
+
+      <h2>8. Salmon, White Bean, and Arugula Salad</h2>
+      <p>120g baked salmon flaked over arugula with 150g white beans, shaved red onion, and a lemon-caper dressing. <strong>~460 cal, 33g protein.</strong> Salmon is one of the few proteins that genuinely tastes better cold the next day, which makes this a strong leftover-night option.</p>
+
+      <h2>9. Lentil and Grilled Chicken Salad</h2>
+      <p>120g grilled chicken breast over 200g cooked lentils with roasted peppers, spinach, and a red wine vinaigrette. <strong>~440 cal, 40g protein.</strong> The lentils bring more fiber than almost anything else on this list, which is worth knowing if your <a href="/blog/fiber-on-a-high-protein-diet">fiber intake has been sliding</a> since your protein number went up.</p>
+
+      <h2>10. Tofu and Edamame Crunch Salad</h2>
+      <p>200g baked tofu cubes over mixed greens with 100g shelled edamame, shredded carrot, and a sesame-ginger dressing. <strong>~410 cal, 30g protein.</strong> The highest-fiber, fully plant-based option here, and proof that a salad without meat or dairy can still clear 30g without relying on a protein shake poured over lettuce.</p>
+
+      <h2>Why Most Salads Fall Short of a Real Meal</h2>
+      <p>The problem with a typical salad isn't the vegetables, it's the ratio. Three cups of lettuce and a token portion of chicken might land under 300 calories, which sounds good until you're hungry again an hour later and reaching for something that undoes the whole point of eating light. A salad that actually works as a meal needs a protein portion sized the same way you'd size it for a bowl or a plate, roughly 120 to 150g of cooked meat, fish, or tofu, plus a real carb source like beans, lentils, or a grain, not just a scattering of croutons. Our <a href="/blog/meal-prep-container-math-portion-sizes">guide to meal prep container math</a> covers how those portions translate into grams if you're building salads from scratch rather than eyeballing them.</p>
+      <p>Dressing is the other place salads quietly go wrong, usually in the opposite direction from what people expect. A thin drizzle of a good dressing with real fat in it does more for satiety than a fat-free version loaded with sugar to make up for the flavor loss, and it's a smaller calorie cost than most people assume. Measuring it once with a spoon instead of pouring from the bottle is usually the difference between a salad that fits your macros and one that quietly blows past them.</p>
+
+      <blockquote>A salad that leaves you hungry an hour later isn't a diet food, it's a meal that was built wrong. Fix the protein portion and the carb, and the vegetables take care of themselves.</blockquote>
+
+      <h2>Making These Work for a Week of Prep</h2>
+      <p>Most of these ten hold up well for three to four days refrigerated if you keep the dressing separate until you're ready to eat, which stops the greens from wilting into something unappetizing by day three. The wedge salad, taco salad, and Thai chicken salad are the sturdiest of the bunch since they lean on cabbage or iceberg rather than delicate greens. The salmon and shrimp versions are better eaten within the first two days, in line with how quickly fish turns compared to the rest of your <a href="/blog/how-long-meal-prep-lasts-fridge-freezer-guide">meal prep in the fridge or freezer</a>. <a href="https://macroplan.app">See how MacroPlan fits salads like these into your weekly macro plan →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>Can a salad really replace a full meal on a cut?</h3>
+      <p>Yes, as long as it's built with a proper protein and carb portion rather than just vegetables and a token amount of meat. A 400 to 500 calorie salad with 30g or more of protein and some beans, lentils, or grains fills the same role as a bowl or a plate, it just happens to be cold.</p>
+      <h3>Is it better to use low-fat dressing to save calories?</h3>
+      <p>Not necessarily. Low-fat dressings often replace the fat with added sugar to keep the flavor, and a small amount of a full-fat dressing measured out with a spoon usually costs fewer calories than people assume while doing more for satiety.</p>
+      <h3>Which of these are good for a plant-based diet?</h3>
+      <p>The tofu and edamame salad clears 30g of protein from plant sources alone, and the lentil and chicken salad can swap in a second scoop of lentils or chickpeas for the chicken to stay fully plant-based while still hitting the same number.</p>
+
+      <p>Get a macro plan that treats a salad like a real meal, portioned to your actual targets. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 4, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1605291535065-e1d52d2b264a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxjaGlja2VuJTIwc2FsYWQlMjBib3dsJTIwcHJvdGVpbnxlbnwxfDB8fHwxNzkzNzg2ODQ0fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by logan jeffrey on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@foodjetsexpress?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'high-protein-diet-bloating-why-and-how-to-fix-it',
     title: 'Why a High-Protein Diet Gives You Bloating (and How to Fix It)',
     excerpt: 'Hitting your protein number and feeling like a balloon by 3pm are not unrelated. Here is what actually causes the bloating on a high-protein diet, and how to keep your macros without the discomfort.',
