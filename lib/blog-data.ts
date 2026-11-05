@@ -22,6 +22,52 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'does-soy-protein-lower-testosterone',
+    title: 'Does Soy Protein Lower Testosterone? What the Research Actually Shows',
+    excerpt: 'A lot of lifters quietly avoid tofu, edamame, and soy milk over testosterone fears that trace back to a handful of misread studies. Here is what the actual research says.',
+    content: `
+      <p>Ask around a gym about soy and someone will eventually tell you to stay away from it, usually with a story about estrogen, man boobs, or a training partner's cousin who swears off tofu for the same reason. It is one of the most durable myths in fitness nutrition, repeated often enough that plenty of lifters quietly skip edamame, soy milk, and tofu without ever checking whether the claim holds up. It is worth checking, because soy is one of the few plant foods that comes close to matching animal protein for amino acid quality, and ruling it out for no reason narrows your options for no benefit.</p>
+      <p>The short version is that the testosterone fear does not hold up against the actual body of research. The longer version explains where the myth came from, what soy really contains, and why a food scare built on a handful of misread studies has outlived the evidence against it.</p>
+
+      <h2>Where the Testosterone Fear Started</h2>
+      <p>Soybeans contain compounds called isoflavones, most notably genistein and daidzein, which are a class of plant chemical called phytoestrogens. The name is where most of the confusion begins. Phytoestrogens can bind to estrogen receptors in the body, but binding weakly to a receptor is not the same thing as acting like estrogen does, and isoflavones are structurally and functionally quite different from the estradiol your body actually produces. A handful of early animal studies using isolated soy compounds at doses far beyond what a person would eat in food found hormonal changes in rodents, and those findings got generalized into a blanket warning about soy that never matched how humans actually process it.</p>
+      <p>One frequently cited case report from 2008 described a man who developed gynecomastia after drinking roughly three liters of soy milk a day for months, an intake so far outside normal eating patterns that it tells you almost nothing about a lifter having a protein shake with soy milk or a serving of tofu with dinner. Case reports like this are useful for flagging an extreme edge case, not for drawing conclusions about normal intake, but the headline survived long after the context got dropped.</p>
+
+      <h2>What the Actual Human Research Shows</h2>
+      <p>When researchers study normal soy intake in men rather than extreme outliers, the testosterone effect disappears. A 2010 meta-analysis published in <em>Fertility and Sterility</em> pooled data across 15 controlled trials and found that neither soy protein nor isoflavone supplements had any significant effect on total testosterone, free testosterone, or sex hormone binding globulin in men. That is the strongest type of evidence available on this question, a pooled analysis of controlled trials rather than a single case report or an animal study, and it points the same direction every time someone has gone looking: normal soy intake does not move the needle on testosterone.</p>
+      <p>Later trials looking specifically at resistance-trained men reached the same conclusion. Studies comparing soy protein against whey in men doing structured lifting programs found comparable gains in strength and lean mass between groups, with no hormonal disadvantage tied to the soy. If soy protein were quietly suppressing testosterone in a way that mattered for muscle, it would show up in those trials as a difference in strength or hypertrophy outcomes, and it consistently does not.</p>
+
+      <blockquote>A pooled analysis of 15 controlled trials found no effect of soy protein or isoflavones on testosterone in men. The fear outlived the evidence against it by over a decade.</blockquote>
+
+      <h2>Why the Myth Persists Anyway</h2>
+      <p>Part of the staying power comes from how intuitive the wrong idea sounds. "Soy has estrogen-like compounds, estrogen is the female hormone, therefore soy will feminize you" is a chain of reasoning simple enough to repeat in a locker room conversation, even though the middle step is doing far more work than the biology supports. Isoflavones are selective estrogen receptor modulators, meaning their effect depends heavily on tissue type and existing hormone levels, and at the concentrations found in food they behave nothing like a meaningful dose of estrogen in a man's bloodstream.</p>
+      <p>The other reason the myth sticks is that soy protein isolate genuinely digests and performs differently than whey in a few measurable ways, and some of that got folded into the testosterone narrative even though it has nothing to do with hormones. Soy has a slightly lower leucine content per gram than whey, which is the real, evidence-backed reason it is a notch behind whey for maximizing a single dose's muscle protein synthesis response, something we cover in more detail in our <a href="/blog/whey-vs-casein-vs-plant-protein-powder-comparison">comparison of whey, casein, and plant protein powder</a>. That is a legitimate, minor consideration. Testosterone suppression is not, and conflating the two gives soy a worse reputation than either issue earns on its own.</p>
+
+      <h2>What This Means for Your Macros</h2>
+      <p>If you are building a vegetarian or mostly plant-based week, soy is one of the few single sources that gets you close to a complete amino acid profile without stacking multiple proteins to compensate, the way you often need to with rice and beans. Tofu, tempeh, edamame, and soy milk all fit comfortably into a macro plan built around real food, and our <a href="/blog/high-protein-vegetarian-meal-prep-for-lifters">guide to high-protein vegetarian meal prep</a> leans on soy foods for exactly that reason. A cup of edamame runs close to 17g of protein alongside real fiber, and firm tofu holds its texture through a week of prep better than most plant proteins people try first.</p>
+      <p>None of this means soy needs to become your main protein source if you would rather lean on chicken, eggs, and whey. It means ruling it out specifically over a testosterone concern is removing a useful, well-studied food for a reason that does not survive contact with the actual research. <a href="https://macroplan.app">See how MacroPlan builds a macro plan around whatever proteins you actually want to eat →</a></p>
+
+      <h2>FAQ</h2>
+      <h3>How much soy would it take to actually affect testosterone?</h3>
+      <p>The case reports that show a hormonal effect involve intakes far beyond typical eating, such as multiple liters of soy milk daily for months. Controlled trials using normal serving sizes, including in resistance-trained men, consistently find no measurable effect on testosterone.</p>
+      <h3>Is soy protein as good as whey for building muscle?</h3>
+      <p>It is close but not identical. Soy has a slightly lower leucine content than whey, which gives whey a small edge for maximizing muscle protein synthesis from a single serving. Trials comparing the two in lifters have found comparable strength and lean mass gains over time, so the practical gap is smaller than the leucine numbers alone suggest.</p>
+      <h3>What about estrogen effects in women?</h3>
+      <p>The research on isoflavones in women, including studies on breast cancer survivors and menopausal symptoms, is its own separate body of evidence and generally supportive of normal soy intake as well. This article focuses specifically on the male testosterone claim, which is the version of the myth most often repeated in gyms.</p>
+
+      <p>Get a macro plan that fits real food, soy included, around your actual targets. <a href="https://macroplan.app/signup">Get your plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 5, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1611810174991-5cdd99a2c6b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxlZGFtYW1lJTIwc295YmVhbnN8ZW58MXwwfHx8MTc5Mzg2ODUwOHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Crystal Jo on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@crystalsjo?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'high-protein-salads-for-lifters',
     title: '10 High-Protein Salads That Actually Taste Good (30g+ Protein Each)',
     excerpt: 'Salads get a bad reputation among lifters for being a side dish pretending to be a meal. These ten clear 30g of protein each and are built to fill you up, not just check a box.',
