@@ -14,7 +14,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft, ArrowRight, MoreHorizontal, Plus, ChefHat, Heart, Archive, Trash2 } from 'lucide-react'
+import { ArrowRight, MoreHorizontal, Plus, ChefHat, Heart, Archive, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { macroColors } from '@/lib/design-tokens'
 import { Button } from '@/components/ui/button'
@@ -138,63 +138,42 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
 
   const tabs: { key: TabFilter; label: string }[] = [
     { key: 'all', label: 'All' },
-    { key: 'this_week', label: 'This Week' },
+    { key: 'this_week', label: 'This week' },
     { key: 'favorites', label: 'Favorites' },
   ]
 
   return (
-    <div className="min-h-screen bg-background pb-32">
-      {/* Sub-header with back button, title, and actions */}
-      <div className="bg-background border-b border-border-strong">
-        <div className="mx-auto max-w-5xl">
-          <div className="flex h-14 items-center px-4">
-            <div className="flex size-10 shrink-0 items-center justify-start">
-              <button
-                onClick={() => router.back()}
-                aria-label="Go back"
-                className="flex h-10 w-10 items-center justify-center hover:bg-muted rounded-lg transition-colors"
-              >
-                <ArrowLeft className="size-5 text-foreground" />
-              </button>
-            </div>
-            <h1 className="flex-1 text-center text-lg font-semibold leading-tight tracking-[-0.015em] text-foreground">
-              Saved Plans
-            </h1>
-            <div className="flex w-10 shrink-0 items-center justify-end">
-              <button
-                onClick={handleGenerateNew}
-                aria-label="Generate new plan"
-                className="flex h-10 w-10 items-center justify-center text-coral-700 hover:bg-primary/10 rounded-lg transition-colors duration-fast ease-out-quint dark:text-primary"
-              >
-                <Plus className="size-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Tab Navigation */}
-          <div className="px-4">
-            <div className="flex border-b border-border">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
-                  className={cn(
-                    'flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors duration-fast ease-out-quint md:flex-none md:px-6',
-                    activeTab === tab.key
-                      ? 'border-primary text-coral-700 dark:text-primary'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  <p className="text-sm font-semibold leading-normal">{tab.label}</p>
-                </button>
-              ))}
-            </div>
-          </div>
+    <div className="min-h-screen bg-background pb-24">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 pt-6">
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="text-3xl font-bold tracking-tight">Plans</h1>
+          <Button onClick={handleGenerateNew}>
+            <Plus className="size-4" />
+            New plan
+          </Button>
+        </div>
+        <div role="tablist" className="flex gap-6 border-b border-border-strong">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              role="tab"
+              aria-selected={activeTab === tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={cn(
+                '-mb-px border-b-2 py-2.5 text-sm font-medium transition-colors duration-fast',
+                activeTab === tab.key
+                  ? 'border-primary text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Content */}
-      <main className="mx-auto max-w-5xl p-4">
+      <main className="mx-auto max-w-7xl px-4 py-5">
         {filteredPlans.length === 0 && filteredBatchPlans.length === 0 ? (
           <EmptyState activeTab={activeTab} onGenerate={handleGenerateNew} />
         ) : (
@@ -235,8 +214,8 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
 
       {/* Quota Footer (Free tier only) */}
       {quotaInfo && quotaInfo.tier === 'free' && (
-        <div className="fixed bottom-0 left-0 right-0 z-10 bg-card/95 backdrop-blur-sm p-4 border-t border-border-strong shadow-lg">
-          <div className="text-center text-sm text-muted-foreground">
+        <div className="mx-auto max-w-7xl px-4 pb-6">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border-strong bg-card px-4 py-3 text-sm text-muted-foreground">
             <p>
               Free: <span className="font-mono tabular-nums">{quotaInfo.used}</span> of{' '}
               <span className="font-mono tabular-nums">{quotaInfo.total}</span> plans generated
@@ -489,7 +468,7 @@ function MealPlanCard({
 
           {/* View Plan Button - pushed to bottom */}
           <div className="mt-auto pt-2">
-            <div className="flex h-10 w-full items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-card text-sm font-semibold leading-normal text-coral-700 transition-colors duration-fast ease-out-quint group-hover:bg-primary/10 dark:text-primary">
+            <div className="flex h-10 w-full items-center justify-center gap-2 overflow-hidden rounded-xl border border-border-strong bg-card text-sm font-semibold leading-normal text-foreground transition-colors duration-fast ease-out-quint group-hover:bg-muted">
               <span className="truncate">View Plan</span>
               <ArrowRight className="size-4 transition-transform duration-fast ease-out-quint group-hover:translate-x-0.5" />
             </div>
@@ -538,15 +517,15 @@ function BatchPrepCard({ plan }: { plan: BatchPrepPlanSummary }) {
       aria-label={`View batch prep plan for week of ${weekLabel}`}
     >
       <div className="flex items-start justify-between">
-        <div className="flex size-10 items-center justify-center rounded-xl bg-coral-50 text-coral-700 dark:bg-primary/10 dark:text-primary">
+        <div className="flex size-10 items-center justify-center rounded-xl bg-muted text-foreground">
           <ChefHat className="size-5" />
         </div>
         <ArrowRight className="size-4 text-muted-foreground transition-transform duration-fast ease-out-quint group-hover:translate-x-0.5" />
       </div>
 
       <div>
-        <p className="font-semibold leading-tight text-foreground">Batch Prep</p>
-        <p className="text-sm text-muted-foreground">Week of {weekLabel}</p>
+        <p className="font-display text-lg font-bold leading-tight tracking-tight text-foreground">Week of {weekLabel}</p>
+        <p className="text-sm text-muted-foreground">Batch prep plan</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">

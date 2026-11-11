@@ -141,6 +141,14 @@ useEffect dependency array like `[supabase.auth]`).
 
 **Row Level Security**: All tables use RLS with `auth.uid() = user_id` policies. Users can ONLY access their own data.
 
+### Recipe browse (`/recipes`)
+
+- URL contract and parsing live in `lib/utils/filter-validation.ts`
+  (`tags`, `minProtein`, `maxCalories`, `maxCarbs`, `maxTime`, `sort`, `search`, `tab`)
+- `searchLibraryRecipes()` in `app/actions/recipes.ts` runs every filter in SQL
+  against the `recipes` table; all filters AND together
+- Favorites/Popular tabs reuse the same query restricted to their ids
+
 ### Calculation Engine
 
 Located in `lib/calculations/`:
@@ -194,7 +202,8 @@ their own headers. Route protection lives in `proxy.ts`.
 - `components/onboarding/`: StepContainer, ProgressIndicator
 - `components/dashboard/`: Dashboard-specific features
 - `components/plans/`: Meal plan UI components
-- `components/recipes/`: Recipe cards, filters
+- `components/recipes/`: Recipe cards, `recipe-filters.tsx` (URL-driven filter bar)
+- `components/ui/macro-split.tsx`: the shared macro summary (bar + P/C/F grams)
 
 **Composition Pattern**: Most pages compose multiple smaller components. Components receive props via standard React patterns (no Context overuse).
 

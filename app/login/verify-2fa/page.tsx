@@ -222,7 +222,7 @@ export default function Verify2FAPage() {
                 onClick={() => handleMethodSwitch('totp')}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-medium transition-colors ${
                   method === 'totp'
-                    ? 'bg-primary text-primary-foreground'
+                    ? 'bg-coral-600 text-primary-foreground'
                     : 'bg-muted text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -233,7 +233,7 @@ export default function Verify2FAPage() {
                 onClick={() => handleMethodSwitch('email')}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-medium transition-colors ${
                   method === 'email'
-                    ? 'bg-primary text-primary-foreground'
+                    ? 'bg-coral-600 text-primary-foreground'
                     : 'bg-muted text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -252,7 +252,7 @@ export default function Verify2FAPage() {
               <button
                 onClick={handleSendEmailCode}
                 disabled={sendingCode}
-                className="inline-flex items-center gap-2 py-2 px-4 rounded-xl text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                className="inline-flex items-center gap-2 py-2 px-4 rounded-xl text-sm font-medium bg-coral-600 text-primary-foreground hover:bg-coral-700 disabled:opacity-50 transition-colors"
               >
                 {sendingCode ? (
                   <>

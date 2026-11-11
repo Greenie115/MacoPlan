@@ -40,7 +40,7 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
           />
           <button
             type="submit"
-            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-coral-700"
           >
             Download
           </button>

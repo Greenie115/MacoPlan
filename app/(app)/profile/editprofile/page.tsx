@@ -240,7 +240,7 @@ export default function EditProfilePage() {
             </div>
             <button
               onClick={() => router.push('/onboarding/1')}
-              className="px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors"
+              className="px-6 py-3 rounded-xl bg-coral-600 text-white font-semibold text-sm hover:bg-coral-700 transition-colors"
             >
               Go to Onboarding
             </button>

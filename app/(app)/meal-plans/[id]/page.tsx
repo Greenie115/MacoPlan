@@ -48,7 +48,7 @@ export default async function MealPlanPage({
           </p>
           <Link
             href="/meal-plans/generate"
-            className="inline-block rounded-xl bg-primary px-6 py-3 font-bold text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-block rounded-xl bg-primary px-6 py-3 font-bold text-primary-foreground transition-colors hover:bg-coral-700"
           >
             Generate new plan
           </Link>

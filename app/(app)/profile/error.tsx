@@ -30,7 +30,7 @@ export default function ProfileError({
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={reset}
-            className="inline-flex items-center justify-center h-12 px-6 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center justify-center h-12 px-6 rounded-xl bg-coral-600 text-primary-foreground font-semibold hover:bg-coral-700 transition-colors"
           >
             Try Again
           </button>

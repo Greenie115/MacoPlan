@@ -41,7 +41,7 @@ export default function CheckoutCancelPage() {
         <div className="space-y-3">
           <Link
             href="/pricing"
-            className="inline-flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-primary/20"
+            className="inline-flex items-center justify-center gap-2 w-full bg-primary hover:bg-coral-700 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-primary/20"
           >
             <ArrowLeft className="size-5" />
             Back to Pricing

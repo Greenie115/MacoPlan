@@ -111,7 +111,7 @@ export default function ActivityLevelPage() {
                   <p className="text-sm text-muted-foreground">{level.description}</p>
                 </div>
                 {isSelected && (
-                  <div className="flex items-center justify-center size-6 rounded-full bg-primary text-primary-foreground shrink-0">
+                  <div className="flex items-center justify-center size-6 rounded-full bg-coral-600 text-primary-foreground shrink-0">
                     <Check className="size-4" />
                   </div>
                 )}

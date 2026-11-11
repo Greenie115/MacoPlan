@@ -29,7 +29,7 @@ export function FAQSection() {
   return (
     <section className="border-t border-border-strong bg-card py-24 md:py-32" id="faq">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
-        <h2 className="text-display-lg font-extrabold">Questions? We&apos;ve got answers.</h2>
+        <h2 className="text-display-lg font-extrabold leading-[1.05]">Questions? We&apos;ve got answers.</h2>
 
         <div>
           {faqs.map((faq) => (

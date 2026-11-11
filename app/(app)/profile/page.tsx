@@ -232,7 +232,7 @@ export default function ProfilePage() {
             </div>
             <Link
               href="/onboarding/1"
-              className="px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors flex items-center gap-2"
+              className="px-6 py-3 rounded-xl bg-coral-600 text-white font-semibold text-sm hover:bg-coral-700 transition-colors flex items-center gap-2"
             >
               Complete Onboarding
               <ArrowRight className="h-4 w-4" />
@@ -348,7 +348,7 @@ export default function ProfilePage() {
                   <button
                     onClick={handleUpgrade}
                     disabled={isPending}
-                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors disabled:opacity-50"
+                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-coral-600 text-white font-semibold text-sm hover:bg-coral-700 transition-colors disabled:opacity-50"
                   >
                     {isPending ? (
                       <Loader2 className="size-4 animate-spin" />
@@ -488,7 +488,7 @@ export default function ProfilePage() {
                     disabled={isUpdatingTier}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                       simulatedTier === 'paid'
-                        ? 'bg-primary text-white'
+                        ? 'bg-coral-600 text-white'
                         : simulatedTier === 'free'
                         ? 'bg-secondary text-foreground'
                         : 'bg-accent text-muted-foreground'

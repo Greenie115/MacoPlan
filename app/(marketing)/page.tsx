@@ -187,7 +187,7 @@ export default function LandingPage() {
           {/* ==================== HOW IT WORKS ==================== */}
           <section className="py-24 md:py-32" id="how-it-works" aria-labelledby="how-heading">
             <div className="mx-auto max-w-6xl px-6">
-              <h2 id="how-heading" className="max-w-2xl text-display-xl font-extrabold">
+              <h2 id="how-heading" className="max-w-2xl text-display-xl font-extrabold leading-[1.05]">
                 Three steps to a stocked fridge.
               </h2>
               <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-0">

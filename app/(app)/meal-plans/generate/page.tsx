@@ -76,7 +76,7 @@ export default async function GenerateBatchPrepPage() {
               </p>
               <Link
                 href="/onboarding/1"
-                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-primary text-primary-foreground font-semibold text-base shadow-lg hover:bg-primary/90 transition-colors"
+                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-coral-600 text-primary-foreground font-semibold text-base shadow-lg hover:bg-coral-700 transition-colors"
               >
                 Complete Onboarding
               </Link>

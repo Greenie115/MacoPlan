@@ -166,7 +166,7 @@ export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onS
             
             {/* Annual Plan */}
             <div className="relative w-full border-2 border-primary bg-primary/5 rounded-xl p-4">
-              <div className="absolute -top-3 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+              <div className="absolute -top-3 left-4 bg-coral-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
                 <ShieldCheck className="size-3" />
                 BEST VALUE
               </div>
@@ -178,7 +178,7 @@ export function PaywallModal({ isOpen, onClose, trigger = 'meal_plan_limit', onS
               <button
                 onClick={() => handleSubscribe('annual')}
                 disabled={isPending}
-                className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-12 flex items-center justify-center gap-2 rounded-lg bg-coral-600 text-white font-bold hover:bg-coral-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loadingPlan === 'annual' ? (
                   <>
