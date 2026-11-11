@@ -41,7 +41,7 @@ export function RecipeHero({
             onError={() => setImageFailed(true)}
           />
         ) : (
-          <RecipeImageFallback title={recipeName} iconClassName="size-12" />
+          <RecipeImageFallback title={recipeName} />
         )}
         {/* Gradient overlay for better text visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-50" />

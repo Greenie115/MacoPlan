@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils'
 /** Shared chip classes for the dietary-style and allergy toggle groups. */
 function chipClass(isSelected: boolean) {
   return cn(
-    'inline-flex h-11 items-center gap-1.5 rounded-full border-2 px-4 text-sm font-medium transition-all duration-[var(--duration-fast)] ease-out-quint',
+    'inline-flex h-11 items-center gap-1.5 rounded-full border-2 px-4 text-sm font-medium transition-all duration-fast ease-out-quint',
     isSelected
       ? 'border-primary bg-primary/10 text-foreground'
       : 'border-border-strong text-foreground hover:border-primary/40'
@@ -22,13 +22,13 @@ function chipClass(isSelected: boolean) {
 }
 
 const DIETARY_STYLES = [
-  { id: 'none' as DietaryStyle, emoji: '🍽️', label: 'None / Flexible' },
-  { id: 'vegetarian' as DietaryStyle, emoji: '🥗', label: 'Vegetarian' },
-  { id: 'vegan' as DietaryStyle, emoji: '🌱', label: 'Vegan' },
-  { id: 'pescatarian' as DietaryStyle, emoji: '🐟', label: 'Pescatarian' },
-  { id: 'paleo' as DietaryStyle, emoji: '🥩', label: 'Paleo' },
-  { id: 'keto' as DietaryStyle, emoji: '🥑', label: 'Keto' },
-  { id: 'mediterranean' as DietaryStyle, emoji: '🫒', label: 'Mediterranean' },
+  { id: 'none' as DietaryStyle, label: 'None / Flexible' },
+  { id: 'vegetarian' as DietaryStyle, label: 'Vegetarian' },
+  { id: 'vegan' as DietaryStyle, label: 'Vegan' },
+  { id: 'pescatarian' as DietaryStyle, label: 'Pescatarian' },
+  { id: 'paleo' as DietaryStyle, label: 'Paleo' },
+  { id: 'keto' as DietaryStyle, label: 'Keto' },
+  { id: 'mediterranean' as DietaryStyle, label: 'Mediterranean' },
 ]
 
 const ALLERGIES = [
@@ -135,7 +135,6 @@ export default function DietaryPreferencesPage() {
       <StepContainer
         step={4}
         title="Dietary Preferences"
-        emoji="🥗"
         subtitle="Help us personalize your meal plans (optional)"
         onBack={handleBack}
         onContinue={handleContinue}
@@ -156,7 +155,6 @@ export default function DietaryPreferencesPage() {
                   aria-pressed={isSelected}
                   className={chipClass(isSelected)}
                 >
-                  <span aria-hidden="true">{style.emoji}</span>
                   {style.label}
                   {isSelected && <Check className="size-3.5 text-primary" aria-hidden="true" />}
                 </button>

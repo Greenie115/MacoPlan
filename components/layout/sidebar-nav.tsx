@@ -2,105 +2,86 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BookOpen, Calendar, User, ChevronLeft, ChevronRight } from 'lucide-react'
+import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useSidebarStore } from '@/stores/sidebar-store'
+import { Logo, LogoMark } from '@/components/brand/logo'
+import { NAV_ITEMS, activePath } from './nav-items'
+import { UserAvatar } from './user-avatar'
 
-const tabs = [
-  { id: 'home' as const, label: 'Home', icon: Home, path: '/dashboard' },
-  { id: 'recipes' as const, label: 'Recipes', icon: BookOpen, path: '/recipes' },
-  { id: 'plans' as const, label: 'Plans', icon: Calendar, path: '/meal-plans' },
-  { id: 'profile' as const, label: 'Profile', icon: User, path: '/profile' },
-]
-
-export function SidebarNav() {
-  const pathname = usePathname()
+export function SidebarNav({ userName, avatarUrl }: { userName: string; avatarUrl: string | null }) {
+  const current = activePath(usePathname())
   const { isCollapsed, toggle } = useSidebarStore()
 
-  // Determine active tab from pathname
-  const getActiveTab = () => {
-    if (pathname.startsWith('/recipes')) return 'recipes'
-    if (pathname.startsWith('/meal-plans')) return 'plans'
-    if (pathname.startsWith('/profile')) return 'profile'
-    return 'home'
-  }
-
-  const currentTab = getActiveTab()
-
   return (
-    <>
-      {/* Sidebar - always visible on desktop, hidden on mobile */}
-      <aside
-        className={cn(
-          'fixed top-0 left-0 z-40 h-full bg-muted border-r border-border-strong transition-[width] duration-200 ease-out-quint',
-          isCollapsed ? 'w-20' : 'w-64',
-          // Hide on mobile, always show on desktop
-          'hidden lg:block'
+    <aside
+      className={cn(
+        'fixed left-0 top-0 z-40 hidden h-full flex-col border-r border-border-strong bg-card transition-[width] duration-200 ease-out-quint lg:flex',
+        isCollapsed ? 'w-[4.5rem]' : 'w-60'
+      )}
+      aria-label="Main navigation"
+    >
+      <div className={cn('flex h-16 items-center', isCollapsed ? 'justify-center' : 'px-5')}>
+        {isCollapsed ? (
+          <Link href="/dashboard" aria-label="MacroPlan — Home">
+            <LogoMark size={28} />
+          </Link>
+        ) : (
+          <Logo href="/dashboard" markSize={26} textClassName="font-display text-lg font-bold tracking-tight" />
         )}
-        aria-label="Main navigation"
-      >
-        <div className="flex flex-col h-full">
-          {/* Toggle Button */}
-          <button
-            onClick={toggle}
-            className="absolute -right-3 top-9 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-border-strong bg-card shadow-sm hover:shadow-md hover:bg-accent transition-all duration-150"
-            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            {isCollapsed ? (
-              <ChevronRight className="h-3 w-3 text-icon" />
-            ) : (
-              <ChevronLeft className="h-3 w-3 text-icon" />
-            )}
-          </button>
+      </div>
 
-          {/* Navigation items */}
-          <nav className="flex-1 p-3 pt-20">
-            <ul className="space-y-1">
-              {tabs.map((tab) => {
-                const Icon = tab.icon
-                const isActive = currentTab === tab.id
+      <nav className="flex-1 px-3 py-2">
+        <ul className="space-y-0.5">
+          {NAV_ITEMS.map(({ label, icon: Icon, path }) => {
+            const isActive = current === path
+            return (
+              <li key={path}>
+                <Link
+                  href={path}
+                  aria-current={isActive ? 'page' : undefined}
+                  title={isCollapsed ? label : undefined}
+                  className={cn(
+                    'flex h-10 items-center gap-3 rounded-lg text-sm transition-colors duration-fast',
+                    isCollapsed ? 'justify-center' : 'px-3',
+                    isActive
+                      ? 'bg-muted font-semibold text-foreground'
+                      : 'font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground'
+                  )}
+                >
+                  <Icon className={cn('size-[1.125rem] shrink-0', isActive && 'text-primary')} strokeWidth={isActive ? 2.25 : 2} />
+                  {isCollapsed ? <span className="sr-only">{label}</span> : label}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
 
-                return (
-                  <li key={tab.id}>
-                    <Link
-                      href={tab.path}
-                      className={cn(
-                        'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm',
-                        'transition-colors duration-150',
-                        isActive
-                          ? 'bg-coral-50 text-coral-700 font-semibold'
-                          : 'text-muted-foreground font-medium hover:bg-accent hover:text-foreground',
-                        isCollapsed ? 'justify-center px-2' : 'w-full'
-                      )}
-                      aria-label={`Navigate to ${tab.label}`}
-                      aria-current={isActive ? 'page' : undefined}
-                      title={isCollapsed ? tab.label : undefined}
-                    >
-                      <Icon className="size-5 shrink-0" strokeWidth={isActive ? 2.25 : 2} />
-                      {!isCollapsed && (
-                        <span className="whitespace-nowrap overflow-hidden">
-                          {tab.label}
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </nav>
-
-          {/* Footer */}
-          <div className="p-4 border-t border-border-strong">
-            {!isCollapsed ? (
-              <p className="text-xs text-muted-foreground text-center whitespace-nowrap">
-                MacroPlan v1.0
-              </p>
-            ) : (
-              <p className="text-xs text-muted-foreground text-center">v1.0</p>
-            )}
-          </div>
-        </div>
-      </aside>
-    </>
+      <div className="space-y-0.5 border-t border-border p-3">
+        <button
+          onClick={toggle}
+          className={cn(
+            'flex h-10 w-full items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-colors duration-fast hover:bg-muted/60 hover:text-foreground',
+            isCollapsed ? 'justify-center' : 'px-3'
+          )}
+          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {isCollapsed ? <PanelLeftOpen className="size-[1.125rem]" /> : <PanelLeftClose className="size-[1.125rem]" />}
+          {!isCollapsed && 'Collapse'}
+        </button>
+        <Link
+          href="/profile"
+          className={cn(
+            'flex h-12 items-center gap-3 rounded-lg transition-colors duration-fast hover:bg-muted/60',
+            isCollapsed ? 'justify-center' : 'px-2'
+          )}
+          aria-label="Your profile"
+        >
+          <UserAvatar name={userName} avatarUrl={avatarUrl} />
+          {!isCollapsed && <span className="truncate text-sm font-medium">{userName}</span>}
+        </Link>
+      </div>
+    </aside>
   )
 }

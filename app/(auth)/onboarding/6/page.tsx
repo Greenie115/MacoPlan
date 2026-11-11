@@ -16,9 +16,9 @@ import { cn } from '@/lib/utils'
 
 /** Macro reveal cards — one shared vocabulary for icon, color token, and label. */
 const MACRO_CARDS = [
-  { key: 'protein' as const, emoji: '🥩', label: 'Protein', textClass: 'text-protein', bgClass: 'bg-protein/10', borderClass: 'border-protein/20' },
-  { key: 'carbs' as const, emoji: '🍞', label: 'Carbs', textClass: 'text-carb', bgClass: 'bg-carb/10', borderClass: 'border-carb/20' },
-  { key: 'fat' as const, emoji: '🥑', label: 'Fat', textClass: 'text-fat', bgClass: 'bg-fat/10', borderClass: 'border-fat/20' },
+  { key: 'protein' as const, label: 'Protein', textClass: 'text-protein', bgClass: 'bg-protein/10', borderClass: 'border-protein/20' },
+  { key: 'carbs' as const, label: 'Carbs', textClass: 'text-carb', bgClass: 'bg-carb/10', borderClass: 'border-carb/20' },
+  { key: 'fat' as const, label: 'Fat', textClass: 'text-fat', bgClass: 'bg-fat/10', borderClass: 'border-fat/20' },
 ]
 
 /** Counts up to `target` over ~600ms — makes the reveal read as "computed for you" */
@@ -216,7 +216,6 @@ export default function MacroResultsPage() {
         <StepContainer
           step={6}
           title="Calculation Error"
-          emoji="⚠️"
           onBack={handleBack}
           onContinue={() => {
             store.clearError()
@@ -270,7 +269,6 @@ export default function MacroResultsPage() {
       <StepContainer
         step={6}
         title="Your Macro Targets"
-        emoji="🎯"
         subtitle="Built from your numbers — your weight, your training, your goal. Not a template."
         onBack={handleBack}
         onContinue={handleComplete}
@@ -314,7 +312,6 @@ export default function MacroResultsPage() {
                     style={{ animationDelay: `${80 * (i + 1)}ms` }}
                   >
                     <div className={cn('mx-auto mb-2 flex size-12 items-center justify-center rounded-full', macro.bgClass)}>
-                      <span className="text-xl" aria-hidden="true">{macro.emoji}</span>
                     </div>
                     <p className={cn('font-mono text-2xl font-bold tabular-nums', macro.textClass)}>
                       {grams}g

@@ -82,7 +82,7 @@ export function RecipeFilters() {
           aria-label="Sort recipes"
           value={state.sort}
           onChange={(e) => set('sort', e.target.value)}
-          className="h-11 min-w-0 flex-[0_1_14rem] cursor-pointer rounded-xl border border-border-strong bg-card px-3.5 text-sm font-medium shadow-xs"
+          className="h-11 min-w-0 flex-[1_1_12rem] sm:flex-[0_1_14rem] cursor-pointer rounded-xl border border-border-strong bg-card px-3.5 text-sm font-medium shadow-xs"
         >
           {Object.entries(RECIPE_SORTS).map(([value, label]) => (
             <option key={value} value={value}>
@@ -113,11 +113,11 @@ export function RecipeFilters() {
         })}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 text-sm text-muted-foreground">
-        <span>Per serving</span>
+      <div className="grid grid-cols-2 items-end gap-x-5 gap-y-2.5 text-sm text-muted-foreground sm:flex sm:flex-wrap sm:items-center">
+        <span className="col-span-2">Per serving</span>
         {RECIPE_LIMITS.map(({ key, label, unit, max }) => (
-          <label key={key} className="flex items-center gap-2">
-            {label}
+          <label key={key} className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="w-full sm:w-auto">{label}</span>
             <input
               type="number"
               inputMode="numeric"
@@ -133,7 +133,7 @@ export function RecipeFilters() {
         {active > 0 && (
           <button
             onClick={() => setState((s) => ({ ...DEFAULTS, ...Object.fromEntries(KEYS.map((k) => [k, ''])), tab: s.tab, sort: s.sort }))}
-            className="ml-auto font-medium text-coral-700 hover:underline dark:text-coral-300"
+            className="col-span-2 justify-self-start font-medium sm:ml-auto text-coral-700 hover:underline dark:text-coral-300"
           >
             Clear {active} filter{active > 1 ? 's' : ''}
           </button>

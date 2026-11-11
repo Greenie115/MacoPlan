@@ -12,31 +12,26 @@ import { cn } from '@/lib/utils'
 const ACTIVITY_LEVELS = [
   {
     id: 'sedentary' as ActivityLevel,
-    emoji: '🛋️',
     label: 'Sedentary',
     description: 'Little to no exercise',
   },
   {
     id: 'lightly' as ActivityLevel,
-    emoji: '🚶',
     label: 'Lightly Active',
     description: '1-3 days/week',
   },
   {
     id: 'moderately' as ActivityLevel,
-    emoji: '🏃',
     label: 'Moderately Active',
     description: '3-5 days/week',
   },
   {
     id: 'very' as ActivityLevel,
-    emoji: '🏋️',
     label: 'Very Active',
     description: '6-7 days/week',
   },
   {
     id: 'extremely' as ActivityLevel,
-    emoji: '💪',
     label: 'Extremely Active',
     description: '2x per day + physical job',
   },
@@ -94,7 +89,7 @@ export default function ActivityLevelPage() {
               <Card
                 key={level.id}
                 className={cn(
-                  'flex items-center gap-4 p-4 cursor-pointer border-2 transition-all duration-[var(--duration-fast)] ease-out-quint',
+                  'flex items-center gap-4 p-4 cursor-pointer border-2 transition-all duration-fast ease-out-quint',
                   isSelected
                     ? 'border-primary bg-primary/5'
                     : 'border-border-strong hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5'
@@ -111,7 +106,6 @@ export default function ActivityLevelPage() {
                 aria-pressed={isSelected}
                 aria-label={`${level.label}: ${level.description}`}
               >
-                <span className="text-3xl" aria-hidden="true">{level.emoji}</span>
                 <div className="flex-1">
                   <p className="text-base font-medium text-foreground">{level.label}</p>
                   <p className="text-sm text-muted-foreground">{level.description}</p>

@@ -1,93 +1,33 @@
-'use client'
-
 import { cn } from '@/lib/utils'
 
-interface MacroProgressBarProps {
-  type: 'protein' | 'carbs' | 'fat'
-  eaten: number
-  target: number
-  showCalories?: boolean
-}
-
-const macroConfig = {
-  protein: {
-    label: 'Protein',
-    barColor: 'bg-protein',
-    textColor: 'text-protein',
-    dotColor: 'bg-protein',
-  },
-  carbs: {
-    label: 'Carbs',
-    barColor: 'bg-carb',
-    textColor: 'text-carb',
-    dotColor: 'bg-carb',
-  },
-  fat: {
-    label: 'Fat',
-    barColor: 'bg-fat',
-    textColor: 'text-fat',
-    dotColor: 'bg-fat',
-  },
+const MACROS = {
+  protein: { label: 'Protein', bar: 'bg-protein' },
+  carbs: { label: 'Carbs', bar: 'bg-carb' },
+  fat: { label: 'Fat', bar: 'bg-fat' },
 } as const
 
-export function MacroProgressBar({
-  type,
-  eaten,
-  target,
-  showCalories = false,
-}: MacroProgressBarProps) {
-  const config = macroConfig[type]
-  const percentage = target > 0 ? Math.round((eaten / target) * 100) : 0
-  const isOver = percentage > 100
-
-  // Calculate calories for this macro
-  const caloriesPerGram = type === 'fat' ? 9 : 4
-  const caloriesEaten = Math.round(eaten * caloriesPerGram)
+/** One macro as a gauge: eaten over target, a slim bar, and what's left. */
+export function MacroProgressBar({ type, eaten, target }: { type: keyof typeof MACROS; eaten: number; target: number }) {
+  const { label, bar } = MACROS[type]
+  const percent = target > 0 ? (eaten / target) * 100 : 0
+  const left = Math.round(target - eaten)
 
   return (
-    <div className="flex items-center gap-3">
-      {/* Macro color indicator */}
-      <div className={cn('size-2.5 rounded-full flex-shrink-0', config.dotColor)} aria-hidden="true" />
-
-      {/* Progress Section */}
-      <div className="flex-1 min-w-0">
-        {/* Label Row */}
-        <div className="flex items-baseline justify-between mb-1">
-          <span className="text-sm font-medium text-foreground">{config.label}</span>
-          <div className="flex items-baseline gap-1.5 font-mono tabular-nums">
-            <span className={cn('text-sm font-bold', config.textColor)}>
-              {Math.round(eaten)}g
-            </span>
-            <span className="text-xs text-muted-foreground">/ {Math.round(target)}g</span>
-            {showCalories && (
-              <span className="text-xs text-muted-foreground ml-1">
-                • {caloriesEaten} cal
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="w-full bg-background rounded-full h-2 overflow-hidden">
-          <div
-            className={cn(
-              'h-2 rounded-full transition-[width] duration-500 ease-out-quint',
-              isOver ? 'bg-warning' : config.barColor
-            )}
-            style={{ width: `${Math.min(percentage, 100)}%` }}
-          />
-        </div>
-
-        {/* Percentage / Over indicator */}
-        <div className="flex justify-between items-center mt-1">
-          <span className="text-xs text-muted-foreground tabular-nums">{percentage}%</span>
-          {isOver && (
-            <span className="text-xs font-medium text-warning tabular-nums">
-              +{Math.round(eaten - target)}g over
-            </span>
-          )}
-        </div>
+    <div className="min-w-0">
+      <p className="text-xs font-medium text-muted-foreground">{label}</p>
+      <p className="mt-1 font-mono tabular-nums">
+        <span className="text-xl font-semibold text-foreground">{Math.round(eaten)}</span>
+        <span className="text-xs text-muted-foreground"> / {Math.round(target)}g</span>
+      </p>
+      <div className="mt-2 h-1.5 rounded-full bg-muted" role="progressbar" aria-label={label} aria-valuenow={Math.round(percent)} aria-valuemin={0} aria-valuemax={100}>
+        <div
+          className={cn('h-full rounded-full transition-[width] duration-500 ease-out-quint', bar)}
+          style={{ width: `${Math.min(percent, 100)}%` }}
+        />
       </div>
+      <p className={cn('mt-1.5 font-mono text-xs tabular-nums', left < 0 ? 'text-warning' : 'text-muted-foreground')}>
+        {left < 0 ? `${-left}g over` : `${left}g left`}
+      </p>
     </div>
   )
 }

@@ -27,25 +27,21 @@ export function FAQSection() {
   ]
 
   return (
-    <section className="py-24 bg-background" id="faq">
-      <div className="container mx-auto px-6 max-w-4xl">
-        <div className="text-center mb-16">
-          <h2 className="text-display-lg font-extrabold tracking-tight [font-family:var(--font-display)] [text-wrap:balance]">Questions? We&apos;ve got answers.</h2>
-        </div>
+    <section className="border-t border-border-strong bg-card py-24 md:py-32" id="faq">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+        <h2 className="text-display-lg font-extrabold">Questions? We&apos;ve got answers.</h2>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
+        <div>
+          {faqs.map((faq) => (
             <details
-              key={index}
-              className="group bg-card p-6 rounded-xl border border-border-strong shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:shadow-lg hover:border-coral-200 [&_summary::-webkit-details-marker]:hidden"
+              key={faq.question}
+              className="group border-t border-border-strong py-5 last:border-b [&_summary::-webkit-details-marker]:hidden"
             >
-              <summary className="flex justify-between items-center cursor-pointer font-semibold text-lg list-none">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold transition-colors duration-fast hover:text-coral-700">
                 {faq.question}
-                <ChevronDown className="w-5 h-5 text-icon transition-transform duration-[var(--duration-base)] ease-out-quint group-open:rotate-180 flex-shrink-0 ml-4" />
+                <ChevronDown className="size-5 shrink-0 text-icon transition-transform duration-base ease-out-quint group-open:rotate-180" />
               </summary>
-              <p className="text-muted-foreground mt-4 leading-relaxed">
-                {faq.answer}
-              </p>
+              <p className="mt-3 max-w-prose leading-relaxed text-muted-foreground">{faq.answer}</p>
             </details>
           ))}
         </div>

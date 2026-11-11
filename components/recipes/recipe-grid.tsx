@@ -29,7 +29,7 @@ export function RecipeGrid({
   return (
     <div className="mx-auto w-full max-w-7xl px-4 pb-28 pt-4">
       {/* min width clamped to 45vw so phones still get 2 columns */}
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(240px,45vw),1fr))] gap-3 md:gap-5">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(220px,42vw),1fr))] gap-3 md:gap-5">
         {recipes.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} isFavorite={favoriteIds.includes(recipe.id)} />
         ))}

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Bricolage_Grotesque } from 'next/font/google'
 import { getBlogPost, blogPosts } from '@/lib/blog-data'
 import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react'
 import { MarketingHeader } from '@/components/landing/marketing-header'
@@ -14,12 +13,6 @@ import { ReadingProgress } from '@/components/blog/ReadingProgress'
 // ponytail: post.content is authored in lib/blog-data.ts by the team, not
 // user-submitted — dangerouslySetInnerHTML here predates this change and is
 // a known, accepted risk (see project memory) tracked for a future CMS move.
-const display = Bricolage_Grotesque({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-display',
-})
-
 interface BlogPostPageProps {
   params: Promise<{
     slug: string
@@ -109,7 +102,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className={`${display.variable} min-h-screen bg-background text-foreground font-sans`}>
+      <div className={`min-h-screen bg-background text-foreground font-sans`}>
         <MarketingHeader />
         <ReadingProgress />
 
@@ -129,7 +122,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <span className="mb-4 inline-block rounded-full bg-coral-50 px-3 py-1 text-xs font-semibold text-coral-700">
                 {post.category}
               </span>
-              <h1 className="text-display-lg font-extrabold leading-[1.08] tracking-tight text-foreground [font-family:var(--font-display)] [text-wrap:balance]">
+              <h1 className="text-display-lg font-extrabold leading-[1.08] tracking-tight text-foreground font-display [text-wrap:balance]">
                 {post.title}
               </h1>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-subtle-foreground">
@@ -182,7 +175,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="lg:col-span-2">
                 {/* Article Content — measure capped at ~70ch via prose-lg */}
                 <div
-                  className="prose prose-lg dark:prose-invert mx-auto max-w-[70ch] prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-headings:[font-family:var(--font-display)] prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-2xl prose-h3:mt-10 prose-h3:mb-3 prose-h3:text-xl prose-p:leading-relaxed prose-p:text-foreground/85 prose-li:my-1 prose-li:text-foreground/85 prose-li:marker:text-coral-500 prose-strong:text-foreground prose-a:font-medium prose-a:text-coral-700 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-blockquote:rounded-xl prose-blockquote:border prose-blockquote:border-coral-200 prose-blockquote:bg-coral-50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:font-medium prose-blockquote:not-italic prose-blockquote:text-foreground prose-code:text-coral-700 prose-code:before:content-none prose-code:after:content-none mb-12"
+                  className="prose prose-lg dark:prose-invert mx-auto max-w-[70ch] prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-headings:font-display prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-2xl prose-h3:mt-10 prose-h3:mb-3 prose-h3:text-xl prose-p:leading-relaxed prose-p:text-foreground/85 prose-li:my-1 prose-li:text-foreground/85 prose-li:marker:text-coral-500 prose-strong:text-foreground prose-a:font-medium prose-a:text-coral-700 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-blockquote:rounded-xl prose-blockquote:border prose-blockquote:border-coral-200 prose-blockquote:bg-coral-50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:font-medium prose-blockquote:not-italic prose-blockquote:text-foreground prose-code:text-coral-700 prose-code:before:content-none prose-code:after:content-none mb-12"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 
@@ -199,7 +192,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <div className="premium-mesh" aria-hidden="true" />
                   <div className="grain-overlay" aria-hidden="true" />
                   <div className="relative z-10">
-                    <h2 className="text-2xl font-bold text-white [font-family:var(--font-display)] md:text-3xl">
+                    <h2 className="text-2xl font-bold text-white font-display md:text-3xl">
                       Ready to put your meal planning on autopilot?
                     </h2>
                     <p className="mx-auto mt-4 max-w-md text-white/80">

@@ -116,7 +116,7 @@ export function MacroSummary({
             </div>
             <div className="relative h-3 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className={`absolute inset-y-0 left-0 rounded-full transition-[width] duration-[var(--duration-slow)] ease-out-quint ${macro.barClass}`}
+                className={`absolute inset-y-0 left-0 rounded-full transition-[width] duration-slow ease-out-quint ${macro.barClass}`}
                 style={{ width: `${macro.percentage}%` }}
               />
             </div>

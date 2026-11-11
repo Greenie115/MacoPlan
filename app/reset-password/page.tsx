@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Logo } from '@/components/brand/logo'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Lock, CheckCircle, Eye, EyeOff, AlertCircle } from 'lucide-react'
@@ -109,7 +110,7 @@ export default function ResetPasswordPage() {
             </p>
             <Link
               href="/forgot-password"
-              className="block w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-primary hover:bg-primary/90 transition-colors text-center"
+              className="block w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-coral-600 hover:bg-coral-700 transition-colors text-center"
             >
               Request new reset link
             </Link>
@@ -136,7 +137,7 @@ export default function ResetPasswordPage() {
             </p>
             <Link
               href="/login"
-              className="block w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-primary hover:bg-primary/90 transition-colors text-center"
+              className="block w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-coral-600 hover:bg-coral-700 transition-colors text-center"
             >
               Go to login
             </Link>
@@ -149,6 +150,9 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="flex justify-center">
+          <Logo href="/" markSize={28} textClassName="font-display text-xl font-bold tracking-tight" />
+        </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-foreground">
           Create new password
         </h2>
@@ -246,7 +250,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-coral-600 hover:bg-coral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
               >
                 {loading ? 'Updating password...' : 'Reset password'}
               </button>

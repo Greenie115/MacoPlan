@@ -95,7 +95,7 @@ export function MacroInput({
         max={inputMax}
         step={1}
         className={cn(
-          'font-mono tabular-nums transition-colors duration-[var(--duration-fast)] ease-out-quint',
+          'font-mono tabular-nums transition-colors duration-fast ease-out-quint',
           error && 'border-destructive focus-visible:ring-destructive',
           warning && !error && 'border-warning-500 focus-visible:ring-warning-500'
         )}

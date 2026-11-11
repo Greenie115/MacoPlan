@@ -35,18 +35,18 @@
   --color-destructive-foreground: #FFFFFF;
 
   /* UI Element Colors */
-  --color-border: #E4E6E4;
-  --color-input: #E4E6E4;
-  --color-icon: #6B7280;
+  --color-border: #E7E5DF;
+  --color-input: #DBD8D0;
+  --color-icon: #666A70;
   --color-ring: #FF6B5C;
 
   /* Background Colors */
-  --color-background: #F5F6F5;
+  --color-background: #F6F5F2;
 
   /* Secondary/Muted Colors */
-  --color-muted: #EEF0EE;
-  --color-muted-foreground: #6B7280;
-  --color-secondary: #EEF0EE;
+  --color-muted: #EDEBE6;
+  --color-muted-foreground: #5C6066;
+  --color-secondary: #EDEBE6;
   --color-secondary-foreground: #0B0F10;
 
   /* Popover/Dropdown Colors */
@@ -54,7 +54,7 @@
   --color-popover-foreground: #0B0F10;
 
   /* Accent Colors (soft coral tint) */
-  --color-accent: #FFEDEA;
+  --color-accent: #FFF1EF;
   --color-accent-foreground: #0B0F10;
 
   /* Semantic Color Scales */
@@ -79,20 +79,21 @@
   /* Border Radius */
   --radius-default: 0.5rem;
   --radius-card: 1rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
 
   /* Card Colors */
   --color-card: #FFFFFF;
   --color-card-foreground: #0B0F10;
 
   /* Subtle/Secondary Text */
-  --color-subtle: #6B7280;
-  --color-subtle-foreground: #6B7280;
+  --color-subtle: #5C6066;
+  --color-subtle-foreground: #5C6066;
 
   /* Strong Border (for card borders) */
-  --color-border-strong: #DDE0DD;
+  --color-border-strong: #DBD8D0;
 
   /* ============================================
      PREMIUM ELEVATION LAYER (additive)
@@ -154,7 +155,21 @@ html {
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* One typographic voice site-wide: display face on page and section
+   headings, balanced wrapping, tight tracking. */
+h1,
+h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+h3 {
+  text-wrap: balance;
 }
 
 /* Skip-to-content link for keyboard navigation */
@@ -178,23 +193,23 @@ body {
 
 /* Dark Mode — the signature MacroPlan brand look (near-black + coral) */
 .dark {
-  --color-background: #0B0F10;
+  --color-background: #0A0C0D;
   --color-foreground: #F6F8F7;
-  --color-card: #14181B;
+  --color-card: #121517;
   --color-card-foreground: #F6F8F7;
-  --color-muted: #14181B;
-  --color-muted-foreground: #8B9298;
+  --color-muted: #191D20;
+  --color-muted-foreground: #949BA1;
   --color-secondary: #1A1F22;
   --color-secondary-foreground: #F6F8F7;
-  --color-border: #242A2D;
-  --color-border-strong: #2E3539;
-  --color-input: #242A2D;
+  --color-border: #22282B;
+  --color-border-strong: #2C3336;
+  --color-input: #2C3336;
   --color-accent: #221512;
   --color-accent-foreground: #F6F8F7;
-  --color-popover: #14181B;
+  --color-popover: #171B1D;
   --color-popover-foreground: #F6F8F7;
-  --color-subtle: #8B9298;
-  --color-subtle-foreground: #8B9298;
+  --color-subtle: #949BA1;
+  --color-subtle-foreground: #949BA1;
   --color-icon: #C7CBC9;
   /* macros pop slightly brighter on dark */
   --color-protein: #FF7C6E;

@@ -24,7 +24,7 @@ export function BlogCard({ post }: BlogCardProps) {
         <span className="w-fit rounded-full bg-coral-50 px-3 py-1 text-xs font-semibold text-coral-700">
           {post.category}
         </span>
-        <h3 className="mt-3 text-lg font-bold leading-snug tracking-tight text-foreground [font-family:var(--font-display)] group-hover:text-coral-700">
+        <h3 className="mt-3 text-lg font-bold leading-snug tracking-tight text-foreground font-display group-hover:text-coral-700">
           {post.title}
         </h3>
         <p className="mt-2 flex-grow text-sm leading-relaxed text-subtle-foreground line-clamp-3">

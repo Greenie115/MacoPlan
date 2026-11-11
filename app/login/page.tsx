@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Logo } from '@/components/brand/logo'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AlertTriangle, Clock, Loader2, Eye, EyeOff } from 'lucide-react'
@@ -133,6 +134,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="flex justify-center">
+          <Logo href="/" markSize={28} textClassName="font-display text-xl font-bold tracking-tight" />
+        </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-foreground">
           Sign in to your account
         </h2>
@@ -273,7 +277,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading || isLocked}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-coral-600 hover:bg-coral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {loading ? 'Signing in...' : isLocked ? 'Account Locked' : 'Sign in'}
               </button>

@@ -73,7 +73,7 @@ export const macroColors = {
     bg: 'bg-red-50',
     text: 'text-red-700',
     border: 'border-red-200',
-    emoji: '🥩',
+    emoji: 'P',
   },
   carbs: {
     primary: '#38BDF8', // Sky
@@ -81,7 +81,7 @@ export const macroColors = {
     bg: 'bg-sky-50',
     text: 'text-sky-700',
     border: 'border-sky-200',
-    emoji: '🍞',
+    emoji: 'C',
   },
   fat: {
     primary: '#FBBF24', // Amber
@@ -89,7 +89,7 @@ export const macroColors = {
     bg: 'bg-amber-50',
     text: 'text-amber-700',
     border: 'border-amber-200',
-    emoji: '🥑',
+    emoji: 'F',
   },
 } as const
 

@@ -164,7 +164,7 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
               <button
                 onClick={handleGenerateNew}
                 aria-label="Generate new plan"
-                className="flex h-10 w-10 items-center justify-center text-coral-700 hover:bg-primary/10 rounded-lg transition-colors duration-[var(--duration-fast)] ease-out-quint dark:text-primary"
+                className="flex h-10 w-10 items-center justify-center text-coral-700 hover:bg-primary/10 rounded-lg transition-colors duration-fast ease-out-quint dark:text-primary"
               >
                 <Plus className="size-5" />
               </button>
@@ -179,7 +179,7 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
                   className={cn(
-                    'flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors duration-[var(--duration-fast)] ease-out-quint md:flex-none md:px-6',
+                    'flex flex-1 flex-col items-center justify-center border-b-[3px] py-3 transition-colors duration-fast ease-out-quint md:flex-none md:px-6',
                     activeTab === tab.key
                       ? 'border-primary text-coral-700 dark:text-primary'
                       : 'border-transparent text-muted-foreground hover:text-foreground'
@@ -246,7 +246,7 @@ export function MealPlansClient({ initialPlans, batchPlans = [], quotaInfo }: Me
                 setPaywallTrigger('meal_plan_limit')
                 setShowPaywall(true)
               }}
-              className="font-semibold text-coral-700 transition-colors duration-[var(--duration-fast)] ease-out-quint hover:underline dark:text-primary"
+              className="font-semibold text-coral-700 transition-colors duration-fast ease-out-quint hover:underline dark:text-primary"
             >
               Upgrade for unlimited plans
             </button>
@@ -373,7 +373,7 @@ function MealPlanCard({
 
   return (
     <Link href={`/meal-plans/${plan.id}`} className="group block h-full">
-      <div className="relative flex h-full flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 transition-all duration-[var(--duration-base)] ease-out-quint group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:border-coral-200">
+      <div className="relative flex h-full flex-col items-stretch justify-start rounded-2xl bg-card shadow-sm border border-border-strong p-4 transition-all duration-base ease-out-quint group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:border-coral-200">
         {/* More Options Button */}
         <div className="absolute top-2 right-2 z-10">
           <DropdownMenu>
@@ -489,9 +489,9 @@ function MealPlanCard({
 
           {/* View Plan Button - pushed to bottom */}
           <div className="mt-auto pt-2">
-            <div className="flex h-10 w-full items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-card text-sm font-semibold leading-normal text-coral-700 transition-colors duration-[var(--duration-fast)] ease-out-quint group-hover:bg-primary/10 dark:text-primary">
+            <div className="flex h-10 w-full items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-primary bg-card text-sm font-semibold leading-normal text-coral-700 transition-colors duration-fast ease-out-quint group-hover:bg-primary/10 dark:text-primary">
               <span className="truncate">View Plan</span>
-              <ArrowRight className="size-4 transition-transform duration-[var(--duration-fast)] ease-out-quint group-hover:translate-x-0.5" />
+              <ArrowRight className="size-4 transition-transform duration-fast ease-out-quint group-hover:translate-x-0.5" />
             </div>
           </div>
         </div>
@@ -534,14 +534,14 @@ function BatchPrepCard({ plan }: { plan: BatchPrepPlanSummary }) {
   return (
     <Link
       href={`/meal-plans/${plan.id}`}
-      className="group flex flex-col gap-3 rounded-2xl border border-border-strong bg-card p-4 shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:-translate-y-0.5 hover:shadow-md hover:border-coral-200"
+      className="group flex flex-col gap-3 rounded-2xl border border-border-strong bg-card p-4 shadow-sm transition-all duration-base ease-out-quint hover:-translate-y-0.5 hover:shadow-md hover:border-coral-200"
       aria-label={`View batch prep plan for week of ${weekLabel}`}
     >
       <div className="flex items-start justify-between">
         <div className="flex size-10 items-center justify-center rounded-xl bg-coral-50 text-coral-700 dark:bg-primary/10 dark:text-primary">
           <ChefHat className="size-5" />
         </div>
-        <ArrowRight className="size-4 text-muted-foreground transition-transform duration-[var(--duration-fast)] ease-out-quint group-hover:translate-x-0.5" />
+        <ArrowRight className="size-4 text-muted-foreground transition-transform duration-fast ease-out-quint group-hover:translate-x-0.5" />
       </div>
 
       <div>

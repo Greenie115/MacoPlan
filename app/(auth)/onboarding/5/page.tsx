@@ -18,7 +18,7 @@ import { cn } from '@/lib/utils'
 /** Shared selection-card classes so all three groups on this step read as one control vocabulary. */
 function optionCardClass(isSelected: boolean) {
   return cn(
-    'p-4 cursor-pointer border-2 transition-all duration-[var(--duration-fast)] ease-out-quint',
+    'p-4 cursor-pointer border-2 transition-all duration-fast ease-out-quint',
     isSelected
       ? 'border-primary bg-primary/5'
       : 'border-border-strong hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5'
@@ -28,19 +28,16 @@ function optionCardClass(isSelected: boolean) {
 const FITNESS_LEVELS = [
   {
     id: 'beginner' as ExperienceLevel,
-    emoji: '🌱',
     label: 'Beginner',
     description: 'New to fitness and nutrition tracking',
   },
   {
     id: 'intermediate' as ExperienceLevel,
-    emoji: '💪',
     label: 'Intermediate',
     description: 'I work out regularly and track occasionally',
   },
   {
     id: 'advanced' as ExperienceLevel,
-    emoji: '🏆',
     label: 'Advanced',
     description: "I'm experienced with fitness and macro tracking",
   },
@@ -49,19 +46,16 @@ const FITNESS_LEVELS = [
 const TRACKING_LEVELS = [
   {
     id: 'never' as TrackingExperience,
-    emoji: '❌',
     label: 'Never tracked',
     description: 'This is my first time tracking macros',
   },
   {
     id: 'some' as TrackingExperience,
-    emoji: '📊',
     label: 'Some experience',
     description: "I've tracked before but need guidance",
   },
   {
     id: 'experienced' as TrackingExperience,
-    emoji: '✅',
     label: 'Experienced',
     description: "I'm comfortable with macro tracking",
   },
@@ -70,19 +64,16 @@ const TRACKING_LEVELS = [
 const MEAL_PREP_LEVELS = [
   {
     id: 'beginner' as MealPrepLevel,
-    emoji: '🍕',
     label: 'Beginner',
     description: 'I rarely cook or meal prep',
   },
   {
     id: 'intermediate' as MealPrepLevel,
-    emoji: '🥘',
     label: 'Intermediate',
     description: 'I cook occasionally',
   },
   {
     id: 'advanced' as MealPrepLevel,
-    emoji: '👨‍🍳',
     label: 'Advanced',
     description: 'I meal prep regularly',
   },
@@ -159,7 +150,6 @@ export default function ExperienceLevelPage() {
       <StepContainer
         step={5}
         title="Experience Level"
-        emoji="📊"
         subtitle="Help us tailor the app to your needs"
         onBack={handleBack}
         onContinue={handleContinue}
@@ -190,7 +180,6 @@ export default function ExperienceLevelPage() {
                   aria-label={`${level.label}: ${level.description}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl" aria-hidden="true">{level.emoji}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-foreground">{level.label}</p>
                       <p className="text-sm text-muted-foreground">{level.description}</p>
@@ -230,7 +219,6 @@ export default function ExperienceLevelPage() {
                   aria-label={`${level.label}: ${level.description}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl" aria-hidden="true">{level.emoji}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-foreground">{level.label}</p>
                       <p className="text-sm text-muted-foreground">{level.description}</p>
@@ -270,7 +258,6 @@ export default function ExperienceLevelPage() {
                   aria-label={`${level.label}: ${level.description}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl" aria-hidden="true">{level.emoji}</span>
                     <div className="flex-1">
                       <p className="font-semibold text-foreground">{level.label}</p>
                       <p className="text-sm text-muted-foreground">{level.description}</p>

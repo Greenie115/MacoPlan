@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export function RecipeGridSkeleton() {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 pb-28 pt-12">
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(240px,45vw),1fr))] gap-3 md:gap-5">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(220px,42vw),1fr))] gap-3 md:gap-5">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
           <RecipeCardSkeleton key={i} />
         ))}

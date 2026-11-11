@@ -314,7 +314,7 @@ export default function Verify2FAPage() {
               <button
                 onClick={() => handleVerify(useBackupCode ? backupCode : undefined)}
                 disabled={loading || (useBackupCode ? backupCode.trim() === '' : code.some((c) => c === ''))}
-                className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-white bg-coral-600 hover:bg-coral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {loading ? 'Verifying...' : 'Verify'}
               </button>

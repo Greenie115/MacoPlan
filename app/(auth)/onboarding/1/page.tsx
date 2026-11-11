@@ -9,10 +9,10 @@ import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const GOALS = [
-  { id: 'cut' as Goal, emoji: '🔥', label: 'Lose Fat (Cut)' },
-  { id: 'bulk' as Goal, emoji: '💪', label: 'Build Muscle (Bulk)' },
-  { id: 'maintain' as Goal, emoji: '⚖️', label: 'Maintain Weight' },
-  { id: 'recomp' as Goal, emoji: '🎯', label: 'Body Recomposition' },
+  { id: 'cut' as Goal, label: 'Lose Fat (Cut)' },
+  { id: 'bulk' as Goal, label: 'Build Muscle (Bulk)' },
+  { id: 'maintain' as Goal, label: 'Maintain Weight' },
+  { id: 'recomp' as Goal, label: 'Body Recomposition' },
 ]
 
 export default function GoalSelectionPage() {
@@ -35,7 +35,6 @@ export default function GoalSelectionPage() {
       <StepContainer
         step={1}
         title="Hey there!"
-        emoji="👋"
         subtitle="What's your main goal?"
         onBack={handleBack}
         onContinue={handleContinue}
@@ -49,7 +48,7 @@ export default function GoalSelectionPage() {
               <Card
                 key={goalOption.id}
                 className={cn(
-                  'flex items-center gap-4 p-4 cursor-pointer border-2 transition-all duration-[var(--duration-fast)] ease-out-quint',
+                  'flex items-center gap-4 p-4 cursor-pointer border-2 transition-all duration-fast ease-out-quint',
                   isSelected
                     ? 'border-primary bg-primary/5'
                     : 'border-border-strong hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5'
@@ -66,7 +65,6 @@ export default function GoalSelectionPage() {
                 aria-pressed={isSelected}
                 aria-label={goalOption.label}
               >
-                <span className="text-2xl" aria-hidden="true">{goalOption.emoji}</span>
                 <p className="flex-1 text-base font-medium text-foreground">
                   {goalOption.label}
                 </p>

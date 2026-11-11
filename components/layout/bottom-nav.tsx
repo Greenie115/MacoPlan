@@ -2,60 +2,33 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BookOpen, Calendar, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { NAV_ITEMS, activePath } from './nav-items'
 
-interface BottomNavProps {
-  activeTab?: 'home' | 'recipes' | 'plans' | 'profile'
-}
-
-const tabs = [
-  { id: 'home' as const, label: 'Home', icon: Home, path: '/dashboard' },
-  { id: 'recipes' as const, label: 'Recipes', icon: BookOpen, path: '/recipes' },
-  { id: 'plans' as const, label: 'Plans', icon: Calendar, path: '/meal-plans' },
-  { id: 'profile' as const, label: 'Profile', icon: User, path: '/profile' },
-]
-
-export function BottomNav({ activeTab = 'home' }: BottomNavProps) {
-  const pathname = usePathname()
-
-  // Determine active tab from pathname if not explicitly provided
-  const getActiveTab = () => {
-    if (pathname.startsWith('/recipes')) return 'recipes'
-    if (pathname.startsWith('/meal-plans')) return 'plans'
-    if (pathname.startsWith('/profile')) return 'profile'
-    return activeTab
-  }
-
-  const currentTab = getActiveTab()
+export function BottomNav() {
+  const current = activePath(usePathname())
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 h-16 bg-card border-t border-border-strong lg:hidden safe-area-bottom">
-      <div className="grid grid-cols-4 h-full max-w-lg mx-auto">
-        {tabs.map((tab) => {
-          const Icon = tab.icon
-          const isActive = currentTab === tab.id
-
+    <nav
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-border-strong bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
+      aria-label="Main navigation"
+    >
+      <div className="mx-auto grid h-16 max-w-lg grid-cols-4">
+        {NAV_ITEMS.map(({ label, icon: Icon, path }) => {
+          const isActive = current === path
           return (
             <Link
-              key={tab.id}
-              href={tab.path}
-              className={cn(
-                'inline-flex min-h-11 flex-col items-center justify-center gap-0.5 transition-colors duration-150',
-                isActive ? 'text-coral-600' : 'text-icon hover:text-foreground'
-              )}
-              aria-label={`Navigate to ${tab.label}`}
+              key={path}
+              href={path}
               aria-current={isActive ? 'page' : undefined}
+              className={cn(
+                'relative flex flex-col items-center justify-center gap-1 text-[0.6875rem] transition-colors duration-fast',
+                isActive ? 'font-semibold text-foreground' : 'font-medium text-muted-foreground hover:text-foreground'
+              )}
             >
-              <Icon className="size-6" strokeWidth={isActive ? 2.5 : 2} />
-              <span
-                className={cn(
-                  'text-xs',
-                  isActive ? 'font-semibold' : 'font-medium'
-                )}
-              >
-                {tab.label}
-              </span>
+              {isActive && <span className="absolute top-0 h-0.5 w-8 rounded-full bg-primary" aria-hidden="true" />}
+              <Icon className={cn('size-5', isActive && 'text-primary')} strokeWidth={isActive ? 2.25 : 2} />
+              {label}
             </Link>
           )
         })}
