@@ -1,15 +1,42 @@
-# Design System — MacroPlan "Coral Pulse, Refined"
+# Design System — MacroPlan "Coral Pulse, Instrument"
 
-The premium-refined evolution of the existing Coral Pulse identity. Coral +
-charcoal stay; craft, depth, motion, and rhythm get pushed to Linear/Vercel/
-Stripe tier. **Additive** — every existing token still works; this layer elevates.
+Coral + charcoal stay. The 2026-11 pass turns the product into a precision
+instrument: warm paper neutrals, hairlines instead of heavy shadows, tighter
+radii, one display face for every heading, mono numerals, and coral reserved
+for signal. Applies to **every** surface: marketing, auth, onboarding, app.
 
 Reference lane: **Stripe-precision + Linear-craft**. Wow through polish and
-restraint, never volume. If you're reaching for a loud effect, you're in the
-wrong lane.
+restraint, never volume.
 
 All tokens live in `app/globals.css` (`@theme` block, Tailwind v4). Consume them
 as utilities — never hardcode a hex or a shadow.
+
+## Signatures (use these, don't reinvent)
+
+- **Macro split** (`components/ui/macro-split.tsx`) — thin bar split by where
+  the calories come from, over `P / C / F` gram figures. The one way macros are
+  summarised on cards (recipes, meals, plan totals, the landing ticket). No
+  emoji, no coloured gram text.
+- **Kitchen ticket** (`components/landing/prep-ticket.tsx`) — a plan printed
+  like a line cook's ticket: paper, mono type, dashed rules, torn edge.
+  Marketing only.
+- **Page header pattern** — `h1` (display, `text-3xl font-bold`) then underline
+  tabs (`border-b-2`, active = coral rule + ink text). See Recipes and Plans.
+- **Gauge** (`components/dashboard/macro-progress-bar.tsx`) — label, mono
+  `eaten / target`, slim bar, "left/over". Calories use an ink bar; only macros
+  get colour.
+
+## Rules added in this pass
+
+- Headings: `h1`/`h2` get the display face globally. Use `font-display` for
+  other display text. Sentence case everywhere.
+- Coral fills are `coral-600` (hover `coral-700`); coral text on light is
+  `coral-700`, on dark `coral-300`. Secondary actions are neutral
+  (`Button variant="outline"`), never a coral outline.
+- Placeholders for missing photos are neutral tiles, not gradients.
+- `dark:` utilities follow the in-app theme class (see `@custom-variant`).
+- Durations: `duration-fast` / `duration-base` / `duration-slow` utilities.
+- No scroll-gated content: sections are visible at rest.
 
 ---
 
@@ -45,7 +72,7 @@ Surface layering: content on `bg-background`, panels/cards on `bg-card` with a
 
 ## Typography
 
-Families (unchanged): **Bricolage Grotesque** display (marketing headlines),
+Families: **Bricolage Grotesque** display (all `h1`/`h2`, loaded once in the root layout),
 **Geist Sans** UI/body, **Geist Mono** for numeric/tabular data.
 
 **New: fluid display scale** for brand surfaces (utilities `text-display-2xl`
@@ -83,7 +110,7 @@ No bounce, no elastic — exponential ease-out only.
 
 - **Button** — primary has subtle top-highlight depth + `shadow-coral` glow on
   hover, `active:scale-[0.97]`. Consistent across every surface; same shape.
-- **Card** — `rounded-2xl`, `border-strong` hairline, `shadow-sm` at rest →
+- **Card** — `rounded-2xl` (now 1rem), `border-strong` hairline, `shadow-xs` at rest →
   `shadow-lg` + `-translate-y-0.5` + `border-coral-200/coral/20` on hover for
   interactive cards. Static cards don't lift.
 - Every interactive element ships default/hover/focus/active/disabled. Loading =

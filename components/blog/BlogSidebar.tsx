@@ -21,7 +21,7 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
     <aside className="sticky top-24 space-y-6">
       {/* Lead Magnet Box */}
       <div className="rounded-2xl border border-coral-200 bg-coral-50 p-6 shadow-sm">
-        <h3 className="text-xl font-bold text-foreground [font-family:var(--font-display)]">Get the Guide</h3>
+        <h3 className="text-xl font-bold text-foreground font-display">Get the Guide</h3>
         <p className="mb-4 mt-2 text-sm text-subtle-foreground">
           Free Macro Calculator PDF
         </p>
@@ -40,7 +40,7 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
           />
           <button
             type="submit"
-            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-coral-700"
           >
             Download
           </button>
@@ -50,7 +50,7 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <div className="rounded-2xl border border-border-strong bg-card p-6 shadow-sm">
-          <h3 className="mb-4 text-lg font-bold text-foreground [font-family:var(--font-display)]">Related Posts</h3>
+          <h3 className="mb-4 text-lg font-bold text-foreground font-display">Related Posts</h3>
           <div className="space-y-4">
             {relatedPosts.map((post) => (
               <Link
@@ -73,7 +73,7 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
       {/* Popular Posts */}
       {popularPosts.length > 0 && (
         <div className="rounded-2xl border border-border-strong bg-card p-6 shadow-sm">
-          <h3 className="mb-4 text-lg font-bold text-foreground [font-family:var(--font-display)]">Popular Posts</h3>
+          <h3 className="mb-4 text-lg font-bold text-foreground font-display">Popular Posts</h3>
           <div className="space-y-4">
             {popularPosts.map((post) => (
               <Link

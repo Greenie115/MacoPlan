@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Plus, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowRight, Plus, ChevronDown, ChevronUp } from 'lucide-react'
 import { MacroProgressBar } from './macro-progress-bar'
 import { MealLogList } from '@/components/meals/meal-log-list'
 import { cn } from '@/lib/utils'
@@ -68,81 +68,43 @@ export function MacroTargetCard({
   const displayedMeals = meals
 
   return (
-    <div className="flex flex-col items-stretch justify-start rounded-2xl shadow-md bg-card p-5 md:p-6 border border-border-strong h-full">
-      {/* Header Row */}
+    <div className="flex h-full flex-col rounded-2xl border border-border-strong bg-card p-5 shadow-xs md:p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-foreground text-lg font-bold leading-tight tracking-[-0.015em]">
-            Today's Macro Target
+          <h2 className="font-sans text-sm font-medium tracking-normal text-muted-foreground">Today</h2>
+          <p className="mt-1 font-display text-4xl font-extrabold sm:text-5xl tabular-nums tracking-tight text-foreground">
+            {isOver ? (caloriesEaten - targetCalories).toLocaleString() : caloriesRemaining.toLocaleString()}
+            <span className={cn('ml-2 whitespace-nowrap font-sans text-base font-medium tracking-normal', isOver ? 'text-warning' : 'text-muted-foreground')}>
+              kcal {isOver ? 'over' : 'left'}
+            </span>
           </p>
-          {/* Calories Display */}
-          <div className="flex items-baseline gap-2 pt-1">
-            <p className="text-foreground text-3xl font-extrabold leading-tight tracking-tighter tabular-nums font-mono">
-              {targetCalories.toLocaleString()}
-            </p>
-            <p className="text-muted-foreground text-base font-normal">cal</p>
-          </div>
         </div>
-
-        {/* Log Meal Button */}
-        <Button
-          onClick={onLogMeal}
-          size="sm"
-          className="flex-shrink-0 gap-1.5"
-        >
-          <Plus className="h-4 w-4" />
-          <span className="hidden sm:inline">Log Meal</span>
+        <Button onClick={onLogMeal} size="sm" className="shrink-0 gap-1.5">
+          <Plus className="size-4" />
+          Log meal
         </Button>
       </div>
 
-      {/* Overall Progress Bar */}
-      <div className="w-full pt-4 pb-2">
-        <div className="flex justify-between items-center mb-1.5">
-          <span className="text-sm font-medium text-muted-foreground tabular-nums">
-            {caloriesEaten.toLocaleString()} eaten
-          </span>
-          <span className={cn(
-            'text-sm font-medium tabular-nums',
-            isOver ? 'text-warning' : 'text-muted-foreground'
-          )}>
-            {isOver ? `${progressPercent - 100}% over` : `${caloriesRemaining.toLocaleString()} remaining`}
-          </span>
-        </div>
-        <div className="w-full bg-background rounded-full h-2.5 md:h-3">
+      <div className="pt-5">
+        <div className="h-2 rounded-full bg-muted" role="progressbar" aria-label="Calories" aria-valuenow={progressPercent} aria-valuemin={0} aria-valuemax={100}>
           <div
-            className={cn(
-              'h-2.5 md:h-3 rounded-full transition-[width] duration-500 ease-out-quint',
-              isOver ? 'bg-warning' : 'bg-primary'
-            )}
+            className={cn('h-full rounded-full transition-[width] duration-500 ease-out-quint', isOver ? 'bg-warning' : 'bg-foreground')}
             style={{ width: `${Math.min(progressPercent, 100)}%` }}
           />
         </div>
+        <p className="mt-2 font-mono text-xs tabular-nums text-muted-foreground">
+          {caloriesEaten.toLocaleString()} eaten of {targetCalories.toLocaleString()} kcal
+        </p>
       </div>
 
-      {/* Macro Breakdown Section */}
-      <div className="border-t border-border-strong pt-4 mt-2 space-y-4">
-        <MacroProgressBar
-          type="protein"
-          eaten={proteinEaten}
-          target={proteinGrams}
-          showCalories
-        />
-        <MacroProgressBar
-          type="carbs"
-          eaten={carbsEaten}
-          target={carbGrams}
-          showCalories
-        />
-        <MacroProgressBar
-          type="fat"
-          eaten={fatEaten}
-          target={fatGrams}
-          showCalories
-        />
+      <div className="mt-5 grid grid-cols-3 gap-5 border-t border-border pt-5">
+        <MacroProgressBar type="protein" eaten={proteinEaten} target={proteinGrams} />
+        <MacroProgressBar type="carbs" eaten={carbsEaten} target={carbGrams} />
+        <MacroProgressBar type="fat" eaten={fatEaten} target={fatGrams} />
       </div>
 
-      {/* Today's Meals Section - Collapsible */}
-      <div className="border-t border-border-strong pt-4 mt-4">
+      {/* Today&apos;s meals Section - Collapsible */}
+      <div className="border-t border-border pt-4 mt-5">
         <button
           onClick={() => setIsMealsExpanded(!isMealsExpanded)}
           className="flex items-center justify-between w-full text-left group"
@@ -150,7 +112,7 @@ export function MacroTargetCard({
         >
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-foreground">
-              Today's Meals
+              Today&apos;s meals
             </span>
             <span className="text-xs text-muted-foreground bg-background px-2 py-0.5 rounded-full tabular-nums">
               {meals.length}
@@ -191,14 +153,11 @@ export function MacroTargetCard({
         </div>
       </div>
 
-      {/* Action Button - Pushed to bottom */}
-      <div className="pt-4 mt-auto">
-        <button
-          onClick={onViewPlan || (() => router.push('/meal-plans'))}
-          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 md:h-12 px-4 bg-primary/10 text-primary text-sm md:text-base font-semibold leading-normal transition-colors duration-150 hover:bg-primary/20 active:scale-[0.98]"
-        >
-          <span className="truncate">View Today's Plan →</span>
-        </button>
+      <div className="mt-auto pt-4">
+        <Button variant="outline" className="h-11 w-full" onClick={onViewPlan || (() => router.push('/meal-plans'))}>
+          View today&apos;s plan
+          <ArrowRight className="size-4" />
+        </Button>
       </div>
     </div>
   )

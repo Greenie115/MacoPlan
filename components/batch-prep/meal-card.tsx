@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { ChevronDown } from 'lucide-react'
 import type { Meal } from '@/lib/types/batch-prep'
 import { MealPlaceholder } from '@/components/meal-plans/meal-placeholder'
-import { macroColors } from '@/lib/design-tokens'
+import { MacroSplit } from '@/components/ui/macro-split'
 
 export interface MealImage {
   url: string
@@ -14,7 +14,7 @@ export interface MealImage {
 export function MealCard({ meal, image }: { meal: Meal; image?: MealImage }) {
   const m = meal.total_macros
   return (
-    <div className="rounded-2xl bg-card shadow-sm border border-border-strong overflow-hidden">
+    <div className="overflow-hidden rounded-2xl border border-border-strong bg-card shadow-xs">
       <div className="relative aspect-[16/9] w-full bg-muted">
         {image ? (
           <>
@@ -39,32 +39,20 @@ export function MealCard({ meal, image }: { meal: Meal; image?: MealImage }) {
           <MealPlaceholder mealType={meal.meal_slot} className="absolute inset-0" />
         )}
       </div>
-      <div className="p-4 space-y-3">
-        <div className="flex items-start justify-between">
+      <div className="space-y-4 p-4">
+        <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="font-bold text-lg text-foreground">{meal.name}</h3>
-            <p className="text-xs text-muted-foreground uppercase">{meal.meal_slot}</p>
+            <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{meal.meal_slot}</p>
+            <h3 className="mt-0.5 font-display text-lg font-bold leading-tight tracking-tight text-foreground">{meal.name}</h3>
           </div>
-          <div className="text-right text-sm">
-            <p className="text-foreground">{meal.servings_to_prep} servings</p>
-            <p className="text-muted-foreground">{meal.storage_days} days</p>
-          </div>
+          <p className="shrink-0 text-right font-mono text-xs tabular-nums text-muted-foreground">
+            {meal.servings_to_prep} servings
+            <br />
+            keeps {meal.storage_days} days
+          </p>
         </div>
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <span className="font-medium">{m.calories} cal</span>
-          <span className="flex items-center gap-1 font-medium text-protein">
-            <span>{macroColors.protein.emoji}</span>
-            {m.protein_g}g
-          </span>
-          <span className="flex items-center gap-1 font-medium text-carb">
-            <span>{macroColors.carbs.emoji}</span>
-            {m.carbs_g}g
-          </span>
-          <span className="flex items-center gap-1 font-medium text-fat">
-            <span>{macroColors.fat.emoji}</span>
-            {m.fat_g}g
-          </span>
-        </div>
+        <p className="font-mono text-xs tabular-nums text-muted-foreground">{m.calories} kcal per serving</p>
+        <MacroSplit protein={m.protein_g} carbs={m.carbs_g} fat={m.fat_g} />
         <details className="group [&_summary::-webkit-details-marker]:hidden">
           <summary className="flex items-center justify-between cursor-pointer text-sm font-medium text-foreground list-none">
             Ingredients
@@ -73,7 +61,8 @@ export function MealCard({ meal, image }: { meal: Meal; image?: MealImage }) {
           <ul className="mt-2 text-sm text-muted-foreground space-y-1">
             {meal.ingredients.map((i, idx) => (
               <li key={idx}>
-                {i.quantity_g}g {i.name}
+                {i.quantity_g ? `${i.quantity_g}g ` : ''}
+                {i.name}
               </li>
             ))}
           </ul>

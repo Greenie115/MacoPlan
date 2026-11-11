@@ -14,7 +14,7 @@ export function EmailCapture() {
     <section className="bg-muted/50 py-16">
       <div className="container mx-auto max-w-3xl px-6">
         <div className="rounded-2xl border border-border-strong bg-card p-8 text-center shadow-md md:p-12">
-          <h2 className="text-2xl font-bold text-foreground [font-family:var(--font-display)] md:text-3xl">
+          <h2 className="text-2xl font-bold text-foreground font-display md:text-3xl">
             Get weekly macro tips &amp; recipes
           </h2>
           <p className="mb-8 mt-4 text-lg text-subtle-foreground">

@@ -5,11 +5,11 @@ import { LogoMark } from '@/components/brand/logo'
 export function Footer() {
   return (
     <footer className="py-16 bg-card border-t border-border-strong">
-      <div className="container mx-auto px-6">
+      <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Column 1: Logo and tagline */}
           <div>
-            <Link href="/" className="flex items-center gap-2 text-xl font-bold mb-4">
+            <Link href="/" className="mb-4 flex items-center gap-2 font-display text-xl font-bold tracking-tight">
               <LogoMark size={28} />
               <span>MacroPlan</span>
             </Link>
@@ -18,7 +18,7 @@ export function Footer() {
             </p>
             <Link
               href="/onboarding/1"
-              className="inline-flex items-center gap-2 bg-coral-600 hover:bg-coral-700 active:scale-[0.97] text-primary-foreground font-semibold py-2.5 px-5 rounded-xl transition-all duration-[var(--duration-base)] ease-out-quint shadow-sm hover:shadow-coral text-sm"
+              className="inline-flex items-center gap-2 bg-coral-600 hover:bg-coral-700 active:scale-[0.97] text-primary-foreground font-semibold py-2.5 px-5 rounded-full transition-all duration-base ease-out-quint shadow-sm hover:shadow-coral text-sm"
             >
               Start today
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -27,30 +27,30 @@ export function Footer() {
 
           {/* Column 2: Product & resources */}
           <div>
-            <h3 className="font-bold mb-4">Product</h3>
-            <ul className="space-y-2 text-muted-foreground">
+            <h3 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">Product</h3>
+            <ul className="space-y-2">
               <li>
-                <Link href="/#how-it-works" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <Link href="/#how-it-works" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   How it works
                 </Link>
               </li>
               <li>
-                <Link href="/pricing" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <Link href="/pricing" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <Link href="/blog" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/help" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <Link href="/help" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   Help centre
                 </Link>
               </li>
               <li>
-                <Link href="/#faq" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <Link href="/#faq" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   FAQ
                 </Link>
               </li>
@@ -59,20 +59,20 @@ export function Footer() {
 
           {/* Column 3: Legal */}
           <div>
-            <h3 className="font-bold mb-4">Legal</h3>
-            <ul className="space-y-2 text-muted-foreground">
+            <h3 className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">Legal</h3>
+            <ul className="space-y-2">
               <li>
-                <Link href="/privacy" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <Link href="/privacy" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   Privacy policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <Link href="/terms" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   Terms of service
                 </Link>
               </li>
               <li>
-                <a href="mailto:support@macroplan.app" className="hover:text-coral-700 transition-colors duration-[var(--duration-base)] ease-out-quint">
+                <a href="mailto:support@macroplan.app" className="hover:text-coral-700 transition-colors duration-base ease-out-quint">
                   Contact us
                 </a>
               </li>

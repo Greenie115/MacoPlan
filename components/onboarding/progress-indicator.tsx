@@ -30,7 +30,7 @@ export function ProgressIndicator({
             <div
               key={stepNumber}
               className={cn(
-                'h-1.5 rounded-full transition-all duration-[var(--duration-base)] ease-out-quint',
+                'h-1.5 rounded-full transition-all duration-base ease-out-quint',
                 isActive
                   ? 'w-6 bg-primary'
                   : isCompleted

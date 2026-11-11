@@ -49,9 +49,8 @@ export function PrepTimeline({ planId, steps, totalContainers }: Props) {
   return (
     <>
     {allDone && (
-      <div className="rounded-2xl border-2 border-primary bg-primary/10 p-6 text-center animate-in zoom-in-95 fade-in duration-500">
-        <p className="text-3xl mb-2">🏁</p>
-        <p className="text-xl font-bold text-foreground">
+      <div className="rounded-2xl border border-coral-200 bg-coral-50 p-6 text-center dark:border-coral-800 dark:bg-coral-950 animate-in zoom-in-95 fade-in duration-500">
+        <p className="font-display text-2xl font-bold tracking-tight text-foreground">
           Prep done{totalContainers ? ` — ${totalContainers} containers ready` : ''}.
         </p>
         <p className="text-muted-foreground mt-1">

@@ -13,7 +13,7 @@ export function AuthorBio({ post }: AuthorBioProps) {
         className="h-20 w-20 flex-shrink-0 rounded-full"
       />
       <div>
-        <h3 className="mb-1 text-xl font-bold text-foreground [font-family:var(--font-display)]">{post.author}</h3>
+        <h3 className="mb-1 text-xl font-bold text-foreground font-display">{post.author}</h3>
         <p className="leading-relaxed text-subtle-foreground">
           {post.authorBio}
         </p>

@@ -1,94 +1,36 @@
-'use client'
-
 import { Utensils, Coffee, Sandwich, UtensilsCrossed, Cookie, Salad } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-interface MealPlaceholderProps {
+const ICONS = [
+  ['breakfast', Coffee],
+  ['lunch', Sandwich],
+  ['dinner', UtensilsCrossed],
+  ['snack', Cookie],
+  ['salad', Salad],
+  ['side', Salad],
+] as const
+
+/** Quiet placeholder for meals without a photo: a meal-type icon on a neutral tile. */
+export function MealPlaceholder({
+  mealType,
+  className,
+  compact = false,
+}: {
   mealType: string
   className?: string
-  /** Use compact version with smaller icon for thumbnails */
+  /** Smaller icon for thumbnails */
   compact?: boolean
-}
-
-/**
- * Placeholder component for meals without images.
- * Shows a meal-type-appropriate icon with brand-consistent styling.
- */
-export function MealPlaceholder({ mealType, className, compact = false }: MealPlaceholderProps) {
-  const { icon: Icon, gradient } = getMealTypeVisuals(mealType)
+}) {
+  const Icon = ICONS.find(([key]) => mealType.toLowerCase().includes(key))?.[1] ?? Utensils
 
   return (
     <div
       className={cn(
-        "flex items-center justify-center",
-        gradient,
+        'flex items-center justify-center bg-[radial-gradient(circle_at_30%_20%,var(--color-card),var(--color-muted))]',
         className
       )}
     >
-      <Icon
-        className={cn(
-          "text-white/70",
-          compact ? "size-8" : "size-16"
-        )}
-        strokeWidth={1.5}
-      />
+      <Icon className={cn('text-foreground/20', compact ? 'size-8' : 'size-14')} strokeWidth={1.5} />
     </div>
   )
-}
-
-/**
- * Returns the appropriate icon and gradient for each meal type.
- * Uses MacroPlan brand colors for consistency.
- */
-function getMealTypeVisuals(mealType: string) {
-  const type = mealType.toLowerCase()
-
-  // Coral (primary) base with macro-palette accents, varied per meal type
-  // to differentiate while staying on-brand
-
-  if (type.includes('breakfast')) {
-    return {
-      icon: Coffee,
-      // Coral to amber (fat)
-      gradient: 'bg-gradient-to-br from-primary to-amber-400'
-    }
-  }
-
-  if (type.includes('lunch')) {
-    return {
-      icon: Sandwich,
-      // Coral to sky (carbs)
-      gradient: 'bg-gradient-to-br from-primary to-sky-400'
-    }
-  }
-
-  if (type.includes('dinner')) {
-    return {
-      icon: UtensilsCrossed,
-      // Coral to rose
-      gradient: 'bg-gradient-to-br from-primary to-rose-500'
-    }
-  }
-
-  if (type.includes('snack')) {
-    return {
-      icon: Cookie,
-      // Amber to coral
-      gradient: 'bg-gradient-to-br from-amber-400 to-primary'
-    }
-  }
-
-  if (type.includes('salad') || type.includes('side')) {
-    return {
-      icon: Salad,
-      // Coral to emerald for a fresh feel
-      gradient: 'bg-gradient-to-br from-primary to-emerald-400'
-    }
-  }
-
-  // Default fallback - brand primary
-  return {
-    icon: Utensils,
-    gradient: 'bg-gradient-to-br from-primary/90 to-primary'
-  }
 }

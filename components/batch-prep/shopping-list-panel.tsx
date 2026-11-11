@@ -41,7 +41,8 @@ export function ShoppingListPanel({ items }: { items: ShoppingItem[] }) {
                         : 'text-foreground cursor-pointer'
                     }
                   >
-                    {item.quantity_g}g {item.ingredient}
+                    {item.quantity_g ? `${item.quantity_g}g ` : ''}
+                    {item.ingredient}
                   </label>
                 </li>
               )

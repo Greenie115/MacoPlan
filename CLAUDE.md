@@ -5,9 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Required skills
 
 - **All coding and writing work** must run through the `ponytail` skill at **full** intensity (invoke it via the Skill tool before starting; laziest-that-works, simplest, shortest solution).
-- **All UI work** (building, changing, or reviewing anything user-facing) must additionally run through the `impeccable` skill.
 
-Invoke these automatically at the start of a task — don't wait to be asked.
+Invoke it automatically at the start of a task — don't wait to be asked.
 
 ## Commands
 
@@ -119,16 +118,16 @@ useEffect dependency array like `[supabase.auth]`).
 `getCachedImages()` and warm misses with `next/server` `after()`.
 
 **Batch Prep Generator** (`lib/services/batch-prep-*.ts`):
-- GLM 4.7 via OpenRouter (`lib/services/openrouter.ts`) generates batch-cookable meal plans as structured JSON — env `OPENROUTER_API_KEY`, model override `BATCH_PREP_MODEL` (default `z-ai/glm-4.7`)
-- `batch-prep-generator.ts` orchestrates: prompt → Zod parse → macro accuracy check → one retry with correction hint → best-of-two (never hard-fails on macro misses)
-- Persisted to `batch_prep_plans` (+ `user_training_profile` snapshot); listed via `listBatchPrepPlans()`; token usage logged to `anthropic_usage_log`
+- **Default, free:** `batch-prep-library.ts` builds the plan from the `recipes` library with no model call — SQL filters (diet flag, max prep time), text matching (exclusions on name + ingredient lines, breakfast and per-slot cuisine preferences), then per-recipe portion sizes fitted arithmetically to the training-day and rest-day targets. Ingredients are the recipe's own lines, so `quantity_g`/`macros` on ingredients are optional.
+- **Fallback, paid:** if the library can't fill the plan (`BatchPrepValidationError`) and `OPENROUTER_API_KEY` is set, `batch-prep-generator.ts` asks GLM 4.7 via OpenRouter (`BATCH_PREP_MODEL`, default `z-ai/glm-4.7`): prompt → Zod parse → macro accuracy check → one retry → best-of-two. Unset the key to never spend tokens.
+- Persisted to `batch_prep_plans` (+ `user_training_profile` snapshot); listed via `listBatchPrepPlans()`; model token usage logged to `anthropic_usage_log`
 - The old Recipe-API.com `meal-plan-generator.ts` was deleted in the 2026-04 batch-prep pivot; Recipe-API.com is only used for `/recipes` browse
 
 ### Database Schema
 
 **Key Tables**:
 - `user_profiles`: All onboarding data, macros, experience levels
-- `batch_prep_plans`: Claude-generated batch prep plans (the primary plan type)
+- `batch_prep_plans`: batch prep plans, library-built or model-generated (the primary plan type)
 - `user_training_profile`: Lifter prefs snapshot (training days, prep day, containers)
 - `anthropic_usage_log`: Token usage per generation (admin-only read)
 - `recipes`: Recipe catalog (title, ingredients, instructions, nutritional info)
@@ -140,6 +139,14 @@ useEffect dependency array like `[supabase.auth]`).
 - `recipe_images`: Permanently cached Unsplash image URLs
 
 **Row Level Security**: All tables use RLS with `auth.uid() = user_id` policies. Users can ONLY access their own data.
+
+### Recipe browse (`/recipes`)
+
+- URL contract and parsing live in `lib/utils/filter-validation.ts`
+  (`tags`, `minProtein`, `maxCalories`, `maxCarbs`, `maxTime`, `sort`, `search`, `tab`)
+- `searchLibraryRecipes()` in `app/actions/recipes.ts` runs every filter in SQL
+  against the `recipes` table; all filters AND together
+- Favorites/Popular tabs reuse the same query restricted to their ids
 
 ### Calculation Engine
 
@@ -194,7 +201,8 @@ their own headers. Route protection lives in `proxy.ts`.
 - `components/onboarding/`: StepContainer, ProgressIndicator
 - `components/dashboard/`: Dashboard-specific features
 - `components/plans/`: Meal plan UI components
-- `components/recipes/`: Recipe cards, filters
+- `components/recipes/`: Recipe cards, `recipe-filters.tsx` (URL-driven filter bar)
+- `components/ui/macro-split.tsx`: the shared macro summary (bar + P/C/F grams)
 
 **Composition Pattern**: Most pages compose multiple smaller components. Components receive props via standard React patterns (no Context overuse).
 
@@ -211,7 +219,7 @@ Required for recipes/meal plans:
 ```
 RECIPE_API_KEY=your-recipe-api-key          # From recipe-api.com (still used for /recipes browse)
 UNSPLASH_ACCESS_KEY=your-unsplash-key       # From unsplash.com/developers
-OPENROUTER_API_KEY=sk-or-...                # From openrouter.ai (batch prep generation, GLM 4.7)
+OPENROUTER_API_KEY=sk-or-...                # Optional: paid fallback when the recipe library can't fill a plan
 ```
 
 Optional:
@@ -247,7 +255,8 @@ STRIPE_SECRET_KEY=sk_test_...
 - `supabase/migrations/`: NOTE — only post-2026-03 migrations exist in the repo; founding tables (`user_profiles`, `recipes`, `meal_plans`, `logged_meals`, ...) live only in production Supabase
 - `lib/services/recipe-api.ts`: Recipe-API.com service with caching
 - `lib/services/unsplash.ts`: Unsplash image service (negative caching + rate-limit breaker)
-- `lib/services/batch-prep-generator.ts`: GLM-powered (via OpenRouter) batch prep generation engine
+- `lib/services/batch-prep-library.ts`: free plan builder from the recipe library (default path)
+- `lib/services/batch-prep-generator.ts`: GLM-powered (via OpenRouter) fallback generator
 - `lib/services/batch-prep-persistence.ts`: batch_prep_plans CRUD + listBatchPrepPlans
 - `app/actions/recipe-search.ts`: Recipe search server actions
 - `lib/types/recipe.ts`: Provider-agnostic recipe types (`NormalizedRecipe`)

@@ -17,7 +17,7 @@ export default function RecipeNotFound() {
         </p>
         <Link
           href="/recipes"
-          className="inline-flex items-center justify-center h-12 px-6 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 transition-colors"
+          className="inline-flex items-center justify-center h-12 px-6 rounded-xl bg-coral-600 text-white font-semibold hover:bg-coral-700 transition-colors"
         >
           Back to Recipes
         </Link>

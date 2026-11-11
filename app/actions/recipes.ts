@@ -8,7 +8,7 @@ import { FREE_FAVORITES_LIMIT } from '@/lib/constants/subscription'
 import { checkFavoritesQuota } from '@/app/actions/subscription'
 import { createCacheClient } from '@/lib/supabase/cache-client'
 import { unsplashService } from '@/lib/services/unsplash'
-import type { ValidatedFilters } from '@/lib/utils/filter-validation'
+import { RECIPE_TAGS, type RecipeFilters } from '@/lib/utils/filter-validation'
 
 /**
  * Recipe metadata for favorites
@@ -264,78 +264,18 @@ async function toListItems(rows: LibraryRow[]): Promise<LibraryRecipeListItem[]>
 }
 
 const LIBRARY_COLUMNS = 'id, name, description, image_url, calories, protein_grams, carb_grams, fat_grams'
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 /**
- * Browse the self-hosted recipe library (no search/filters). Quality-first,
- * stable order (batch_prep_score desc, id) so pagination and infinite scroll
- * stay consistent across requests. Replaces the old Recipe-API.com cache path.
- */
-export async function getCachedRecipes(
-  page: number = 1,
-  limit: number = 20
-): Promise<{
-  data: LibraryRecipeListItem[]
-  totalCount: number
-  error: string | null
-}> {
-  try {
-    const supabase = await createClient()
-    const offset = (page - 1) * limit
-
-    const { data, count, error } = await supabase
-      .from('recipes')
-      .select(LIBRARY_COLUMNS, { count: 'exact' })
-      .order('batch_prep_score', { ascending: false, nullsFirst: false })
-      .order('id', { ascending: true })
-      .range(offset, offset + limit - 1)
-
-    if (error) {
-      return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
-    }
-
-    return {
-      data: await toListItems((data as LibraryRow[]) || []),
-      totalCount: count || 0,
-      error: null,
-    }
-  } catch {
-    return { data: [], totalCount: 0, error: 'Failed to fetch recipes' }
-  }
-}
-
-/**
- * Curated recipe "type" filters. Each maps to a single PostgREST or-filter
- * condition on the recipes row, so filtering and counting need no joins.
- * Ordered by usefulness for lifters (macros/prep first, then diets, then
- * cuisines). Cuisine is deliberately NOT a catch-all list: ~64% of the library
- * is "american", which is what made the old cuisine-only dropdown useless.
- */
-const RECIPE_TYPE_FILTERS: ReadonlyArray<{ value: string; label: string; condition: string }> = [
-  { value: 'high-protein', label: 'High Protein', condition: 'protein_grams.gte.30' },
-  { value: 'low-carb', label: 'Low Carb', condition: 'carb_grams.lte.20' },
-  { value: 'meal-prep', label: 'Meal-Prep Friendly', condition: 'batch_prep_score.gte.4' },
-  { value: 'vegetarian', label: 'Vegetarian', condition: 'dietary_flags.cs.{vegetarian}' },
-  { value: 'vegan', label: 'Vegan', condition: 'dietary_flags.cs.{vegan}' },
-  { value: 'keto', label: 'Keto', condition: 'dietary_flags.cs.{keto}' },
-  { value: 'paleo', label: 'Paleo', condition: 'dietary_flags.cs.{paleo}' },
-  { value: 'gluten-free', label: 'Gluten-Free', condition: 'dietary_flags.cs.{gluten-free}' },
-  { value: 'dairy-free', label: 'Dairy-Free', condition: 'dietary_flags.cs.{dairy-free}' },
-  { value: 'italian', label: 'Italian', condition: 'cuisine.eq.italian' },
-  { value: 'mexican', label: 'Mexican', condition: 'cuisine.eq.mexican' },
-  { value: 'asian', label: 'Asian', condition: 'cuisine.eq.asian' },
-  { value: 'mediterranean', label: 'Mediterranean', condition: 'cuisine.eq.mediterranean' },
-  { value: 'indian', label: 'Indian', condition: 'cuisine.eq.indian' },
-]
-
-/**
- * Search and filter the self-hosted recipe library. Replaces the Recipe-API.com
- * search path: text match on name, macro/calorie ranges, recipe "type"
- * ("category"), and sort all run as SQL against the recipes table.
+ * Browse, search and filter the self-hosted recipe library. Every filter
+ * narrows the result (AND). Pass `ids` to restrict to a known set (the
+ * Favorites and Popular tabs).
  */
 export async function searchLibraryRecipes(
-  filters: ValidatedFilters,
+  filters: RecipeFilters,
   page: number = 1,
-  limit: number = 20
+  limit: number = 20,
+  ids?: string[]
 ): Promise<{
   recipes: LibraryRecipeListItem[]
   totalResults: number
@@ -347,44 +287,27 @@ export async function searchLibraryRecipes(
 
     let query = supabase.from('recipes').select(LIBRARY_COLUMNS, { count: 'exact' })
 
+    // Legacy favorites hold non-uuid Recipe-API ids, which the uuid column rejects.
+    if (ids) query = query.in('id', ids.filter((id) => UUID.test(id)))
     if (filters.q) query = query.ilike('name', `%${filters.q}%`)
-    // "category" holds selected recipe-type values; each maps to a row-level
-    // condition. Multiple selections are OR'd (union), matching how a user
-    // expects "show me High Protein OR Vegan" to behave.
-    if (filters.category) {
-      const conditions = filters.category
-        .split(',')
-        .map((v) => RECIPE_TYPE_FILTERS.find((f) => f.value === v)?.condition)
-        .filter((c): c is string => Boolean(c))
-      if (conditions.length) query = query.or(conditions.join(','))
+    // Chained .or() calls are AND'd, so each tag narrows the list.
+    for (const tag of RECIPE_TAGS) {
+      if (filters.tags.includes(tag.value)) query = query.or(tag.condition)
     }
-    if (filters.min_calories !== undefined) query = query.gte('calories', filters.min_calories)
-    if (filters.max_calories !== undefined) query = query.lte('calories', filters.max_calories)
-    if (filters.min_protein !== undefined) query = query.gte('protein_grams', filters.min_protein)
-    if (filters.max_protein !== undefined) query = query.lte('protein_grams', filters.max_protein)
-    if (filters.min_carbs !== undefined) query = query.gte('carb_grams', filters.min_carbs)
-    if (filters.max_carbs !== undefined) query = query.lte('carb_grams', filters.max_carbs)
-    if (filters.min_fat !== undefined) query = query.gte('fat_grams', filters.min_fat)
-    if (filters.max_fat !== undefined) query = query.lte('fat_grams', filters.max_fat)
+    if (filters.minProtein !== undefined) query = query.gte('protein_grams', filters.minProtein)
+    if (filters.maxCalories !== undefined) query = query.lte('calories', filters.maxCalories)
+    if (filters.maxCarbs !== undefined) query = query.lte('carb_grams', filters.maxCarbs)
+    if (filters.maxTime !== undefined) query = query.lte('total_time_minutes', filters.maxTime)
 
-    switch (filters.sort_by) {
-      case 'newest':
-        query = query.order('created_at', { ascending: false })
-        break
-      case 'oldest':
-        query = query.order('created_at', { ascending: true })
-        break
-      case 'caloriesPerServingAscending':
-        query = query.order('calories', { ascending: true })
-        break
-      case 'caloriesPerServingDescending':
-        query = query.order('calories', { ascending: false })
-        break
-      default:
-        // Relevance: best batch-prep recipes first, stable via id.
-        query = query.order('batch_prep_score', { ascending: false, nullsFirst: false })
-    }
-    query = query.order('id', { ascending: true })
+    const sorts = {
+      prep: ['batch_prep_score', false],
+      protein: ['protein_grams', false],
+      caloriesAsc: ['calories', true],
+      caloriesDesc: ['calories', false],
+      fastest: ['total_time_minutes', true],
+    } as const
+    const [column, ascending] = sorts[filters.sort]
+    query = query.order(column, { ascending, nullsFirst: false }).order('id', { ascending: true })
 
     const { data, count, error } = await query.range(offset, offset + limit - 1)
 
@@ -399,32 +322,6 @@ export async function searchLibraryRecipes(
     }
   } catch {
     return { recipes: [], totalResults: 0, error: 'Failed to search recipes' }
-  }
-}
-
-/**
- * Lightweight title autocomplete for the search bar — name match only, no
- * images or macros. Replaces the Recipe-API.com autocomplete call.
- */
-export async function getRecipeAutocomplete(
-  query: string
-): Promise<Array<{ id: string; title: string }>> {
-  const q = query.trim()
-  if (q.length < 3) return []
-
-  try {
-    const supabase = await createClient()
-    const { data, error } = await supabase
-      .from('recipes')
-      .select('id, name')
-      .ilike('name', `%${q}%`)
-      .order('batch_prep_score', { ascending: false, nullsFirst: false })
-      .limit(5)
-
-    if (error || !data) return []
-    return data.map((r) => ({ id: r.id as string, title: r.name as string }))
-  } catch {
-    return []
   }
 }
 
@@ -500,41 +397,4 @@ export const getMostFavoritedRecipes = unstable_cache(
   },
   ['popular-recipes'],
   { revalidate: 300 } // 5 minutes
-)
-
-/**
- * Recipe "type" filter options: the curated RECIPE_TYPE_FILTERS with a live
- * count per type (so users see how much is behind each). Types with zero
- * matches are dropped. Cached for an hour since the library changes slowly.
- */
-export const getRecipeTypeFilters = unstable_cache(
-  async (): Promise<{
-    success: boolean
-    data?: Array<{ value: string; label: string }>
-    error?: string
-  }> => {
-    try {
-      const supabase = createCacheClient()
-
-      const counts = await Promise.all(
-        RECIPE_TYPE_FILTERS.map(async (f) => {
-          const { count } = await supabase
-            .from('recipes')
-            .select('id', { count: 'exact', head: true })
-            .or(f.condition)
-          return count ?? 0
-        })
-      )
-
-      const data = RECIPE_TYPE_FILTERS.map((f, i) => ({ ...f, count: counts[i] }))
-        .filter((f) => f.count > 0)
-        .map((f) => ({ value: f.value, label: `${f.label} (${f.count})` }))
-
-      return { success: true, data }
-    } catch {
-      return { success: false, error: 'Failed to fetch recipe types' }
-    }
-  },
-  ['library-type-filters'],
-  { revalidate: 3600 } // 1 hour
 )

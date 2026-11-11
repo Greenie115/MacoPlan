@@ -231,7 +231,7 @@ export function GeneratorForm({ defaults, userDietType, userExclusions }: Props)
           </p>
           <Link
             href="/pricing"
-            className="mt-3 inline-block rounded-xl bg-primary px-6 py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            className="mt-3 inline-block rounded-xl bg-primary px-6 py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-coral-700"
           >
             Upgrade to Premium
           </Link>

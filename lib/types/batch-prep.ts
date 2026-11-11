@@ -14,10 +14,12 @@ export type Equipment = z.infer<typeof EquipmentSchema>
 export const MealSlotSchema = z.enum(['breakfast', 'lunch', 'snack', 'dinner'])
 export type MealSlot = z.infer<typeof MealSlotSchema>
 
+// Model-written plans weigh every ingredient; library plans carry the
+// recipe's own ingredient line ("2 lbs chicken thighs") as the name.
 export const IngredientSchema = z.object({
   name: z.string().min(1),
-  quantity_g: z.number().positive(),
-  macros: MacrosSchema,
+  quantity_g: z.number().positive().optional(),
+  macros: MacrosSchema.optional(),
 })
 export type Ingredient = z.infer<typeof IngredientSchema>
 
@@ -45,7 +47,7 @@ export type PrepStep = z.infer<typeof PrepStepSchema>
 
 export const ShoppingItemSchema = z.object({
   ingredient: z.string().min(1),
-  quantity_g: z.number().positive(),
+  quantity_g: z.number().positive().optional(),
   category: z.string().optional(),
 })
 export type ShoppingItem = z.infer<typeof ShoppingItemSchema>

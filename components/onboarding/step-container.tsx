@@ -8,7 +8,6 @@ interface StepContainerProps {
   step: number
   title: string
   subtitle?: string
-  emoji?: string
   onBack: () => void
   onContinue: () => void
   continueDisabled?: boolean
@@ -21,7 +20,6 @@ export function StepContainer({
   step,
   title,
   subtitle,
-  emoji,
   onBack,
   onContinue,
   continueDisabled = false,
@@ -37,7 +35,7 @@ export function StepContainer({
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 pt-4">
           <button
             onClick={onBack}
-            className="flex items-center justify-center size-11 -ml-1.5 rounded-full text-icon transition-colors duration-[var(--duration-fast)] hover:bg-accent hover:text-foreground active:scale-95"
+            className="flex items-center justify-center size-11 -ml-1.5 rounded-full text-icon transition-colors duration-fast hover:bg-accent hover:text-foreground active:scale-95"
             aria-label="Go back to previous step"
           >
             <ArrowLeft className="size-5" />
@@ -54,12 +52,7 @@ export function StepContainer({
         {/* Content */}
         <div className="flex-1 px-4 sm:px-6 lg:px-8 overflow-y-auto pb-28">
           <div className="mt-6">
-            <h1 className="text-2xl sm:text-[1.75rem] font-semibold leading-tight tracking-tight text-foreground text-balance">
-              {emoji && (
-                <span className="mr-2" aria-hidden="true">
-                  {emoji}
-                </span>
-              )}
+            <h1 className="text-3xl font-bold leading-tight tracking-tight text-foreground text-balance">
               {title}
             </h1>
             {subtitle && (

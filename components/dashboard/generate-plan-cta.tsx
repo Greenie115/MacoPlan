@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Sparkles } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 interface GeneratePlanCTAProps {
   hasActivePlan?: boolean
@@ -48,28 +48,20 @@ export function GeneratePlanCTA({
     )
   }
 
-  // No active plan - show prominent CTA
+  // No active plan: the one loud thing on the dashboard
   return (
-    <div className="flex flex-col items-start justify-between gap-4 rounded-2xl bg-primary p-5 md:p-6 text-white shadow-coral">
-      <div className="flex items-start gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 flex-shrink-0">
-          <Sparkles className="h-5 w-5" />
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-base font-bold leading-tight">
-            Generate New Meal Plan
-          </p>
-          <p className="text-sm font-normal leading-normal text-white/80">
-            Create a new macro-perfect plan in 3 seconds
-          </p>
-        </div>
+    <div className="relative overflow-hidden rounded-2xl bg-charcoal p-6 text-white md:p-7">
+      <div aria-hidden="true" className="premium-mesh" />
+      <div className="relative">
+        <h2 className="text-2xl font-bold">Plan this week&apos;s prep</h2>
+        <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/65">
+          Stop deciding what to cook. Get the recipes, portions, cooking order and one shopping list for your macros, in seconds.
+        </p>
+        <Button onClick={handleClick} size="lg" className="mt-6 w-full sm:w-auto">
+          Generate my plan
+          <ArrowRight className="size-4" />
+        </Button>
       </div>
-      <button
-        onClick={handleClick}
-        className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-11 md:h-12 px-5 bg-white text-primary text-sm md:text-base font-bold leading-normal transition-colors duration-150 hover:bg-white/90 active:scale-[0.98]"
-      >
-        <span className="truncate">Generate Now →</span>
-      </button>
     </div>
   )
 }

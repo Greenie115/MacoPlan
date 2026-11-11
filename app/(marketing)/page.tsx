@@ -1,45 +1,26 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Bricolage_Grotesque } from 'next/font/google'
-import {
-  Utensils,
-  ArrowRight,
-  ArrowDown,
-  Target,
-  Zap,
-  TrendingUp,
-  Clock,
-  CalendarCheck,
-  RefreshCw,
-  Check,
-} from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { FAQSection } from '@/components/landing/faq-section'
 import { Footer } from '@/components/landing/footer'
 import { MarketingHeader } from '@/components/landing/marketing-header'
 import { SuccessStories } from '@/components/landing/success-stories'
-import { Reveal } from '@/components/landing/reveal'
-import { HeroPrepCard } from '@/components/landing/hero-prep-card'
-
-const display = Bricolage_Grotesque({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-display',
-})
+import { PrepTicket } from '@/components/landing/prep-ticket'
 
 export const metadata: Metadata = {
   title: 'MacroPlan - The Meal Prep Planner That Actually Understands How Lifters Eat',
-  description: 'AI-generated batch cooking plans that hit your exact macros. Tell us your prep day, your macros, and how many containers to fill — done in 3 seconds.',
+  description: 'You know your macros. MacroPlan works out what to cook to hit them: batch recipes, portions, cooking order and a shopping list for one prep session, in seconds.',
   keywords: ['meal prep', 'batch cooking', 'macro calculator', 'nutrition', 'fitness', 'meal prep planner', 'lifting', 'bodybuilding meal prep'],
   openGraph: {
     title: 'MacroPlan - Your Meal Prep, Planned',
-    description: 'AI-generated batch cooking plans that hit your exact macros. Tell us your prep day, your macros, and how many containers to fill — done in 3 seconds.',
+    description: 'You know your macros. MacroPlan works out what to cook to hit them: batch recipes, portions, cooking order and a shopping list for one prep session, in seconds.',
     type: 'website',
     siteName: 'MacroPlan',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MacroPlan - Your Meal Prep, Planned',
-    description: 'AI-generated batch cooking plans that hit your exact macros. Tell us your prep day, your macros, and how many containers to fill — done in 3 seconds.',
+    description: 'You know your macros. MacroPlan works out what to cook to hit them: batch recipes, portions, cooking order and a shopping list for one prep session, in seconds.',
   },
   alternates: {
     canonical: '/',
@@ -53,7 +34,7 @@ const jsonLd = {
   name: 'MacroPlan',
   applicationCategory: 'HealthApplication',
   operatingSystem: 'Web',
-  description: 'AI-powered meal planning application that generates personalized meal plans based on your macro targets and dietary preferences.',
+  description: 'Meal prep planner for lifters. Turns your macro targets and prep day into a batch-cook plan with portions, a cooking order and a shopping list.',
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'USD',
@@ -86,298 +67,218 @@ const jsonLd = {
 const jsonLdScript = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
 
 const PROOF_STATS = [
-  { value: '500+', label: 'batch-tested recipes', accent: 'text-protein' },
-  { value: '15+', label: 'diet styles covered', accent: 'text-carb' },
-  { value: '3s', label: 'to a full week of meals', accent: 'text-fat' },
-  { value: '100%', label: 'macro-calculated', accent: 'text-primary' },
+  { value: '1', label: 'prep session a week' },
+  { value: '3-6', label: 'recipes, not 28' },
+  { value: '2', label: 'day types: training and rest' },
+  { value: '0', label: 'macro maths left for you' },
 ] as const
 
 const STEPS = [
   {
-    number: '01',
-    icon: Target,
-    title: 'Set your macros + training days',
-    copy: 'Training 5x/week? We calculate your training day and rest day targets automatically.',
+    title: 'Tell it how you train',
+    copy: 'Lifting days and rest days need different fuel. Set both once and stop recalculating every week.',
   },
   {
-    number: '02',
-    icon: Zap,
-    title: 'Generate your prep plan',
-    copy: 'AI builds a batch-cook plan optimised for cooking once, eating all week. 3-4 recipes, one shopping list, one prep session.',
+    title: 'Get a plan, not homework',
+    copy: 'MacroPlan picks batch recipes and sizes every portion to your targets. No spreadsheet. No guessing.',
   },
   {
-    number: '03',
-    icon: TrendingUp,
-    title: 'Cook, container, crush it',
-    copy: 'Follow the step-by-step cooking timeline. Fill your containers. Hit your macros every day without thinking.',
+    title: 'Cook once, then stop thinking',
+    copy: 'Follow the cooking order, fill the containers, shut the fridge. On Wednesday you just open a lid.',
   },
 ] as const
 
 const FEATURES = [
   {
-    icon: Utensils,
-    title: 'Batch-optimised recipes',
-    copy: 'Every meal designed for bulk cooking and 5-day refrigeration.',
+    title: 'Food that survives Thursday',
+    copy: 'Recipes picked for bulk cooking and days in the fridge, so day four still tastes like dinner.',
   },
   {
-    icon: Clock,
-    title: 'Cooking timeline',
-    copy: 'Oven first, rice cooker second, stovetop third. We tell you what to do and when.',
+    title: 'A cooking order, not chaos',
+    copy: 'The longest cook goes on first. You always know what to start next.',
   },
   {
-    icon: CalendarCheck,
-    title: 'Training day / rest day macros',
-    copy: 'Different targets for different days, automatically.',
+    title: 'Training and rest days, handled',
+    copy: 'Bigger portions when you lift, smaller when you don\u2019t. Same food, no second plan.',
   },
   {
-    icon: RefreshCw,
-    title: 'One-tap shopping list',
-    copy: 'Every plan generates a consolidated grocery list — buy once, prep once.',
+    title: 'One shopping list',
+    copy: 'Everything for the week, grouped by recipe. One trip, nothing forgotten.',
   },
 ] as const
+
+const CTA_CLASS =
+  'inline-flex items-center gap-2 rounded-full bg-coral-600 px-7 py-3.5 text-base font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.2)] transition-[background-color,box-shadow,transform] duration-base ease-out-quint hover:-translate-y-0.5 hover:bg-coral-700 hover:shadow-coral active:scale-[0.97]'
 
 export default function LandingPage() {
   return (
     <>
-      {/* JSON-LD structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdScript }}
-      />
-      <div className={`${display.variable} min-h-screen bg-background text-foreground font-sans selection:bg-primary/30`}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript }} />
+      <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
         <MarketingHeader />
 
-        <main role="main" id="main-content">
-          {/* ==================== HERO (dark) ==================== */}
-          <section
-            className="relative overflow-hidden bg-charcoal text-white pt-28 pb-20 md:pt-36 md:pb-24"
-            aria-labelledby="hero-heading"
-          >
-            {/* Atmosphere: tokenized mesh glow + grid + grain */}
+        <main id="main-content">
+          {/* ==================== HERO ==================== */}
+          <section className="relative overflow-hidden bg-charcoal pt-28 text-white md:pt-36" aria-labelledby="hero-heading">
             <div aria-hidden="true" className="premium-mesh" />
-            <div aria-hidden="true" className="premium-grid" />
             <div aria-hidden="true" className="grain-overlay" />
 
-            <div className="container mx-auto px-6 relative">
-              <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-16 lg:gap-12 items-center">
-                {/* Copy */}
-                <div className="text-center lg:text-left">
-                  <p
-                    className="landing-rise inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/70"
-                    style={{ animationDelay: '0.05s' }}
-                  >
-                    <span className="pulse-dot size-1.5 rounded-full bg-primary" />
-                    AI batch-cooking planner
+            <div className="relative mx-auto max-w-6xl px-6">
+              <div className="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
+                <div>
+                  <p className="landing-rise font-mono text-xs uppercase tracking-[0.16em] text-white/55" style={{ animationDelay: '0.05s' }}>
+                    <span className="pulse-dot mr-2 inline-block size-1.5 rounded-full bg-primary align-middle" />
+                    Batch-cook planner for lifters
                   </p>
 
                   <h1
                     id="hero-heading"
-                    className="landing-rise mt-6 text-display-2xl font-extrabold leading-[0.98] tracking-tight [font-family:var(--font-display)] [text-wrap:balance]"
-                    style={{ animationDelay: '0.15s' }}
+                    className="landing-rise mt-6 text-display-2xl font-extrabold leading-[0.95] tracking-tight"
+                    style={{ animationDelay: '0.12s' }}
                   >
-                    Cook once.
-                    <span className="block text-primary">Hit your macros all&nbsp;week.</span>
+                    Stop winging
+                    <span className="block text-primary">your meal&nbsp;prep.</span>
                   </h1>
 
-                  <p
-                    className="landing-rise mt-6 text-lg md:text-xl text-white/65 leading-relaxed max-w-xl mx-auto lg:mx-0"
-                    style={{ animationDelay: '0.25s' }}
-                  >
-                    Tell MacroPlan your targets and your prep day. It hands back 3-4 batch
-                    recipes, a cooking timeline, and a shopping list that fills every
-                    container — in 3 seconds.
+                  <p className="landing-rise mt-7 max-w-xl text-lg leading-relaxed text-white/65 md:text-xl" style={{ animationDelay: '0.2s' }}>
+                    You know your macros. Working out what to cook to hit them is what eats your Sunday.
+                    MacroPlan hands you the recipes, the portions, the cooking order and the shopping list, in
+                    seconds.
                   </p>
 
-                  <div
-                    className="landing-rise mt-9 flex flex-col sm:flex-row items-center gap-4 lg:justify-start justify-center"
-                    style={{ animationDelay: '0.35s' }}
-                  >
-                    <Link
-                      href="/onboarding/1"
-                      className="inline-flex items-center gap-2 bg-coral-600 hover:bg-coral-700 active:scale-[0.97] text-primary-foreground font-bold py-4 px-8 rounded-full transition-all duration-[var(--duration-base)] ease-out-quint shadow-xl shadow-charcoal/40 hover:shadow-coral hover:-translate-y-0.5 text-base"
-                    >
-                      <span>Generate my prep plan — free</span>
-                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                  <div className="landing-rise mt-9 flex flex-wrap items-center gap-x-6 gap-y-4" style={{ animationDelay: '0.28s' }}>
+                    <Link href="/onboarding/1" className={CTA_CLASS}>
+                      Sort my prep, free
+                      <ArrowRight className="size-5" aria-hidden="true" />
                     </Link>
                     <Link
                       href="/#how-it-works"
-                      className="inline-flex items-center gap-2 text-white/70 hover:text-white font-semibold py-4 px-4 transition-colors duration-[var(--duration-base)] ease-out-quint"
+                      className="font-medium text-white/70 underline decoration-white/25 underline-offset-4 transition-colors duration-base hover:text-white hover:decoration-white"
                     >
-                      <span>See how it works</span>
-                      <ArrowDown className="w-4 h-4" aria-hidden="true" />
+                      See how it works
                     </Link>
                   </div>
 
-                  <ul
-                    className="landing-rise mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-sm text-white/50"
-                    style={{ animationDelay: '0.45s' }}
-                  >
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-primary" aria-hidden="true" /> No credit card</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-primary" aria-hidden="true" /> Free plan included</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-primary" aria-hidden="true" /> Cancel anytime</li>
+                  <ul className="landing-rise mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/50" style={{ animationDelay: '0.36s' }}>
+                    {['No credit card', 'Free plan included', 'Cancel anytime'].map((item) => (
+                      <li key={item} className="flex items-center gap-2">
+                        <Check className="size-4 text-primary" aria-hidden="true" /> {item}
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
-                {/* Product proof */}
-                <div className="landing-rise px-2 pt-6 lg:pt-0 sm:px-0" style={{ animationDelay: '0.3s' }}>
-                  <HeroPrepCard />
+                <div className="landing-rise" style={{ animationDelay: '0.25s' }}>
+                  <PrepTicket />
                 </div>
               </div>
 
-              {/* Proof strip */}
-              <div className="landing-rise mt-24 border-t border-white/10 pt-10" style={{ animationDelay: '0.55s' }}>
-                <dl className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 text-center">
-                  {PROOF_STATS.map((stat) => (
-                    <div key={stat.label}>
-                      <dt className="sr-only">{stat.label}</dt>
-                      <dd className={`text-4xl md:text-5xl font-extrabold tabular-nums [font-family:var(--font-display)] ${stat.accent}`}>
-                        {stat.value}
-                      </dd>
-                      <dd className="mt-1.5 text-sm text-white/50">{stat.label}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
+              <dl className="landing-rise mt-20 grid grid-cols-2 border-t border-white/10 md:grid-cols-4" style={{ animationDelay: '0.45s' }}>
+                {PROOF_STATS.map((stat) => (
+                  <div key={stat.label} className="border-white/10 py-7 md:border-l md:px-6 md:first:border-l-0 md:first:pl-0">
+                    <dt className="sr-only">{stat.label}</dt>
+                    <dd className="font-display text-4xl font-extrabold tabular-nums tracking-tight">{stat.value}</dd>
+                    <dd className="mt-1 font-mono text-xs uppercase tracking-wider text-white/45">{stat.label}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </section>
 
           {/* ==================== HOW IT WORKS ==================== */}
           <section className="py-24 md:py-32" id="how-it-works" aria-labelledby="how-heading">
-            <div className="container mx-auto px-6 max-w-6xl">
-              <Reveal className="max-w-2xl mb-16">
-                <h2 id="how-heading" className="text-display-xl font-extrabold tracking-tight [font-family:var(--font-display)] [text-wrap:balance]">
-                  Three steps to a stocked fridge.
-                </h2>
-                <p className="mt-4 text-lg text-muted-foreground">
-                  Three steps. Three seconds. A full week of prep.
-                </p>
-              </Reveal>
-
-              <div className="relative max-w-3xl">
-                {/* Vertical connector line */}
-                <div aria-hidden="true" className="absolute left-6 top-0 bottom-0 w-px bg-border-strong hidden md:block" />
-
-                <div className="space-y-8 md:space-y-12">
-                  {STEPS.map((step, i) => (
-                    <Reveal key={step.number} delay={i * 0.12}>
-                      <div className="relative flex gap-6 md:gap-8 items-start">
-                        {/* Step number circle */}
-                        <div className="relative z-10 flex-shrink-0 w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center text-lg font-extrabold [font-family:var(--font-display)] shadow-lg shadow-primary/20">
-                          {step.number}
-                        </div>
-                        {/* Content */}
-                        <div className="flex-1 bg-card border border-border-strong rounded-2xl p-6 shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:shadow-lg hover:-translate-y-0.5 hover:border-coral-200">
-                          <div className="flex items-center gap-3 mb-2">
-                            <step.icon className="w-5 h-5 text-primary" aria-hidden="true" />
-                            <h3 className="text-lg font-bold [font-family:var(--font-display)]">{step.title}</h3>
-                          </div>
-                          <p className="text-muted-foreground leading-relaxed text-[15px]">{step.copy}</p>
-                        </div>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
+            <div className="mx-auto max-w-6xl px-6">
+              <h2 id="how-heading" className="max-w-2xl text-display-xl font-extrabold leading-[1.05]">
+                From &ldquo;what do I cook?&rdquo; to a stocked fridge.
+              </h2>
+              <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-0">
+                {STEPS.map((step, i) => (
+                  <li key={step.title} className="border-t border-foreground pt-6 md:pr-10">
+                    <span className="font-mono text-sm tabular-nums text-coral-700">Step {i + 1}</span>
+                    <h3 className="mt-3 font-display text-2xl font-bold leading-tight tracking-tight">{step.title}</h3>
+                    <p className="mt-3 leading-relaxed text-muted-foreground">{step.copy}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </section>
 
           {/* ==================== DIFFERENTIATOR ==================== */}
-          <section className="pb-24 md:pb-32" aria-labelledby="diff-heading">
-            <div className="container mx-auto px-6 max-w-6xl">
-              {/* Statement card */}
-              <Reveal>
-                <div className="relative overflow-hidden bg-charcoal text-white rounded-3xl px-8 py-14 md:px-16 md:py-20 text-center shadow-xl">
-                  <div aria-hidden="true" className="premium-mesh" />
-                  <div aria-hidden="true" className="grain-overlay" />
-                  <div className="relative max-w-3xl mx-auto">
-                    <h2 id="diff-heading" className="text-display-lg font-extrabold tracking-tight leading-[1.08] [font-family:var(--font-display)] [text-wrap:balance]">
-                      Other apps plan 28 different meals.{' '}
-                      <span className="text-primary">You&apos;re cooking on Sunday.</span>
-                    </h2>
-                    <p className="mt-6 text-lg text-white/60 leading-relaxed">
-                      You&apos;re not cooking 28 meals — you&apos;re cooking once and eating from
-                      containers all week. MacroPlan is the only planner built around that.
-                    </p>
+          <section className="border-y border-border-strong bg-card py-24 md:py-32" aria-labelledby="diff-heading">
+            <div className="mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-2 lg:gap-20">
+              <div>
+                <h2 id="diff-heading" className="text-display-lg font-extrabold leading-[1.05]">
+                  Other apps plan 28 different meals. <span className="text-coral-700">You&apos;re cooking on Sunday.</span>
+                </h2>
+                <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+                  Nobody preps 28 recipes. You cook a few things in bulk and eat them all week. MacroPlan plans
+                  for that, because that is what you will actually do.
+                </p>
+
+                {/* The whole argument as a picture: 28 one-off meals vs 4 batches */}
+                <div className="mt-10 grid grid-cols-2 gap-8" aria-hidden="true">
+                  <div>
+                    <div className="grid grid-cols-7 gap-1.5">
+                      {Array.from({ length: 28 }, (_, i) => (
+                        <span key={i} className="aspect-square rounded-[3px] border border-border-strong" />
+                      ))}
+                    </div>
+                    <p className="mt-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">28 meals to cook</p>
+                  </div>
+                  <div>
+                    <div className="grid h-[calc(100%-1.75rem)] grid-cols-4 gap-1.5">
+                      {['bg-protein', 'bg-carb', 'bg-fat', 'bg-foreground'].map((c) => (
+                        <span key={c} className={`rounded-[3px] ${c}`} />
+                      ))}
+                    </div>
+                    <p className="mt-3 font-mono text-xs uppercase tracking-wider text-foreground">4 batches, 1 session</p>
                   </div>
                 </div>
-              </Reveal>
+              </div>
 
-              {/* Feature grid — lead card wider (the core differentiator), rest fall in behind it */}
-              <div className="grid sm:grid-cols-2 gap-5 mt-6">
-                {FEATURES.map((feature, i) => (
-                  <Reveal
-                    key={feature.title}
-                    delay={i * 0.08}
-                    className={i === 0 ? 'sm:col-span-2' : undefined}
-                  >
-                    <div
-                      className={`h-full bg-card border border-border-strong rounded-2xl shadow-sm transition-all duration-[var(--duration-base)] ease-out-quint hover:-translate-y-0.5 hover:shadow-lg hover:border-coral-200 group ${
-                        i === 0 ? 'p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5' : 'p-6'
-                      }`}
-                    >
-                      <div
-                        className={`shrink-0 bg-primary/10 rounded-xl flex items-center justify-center transition-colors group-hover:bg-primary/15 ${
-                          i === 0 ? 'w-14 h-14' : 'w-11 h-11 mb-4'
-                        }`}
-                      >
-                        <feature.icon className={i === 0 ? 'w-7 h-7 text-primary' : 'w-5 h-5 text-primary'} aria-hidden="true" />
-                      </div>
-                      <div>
-                        <h3 className={`font-bold mb-2 [font-family:var(--font-display)] ${i === 0 ? 'text-lg' : 'text-base'}`}>
-                          {feature.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{feature.copy}</p>
-                      </div>
-                    </div>
-                  </Reveal>
+              <dl className="self-center">
+                {FEATURES.map((feature) => (
+                  <div key={feature.title} className="border-t border-border-strong py-6 last:border-b">
+                    <dt className="font-display text-xl font-bold tracking-tight">{feature.title}</dt>
+                    <dd className="mt-1.5 text-muted-foreground">{feature.copy}</dd>
+                  </div>
                 ))}
+              </dl>
+            </div>
+          </section>
+
+          <SuccessStories />
+
+          {/* ==================== CTA ==================== */}
+          <section className="px-6 pb-24 md:pb-32" aria-labelledby="cta-heading">
+            <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-charcoal px-8 py-16 text-white md:px-16 md:py-20">
+              <div aria-hidden="true" className="premium-mesh" />
+              <div aria-hidden="true" className="grain-overlay" />
+              <div className="relative max-w-2xl">
+                <h2 id="cta-heading" className="text-display-lg font-extrabold leading-[1.05]">
+                  Your next prep day is already planned.
+                </h2>
+                <p className="mt-5 text-lg text-white/65">
+                  Skip the Sunday scramble and the 9pm protein panic. Your first plan is free.
+                </p>
+                <Link href="/signup" className={`${CTA_CLASS} mt-9`}>
+                  Start for free
+                  <ArrowRight className="size-5" aria-hidden="true" />
+                </Link>
+                <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/50">
+                  {['No credit card', 'Cancel anytime', 'Secure checkout via Stripe'].map((item) => (
+                    <li key={item} className="flex items-center gap-2">
+                      <Check className="size-4 text-primary" aria-hidden="true" /> {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </section>
 
-          {/* ==================== WHY IT WORKS ==================== */}
-          <SuccessStories />
-
-          {/* ==================== CTA ==================== */}
-          <section className="py-24 md:py-28" aria-labelledby="cta-heading">
-            <div className="container mx-auto px-6 max-w-6xl">
-              <Reveal>
-                <div className="relative overflow-hidden bg-primary text-primary-foreground rounded-3xl px-8 py-16 md:px-16 md:py-20 text-center shadow-xl">
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:48px_48px]"
-                  />
-                  <div className="relative max-w-2xl mx-auto">
-                    <h2 id="cta-heading" className="text-display-lg font-extrabold tracking-tight leading-[1.05] [font-family:var(--font-display)] [text-wrap:balance]">
-                      Your next prep day is already planned.
-                    </h2>
-                    <p className="mt-5 text-lg text-white/85">
-                      Replace endless calorie counting with one smart prep session a week.
-                      Your first plan is free.
-                    </p>
-                    <Link
-                      href="/signup"
-                      className="mt-9 inline-flex items-center gap-2 bg-charcoal text-white hover:bg-charcoal/90 active:scale-[0.97] font-bold py-4 px-9 rounded-full transition-all duration-[var(--duration-base)] ease-out-quint shadow-xl shadow-charcoal/30 hover:-translate-y-0.5"
-                    >
-                      <span>Start for free</span>
-                      <ArrowRight className="w-5 h-5" aria-hidden="true" />
-                    </Link>
-                    <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/80">
-                      <span className="flex items-center gap-2"><Check className="w-4 h-4" aria-hidden="true" /> No credit card</span>
-                      <span className="flex items-center gap-2"><Check className="w-4 h-4" aria-hidden="true" /> Cancel anytime</span>
-                      <span className="flex items-center gap-2"><Check className="w-4 h-4" aria-hidden="true" /> Secure checkout via Stripe</span>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-          </section>
-
-          {/* ==================== FAQ ==================== */}
           <FAQSection />
         </main>
 
-        {/* Footer */}
         <Footer />
       </div>
     </>

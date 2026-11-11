@@ -29,7 +29,7 @@ export function FeaturedPost({ post }: FeaturedPostProps) {
             {post.category}
           </span>
         </div>
-        <h2 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight text-foreground [font-family:var(--font-display)] [text-wrap:balance] md:text-3xl lg:text-display-md">
+        <h2 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight text-foreground font-display [text-wrap:balance] md:text-3xl lg:text-display-md">
           {post.title}
         </h2>
         <p className="mt-4 text-base leading-relaxed text-subtle-foreground line-clamp-3 md:text-lg">

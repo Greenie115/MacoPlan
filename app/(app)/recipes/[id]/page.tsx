@@ -591,7 +591,7 @@ async function RecipeApiDetailPage({ id, mealId }: { id: string; mealId?: string
                       </p>
                     )}
                     <div className="flex gap-3">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-medium">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-coral-600 text-primary-foreground flex items-center justify-center text-sm font-medium">
                         {step.stepNumber || index + 1}
                       </span>
                       <div className="flex-1">

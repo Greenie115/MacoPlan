@@ -78,8 +78,8 @@ export default function HelpPage() {
               </summary>
               <div className="px-4 pb-4 text-muted-foreground">
                 <p>
-                  Yes! You can swap recipes within your meal plan by tapping on any meal and selecting "Swap Recipe".
-                  You can also adjust serving sizes to better match your needs.
+                  You can&apos;t edit a single recipe yet. Build a new plan instead: it avoids recipes from your recent
+                  plans, and any ingredient you exclude never appears.
                 </p>
               </div>
             </details>

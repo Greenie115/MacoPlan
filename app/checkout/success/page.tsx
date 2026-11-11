@@ -60,7 +60,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
         {/* CTA */}
         <Link
           href="/meal-plans/generate"
-          className="inline-flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-primary/20"
+          className="inline-flex items-center justify-center gap-2 w-full bg-primary hover:bg-coral-700 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-primary/20"
         >
           Generate this week&apos;s plan
           <ArrowRight className="size-5" />

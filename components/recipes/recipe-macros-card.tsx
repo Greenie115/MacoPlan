@@ -128,7 +128,7 @@ export function RecipeMacrosCard({
           </span>
           <button
             onClick={handleIncrement}
-            className="flex items-center justify-center size-8 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors duration-fast"
+            className="flex items-center justify-center size-8 rounded-full bg-coral-600 text-white hover:bg-coral-700 transition-colors duration-fast"
             aria-label="Increase servings"
           >
             <Plus className="size-4" />

@@ -26,7 +26,7 @@ export function GreetingHeader({
 
   return (
     <div className="pb-2">
-      <h1 className="text-2xl font-bold leading-tight tracking-[-0.015em] text-foreground">
+      <h1 className="text-3xl font-bold text-foreground">
         {greeting}
       </h1>
       {subline && (
