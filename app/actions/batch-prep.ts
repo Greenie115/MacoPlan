@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { generateBatchPrepPlan } from '@/lib/services/batch-prep-generator'
+import { generatePlanFromLibrary } from '@/lib/services/batch-prep-library'
 import {
   persistBatchPrepPlan,
   upsertTrainingProfile,
@@ -11,6 +12,7 @@ import {
 } from '@/lib/services/batch-prep-persistence'
 import { canGenerateBatchPrepPlan } from './subscription'
 import {
+  BatchPrepValidationError,
   TrainingProfileSchema,
   DietaryPreferencesSchema,
   type TrainingProfile,
@@ -56,7 +58,13 @@ export async function generateBatchPrepPlanAction(
     // Steer the generator away from recipes the user already received
     const recentRecipeNames = await getRecentRecipeNames(user.id).catch(() => [])
 
-    const plan = await generateBatchPrepPlan(user.id, profile, preferences, recentRecipeNames)
+    // Free path first: assemble the plan from the recipe library. The paid
+    // model is only a fallback for when the library can't fill the plan
+    // (too few recipes for this diet/exclusions) and a key is configured.
+    const plan = await generatePlanFromLibrary(profile, preferences, recentRecipeNames).catch((err) => {
+      if (!(err instanceof BatchPrepValidationError) || !process.env.OPENROUTER_API_KEY) throw err
+      return generateBatchPrepPlan(user.id, profile, preferences, recentRecipeNames)
+    })
     const planId = await persistBatchPrepPlan(user.id, plan, profile)
     await upsertTrainingProfile(user.id, profile)
     revalidatePath('/meal-plans')

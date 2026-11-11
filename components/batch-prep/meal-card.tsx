@@ -61,7 +61,8 @@ export function MealCard({ meal, image }: { meal: Meal; image?: MealImage }) {
           <ul className="mt-2 text-sm text-muted-foreground space-y-1">
             {meal.ingredients.map((i, idx) => (
               <li key={idx}>
-                {i.quantity_g}g {i.name}
+                {i.quantity_g ? `${i.quantity_g}g ` : ''}
+                {i.name}
               </li>
             ))}
           </ul>
