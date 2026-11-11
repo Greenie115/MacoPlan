@@ -1,7 +1,14 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* next-themes toggles a .dark class; without this, dark: utilities would
+   follow the OS setting instead of the in-app theme switch. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: var(--font-bricolage), var(--font-geist-sans), -apple-system, sans-serif;
   /* ============================================
      MacroPlan Brand Kit — "Clean Athletic" (Coral Pulse)
      Dark-first premium system. Light theme = :root values,
@@ -135,6 +142,10 @@
   --duration-base: 220ms;
   --duration-slow: 400ms;
 }
+
+@utility duration-fast { transition-duration: var(--duration-fast); }
+@utility duration-base { transition-duration: var(--duration-base); }
+@utility duration-slow { transition-duration: var(--duration-slow); }
 
 html {
   scroll-behavior: smooth;
