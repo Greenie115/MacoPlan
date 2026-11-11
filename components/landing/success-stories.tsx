@@ -3,23 +3,23 @@ import { Calculator, FlaskConical, ShieldCheck, Soup } from 'lucide-react'
 const pillars = [
   {
     icon: Calculator,
-    title: 'Real macro math, not guesswork',
-    body: 'Targets come from the Mifflin–St Jeor equation and your activity level — the same method dietitians use — then split into protein, carbs, and fat for your goal.',
+    title: 'Targets from real equations',
+    body: 'Your calories come from Mifflin-St Jeor and your activity level, then split into protein, carbs and fat for your goal. Nothing invented.',
   },
   {
     icon: FlaskConical,
-    title: 'Goal-aware splits',
-    body: 'Cutting, bulking, maintaining, or recomping each get a different calorie and protein strategy. Training and rest days are calculated separately.',
+    title: 'Your goal changes the plan',
+    body: 'Cutting, bulking, maintaining and recomp each get their own calorie and protein strategy. Training and rest days are worked out separately.',
   },
   {
     icon: Soup,
-    title: 'Built around batch cooking',
-    body: 'Every plan is designed to cook once and eat all week — 3–4 recipes, one shopping list, one prep session that actually fits real life.',
+    title: 'Sized for one prep session',
+    body: 'A few recipes, one shop, one cook. If it doesn\u2019t fit a real Sunday you won\u2019t do it, so it fits.',
   },
   {
     icon: ShieldCheck,
-    title: 'Free to try, no card required',
-    body: 'Generate your first prep plan free and see the numbers before you ever think about upgrading. Cancel anytime.',
+    title: 'See it before you pay',
+    body: 'Your first plans are free, no card. Check the numbers, then decide.',
   },
 ]
 
@@ -27,10 +27,10 @@ export function SuccessStories() {
   return (
     <section className="py-24 md:py-32" id="why-it-works">
       <div className="mx-auto max-w-6xl px-6">
-        <h2 className="max-w-2xl text-display-lg font-extrabold">Numbers you can actually trust</h2>
+        <h2 className="max-w-2xl text-display-lg font-extrabold">You shouldn&apos;t have to double-check the maths.</h2>
         <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-          No fad diets, no made-up rules. MacroPlan turns proven nutrition science into a prep plan you can follow
-          without thinking about it.
+          Guessing portions is how a cut stalls and a bulk turns sloppy. Every number in your plan traces back to
+          your targets.
         </p>
 
         <div className="mt-14 grid gap-x-16 sm:grid-cols-2">

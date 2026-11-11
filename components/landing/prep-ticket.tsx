@@ -59,10 +59,10 @@ export function PrepTicket() {
 
         <div className={`flex justify-between py-4 ${RULE}`}>
           <span className="uppercase tracking-wider text-charcoal/60">Shopping list</span>
-          <span className="font-semibold">18 items, by aisle</span>
+          <span className="font-semibold">One list, by recipe</span>
         </div>
 
-        <p className={`pt-4 text-center uppercase tracking-[0.2em] text-charcoal/45 ${RULE}`}>Generated in 3s</p>
+        <p className={`pt-4 text-center uppercase tracking-[0.2em] text-charcoal/45 ${RULE}`}>Built in seconds</p>
       </div>
     </div>
   )

@@ -9,18 +9,18 @@ import { PrepTicket } from '@/components/landing/prep-ticket'
 
 export const metadata: Metadata = {
   title: 'MacroPlan - The Meal Prep Planner That Actually Understands How Lifters Eat',
-  description: 'AI-generated batch cooking plans that hit your exact macros. Tell us your prep day, your macros, and how many containers to fill — done in 3 seconds.',
+  description: 'You know your macros. MacroPlan works out what to cook to hit them: batch recipes, portions, cooking order and a shopping list for one prep session, in seconds.',
   keywords: ['meal prep', 'batch cooking', 'macro calculator', 'nutrition', 'fitness', 'meal prep planner', 'lifting', 'bodybuilding meal prep'],
   openGraph: {
     title: 'MacroPlan - Your Meal Prep, Planned',
-    description: 'AI-generated batch cooking plans that hit your exact macros. Tell us your prep day, your macros, and how many containers to fill — done in 3 seconds.',
+    description: 'You know your macros. MacroPlan works out what to cook to hit them: batch recipes, portions, cooking order and a shopping list for one prep session, in seconds.',
     type: 'website',
     siteName: 'MacroPlan',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MacroPlan - Your Meal Prep, Planned',
-    description: 'AI-generated batch cooking plans that hit your exact macros. Tell us your prep day, your macros, and how many containers to fill — done in 3 seconds.',
+    description: 'You know your macros. MacroPlan works out what to cook to hit them: batch recipes, portions, cooking order and a shopping list for one prep session, in seconds.',
   },
   alternates: {
     canonical: '/',
@@ -34,7 +34,7 @@ const jsonLd = {
   name: 'MacroPlan',
   applicationCategory: 'HealthApplication',
   operatingSystem: 'Web',
-  description: 'AI-powered meal planning application that generates personalized meal plans based on your macro targets and dietary preferences.',
+  description: 'Meal prep planner for lifters. Turns your macro targets and prep day into a batch-cook plan with portions, a cooking order and a shopping list.',
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'USD',
@@ -67,43 +67,43 @@ const jsonLd = {
 const jsonLdScript = JSON.stringify(jsonLd).replace(/</g, '\\u003c')
 
 const PROOF_STATS = [
-  { value: '500+', label: 'batch-tested recipes' },
-  { value: '15+', label: 'diet styles covered' },
-  { value: '3s', label: 'to a full week of meals' },
-  { value: '100%', label: 'macro-calculated' },
+  { value: '1', label: 'prep session a week' },
+  { value: '3-6', label: 'recipes, not 28' },
+  { value: '2', label: 'day types: training and rest' },
+  { value: '0', label: 'macro maths left for you' },
 ] as const
 
 const STEPS = [
   {
-    title: 'Set your macros and training days',
-    copy: 'Training 5x/week? We calculate your training day and rest day targets automatically.',
+    title: 'Tell it how you train',
+    copy: 'Lifting days and rest days need different fuel. Set both once and stop recalculating every week.',
   },
   {
-    title: 'Generate your prep plan',
-    copy: 'AI builds a batch-cook plan optimised for cooking once, eating all week. 3-4 recipes, one shopping list, one prep session.',
+    title: 'Get a plan, not homework',
+    copy: 'MacroPlan picks batch recipes and sizes every portion to your targets. No spreadsheet. No guessing.',
   },
   {
-    title: 'Cook, container, crush it',
-    copy: 'Follow the step-by-step cooking timeline. Fill your containers. Hit your macros every day without thinking.',
+    title: 'Cook once, then stop thinking',
+    copy: 'Follow the cooking order, fill the containers, shut the fridge. On Wednesday you just open a lid.',
   },
 ] as const
 
 const FEATURES = [
   {
-    title: 'Batch-optimised recipes',
-    copy: 'Every meal designed for bulk cooking and 5-day refrigeration.',
+    title: 'Food that survives Thursday',
+    copy: 'Recipes picked for bulk cooking and days in the fridge, so day four still tastes like dinner.',
   },
   {
-    title: 'Cooking timeline',
-    copy: 'Oven first, rice cooker second, stovetop third. We tell you what to do and when.',
+    title: 'A cooking order, not chaos',
+    copy: 'The longest cook goes on first. You always know what to start next.',
   },
   {
-    title: 'Training day / rest day macros',
-    copy: 'Different targets for different days, automatically.',
+    title: 'Training and rest days, handled',
+    copy: 'Bigger portions when you lift, smaller when you don\u2019t. Same food, no second plan.',
   },
   {
-    title: 'One-tap shopping list',
-    copy: 'Every plan generates a consolidated grocery list. Buy once, prep once.',
+    title: 'One shopping list',
+    copy: 'Everything for the week, grouped by recipe. One trip, nothing forgotten.',
   },
 ] as const
 
@@ -136,18 +136,19 @@ export default function LandingPage() {
                     className="landing-rise mt-6 text-display-2xl font-extrabold leading-[0.95] tracking-tight"
                     style={{ animationDelay: '0.12s' }}
                   >
-                    Cook once.
-                    <span className="block text-primary">Hit your macros all&nbsp;week.</span>
+                    Stop winging
+                    <span className="block text-primary">your meal&nbsp;prep.</span>
                   </h1>
 
                   <p className="landing-rise mt-7 max-w-xl text-lg leading-relaxed text-white/65 md:text-xl" style={{ animationDelay: '0.2s' }}>
-                    Tell MacroPlan your targets and your prep day. It hands back 3-4 batch recipes, a cooking
-                    timeline, and a shopping list that fills every container, in 3 seconds.
+                    You know your macros. Working out what to cook to hit them is what eats your Sunday.
+                    MacroPlan hands you the recipes, the portions, the cooking order and the shopping list, in
+                    seconds.
                   </p>
 
                   <div className="landing-rise mt-9 flex flex-wrap items-center gap-x-6 gap-y-4" style={{ animationDelay: '0.28s' }}>
                     <Link href="/onboarding/1" className={CTA_CLASS}>
-                      Generate my prep plan free
+                      Sort my prep, free
                       <ArrowRight className="size-5" aria-hidden="true" />
                     </Link>
                     <Link
@@ -188,7 +189,7 @@ export default function LandingPage() {
           <section className="py-24 md:py-32" id="how-it-works" aria-labelledby="how-heading">
             <div className="mx-auto max-w-6xl px-6">
               <h2 id="how-heading" className="max-w-2xl text-display-xl font-extrabold leading-[1.05]">
-                Three steps to a stocked fridge.
+                From &ldquo;what do I cook?&rdquo; to a stocked fridge.
               </h2>
               <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-0">
                 {STEPS.map((step, i) => (
@@ -210,8 +211,8 @@ export default function LandingPage() {
                   Other apps plan 28 different meals. <span className="text-coral-700">You&apos;re cooking on Sunday.</span>
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-                  You&apos;re not cooking 28 meals. You&apos;re cooking once and eating from containers all week.
-                  MacroPlan is the only planner built around that.
+                  Nobody preps 28 recipes. You cook a few things in bulk and eat them all week. MacroPlan plans
+                  for that, because that is what you will actually do.
                 </p>
 
                 {/* The whole argument as a picture: 28 one-off meals vs 4 batches */}
@@ -258,7 +259,7 @@ export default function LandingPage() {
                   Your next prep day is already planned.
                 </h2>
                 <p className="mt-5 text-lg text-white/65">
-                  Replace endless calorie counting with one smart prep session a week. Your first plan is free.
+                  Skip the Sunday scramble and the 9pm protein panic. Your first plan is free.
                 </p>
                 <Link href="/signup" className={`${CTA_CLASS} mt-9`}>
                   Start for free

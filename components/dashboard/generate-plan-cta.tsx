@@ -55,7 +55,7 @@ export function GeneratePlanCTA({
       <div className="relative">
         <h2 className="text-2xl font-bold">Plan this week&apos;s prep</h2>
         <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/65">
-          3-4 batch recipes, a cooking timeline and one shopping list, built around your macros in about 3 seconds.
+          Stop deciding what to cook. Get the recipes, portions, cooking order and one shopping list for your macros, in seconds.
         </p>
         <Button onClick={handleClick} size="lg" className="mt-6 w-full sm:w-auto">
           Generate my plan
