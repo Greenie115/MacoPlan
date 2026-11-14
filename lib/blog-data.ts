@@ -22,6 +22,53 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'are-eggs-bad-for-cholesterol-lifters',
+    title: 'Are Eggs Bad for Your Cholesterol? What Lifters Actually Need to Know',
+    excerpt: 'Whole eggs get blamed for cholesterol problems they mostly do not cause. Here is what the research says about dietary cholesterol, blood cholesterol, and how many eggs a lifter can actually eat.',
+    content: `
+      <p>Somewhere along the way, the egg yolk became the villain of every cutting diet. Lifters who have no problem eating 200g of chicken breast a day will scrape the yolks out of six eggs and toss them, convinced they are protecting their heart. The reasoning usually goes: eggs are high in dietary cholesterol, dietary cholesterol raises blood cholesterol, and blood cholesterol causes heart disease. Each step in that chain sounds reasonable. The middle one is mostly wrong, and that is enough to unravel the whole argument.</p>
+      <p>Whole eggs are one of the most practical foods available for anyone tracking macros. They are cheap, they cook in minutes, and a large egg carries about 6g of protein with a nearly ideal amino acid profile, the kind nutrition researchers use as the reference standard against which other proteins get measured. Throwing away the yolk to dodge a cholesterol problem that does not really exist for most people means giving up the fat-soluble vitamins, choline, and flavor that make the yolk worth eating in the first place.</p>
+
+      <h2>Dietary Cholesterol vs. Blood Cholesterol</h2>
+      <p>The confusion starts with treating "cholesterol in food" and "cholesterol in your blood" as the same number moving in lockstep. They are not. Your liver produces most of the cholesterol circulating in your blood regardless of what you eat, and for the majority of people it adjusts production up or down to keep blood levels relatively stable. Eat more cholesterol at breakfast and the liver dials back its own output later in the day. This feedback loop is well established and is the main reason the old daily cholesterol limit of 300mg, once printed on every nutrition label, got dropped from U.S. dietary guidelines back in 2015.</p>
+      <p>A 2018 review in the <em>American Journal of Clinical Nutrition</em> looked specifically at egg intake and cardiovascular outcomes and found that for most healthy people, eating up to one egg a day was not associated with increased heart disease risk, and several studies in the review found no meaningful rise in LDL for people eating considerably more than that. The relationship is not zero for everyone, but it is far weaker and far more person-dependent than the old blanket warning suggested.</p>
+
+      <h2>Hyper-Responders Are Real, Just Less Common Than You Think</h2>
+      <p>About a quarter of the population falls into a group researchers call hyper-responders, people whose LDL cholesterol does rise meaningfully when they increase dietary cholesterol intake. If you already know you have high LDL, a family history of early heart disease, or you have had bloodwork come back with cholesterol flagged, that is a real reason to be more careful with yolks and to get your numbers rechecked after a few weeks of eating more eggs than usual. This is one of the cases where individual variation genuinely matters, and a quick conversation with a doctor who has your bloodwork is worth more than any general rule in an article like this one.</p>
+      <p>For everyone else, the practical effect of eating whole eggs tends to show up as a shift in LDL particle size and an increase in HDL rather than a straightforward rise in total cholesterol, a pattern several controlled trials have described as neutral to favorable for cardiovascular risk markers. That nuance rarely makes it into gym folklore, where "eggs raise cholesterol" gets repeated as a flat fact rather than a conditional one.</p>
+
+      <blockquote>Up to one egg a day shows no increased cardiovascular risk in most healthy adults, and the old 300mg dietary cholesterol cap was dropped from U.S. guidelines in 2015 for exactly this reason.</blockquote>
+
+      <h2>Whole Eggs vs. Egg Whites for Lifters</h2>
+      <p>Egg whites are not a bad choice, especially if you are deep into a cut and need to stretch every gram of protein across fewer calories. A large egg white is roughly 17 calories and 3.6g of protein with essentially no fat, which makes a carton of whites a useful tool when you are trying to hit 180g of protein without blowing through your fat allowance. But the yolk is where almost all the egg's micronutrients live: choline for liver and brain function, lutein and zeaxanthin for eye health, vitamin D, and roughly half the egg's total protein along with the fat that makes it actually taste like something.</p>
+      <p>A reasonable middle ground for most lifters is whole eggs as the default, with whites added on top when you need more protein without more fat or calories, say two whole eggs plus a half cup of whites rather than four whole eggs. That gets you the micronutrients from the yolks while still letting you hit an aggressive protein target. It also just tastes better, and a meal plan you actually want to eat is the one you will stick with past week two.</p>
+
+      <h2>How Many Eggs Is Actually Fine</h2>
+      <p>For a healthy lifter with no diagnosed cholesterol issue, the research supports well beyond the old one-a-day rule. Several studies, including trials specifically in resistance-trained populations, have had subjects eat two to three whole eggs daily for 12 weeks or longer without adverse changes in lipid panels, and some egg-focused trials have gone as high as a dozen eggs a week without issue. That does not mean there is no ceiling. It means the ceiling is considerably higher than gym folklore suggests, and for most people the limiting factor is calories and variety in the diet, not cholesterol risk.</p>
+      <p>If eggs are a regular part of your <a href="/blog/high-protein-breakfasts">high-protein breakfast</a> rotation, there is no need to cap yourself at one out of fear. Build your morning meal around two or three whole eggs, add a carb source that fits your macros, and save the worrying for things that actually move the needle on your health, like total saturated fat intake, fiber, and sleep. This is the same kind of overcorrection we see with other foods lifters avoid for reasons that do not hold up, including the <a href="/blog/high-protein-diet-kidney-health-myth">kidney health myth around high-protein diets</a> and the <a href="/blog/does-soy-protein-lower-testosterone">soy and testosterone scare</a>, both of which trace back to the same pattern: a plausible-sounding mechanism that does not survive contact with the actual trial data.</p>
+      <p>Individual results still vary, and if you have existing cardiovascular risk factors or a family history of heart disease, get your lipid panel checked and talk to your doctor before loading up on yolks. For everyone else, eggs are one of the easiest, cheapest, most complete proteins available, and <a href="https://macroplan.app">MacroPlan builds them into your prep plan</a> without you needing to second-guess every yolk.</p>
+
+      <h2>FAQ</h2>
+      <h3>Do eggs raise blood cholesterol?</h3>
+      <p>For most healthy people, no, not meaningfully. The liver compensates for dietary cholesterol intake by adjusting its own production. About a quarter of people are "hyper-responders" whose LDL does rise with higher cholesterol intake, which is why individual bloodwork matters more than a blanket rule.</p>
+      <h3>How many eggs a day is safe for muscle building?</h3>
+      <p>Research in resistance-trained populations has supported two to three whole eggs a day for extended periods without adverse lipid changes in healthy subjects. The practical limit for most lifters is calories and dietary variety, not a cholesterol ceiling.</p>
+      <h3>Should I eat egg whites instead of whole eggs?</h3>
+      <p>Egg whites are useful when you need to hit a high protein target on very few calories, but the yolk carries most of the micronutrients and roughly half the egg's protein. A mix of whole eggs plus added whites is a practical middle ground for most people.</p>
+
+      <p>Stop second-guessing your breakfast macros. <a href="https://macroplan.app/signup">Get your free meal plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 14, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1529411081224-84ac0d0bf6ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxlZ2dzJTIwYnJlYWtmYXN0JTIwcHJvdGVpbnxlbnwxfDB8fHwxNzk0NjgyMjExfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Thought Catalog on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@thoughtcatalog?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'does-soy-protein-lower-testosterone',
     title: 'Does Soy Protein Lower Testosterone? What the Research Actually Shows',
     excerpt: 'A lot of lifters quietly avoid tofu, edamame, and soy milk over testosterone fears that trace back to a handful of misread studies. Here is what the actual research says.',
