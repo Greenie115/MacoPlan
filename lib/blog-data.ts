@@ -22,6 +22,56 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-overnight-oats-for-meal-prep',
+    title: '9 High-Protein Overnight Oats Recipes for Meal Prep (30g+ Protein Each)',
+    excerpt: 'Overnight oats solve the one breakfast problem meal prep usually cannot: eating the same thing five days running without getting sick of it. These nine versions all clear 30g of protein.',
+    content: `
+      <p>Breakfast is the easiest meal to under-protein and the easiest one to prep a week in advance, which makes overnight oats one of the better tools in a lifter's kit once you stop treating them as a dessert. The base recipe barely changes: rolled oats, a liquid, a protein source, and a jar in the fridge. What changes is the ratio, and most recipes online are built for people who are not trying to hit 180g of protein a day. A standard half cup of dry oats with milk gets you maybe 12g of protein, which is a snack, not a meal. The versions below start from a higher protein base and build flavor on top of it instead of the other way around.</p>
+      <p>The appeal for anyone doing <a href="/blog/high-protein-breakfasts">high-protein breakfasts</a> on a schedule is that oats actually improve overnight. The starches soften, the protein powder fully dissolves instead of clumping, and the jar is already sitting in the fridge when you are running out the door. Batch five or six jars on a Sunday and breakfast stops being a decision you have to make on a Tuesday morning before coffee.</p>
+
+      <h2>The Base Ratio That Actually Hits Macros</h2>
+      <p>Most overnight oats recipes use a 1:1 ratio of oats to liquid, which is fine for texture but weak on protein. The versions here use roughly 40g of rolled oats, 200ml of liquid split between milk and Greek yogurt, and one scoop of whey or casein protein powder stirred in before the jar goes in the fridge. That base alone runs close to 30g of protein and around 350 to 400 calories before you add anything else, which leaves room to build in fruit, nut butter, or chocolate without blowing the meal past 500 calories. Casein is worth trying here specifically because it thickens as it sits, which gives the oats a denser, pudding-like texture that whey does not produce as well.</p>
+      <p>Stir the protein powder into the liquid first, before it touches the oats, or you will fight clumps all week. A small whisk or even a tight-lidded jar you shake for ten seconds solves this completely. Skipping this step is the single most common reason people say protein oats "taste chalky," when the real issue is undissolved powder sitting in pockets.</p>
+
+      <h2>Nine Versions Worth Rotating</h2>
+      <p>Cinnamon apple starts with the base ratio plus half a diced apple, a teaspoon of cinnamon, and a tablespoon of chopped walnuts stirred in before bed. Peanut butter banana swaps in a tablespoon of natural peanut butter and half a sliced banana layered on top, which keeps the banana from going mushy by morning. Chocolate hazelnut uses chocolate whey as the protein base with a teaspoon of cocoa powder and a few chopped hazelnuts, and it tastes closer to pudding than oatmeal.</p>
+      <p>Blueberry lemon brightens the base with a handful of frozen blueberries and a bit of lemon zest, which cuts through the richness of the yogurt. Carrot cake works better than it sounds: shredded carrot, cinnamon, a few raisins, and a spoon of cottage cheese blended into the base instead of yogurt for extra protein and a denser texture. Pumpkin spice uses a few tablespoons of canned pumpkin puree with cinnamon and nutmeg, and it holds up well as a cold-weather rotation option.</p>
+      <ul>
+        <li>Mocha: a shot of cold brew or a teaspoon of instant coffee stirred into the base liquid, plus chocolate protein powder.</li>
+        <li>Strawberry cheesecake: diced strawberries, a spoon of light cream cheese blended in, and vanilla protein powder.</li>
+        <li>Tropical: diced mango, a spoon of shredded coconut, and a splash of pineapple juice in place of some of the milk.</li>
+      </ul>
+      <p>None of these require cooking. Every version is stir, jar, fridge, and the flavor differences come entirely from what gets layered in, which is the whole point of batching a base recipe instead of nine separate ones.</p>
+
+      <h2>Batching Without Them Turning to Mush</h2>
+      <p>Oats hold up in the fridge for about five days before the texture starts breaking down past the point of enjoyable, so a Sunday batch covers a full work week without needing a midweek top-up. The exception is anything with fresh banana or very ripe fruit mixed directly in, which can turn the jar watery by day four. If you want banana in the mix, add it fresh each morning instead of prepping it into all five jars at once. Frozen fruit behaves better across a full week because it releases less liquid than fresh fruit does once it thaws into the oats.</p>
+      <p>Mason jars or any container with a tight lid work fine here, and the exact size matters less than it does for a rice-and-chicken tray, since you are not trying to hit an exact gram count on wet ingredients the way <a href="/blog/meal-prep-container-math-portion-sizes">container math for solid meal prep</a> requires. A reliable approach is one jar per protein scoop, which keeps the macros consistent even if you are eyeballing the fruit and toppings. If you are prepping other proteins for the week at the same time, the same batching logic that works for <a href="/blog/best-protein-for-meal-prep">choosing a protein for meal prep</a> applies here: pick two or three bases you actually like and rotate them, rather than trying to make something new every single day.</p>
+
+      <h2>Hitting the Protein Number Without Just Adding More Powder</h2>
+      <p>It is tempting to solve a low-protein breakfast by dumping in a second scoop of powder, but two scoops in one jar usually tastes worse and costs more than it is worth. Greek yogurt is the better lever: swapping half the milk for plain nonfat Greek yogurt adds another 10 to 15g of protein without changing the texture much, since the oats are already absorbing liquid overnight. Cottage cheese blended smooth works the same way and adds a slightly denser, creamier result that pairs especially well with the carrot cake and strawberry cheesecake versions above.</p>
+      <p>If you are logging these into <a href="https://macroplan.app">MacroPlan</a>, the base recipe is consistent enough that you only need to weigh it once, note the numbers, and then adjust for whatever fruit or topping you add that day. That is most of what makes overnight oats worth the five minutes of prep on a Sunday: once the macros are known, breakfast stops being a daily calculation.</p>
+
+      <h2>FAQ</h2>
+      <h3>Can you use quick oats instead of rolled oats?</h3>
+      <p>Yes, quick oats work and soften slightly faster overnight, but they produce a softer, less textured result. Rolled oats hold their shape better over a five-day batch and are the better default for meal prep.</p>
+      <h3>Does the protein powder lose anything from sitting in the fridge overnight?</h3>
+      <p>No. Whey and casein are stable mixed into cold liquid for several days in the fridge. The main risk is clumping if the powder is not fully dissolved before the oats are added, not any loss of protein content or quality.</p>
+      <h3>Why does casein work better than whey for overnight oats?</h3>
+      <p>Casein digests slowly and thickens when it sits in liquid, which gives overnight oats a denser, pudding-like consistency by morning. Whey stays thinner and can occasionally separate slightly, though it still works fine if it is what you have on hand.</p>
+
+      <p>Stop guessing at breakfast macros every morning. <a href="https://macroplan.app/signup">Get your free meal plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 16, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1502747220144-846486e80891?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxvdmVybmlnaHQlMjBvYXRzJTIwcHJvdGVpbnxlbnwxfDB8fHwxNzk0ODI3MjUyfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Daria Nepriakhina 🇺🇦 on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@epicantus?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'are-eggs-bad-for-cholesterol-lifters',
     title: 'Are Eggs Bad for Your Cholesterol? What Lifters Actually Need to Know',
     excerpt: 'Whole eggs get blamed for cholesterol problems they mostly do not cause. Here is what the research says about dietary cholesterol, blood cholesterol, and how many eggs a lifter can actually eat.',
