@@ -22,6 +22,69 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'how-to-calculate-your-tdee-as-a-lifter',
+    title: 'How to Calculate Your TDEE as a Lifter (And Why Generic Calculators Get It Wrong)',
+    excerpt: 'Most TDEE calculators give you one number and send you off to guess. Here is how the math actually works, where it breaks down for lifters specifically, and how to adjust it once real data comes in.',
+    content: `
+      <p>Total Daily Energy Expenditure, or TDEE, is the number of calories your body burns in a day: resting metabolism, digestion, daily movement, and training combined. It is the single most important number in setting up a cut, a lean bulk, or a maintenance phase, because every calorie target you pick is really just TDEE plus or minus an offset. Get the TDEE wrong and the offset is wrong too, no matter how carefully you track the rest of it.</p>
+      <p>The problem is that most online calculators hand you a single number with no context, and that number is a population average dressed up as a personal result. It is a reasonable starting point. It is not a measurement. Understanding how the calculation actually works, and where it tends to miss for people who lift, is what lets you use that starting number instead of being misled by it.</p>
+
+      <h2>The Two-Step Math Behind TDEE</h2>
+      <p>TDEE is built from two numbers multiplied together: your Basal Metabolic Rate (BMR) and an activity multiplier. BMR is the calories your body burns at rest, just keeping your organs running and your temperature stable, and it accounts for roughly 60 to 70% of total daily burn in most people. The most widely used formula for estimating it is Mifflin-St Jeor, which takes your weight, height, age, and sex and returns an estimate that is generally accurate within about 10% for most adults.</p>
+      <p>From there, TDEE multiplies BMR by an activity factor that estimates how much movement adds on top of that resting baseline:</p>
+      <ul>
+        <li><strong>Sedentary (1.2):</strong> little to no structured exercise, a desk job, minimal walking</li>
+        <li><strong>Lightly active (1.375):</strong> training 1 to 3 days a week</li>
+        <li><strong>Moderately active (1.55):</strong> training 3 to 5 days a week</li>
+        <li><strong>Very active (1.725):</strong> training 6 to 7 days a week</li>
+        <li><strong>Extremely active (1.9):</strong> two sessions a day, or hard training plus a physically demanding job</li>
+      </ul>
+      <p>Multiply BMR by the matching factor and you get TDEE. A 180 lb (82 kg) male lifter in his late twenties with a BMR around 1,850 calories, training five days a week, lands at roughly 1,850 times 1.55, or about 2,870 calories a day. That is the number most calculators, including the one behind <a href="/blog/decoding-macros">MacroPlan's macro calculations</a>, will return for that profile.</p>
+
+      <h2>Where the Formula Breaks Down for Lifters Specifically</h2>
+      <p>The math above is honest about what it is: an estimate built from population averages, not a reading of your actual metabolism. Three things cause it to drift further off for lifters than for the general population it was built around.</p>
+      <p>The first is body composition. Mifflin-St Jeor only asks for weight, height, age, and sex, so it cannot tell the difference between 180 lb of mostly muscle and 180 lb of mostly fat, even though muscle tissue burns noticeably more calories at rest than fat tissue does. Two lifters at the same bodyweight with very different body fat percentages will have genuinely different BMRs, and the formula returns the same number for both. If you know your approximate body fat percentage, a lean-mass-based formula like Katch-McArdle gets closer, but for most people the gap is small enough that it is not worth the extra step at the start.</p>
+      <p>The second, bigger issue is the activity multiplier itself. "Training 3 to 5 days a week" covers someone doing 45-minute upper-lower splits and someone doing two-hour sessions with accessory work and conditioning tacked on, and those two training loads do not burn remotely the same number of calories, even though the calculator buckets them identically. The multiplier also only accounts for structured training. It says nothing about how much you move the rest of the day, which brings in the third issue: <a href="/blog/neat-calories-burned-without-exercise">NEAT, or non-exercise activity thermogenesis</a>, the calories burned from walking, fidgeting, standing, and general daily movement. NEAT varies enormously between individuals, by as much as 2,000 calories a day in extreme cases, and it tends to drop on its own as a cut progresses, which is a big part of why a deficit that worked in week one quietly stops working by week six.</p>
+
+      <h2>Use the Calculator as a Starting Line, Not a Finish Line</h2>
+      <blockquote>The number a calculator gives you is a hypothesis. The number your scale gives you over two weeks is the data that tests it.</blockquote>
+      <p>The fix for all of this is not a better formula, it is treating the calculated number as step one of a two-step process. Step one: calculate TDEE, pick an activity multiplier that matches your actual weekly training and daily movement as honestly as you can, and set your calories from there, whether that means a deficit for a cut or a surplus for a <a href="/blog/lean-bulk-guide-gain-muscle-without-fat">lean bulk</a>. Step two: track your bodyweight most mornings for two full weeks, average it by week to smooth out water and food weight fluctuations, and compare that trend to what the math predicted.</p>
+      <p>If you set a 500-calorie daily deficit and the scale dropped roughly a pound a week, as the 3,500-calorie-per-pound rule would predict, your calculated TDEE was close enough to real. If two weeks passed and bodyweight barely moved, your actual TDEE is lower than the formula estimated, probably because the activity multiplier overshot how much you really move, and the fix is to adjust the calorie target down by 100 to 200 calories and watch the next two weeks rather than re-running the formula with different inputs. The formula does not need to be more precise. Your adjustment based on real results does the precision work that the formula cannot.</p>
+      <p>This same adjustment logic applies going the other direction on a bulk. If a surplus meant to add half a pound a week is instead adding a pound and a half, the extra is very likely going toward fat gain rather than muscle, and trimming the surplus protects the lean side of a <a href="/blog/bulking-vs-cutting-vs-recomp">bulk versus recomp</a> decision before it turns into a bigger cut later.</p>
+
+      <h2>A Worked Example</h2>
+      <p>Take a 30-year-old woman, 150 lb (68 kg), 5'6" (168 cm), training four days a week with a desk job. Her Mifflin-St Jeor BMR comes out to roughly 1,400 calories. At a moderately active multiplier of 1.55, that puts her TDEE around 2,170 calories. If her goal is a cut, a typical 20% deficit lands her near 1,735 calories a day, with protein set around 1.6 to 2.2 g per kg of bodyweight, or about 110 to 150g, to protect muscle through the deficit.</p>
+      <p>She logs her weight each morning for two weeks and averages 2,169 calories eaten against a 148.6 lb weekly average, down from 150 lb. That is close to the roughly half-pound-a-week loss the math predicted, so the numbers hold and she continues as planned. If instead her weight had stayed flat at 150 lb, the honest read is that her real TDEE is closer to 1,900 calories than 2,170, likely because "training four days a week" did not account for a job that keeps her seated most of the day, and the fix is a few hundred fewer calories, not a complete recalculation.</p>
+
+      <h2>Why This Matters More for Training Day vs. Rest Day Eating</h2>
+      <p>One place the generic calculator falls especially short is treating every day the same. A lifter training hard on Monday and resting completely on Tuesday is not burning the same calories on both days, so eating the exact same amount on both misses an easy lever: slightly more food on training days supports recovery and performance, slightly less on rest days keeps the weekly average on target without feeling like constant restriction. This is the same logic behind calorie cycling between harder and easier training days, and it is one of the reasons a single flat TDEE number, applied identically every day of the week, undersells how useful the concept actually is once you break it down by day instead of averaging it away.</p>
+      <p>Doing that breakdown by hand means recalculating targets for two different day types, splitting macros across both, and then building meals that hit each one, which is exactly the kind of arithmetic that eats an evening. <a href="https://macroplan.app">MacroPlan</a> runs the full calculation, including separate training day and rest day targets based on your actual training frequency, and turns the result straight into a batch-cooked meal plan built around your containers for the week.</p>
+
+      <h2>FAQ</h2>
+      <h3>How accurate is Mifflin-St Jeor for lifters?</h3>
+      <p>It is generally accurate within about 10% for most adults, which is a reasonable starting estimate but can be off by 200 calories or more in either direction for an individual. It does not account for muscle mass directly, so very lean, muscular lifters may find their real BMR runs slightly higher than the formula predicts.</p>
+      <h3>Should I recalculate my TDEE every time I lose or gain weight?</h3>
+      <p>Recalculate every 10 to 15 lb (4 to 7 kg) of change, or if progress stalls for more than two to three weeks despite consistent tracking. Small weekly fluctuations are not a reason to recalculate; they are usually water weight or measurement noise.</p>
+      <h3>Why did my weight loss stall even though my calories did not change?</h3>
+      <p>TDEE drops as bodyweight drops, since a smaller body burns fewer calories at rest, and NEAT tends to fall during a sustained deficit as general daily movement unconsciously decreases. A deficit that was accurate in week one can shrink to nearly nothing by week eight without any change in what you are eating.</p>
+      <h3>Does muscle really burn that many more calories than fat at rest?</h3>
+      <p>The commonly cited figure is that muscle tissue burns something like three times more calories at rest than fat tissue, gram for gram, though the exact multiplier varies by study. The practical takeaway is directional rather than exact: more muscle at the same bodyweight means a somewhat higher BMR, not a dramatically different one.</p>
+
+      <p>If individual metabolic conditions, medications, or a diagnosed eating disorder are part of the picture, a registered dietitian can account for things a formula and a two-week trend cannot.</p>
+
+      <p>Stop recalculating by hand every time the scale moves. <a href="https://macroplan.app/signup">Generate my free macro plan →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 19, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1764620931673-ba46205f2e4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwzfHxraXRjaGVuJTIwc2NhbGUlMjBmb29kJTIwd2VpZ2hpbmd8ZW58MXwwfHx8MTc5NTA5MTk2N3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Kalle Georgiev on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@kallenicole?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'mass-gainer-shakes-vs-whole-food-bulking',
     title: 'Mass Gainer Shakes vs Whole-Food Bulking: Which Builds More Muscle',
     excerpt: 'A 1,200-calorie shake looks like the fast way to a surplus, but it is not the same decision as eating more real food. Here is what actually differs between the two, and when a shake earns its place.',
