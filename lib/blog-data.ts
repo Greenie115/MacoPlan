@@ -22,6 +22,57 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'holiday-eating-for-lifters-thanksgiving-christmas-macros',
+    title: 'Holiday Eating for Lifters: How to Hit Your Macros at Thanksgiving and Christmas',
+    excerpt: 'You do not need to skip the turkey or the pie to protect months of progress. Here is how to plan the handful of holiday meals that actually matter and let the rest of the week absorb the rest.',
+    content: `
+      <p>The stretch between Thanksgiving and New Year's is the single biggest threat to a year of consistent training, and it is not because one meal is dangerous. A Thanksgiving plate, even a big one, is a few thousand calories on a single day, which is not enough on its own to undo a cut or derail a bulk. The real damage comes from treating the whole season as one long cheat day, where "the holidays" quietly expand from one dinner into six weeks of grazing, drinking, and skipped training sessions. Fix the framing and the math gets a lot easier.</p>
+      <p>This is not a guide to eating plain chicken and broccoli while your family eats pie. It is a plan for showing up to the meals that matter, eating real portions of the food you actually want, and keeping the other 90% of the season close enough to your normal routine that one or two big days do not turn into a six-week surplus you never intended.</p>
+
+      <h2>One Big Day Is Not the Problem</h2>
+      <p>Run the numbers and Thanksgiving dinner stops looking scary. A generous plate of turkey, stuffing, mashed potatoes, a roll, gravy, and a slice of pie, plus some grazing before and after, lands most people somewhere around 2,500 to 3,500 calories for the day, maybe more with a few drinks mixed in. That is a surplus of roughly 500 to 1,500 calories above maintenance for most lifters, which is nowhere near enough to add meaningful fat in one sitting. A pound of fat is about 3,500 calories, so a single big day mostly shows up as water retention from the extra sodium and carbohydrates, which clears in a few days of normal eating.</p>
+      <p>What actually causes visible, lasting setbacks is the accumulation of decisions made under the banner of "it's the holidays." One big dinner on Thursday is fine. Leftover-fueled grazing through the following weekend, a work party on Tuesday, a family gathering the Saturday after that, and a general drop in training frequency because the gym feels less urgent than it did in October: that is a six-week surplus disguised as a single occasion, and it is the pattern that actually moves the scale and erases visible progress. The fix is not white-knuckling through every holiday meal. It is being honest about which days are the real occasion and which days are just regular Tuesdays wearing a festive sweater.</p>
+
+      <h2>Bank Calories Without Starving Through the Day</h2>
+      <p>The most useful lever for a known big meal is shifting calories within the day and the days around it, not cutting them out entirely. Eating a smaller breakfast and lunch on the day of a dinner you know is going to run high leaves more room for the meal itself without requiring a full fast beforehand, which tends to backfire into overeating anyway once you actually sit down at the table. A simple version: protein-forward breakfast and lunch at roughly half your usual calories, then let dinner be dinner.</p>
+      <p>The same logic works across the week rather than just the day. If Thanksgiving dinner is going to land around 1,000 calories over your normal target, trimming 150 to 200 calories a day from the two or three days before and after closes most of that gap without any single day feeling restrictive. This is the same idea behind <a href="/blog/diet-breaks-and-refeeds-for-lifters">planned refeeds and diet breaks</a>: a deliberate, bounded surplus day is a tool, not a failure, as long as the days around it are accounted for rather than ignored.</p>
+      <p>Protein is the one macro worth protecting on the big day itself. Hitting your usual protein target, even generously, before loading up on stuffing and pie helps with satiety at the table and gives your body something to work with for recovery, since training does not stop just because the calendar says holiday. Carbs and fat are where the day's surplus naturally lands, and that is fine. Fighting that with a low-carb Thanksgiving plate is a losing battle against the actual food on the table.</p>
+
+      <h2>Pick Your Real Occasions and Let the Rest Stay Normal</h2>
+      <p>Most people invited to "the holidays" are really only facing two or three meals that genuinely matter: Thanksgiving dinner, maybe a work or family party, and Christmas or a similar gathering. Everything else between now and New Year's, the random office snack table, the extra eggnog in the fridge, the cookies a coworker brought in, is optional in a way that the actual family dinner is not. Treating every single one of those as equally sacred is what turns a two-day event into a six-week drift.</p>
+      <p>Write down the actual dates that matter to you. For most lifters that is a very short list, not a running theme for the entire season. On the days that are not on that list, eat the way you normally eat. Nobody's grandmother is offended that you did not eat a second helping of pie on a random Tuesday in December. Saving the flexibility for the meals that are genuinely worth it, and holding a normal routine everywhere else, is the single highest-leverage decision in this entire plan. The same discipline applies to <a href="/blog/eating-out-on-a-cut-restaurant-guide-for-lifters">eating out at restaurants</a> the rest of the year: pick the meals that matter and stop treating every dinner out as an event.</p>
+
+      <h2>Alcohol Deserves Its Own Decision</h2>
+      <blockquote>A drink at dinner is a different decision than drinking through the entire party. Decide which one you are doing before you arrive.</blockquote>
+      <p>Holiday gatherings are often where drinking habits quietly change for a few weeks, and alcohol calories add up faster than people expect, especially mixed drinks with sugary liqueurs or mixers. A glass of wine or a cocktail with dinner is a reasonable, countable addition to the day's calories. Three or four drinks over the course of a party is a different amount of math entirely, and it also tends to lower the guard around the food on the table, which compounds the effect. <a href="/blog/alcohol-and-macros-how-to-drink-on-a-cut">Planning for alcohol</a> the same way you plan for food, picking roughly how many drinks the occasion is actually worth to you ahead of time, keeps the night from turning into a bigger surplus than you meant to run.</p>
+
+      <h2>Keep Training Even When the Week Is Chaotic</h2>
+      <p>Travel, family obligations, and a packed calendar make December the easiest month of the year to quietly stop training, and that matters more than any single meal. Training is what gives the extra food somewhere useful to go, supporting muscle retention through a surplus day and helping offset the water retention that comes with higher sodium and carbohydrate intake. A short, simple session, even just 30 minutes hitting the big compound lifts, does more for how you feel and look through the holidays than any amount of careful plate-building at dinner. If a full week off the gym is unavoidable because of travel, treat it as a planned deload rather than a failure, and get back to the normal schedule as soon as you are home.</p>
+      <p>Most of the stress around holiday eating comes from not having a plan at all and reacting meal by meal under pressure. Setting your training day and rest day targets for the handful of normal days in between the actual events, and letting <a href="https://macroplan.app">MacroPlan</a> turn those targets into a batch-cooked plan for the week, removes the daily decision-making for everything except the one or two meals that are genuinely worth deciding about on the spot.</p>
+
+      <h2>FAQ</h2>
+      <h3>Will one big Thanksgiving meal ruin a cut?</h3>
+      <p>No. A single high-calorie day, even a very generous one, is not enough to add meaningful fat on its own. The scale may jump a pound or two afterward, but that is mostly water retention from extra sodium and carbohydrates, and it typically resolves within a few days of normal eating.</p>
+      <h3>Should I fast all day before a big holiday dinner?</h3>
+      <p>A full fast tends to backfire by making you more likely to overeat once you sit down. Eating smaller, protein-forward meals earlier in the day works better than skipping food entirely, since it curbs hunger without using up the day's entire calorie allowance before the meal that matters even starts.</p>
+      <h3>How do I handle a holiday party where I do not control the menu?</h3>
+      <p>Eat a normal, protein-focused meal beforehand so you are not arriving starving, prioritize protein sources on the table when you do eat, and decide on a rough number of drinks ahead of time rather than deciding in the moment. You cannot control the spread, but you can control how hungry and how deliberate you are when you get there.</p>
+      <h3>What if I miss a week of training over the holidays because of travel?</h3>
+      <p>Treat it as a deload, not a setback. A week off does not meaningfully reduce muscle or strength for someone with a consistent training history, and returning to your normal schedule as soon as you are back matters far more than trying to make up for the missed week all at once.</p>
+
+      <p>If you want the other five or six days a week to run on autopilot so the two days that actually matter get your full attention, <a href="https://macroplan.app/signup">generate your free macro plan</a> and let it handle the math around the holidays, not just the big dinner.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 20, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1510195429239-8a5c0222144a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHx0aGFua3NnaXZpbmclMjBkaW5uZXIlMjBob2xpZGF5JTIwdGFibGV8ZW58MXwwfHx8MTc5NTE4MzIzMnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Megan Watson on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@meganwatson?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'how-to-calculate-your-tdee-as-a-lifter',
     title: 'How to Calculate Your TDEE as a Lifter (And Why Generic Calculators Get It Wrong)',
     excerpt: 'Most TDEE calculators give you one number and send you off to guess. Here is how the math actually works, where it breaks down for lifters specifically, and how to adjust it once real data comes in.',
