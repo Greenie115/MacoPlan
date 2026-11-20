@@ -1,6 +1,8 @@
 export interface BlogPost {
   slug: string;
   title: string;
+  /** Shorter <title> for Google (≤60 chars) when the on-page title is longer. */
+  seoTitle?: string;
   excerpt: string;
   content: string;
   author: string;
@@ -24,6 +26,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'holiday-eating-for-lifters-thanksgiving-christmas-macros',
     title: 'Holiday Eating for Lifters: How to Hit Your Macros at Thanksgiving and Christmas',
+    seoTitle: 'Holiday Eating for Lifters: Hit Your Macros at Christmas',
     excerpt: 'You do not need to skip the turkey or the pie to protect months of progress. Here is how to plan the handful of holiday meals that actually matter and let the rest of the week absorb the rest.',
     content: `
       <p>The stretch between Thanksgiving and New Year's is the single biggest threat to a year of consistent training, and it is not because one meal is dangerous. A Thanksgiving plate, even a big one, is a few thousand calories on a single day, which is not enough on its own to undo a cut or derail a bulk. The real damage comes from treating the whole season as one long cheat day, where "the holidays" quietly expand from one dinner into six weeks of grazing, drinking, and skipped training sessions. Fix the framing and the math gets a lot easier.</p>
@@ -75,6 +78,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'how-to-calculate-your-tdee-as-a-lifter',
     title: 'How to Calculate Your TDEE as a Lifter (And Why Generic Calculators Get It Wrong)',
+    seoTitle: 'How to Calculate Your TDEE as a Lifter (Calculators Miss)',
     excerpt: 'Most TDEE calculators give you one number and send you off to guess. Here is how the math actually works, where it breaks down for lifters specifically, and how to adjust it once real data comes in.',
     content: `
       <p>Total Daily Energy Expenditure, or TDEE, is the number of calories your body burns in a day: resting metabolism, digestion, daily movement, and training combined. It is the single most important number in setting up a cut, a lean bulk, or a maintenance phase, because every calorie target you pick is really just TDEE plus or minus an offset. Get the TDEE wrong and the offset is wrong too, no matter how carefully you track the rest of it.</p>
@@ -138,6 +142,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'mass-gainer-shakes-vs-whole-food-bulking',
     title: 'Mass Gainer Shakes vs Whole-Food Bulking: Which Builds More Muscle',
+    seoTitle: 'Mass Gainer vs Whole-Food Bulking: Which Builds Muscle?',
     excerpt: 'A 1,200-calorie shake looks like the fast way to a surplus, but it is not the same decision as eating more real food. Here is what actually differs between the two, and when a shake earns its place.',
     content: `
       <p>The pitch for a mass gainer shake is simple: training hard enough to grow is already a full-time job, and choking down an extra 1,000 calories of chicken and rice on top of that can feel like a second one. A shake promises to solve the hardest part of bulking, getting the calories in, without anyone having to sit at a table and force down a fourth meal they don't actually want. That pitch is not wrong, but it skips over what the shake is actually made of, and that gap is where most of the disappointment with mass gainers comes from.</p>
@@ -183,6 +188,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-overnight-oats-for-meal-prep',
     title: '9 High-Protein Overnight Oats Recipes for Meal Prep (30g+ Protein Each)',
+    seoTitle: '9 High-Protein Overnight Oats for Meal Prep (30g+ Each)',
     excerpt: 'Overnight oats solve the one breakfast problem meal prep usually cannot: eating the same thing five days running without getting sick of it. These nine versions all clear 30g of protein.',
     content: `
       <p>Breakfast is the easiest meal to under-protein and the easiest one to prep a week in advance, which makes overnight oats one of the better tools in a lifter's kit once you stop treating them as a dessert. The base recipe barely changes: rolled oats, a liquid, a protein source, and a jar in the fridge. What changes is the ratio, and most recipes online are built for people who are not trying to hit 180g of protein a day. A standard half cup of dry oats with milk gets you maybe 12g of protein, which is a snack, not a meal. The versions below start from a higher protein base and build flavor on top of it instead of the other way around.</p>
@@ -233,6 +239,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'are-eggs-bad-for-cholesterol-lifters',
     title: 'Are Eggs Bad for Your Cholesterol? What Lifters Actually Need to Know',
+    seoTitle: 'Are Eggs Bad for Cholesterol? What Lifters Need to Know',
     excerpt: 'Whole eggs get blamed for cholesterol problems they mostly do not cause. Here is what the research says about dietary cholesterol, blood cholesterol, and how many eggs a lifter can actually eat.',
     content: `
       <p>Somewhere along the way, the egg yolk became the villain of every cutting diet. Lifters who have no problem eating 200g of chicken breast a day will scrape the yolks out of six eggs and toss them, convinced they are protecting their heart. The reasoning usually goes: eggs are high in dietary cholesterol, dietary cholesterol raises blood cholesterol, and blood cholesterol causes heart disease. Each step in that chain sounds reasonable. The middle one is mostly wrong, and that is enough to unravel the whole argument.</p>
@@ -280,6 +287,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'does-soy-protein-lower-testosterone',
     title: 'Does Soy Protein Lower Testosterone? What the Research Actually Shows',
+    seoTitle: 'Does Soy Protein Lower Testosterone? What Research Shows',
     excerpt: 'A lot of lifters quietly avoid tofu, edamame, and soy milk over testosterone fears that trace back to a handful of misread studies. Here is what the actual research says.',
     content: `
       <p>Ask around a gym about soy and someone will eventually tell you to stay away from it, usually with a story about estrogen, man boobs, or a training partner's cousin who swears off tofu for the same reason. It is one of the most durable myths in fitness nutrition, repeated often enough that plenty of lifters quietly skip edamame, soy milk, and tofu without ever checking whether the claim holds up. It is worth checking, because soy is one of the few plant foods that comes close to matching animal protein for amino acid quality, and ruling it out for no reason narrows your options for no benefit.</p>
@@ -326,6 +334,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-salads-for-lifters',
     title: '10 High-Protein Salads That Actually Taste Good (30g+ Protein Each)',
+    seoTitle: '10 High-Protein Salads That Taste Good (30g+ Protein)',
     excerpt: 'Salads get a bad reputation among lifters for being a side dish pretending to be a meal. These ten clear 30g of protein each and are built to fill you up, not just check a box.',
     content: `
       <p>Tell a lifter to eat a salad for lunch and the usual reaction is suspicion, mostly earned. A pile of lettuce with a few croutons and a grilled chicken strip on top is a side dish wearing a main course's name, and it leaves most people hungry by 3pm. That reputation is really a complaint about bad salads, not salads themselves. Build one around a real protein portion, a starch or legume, and a dressing that isn't an afterthought, and it holds up as a full meal that happens to be cold.</p>
@@ -393,6 +402,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-diet-bloating-why-and-how-to-fix-it',
     title: 'Why a High-Protein Diet Gives You Bloating (and How to Fix It)',
+    seoTitle: 'High-Protein Diet Bloating: Why It Happens and the Fix',
     excerpt: 'Hitting your protein number and feeling like a balloon by 3pm are not unrelated. Here is what actually causes the bloating on a high-protein diet, and how to keep your macros without the discomfort.',
     content: `
       <p>You finally got your protein dialed in, 170 or 180 grams a day, split across four or five meals, tracked down to the gram. And somewhere around week two you noticed your stomach looks and feels distended most afternoons, even on days you ate clean and trained hard. It is tempting to blame the protein target itself, maybe even to pull it back down. That is usually the wrong move, because protein in isolation rarely causes bloating. What causes it is almost always something riding along with how you are getting that protein, not the macro itself.</p>
@@ -450,6 +460,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'cottage-cheese-vs-greek-yogurt-protein',
     title: 'Cottage Cheese vs. Greek Yogurt: Which One Actually Wins on Protein',
+    seoTitle: 'Cottage Cheese vs Greek Yogurt: Which Wins on Protein?',
     excerpt: 'Both show up in every "high protein" grocery haul video right now, and both belong in a lifter\'s fridge. Here is how they actually compare once you look past the label and into what each one does for your macros.',
     content: `
       <p>Scroll through enough fitness content and you will see the same two tubs on repeat: a container of cottage cheese next to a tub of Greek yogurt, both getting crowned the best high-protein snack on the internet within the same week. They end up compared constantly because they occupy almost the same shelf, the same price range, and the same role in a lot of meal plans, which makes the question of which one is actually better worth settling with numbers instead of whichever one trended last.</p>
@@ -558,6 +569,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'satiety-index-foods-that-keep-you-full-on-fewer-calories',
     title: 'The Satiety Index: Why Some 500-Calorie Meals Keep You Full and Others Don\'t',
+    seoTitle: 'Satiety Index: Foods That Keep You Full on Fewer Calories',
     excerpt: 'Two meals with the same calories and macros can leave you starving an hour apart or full for four. Here is the research behind why, and which foods to build a cut around if staying full matters more than the number on the label.',
     content: `
       <p>Two lifters eat 500 calories at lunch. One of them is rooting around the pantry by 2pm. The other barely thinks about food again until dinner. Same calorie count, same rough macro split even, and a completely different afternoon. If you've tracked macros for more than a few weeks you've probably lived both versions of that lunch, and it's tempting to chalk the difference up to willpower or how much sleep you got the night before. Most of the time it's neither. It's the food itself, and specifically how much volume, water, protein, and fiber it packed into that calorie count.</p>
@@ -667,6 +679,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'neat-calories-burned-without-exercise',
     title: 'NEAT: The Calories You Burn Without Trying, and Why They Shrink During a Cut',
+    seoTitle: 'NEAT: The Calories You Burn Without Exercise',
     excerpt: 'Walking to the kitchen, fidgeting at your desk, and standing instead of sitting all burn real calories your tracking app never sees. Here is why that hidden total quietly drops the longer you diet, and what to do about it.',
     content: `
       <p>Two people eat the exact same calories, train the exact same program, and lose fat at completely different rates. It is one of the more frustrating things about dieting, and it rarely comes down to willpower or tracking accuracy. More often it comes down to a number neither of them is logging: how much they move when they are not working out.</p>
@@ -714,6 +727,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'macros-and-your-menstrual-cycle',
     title: 'Macros and Your Menstrual Cycle: Why Some Weeks Feel Harder Than Others',
+    seoTitle: 'Macros and Your Menstrual Cycle: Why Some Weeks Are Harder',
     excerpt: 'The same calorie target can feel completely different depending on where you are in your cycle. Here is what actually shifts week to week, and how to adjust your macros instead of fighting your own biology.',
     content: `
       <p>You hit your numbers perfectly for two weeks straight, then one week everything feels off. Hunger shows up out of nowhere, the usual portion looks smaller than it should, and a plan that felt easy a few days earlier suddenly takes real willpower to stick to. The macro app has not changed and neither has the training schedule, so it is easy to read this as a discipline problem. For a lot of women, it is not. It is the menstrual cycle doing exactly what it does, shifting hunger hormones, water retention, and metabolic rate by a measurable amount across the month, and most macro plans are built as if that shift does not exist.</p>
@@ -759,6 +773,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-soups-stews-winter-meal-prep',
     title: '9 High-Protein Soups and Stews for Winter Meal Prep (30g+ Protein, Freezer-Friendly)',
+    seoTitle: '9 High-Protein Soups and Stews for Winter Meal Prep',
     excerpt: 'Soup season and meal prep season overlap almost exactly, but most soup recipes are built around flavor, not protein. These nine hit 30g or more per serving and freeze well enough to carry you through a cold month.',
     content: `
       <p>Once the weather turns, the usual meal prep rotation of chicken and rice starts to feel like a chore rather than a plan. Soup and stew solve that problem better than almost any other format, because they are built in one pot, they improve after a day or two in the fridge instead of degrading, and they freeze in a way that a dry chicken breast never quite does. The catch is that most soup recipes are written for comfort first, which usually means a broth-heavy base with a small amount of meat floating in it, nowhere near enough protein to count as a real meal for someone tracking macros.</p>
@@ -822,6 +837,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'meal-prepping-for-two-different-macros',
     title: 'Meal Prepping for Two People With Different Macros (Without Cooking Two Dinners)',
+    seoTitle: 'Meal Prep for Two People With Different Macros',
     excerpt: 'One of you is cutting, the other is lean bulking, and nobody wants to cook two separate dinners every night. Here is how to batch cook once and portion two completely different macro targets out of the same pots.',
     content: `
       <p>You and your partner, roommate, or training buddy are both meal prepping, and your numbers do not match. Maybe one of you is cutting at 1,800 calories and the other is lean bulking at 2,900. Maybe you are the same weight but she trains six days a week and you train three, so her protein target is 40g higher than yours. Either way, the obvious fix, cooking two separate meals every night, is the one that gets abandoned by week two. Nobody has the energy to run two skillets after a full workday, and the person who ends up doing the extra cooking usually resents it within a month.</p>
@@ -996,6 +1012,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-diet-kidney-health-myth',
     title: 'Is a High-Protein Diet Bad for Your Kidneys? What the Research Actually Shows',
+    seoTitle: 'Is a High-Protein Diet Bad for Your Kidneys?',
     excerpt: 'Every lifter eating 180g of protein a day has heard the warning at least once. Here is what the actual research says about protein intake and kidney function, and who the warning genuinely applies to.',
     content: `
       <p>At some point, usually from a relative, a doctor who hasn't looked at the sports nutrition literature in a decade, or a comment under a fitness post, every lifter eating a high-protein diet hears the same warning: all that protein is going to wreck your kidneys. It's one of the most durable myths in nutrition, repeated often enough that even people who track their macros carefully start to wonder if the number on their <a href="/blog/how-much-protein-to-build-muscle">protein target</a> is secretly doing damage they can't feel yet. The honest answer is more specific than either side of the internet argument wants it to be, and it depends almost entirely on one thing: whether your kidneys were healthy to begin with.</p>
@@ -1044,6 +1061,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'best-protein-bars-for-lifters',
     title: 'The Best Protein Bars for Lifters: 9 Worth Keeping in Your Gym Bag',
+    seoTitle: '9 Best Protein Bars for Lifters (Worth Your Gym Bag)',
     excerpt: 'Most protein bars are a dessert with a marketing budget. Here are nine that actually earn a spot in your gym bag, ranked by what matters: protein per calorie, ingredient quality, and whether your stomach will forgive you.',
     content: `
       <p>Walk down a protein bar aisle and you will find forty options promising twenty grams of protein and a taste "just like a candy bar." Most of them get there with sugar alcohols, a thick chocolate coating, and a calorie count that makes the bar closer to a dessert than a meal replacement. A handful of brands actually build a bar around the protein first and the taste second, and those are the ones worth carrying in a gym bag or desk drawer. Here are nine that hold up, with notes on where each one is strongest and where it falls short.</p>
@@ -1109,6 +1127,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-lunches-for-lifters',
     title: '10 High-Protein Lunches for Lifters (35g+ Protein, Desk or Gym Bag Friendly)',
+    seoTitle: '10 High-Protein Lunches for Lifters (35g+ Protein)',
     excerpt: 'Ten lunches with 35g+ protein each, built to survive a lunchbox or a desk drawer without going soggy. Macros included, so the midday meal stops being the weak link in your day.',
     content: `
       <p>Breakfast gets planned the night before and dinner gets cooked fresh, but lunch is where most macro tracking falls apart. It's the meal eaten at a desk, in a car, or standing at a counter between sets, and it's the one most likely to turn into whatever's closest. Here are ten lunches that hit at least 35g of protein, travel well in a container, and don't need a microwave to taste like an actual meal.</p>
@@ -1172,6 +1191,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'intermittent-fasting-for-lifters-hitting-macros-in-a-short-window',
     title: 'Intermittent Fasting for Lifters: Can You Actually Hit Your Macros in 8 Hours?',
+    seoTitle: 'Intermittent Fasting for Lifters: Hit Macros in 8 Hours',
     excerpt: 'Compressing every meal into a 6 to 8 hour window sounds simple until you try to fit 180g of protein and 2,800 calories into it. Here is what actually breaks, and how to structure an eating window that still gets you there.',
     content: `
       <p>The math on intermittent fasting always looks clean on paper. Skip breakfast, eat between noon and 8 p.m., and the same calories and macros you were already hitting just get compressed into a shorter window. In practice, a lot of lifters try 16:8 for the first time and discover on day two that fitting 180g of protein and 2,800 calories into 8 hours means eating like it's a competitive sport, not a normal Tuesday. The window isn't the hard part. Getting the volume in without feeling sick or running out of time is.</p>
@@ -1227,6 +1247,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'hitting-your-macros-while-traveling',
     title: 'Hitting Your Macros While Traveling: A No-Kitchen Survival Guide',
+    seoTitle: 'Hitting Your Macros While Traveling (No Kitchen Needed)',
     excerpt: 'No fridge, no scale, no batch-cooked containers waiting for you. Here is how to keep your protein and calories on track through flights, hotel rooms, and unfamiliar restaurants without white-knuckling every meal.',
     content: `
       <p>The first business trip or vacation after a few months of consistent tracking is usually the moment a lifter finds out how much of their progress was actually built on infrastructure rather than willpower. At home, hitting protein is mostly a logistics problem you already solved: a fridge full of pre-portioned containers, a scale on the counter, a routine that runs on autopilot. Take that infrastructure away for four or five days and the same person who hasn't missed a target in months suddenly can't figure out what to order at an airport Chili's. The good news is that traveling well on macros isn't about recreating your kitchen setup somewhere else. It's about picking a much smaller set of rules that still work when none of your usual tools are available.</p>
@@ -1284,6 +1305,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'diet-breaks-and-refeeds-for-lifters',
     title: 'Diet Breaks and Refeeds: When to Take One and How to Structure It',
+    seoTitle: 'Diet Breaks and Refeeds: When and How to Take One',
     excerpt: 'A planned break from your deficit is not the same as falling off the diet. Here is when a diet break actually helps, how a refeed differs from one, and how to run either without losing weeks of progress.',
     content: `
       <p>Somewhere around week six or seven of a cut, most lifters hit the same wall. The deficit that felt manageable in week one now feels like a low-grade fight against your own body all day, training numbers are drifting down instead of holding, and the thought of one more week of the same calories is exhausting before the week has even started. The instinct at that point is usually one of two extremes: grit it out no matter what, or quietly abandon the diet and call it a bad week. There is a third option that gets far less attention than it deserves, and it is the one most experienced dieters actually use: a planned, deliberate diet break.</p>
@@ -1333,6 +1355,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'weekly-grocery-list-for-lifters-high-protein-template',
     title: "The Lifter's Weekly Grocery List: A High-Protein Shopping Template",
+    seoTitle: "High-Protein Grocery List: A Lifter's Weekly Template",
     excerpt: 'A repeatable weekly shopping list built around protein-dense staples, so your macros are decided at the store instead of guessed at the stove.',
     content: `
       <p>Most lifters do not blow their macros at dinner. They blow them at the grocery store, three days earlier, when the cart fills up with things that sounded fine in the aisle but do not add up to anything close to the protein target for the week. A shopping list that is built around macros instead of vague "eating healthy" intentions solves most of this before you ever pick up a pan. It is not a diet plan, it is closer to a default setting: the stuff that ends up in the cart most weeks, organized so the protein number takes care of itself.</p>
@@ -1393,6 +1416,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-dinners-for-lifters',
     title: '10 High-Protein Dinners for Lifters (35g+ Protein, Ready in 30 Minutes)',
+    seoTitle: '10 High-Protein Dinners for Lifters, Ready in 30 Minutes',
     excerpt: 'Ten dinners that clear 35g of protein without living on chicken and rice every night. Macros included, most scale straight into meal-prep containers.',
     content: `
       <p>Breakfast and lunch get the meal-prep spotlight, but dinner is where most lifters actually fall short. It is the meal eaten latest, cooked with the least energy left in the tank, and easiest to replace with whatever is fastest when the day has already run long. The problem is dinner usually carries the biggest protein number of the day, since it is the one meal most people still cook fresh. These ten dinners each clear 35g of protein, come together in 30 minutes or less, and none of them are plain chicken breast and white rice for the fourth night running.</p>
@@ -1510,6 +1534,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'air-fryer-meal-prep-for-lifters',
     title: 'Air Fryer Meal Prep for Lifters: Cook Times, Batch Sizes, and Container Math',
+    seoTitle: 'Air Fryer Meal Prep for Lifters: Cook Times and Batches',
     excerpt: 'An air fryer cooks a week of chicken and vegetables in a fraction of the oven time, with less added oil to account for. Here is how to actually batch cook with one, including cook times and how to fill your containers.',
     content: `
       <p>An air fryer is a small convection oven, not a magic box, but that distinction is exactly why it works so well for meal prep. The fan-forced heat circulates around food in a tight basket instead of a large oven cavity, so a batch of chicken thighs or a tray of broccoli finishes in 12 to 18 minutes instead of 25 to 35. For a lifter who wants Sunday's prep session over in under an hour, that time savings is the entire pitch, and the macro side of it is a genuine bonus: less oil is needed to get a crisp result than roasting or pan-searing, so the calories you save aren't just theoretical.</p>
@@ -1567,6 +1592,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'pre-workout-vs-coffee-for-lifters',
     title: 'Pre-Workout vs. Coffee for Lifters: Caffeine, Cost, and What Fits Your Macros',
+    seoTitle: 'Pre-Workout vs Coffee for Lifters: Which Is Worth It?',
     excerpt: 'A tub of pre-workout and a cup of black coffee can deliver nearly the same caffeine hit for wildly different prices and calorie costs. Here is how the two actually compare once you look past the packaging.',
     content: `
       <p>Walk into any gym locker room and you will see both camps: the shaker bottle crowd swirling something neon, and the coffee cup crowd nursing a black brew on the way to the squat rack. Both are chasing the same thing, a jolt of alertness and a bit more output on the first working set, and both are willing to pay for it. The question that rarely gets a straight answer is whether the $40 tub is actually doing something the $8 bag of beans in your cupboard is not.</p>
@@ -1620,6 +1646,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'micronutrients-on-a-cut-what-lifters-run-low-on',
     title: 'Micronutrients on a Cut: What High-Protein Dieters Actually Fall Short On',
+    seoTitle: 'Micronutrients on a Cut: What Lifters Run Low On',
     excerpt: 'Your protein, carbs, and fat can all hit target while iron, magnesium, and vitamin D quietly run low. Here is why a lean, macro-perfect cut can still leave you short on the nutrients that keep you recovering.',
     content: `
       <p>You can hit every macro on your tracker for a month straight and still feel worse than you did at maintenance. Tired on training days, cramping in your calves at night, catching every cold that goes around the gym. The macros were never the problem. A cut built around chicken, rice, egg whites, and whey is extremely good at hitting protein, carbs, and fat targets, and mediocre at delivering the vitamins and minerals that used to come along for free when your diet had more food groups and more calories in it.</p>
@@ -1670,6 +1697,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'eating-out-on-a-cut-restaurant-guide-for-lifters',
     title: 'Eating Out on a Cut: A No-Guesswork Restaurant Guide for Lifters',
+    seoTitle: 'Eating Out on a Cut: A Restaurant Guide for Lifters',
     excerpt: 'No nutrition label, no scale, no idea how much oil is in the pan. Here is how to walk into any sit-down restaurant on a cut and order something that fits your macros without wrecking the night.',
     content: `
       <p>You have been dialed in all week. Chicken and rice measured to the gram, containers stacked in the fridge, macros landing on target four days running. Then a friend picks a restaurant for Saturday night, the menu has zero nutrition info, and the choice is between guessing wildly or being the person who brings a food scale to dinner. Neither feels great. Here is how to order like someone who knows what they are doing, without turning a night out into a math problem at the table.</p>
@@ -1724,6 +1752,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'sleep-recovery-and-macros-for-lifters',
     title: 'Bad Sleep Is Wrecking Your Macros: The Recovery Connection Lifters Skip',
+    seoTitle: 'Bad Sleep Is Wrecking Your Macros: Sleep for Lifters',
     excerpt: 'You can hit protein, carbs, and fat perfectly and still stall out if you are sleeping five hours a night. Here is what short sleep actually does to hunger, recovery, and muscle growth, and what to do about it without touching your macros.',
     content: `
       <p>You have the tracking dialed in. Protein hits target most days, carbs are timed around training, calories land where the plan says they should. And you are still not recovering between sessions, still hungrier than the numbers should explain, still not seeing the changes the macros are supposed to produce. Before you touch the plan again, check the one variable most trackers never ask about: how much you actually slept last night.</p>
@@ -1781,6 +1810,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'hydration-and-sodium-for-lifters-tracking-macros',
     title: 'Hydration and Sodium for Lifters: What Water and Salt Actually Do to Your Macros',
+    seoTitle: 'Hydration and Sodium for Lifters: What They Do to Macros',
     excerpt: 'You track protein, carbs, and fat to the gram and still cramp mid-set or watch the scale swing five pounds overnight. Here is how much water and sodium a lifter actually needs, and why cutting salt is usually the wrong move.',
     content: `
       <p>You hit your macros almost every day. Protein is dialed in, carbs are timed around training, fat fills the rest of the budget. And you still cramp in the last set of leg press, wake up some mornings looking noticeably flatter than others, or watch the scale swing three or four pounds overnight for no reason you can point to. The macro tracking did its job. Something upstream of it did not.</p>
@@ -1835,6 +1865,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'creatine-for-lifters-dosing-timing-guide',
     title: 'Creatine for Lifters: The Real Dosing, Timing, and Macro Guide',
+    seoTitle: 'Creatine for Lifters: Dosing, Timing and Macros',
     excerpt: 'Creatine is the most researched supplement in sports nutrition, and also the most argued about. Here is what the dosing actually needs to be, when to take it, and how it fits into a day you are already tracking.',
     content: `
       <p>Everyone tells you to take creatine. Almost nobody agrees on how much, when, or whether the water weight it causes means anything. You end up with a tub in the cupboard, a vague memory of "five grams a day," and a nagging feeling that you might be doing it wrong, or that it might not even be doing anything since you cannot see a difference the way you can with a new lift PR.</p>
@@ -1893,6 +1924,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'how-long-meal-prep-lasts-fridge-freezer-guide',
     title: 'How Long Does Meal Prep Actually Last? A Fridge and Freezer Guide for Lifters',
+    seoTitle: 'How Long Does Meal Prep Last? Fridge and Freezer Guide',
     excerpt: 'Four days in the fridge is a guideline, not a rule that applies to every protein the same way. Here is how long your batch-cooked chicken, rice, and sauces actually hold up, and when freezing on day one saves the week.',
     content: `
       <p>You cook eight portions on Sunday, and by Thursday you are standing over the container asking the same question every lifter eventually asks: does this still count as food. Most meal prep advice waves this off with a flat "three to four days in the fridge" rule and moves on, as if ground beef, rice, and a sauce with dairy in it all degrade at the same rate. They do not, and treating them like they do is how a week of good tracking ends with either a stomach ache or a bin full of chicken you cooked for nothing.</p>
@@ -1950,6 +1982,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'alcohol-and-macros-how-to-drink-on-a-cut',
     title: 'Alcohol and Macros: How to Drink Without Blowing Your Numbers',
+    seoTitle: 'Alcohol and Macros: How to Drink on a Cut',
     excerpt: 'A night out does not have to undo a week of tracking. Here is how alcohol actually fits into your macros, what it does to fat loss beyond the calories, and how to plan a drink without guessing.',
     content: `
       <p>You logged a clean week. Protein on target every day, calories where they needed to be, and then Saturday arrives and you are standing at a bar trying to figure out whether a couple of drinks is going to undo six days of work. Most tracking advice skips this question entirely, as if lifters do not drink, which leaves you either skipping the app for the night or guessing and hoping the number is close enough.</p>
@@ -2006,6 +2039,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-smoothie-recipes-for-lifters',
     title: '6 High-Protein Smoothie Recipes That Actually Hit 40g (Ready in 5 Minutes)',
+    seoTitle: '6 High-Protein Smoothie Recipes That Hit 40g Protein',
     excerpt: 'Most "protein smoothie" recipes online top out at 15 or 20 grams once you actually weigh the ingredients. These six are built backward from a real macro target, so the number on the blender matches the number in your app.',
     content: `
       <p>Search "high protein smoothie recipe" and you'll get a hundred results built around a scoop of powder, a banana, and a splash of milk, which sounds right until you actually run the numbers and find it's sitting at 22 grams of protein for 380 calories. That's not a bad snack, but it's not what most lifters mean when they say high protein, and it's rarely built with a specific macro target in mind. The six recipes below start from the other direction: pick a protein number, then build the smoothie to hit it without the carb and fat totals sliding somewhere you didn't plan for.</p>
@@ -2059,6 +2093,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'whey-vs-casein-vs-plant-protein-powder-comparison',
     title: 'Whey vs. Casein vs. Plant Protein: Which One Actually Fits Your Macros',
+    seoTitle: 'Whey vs Casein vs Plant Protein: Which Fits Your Macros?',
     excerpt: 'Three tubs, three price points, three digestion speeds. Here is how whey, casein, and plant protein powder actually compare once you look past the label and into what each one does for your macros.',
     content: `
       <p>Walk into any supplement aisle and you'll find the same three categories fighting for shelf space: whey, casein, and some version of a plant blend, usually pea and rice combined to fake a complete amino acid profile. Every tub claims to be the best option for building muscle, and every forum thread on the topic eventually turns into a brand war that has nothing to do with what actually separates them. The real differences are narrower and more useful than the marketing suggests, and once you know what each one is actually good at, picking between them stops being a personality choice and starts being a macro decision.</p>
@@ -2108,6 +2143,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'meal-prep-container-math-portion-sizes',
     title: 'Meal Prep Container Math: How Many Grams of Chicken, Rice, and Veggies Actually Fit',
+    seoTitle: 'Meal Prep Portion Sizes: Container Math for Lifters',
     excerpt: 'Stop eyeballing portions. Here is the actual gram weight of chicken, rice, and vegetables per cup, mapped against the meal prep container sizes lifters actually use, so you can hit your macros without a food scale at the table.',
     content: `
       <p>Most lifters own a food scale and stop using it within a month. Not because tracking stops mattering, but because weighing rice at 9 p.m. on a Sunday gets old fast. What replaces the scale for people who keep their macros on point for years, not weeks, is container math: knowing roughly how many grams of chicken, rice, or broccoli a given container size holds, so the container becomes the measuring device. This is the cheat sheet for that, built from standard cooked-food densities and the container sizes lifters actually buy.</p>
@@ -2232,6 +2268,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'lean-bulk-meal-prep-without-dirty-bulk',
     title: 'Lean Bulk Meal Prep: How to Gain Muscle Without It Turning Into a Dirty Bulk',
+    seoTitle: 'Lean Bulk Meal Prep: Gain Muscle Without a Dirty Bulk',
     excerpt: 'Every lean bulk starts with good intentions and a modest surplus. Eight weeks later the scale is up 10 pounds and half of it is fat. Here is why that happens and the meal prep habits that keep a bulk lean on purpose.',
     content: `
       <p>You started this bulk with a plan: a small surplus, steady weight gain, most of it muscle. Two months in, the scale says plus 10 pounds, your lifts have gone up a little, and your waistband has gone up a lot. Somewhere between week one and week eight, "lean bulk" quietly turned into a bulk with no adjective in front of it. This happens to almost everyone who bulks without a system, and it is rarely a willpower problem. It is a portioning and tracking problem, and it is fixable with the same discipline you'd apply to a cut.</p>
@@ -2276,6 +2313,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'fiber-on-a-high-protein-diet',
     title: 'High-Protein, Low-Fiber? 11 Foods That Fix the Gut Problem No One Warns You About',
+    seoTitle: 'Fiber on a High-Protein Diet: 11 Foods That Fix Your Gut',
     excerpt: 'Chicken, eggs, and whey get you to your protein number and nowhere near your fiber number. Here is why that combination backs lifters up, and eleven foods that close the gap without touching your macros.',
     content: `
       <p>Somewhere around week three of tracking macros seriously, a lot of lifters hit the same unglamorous wall: they're eating more food than ever, hitting every number on the app, and somehow more constipated than they've been in years. It's rarely the protein itself causing the problem. It's what got pushed off the plate to make room for it. Chicken breast, egg whites, and a scoop of whey are protein-dense and almost entirely fiber-free, and when they start crowding out the volume of vegetables, whole grains, and legumes a normal diet used to include almost by accident, the gut backs up. Fiber intake in the general population already sits well below the recommended 25 to 38 grams a day, and a high-protein cut or bulk built around lean meat and shakes tends to make that gap worse, not better.</p>
@@ -2342,6 +2380,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'lean-bulk-guide-gain-muscle-without-fat',
     title: 'Lean Bulking: How to Gain Muscle Without Gaining a Ton of Fat',
+    seoTitle: 'Lean Bulking: How to Gain Muscle Without Gaining Fat',
     excerpt: 'Most bulks fail for the same reason: the surplus is too big, too fast, and nobody’s tracking what actually happens on the scale. Here is how to run a lean bulk that adds muscle without undoing months of dieting.',
     content: `
       <p>Ask most lifters how their last bulk went and you'll get some version of the same story: they started eating more, the scale went up fast, and six months later they had to spend just as long cutting the fat back off as they spent gaining it. That's not a bulk, that's a slow-motion cut waiting to happen. A lean bulk is built around a different idea: gain weight slowly enough that most of it is muscle, track closely enough to catch it if that stops being true, and stop before the surplus starts working against you.</p>
@@ -2397,6 +2436,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'weight-loss-plateau-how-to-break-it',
     title: 'Weight Loss Plateau: Why It Happens and How to Actually Break It',
+    seoTitle: 'Weight Loss Plateau: Why It Happens and How to Break It',
     excerpt: 'The scale stopped moving even though nothing about your plan changed. Here is what is actually happening metabolically, and the specific adjustments that get you moving again without crashing your calories.',
     content: `
       <p>Four weeks ago the scale was moving every week. Now it hasn't budged in ten days, you're still logging every meal, you're still training, and nothing about your plan has changed on paper. This is the point where most people either panic and slash their calories by another few hundred, or throw the whole thing out and decide tracking doesn't work for them. Neither reaction is warranted, because a stall like this is one of the most predictable parts of a cut, not a sign that something has gone wrong.</p>
@@ -2445,6 +2485,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'reverse-dieting-after-a-cut',
     title: 'Reverse Dieting After a Cut: How to Raise Calories Without Getting Fat Back',
+    seoTitle: 'Reverse Dieting After a Cut: Raise Calories, Stay Lean',
     excerpt: 'Jumping straight from a deficit to maintenance calories is how most of a cut gets undone in a month. Here is how to raise food back up in a way that actually sticks.',
     content: `
       <p>The end of a cut is where a lot of good work quietly falls apart. You hit your target, you're proud of the number on the scale, and then you do the thing that feels obvious: you go back to eating "normally." Within a few weeks the scale is climbing faster than it has any right to, the mirror looks softer, and it feels like your metabolism betrayed you. It didn't. What actually happened is that a body running on a deficit for two or three months adapts to being underfed, and jumping straight back to a higher calorie number all at once outruns how fast that adaptation can reverse. Reverse dieting is the fix: a structured, gradual climb back to maintenance that gives your metabolism time to catch up before your intake does.</p>
@@ -2491,6 +2532,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'meal-timing-for-muscle-growth',
     title: 'Meal Timing for Muscle Growth: Does When You Eat Actually Matter?',
+    seoTitle: 'Meal Timing for Muscle Growth: Does It Actually Matter?',
     excerpt: 'The "anabolic window" got oversold for years, then the backlash oversold the opposite. Here is what meal timing actually does for a lifter, and where it stops mattering.',
     content: `
       <p>Somewhere around 2010, every serious lifter believed there was a 30-minute window after training where you had to get protein and carbs in or the workout was basically wasted. Then the research caught up, the window turned out to be much wider than anyone thought, and the pendulum swung hard the other way: timing doesn't matter at all, just hit your daily numbers and stop overthinking it. Neither version is quite right. Meal timing has a real, if modest, effect on muscle growth and recovery, and understanding where that effect actually lives will save you from both the old anxiety and the new complacency.</p>
@@ -2535,6 +2577,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'myfitnesspal-vs-cronometer-for-lifters',
     title: 'MyFitnessPal vs. Cronometer for Lifters: Which Tracker Actually Holds Up',
+    seoTitle: 'MyFitnessPal vs Cronometer for Lifters: Which Is Better?',
     excerpt: 'Both apps will let you log a chicken breast. Neither one will tell you what to cook. Here is how the two biggest food trackers actually compare for someone training and cutting on a macro target, and where they both fall short.',
     content: `
       <p>If you've searched for a macro tracking app, you've landed on the same two names over and over: MyFitnessPal and Cronometer. Both have been around for over a decade, both have loyal followings in the lifting community, and both get recommended constantly without much explanation of what actually separates them. The honest answer is that they solve the same core problem in different ways, and the differences matter more than most reviews let on once you're trying to hit a specific protein number every day, not just "eat healthier."</p>
@@ -2630,6 +2673,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'meal-prep-without-a-kitchen-scale',
     title: 'How to Meal Prep Without a Kitchen Scale (And Still Hit Your Macros)',
+    seoTitle: 'Meal Prep Without a Kitchen Scale (and Still Hit Macros)',
     excerpt: 'A food scale isn’t always available, at a friend’s house, in a shared kitchen, mid-move. Here is how to portion by eye and by tool so your week still lands close to your targets.',
     content: `
       <p>You get used to the scale fast. Grams stop feeling like an estimate and start feeling like a fact, and then one week the scale is packed in a box, or you're cooking in someone else's kitchen, or the battery's dead and the nearest replacement is a weekend away. Suddenly a chicken breast is just a chicken breast again, and you're portioning by memory instead of by number.</p>
@@ -2685,6 +2729,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'meal-prep-for-shift-workers',
     title: 'Meal Prep for Shift Workers: Hitting Your Macros on a Rotating Schedule',
+    seoTitle: 'Meal Prep for Shift Workers: Macros on a Rotating Schedule',
     excerpt: 'Most meal prep advice assumes a normal 9-to-5 and three predictable meals a day. Here is how to actually hit your protein target when your "morning" starts at 7pm and your schedule flips every other week.',
     content: `
       <p>Every meal prep guide on the internet quietly assumes the same thing: you wake up around 7am, eat breakfast, train after work, and eat dinner at a normal hour. If you work nights, rotate between day and night shifts, or spend twelve hours on your feet in a hospital, warehouse, or kitchen, that advice doesn't just miss the mark, it can actively work against you. "Eat breakfast within an hour of waking" means something completely different when you're waking up at 6pm, and "meal prep on Sunday" assumes you're not scheduled to work every Sunday this month.</p>
@@ -2806,6 +2851,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'macroplan-vs-myfitnesspal',
     title: 'MacroPlan vs MyFitnessPal: Which One Actually Fits a Lifter’s Macros?',
+    seoTitle: 'MacroPlan vs MyFitnessPal: Which Fits a Lifter Better?',
     excerpt: 'One app is built to log what you already ate. The other is built to plan what you cook before the week starts. Here is an honest side-by-side for lifters deciding between them.',
     content: `
       <p>MyFitnessPal and MacroPlan get compared a lot, but they're not really solving the same problem. MyFitnessPal is a food diary: you log what you eat, meal by meal, and it tells you where your macros landed. MacroPlan is a meal-prep planner: you set your macro targets once, and it hands you a batch-cooking plan and shopping list built to hit them, before you've cooked anything. Full disclosure, we're the MacroPlan team, but this comparison is meant to be genuinely useful, not a sales pitch, so we're naming where each app wins.</p>
@@ -2939,6 +2985,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'weight-loss-plateau-hitting-macros',
     title: "Hitting Your Macros but the Scale Won't Move? Here's What Actually Stalled",
+    seoTitle: "Hitting Your Macros but the Scale Won't Move?",
     excerpt: "If your tracking app says you're in a deficit but your weight hasn't moved in weeks, the problem usually isn't willpower. It's one of four specific, fixable things.",
     content: `
       <p>You're logging every gram. The app says you're 500 calories under maintenance. And the scale has read within a pound of the same number for three weeks straight. This is one of the most demoralizing places to land on a cut, because it looks like the math is broken when the math is actually fine, something else has moved underneath it. Four things cause this, almost always in combination, and all four are fixable without throwing out your macros and starting over.</p>
@@ -2990,6 +3037,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'rice-beans-vs-pork-muscle-protein-synthesis-study',
     title: 'New Study: Rice and Beans Lost to Pork After Lifting. Here’s the Real Lesson',
+    seoTitle: 'Rice and Beans vs Pork for Muscle: What the Study Found',
     excerpt: 'A new trial found a rice-and-beans meal built less muscle protein than pork after a leg workout. The headline is about pork. The actual lesson is about carb load, and it matters far more than the protein source.',
     content: `
       <p>A new trial out of the University of Illinois is making the rounds this week, and the headline version is exactly the kind of thing that gets forwarded around a gym group chat: rice and beans lost to pork. Researchers had people do a leg-press and leg-extension workout, then eat one of three post-workout meals, each built to deliver 20 grams of protein: a whole-food plate of rice and black beans, a nutrient-matched shake made from free amino acids, or 20 grams of lean pork. The plant-based whole-food meal and the shake produced almost identical, and notably lower, muscle protein synthesis than the pork. Published in the American Journal of Clinical Nutrition, it's the kind of result that's tailor-made to get twisted into "plants don't build muscle," so it's worth actually reading past the headline before you change anything about how you eat.</p>
@@ -3032,6 +3080,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-vegetarian-meal-prep-for-lifters',
     title: 'High-Protein Vegetarian Meal Prep: Hitting 180g a Day Without Meat',
+    seoTitle: 'High-Protein Vegetarian Meal Prep: 180g a Day, No Meat',
     excerpt: 'No chicken breast, no problem. Here is how vegetarian lifters actually hit big protein numbers with real food, plus a batch-cooking approach that keeps the macros honest.',
     content: `
       <p>Most high-protein meal prep advice assumes you're building every meal around a slab of chicken breast, and if you don't eat meat, that advice is mostly useless to you. Vegetarian lifters get told to "just eat more beans" or handed a list of protein powders and called done, which skips over the actual problem: hitting 150 to 200 grams of protein a day from plants and dairy takes more volume, more planning, and a different mental model than swapping one protein source for another. It's completely doable. It just isn't the same math.</p>
@@ -3075,6 +3124,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'meal-prep-delivery-vs-diy-for-lifters',
     title: 'Meal Prep Delivery vs. DIY: Which Actually Fits a Lifter’s Macros',
+    seoTitle: 'Meal Prep Delivery vs DIY: Which Fits a Lifter?',
     excerpt: 'Fitness meal delivery services promise to solve prep for you. Here is what they actually get you compared to cooking your own, once you account for macro precision, cost per gram of protein, and portion control.',
     content: `
       <p>Somewhere between "I hate meal prepping" and "I'll just order it," a whole industry sprang up to sell lifters on the idea that they can skip Sunday cooking entirely. Factor, Trifecta, Icon Meals, and a dozen smaller operators now ship pre-portioned, macro-labeled meals straight to your door. The pitch is obvious: no shopping, no chopping, no dishes, just grab a container and eat. For anyone who has stood in a kitchen at 9pm on a Sunday wondering why they signed up for this, that pitch is genuinely tempting.</p>
@@ -3250,6 +3300,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'rice-vs-potatoes-vs-pasta-meal-prep',
     title: 'Rice vs. Potatoes vs. Pasta: The Best Carb Source for Meal Prep',
+    seoTitle: 'Rice vs Potatoes vs Pasta: Best Carb for Meal Prep',
     excerpt: 'Rice, potatoes, and pasta all fill a container, but they behave very differently on macros, cost, and day-five texture. Here is which one to reach for and when.',
     content: `
       <p>Ask ten lifters what carb they meal prep and you'll get ten different answers, and most of them will defend the choice like it's a personality trait. Rice people think potatoes are bland. Potato people think rice is boring. Pasta people just want to eat something that tastes like a meal instead of fuel. The truth is none of them are wrong, because the three carbs behave differently enough in a container that the "best" one depends on what you're actually optimizing for: calorie density, how it survives five days in the fridge, or what it costs you per meal.</p>
@@ -3401,6 +3452,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'macro-friendly-fast-food-guide',
     title: 'The Macro-Friendly Fast Food Guide: What to Order at 13 Chains',
+    seoTitle: 'Macro-Friendly Fast Food: What to Order at 13 Chains',
     excerpt: 'A definitive, chain-by-chain reference for eating fast food without wrecking your macros, with approximate protein and calories for the order that actually works.',
     content: `
       <p>Meal prep breaks down on a normal week more often than anyone admits. A late meeting eats your lunch, a road trip strands you at a rest stop, or the container you packed gets left in the office fridge on a Friday. None of that has to blow a cut or a bulk. Fast food menus have quietly gotten more protein-friendly over the last few years, and once you know which order to give at the register, a drive-thru stop can look almost identical on paper to a home-cooked meal. This is the reference to keep bookmarked for exactly that day.</p>
@@ -3495,6 +3547,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'high-protein-snacks-under-200-calories',
     title: '11 High-Protein Snacks Under 200 Calories (For Between Meals)',
+    seoTitle: '11 High-Protein Snacks Under 200 Calories',
     excerpt: 'Eleven snacks that deliver serious protein for well under 200 calories each, with macros listed so hitting your target between meals stops being a guess.',
     content: `
       <p>Most people hit their protein target at meals and then quietly lose the whole day between them. A snack that's just carbs or fat doesn't move the number that actually matters for a lifter, and by dinner you're staring down 60g still to eat with one meal left to eat it in. The fix isn't eating more often, it's picking snacks built around protein instead of whatever's closest to hand. Here are eleven that clear at least 14g of protein for under 200 calories, with the macros included so you can slot them straight into your day.</p>
@@ -3573,6 +3626,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'glp-1-muscle-loss-protein-resistance-training',
     title: 'GLP-1 Weight Loss Is Costing You Muscle: What the 2025-2026 Research Says to Do',
+    seoTitle: 'GLP-1 Muscle Loss: How Protein and Lifting Protect It',
     excerpt: 'New research shows GLP-1 medications like Ozempic and Zepbound can strip 10-15% of lean mass during a big weight loss. Here is what the studies say actually prevents it.',
     content: `
       <p>GLP-1 medications (semaglutide, tirzepatide, the drugs sold as Ozempic, Wegovy, Mounjaro, and Zepbound) produce weight loss numbers that were rare before pharmacology got involved. But a growing body of 2025 and 2026 research has been quietly raising a less flattering number alongside it: how much of that lost weight is muscle, not fat. For lifters using these medications, or coached clients who are, this is the number that actually matters.</p>
@@ -4042,6 +4096,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'calorie-cycling-training-rest-days',
     title: 'Calorie Cycling: Why Your Training and Rest Days Shouldn’t Match',
+    seoTitle: 'Calorie Cycling: Different Calories for Training and Rest',
     excerpt: 'You don’t burn the same energy on leg day as you do on the couch, so why eat the same? A practical look at training-day and rest-day calorie cycling.',
     content: `
       <p>Most people eat the same number of calories every day, all week. It's simpler, and for plenty of goals it's perfectly fine. But if you train hard some days and rest others, your body's energy demand swings a lot from day to day, and matching your intake to that swing can make a cut or a lean bulk more comfortable and more effective. That's calorie cycling.</p>
@@ -4088,6 +4143,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'best-foods-for-batch-cooking',
     title: 'The Best Foods for Batch Cooking (That Still Taste Good on Day 4)',
+    seoTitle: 'Best Foods for Batch Cooking (Still Good on Day 4)',
     excerpt: 'Some foods are built for the fridge. Others turn sad and rubbery by Wednesday. Here’s what to batch-cook so day-four lunch is still something you want to eat.',
     content: `
       <p>The dirty secret of meal prep is that a lot of food simply doesn't survive five days in a container. You cook a beautiful Sunday spread, and by Wednesday the chicken is dry, the broccoli is grey, and you're ordering takeout. The fix isn't more willpower, it's choosing foods that are actually built to be cooked in bulk and reheated.</p>
