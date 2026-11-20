@@ -9,54 +9,54 @@ import {
 describe('Shopping List Generator', () => {
   describe('categorizeIngredient', () => {
     it('should categorize protein correctly', () => {
-      expect(categorizeIngredient({ name: 'chicken breast' } as any)).toBe(
+      expect(categorizeIngredient({ name: 'chicken breast' } as RecipeIngredient)).toBe(
         'meat'
       )
-      expect(categorizeIngredient({ name: 'ground beef' } as any)).toBe('meat')
-      expect(categorizeIngredient({ name: 'salmon fillet' } as any)).toBe(
+      expect(categorizeIngredient({ name: 'ground beef' } as RecipeIngredient)).toBe('meat')
+      expect(categorizeIngredient({ name: 'salmon fillet' } as RecipeIngredient)).toBe(
         'meat'
       )
       // Note: eggs are categorized as 'other' since they're not in the dairy keywords
-      expect(categorizeIngredient({ name: 'eggs' } as any)).toBe('other')
+      expect(categorizeIngredient({ name: 'eggs' } as RecipeIngredient)).toBe('other')
     })
 
     it('should categorize produce correctly', () => {
-      expect(categorizeIngredient({ name: 'tomatoes' } as any)).toBe('produce')
-      expect(categorizeIngredient({ name: 'lettuce' } as any)).toBe('produce')
-      expect(categorizeIngredient({ name: 'onion' } as any)).toBe('produce')
-      expect(categorizeIngredient({ name: 'bell pepper' } as any)).toBe(
+      expect(categorizeIngredient({ name: 'tomatoes' } as RecipeIngredient)).toBe('produce')
+      expect(categorizeIngredient({ name: 'lettuce' } as RecipeIngredient)).toBe('produce')
+      expect(categorizeIngredient({ name: 'onion' } as RecipeIngredient)).toBe('produce')
+      expect(categorizeIngredient({ name: 'bell pepper' } as RecipeIngredient)).toBe(
         'produce'
       )
     })
 
     it('should categorize dairy correctly', () => {
-      expect(categorizeIngredient({ name: 'milk' } as any)).toBe('dairy')
-      expect(categorizeIngredient({ name: 'cheese' } as any)).toBe('dairy')
-      expect(categorizeIngredient({ name: 'yogurt' } as any)).toBe('dairy')
-      expect(categorizeIngredient({ name: 'butter' } as any)).toBe('dairy')
+      expect(categorizeIngredient({ name: 'milk' } as RecipeIngredient)).toBe('dairy')
+      expect(categorizeIngredient({ name: 'cheese' } as RecipeIngredient)).toBe('dairy')
+      expect(categorizeIngredient({ name: 'yogurt' } as RecipeIngredient)).toBe('dairy')
+      expect(categorizeIngredient({ name: 'butter' } as RecipeIngredient)).toBe('dairy')
     })
 
     it('should categorize pantry items correctly', () => {
-      expect(categorizeIngredient({ name: 'olive oil' } as any)).toBe('pantry')
-      expect(categorizeIngredient({ name: 'salt' } as any)).toBe('pantry')
-      expect(categorizeIngredient({ name: 'soy sauce' } as any)).toBe('pantry')
+      expect(categorizeIngredient({ name: 'olive oil' } as RecipeIngredient)).toBe('pantry')
+      expect(categorizeIngredient({ name: 'salt' } as RecipeIngredient)).toBe('pantry')
+      expect(categorizeIngredient({ name: 'soy sauce' } as RecipeIngredient)).toBe('pantry')
     })
 
     it('should categorize bakery items correctly', () => {
-      expect(categorizeIngredient({ name: 'bread' } as any)).toBe('bakery')
-      expect(categorizeIngredient({ name: 'tortillas' } as any)).toBe('bakery')
+      expect(categorizeIngredient({ name: 'bread' } as RecipeIngredient)).toBe('bakery')
+      expect(categorizeIngredient({ name: 'tortillas' } as RecipeIngredient)).toBe('bakery')
     })
 
     it('should categorize frozen items correctly', () => {
-      expect(categorizeIngredient({ name: 'frozen peas' } as any)).toBe(
+      expect(categorizeIngredient({ name: 'frozen peas' } as RecipeIngredient)).toBe(
         'frozen'
       )
       // Note: ice cream contains 'cream' keyword, so it's categorized as dairy first
-      expect(categorizeIngredient({ name: 'ice cream' } as any)).toBe('dairy')
+      expect(categorizeIngredient({ name: 'ice cream' } as RecipeIngredient)).toBe('dairy')
     })
 
     it('should default to "other" for unknown items', () => {
-      expect(categorizeIngredient({ name: 'mystery ingredient' } as any)).toBe(
+      expect(categorizeIngredient({ name: 'mystery ingredient' } as RecipeIngredient)).toBe(
         'other'
       )
     })
@@ -71,14 +71,14 @@ describe('Shopping List Generator', () => {
           amount: 2,
           unit: 'lbs',
           aisle: 'Meat',
-        } as any,
+        } as RecipeIngredient,
         {
           id: 2,
           name: 'chicken breast',
           amount: 1,
           unit: 'lbs',
           aisle: 'Meat',
-        } as any,
+        } as RecipeIngredient,
       ]
 
       const result = aggregateIngredients(ingredients)
@@ -98,14 +98,14 @@ describe('Shopping List Generator', () => {
           amount: 2,
           unit: 'cups',
           aisle: 'Baking',
-        } as any,
+        } as RecipeIngredient,
         {
           id: 2,
           name: 'sugar',
           amount: 100,
           unit: 'grams',
           aisle: 'Baking',
-        } as any,
+        } as RecipeIngredient,
       ]
 
       const result = aggregateIngredients(ingredients)
@@ -120,7 +120,7 @@ describe('Shopping List Generator', () => {
           amount: 3,
           unit: 'whole',
           aisle: 'Produce',
-        } as any,
+        } as RecipeIngredient,
       ]
 
       const result = aggregateIngredients(ingredients)
@@ -139,28 +139,28 @@ describe('Shopping List Generator', () => {
           amount: 2,
           unit: 'lbs',
           aisle: 'Meat',
-        } as any,
+        } as RecipeIngredient,
         {
           id: 2,
           name: 'Tomatoes',
           amount: 4,
           unit: 'whole',
           aisle: 'Produce',
-        } as any,
+        } as RecipeIngredient,
         {
           id: 3,
           name: 'Milk',
           amount: 1,
           unit: 'gallon',
           aisle: 'Dairy',
-        } as any,
+        } as RecipeIngredient,
         {
           id: 4,
           name: 'Olive Oil',
           amount: 2,
           unit: 'tbsp',
           aisle: 'Oils',
-        } as any,
+        } as RecipeIngredient,
       ]
 
       const result = generateShoppingList(ingredients)
@@ -182,7 +182,7 @@ describe('Shopping List Generator', () => {
           amount: 2.666666,
           unit: 'cups',
           aisle: 'Baking',
-        } as any,
+        } as RecipeIngredient,
       ]
 
       const result = generateShoppingList(ingredients)
@@ -211,7 +211,7 @@ describe('Shopping List Generator', () => {
           amount: 2,
           unit: 'cups',
           aisle: 'Grains',
-        } as any,
+        } as RecipeIngredient,
       ]
 
       const result = generateShoppingList(ingredients)
