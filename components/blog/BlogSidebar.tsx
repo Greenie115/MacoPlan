@@ -1,50 +1,29 @@
-'use client'
-
 import Link from 'next/link'
 import type { BlogPost } from '@/lib/blog-data'
-import { useState } from 'react'
+import { TrackedLink } from './TrackedLink'
 
 interface BlogSidebarProps {
+  currentSlug: string
   relatedPosts: BlogPost[]
   popularPosts: BlogPost[]
 }
 
-export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
-  const [email, setEmail] = useState('')
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setEmail('')
-  }
-
+export function BlogSidebar({ currentSlug, relatedPosts, popularPosts }: BlogSidebarProps) {
   return (
     <aside className="sticky top-24 space-y-6">
-      {/* Lead Magnet Box */}
+      {/* Calculator CTA */}
       <div className="rounded-2xl border border-coral-200 bg-coral-50 p-6 shadow-sm">
-        <h3 className="text-xl font-bold text-foreground font-display">Get the Guide</h3>
+        <h3 className="text-xl font-bold text-foreground font-display">Not sure what your macros are?</h3>
         <p className="mb-4 mt-2 text-sm text-subtle-foreground">
-          Free Macro Calculator PDF
+          Get your training-day and rest-day numbers in two minutes. No signup to start.
         </p>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <label htmlFor="sidebar-email" className="sr-only">
-            Email address
-          </label>
-          <input
-            id="sidebar-email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your email"
-            required
-            className="w-full rounded-lg border border-border-strong bg-background px-4 py-2.5 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground transition-colors hover:bg-coral-700"
-          >
-            Download
-          </button>
-        </form>
+        <TrackedLink
+          href="/onboarding/1"
+          event={{ location: 'blog-sidebar', post: currentSlug }}
+          className="block w-full rounded-lg bg-primary py-2.5 text-center font-semibold text-primary-foreground transition-colors hover:bg-coral-700"
+        >
+          Work out my macros
+        </TrackedLink>
       </div>
 
       {/* Related Posts */}
@@ -73,7 +52,7 @@ export function BlogSidebar({ relatedPosts, popularPosts }: BlogSidebarProps) {
       {/* Popular Posts */}
       {popularPosts.length > 0 && (
         <div className="rounded-2xl border border-border-strong bg-card p-6 shadow-sm">
-          <h3 className="mb-4 text-lg font-bold text-foreground font-display">Popular Posts</h3>
+          <h3 className="mb-4 text-lg font-bold text-foreground font-display">Start Here</h3>
           <div className="space-y-4">
             {popularPosts.map((post) => (
               <Link

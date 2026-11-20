@@ -9,6 +9,8 @@ import { BlogSidebar } from '@/components/blog/BlogSidebar'
 import { AuthorBio } from '@/components/blog/AuthorBio'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
+import { TrackedLink } from '@/components/blog/TrackedLink'
+import { relatedPosts as getRelated, startHerePosts, categoryCta } from '@/lib/blog-links'
 
 // ponytail: post.content is authored in lib/blog-data.ts by the team, not
 // user-submitted — dangerouslySetInnerHTML here predates this change and is
@@ -31,8 +33,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     return { title: 'Post Not Found' }
   }
 
+  // Google truncates around 60 chars; drop the " | MacroPlan" suffix when it won't fit.
+  const seoTitle = post.seoTitle ?? post.title
   return {
-    title: post.title,
+    title: seoTitle.length > 48 ? { absolute: seoTitle } : seoTitle,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -63,13 +67,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound()
   }
 
-  const relatedPosts = blogPosts
-    .filter((p) => p.category === post.category && p.slug !== post.slug)
-    .slice(0, 3)
-
-  const popularPosts = blogPosts
-    .filter((p) => p.slug !== post.slug)
-    .slice(0, 3)
+  const relatedPosts = getRelated(post)
+  const popularPosts = startHerePosts(post.slug)
+  const cta = categoryCta[post.category] ?? categoryCta.Nutrition
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://macroplan.app'
   const postUrl = `${baseUrl}/blog/${post.slug}`
@@ -193,25 +193,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <div className="grain-overlay" aria-hidden="true" />
                   <div className="relative z-10">
                     <h2 className="text-2xl font-bold text-white font-display md:text-3xl">
-                      Ready to put your meal planning on autopilot?
+                      {cta.heading}
                     </h2>
                     <p className="mx-auto mt-4 max-w-md text-white/80">
-                      Get personalized meal plans that hit your macros perfectly.
+                      {cta.body}
                     </p>
-                    <Link
+                    <TrackedLink
                       href="/onboarding/1"
+                      event={{ location: 'blog-end', post: post.slug, category: post.category }}
                       className="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 font-bold text-primary-foreground shadow-coral transition-all duration-base ease-out-quint hover:-translate-y-0.5 active:scale-[0.97]"
                     >
-                      Start for free
+                      {cta.button}
                       <ArrowRight className="h-5 w-5" aria-hidden="true" />
-                    </Link>
+                    </TrackedLink>
                   </div>
                 </div>
               </div>
 
               {/* Sidebar */}
               <div className="lg:col-span-1">
-                <BlogSidebar relatedPosts={relatedPosts} popularPosts={popularPosts} />
+                <BlogSidebar currentSlug={post.slug} relatedPosts={relatedPosts} popularPosts={popularPosts} />
               </div>
             </div>
           </article>
