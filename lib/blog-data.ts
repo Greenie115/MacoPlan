@@ -24,6 +24,57 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'keto-vs-high-carb-for-lifters',
+    title: 'Keto vs. High-Carb for Lifters: Which Builds More Muscle',
+    seoTitle: 'Keto vs. High-Carb for Lifters: Which Builds Muscle',
+    excerpt: 'Both diets can get you lean and both can build muscle, but they do it through very different daily experiences. Here is what the training research actually shows once the macros are matched.',
+    content: `
+      <p>Every few months the keto versus high-carb debate resurfaces in gym chat, usually started by someone who dropped fifteen pounds on keto and someone else who swears they only got strong once they started eating rice at every meal. Both of them are telling the truth about their own experience, and neither of them is describing a universal law. The honest answer for a lifter is that keto and high-carb diets can both build muscle and both strip fat, provided calories and protein are matched, but they get there through such different day-to-day experiences that picking the wrong one for your training style can quietly sabotage months of effort.</p>
+      <p>This is not a philosophical argument about which macro is morally superior. It is a practical comparison of what each approach does to your lifting sessions, your recovery, and your ability to actually stick with the plan long enough for it to matter.</p>
+
+      <h2>What the Research Actually Shows</h2>
+      <p>When studies control for total calories and protein intake, ketogenic diets and higher-carb diets produce broadly similar changes in body composition and strength over periods of eight to twelve weeks. A well-known 2020 trial on competitive gymnasts found that a ketogenic diet preserved lean mass and even improved some measures of body composition compared to a traditional diet, while strength outputs stayed roughly equal between groups. Other work on resistance-trained lifters has found similar strength maintenance on keto, as long as the diet was given several weeks to let the body adapt to using fat and ketones as a primary fuel source.</p>
+      <p>The catch is in that word "adapted." The first two to four weeks of a ketogenic diet, often called the keto-adaptation period, tend to come with a real drop in training performance. Glycogen stores run low, water and sodium shift out of the body along with that glycogen, and heavy compound lifts that rely on short, explosive bursts of energy can feel noticeably harder. Lifters who judge keto by week one are judging it at its worst moment. The research that shows keto holding its own on strength is measuring people well past that adaptation window, not during it.</p>
+      <p>High-carb diets do not have an adaptation penalty in the same way, because glycogen stores stay topped off and the body never has to switch its primary fuel source. This is part of why high-carb approaches tend to feel immediately better for anyone doing high-volume training, repeated sets close to failure, or anything that depends on quick, repeated bursts of power like sprinting or Olympic lifting variations.</p>
+
+      <h2>Where Carbs Actually Matter for Performance</h2>
+      <p>Carbohydrate's main job in a lifter's diet is refilling muscle glycogen, the stored fuel your muscles burn through during sets, especially anything past six or eight reps. Low glycogen does not stop you from lifting, but it does lower the ceiling on how many quality reps you can grind out before form breaks down, and it shows up most on the second and third exercise of a session rather than the first. A lifter doing five sets of squats followed by accessory work for an hour will feel glycogen depletion much more than someone doing three heavy singles and going home.</p>
+      <p>This is why the people who report keto "killing their lifts" are very often doing high-volume bodybuilding-style training, and the people who report keto "working great" are often doing lower-volume strength work, or they simply adapted long enough to stop noticing the difference. Training style is a bigger predictor of how a lifter will tolerate keto than anything about their individual metabolism. If your program is built around five or six sets per exercise and short rest periods, you are asking a lot of a diet that deliberately keeps glycogen low.</p>
+      <p>None of this means carbs are mandatory for muscle growth. Protein and total calories do the heavy lifting there, which is the same principle covered in <a href="/blog/decoding-macros">how to calculate your macro ratio</a> in the first place. Carbs are a performance tool more than a muscle-building requirement, and how much performance you actually need from them depends entirely on how your training is structured.</p>
+
+      <h2>The Satiety and Adherence Problem</h2>
+      <p>Diets do not fail in a lab. They fail on a Tuesday night when you are tired, hungry, and the plan asks you to turn down food you actually want. This is the part of the comparison that gets skipped in most "keto vs carbs" arguments, and it is arguably more decisive than any strength study. Fat and protein are both more filling per calorie than carbohydrates for most people, which is a big part of why ketogenic diets often produce effortless-feeling appetite control during a cut. Meanwhile, a high-carb approach built around whole foods like rice, potatoes, oats, and fruit tends to deliver more total food volume for the same calorie count, which some people find just as satisfying through a different mechanism.</p>
+      <p>The diets that people actually finish are the ones that fit their hunger cues and their social life, not the ones that score best on a whiteboard. Someone who loves bread, pasta, and rice is setting themselves up for a miserable, short-lived keto attempt regardless of what the strength research says. Someone who finds carb-heavy meals boring or bloating, which is covered in more detail in <a href="/blog/high-protein-diet-bloating-why-and-how-to-fix-it">why high-protein, lower-carb eating sometimes reduces bloating</a>, might find keto is simply more comfortable to sit inside for months at a time. Pick the version of "fewer carbs" or "more carbs" that you can actually imagine eating in six months, not the one that sounds more optimal in an internet argument.</p>
+
+      <h2>Practical Takeaways for Choosing Between Them</h2>
+      <p>If your training is high-volume, involves a lot of sets near failure, or includes any kind of sprinting or explosive conditioning work, a higher-carb approach is going to feel easier and probably perform slightly better on paper, at least without a long adaptation period behind you. If your training is lower-volume strength work, or if appetite control during a cut has always been your biggest obstacle, a ketogenic or lower-carb approach is a legitimate option that is not leaving meaningful muscle on the table, as long as protein stays high and the two-to-four week adaptation period is accounted for rather than judged too early.</p>
+      <p>A few practical notes make either path smoother. Anyone trying keto should expect the first couple of weeks to feel off and should not make permanent judgments about the approach until that window has passed. Sodium intake usually needs to go up on keto to compensate for the water loss that comes with lower glycogen, which is the same electrolyte principle covered in more depth around <a href="/blog/ultimate-guide-to-flexible-dieting">flexible dieting and macro tracking</a> generally. And on either diet, protein should be set first and held constant, since it is the one macro that consistently drives muscle retention and growth regardless of which side of the carb debate you land on.</p>
+      <p>Creatine supplementation is also worth a mention here, since it works identically on both diets and can offset some of the strength dip people notice during keto-adaptation by keeping intramuscular energy stores topped up. The dosing details are covered in <a href="/blog/creatine-for-lifters-dosing-timing-guide">the full creatine guide</a> if that is a gap in your current routine.</p>
+      <p>Neither diet is a shortcut, and neither is a trap. They are two different tools for hitting the same protein and calorie targets, and <a href="https://macroplan.app">MacroPlan</a> will build a meal-prep plan around whichever ratio you choose, so the actual decision comes down to which version of eating you can hold onto long enough to see the results.</p>
+
+      <h2>FAQ</h2>
+      <h3>Can you build muscle on a ketogenic diet?</h3>
+      <p>Yes, as long as calories and protein are high enough. Muscle growth depends primarily on protein intake, training stimulus, and overall calorie balance, not on carbohydrate intake specifically. Strength and training volume may dip during the first few weeks of keto-adaptation, but studies on trained lifters generally show strength holding steady once that period has passed.</p>
+      <h3>Is high-carb better for cutting than keto?</h3>
+      <p>Not inherently. Fat loss is driven by a sustained calorie deficit, and both approaches can create one. Keto often makes appetite control easier for some people because fat and protein are more filling per calorie, while others find a higher-carb, higher-volume diet easier to stick with. The better diet for cutting is the one you can actually sustain at a deficit for weeks at a time.</p>
+      <h3>How long does it take to adapt to keto for lifting?</h3>
+      <p>Most people notice the heaviest performance dip in the first one to two weeks, with most of the adaptation complete by around four weeks. Strength and training capacity for most lifters returns close to baseline after that window, though very high-volume or sprint-based training may still feel somewhat harder long-term simply due to lower glycogen availability.</p>
+      <h3>Do you need carbs around your workout no matter which diet you follow?</h3>
+      <p>No. Pre- and post-workout carbohydrate timing matters more for high-volume training and multiple sessions in the same day than it does for a single daily training session. Total daily protein and calorie intake matter far more than the timing of carbohydrates around any individual workout.</p>
+
+      <p>Whichever side of this you land on, the planning problem is the same: hitting a specific protein target every day without guesswork. <a href="https://macroplan.app/signup">Build your free macro plan</a> and let MacroPlan handle the batch-prep math for whichever ratio actually fits your training and your life.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 23, 2026',
+    readTime: '9 min read',
+    image: 'https://images.unsplash.com/photo-1676037150429-77d231b14c4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwyfHxzdGVhayUyMGVnZ3MlMjBsb3clMjBjYXJiJTIwbWVhbHxlbnwxfDB8fHwxNzk1NDQ5NzI5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Orkun Orcan on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@orkunorcan?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'holiday-eating-for-lifters-thanksgiving-christmas-macros',
     title: 'Holiday Eating for Lifters: How to Hit Your Macros at Thanksgiving and Christmas',
     seoTitle: 'Holiday Eating for Lifters: Hit Your Macros at Christmas',
