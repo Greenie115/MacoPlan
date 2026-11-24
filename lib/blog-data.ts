@@ -24,6 +24,58 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'high-protein-pasta-recipes-for-lifters',
+    title: 'High-Protein Pasta Recipes for Lifters: Carb-Smart Ways to Hit Your Macros',
+    seoTitle: 'High-Protein Pasta Recipes for Lifters',
+    excerpt: 'Pasta has a reputation as empty carbs, but build the sauce and protein around it right and a bowl of noodles turns into one of the easiest 40g-plus protein meals you can batch cook.',
+    content: `
+      <p>Pasta gets treated like a cheat meal in a lot of lifting circles, something you eat despite your macros instead of because of them. That reputation comes from how most people actually make it: a thin layer of sauce over a mountain of noodles with almost no protein in sight. Fix the ratio and pasta turns into one of the fastest, cheapest ways to build a 40 to 50g protein meal that still tastes like dinner instead of fuel. These four recipes are built that way from the start, with the protein doing real work in the dish rather than sitting on the side as an afterthought.</p>
+      <p>Each one is written for batch cooking, not a single plate, because that is how pasta earns its place in a weekly prep. Cook the noodles a minute under al dente, store the sauce and pasta together or separately depending on the recipe, and you get five days of meals that reheat without turning to glue, which is the part that actually determines whether pasta survives a real meal-prep week.</p>
+
+      <h2>Turkey and White Bean Bolognese</h2>
+      <p>Lean ground turkey brings the protein, and a can of white beans quietly doubles down on it while adding fiber and body to the sauce without tasting like a health food swap. Brown 500g of 93% lean ground turkey in a large pot, breaking it up as it cooks, then add a diced onion, two minced garlic cloves, and a drained can of white beans. Pour in a 28-ounce can of crushed tomatoes, season with oregano, basil, and a pinch of red pepper flakes, and simmer for 20 minutes while the beans soften into the sauce. Toss with 400g of cooked pasta, any shape that holds sauce well works, penne or rotini in particular.</p>
+      <p>Split across five containers, each portion lands around 480 calories with roughly 42g of protein, 55g of carbs, and 10g of fat, depending on the exact pasta shape and brand you use. The beans are doing more here than people expect: a standard can of white beans carries close to 20g of protein on its own, which is why this sauce hits numbers that a turkey-only bolognese usually falls short of.</p>
+
+      <h2>One-Pot Chicken Alfredo with Greek Yogurt</h2>
+      <p>Classic alfredo is heavy cream and butter stacked on top of more heavy cream, which is exactly the kind of dish that makes pasta look like a macro liability. Swapping most of the cream for plain Greek yogurt keeps the same creamy texture and tang while adding protein instead of just fat. Cook 600g of diced chicken breast in a large pot until browned, then add two minced garlic cloves, a cup of chicken broth, and let it reduce slightly. Off the heat, stir in 400g of plain, full-fat Greek yogurt and a cup of grated parmesan until the sauce turns glossy and thick, then fold in 400g of cooked pasta. Keeping the pot off direct heat when the yogurt goes in matters: dump yogurt straight into a boiling pot and it can split into a grainy, watery sauce instead of staying smooth.</p>
+      <p>This one runs higher in protein than most pasta dishes manage, around 46g per serving across five containers, alongside about 460 calories, 48g of carbs, and 11g of fat. It also reheats better than a traditional cream-based alfredo, since Greek yogurt holds together through a microwave reheat far more reliably than a cream sauce that was never meant to sit in the fridge for four days.</p>
+
+      <h2>Shrimp and Spinach Lemon Pasta</h2>
+      <p>This is the fastest of the four, built for a prep day when you are already short on time. Sauté a minced garlic clove and a pinch of red pepper flakes in olive oil, add 600g of peeled, deveined shrimp, and cook just until opaque, about three minutes, since overcooked shrimp turns rubbery fast and does not recover in the microwave. Toss in a few handfuls of fresh spinach until it wilts, then add 400g of cooked pasta along with the juice of a lemon and a splash of the pasta's starchy cooking water to bring the sauce together.</p>
+      <p>Shrimp is one of the leaner protein sources available for the calories, which keeps this dish light relative to the other three: about 410 calories per serving, 38g of protein, 52g of carbs, and 7g of fat across five containers. The one note worth flagging for a real five-day prep is texture. Shrimp holds up fine for three to four days in the fridge but gets noticeably tougher by day five, so if you are planning a full week, this is the recipe to eat earlier rather than saving for Friday.</p>
+
+      <h2>Beef and Broccoli Garlic Pasta</h2>
+      <p>This one leans on the <a href="/blog/protein-per-calorie-food-ranking">protein-per-calorie advantage of lean beef</a> and pairs it with broccoli instead of a sauce, which keeps the dish from sliding into calorie-dense territory the way a cream or cheese-heavy pasta can. Brown 500g of 90% lean ground beef with a diced onion and three minced garlic cloves, then add a head of broccoli cut into small florets along with a splash of soy sauce and beef broth, covering the pan for a few minutes so the broccoli steams through without turning mushy. Stir in 400g of cooked pasta and a drizzle of sesame oil at the end.</p>
+      <p>Split five ways, this lands around 500 calories per serving with 40g of protein, 50g of carbs, and 15g of fat, making it the most calorie-dense of the four, useful if you are building a lean bulk rather than managing a tight deficit. Broccoli also holds its texture through five days of reheating far better than most vegetables, so this is the recipe to lean on if a full week without a second cooking session is the goal.</p>
+
+      <h2>Making Any Pasta Dish Hit Higher Protein</h2>
+      <p>These four recipes share a pattern worth stealing for whatever pasta dish you already make: pick a protein that scales past a token garnish amount, lean on a dairy or legume ingredient that quietly adds protein without changing the flavor much, and treat the pasta itself as the smallest macro lever in the dish rather than the main event. A can of white beans, a cup of Greek yogurt, or an extra 100g of ground meat moves a sauce's protein count more than switching to a chickpea or lentil pasta does, and it's a lot cheaper than building a meal around a specialty noodle. If protein sources in general are something you are still sorting out, <a href="/blog/best-protein-for-meal-prep">our chicken vs. beef vs. salmon comparison</a> covers the cost and storage side of that decision.</p>
+      <p>Pasta is also where undercooking actually pays off at the register. Cooking noodles a minute under al dente before they go into containers is the single biggest thing standing between a pasta prep that tastes fine on day five and one that turns to glue by day three. If you are choosing between pasta, rice, and potatoes for a given week, <a href="/blog/rice-vs-potatoes-vs-pasta-meal-prep">our full comparison of all three</a> breaks down when each one actually makes sense based on your goal and your fridge life.</p>
+      <p>None of this requires getting precise with a food scale every night. Once you know roughly what 400g of cooked pasta and 500g of a protein source adds up to, <a href="https://macroplan.app">MacroPlan</a> can build the exact portions and container math around your training day and rest day targets automatically, so the only decision left is which sauce you're in the mood for.</p>
+
+      <h2>FAQ</h2>
+      <h3>Is pasta actually a good carb for building muscle?</h3>
+      <p>Yes. Muscle growth depends on total protein and calorie intake, not on which specific carbohydrate you eat. Pasta is calorie-dense and cheap, which makes it a practical choice for a bulk, and the protein-forward recipes above close the gap that makes plain pasta feel like empty carbs.</p>
+      <h3>How much protein can you realistically add to a pasta dish?</h3>
+      <p>A serving built around 100 to 120g of lean meat, shrimp, or chicken plus a dairy or legume addition like Greek yogurt or white beans typically lands in the 38 to 46g protein range per portion, as shown in the recipes above, without needing a protein-fortified pasta.</p>
+      <h3>Does protein pasta made from lentils or chickpeas work better than regular pasta?</h3>
+      <p>It can add some protein, usually an extra 5 to 8g per serving over regular pasta, but it costs more and some people find the texture noticeably different, especially after a few days in the fridge. Building protein into the sauce, as these recipes do, is usually a bigger lever for less money.</p>
+      <h3>How long does protein pasta meal prep actually last in the fridge?</h3>
+      <p>Most of these dishes hold up well for four to five days when the pasta is slightly undercooked before storage. Shrimp-based pasta is the exception and is best eaten within three to four days, since the texture toughens noticeably by day five.</p>
+
+      <p>Ready to stop guessing at portions? <a href="https://macroplan.app/signup">Generate your first meal plan free →</a></p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 24, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxoaWdoJTIwcHJvdGVpbiUyMHBhc3RhJTIwbWVhbHxlbnwxfDB8fHwxNzk1NTA3MzkxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Eaters Collective on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@eaterscollective?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Recipes'
+  },
+  {
     slug: 'keto-vs-high-carb-for-lifters',
     title: 'Keto vs. High-Carb for Lifters: Which Builds More Muscle',
     seoTitle: 'Keto vs. High-Carb for Lifters: Which Builds Muscle',
