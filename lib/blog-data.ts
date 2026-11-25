@@ -24,6 +24,57 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'what-to-eat-when-sick-macros-for-lifters',
+    title: "What to Eat When You're Sick: Keeping Your Macros on Track Without Losing a Training Week",
+    seoTitle: "What to Eat When You're Sick: A Lifter's Guide",
+    excerpt: "Getting sick doesn't have to mean a blown week. Here's how to adjust your macros, not abandon them, so you come back from a cold or flu without losing the muscle you worked for.",
+    content: `
+      <p>Every lifter eventually hits the same wall: you wake up with a sore throat, a head full of pressure, or a stomach that wants nothing to do with chicken and rice, and the plan you've been following for weeks suddenly feels impossible. Most people respond one of two ways. They either force down the same meal-prepped containers out of stubbornness and end up worse off, or they throw the whole thing out the window for a week and come back to find the scale and their strength both moved in the wrong direction. Neither response is necessary. Being sick changes what your body can handle and what it actually needs, but it doesn't mean macros stop mattering. It means the targets shift for a few days, and knowing how they shift is what keeps a cold from turning into a lost month.</p>
+
+      <h2>Why Being Sick Changes the Math</h2>
+      <p>Your body burns more energy fighting an infection than it does sitting on the couch feeling fine, thanks to the metabolic cost of fever, immune activity, and inflammation. At the same time, appetite usually drops, sometimes hard, which means the calories you'd normally eat without thinking suddenly feel like a chore to get down. That combination, higher energy demand paired with lower intake, is exactly why people lose weight when they're sick even though common sense says a few days on the couch should do the opposite. The weight that comes off fastest in that window is rarely fat. It's water, glycogen, and in a bad case, some muscle protein if the illness drags on and protein intake falls too far.</p>
+      <p>This is also why "just eat whatever you can keep down" is reasonable advice for someone who is miserable and not reasonable advice for someone trying to protect weeks of training progress. The goal during a cold or flu isn't to hit your usual 180 grams of protein on the nose. It's to not let protein collapse to near zero for four or five days in a row, because that's the scenario that actually costs muscle, not a few days of lower calories.</p>
+
+      <h2>The One Number Worth Protecting: Protein</h2>
+      <p>If you can only manage one macro while sick, make it protein. Research on short-term illness and underfeeding consistently points to protein as the variable that protects lean mass when total calories drop, because it supplies the amino acids your body needs for immune function and basic tissue repair even while training is paused. A realistic sick-day target is somewhere around 1.2 to 1.6 grams per kilogram of bodyweight, noticeably lower than a normal training target but still high enough to matter, and it's a target you can usually hit even with a reduced appetite because protein-rich foods tend to be the easiest things to get down: broth with shredded chicken, a protein shake blended with milk, scrambled eggs, cottage cheese, or a plain protein smoothie if solid food feels unappealing.</p>
+      <p>Carbs and fat matter too, but they're more forgiving. If your appetite only allows for 1,400 calories on a day you'd normally eat 2,600, that's fine for a short stretch as long as protein isn't the thing that got cut to make room. A bowl of broth-based soup with rice and shredded chicken quietly covers protein and carbs in one go, which is part of why soup shows up on every sick-day list that's ever existed. It's not folklore, it's just an easy way to get fluid, sodium, and protein into a stomach that doesn't want much else.</p>
+
+      <h2>Hydration Matters More Than Usual</h2>
+      <p>Fever raises fluid losses, and a stuffy nose or sore throat makes people drink less without noticing, which is a bad combination. Dehydration on top of an infection makes fatigue and brain fog worse and can make a mild illness feel a lot rougher than it needs to. Water is the baseline, but if you're running a fever or dealing with GI symptoms, plain water alone often isn't enough, since you're losing electrolytes along with fluid. This is the same sodium and electrolyte logic covered in our <a href="/blog/hydration-and-sodium-for-lifters-tracking-macros">guide to hydration and sodium for lifters</a>, and it applies even more directly here: a pinch of salt in broth, an electrolyte packet, or even diluted sports drink does more for how you feel than another glass of plain water once you're a couple of days into being sick.</p>
+      <p>Sleep is the other lever that gets ignored, mostly because people assume being sick already means more rest. It doesn't always work out that way if a cough or congestion is keeping you up at night, and poor sleep slows recovery from illness the same way it slows recovery from training, a connection we go into further in <a href="/blog/sleep-recovery-and-macros-for-lifters">how sleep affects your macros and recovery</a>. If nothing else is working, prioritizing sleep over forcing a full day's calories is usually the better trade while you're actively sick.</p>
+
+      <h2>What This Looks Like in a Real Day</h2>
+      <p>A realistic sick day doesn't look like your normal meal plan with smaller portions. It looks like whatever you can actually stomach, built around a few easy wins. Chicken noodle or rice soup with extra shredded chicken stirred in covers protein, sodium, and fluid in one bowl. A protein shake with a banana works when solid food feels like too much effort but your stomach isn't actually upset. Scrambled eggs or plain toast with peanut butter cover the mornings when appetite is low but not gone entirely. None of this needs to be weighed to the gram. The point of a sick day isn't precision, it's not letting protein go to zero and not letting dehydration compound how bad you feel.</p>
+      <p>If GI symptoms are part of the picture, rather than just a cold or sore throat, pull back further on fiber and fat for a day or two since both can make nausea or diarrhea worse, and lean on bland, easily digested carbs and protein like rice, broth, bananas, and plain chicken until your stomach settles. This is a short-term adjustment, not a new way of eating, and it should resolve within a few days as symptoms improve.</p>
+
+      <h2>Getting Back to Training and Full Macros</h2>
+      <p>The question that matters most once you're feeling better isn't "how do I make up for lost time," it's "am I actually ready to train again." A good rule of thumb is to wait until symptoms are mostly above the neck, think runny nose or mild congestion, before resuming any real training intensity, and to skip training entirely if you've had a fever, body aches, or chest symptoms in the last 24 to 48 hours. Jumping back into heavy training too soon after a fever doesn't speed recovery, it usually extends it.</p>
+      <p>Ramp your calories and training volume back up together rather than trying to hit full intensity and full macros on the same day you walk back into the gym. Most lifters find their appetite returns a day or two before their energy for training fully does, which is normal and not something to fight. This is a short enough window that it doesn't require anything like a formal <a href="/blog/diet-breaks-and-refeeds-for-lifters">diet break or refeed</a>, which are tools for planned, longer resets rather than a four-day cold, but the same underlying idea applies: easing back in beats forcing a jump back to baseline in one day.</p>
+      <p>The good news is that a week of reduced training and slightly lower calories while sick does not meaningfully set back someone who was training and eating consistently before they got sick. The actual risk isn't the sick week itself, it's a sick week that turns into two weeks of skipped meals and skipped gym sessions because the plan feels too broken to pick back up. Getting your protein roughly back on track and your training back to normal volume within a few days of feeling human again is what prevents that spiral.</p>
+
+      <h2>FAQ</h2>
+      <h3>Should I still track my macros when I'm sick?</h3>
+      <p>Loosely, yes, but don't stress over precision. Keeping a rough eye on protein so it doesn't collapse to near zero matters far more than hitting an exact calorie number. If logging feels like one more chore you don't have energy for, it's fine to skip it for a few days and focus on eating what you can.</p>
+      <h3>Will being sick for a week make me lose muscle?</h3>
+      <p>Not meaningfully, as long as protein intake doesn't drop too low for too long and the illness resolves within a normal timeframe. Short-term strength or performance dips after being sick are usually from lost training stimulus and some water or glycogen loss, not actual muscle loss, and they recover quickly once you're back to normal training and eating.</p>
+      <h3>Is it okay to eat less than my normal calorie target while sick?</h3>
+      <p>Yes. Appetite naturally drops during illness, and forcing full calories when you genuinely can't stomach them usually backfires. Prioritize protein and fluids over hitting your full calorie number for the few days you're actually feeling unwell.</p>
+      <h3>How do I know when it's safe to train again?</h3>
+      <p>A common guideline is to wait until symptoms are limited to above the neck, like a mild runny nose, and to avoid training if you've had a fever, body aches, or chest congestion in the past day or two. When in doubt, an extra rest day costs far less than training through an illness and extending it.</p>
+
+      <p>Once you're back on your feet, getting your macros dialed back in shouldn't take guesswork. <a href="https://macroplan.app/signup">Generate your free meal plan</a> and let MacroPlan rebuild your training-day targets the moment you're ready to train again.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 25, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1512003867696-6d5ce6835040?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHw0fHxjaGlja2VuJTIwc291cCUyMGJvd2x8ZW58MXwwfHx8MTc5NTU5NDQ0Nnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Stacey Doyle on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@hippiefarmgirl?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Nutrition'
+  },
+  {
     slug: 'high-protein-pasta-recipes-for-lifters',
     title: 'High-Protein Pasta Recipes for Lifters: Carb-Smart Ways to Hit Your Macros',
     seoTitle: 'High-Protein Pasta Recipes for Lifters',
