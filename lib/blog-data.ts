@@ -24,6 +24,54 @@ const TEAM_IMAGE =
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'meal-prep-smells-fridge-lunch-bag-fix',
+    title: 'Meal Prep Smells: How to Stop Your Fridge, Lunch Bag, and Gym Bag From Reeking',
+    seoTitle: 'Meal Prep Smells: How to Stop the Fridge and Lunch Bag Reek',
+    excerpt: "Fish, eggs, and garlic make the best high-protein meal prep and the worst-smelling fridge. Here's how to keep your containers, lunch bag, and gym locker from giving away what's for lunch.",
+    content: `
+      <p>Somewhere around week three of consistent meal prepping, most lifters hit the same unglamorous wall: the fridge smells like a dock, the lunch bag needs its own zip code, and a coworker has started asking what exactly is in that container before you've even opened the lid. Nobody warns you about this part. The advice is always about hitting protein targets and prepping five days of food in one sitting, never about the fact that the foods that make hitting those targets easy, fish, eggs, cruciferous vegetables, garlic-heavy sauces, are also the foods most likely to turn a fridge or a desk drawer into a problem. The good news is that the smell isn't a sign you're doing something wrong. It's a sign you're eating like someone trying to hit 180 grams of protein a day, and there's a short list of fixes that solve almost all of it without giving up any of the foods causing it.</p>
+
+      <h2>Why These Foods Smell So Much Worse Reheated</h2>
+      <p>Fresh-cooked fish barely smells like anything compared to the same fillet microwaved two days later. The difference comes down to oxidation. Fish, especially oilier varieties like salmon, carries polyunsaturated fats that start breaking down the moment it's cooked, and that breakdown accelerates every time the food is reheated, chilled, and reheated again across a prep week. The compounds responsible for that classic "reheated fish" smell, mainly trimethylamine and a handful of aldehydes, are barely present in a fish fillet straight off the pan but build up noticeably by day three or four in the fridge. Eggs follow a similar pattern for a different reason: sulfur compounds in the yolk become more volatile with repeated heating, which is why a fresh scramble smells like breakfast and a reheated one smells like something closer to sulfur.</p>
+      <p>Cruciferous vegetables, broccoli, cauliflower, Brussels sprouts, work the same way through a compound called glucosinolate, which breaks down into sulfur-containing byproducts as the vegetable cooks and sits. None of this means these foods have gone bad or become unsafe to eat. It just means they were never designed to smell pleasant after being cooked, chilled, and reheated multiple times, which is exactly the lifecycle every meal-prepped lunch goes through.</p>
+
+      <h2>The Fridge Fix: Containers Do Most of the Work</h2>
+      <p>The single biggest lever here is container quality, and it's also the fix most people skip because they already own containers and don't want to buy new ones. Thin, cheap plastic containers are porous at a level you can't see, and they absorb odor compounds over repeated use, which is why a container that held salmon once will smell faintly of salmon every time you use it afterward, no matter what's inside now. Glass containers with a true silicone-sealed lid solve this almost entirely, since glass doesn't absorb anything and a proper seal keeps smell from leaking into the rest of the fridge while the food sits. Our <a href="/blog/meal-prep-containers-guide">guide to meal prep containers</a> goes through the material differences in more detail, but for odor control specifically, glass with a locking, gasketed lid beats stackable plastic every time.</p>
+      <p>Inside the fridge itself, an open box of baking soda on a shelf absorbs ambient odor the same way it does in a regular kitchen fridge, and it's worth replacing monthly rather than letting one box sit for a year doing nothing. If the smell is coming from one specific container rather than the whole fridge, that's almost always a sign the seal has failed or the lid needs a proper wash with baking soda and warm water rather than just a rinse, since odor compounds can cling to lid grooves a normal wash misses.</p>
+
+      <h2>The Lunch Bag and Office Microwave Problem</h2>
+      <p>A fridge is a closed box you control. An office fridge and a shared microwave are neither, which is where most of the social pressure around meal prep smells actually comes from. The fix starts before the food ever leaves your kitchen: let everything cool fully before sealing the container, since trapping warm, steaming food under a lid concentrates the smell far more than the same food sealed once it's cold. A insulated lunch bag with a reusable ice pack keeps the container cold enough that odor compounds stay mostly dormant until you actually open the lid at your desk, rather than slow-cooking in a bag all morning.</p>
+      <p>For the microwave itself, a splash of lemon juice or a few lemon slices in a cup of water, microwaved for a minute before your food goes in, loosens and masks most residual smell for the next person, and it's a courtesy that takes less time than waiting for your lunch to heat anyway. If fish is a regular part of your rotation, consider shifting it to a meal you eat at home rather than one that travels to a shared kitchen, and save the office lunches for proteins like chicken, turkey, or ground beef that reheat with far less odor. This isn't about avoiding fish, which is genuinely one of the better protein sources for a lifter per our <a href="/blog/omega-3-fish-oil-for-lifters">guide to omega-3s</a>, it's about picking which meal of the day it makes the most sense to eat around other people.</p>
+
+      <h2>A Few Habits That Fix Most of the Rest</h2>
+      <p>Beyond containers and timing, a handful of small habits clear up most of what's left. Cooking fish and eggs with a splash of lemon juice, vinegar, or an acidic marinade cuts down on the sulfur and trimethylamine compounds before they ever reach the fridge, which is part of why a lot of fish recipes default to lemon regardless of flavor. Storing strong-smelling leftovers on their own shelf, away from anything with an open top like yogurt or milk, stops cross-contamination of smell inside the fridge itself. And running the fridge at a proper 37 to 40°F (3 to 4°C) rather than letting it creep warmer slows the bacterial and oxidative breakdown that produces most of the smell in the first place, which is the same temperature range that matters for actual food safety covered in our <a href="/blog/how-long-meal-prep-lasts-fridge-freezer-guide">guide to how long meal prep lasts</a>.</p>
+      <p>Gym bags deserve their own mention, since a protein shake bottle or a container that traveled to the gym and sat in a warm bag for hours is a different problem than a fridge-stored lunch. Rinsing a shaker bottle immediately after drinking, rather than letting it sit capped in a bag until laundry day, prevents the kind of bacterial buildup that turns a bottle genuinely foul rather than just smelling faintly of yesterday's protein powder. A bottle that already smells off no matter how many times it's washed has usually developed a biofilm in the threads of the lid that a dishwasher or a baking soda soak will clear, but a bottle that's too far gone is cheaper to replace than to keep fighting.</p>
+
+      <blockquote>The smell isn't a flaw in your meal prep. It's the cost of eating enough protein-dense food to actually hit your targets, and it has a fix that doesn't involve eating less of it.</blockquote>
+
+      <h2>FAQ</h2>
+      <h3>Why does my meal prep smell worse on day three than day one?</h3>
+      <p>Oxidation and sulfur compound breakdown build up with each reheating cycle, so fish, eggs, and cruciferous vegetables smell progressively stronger as the week goes on even though the food is still safe to eat within a normal four to five day window.</p>
+      <h3>Does freezing meal prep stop the smell?</h3>
+      <p>Freezing slows the chemical breakdown that causes odor, so a frozen portion reheated a week later usually smells milder than a fridge-stored portion that's been reheated daily. It doesn't eliminate the smell entirely once the food is actually heated.</p>
+      <h3>Is it bad to store fish and other food in the same fridge?</h3>
+      <p>It's not unsafe, but odor compounds can transfer to open containers of dairy or other absorbent foods nearby. Sealing fish tightly and keeping it on its own shelf, away from anything uncovered, keeps the smell contained to its own container.</p>
+      <h3>Will a glass container really smell less than plastic over time?</h3>
+      <p>Yes. Plastic is porous at a microscopic level and holds onto odor compounds after repeated washes, while glass doesn't absorb anything, which is why a years-old glass container can smell neutral while a plastic one used for the same foods develops a permanent faint odor.</p>
+
+      <p>None of this should talk you out of the foods that make hitting your protein target easy. <a href="https://macroplan.app/signup">Build your free MacroPlan meal plan</a> and keep the fish, eggs, and broccoli, just with a container strategy that keeps your fridge from announcing it.</p>
+    `,
+    author: TEAM_AUTHOR,
+    authorBio: TEAM_BIO,
+    authorImage: TEAM_IMAGE,
+    date: 'November 26, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1606859191214-25806e8e2423?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MjU2MDR8MHwxfHNlYXJjaHwxfHxtZWFsJTIwcHJlcCUyMGNvbnRhaW5lcnMlMjBmcmlkZ2V8ZW58MXwwfHx8MTc5NTY4NjcxMXww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageCredit: 'Photo by Ello on Unsplash',
+    imageCreditUrl: 'https://unsplash.com/@elloproducts?utm_source=MacroPlan&utm_medium=referral',
+    category: 'Meal Prep'
+  },
+  {
     slug: 'what-to-eat-when-sick-macros-for-lifters',
     title: "What to Eat When You're Sick: Keeping Your Macros on Track Without Losing a Training Week",
     seoTitle: "What to Eat When You're Sick: A Lifter's Guide",
